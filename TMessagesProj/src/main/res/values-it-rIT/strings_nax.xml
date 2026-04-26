@@ -204,6 +204,7 @@
     <string name="CreateCode">Crea codice</string>
     <string name="CreateCodeLanguage">Lingua</string>
     <string name="NoCaptionForward">NoCaption avanti</string>
+    <string name="NoCaptionForwardShort">Senza didascalia</string>
     <string name="PreferCommonGroupsTab">Preferisci Scheda Gruppi</string>
     <string name="PreferCommonGroupsTabNotice">Se possibile, seleziona automaticamente la scheda \"Gruppi\" anziché \"Regali\".</string>
     <string name="GroupedMessageMenu">Menu Messaggio Di Gruppo</string>

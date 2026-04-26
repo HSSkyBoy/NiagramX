@@ -204,6 +204,7 @@
     <string name="CreateCode">コードを作成</string>
     <string name="CreateCodeLanguage">言語</string>
     <string name="NoCaptionForward">説明文なしで転送</string>
+    <string name="NoCaptionForwardShort">説明文なし</string>
     <string name="PreferCommonGroupsTab">グループタブを優先</string>
     <string name="PreferCommonGroupsTabNotice">可能な場合、\"ギフト\"の代わりに\"グループ\"タブを自動選択します。</string>
     <string name="GroupedMessageMenu">メッセージメニューをグループ化</string>
