@@ -804,6 +804,10 @@ public class NotificationCenter {
     }
 
     public void doOnIdle(Runnable runnable) {
+        if (Thread.currentThread() != ApplicationLoader.applicationHandler.getLooper().getThread()) {
+            AndroidUtilities.runOnUIThread(() -> doOnIdle(runnable));
+            return;
+        }
         if (isAnimationInProgress()) {
             delayedRunnables.add(runnable);
         } else {
@@ -812,6 +816,10 @@ public class NotificationCenter {
     }
 
     public void removeDelayed(Runnable runnable) {
+        if (Thread.currentThread() != ApplicationLoader.applicationHandler.getLooper().getThread()) {
+            AndroidUtilities.runOnUIThread(() -> removeDelayed(runnable));
+            return;
+        }
         delayedRunnables.remove(runnable);
     }
 

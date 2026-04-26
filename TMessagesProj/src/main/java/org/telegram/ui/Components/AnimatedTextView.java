@@ -523,21 +523,27 @@ public class AnimatedTextView extends View {
         }
 
         private void clearOldParts() {
-            if (oldParts != null) {
-                for (int i = 0; i < oldParts.length; ++i) {
-                    oldParts[i].detach();
+            Part[] parts = oldParts;
+            oldParts = null;
+            if (parts != null) {
+                for (Part part : parts) {
+                    if (part != null) {
+                        part.detach();
+                    }
                 }
             }
-            oldParts = null;
         }
 
         private void clearCurrentParts() {
-            if (oldParts != null) {
-                for (int i = 0; i < oldParts.length; ++i) {
-                    oldParts[i].detach();
+            Part[] parts = currentParts;
+            currentParts = null;
+            if (parts != null) {
+                for (Part part : parts) {
+                    if (part != null) {
+                        part.detach();
+                    }
                 }
             }
-            oldParts = null;
         }
 
         public CharSequence getText() {
