@@ -6004,6 +6004,9 @@ public class ChatActivityEnterView extends FrameLayout implements
                     photos.add(info);
                     photoEntry.reset();
                     sending = true;
+                    if (delegate != null) {
+                        delegate.beforeMessageSend(null, notify, scheduleDate, 0);
+                    }
                     boolean updateStickersOrder = SendMessagesHelper.checkUpdateStickersOrder(info.caption);
                     SendMessagesHelper.prepareSendingMedia(accountInstance, photos, dialog_id, replyingMessageObject, getThreadMessage(), null, replyingQuote, false, false, editingMessageObject, notify, scheduleDate, scheduleRepeatPeriod, parentFragment == null ? 0 : parentFragment.getChatMode(), updateStickersOrder, null, parentFragment != null ? parentFragment.quickReplyShortcut : null, parentFragment != null ? parentFragment.getQuickReplyId() : 0, 0, false, 0, getSendMonoForumPeerId(), parentFragment != null ? parentFragment.messageSuggestionParams : null);
                     if (delegate != null) {
@@ -13067,6 +13070,9 @@ public class ChatActivityEnterView extends FrameLayout implements
                         setSearchingTypeInternal(0, true);
                         emojiView.closeSearch(true);
                         emojiView.hideSearchKeyboard();
+                    }
+                    if (delegate != null) {
+                        delegate.beforeMessageSend(null, notify, scheduleDate, stars);
                     }
                     setStickersExpanded(false, true, false);
                     final TL_stories.StoryItem storyItem = delegate != null ? delegate.getReplyToStory() : null;

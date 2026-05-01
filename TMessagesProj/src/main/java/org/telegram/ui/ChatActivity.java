@@ -13237,6 +13237,7 @@ public class ChatActivity extends BaseFragment implements
                         final HashMap<Object, Object> selectedPhotos = chatAttachAlert.getPhotoLayout().getSelectedPhotos();
                         final ArrayList<Object> selectedPhotosOrder = chatAttachAlert.getPhotoLayout().getSelectedPhotosOrder();
                         if (!selectedPhotos.isEmpty()) {
+                            beforeMessageSend(notify, scheduleDate, true, payStars);
                             final int albumsCount = (int) Math.ceil(selectedPhotos.size() / 10f);
                             for (int i = 0; i < albumsCount; ++i) {
                                 int count = Math.min(10, selectedPhotos.size() - (i * 10));
@@ -14600,6 +14601,7 @@ public class ChatActivity extends BaseFragment implements
         PollCreateActivity pollCreateActivity = new PollCreateActivity(ChatActivity.this, false, quiz);
         pollCreateActivity.setDelegate((poll, correctAnswers, notify, scheduleDate) -> {
             if (checkSlowModeAlert()) {
+                beforeMessageSend(notify, scheduleDate, true, 0);
                 SendMessagesHelper.SendMessageParams params2 = SendMessagesHelper.SendMessageParams.of(poll, dialog_id, replyingMessageObject, getThreadMessage(), null, null, notify, scheduleDate, 0);
                 params2.pollSendParams = new PollSendParams(null, (TLRPC.TL_messageMediaPoll) poll, 0, null, null, correctAnswers);
                 params2.quick_reply_shortcut = quickReplyShortcut;
@@ -14615,6 +14617,7 @@ public class ChatActivity extends BaseFragment implements
     public void didSelectFiles(ArrayList<String> files, String caption, ArrayList<TLRPC.MessageEntity> captionEntities, ArrayList<MessageObject> fmessages, boolean notify, int scheduleDate, int scheduleRepeatPeriod, long effectId, boolean invertMedia, long payStars) {
         fillEditingMediaWithCaption(caption, null);
         if (checkSlowModeAlert()) {
+            beforeMessageSend(notify, scheduleDate, true, payStars);
             if (!fmessages.isEmpty() && !TextUtils.isEmpty(caption)) {
                 SendMessagesHelper.SendMessageParams params = SendMessagesHelper.SendMessageParams.of(caption, dialog_id, null, null, null, true, captionEntities, null, null, true, 0, 0, null, false);
                 params.quick_reply_shortcut = quickReplyShortcut;
@@ -14635,6 +14638,7 @@ public class ChatActivity extends BaseFragment implements
     @Override
     public void didSelectPhotos(ArrayList<SendMessagesHelper.SendingMediaInfo> photos, boolean notify, int scheduleDate, int scheduleRepeatPeriod, long payStars) {
         fillEditingMediaWithCaption(photos.get(0).caption, photos.get(0).entities);
+        beforeMessageSend(notify, scheduleDate, true, payStars);
         SendMessagesHelper.prepareSendingMedia(getAccountInstance(), photos, dialog_id, replyingMessageObject, getThreadMessage(), null, replyingQuote, true, false, editingMessageObject, notify, scheduleDate, scheduleRepeatPeriod, chatMode, photos.get(0).updateStickersOrder, null, quickReplyShortcut, getQuickReplyId(), 0, false, payStars, getSendMonoForumPeerId(), getSendMessageSuggestionParams());
         afterMessageSend();
         if (scheduleDate != 0) {
@@ -14653,6 +14657,7 @@ public class ChatActivity extends BaseFragment implements
         if (!checkSlowModeAlert()) {
             return;
         }
+        beforeMessageSend(notify, scheduleDate, true, 0);
         boolean hasNoGifs = false;
         for (int a = 0; a < photos.size(); a++) {
             SendMessagesHelper.SendingMediaInfo info = photos.get(a);
@@ -20492,6 +20497,7 @@ public class ChatActivity extends BaseFragment implements
                 }
             }, this);
         } else {
+            beforeMessageSend(true, 0, true, 0);
             fillEditingMediaWithCaption(caption, null);
             SendMessagesHelper.prepareSendingVideo(getAccountInstance(), videoPath, null, null, null, dialog_id, replyingMessageObject, getThreadMessage(), null, replyingQuote, null, 0, editingMessageObject, true, 0, 0, false, false, null, quickReplyShortcut, getQuickReplyId(), 0, 0, getSendMonoForumPeerId(), getSendMessageSuggestionParams());
             afterMessageSend();
@@ -20590,6 +20596,7 @@ public class ChatActivity extends BaseFragment implements
     }
     private void sendPhotosGroup(ArrayList<MediaController.PhotoEntry> entries, boolean notify, int scheduleDate, boolean forceDocument) {
         if (!entries.isEmpty()) {
+            beforeMessageSend(notify, scheduleDate, true, 0);
             ArrayList<SendMessagesHelper.SendingMediaInfo> photos = new ArrayList<>();
             for (MediaController.PhotoEntry entry : entries) {
                 SendMessagesHelper.SendingMediaInfo info = new SendMessagesHelper.SendingMediaInfo();
@@ -20867,6 +20874,7 @@ public class ChatActivity extends BaseFragment implements
             }
         }
         fillEditingMediaWithCaption(null, null);
+        beforeMessageSend(notify, schedule_date, true, 0);
         if (sendAsUri) {
             SendMessagesHelper.prepareSendingDocument(getAccountInstance(), null, null, uri, null, null, dialog_id, replyingMessageObject, getThreadMessage(), null, replyingQuote, editingMessageObject, notify, schedule_date, null, quickReplyShortcut, getQuickReplyId(), false);
         } else {
@@ -20932,10 +20940,12 @@ public class ChatActivity extends BaseFragment implements
                 } else {
                     if (editingMessageObject == null && chatMode == MODE_SCHEDULED) {
                         AlertsCreator.createScheduleDatePickerDialog(getParentActivity(), dialog_id, (notify, scheduleDate, scheduleRepeatPeriod) -> {
+                            beforeMessageSend(notify, scheduleDate, true, 0);
                             fillEditingMediaWithCaption(null, null);
                             SendMessagesHelper.prepareSendingPhoto(getAccountInstance(), null, uri, dialog_id, replyingMessageObject, getThreadMessage(), replyingQuote, null, null, null, null, 0, editingMessageObject, notify, scheduleDate, chatMode, quickReplyShortcut, getQuickReplyId());
                         }, themeDelegate);
                     } else {
+                        beforeMessageSend(true, 0, true, 0);
                         fillEditingMediaWithCaption(null, null);
                         SendMessagesHelper.prepareSendingPhoto(getAccountInstance(), null, uri, dialog_id, replyingMessageObject, getThreadMessage(), replyingQuote, null, null, null, null, 0, editingMessageObject, true, 0, chatMode, quickReplyShortcut, getQuickReplyId());
                     }
@@ -35769,6 +35779,7 @@ public class ChatActivity extends BaseFragment implements
 
     @Override
     public void didSelectLocation(TLRPC.MessageMedia location, int locationType, boolean notify, int scheduleDate, long payStars) {
+        beforeMessageSend(notify, scheduleDate, true, payStars);
         SendMessagesHelper.SendMessageParams params = SendMessagesHelper.SendMessageParams.of(location, dialog_id, replyingMessageObject, getThreadMessage(), null, null, notify, scheduleDate, 0);
         params.quick_reply_shortcut = quickReplyShortcut;
         params.quick_reply_shortcut_id = getQuickReplyId();
@@ -35906,6 +35917,7 @@ public class ChatActivity extends BaseFragment implements
 
     public void sendAudio(ArrayList<MessageObject> audios, CharSequence caption, boolean notify, int scheduleDate, int scheduleRepeatPeriod, long effectId, boolean invertMedia, long payStars) {
         if (checkSlowModeAlert()) {
+            beforeMessageSend(notify, scheduleDate, true, payStars);
             fillEditingMediaWithCaption(caption, null);
             SendMessagesHelper.prepareSendingAudioDocuments(getAccountInstance(), audios, caption != null ? caption : null, dialog_id, replyingMessageObject, getThreadMessage(), null, notify, scheduleDate, scheduleRepeatPeriod, editingMessageObject, quickReplyShortcut, getQuickReplyId(), effectId, invertMedia, payStars);
             afterMessageSend();
@@ -35914,6 +35926,7 @@ public class ChatActivity extends BaseFragment implements
 
     public void sendContact(TLRPC.User user, boolean notify, int scheduleDate, long effectId, boolean invertMedia, long payStars) {
         if (checkSlowModeAlert()) {
+            beforeMessageSend(notify, scheduleDate, true, payStars);
             SendMessagesHelper.SendMessageParams params = SendMessagesHelper.SendMessageParams.of(user, dialog_id, replyingMessageObject, getThreadMessage(), null, null, notify, scheduleDate, 0);
             params.quick_reply_shortcut = quickReplyShortcut;
             params.quick_reply_shortcut_id = getQuickReplyId();
@@ -35929,6 +35942,7 @@ public class ChatActivity extends BaseFragment implements
 
     public void sendContacts(ArrayList<TLRPC.User> users, String caption, boolean notify, int scheduleDate, long effectId, boolean invertMedia, long payStars) {
         if (checkSlowModeAlert()) {
+            beforeMessageSend(notify, scheduleDate, true, payStars);
             if (!TextUtils.isEmpty(caption)) {
                 SendMessagesHelper.SendMessageParams params = SendMessagesHelper.SendMessageParams.of(caption, dialog_id, null, null, null, true, null, null, null, true, 0, 0, null, false);
                 params.quick_reply_shortcut = quickReplyShortcut;
@@ -35960,6 +35974,7 @@ public class ChatActivity extends BaseFragment implements
 
     public void sendPoll(TLRPC.TL_messageMediaPoll poll, CharSequence caption, PollAttachedMediaPack media, ArrayList<Integer> correctAnswers, boolean notify, int scheduleDate, long payStars) {
         if (checkSlowModeAlert()) {
+            beforeMessageSend(notify, scheduleDate, true, payStars);
             final long groupId = Utilities.random.nextLong();
             String captionStr = null;
             ArrayList<TLRPC.MessageEntity> entities = null;
@@ -35977,6 +35992,7 @@ public class ChatActivity extends BaseFragment implements
 
     public void sendTodo(TLRPC.TL_messageMediaToDo todo, boolean notify, int scheduleDate, long payStars) {
         if (checkSlowModeAlert()) {
+            beforeMessageSend(notify, scheduleDate, true, payStars);
             final SendMessagesHelper.SendMessageParams params2 = SendMessagesHelper.SendMessageParams.of((TLRPC.TL_messageMediaPoll) null, dialog_id, replyingMessageObject, getThreadMessage(), null, null, notify, scheduleDate, 0);
             params2.todo = todo;
             params2.quick_reply_shortcut = quickReplyShortcut;
@@ -36087,6 +36103,7 @@ public class ChatActivity extends BaseFragment implements
         entity.offset = 0;
         entity.length = message.length();
         entities.add(entity);
+        beforeMessageSend(notify, scheduleDate, true, 0);
         SendMessagesHelper.SendMessageParams params = SendMessagesHelper.SendMessageParams.of(message, dialog_id, replyingMessageObject, getThreadMessage(), null, false, entities, null, null, notify, scheduleDate, 0, null, false);
         params.quick_reply_shortcut = quickReplyShortcut;
         params.quick_reply_shortcut_id = getQuickReplyId();
