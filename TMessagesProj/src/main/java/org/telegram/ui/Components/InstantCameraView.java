@@ -2386,9 +2386,10 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
 
             keyframeThumbs.clear();
             frameCount = 0;
-            if (generateKeyframeThumbsQueue != null) {
-                generateKeyframeThumbsQueue.cleanupQueue();
-                generateKeyframeThumbsQueue.recycle();
+            DispatchQueue queue = generateKeyframeThumbsQueue;
+            if (queue != null) {
+                queue.cleanupQueue();
+                queue.recycle();
             }
             generateKeyframeThumbsQueue = new DispatchQueue("keyframes_thumb_queue");
             handler.sendMessage(handler.obtainMessage(MSG_START_RECORDING));
@@ -2733,9 +2734,10 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
         }
 
         private void createKeyframeThumb() {
-            if (generateKeyframeThumbsQueue != null && SharedConfig.getDevicePerformanceClass() == SharedConfig.PERFORMANCE_CLASS_HIGH && frameCount % 33 == 0) {
+            DispatchQueue queue = generateKeyframeThumbsQueue;
+            if (queue != null && SharedConfig.getDevicePerformanceClass() == SharedConfig.PERFORMANCE_CLASS_HIGH && frameCount % 33 == 0) {
                 GenerateKeyframeThumbTask task = new GenerateKeyframeThumbTask();
-                generateKeyframeThumbsQueue.postRunnable(task);
+                queue.postRunnable(task);
             }
         }
 
@@ -3038,9 +3040,10 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
                 }
             }
             if (send != 2) {
-                if (generateKeyframeThumbsQueue != null) {
-                    generateKeyframeThumbsQueue.cleanupQueue();
-                    generateKeyframeThumbsQueue.recycle();
+                DispatchQueue queue = generateKeyframeThumbsQueue;
+                if (queue != null) {
+                    queue.cleanupQueue();
+                    queue.recycle();
                     generateKeyframeThumbsQueue = null;
                 }
             }
