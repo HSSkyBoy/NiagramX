@@ -11003,6 +11003,14 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             }
         } else if (chatId != 0) {
 
+            if (emptyRow < 0 && emptyRow2 < 0) {
+                if (hasMusic || peerColor != null || actionsView == null) {
+                    emptyRow2 = rowCount++;
+                } else {
+                    emptyRow = rowCount++;
+                }
+            }
+
             // na: Group Profile Show Linked Channel Info
             if (chatInfo != null && chatInfo.linked_chat_id != 0 && (profileChannelMessageFetcher == null || !profileChannelMessageFetcher.loaded || profileChannelMessageFetcher.messageObjects != null)) {
                 TLRPC.Chat channel = getMessagesController().getChat(chatInfo.linked_chat_id);
@@ -11013,14 +11021,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             }
 
             if (chatInfo != null && (!TextUtils.isEmpty(chatInfo.about) || chatInfo.location instanceof TLRPC.TL_channelLocation) || ChatObject.isPublic(currentChat)) {
-                if (emptyRow < 0 && emptyRow2 < 0) {
-                    if (hasMusic || peerColor != null || actionsView == null) {
-                        emptyRow2 = rowCount++;
-                    } else {
-                        emptyRow = rowCount++;
-                    }
-                }
-
                 if (actionsView == null) {
                     infoHeaderRow = rowCount++;
                 }
@@ -11037,13 +11037,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 }
                 if (!currentChat.restriction_reason.isEmpty()) {
                     restrictionReasonRow = rowCount++;
-                }
-            }
-            if (emptyRow < 0 && emptyRow2 < 0) {
-                if (hasMusic || peerColor != null || actionsView == null) {
-                    emptyRow2 = rowCount++;
-                } else {
-                    emptyRow = rowCount++;
                 }
             }
             if (NaConfig.INSTANCE.getIdDcType().Int() != 0) {
