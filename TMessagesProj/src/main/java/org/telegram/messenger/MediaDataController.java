@@ -6598,7 +6598,7 @@ public class MediaDataController extends BaseController {
                                                 req2 = reqInner;
                                             }
                                             getConnectionsManager().sendRequest(req2, (response2, error2) -> {
-                                                if (error == null) {
+                                                if (error2 == null && response2 instanceof TLRPC.messages_Messages) {
                                                     TLRPC.messages_Messages messagesRes2 = (TLRPC.messages_Messages) response2;
                                                     messagesRes.messages.addAll(messagesRes2.messages);
                                                     messagesRes.users.addAll(messagesRes2.users);
@@ -6614,6 +6614,8 @@ public class MediaDataController extends BaseController {
                                                     broadcastReplyMessages(messagesRes.messages, replyMessageOwners, messagesRes.users, messagesRes.chats, dialogId, false);
                                                     getMessagesStorage().putUsersAndChats(messagesRes.users, messagesRes.chats, true, true);
                                                     saveReplyMessages(replyMessageOwners, messagesRes.messages, scheduled);
+                                                } else if (error2 != null) {
+                                                    Timer.log(logLogger, "getMessages error: " + error2.code + " " + error2.text);
                                                 }
                                             });
                                         } else {
