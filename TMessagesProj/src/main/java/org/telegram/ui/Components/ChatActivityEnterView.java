@@ -2619,7 +2619,7 @@ public class ChatActivityEnterView extends FrameLayout implements
         this.resourcesProvider = resourcesProvider;
         this.isChat = isChat;
 
-        smoothKeyboard = isChat && (!AndroidUtilities.isInMultiwindow || Theme.isCurrentThemeDark()) && (fragment == null || !fragment.isInBubbleMode());
+        smoothKeyboard = isChat && !AndroidUtilities.isInMultiwindow && (fragment == null || !fragment.isInBubbleMode());
         dotPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         dotPaint.setColor(getThemedColor(Theme.key_chat_emojiPanelNewTrending));
         setFocusable(true);
@@ -13691,15 +13691,22 @@ public class ChatActivityEnterView extends FrameLayout implements
 
             if (currentView != null) {
                 FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) currentView.getLayoutParams();
-                if (!closeAnimationInProgress && (layoutParams.width != AndroidUtilities.displaySize.x || layoutParams.height != newHeight) && !stickersExpanded) {
+                boolean panelSizeChanged = windowInsetsInAppController == null ?
+                        layoutParams.width != AndroidUtilities.displaySize.x || layoutParams.height != newHeight :
+                        emojiPadding != newHeight;
+                if (!closeAnimationInProgress && panelSizeChanged && !stickersExpanded) {
+                    int currentPanelHeight = newHeight;
                     if (windowInsetsInAppController == null) {
                         layoutParams.width = AndroidUtilities.displaySize.x;
                         layoutParams.height = newHeight;
                         currentView.setLayoutParams(layoutParams);
+                        currentPanelHeight = layoutParams.height;
+                    } else if (newHeight > 0) {
+                        windowInsetsInAppController.requestInAppKeyboardHeightIncludeNavbar(newHeight);
                     }
                     if (sizeNotifierLayout != null) {
                         int oldHeight = emojiPadding;
-                        emojiPadding = layoutParams.height;
+                        emojiPadding = currentPanelHeight;
                         sizeNotifierLayout.requestLayout();
                         onWindowSizeChanged();
                         if (smoothKeyboard && !keyboardVisible && oldHeight != emojiPadding && pannelAnimationEnabled()) {

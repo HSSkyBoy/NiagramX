@@ -197,6 +197,9 @@ public class WindowInsetsStateHolder implements WindowInsetsProvider, WindowInse
             this.inAppKeyboardHeight = inAppKeyboardHeight;
             this.inAppKeyboardState = IN_APP_IME_STATE_VISIBLE;
 
+            if (lastInsets != null) {
+                onUpdateListener.run();
+            }
             setInsets(lastInsets);
         }
     }
