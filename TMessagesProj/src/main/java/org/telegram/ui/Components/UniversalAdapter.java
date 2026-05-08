@@ -1067,11 +1067,15 @@ public class UniversalAdapter extends AdapterWithDiffUtils {
 
     public void updateReorder(RecyclerView.ViewHolder holder, boolean allowReorder) {
         if (holder == null) return;
+        final int position = holder.getAdapterPosition();
+        if (position == RecyclerView.NO_POSITION) return;
         final int viewType = holder.getItemViewType();
         if (viewType >= UItem.factoryViewTypeStartsWith) {
             UItem.UItemFactory<?> factory = UItem.findFactory(viewType);
             if (factory != null) {
-                factory.attachedView(listView, holder.itemView, getItem(holder.getAdapterPosition()));
+                UItem item = getItem(position);
+                if (item == null) return;
+                factory.attachedView(listView, holder.itemView, item);
             }
         } else {
             switch (viewType) {
