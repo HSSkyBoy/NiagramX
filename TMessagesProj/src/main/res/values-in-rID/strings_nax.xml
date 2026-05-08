@@ -204,6 +204,7 @@
     <string name="CreateCode">Buat Kode</string>
     <string name="CreateCodeLanguage">Bahasa</string>
     <string name="NoCaptionForward">Teruskan Tanpa Teks</string>
+    <string name="NoCaptionForwardShort">Tanpa Teks</string>
     <string name="PreferCommonGroupsTab">Lebih suka Tab Grup</string>
     <string name="PreferCommonGroupsTabNotice">Pilih otomatis tab \"Grup\" alih-alih \"Hadiah\" bila memungkinkan.</string>
     <string name="GroupedMessageMenu">Menu Pesan Grup</string>

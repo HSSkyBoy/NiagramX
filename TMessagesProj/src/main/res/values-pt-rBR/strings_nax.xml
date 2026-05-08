@@ -9,8 +9,8 @@
     <string name="ClearMessageDatabase">Limpar BD de mensagens</string>
     <string name="ClearMessageDatabaseNotification">Dados de mensagens limpos.</string>
     <string name="CustomDeletedMark">Marca de exclusão personalizada</string>
-    <string name="HidePremiumSection">Ocultar Premium nas configurações</string>
-    <string name="HideHelpSection">Ocultar Ajuda nas configurações</string>
+    <string name="HidePremiumSection">Ocultar premium nas configurações</string>
+    <string name="HideHelpSection">Ocultar ajuda nas configurações</string>
     <string name="ProviderLLMTranslator">Tradutor por IA</string>
     <string name="LlmApiUrl">URL da API</string>
     <string name="LlmApiKey">Chave da API</string>
@@ -216,7 +216,7 @@
     <string name="AutoCheckUpdateRelease">Estável</string>
     <string name="AutoCheckUpdateBeta">Beta</string>
     <string name="YourVersionIsLatestNax">Sua versão está atualizada.</string>
-    <string name="PremiumElements">Elementos Premium</string>
+    <string name="PremiumElements">Elementos premium</string>
     <string name="PremiumItemBoosts">Contador de impulsos</string>
     <string name="PremiumItemStickerEffects">Efeitos de stickers</string>
     <string name="PremiumItemEmojiStatus">Status de emoji</string>

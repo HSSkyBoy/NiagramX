@@ -92,7 +92,7 @@
     <string name="SaveDeletedMessageForBot">在機器人聊天中儲存</string>
     <string name="HideArchive">從聊天清單移除「已封存對話」</string>
     <string name="ConfirmAllLinks">開啟內聯連結前確認</string>
-    <string name="ConfirmAllLinksDescription">啟用後，開啟所有內聯連結（包括 Telegram 內部連結，例如機器人內聯按鈕中的 t.me 連結）前，都會詢問是否確認。</string>
+    <string name="ConfirmAllLinksDescription">啟用後，開啟所有內聯連結（包括 Telegram 內部連結）前，都會詢問是否確認。</string>
     <string name="TranslatorMinimizedChannel">翻譯欄已為此頻道最小化。</string>
     <string name="TranslatorMinimizedGroup">翻譯欄已為此群組最小化。</string>
     <string name="TranslatorMinimized">翻譯欄已為此聊天最小化。</string>
@@ -204,6 +204,7 @@
     <string name="CreateCode">建立程式碼</string>
     <string name="CreateCodeLanguage">語言</string>
     <string name="NoCaptionForward">無說明轉發</string>
+    <string name="NoCaptionForwardShort">無說明文字</string>
     <string name="PreferCommonGroupsTab">首選群組標籤</string>
     <string name="PreferCommonGroupsTabNotice">在個人資料頁面自動選擇“群組”標籤而不是“禮物”。</string>
     <string name="GroupedMessageMenu">分組訊息選單</string>
