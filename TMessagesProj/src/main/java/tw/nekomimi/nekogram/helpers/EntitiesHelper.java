@@ -22,11 +22,13 @@ public class EntitiesHelper {
     public static final class TableSelectionSpan {
     }
 
+    private static final String TABLE_SEPARATOR_ROW_PATTERN = "[ \\t]*\\|?[ \\t]*:?-+:?[ \\t]*(?:\\|[ \\t]*:?-+:?[ \\t]*)*\\|?[ \\t]*";
     private static final Pattern TABLE_BLOCK_PATTERN = Pattern.compile(
-            "^([ \\t]*\\|?.*\\|.*\\|?[ \\t]*\\n)([ \\t]*\\|?[-| :]+\\|?[ \\t]*\\n)((?:[ \\t]*\\|?.*\\|.*\\|?[ \\t]*\\n?)+)",
+            "^([ \\t]*\\|?.*\\|.*\\|?[ \\t]*\\n)(" + TABLE_SEPARATOR_ROW_PATTERN + "\\n)((?:[ \\t]*\\|?.*\\|.*\\|?[ \\t]*\\n?)+)",
             Pattern.MULTILINE  // Table pattern: matches GFM table with header row, separator row, and data rows
     );
-    private static final Pattern TABLE_SEPARATOR_PATTERN = Pattern.compile("^[ \\t]*\\|?([ \\t]*:?-+:?[ \\t]*\\|[ \\t]*)*([ \\t]*:?-+:?[ \\t]*)\\|?[ \\t]*$");
+    private static final Pattern TABLE_SEPARATOR_PATTERN = Pattern.compile("^" + TABLE_SEPARATOR_ROW_PATTERN + "$");
+    private static final Pattern TABLE_SEPARATOR_CELL_PATTERN = Pattern.compile(":?-+:?");
     private static final Pattern TABLE_CELL_SPLIT_PATTERN = Pattern.compile("(?<!\\\\)\\|");
 
     private static final Pattern[] PATTERNS = new Pattern[]{
@@ -259,33 +261,37 @@ public class EntitiesHelper {
         return new int[]{start, end};
     }
 
-    // Parse table markdown into 2D String array
     private static String[][] parseTableRows(String tableBlock) {
-        var lines = tableBlock.split("\\r?\\n");
+        var lines = tableBlock.split("\\r?\\n", -1);
         if (lines.length < 2) return null;
+
+        String headerLine = lines[0].trim();
+        String separatorLine = lines[1].trim();
+        if (!TABLE_SEPARATOR_PATTERN.matcher(separatorLine).matches()) {
+            return null;
+        }
+
+        String[] headerCells = splitTableCells(headerLine);
+        String[] separatorCells = splitTableCells(separatorLine);
+        if (headerCells.length == 0 || headerCells.length != separatorCells.length) {
+            return null;
+        }
+        for (String separatorCell : separatorCells) {
+            if (!TABLE_SEPARATOR_CELL_PATTERN.matcher(separatorCell.trim()).matches()) {
+                return null;
+            }
+        }
 
         var validRows = new ArrayList<String[]>();
         for (int i = 0; i < lines.length; i++) {
             String line = lines[i].trim();
             if (line.isEmpty()) continue;
 
-            if (i == 1 && TABLE_SEPARATOR_PATTERN.matcher(line).matches()) {
+            if (i == 1) {
                 continue;
             }
 
-            if (line.startsWith("|")) {
-                line = line.substring(1);
-            }
-            if (line.endsWith("|") && !line.endsWith("\\|")) {
-                line = line.substring(0, line.length() - 1);
-            }
-
-            String[] cells = TABLE_CELL_SPLIT_PATTERN.split(line);
-
-            for (int j = 0; j < cells.length; j++) {
-                cells[j] = cells[j].replace("\\|", "|").trim();
-            }
-            validRows.add(cells);
+            validRows.add(splitTableCells(line));
         }
 
         String[][] result = new String[validRows.size()][];
@@ -293,5 +299,20 @@ public class EntitiesHelper {
             result[i] = validRows.get(i);
         }
         return result;
+    }
+
+    private static String[] splitTableCells(String line) {
+        if (line.startsWith("|")) {
+            line = line.substring(1);
+        }
+        if (line.endsWith("|") && !line.endsWith("\\|")) {
+            line = line.substring(0, line.length() - 1);
+        }
+
+        String[] cells = TABLE_CELL_SPLIT_PATTERN.split(line, -1);
+        for (int i = 0; i < cells.length; i++) {
+            cells[i] = cells[i].replace("\\|", "|").trim();
+        }
+        return cells;
     }
 }
