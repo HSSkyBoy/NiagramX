@@ -31,12 +31,6 @@ object LlmModelUtil {
     }
 
     @JvmStatic
-    fun isCerebrasGlm(url: String?, model: String?): Boolean {
-        val base = getBaseModelName(model).lowercase()
-        return url == LlmPresetRegistry.getPresetBaseUrl(LlmPresetRegistry.CEREBRAS) && base == "zai-glm-4.7"
-    }
-
-    @JvmStatic
     fun isDeepSeekV4(model: String?): Boolean {
         val base = getBaseModelName(model).lowercase()
         return base.startsWith("deepseek-v4")
@@ -65,8 +59,6 @@ object LlmModelUtil {
     fun applyReasoningParameters(requestJson: JSONObject, url: String?, model: String?) {
         if (isReasoning(model)) {
             requestJson.put("reasoning_effort", getReasoningEffort(model))
-        } else if (isCerebrasGlm(url, model)) {
-            requestJson.put("disable_reasoning", true)
         } else if (isDeepSeekV4(model)) {
             if (url == LlmPresetRegistry.getPresetBaseUrl(LlmPresetRegistry.VERCEL_AI_GATEWAY)) {
                 requestJson.put(
