@@ -179,24 +179,26 @@ public class CodeHighlighting {
             return new SpannableString(text);
         }
         final String key = language + "`" + text;
-        Highlighting process = processedHighlighting.get(key);
-        if (process == null) {
-            process = new Highlighting();
-            process.text = text;
-            process.language = language;
-            process.result = new LockedSpannableString(text);
+        synchronized (processedHighlighting) {
+            Highlighting process = processedHighlighting.get(key);
+            if (process == null) {
+                process = new Highlighting();
+                process.text = text;
+                process.language = language;
+                process.result = new LockedSpannableString(text);
 
-            highlight(process.result, 0, process.result.length(), language, 0, null, true);
+                highlight(process.result, 0, process.result.length(), language, 0, null, true);
 
-            Iterator<String> keys = processedHighlighting.keySet().iterator();
-            while (keys.hasNext() && processedHighlighting.size() > 8) {
-                keys.next();
-                keys.remove();
+                Iterator<String> keys = processedHighlighting.keySet().iterator();
+                while (keys.hasNext() && processedHighlighting.size() > 8) {
+                    keys.next();
+                    keys.remove();
+                }
+
+                processedHighlighting.put(key, process);
             }
-
-            processedHighlighting.put(key, process);
+            return process.result;
         }
-        return process.result;
     }
 
     public static void highlight(Spannable text, int start, int end, String lng, int type, TextStyleSpan.TextStyleRun style, boolean smallerSize) {
