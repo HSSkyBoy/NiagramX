@@ -335,4 +335,6 @@
     <string name="TabletModeOn">On</string>
     <string name="TabletModeOff">Off</string>
     <string name="HideDialogsSearchField">Hide Search Box</string>
+    <string name="DeepLTranslateKey">DeepL API Key</string>
+    <string name="DeepLTranslateKeyNotice">Configure DeepL API Key, leave blank to use built-in credentials.</string>
 </resources>

@@ -1235,6 +1235,12 @@ object NaConfig {
             ConfigItem.configTypeBool,
             false
         )
+    val deepLTranslateKey =
+        addConfig(
+            "DeepLTranslateKey",
+            ConfigItem.configTypeString,
+            ""
+        )
 
     val preferredTranslateTargetLangList = ArrayList<String>()
     fun updatePreferredTranslateTargetLangList() {
