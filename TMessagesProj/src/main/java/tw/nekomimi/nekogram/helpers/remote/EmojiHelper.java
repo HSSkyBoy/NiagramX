@@ -14,6 +14,7 @@ import android.graphics.fonts.SystemFonts;
 import android.os.Build;
 import android.os.SystemClock;
 import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
 import android.text.TextUtils;
@@ -1142,5 +1143,17 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
             replaced = true;
         }
         return replaced;
+    }
+
+    public static CharSequence removeEmojiSpans(CharSequence title) {
+        if (!(title instanceof Spanned)) {
+            return title;
+        }
+        SpannableStringBuilder result = new SpannableStringBuilder(title);
+        Emoji.EmojiSpan[] emojiSpans = result.getSpans(0, result.length(), Emoji.EmojiSpan.class);
+        for (Emoji.EmojiSpan emojiSpan : emojiSpans) {
+            result.removeSpan(emojiSpan);
+        }
+        return result;
     }
 }
