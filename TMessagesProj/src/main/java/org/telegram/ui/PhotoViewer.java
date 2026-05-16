@@ -6890,6 +6890,13 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                     w = h;
                     h = t;
                 }
+                if (w <= 0 || h <= 0) {
+                    AndroidUtilities.runOnUIThread(() -> {
+                        coverEditor.button.setLoading(false);
+                        switchToEditMode(EDIT_MODE_NONE);
+                    });
+                    return;
+                }
 
                 float scale = Math.max((float) frame.getWidth() / w, (float) frame.getHeight() / h);
                 final Bitmap croppedFrame = Bitmap.createBitmap((int) (w * scale), (int) (h * scale), Bitmap.Config.ARGB_8888);
