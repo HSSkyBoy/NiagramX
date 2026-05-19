@@ -131,7 +131,7 @@
     <string name="DisableGhostMode">Desativar fantasma</string>
     <string name="GhostModeEnabled">Modo fantasma ativado</string>
     <string name="GhostModeDisabled">Modo fantasma desativado</string>
-    <string name="GhostModeInDrawer">Atalho</string>
+    <string name="GhostModeInDrawer">Atalhos</string>
     <string name="GhostModeStatusIndicator">Indicador do modo fantasma</string>
     <string name="DontSendReadMessagePackets">Não ler mensagens</string>
     <string name="DontReadStoriesPackets">Não visualizar stories</string>
@@ -332,4 +332,6 @@
     <string name="TabletModeOn">Ativado</string>
     <string name="TabletModeOff">Desativado</string>
     <string name="HideDialogsSearchField">Ocultar barra de pesquisa</string>
+    <string name="DeepLTranslateKey">Chave da API do DeepL</string>
+    <string name="DeepLTranslateKeyNotice">Configure sua chave da API do DeepL; deixe em branco para usar as credenciais integradas.</string>
 </resources>

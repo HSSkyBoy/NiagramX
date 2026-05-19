@@ -332,4 +332,6 @@
     <string name="TabletModeOn">Nyala</string>
     <string name="TabletModeOff">Mati</string>
     <string name="HideDialogsSearchField">Sembunyikan Kotak Pencarian</string>
+    <string name="DeepLTranslateKey">Kunci API DeepL</string>
+    <string name="DeepLTranslateKeyNotice">Konfigurasikan Kunci API DeepL, biarkan kosong untuk menggunakan kredensial bawaan.</string>
 </resources>

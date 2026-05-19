@@ -204,6 +204,7 @@
     <string name="CreateCode">ایجاد کد</string>
     <string name="CreateCodeLanguage">زبان</string>
     <string name="NoCaptionForward">ارسال بدون زیرنویس</string>
+    <string name="NoCaptionForwardShort">بدون شرح</string>
     <string name="PreferCommonGroupsTab">ترجیح تب گروه‌ها</string>
     <string name="PreferCommonGroupsTabNotice">انتخاب خودکار تب \"گروه‌ها\" به جای \"هدایا\" در صورت امکان.</string>
     <string name="GroupedMessageMenu">منوی پیام‌های گروهی</string>
@@ -286,6 +287,24 @@
     <string name="ClearAllBookmarks">پاک کردن همه نشانک‌ها</string>
     <string name="ClearAllBookmarksNotification">همه نشانک‌ها پاک شدند.</string>
     <string name="SortByUnread">مرتب‌سازی بر اساس خوانده نشده</string>
+    <string name="MediaSettings">رسانه</string>
+    <string name="CameraInVideoMessages">دوربین در پیام‌های ویدیویی</string>
+    <string name="CameraInVideoMessagesFront">دوربین جلو</string>
+    <string name="CameraInVideoMessagesRear">دوربین عقب</string>
+    <string name="CameraInVideoMessagesAsk">بپرس</string>
+    <string name="CameraSettings">دوربین</string>
+    <string name="ContactNotes">یادداشت‌ها</string>
+    <string name="PhoneNotOnTelegramInvite">این شماره تلفن در تلگرام نیست. **دعوت کنید &gt;**</string>
+    <string name="PhoneAlreadyInContacts">این شماره تلفن قبلاً در مخاطبین شما موجود است. **مشاهده &gt;**</string>
+    <string name="PhoneOnTelegram">این شماره تلفن در تلگرام است.</string>
+    <string name="SIMCard">سیم‌کارت</string>
+    <string name="DeviceAccount">دستگاه</string>
+    <string name="ApiKeyNotSet">کلید API پیکربندی نشده است.</string>
+    <string name="SaveLocalLastSeen">ذخیره تاریخ آخرین بازدید</string>
+    <string name="CopyVideoFrame">کپی فریم</string>
+    <string name="SetLocalName">تعیین نام محلی</string>
+    <string name="DeleteChatForBothSides">به طور پیش‌فرض از \"همچنین حذف برای\" استفاده کن</string>
+    <string name="BackAnimationStyle">انیمیشن پیمایش</string>
     <string name="BackAnimationClassic">کلاسیک</string>
     <string name="BackAnimationSpring">بهار</string>
     <string name="BackAnimationPredictive">پیش بینی کننده</string>
@@ -313,4 +332,6 @@
     <string name="TabletModeOn">روشن</string>
     <string name="TabletModeOff">خاموش</string>
     <string name="HideDialogsSearchField">مخفی کردن کادر جستجو</string>
+    <string name="DeepLTranslateKey">کلید API سرویس DeepL</string>
+    <string name="DeepLTranslateKeyNotice">کلید رابط برنامه‌نویسی DeepL را پیکربندی کنید، برای استفاده از اعتبارنامه‌های داخلی آن را خالی بگذارید.</string>
 </resources>

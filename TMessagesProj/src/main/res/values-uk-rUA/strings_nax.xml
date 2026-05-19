@@ -202,6 +202,7 @@
     <string name="CreateCode">Створити код</string>
     <string name="CreateCodeLanguage">Мова</string>
     <string name="NoCaptionForward">Переслати без підпису</string>
+    <string name="NoCaptionForwardShort">Без підпису</string>
     <string name="PreferCommonGroupsTab">Перевага вкладці \"Групи”</string>
     <string name="PreferCommonGroupsTabNotice">Автоматично вибирати вкладку «Групи» замість «Подарунки», коли це можливо.</string>
     <string name="GroupedMessageMenu">Згрупувати меню повідомлення</string>
@@ -329,4 +330,6 @@
     <string name="TabletModeOn">Увімкнено</string>
     <string name="TabletModeOff">Вимкнено</string>
     <string name="HideDialogsSearchField">Приховати поле пошуку</string>
+    <string name="DeepLTranslateKey">DeepL API ключ</string>
+    <string name="DeepLTranslateKeyNotice">Налаштуйте ключ DeepL API, залиште поле порожнім, щоб використовувати вбудовані облікові дані.</string>
 </resources>

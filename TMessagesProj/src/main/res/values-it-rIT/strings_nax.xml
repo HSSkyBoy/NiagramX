@@ -336,4 +336,6 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="TabletModeOn">Attiva</string>
     <string name="TabletModeOff">Disattivata</string>
     <string name="HideDialogsSearchField">Nascondi casella di ricerca</string>
+    <string name="DeepLTranslateKey">Chiave API DeepL</string>
+    <string name="DeepLTranslateKeyNotice">Configura la chiave API DeepL; lascia vuoto il campo per utilizzare le credenziali predefinite.</string>
 </resources>

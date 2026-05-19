@@ -332,4 +332,6 @@
     <string name="TabletModeOn">開啟</string>
     <string name="TabletModeOff">關閉</string>
     <string name="HideDialogsSearchField">隱藏搜尋欄</string>
+    <string name="DeepLTranslateKey">DeepL API 金鑰</string>
+    <string name="DeepLTranslateKeyNotice">設定 DeepL API 金鑰，留空則使用內建金鑰。</string>
 </resources>

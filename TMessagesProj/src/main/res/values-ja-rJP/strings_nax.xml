@@ -332,4 +332,6 @@
     <string name="TabletModeOn">オン</string>
     <string name="TabletModeOff">オフ</string>
     <string name="HideDialogsSearchField">検索ボックスを非表示</string>
+    <string name="DeepLTranslateKey">DeepL API キー</string>
+    <string name="DeepLTranslateKeyNotice">DeepL API キーを設定します。組み込みの認証情報を使用する場合は空白のままにしてください。</string>
 </resources>
