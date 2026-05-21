@@ -1249,7 +1249,18 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
 
     private Drawable pickerViewSendDrawable;
     private CharSequence customTitle;
+    private boolean disableSelection;
     public boolean skipLastFrameDraw;
+
+    public void setSelectionDisabled(boolean disabled) {
+        disableSelection = disabled;
+        if (checkImageView != null) {
+            checkImageView.setVisibility(disabled ? View.GONE : checkImageView.getVisibility());
+        }
+        if (photosCounterView != null && disabled) {
+            photosCounterView.setVisibility(View.GONE);
+        }
+    }
 
     public void addPhoto(MessageObject message, int classGuid) {
         if (classGuid != this.classGuid) {
@@ -1930,9 +1941,6 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
 //    private SpringAnimation mentionListAnimation;
 //    private boolean mentionListViewVisible;
 //    private boolean allowMentions;
-
-    private ActionBarPopupWindow sendPopupWindow;
-    private ActionBarPopupWindow.ActionBarPopupWindowLayout sendPopupLayout;
 
     private int animationInProgress;
     private boolean openAnimationInProgress;
@@ -3013,6 +3021,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         }
         default void onReleasePlayerBeforeClose(int currentIndex) {};
         default long getDialogId() { return 0; }
+        default boolean canSchedule() { return false; }
 
         default boolean forceAllInGroup() {
             return false;
@@ -7782,55 +7791,29 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             }
         });
         pickerViewSendButton.setOnLongClickListener(view -> {
-            if (placeProvider != null && !placeProvider.allowSendingSubmenu()) {
-                return false;
-            }
-            if (sendPhotoType == SELECT_TYPE_STICKER) {
-                return false;
-            }
-            boolean isStoryViewer = parentFragment != null && parentFragment.getLastStoryViewer() != null;
-            if (!isStoryViewer && (parentChatActivity == null || parentChatActivity.isInScheduleMode())) {
-                return false;
-            }
-            if (captionEdit.isCaptionOverLimit()) {
-                return false;
-            }
-            TLRPC.Chat chat;
-            TLRPC.User user;
-            boolean canScheduleMessage;
+            if (placeProvider != null && !placeProvider.allowSendingSubmenu()) return false;
+            if (sendPhotoType == SELECT_TYPE_STICKER) return false;
+            final boolean isStoryViewer = parentFragment != null && parentFragment.getLastStoryViewer() != null;
+            if (parentChatActivity != null && parentChatActivity.isInScheduleMode()) return false;
+            if (parentChatActivity == null && !isStoryViewer && placeProvider == null) return false;
+            if (captionEdit.isCaptionOverLimit()) return false;
+            final TLRPC.User user;
+            final boolean canScheduleMessage;
             if (parentChatActivity != null) {
-                chat = parentChatActivity.getCurrentChat();
                 user = parentChatActivity.getCurrentUser();
                 canScheduleMessage = parentChatActivity.canScheduleMessage();
             } else if (placeProvider != null) {
                 final long dialogId = placeProvider.getDialogId();
-                chat = MessagesController.getInstance(currentAccount).getChat(-dialogId);
-                user = MessagesController.getInstance(currentAccount).getUser(dialogId);
-                canScheduleMessage = !DialogObject.isEncryptedDialog(dialogId) && MessagesController.getInstance(currentAccount).getSendPaidMessagesStars(dialogId) <= 0;
+                user = dialogId != 0 ? MessagesController.getInstance(currentAccount).getUser(dialogId) : null;
+                canScheduleMessage = placeProvider.canSchedule();
             } else {
                 return false;
             }
 
-            sendPopupLayout = new ActionBarPopupWindow.ActionBarPopupWindowLayout(parentActivity);
-            sendPopupLayout.setAnimationEnabled(false);
-            sendPopupLayout.setOnTouchListener((v, event) -> {
-                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                    if (sendPopupWindow != null && sendPopupWindow.isShowing()) {
-                        v.getHitRect(hitRect);
-                        if (!hitRect.contains((int) event.getX(), (int) event.getY())) {
-                            sendPopupWindow.dismiss();
-                        }
-                    }
-                }
-                return false;
-            });
-            sendPopupLayout.setDispatchKeyEventListener(keyEvent -> {
-                if (keyEvent.getKeyCode() == KeyEvent.KEYCODE_BACK && keyEvent.getRepeatCount() == 0 && sendPopupWindow != null && sendPopupWindow.isShowing()) {
-                    sendPopupWindow.dismiss();
-                }
-            });
-            sendPopupLayout.setShownFromBottom(false);
-            sendPopupLayout.setBackgroundColor(0xf9222222);
+            final boolean canEdit = placeProvider != null && placeProvider.canEdit(currentIndex);
+            final boolean canReplace = placeProvider != null && placeProvider.canReplace(currentIndex);
+            final boolean userIsSelf = UserObject.isUserSelf(user);
+            final boolean silentByDefault = NaConfig.INSTANCE.getSilentMessageByDefault().Bool();
 
             Object currentObject = imagesArrLocals.get(currentIndex);
             boolean canSpoiler = fragment instanceof ChatActivity && !((ChatActivity) fragment).isSecretChat() && currentObject instanceof MediaController.PhotoEntry;
@@ -7840,154 +7823,65 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                 spoilerEnabled = entry.hasSpoiler;
             }
 
-            final boolean canEdit = placeProvider != null && placeProvider.canEdit(currentIndex);
-            final boolean canReplace = placeProvider != null && placeProvider.canReplace(currentIndex);
-            final int[] order = {7, 5, 4, 3, 2, 0, 1, 6};
-            for (int i = 0; i < order.length; i++) {
-                final int a = order[i];
-                if (a != 2 && a != 3 && a != 5 && a != 6 && a != 7 && canEdit && canReplace) {
-                    continue;
-                }
-                if (a != 1 && canEdit && !canReplace) {
-                    continue;
-                }
-                if (a == 0 && !canScheduleMessage) {
-                    continue;
-                }
-                if (a == 0 && placeProvider != null && placeProvider.getSelectedPhotos() != null) {
-                    HashMap<Object, Object> hashMap = placeProvider.getSelectedPhotos();
-                    boolean hasTtl = false;
-                    for (HashMap.Entry<Object, Object> entry : hashMap.entrySet()) {
-                        Object object = entry.getValue();
-                        if (object instanceof MediaController.PhotoEntry) {
-                            MediaController.PhotoEntry photoEntry = (MediaController.PhotoEntry) object;
-                            if (photoEntry.ttl != 0) {
-                                hasTtl = true;
-                                break;
-                            }
-                        } else if (object instanceof MediaController.SearchImage) {
-                            MediaController.SearchImage searchImage = (MediaController.SearchImage) object;
-                            if (searchImage.ttl != 0) {
-                                hasTtl = true;
-                                break;
-                            }
+            boolean hasTtl = false;
+            if (placeProvider != null && placeProvider.getSelectedPhotos() != null) {
+                for (HashMap.Entry<Object, Object> entry : placeProvider.getSelectedPhotos().entrySet()) {
+                    Object object = entry.getValue();
+                    if (object instanceof MediaController.PhotoEntry) {
+                        if (((MediaController.PhotoEntry) object).ttl != 0) {
+                            hasTtl = true;
+                            break;
+                        }
+                    } else if (object instanceof MediaController.SearchImage) {
+                        if (((MediaController.SearchImage) object).ttl != 0) {
+                            hasTtl = true;
+                            break;
                         }
                     }
-                    if (hasTtl) {
-                        continue;
-                    }
-                } else if (a == 1 && UserObject.isUserSelf(user)) {
-                    continue;
-                } else if ((a == 2 || a == 3) && !canReplace) {
-                    continue;
-                } else if (a == 4 && (isCurrentVideo || captionEdit.hasTimer())) {
-                    continue;
-                } else if (a == 6 && !canSpoiler) {
-                    continue;
                 }
-                final ActionBarMenuSubItem cell = new ActionBarMenuSubItem(parentActivity, a == 0, a == 3, resourcesProvider);
-                if (a == 0) {
-                    if (UserObject.isUserSelf(user)) {
-                        cell.setTextAndIcon(getString(R.string.SetReminder), R.drawable.msg_calendar2);
-                    } else {
-                        cell.setTextAndIcon(getString(R.string.ScheduleMessage), R.drawable.msg_calendar2);
+            }
+
+            final boolean showSendAsFile = !canEdit && !isCurrentVideo && !captionEdit.hasTimer();
+            final boolean showSchedule = !canEdit && canScheduleMessage && !hasTtl;
+            final boolean showSoundToggle = !(canEdit && canReplace) && !userIsSelf;
+            final boolean showCaptionTranslate = captionEdit != null && captionEdit.getText().length() > 0 && (!canEdit || canReplace);
+            final boolean showSpoiler = canSpoiler && (!canEdit || canReplace);
+            final boolean multipleSelected = placeProvider != null && placeProvider.getSelectedCount() > 1;
+            final String languageText = Translator.getInputTranslateLangForChat(ChatsHelper.getChatId()).toUpperCase();
+
+            final ItemOptions options = ItemOptions.makeOptions(containerView, new DarkThemeResourceProvider(), view)
+                .setGravity(Gravity.RIGHT)
+                .setMinWidth(196);
+            if (showCaptionTranslate && LlmConfig.isLLMTranslatorAvailable() && !LlmConfig.llmIsDefaultProvider()) {
+                addTranslateCommentOption(options, R.drawable.magic_stick_solar, getString(R.string.TranslateMessageLLM) + ' ' + "(" + languageText + ")", Translator.providerLLMTranslator);
+            }
+            if (showCaptionTranslate) {
+                addTranslateCommentOption(options, LlmConfig.llmIsDefaultProvider() ? R.drawable.magic_stick_solar : R.drawable.ic_translate, getString(R.string.TranslateMessage) + ' ' + "(" + languageText + ")", 0);
+            }
+            options
+                .addIf(showSendAsFile, R.drawable.msg_sendfile, getString(multipleSelected ? R.string.SendAsFiles : R.string.SendAsFile), () -> sendPressed(!silentByDefault, 0, 0, false, true, false))
+                .addIf(canReplace, R.drawable.msg_send, getString(R.string.SendAsNewPhoto), () -> sendPressed(!silentByDefault, 0, 0))
+                .addIf(canReplace, R.drawable.msg_replace, getString(R.string.ReplacePhoto), this::replacePressed)
+                .addIf(showSchedule, R.drawable.msg_calendar2, getString(userIsSelf ? R.string.SetReminder : R.string.ScheduleMessage), this::showScheduleDatePickerDialog)
+                .addIf(showSoundToggle, silentByDefault ? R.drawable.input_notify_on : R.drawable.input_notify_off, getString(silentByDefault ? R.string.SendWithSound : R.string.SendWithoutSound), () -> sendPressed(silentByDefault, 0, 0))
+                .addIf(showSpoiler, spoilerEnabled ? R.drawable.msg_spoiler_off : R.drawable.msg_spoiler, getString(spoilerEnabled ? R.string.DisablePhotoSpoiler : R.string.EnablePhotoSpoiler), () -> {
+                    if (placeProvider != null && !placeProvider.isPhotoChecked(currentIndex)) {
+                        setPhotoChecked();
                     }
-                } else if (a == 1) {
-                    boolean sendWithoutSoundNax = NaConfig.INSTANCE.getSilentMessageByDefault().Bool();
-                    cell.setTextAndIcon(sendWithoutSoundNax ? getString(R.string.SendWithSound) : getString(R.string.SendWithoutSound), sendWithoutSoundNax ? R.drawable.input_notify_on : R.drawable.input_notify_off);
-                } else if (a == 2) {
-                    cell.setTextAndIcon(getString(R.string.ReplacePhoto), R.drawable.msg_replace);
-                } else if (a == 3) {
-                    cell.setTextAndIcon(getString(R.string.SendAsNewPhoto), R.drawable.msg_send);
-                } else if (a == 4) {
-                    if (placeProvider != null && placeProvider.getSelectedCount() > 1) {
-                        cell.setTextAndIcon(getString(R.string.SendAsFiles), R.drawable.msg_sendfile);
-                    } else {
-                        cell.setTextAndIcon(getString(R.string.SendAsFile), R.drawable.msg_sendfile);
-                    }
-                } else if (a == 5) {
-                    String languageText = Translator.getInputTranslateLangForChat(ChatsHelper.getChatId()).toUpperCase();
-                    String text = getString(R.string.TranslateMessage) + ' ' + "(" + languageText + ")";
-                    cell.setTextAndIcon(text, LlmConfig.llmIsDefaultProvider() ? R.drawable.magic_stick_solar : R.drawable.ic_translate);
-                    cell.setVisibility(captionEdit != null && captionEdit.getText().length() > 0);
-                } else if (a == 6) {
-                    cell.setTextAndIcon(LocaleController.getString(spoilerEnabled ? R.string.DisablePhotoSpoiler : R.string.EnablePhotoSpoiler), spoilerEnabled ? R.drawable.msg_spoiler_off : R.drawable.msg_spoiler);
-                } else if (a == 7) {
-                    String languageText = Translator.getInputTranslateLangForChat(ChatsHelper.getChatId()).toUpperCase();
-                    String text = getString(R.string.TranslateMessageLLM) + ' ' + "(" + languageText + ")";
-                    cell.setTextAndIcon(text, R.drawable.magic_stick_solar);
-                    cell.setVisibility(captionEdit != null && captionEdit.getText().length() > 0 && LlmConfig.isLLMTranslatorAvailable() && !LlmConfig.llmIsDefaultProvider());
-                }
-                cell.setMinimumWidth(dp(196));
-                cell.setColors(0xffffffff, 0xffffffff);
-                sendPopupLayout.addView(cell, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 48));
-                cell.setOnClickListener(v -> {
-                    if (sendPopupWindow != null && sendPopupWindow.isShowing()) {
-                        sendPopupWindow.dismiss();
-                    }
-                    if (a == 0) {
-                        showScheduleDatePickerDialog();
-                    } else if (a == 1) {
-                        sendPressed(NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
-                    } else if (a == 2) {
-                        replacePressed();
-                    } else if (a == 3) {
-                        sendPressed(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
-                    } else if (a == 4) {
-                        sendPressed(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, false, true, false);
-                    } else if (a == 5) {
-                        translateComment(Translator.getInputTranslateLangLocaleForChat(ChatsHelper.getChatId()));
-                    } else if (a == 6) {
-                        if (placeProvider != null && !placeProvider.isPhotoChecked(currentIndex)) {
-                            setPhotoChecked();
-                        }
-                        MediaController.PhotoEntry entry = (MediaController.PhotoEntry) currentObject;
-                        entry.hasSpoiler = !entry.hasSpoiler;
-                        if (placeProvider != null) placeProvider.spoilerPressed();
-                    } else if (a == 7) {
-                        translateComment(Translator.getInputTranslateLangLocaleForChat(ChatsHelper.getChatId()), Translator.providerLLMTranslator);
+                    MediaController.PhotoEntry entry = (MediaController.PhotoEntry) currentObject;
+                    entry.hasSpoiler = !entry.hasSpoiler;
+                    if (placeProvider != null) {
+                        placeProvider.spoilerPressed();
                     }
                 });
-                cell.setOnLongClickListener(v -> {
-                    if (a == 5 || a == 7) {
-                        Translator.showTargetLangSelect(cell, true, (locale) -> {
-                            if (sendPopupWindow != null && sendPopupWindow.isShowing()) {
-                                sendPopupWindow.dismiss();
-                            }
-                            translateComment(locale, a == 5 ? 0 : Translator.providerLLMTranslator);
-                            Translator.setInputTranslateLangForChat(ChatsHelper.getChatId(), TranslatorKt.getLocale2code(locale));
-                            return Unit.INSTANCE;
-                        });
-                        return true;
-                    }
-                    return false;
-                });
-            }
-            if (sendPopupLayout.getChildCount() == 0) {
-                return false;
-            }
-            sendPopupLayout.setupRadialSelectors(0x24ffffff);
 
-            sendPopupWindow = new ActionBarPopupWindow(sendPopupLayout, LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT);
-            sendPopupWindow.setAnimationEnabled(false);
-            sendPopupWindow.setAnimationStyle(R.style.PopupContextAnimation2);
-            sendPopupWindow.setOutsideTouchable(true);
-            sendPopupWindow.setClippingEnabled(true);
-            sendPopupWindow.setInputMethodMode(ActionBarPopupWindow.INPUT_METHOD_NOT_NEEDED);
-            sendPopupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_UNSPECIFIED);
-            sendPopupWindow.getContentView().setFocusableInTouchMode(true);
-
-            sendPopupLayout.measure(View.MeasureSpec.makeMeasureSpec(dp(1000), View.MeasureSpec.AT_MOST), View.MeasureSpec.makeMeasureSpec(dp(1000), View.MeasureSpec.AT_MOST));
-            sendPopupWindow.setFocusable(true);
-
-            int[] location = new int[2];
-            view.getLocationInWindow(location);
-            sendPopupWindow.showAtLocation(view, Gravity.LEFT | Gravity.TOP, location[0] + view.getMeasuredWidth() - sendPopupLayout.getMeasuredWidth() + dp(14), location[1] - sendPopupLayout.getMeasuredHeight() - dp(18));
+            if (options.getItemsCount() == 0) return false;
             try {
                 if (!NekoConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
             } catch (Exception ignored) {}
 
-            return false;
+            options.show();
+            return true;
         });
 
         pollAttachButtons = new PhotoViewerPollAttachButtons(parentActivity);
@@ -8491,15 +8385,39 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
     }
 
     private void showScheduleDatePickerDialog() {
-        if (parentChatActivity == null) {
+        if (parentActivity == null) {
+            return;
+        }
+        final long dialogId;
+        if (parentChatActivity != null) {
+            dialogId = parentChatActivity.getDialogId();
+        } else if (placeProvider != null) {
+            dialogId = placeProvider.getDialogId();
+        } else {
             return;
         }
         final AlertsCreator.ScheduleDatePickerColors colors = new AlertsCreator.ScheduleDatePickerColors(0xffffffff, 0xff252525, 0xffffffff, 0x1effffff, 0xffffffff, 0xf9222222, 0x24ffffff);
-        AlertsCreator.createScheduleDatePickerDialog(parentActivity, parentChatActivity.getDialogId(), (notify, scheduleDate, scheduleRepeatPeriod) -> sendPressed(notify, scheduleDate, 0), colors);
+        AlertsCreator.createScheduleDatePickerDialog(parentActivity, dialogId, (notify, scheduleDate, scheduleRepeatPeriod) -> sendPressed(notify, scheduleDate, scheduleRepeatPeriod), colors);
     }
 
     private void translateComment(Locale target) {
         translateComment(target, 0);
+    }
+
+    private void addTranslateCommentOption(ItemOptions options, int icon, CharSequence text, int provider) {
+        options.add(icon, text, () -> translateComment(Translator.getInputTranslateLangLocaleForChat(ChatsHelper.getChatId()), provider));
+        ActionBarMenuSubItem item = options.getLast();
+        if (item != null) {
+            item.setOnLongClickListener(v -> {
+                Translator.showTargetLangSelect(item, true, locale -> {
+                    options.dismiss();
+                    translateComment(locale, provider);
+                    Translator.setInputTranslateLangForChat(ChatsHelper.getChatId(), TranslatorKt.getLocale2code(locale));
+                    return Unit.INSTANCE;
+                });
+                return true;
+            });
+        }
     }
 
     private void translateComment(Locale target, int provider) {
@@ -10512,6 +10430,12 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
 
     private CaptionContainerView getCaptionView() {
         return placeProvider != null && placeProvider.isCaptionAbove() ? topCaptionEdit : captionEdit;
+    }
+
+    public CharSequence getCurrentCaptionText() {
+        if (!isVisible()) return null;
+        final CaptionContainerView v = getCaptionView();
+        return v != null ? v.getText() : null;
     }
 
     private CharSequence applyCaption() {
@@ -12882,7 +12806,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                             if (needCaptionLayout) {
                                 captionTextViewSwitcher.setVisibility(captionTextViewSwitcher.getTag() != null ? View.VISIBLE : View.INVISIBLE);
                             }
-                            if (!sendPhotoTypeIsGif && !sendPhotoTypeIsPollMedia && (sendPhotoType == 0 || sendPhotoType == 4 || (sendPhotoType == 2 || sendPhotoType == 5) && imagesArrLocals.size() > 1)) {
+                            if (!sendPhotoTypeIsGif && !sendPhotoTypeIsPollMedia && (sendPhotoType == 0 || sendPhotoType == 4 || (sendPhotoType == 2 || sendPhotoType == 5) && imagesArrLocals.size() > 1) && !disableSelection) {
                                 checkImageView.setVisibility(View.VISIBLE);
                                 photosCounterView.setVisibility(View.VISIBLE);
                                 updateActionBarTitlePadding();
@@ -14498,6 +14422,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
     private void onPhotoShow(final MessageObject messageObject, final TLRPC.FileLocation fileLocation, ImageLocation imageLocation, ImageLocation videoLocation, final ArrayList<MessageObject> messages, final ArrayList<SecureDocument> documents, final List<Object> photos, int index, final PlaceProviderObject object) {
         classGuid = ConnectionsManager.generateClassGuid();
         customTitle = null;
+        disableSelection = false;
         currentMessageObject = null;
         currentFileLocation = null;
         currentFileLocationVideo = null;
@@ -14888,7 +14813,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             }
             setImageIndex(index);
         } else if (photos != null) {
-            if (sendPhotoType != SELECT_TYPE_NO_SELECT && !sendPhotoTypeIsGif && !sendPhotoTypeIsPollMedia && (sendPhotoType == 0 || sendPhotoType == 4 || (sendPhotoType == 2 || sendPhotoType == 5) && photos.size() > 1)) {
+            if (sendPhotoType != SELECT_TYPE_NO_SELECT && !sendPhotoTypeIsGif && !sendPhotoTypeIsPollMedia && (sendPhotoType == 0 || sendPhotoType == 4 || (sendPhotoType == 2 || sendPhotoType == 5) && photos.size() > 1) && !disableSelection) {
                 checkImageView.setVisibility(View.VISIBLE);
                 photosCounterView.setVisibility(View.VISIBLE);
                 updateActionBarTitlePadding();
@@ -15752,7 +15677,8 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                     if (animated) {
                         actionBar.beginDelayedTransition();
                     }
-                    actionBarContainer.setSubtitle("");
+                    final CharSequence customSub = placeProvider != null ? placeProvider.getSubtitleFor(switchingToIndex) : null;
+                    actionBarContainer.setSubtitle(customSub != null ? customSub : "");
                 }
                 if (object instanceof MediaController.PhotoEntry) {
                     MediaController.PhotoEntry photoEntry = ((MediaController.PhotoEntry) object);
@@ -15814,6 +15740,9 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                         title = UserObject.getUserName(user);
                     }
                 }
+            }
+            if (title == null && placeProvider != null) {
+                title = placeProvider.getTitleFor(switchingToIndex);
             }
             if (sendPhotoType == 0 || sendPhotoType == 4 || (sendPhotoType == 2 || sendPhotoType == 5) && imagesArrLocals.size() > 1) {
                 checkImageView.setChecked(placeProvider.isPhotoChecked(switchingToIndex), false);
