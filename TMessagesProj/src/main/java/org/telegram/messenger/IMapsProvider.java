@@ -85,7 +85,7 @@ public interface IMapsProvider {
         LatLng getPosition();
         void setPosition(LatLng latLng);
         void setRotation(int rotation);
-        void setIcon(Resources resources, Bitmap bitmap);
+        void setIcon(Bitmap bitmap);
         void setIcon(Resources resources, int resId);
         void remove();
     }

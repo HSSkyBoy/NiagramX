@@ -236,6 +236,12 @@ dependencies {
     implementation 'com.google.android.gms:play-services-mlkit-image-labeling:16.0.8'
     implementation "androidx.credentials:credentials:1.6.0-alpha04"
     implementation "androidx.credentials:credentials-play-services-auth:1.6.0-alpha04"
+    implementation "io.noties.markwon:core:4.6.2"
+    implementation "io.noties.markwon:ext-strikethrough:4.6.2"
+    implementation "io.noties.markwon:ext-tables:4.6.2"
+    implementation "io.noties.markwon:html:4.6.2"
+    implementation "io.noties.markwon:inline-parser:4.6.2"
+    implementation "io.noties.markwon:ext-latex:4.6.2"
     // payment
     implementation 'com.google.android.gms:play-services-wallet:19.1.0'
     implementation('com.stripe:stripe-android:2.0.2') {

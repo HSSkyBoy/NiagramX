@@ -527,8 +527,8 @@ public class OSMDroidMapsProvider implements IMapsProvider {
         }
 
         @Override
-        public void setIcon(Resources resources, Bitmap bitmap) {
-            marker.setIcon(new BitmapDrawable(resources, bitmap));
+        public void setIcon(Bitmap bitmap) {
+
         }
 
         @Override

@@ -15,6 +15,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.Pair;
 import android.util.SparseArray;
 

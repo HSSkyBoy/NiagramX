@@ -305,7 +305,7 @@ public class GoogleMapsProvider implements IMapsProvider {
             }
 
             @Override
-            public void setIcon(Resources resources, Bitmap bitmap) {
+            public void setIcon(Bitmap bitmap) {
                 marker.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap));
             }
 

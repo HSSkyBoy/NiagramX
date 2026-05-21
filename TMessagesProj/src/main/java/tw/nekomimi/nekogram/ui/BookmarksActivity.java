@@ -348,7 +348,7 @@ public class BookmarksActivity extends NekoDelegateFragment {
         });
 
         ActionBarMenu menu = actionBar.createMenu();
-        searchItem = menu.addItem(0, R.drawable.ic_ab_search).setIsSearchField(true);
+        searchItem = menu.addItem(0, R.drawable.ic_ab_search_solar).setIsSearchField(true);
         searchItem.setSearchFieldHint(getString(R.string.Search));
         searchItem.setActionBarMenuItemSearchListener(new ActionBarMenuItem.ActionBarMenuItemSearchListener() {
             @Override
