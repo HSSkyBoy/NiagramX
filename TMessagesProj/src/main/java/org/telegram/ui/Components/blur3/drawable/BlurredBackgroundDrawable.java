@@ -597,7 +597,7 @@ public abstract class BlurredBackgroundDrawable extends Drawable {
             return;
         }
 
-        final NinePatchDrawable ninePatchDrawable = checkNinePatchDrawable(fillColor, true);
+        final NinePatchDrawable ninePatchDrawable = checkNinePatchDrawable(fillColor, NaConfig.INSTANCE.getStrokeOnViews().Bool());
         ninePatchDrawable.setBounds(
             boundProps.boundsWithPadding.left - ninePatchDrawablePadding.left,
             boundProps.boundsWithPadding.top - ninePatchDrawablePadding.top,
