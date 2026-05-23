@@ -11816,7 +11816,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         }
         final boolean onlyMyselfFinal = onlyMyself;
         boolean sendWithoutSoundNax = NaConfig.INSTANCE.getSilentMessageByDefault().Bool();
-        final ItemOptions options = ItemOptions.makeOptions(this, view).setMinWidth(196);
+        final ItemOptions options = ItemOptions.makeOptions(this, view);
         final ActionBarMenuSubItem[] showSendersNameItem = new ActionBarMenuSubItem[1];
         final ActionBarMenuSubItem[] hideSendersNameItem = new ActionBarMenuSubItem[1];
         options
