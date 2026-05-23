@@ -4608,12 +4608,17 @@ public class ImageLoader {
                 int h = photoSize.h;
                 int w = photoSize.w;
                 PointF point = ChatMessageCell.getMessageSize(w, h);
-                String key = String.format(Locale.US, "%d_%d@%d_%d_b", photoSize.location.volume_id, photoSize.location.local_id, (int) (point.x / AndroidUtilities.density), (int) (point.y / AndroidUtilities.density));
+                int targetWidth = (int) (point.x / AndroidUtilities.density);
+                int targetHeight = (int) (point.y / AndroidUtilities.density);
+                if (targetWidth <= 0 || targetHeight <= 0) {
+                    return null;
+                }
+                String key = String.format(Locale.US, "%d_%d@%d_%d_b", photoSize.location.volume_id, photoSize.location.local_id, targetWidth, targetHeight);
                 if (!getInstance().isInMemCache(key, false)) {
-                    Bitmap bitmap = ImageLoader.loadBitmap(file.getPath(), null, (int) (point.x / AndroidUtilities.density), (int) (point.y / AndroidUtilities.density), false);
+                    Bitmap bitmap = ImageLoader.loadBitmap(file.getPath(), null, targetWidth, targetHeight, false);
                     if (bitmap != null) {
                         Utilities.blurBitmap(bitmap, 3, 1, bitmap.getWidth(), bitmap.getHeight(), bitmap.getRowBytes());
-                        Bitmap scaledBitmap = Bitmaps.createScaledBitmap(bitmap, (int) (point.x / AndroidUtilities.density), (int) (point.y / AndroidUtilities.density), true);
+                        Bitmap scaledBitmap = Bitmaps.createScaledBitmap(bitmap, targetWidth, targetHeight, true);
                         if (scaledBitmap != bitmap) {
                             bitmap.recycle();
                             bitmap = scaledBitmap;
@@ -4644,12 +4649,17 @@ public class ImageLoader {
                     }
 
                     PointF point = ChatMessageCell.getMessageSize(w, h);
-                    String key = String.format(Locale.US, "%s_false@%d_%d_b", ImageLocation.getStrippedKey(message, message, size), (int) (point.x / AndroidUtilities.density), (int) (point.y / AndroidUtilities.density));
+                    int targetWidth = (int) (point.x / AndroidUtilities.density);
+                    int targetHeight = (int) (point.y / AndroidUtilities.density);
+                    if (targetWidth <= 0 || targetHeight <= 0) {
+                        return null;
+                    }
+                    String key = String.format(Locale.US, "%s_false@%d_%d_b", ImageLocation.getStrippedKey(message, message, size), targetWidth, targetHeight);
                     if (!getInstance().isInMemCache(key, false)) {
                         Bitmap b = getStrippedPhotoBitmap(size.bytes, null);
                         if (b != null) {
                             Utilities.blurBitmap(b, 3, 1, b.getWidth(), b.getHeight(), b.getRowBytes());
-                            Bitmap scaledBitmap = Bitmaps.createScaledBitmap(b, (int) (point.x / AndroidUtilities.density), (int) (point.y / AndroidUtilities.density), true);
+                            Bitmap scaledBitmap = Bitmaps.createScaledBitmap(b, targetWidth, targetHeight, true);
                             if (scaledBitmap != b) {
                                 b.recycle();
                                 b = scaledBitmap;
