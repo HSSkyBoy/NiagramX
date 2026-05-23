@@ -21,7 +21,6 @@ import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.SimpleTextView;
 import org.telegram.ui.ActionBar.Theme;
-import org.telegram.ui.BadWayToMakeButtonRound;
 import org.telegram.ui.Cells.CheckBoxCell;
 import org.telegram.ui.Components.Premium.boosts.cells.selector.SelectorBtnCell;
 import org.telegram.ui.Stories.recorder.ButtonWithCounterView;
@@ -138,7 +137,6 @@ public class AdminLogFilterAlert2 extends BottomSheetWithRecyclerListView {
             delegate.didSelectRights(currentFilter, selectedAdmins);
             dismiss();
         });
-        BadWayToMakeButtonRound.round(actionButton);
         ScaleStateListAnimator.apply(actionButton, .02f, 1.2f);
         buttonContainer.addView(actionButton, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 48, Gravity.BOTTOM | Gravity.FILL_HORIZONTAL));
         containerView.addView(buttonContainer, LayoutHelper.createFrameMarginPx(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM | Gravity.FILL_HORIZONTAL, backgroundPaddingLeft, 0, backgroundPaddingLeft, 0));
