@@ -522,7 +522,15 @@ public class ChatCustomReactionsEditActivity extends BaseFragment implements Not
                         AnimatedEmojiSpan span = createAnimatedEmojiSpan(document, documentId, editText.getFontMetricsInt());
                         span.cacheType = AnimatedEmojiDrawable.getCacheTypeForEnterView();
                         span.setAdded();
-                        selectedEmojisIds.add(selectionEnd, documentId);
+                        Editable text = editText.getText();
+                        AnimatedEmojiSpan[] allSpans = text.getSpans(0, text.length(), AnimatedEmojiSpan.class);
+                        int insertionIndex = 0;
+                        for (AnimatedEmojiSpan s : allSpans) {
+                            if (text.getSpanStart(s) < selectionEnd) {
+                                insertionIndex++;
+                            }
+                        }
+                        selectedEmojisIds.add(insertionIndex, documentId);
                         selectedEmojisMap.put(documentId, span);
                         spannable.setSpan(span, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                         editText.getText().insert(selectionEnd, spannable);
