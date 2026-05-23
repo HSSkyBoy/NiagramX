@@ -81,7 +81,6 @@ import org.telegram.messenger.AccountInstance;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.BuildConfig;
-import org.telegram.messenger.BuildVars;
 import org.telegram.messenger.ChatObject;
 import org.telegram.messenger.ContactsController;
 import org.telegram.messenger.DialogObject;
@@ -173,9 +172,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
-import me.vkryl.core.BitwiseUtils;
-
 import tw.nekomimi.nekogram.helpers.PasscodeHelper;
+import tw.nekomimi.nekogram.helpers.ScheduleTimeHelper;
 import tw.nekomimi.nekogram.NekoConfig;
 import static tw.nekomimi.nekogram.settings.NekoChatSettingsActivity.getDeleteMenuChecks;
 import xyz.nextalone.nagram.NaConfig;
@@ -4242,20 +4240,19 @@ public class AlertsCreator {
         linearLayout.addView(minutePicker, LayoutHelper.createLinear(0, 54 * 5, 0.3f));
         minutePicker.setOnValueChangedListener(onValueChangeListener);
 
-        if (currentDate > 0 && currentDate != 0x7FFFFFFE) {
-            currentDate *= 1000;
-            calendar.setTimeInMillis(System.currentTimeMillis());
-            calendar.set(Calendar.MINUTE, 0);
-            calendar.set(Calendar.SECOND, 0);
-            calendar.set(Calendar.MILLISECOND, 0);
-            calendar.set(Calendar.HOUR_OF_DAY, 0);
-            int days = (int) ((currentDate - calendar.getTimeInMillis()) / (24 * 60 * 60 * 1000));
-            calendar.setTimeInMillis(currentDate);
-            if (days >= 0) {
-                minutePicker.setValue(calendar.get(Calendar.MINUTE));
-                hourPicker.setValue(calendar.get(Calendar.HOUR_OF_DAY));
-                dayPicker.setValue(days);
-            }
+        ScheduleTimeHelper.setPickersFromTargetTime(ScheduleTimeHelper.getInitialTargetTime(currentDate), calendar, dayPicker, hourPicker, minutePicker);
+
+        if (ScheduleTimeHelper.shouldUseDefaultSchedule(currentDate)) {
+            ScheduleTimeHelper.addDefaultScheduleSlider(
+                    context,
+                    container,
+                    resourcesProvider,
+                    calendar,
+                    dayPicker,
+                    hourPicker,
+                    minutePicker,
+                    () -> checkScheduleDate(buttonTextView, null, forcedTitle != null ? 3 : selfUserId == dialogId ? 1 : 0, dayPicker, hourPicker, minutePicker)
+            );
         }
         final boolean[] canceled = {true};
 
