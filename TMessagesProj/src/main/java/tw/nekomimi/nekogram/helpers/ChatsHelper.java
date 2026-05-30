@@ -473,4 +473,31 @@ public class ChatsHelper extends BaseController {
         }
         return new int[]{min, max};
     }
+
+    @Nullable
+    public static int[] getScheduledSelectBetweenPositions(ArrayList<MessageObject> messages, SparseArray<MessageObject>[] selectedMessagesIds, long dialogId) {
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+
+        for (int i = 0; i < messages.size(); i++) {
+            MessageObject message = messages.get(i);
+            int index = message.getDialogId() == dialogId ? 0 : 1;
+            if (selectedMessagesIds[index].indexOfKey(message.getId()) >= 0) {
+                if (i < min) min = i;
+                if (i > max) max = i;
+            }
+        }
+
+        if (min == Integer.MAX_VALUE || max - min <= 1) {
+            return null;
+        }
+        return new int[]{min, max};
+    }
+
+    @Nullable
+    public static int[] getSelectBetweenBounds(ArrayList<MessageObject> messages, SparseArray<MessageObject>[] selectedMessagesIds, long dialogId, boolean scheduled) {
+        return scheduled
+                ? getScheduledSelectBetweenPositions(messages, selectedMessagesIds, dialogId)
+                : getSelectBetweenBounds(selectedMessagesIds);
+    }
 }
