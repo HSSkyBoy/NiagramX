@@ -1825,11 +1825,12 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
             }
 
             boolean captureFirstFrameThumb = false;
+            VideoRecorder recorder = videoEncoder;
             if (!recording) {
-                if (videoEncoder == null) {
-                    videoEncoder = new VideoRecorder();
+                if (recorder == null) {
+                    recorder = videoEncoder = new VideoRecorder();
                 }
-                if (videoEncoder.started) {
+                if (recorder.started) {
                     if (!cameraReady) {
                         cameraReady = true;
                         AndroidUtilities.runOnUIThread(() -> textureOverlayView.animate().setDuration(120).alpha(0.0f).setInterpolator(new DecelerateInterpolator()).start());
@@ -1837,7 +1838,7 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
                 } else {
                     captureFirstFrameThumb = true;
                 }
-                videoEncoder.startRecording(cameraFile, EGL14.eglGetCurrentContext());
+                recorder.startRecording(cameraFile, EGL14.eglGetCurrentContext());
                 int orientation;
                 if (currentSession instanceof CameraSession) {
                     orientation = ((CameraSession) currentSession).getCurrentOrientation();
@@ -1855,8 +1856,8 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
                 updateFlash();
             }
 
-            if (videoEncoder != null && (surfaceIndex == 0 && updateTexImage1 || surfaceIndex == 1 && updateTexImage2)) {
-                videoEncoder.frameAvailable(cameraSurface[surfaceIndex], bothCameras ? surfaceIndex : cameraId, System.nanoTime());
+            if (recorder != null && (surfaceIndex == 0 && updateTexImage1 || surfaceIndex == 1 && updateTexImage2)) {
+                recorder.frameAvailable(cameraSurface[surfaceIndex], bothCameras ? surfaceIndex : cameraId, System.nanoTime());
             }
 
             cameraSurface[surfaceIndex].getTransformMatrix(mSTMatrix);
@@ -3153,7 +3154,9 @@ public class InstantCameraView extends FrameLayout implements NotificationCenter
                 overlayHelper = null;
             }
             AndroidUtilities.runOnUIThread(() -> {
-                InstantCameraView.this.videoEncoder = null;
+                if (InstantCameraView.this.videoEncoder == this) {
+                    InstantCameraView.this.videoEncoder = null;
+                }
             });
         }
 
