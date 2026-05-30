@@ -1257,6 +1257,9 @@ public class DownloadController extends BaseController implements NotificationCe
     }
 
     public void addLoadingFileObserver(String fileName, MessageObject messageObject, FileDownloadProgressListener observer) {
+        if (TextUtils.isEmpty(fileName)) {
+            return;
+        }
         if (listenerInProgress) {
             addLaterArray.put(fileName, observer);
             return;
