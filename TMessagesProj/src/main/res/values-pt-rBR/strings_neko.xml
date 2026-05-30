@@ -39,7 +39,7 @@
     <string name="StickerSizeDialogName">Luna</string>
     <string name="Experimental">Experimental</string>
     <string name="UnlimitedFavoredStickers">Stickers favoritos ilimitados</string>
-    <string name="UnlimitedFavoredStickersAbout">Adicione stickers ilimitados aos favoritos. Os stickers podem não ser sincronizados com outros dispositivos.</string>
+    <string name="UnlimitedFavoredStickersAbout">Adicione stickers ilimitados aos favoritos. Eles podem não ser sincronizados com outros dispositivos.</string>
     <string name="MessageDetails">Detalhes</string>
     <string name="ExportAsJson">Exportar como JSON</string>
     <string name="Translate">Traduzir</string>
@@ -51,7 +51,7 @@
     <string name="UndoTranslate">Ocultar tradução</string>
     <string name="BotToken">Token</string>
     <string name="UnlimitedPinnedDialogs">Diálogos fixados ilimitados</string>
-    <string name="UnlimitedPinnedDialogsAbout">Fixar diálogos ilimitados ao desativar a sincronização deles.</string>
+    <string name="UnlimitedPinnedDialogsAbout">Fixe diálogos ilimitados ao desativar a sincronização deles.</string>
     <string name="OpenArchiveOnPull">Abrir \"Chats Arquivados\" ao puxar para baixo</string>
     <string name="HideKeyboardOnChatScroll">Ocultar teclado ao rolar</string>
     <string name="UserRestrictionsSendStickers2">Enviar stickers</string>
@@ -90,7 +90,7 @@
     <string name="customGroupVoipAudioBitrate">Taxa de bits de áudio VoIP do grupo</string>
     <string name="maxRecentStickerCount">Máximo de stickers recentes</string>
     <string name="disableSwipeToNextChannel">Desativar deslizar para ir ao próximo canal</string>
-    <string name="disableChoosingSticker">Enviar digitando em vez de escolhendo sticker</string>
+    <string name="disableChoosingSticker">Mostrar digitando em vez de escolhendo sticker</string>
     <string name="hideSendAsChannel">Ocultar enviar como canal</string>
     <string name="showSpoilersDirectly">Mostrar mensagens com spoiler diretamente</string>
     <string name="SaveToDownloadCount_zero">Salvando %1$d arquivos em downloads</string>
@@ -134,12 +134,12 @@
     <string name="InvalidCustomEmojiTypeface">Arquivo de fonte inválido.</string>
     <string name="DownloadEmojiSet">Download %s</string>
     <string name="EmojiSets">Pacotes de emoji</string>
-    <string name="MyEmojiSets">Meu pacote de emoji</string>
+    <string name="MyEmojiSets">Meus pacotes de emoji</string>
     <string name="InstalledEmojiSet">Instalado</string>
     <string name="InstallingEmojiSet">Instalando…</string>
     <string name="UpdateEmojiSet">Atualizar %s</string>
     <string name="EmojiSetHint">Isso afeta a aparência dos emojis apenas para você. Outros os verão com base nas preferências deles.</string>
-    <string name="CustomEmojiSetHint">Importar e escolher pacotes de emojis do seu armazenamento interno.</string>
+    <string name="CustomEmojiSetHint">Importe e escolha pacotes de emoji do seu armazenamento interno.</string>
     <string name="AddEmojiSet">Adicionar pacote de emoji</string>
     <string name="EmojiSetRemoved">Pacote de emojis removido.</string>
     <string name="EmojiSetRemovedInfo">%1$s não está mais nos seus pacotes de emojis.</string>
@@ -176,7 +176,7 @@
     <string name="ChatAttachEnterMenuDisableLinkPreview">Desativar prévia de link</string>
     <string name="ChatAttachEnterMenuEnableLinkPreview">Ativar prévia de link</string>
     <string name="UseChatAttachEnterMenu">Usar menu de entrada</string>
-    <string name="UseChatAttachEnterMenuNotice">Alterar o botão de gravação para um menu de entrada e adicionar um interruptor de prévia de link.</string>
+    <string name="UseChatAttachEnterMenuNotice">Substitui o botão de gravação por um menu de entrada e adiciona um seletor para prévia de links.</string>
     <string name="DisableLinkPreviewByDefault">Desativar prévia de link por padrão</string>
     <string name="CustomApi">API personalizada</string>
     <string name="UseCustomApiNotice">Faça login usando a API personalizada. Se você não consegue se registrar ou entrar, isso pode ajudar.\n\nNota: o FCM não funcionará se você estiver usando uma API personalizada.</string>
@@ -243,7 +243,7 @@
     <string name="ImportSettings">Importar configurações</string>
     <string name="ImportSettingsAlert">Substituir as configurações\? A importação de configurações de fontes desconhecidas pode fazer com que a senha seja substituída e o aplicativo seja bloqueado.</string>
     <string name="nekoXPaymentRemovedToast">Os recursos de pagamento foram removidos.</string>
-    <string name="unreadBadgeOnBackButton">Ícone de não lido no botão de voltar</string>
+    <string name="unreadBadgeOnBackButton">Contador de não lidas no botão de voltar</string>
     <string name="DeleteDownloadedFileConfirm">Excluir este arquivo do cache local?</string>
     <string name="DeleteDownloadedFileSucceed">Apagado</string>
     <string name="DeleteDownloadedFileExternal">O arquivo externo foi ignorado.</string>

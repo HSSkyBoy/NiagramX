@@ -334,4 +334,5 @@
     <string name="HideDialogsSearchField">隱藏搜尋欄</string>
     <string name="DeepLTranslateKey">DeepL API 金鑰</string>
     <string name="DeepLTranslateKeyNotice">設定 DeepL API 金鑰，留空則使用內建金鑰。</string>
+    <string name="DefaultScheduleDelay">預設延遲</string>
 </resources>

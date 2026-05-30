@@ -103,5 +103,5 @@
     <string name="VideoPlayerDecoder">Декодер відео</string>
     <string name="VideoPlayerDecoderPreferSW">Перевага програмному</string>
     <string name="VideoPlayerDecoderHardware">Тільки апаратне декодування</string>
-    <string name="VideoPlayerDecoderPreferHW">Перевага апаратному</string>
+    <string name="VideoPlayerDecoderPreferHW">Перевага HW</string>
 </resources>

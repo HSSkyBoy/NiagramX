@@ -40,7 +40,7 @@
     <string name="Official">Oficial</string>
     <string name="HalloWeen">Dia das Bruxas</string>
     <string name="ShowOnlineStatus">Mostrar status online</string>
-    <string name="ShowOnlineStatusNotice">Mostrar o status online de outras pessoas ao lado da foto de perfil nos grupos.</string>
+    <string name="ShowOnlineStatusNotice">Exibe o status online dos usuários ao lado da foto de perfil nos grupos.</string>
     <string name="DoActionsInCommonGroups">Aplicar em grupos comuns</string>
     <string name="ShowFullAbout">Sempre expandir descrição do chat</string>
     <string name="TypeMessageHintUseGroupName">Usar o nome do grupo como dica de preenchimento</string>
@@ -70,8 +70,8 @@
     <string name="StickersChooseShortNameForStickerPack">Escolha um nome curto para o seu pacote.</string>
     <string name="StickersCopyStickerSet">Copiar pacote de stickers</string>
     <string name="DisableChannelMuteButton">Ocultar barra inferior nos canais</string>
-    <string name="DisablePreviewVideoSoundShortcut">Bloquear ativação de som com botões de volume</string>
-    <string name="DisablePreviewVideoSoundShortcutNotice">Impedir que as teclas de volume ativem o som da prévia de vídeos.</string>
+    <string name="DisablePreviewVideoSoundShortcut">Desativar ativação de som de vídeos pelos botões de volume</string>
+    <string name="DisablePreviewVideoSoundShortcutNotice">Impede que as teclas de volume ativem o som de vídeos na prévia.</string>
     <string name="PreviewSendPhoto">Enviar foto</string>
     <string name="PreviewSendVideo">Enviar vídeo</string>
     <string name="PreviewSendFile">Enviar arquivo</string>

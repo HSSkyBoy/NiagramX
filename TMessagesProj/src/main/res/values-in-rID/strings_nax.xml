@@ -334,4 +334,5 @@
     <string name="HideDialogsSearchField">Sembunyikan Kotak Pencarian</string>
     <string name="DeepLTranslateKey">Kunci API DeepL</string>
     <string name="DeepLTranslateKeyNotice">Konfigurasikan Kunci API DeepL, biarkan kosong untuk menggunakan kredensial bawaan.</string>
+    <string name="DefaultScheduleDelay">Penundaan bawaan</string>
 </resources>

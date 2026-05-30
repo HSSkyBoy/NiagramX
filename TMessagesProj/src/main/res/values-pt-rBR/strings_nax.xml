@@ -28,7 +28,7 @@
     <string name="LlmUserPromptHint">Traduza @text para @toLang.</string>
     <string name="LlmUserPromptNotice">Use @text como um marcador para a mensagem original e @toLang para o idioma de destino (opcional).\n\nDeixar este campo em branco usará o comando padrão.</string>
     <string name="LlmUseContext">Usar contexto</string>
-    <string name="LlmUseContextNotice">Melhorar a qualidade da tradução ao custo de mais tokens.</string>
+    <string name="LlmUseContextNotice">Melhora a qualidade da tradução, porém consome mais tokens.</string>
     <string name="LlmContextSize">Mensagens de contexto</string>
     <string name="LlmUseContextInAutoTranslate">Usar contexto na tradução automática</string>
     <string name="LlmUseContextInAutoTranslateNotice">Pode aumentar o uso de tokens e a latência.</string>
@@ -97,7 +97,7 @@
     <string name="TranslatorMinimizedGroup">A barra de tradução foi minimizada para este grupo.</string>
     <string name="TranslatorMinimized">A barra de tradução foi minimizada para este chat.</string>
     <string name="UseDeletedIcon">Mostrar ícone em vez de \"apagada\"</string>
-    <string name="UseEditedIcon">Mostrar ícone em vez de \"editado\"</string>
+    <string name="UseEditedIcon">Mostrar ícone em vez de \"editada\"</string>
     <string name="SilentMessageByDefault">Enviar sem som</string>
     <string name="FolderNameAsTitle">Usar nome da pasta como título</string>
     <string name="SaveDeletedMessageForBotUser">Salvar mensagens do bot</string>
@@ -112,7 +112,7 @@
     <string name="ResetSettingsAlert">Tem certeza de que deseja redefinir todas as N-Configurações?</string>
     <string name="DontAutoPlayNextVoice">Não reproduzir a próxima mensagem de voz automaticamente</string>
     <string name="SaveToChatSubfolder">Salvar anexos por nome do chat</string>
-    <string name="MessageColoredBackground">Fundos coloridos para mensagens</string>
+    <string name="MessageColoredBackground">Fundos coloridos nas mensagens</string>
     <string name="ColoredBackgroundNotice">Cor de fundo e emojis para respostas, citações e prévias de links.</string>
     <string name="ChatMenu">Menu do chat</string>
     <string name="MediaViewerMenu">Menu do visualizador de mídia</string>
@@ -141,7 +141,7 @@
     <string name="MarkReadAfterSend">Ler ao interagir</string>
     <string name="GhostModeNotice">Toque e segure em qualquer opção para impedir que mude ao ativar ou desativar o modo fantasma.</string>
     <string name="MarkReadAfterSendNotice">Marcar mensagens como lidas automaticamente ao enviar uma nova ou tocar em uma reação.</string>
-    <string name="SendWithoutSoundRowNotice">Enviar mensagens de saída automaticamente sem som.</string>
+    <string name="SendWithoutSoundRowNotice">Envia mensagens automaticamente sem som.</string>
     <string name="GhostReadMessage">Ler mensagem</string>
     <string name="GhostModeExcludeRead">Excluir leitura</string>
     <string name="GhostModeExcludeTyping">Excluir digitando</string>
@@ -207,8 +207,8 @@
     <string name="NoCaptionForwardShort">Sem legenda</string>
     <string name="PreferCommonGroupsTab">Preferir aba Grupos</string>
     <string name="PreferCommonGroupsTabNotice">Seleciona automaticamente a aba \"Grupos\" em vez de \"Presentes\" sempre que possível.</string>
-    <string name="GroupedMessageMenu">Menu de mensagens agrupado</string>
-    <string name="GroupedMessageMenuNotice">O agrupamento move as ações principais para a parte inferior do menu.</string>
+    <string name="GroupedMessageMenu">Menu de mensagem agrupado</string>
+    <string name="GroupedMessageMenuNotice">Move as ações principais para a parte inferior do menu.</string>
     <string name="CopySticker">Copiar Sticker</string>
     <string name="CheckUpdate">Verificar atualizações</string>
     <string name="AutoCheckUpdateOFF">Desativado</string>
@@ -317,8 +317,8 @@
     <string name="MainTabsSettingsHeader">Abas principais</string>
     <string name="MainTabsHideTitles">Ocultar títulos</string>
     <string name="MainTabsHideContacts">Ocultar aba Contatos</string>
-    <string name="PasscodeShowMessagePreviewWhenLocked">Mostrar prévia das mensagens</string>
-    <string name="PasscodeShowMessagePreviewWhenLockedAbout">Mostrar o conteúdo das notificações mesmo com o bloqueio por senha ativo.</string>
+    <string name="PasscodeShowMessagePreviewWhenLocked">Mostrar prévia de mensagens</string>
+    <string name="PasscodeShowMessagePreviewWhenLockedAbout">Exibe o conteúdo das notificações mesmo com o bloqueio por senha ativo.</string>
     <string name="StickerSavedHint">Sticker salvo na galeria.</string>
     <string name="StickerCopied">Sticker copiado para a área de transferência.</string>
     <string name="StrokeOnViews">Efeitos de brilho</string>
@@ -334,4 +334,5 @@
     <string name="HideDialogsSearchField">Ocultar barra de pesquisa</string>
     <string name="DeepLTranslateKey">Chave da API do DeepL</string>
     <string name="DeepLTranslateKeyNotice">Configure sua chave da API do DeepL; deixe em branco para usar as credenciais integradas.</string>
+    <string name="DefaultScheduleDelay">Atraso padrão</string>
 </resources>

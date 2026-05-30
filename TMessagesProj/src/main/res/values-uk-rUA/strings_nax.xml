@@ -71,6 +71,8 @@
     <string name="UnshadowBan">Зняти тіньовий бан</string>
     <string name="ShadowBanAdded">Додано до **фільтрів користувачів**.</string>
     <string name="ShadowBanRemoved">Видалено з **фільтрів користувачів**.</string>
+    <string name="ShadowBanChannelAdded">Додано до **фільтрів каналів**.</string>
+    <string name="ShadowBanChannelRemoved">Видалено з **фільтрів каналів**.</string>
     <string name="botCommandConfirmTitle">Надіслати команду</string>
     <string name="botCommandConfirmText">Ви хочете відправити цю команду? \n\n%s</string>
     <string name="MessageSavingSaveMedia">Зберегти медіа</string>
@@ -332,4 +334,5 @@
     <string name="HideDialogsSearchField">Приховати поле пошуку</string>
     <string name="DeepLTranslateKey">DeepL API ключ</string>
     <string name="DeepLTranslateKeyNotice">Налаштуйте ключ DeepL API, залиште поле порожнім, щоб використовувати вбудовані облікові дані.</string>
+    <string name="DefaultScheduleDelay">Затримка за замовчуванням</string>
 </resources>
