@@ -2918,13 +2918,15 @@ public class MessagesStorage extends BaseController {
             for (int a = 0, N = dialogFilters.size(); a < N + 2; a++) {
                 MessagesController.DialogFilter filter;
                 int flags;
+                boolean ignoreMutedUnreadCount = false;
                 if (a < N) {
                     filter = dialogFilters.get(a);
                     if (filter.pendingUnreadCount >= 0) {
                         continue;
                     }
                     flags = filter.flags;
-                    if (NaConfig.INSTANCE.getIgnoreUnreadCount().Int() == NekoConfig.DIALOG_FILTER_EXCLUDE_MUTED && (flags & MessagesController.DIALOG_FILTER_FLAG_EXCLUDE_MUTED) == 0) {
+                    ignoreMutedUnreadCount = NaConfig.INSTANCE.getIgnoreUnreadCount().Int() == NekoConfig.DIALOG_FILTER_EXCLUDE_MUTED;
+                    if (ignoreMutedUnreadCount && (flags & MessagesController.DIALOG_FILTER_FLAG_EXCLUDE_MUTED) == 0) {
                         flags |= MessagesController.DIALOG_FILTER_FLAG_EXCLUDE_MUTED;
                     }
                 } else {
@@ -3013,6 +3015,9 @@ public class MessagesStorage extends BaseController {
                 if (filter != null) {
                     for (int b = 0, N2 = filter.alwaysShow.size(); b < N2; b++) {
                         long did = filter.alwaysShow.get(b);
+                        if (ignoreMutedUnreadCount && mutedDialogs.indexOfKey(did) >= 0) {
+                            continue;
+                        }
                         if (DialogObject.isUserDialog(did)) {
                             for (int i = 0; i < 2; i++) {
                                 LongSparseArray<TLRPC.User> dict = i == 0 ? usersDict : encUsersDict;
@@ -6229,6 +6234,7 @@ public class MessagesStorage extends BaseController {
             int unreadCount;
             MessagesController.DialogFilter filter;
             int flags;
+            boolean ignoreMutedUnreadCount = false;
             if (a < N) {
                 filter = dialogFilters.get(a);
                 if (filter.pendingUnreadCount < 0) {
@@ -6236,7 +6242,8 @@ public class MessagesStorage extends BaseController {
                 }
                 unreadCount = filter.pendingUnreadCount;
                 flags = filter.flags;
-                if (NaConfig.INSTANCE.getIgnoreUnreadCount().Int() == NekoConfig.DIALOG_FILTER_EXCLUDE_MUTED && (flags & MessagesController.DIALOG_FILTER_FLAG_EXCLUDE_MUTED) == 0) {
+                ignoreMutedUnreadCount = NaConfig.INSTANCE.getIgnoreUnreadCount().Int() == NekoConfig.DIALOG_FILTER_EXCLUDE_MUTED;
+                if (ignoreMutedUnreadCount && (flags & MessagesController.DIALOG_FILTER_FLAG_EXCLUDE_MUTED) == 0) {
                     flags |= MessagesController.DIALOG_FILTER_FLAG_EXCLUDE_MUTED;
                 }
             } else {
@@ -6335,6 +6342,9 @@ public class MessagesStorage extends BaseController {
                 if (filter != null) {
                     for (int b = 0, N2 = filter.alwaysShow.size(); b < N2; b++) {
                         long did = filter.alwaysShow.get(b);
+                        if (ignoreMutedUnreadCount && mutedDialogs.indexOfKey(did) >= 0) {
+                            continue;
+                        }
                         if (DialogObject.isUserDialog(did)) {
                             for (int i = 0; i < 2; i++) {
                                 LongSparseArray<TLRPC.User> dict = i == 0 ? usersDict : encUsersDict;
@@ -6523,7 +6533,7 @@ public class MessagesStorage extends BaseController {
                 }
                 if (filter != null) {
                     if (!filter.alwaysShow.isEmpty()) {
-                        if ((flags & MessagesController.DIALOG_FILTER_FLAG_EXCLUDE_MUTED) != 0 && dialogsToUpdateMentions != null) {
+                        if (!ignoreMutedUnreadCount && (flags & MessagesController.DIALOG_FILTER_FLAG_EXCLUDE_MUTED) != 0 && dialogsToUpdateMentions != null) {
                             for (int b = 0, N2 = dialogsToUpdateMentions.size(); b < N2; b++) {
                                 long did = dialogsToUpdateMentions.keyAt(b);
                                 TLRPC.Chat chat = chatsDict.get(-did);
@@ -6543,6 +6553,9 @@ public class MessagesStorage extends BaseController {
                         }
                         for (int b = 0, N2 = filter.alwaysShow.size(); b < N2; b++) {
                             long did = filter.alwaysShow.get(b);
+                            if (ignoreMutedUnreadCount && mutedDialogs.indexOfKey(did) >= 0) {
+                                continue;
+                            }
                             if (newUnreadDialogs.indexOfKey(did) < 0) {
                                 continue;
                             }
