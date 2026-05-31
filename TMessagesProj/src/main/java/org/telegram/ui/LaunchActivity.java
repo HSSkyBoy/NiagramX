@@ -241,6 +241,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -8087,7 +8088,9 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
             });
             localeDialog = showAlertDialog(builder);
             SharedPreferences preferences = MessagesController.getGlobalMainSettings();
-            preferences.edit().putString("language_showed2", systemLang).commit();
+            Set<String> showedLangs = new HashSet<>(preferences.getStringSet("language_showed3", new HashSet<>()));
+            showedLangs.add(systemLang);
+            preferences.edit().putStringSet("language_showed3", showedLangs).commit();
         } catch (Exception e) {
             FileLog.e(e);
         }
@@ -8121,11 +8124,11 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                 return;
             }
             SharedPreferences preferences = MessagesController.getGlobalMainSettings();
-            String showedLang = preferences.getString("language_showed2", "");
+            Set<String> showedLangs = preferences.getStringSet("language_showed3", null);
             final String systemLang = MessagesController.getInstance(currentAccount).suggestedLangCode;
-            if (!force && showedLang.equals(systemLang)) {
+            if (!force && showedLangs != null && showedLangs.contains(systemLang)) {
                 if (BuildVars.LOGS_ENABLED) {
-                    FileLog.d("alert already showed for " + showedLang);
+                    FileLog.d("alert already showed for " + systemLang);
                 }
                 return;
             }
