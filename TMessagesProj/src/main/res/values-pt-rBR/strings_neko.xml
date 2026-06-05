@@ -103,8 +103,8 @@
     <string name="customSavePath">Caminho de armazenamento personalizado</string>
     <string name="customSavePathHint">Deixe em branco para salvar diretamente</string>
     <string name="channelLabel">canal</string>
-    <string name="forceBlurInChat">Forçar ativação do desfoque no chat</string>
-    <string name="ChatBlurAlphaValue">Alfa do desfoque no chat</string>
+    <string name="forceBlurInChat">Forçar desfoque no chat</string>
+    <string name="ChatBlurAlphaValue">Opacidade do desfoque do chat</string>
     <string name="MutualContact">Contato comum</string>
     <string name="MutualContactDescription">Este é um contato em comum.</string>
     <string name="DatacenterStatusAbout">Verifique o status dos **datacenters** do Telegram.</string>
@@ -234,7 +234,7 @@
     <string name="TextOrigin">Original</string>
     <string name="TextReplace">Substituir</string>
     <string name="ReplaceRegex">Usar regex</string>
-    <string name="DisableTrending">Desativar tendências</string>
+    <string name="DisableTrending">Desativar populares</string>
     <string name="AutoDownload">Desativar download automático</string>
     <string name="Win32ExecutableFiles">Arquivos executáveis Win32</string>
     <string name="ArchiveFiles">Arquivar arquivos</string>

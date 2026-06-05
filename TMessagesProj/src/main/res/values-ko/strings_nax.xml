@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="NagramX" translatable="false">Nagram X</string>
     <string name="XChannel">Nagram X 채널</string>
     <string name="EnableSaveDeletedMessages">삭제된 메시지 저장</string>
     <string name="DeletedMessage">삭제됨</string>
@@ -14,22 +13,10 @@
     <string name="HideHelpSection">설정에서 도움말 숨기기</string>
     <string name="ProviderLLMTranslator">AI 번역기</string>
     <string name="LlmApiUrl">API URL</string>
-    <string name="LlmApiUrlHint" translatable="false">https://api.openai.com/v1</string>
     <string name="LlmApiKey">API 키</string>
     <string name="LlmModelName">모델</string>
     <string name="LlmApiUrlNotice">API 기본 URL입니다. 비워 두면 Gemini OpenAI 호환 엔드포인트를 기본값으로 사용합니다.</string>
     <string name="LlmApiKeyNotice">하나 이상의 API 키를 쉼표로 구분해 입력하세요(예: key1,key2). 여러 키는 순환 사용됩니다.</string>
-    <string name="LlmApiUrlDefault" translatable="false">https://generativelanguage.googleapis.com/v1beta/openai</string>
-    <string name="LlmModelNameDefault" translatable="false">gemini-flash-latest</string>
-    <string name="LlmProviderOpenAIModel" translatable="false">gpt-5.4-nano</string>
-    <string name="LlmProviderGeminiModel" translatable="false">gemini-flash-lite-latest</string>
-    <string name="LlmProviderGroqModel" translatable="false">openai/gpt-oss-120b</string>
-    <string name="LlmProviderDeepSeekModel" translatable="false">deepseek-v4-flash</string>
-    <string name="LlmProviderXAIModel" translatable="false"></string>
-    <string name="LlmProviderCerebrasModel" translatable="false">gpt-oss-120b</string>
-    <string name="LlmProviderOllamaCloudModel" translatable="false">gemma4:31b</string>
-    <string name="LlmProviderOpenRouterModel" translatable="false">openrouter/free</string>
-    <string name="LlmProviderVercelAIGatewayModel" translatable="false">google/gemma-4-31b-it</string>
     <string name="LlmProviderPreset">모델 제공자</string>
     <string name="LlmProviderCustom">사용자 지정</string>
     <string name="LlmProviderOpenAIKey">OpenAI API 키</string>
@@ -97,11 +84,11 @@
     <string name="MessageSavingSaveMediaInPrivateGroups">… 비공개 그룹에서</string>
     <string name="TelegramUIAutoTranslate">전체 채팅 번역</string>
     <string name="Translated">번역됨</string>
-    <string name="ProviderRealMicrosoftTranslator">Microsoft Translator</string>
+    <string name="ProviderRealMicrosoftTranslator">Microsoft 번역기</string>
     <string name="TranslatorSettings">번역기</string>
     <string name="SettingsOnly">설정에서만</string>
     <string name="ChatsOnly">채팅에서만</string>
-    <string name="InstantViewTranslation">Instant View</string>
+    <string name="InstantViewTranslation">인스턴트</string>
     <string name="SaveDeletedMessageForBot">봇 채팅에 저장</string>
     <string name="HideArchive">채팅 목록에서 \"보관된 채팅\" 제거</string>
     <string name="ConfirmAllLinks">인라인 링크 열기 전 확인</string>
@@ -226,8 +213,8 @@
     <string name="CheckUpdate">업데이트 확인</string>
     <string name="AutoCheckUpdateOFF">꺼짐</string>
     <string name="AutoCheckUpdateSwitch">업데이트 채널</string>
-    <string name="AutoCheckUpdateRelease">Release</string>
-    <string name="AutoCheckUpdateBeta">Beta</string>
+    <string name="AutoCheckUpdateRelease">릴리즈</string>
+    <string name="AutoCheckUpdateBeta">베타</string>
     <string name="YourVersionIsLatestNax">최신 버전입니다.</string>
     <string name="PremiumElements">Premium 요소</string>
     <string name="PremiumItemBoosts">부스트 카운터</string>
@@ -242,7 +229,6 @@
     <string name="SwitchStyle">스위치 스타일</string>
     <string name="SliderStyle">슬라이더 스타일</string>
     <string name="StyleModern">모던</string>
-    <string name="StyleMaterialDesign3" translatable="false">Material Design 3</string>
     <string name="SaveDeletedExclusionMenu">삭제된 메시지 저장</string>
     <string name="SaveDeletedExcluded">제외</string>
     <string name="MarkdownParser">Markdown 파서</string>
@@ -255,7 +241,7 @@
     <string name="TestBackendOff">이 계정은 프로덕션 백엔드에 연결됩니다.</string>
     <string name="DidNotGetTheCodeBlameDurov">다른 기기에서 코드를 받지 못했거나 다른 기기에 Telegram이 로그인되어 있지 않다면, 공식 Telegram 앱을 사용해 코드를 받으세요.\n\nTelegram은 서드파티 앱에서 **SMS로 로그인하는 기능을 비활성화**했습니다. 서드파티 앱에 로그인하는 사용자는 Telegram을 통해서만 로그인 코드를 받을 수 있습니다.\n\n이 문제는 저희가 도와드릴 수 없습니다. 로그인에 문제가 있으면 Telegram 지원팀에 문의하세요.</string>
     <string name="QRLoginMessage">다른 기기로 QR 코드를 스캔하여 로그인하세요.</string>
-    <string name="DnsType">DNS Resolver</string>
+    <string name="DnsType">DNS 리졸버</string>
     <string name="DnsTypeSystem">시스템</string>
     <string name="CustomDoH">사용자 지정 DoH</string>
     <string name="PinnedReactions">고정 반응</string>
@@ -308,8 +294,8 @@
     <string name="CameraInVideoMessagesAsk">묻기</string>
     <string name="CameraSettings">카메라</string>
     <string name="ContactNotes">메모</string>
-    <string name="PhoneNotOnTelegramInvite">이 전화번호는 Telegram에 없습니다. **초대 >**</string>
-    <string name="PhoneAlreadyInContacts">이 전화번호는 이미 연락처에 있습니다. **보기 >**</string>
+    <string name="PhoneNotOnTelegramInvite">이 전화번호는 Telegram에 없습니다. **초대 &gt;**</string>
+    <string name="PhoneAlreadyInContacts">이 전화번호는 이미 연락처에 있습니다. **보기 &gt;**</string>
     <string name="PhoneOnTelegram">이 전화번호는 Telegram에 있습니다.</string>
     <string name="SIMCard">SIM 카드</string>
     <string name="DeviceAccount">기기</string>

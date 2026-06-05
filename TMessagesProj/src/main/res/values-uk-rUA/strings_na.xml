@@ -3,7 +3,7 @@
     <string name="N_Config">Налаштування N</string>
     <string name="CombineMessage">Об\'єднати повідомлення</string>
     <string name="TextStyle">Стиль тексту</string>
-    <string name="NoiseSuppressAndVoiceEnhance">Покращення звуку</string>
+    <string name="NoiseSuppressAndVoiceEnhance">Покращення голосу</string>
     <string name="RepeatAsCopy">Відповісти як копія</string>
     <string name="DoubleTapAction">Дія при подвійному дотику</string>
     <string name="SendReactions">Надсилати реакції</string>
@@ -12,7 +12,7 @@
     <string name="CustomTitleHint">Залиште порожнім, щоб використовувати Nagram X</string>
     <string name="CreateMono">Створити монопростір</string>
     <string name="CreateMonoLanguage">Мова коду</string>
-    <string name="CopyPhoto">Копіювати зображення</string>
+    <string name="CopyPhoto">Копіювати фото</string>
     <string name="PhotoCopied">Фото скопійовано до буфера обміну</string>
     <string name="ToTheBeginning">На початок</string>
     <string name="DateOfForwardedMsg">Показувати дату на пересланих повідомленнях</string>
@@ -32,10 +32,10 @@
     <string name="ZalgoFilterNotice">Всі \"Z̷͍͌ā̸̜l̸̞̂g̷̝͘o̶̩̓\" символи в нікнеймах або повідомленнях буде видалено.</string>
     <string name="AlwaysShowDownloadIcon">Завжди показувати значок завантаження</string>
     <string name="HideTitle">Сховати заголовок</string>
-    <string name="IgnoreUnreadCount">Приховати кількість непрочитаних тек</string>
+    <string name="IgnoreUnreadCount">Приховати кількість непрочитаних</string>
     <string name="SendWithoutMarkdown">Відправити без форматування</string>
-    <string name="SendAsEmoji">Відправити як смайл</string>
-    <string name="CustomEditedMessage">Підпис для видалених повідомлень</string>
+    <string name="SendAsEmoji">Відправити як емодзі</string>
+    <string name="CustomEditedMessage">Підпис змінених повідомлень</string>
     <string name="NotificationIcon">Значок сповіщень</string>
     <string name="Official">Офіційний</string>
     <string name="HalloWeen">Хелловін</string>

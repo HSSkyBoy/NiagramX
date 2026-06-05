@@ -156,7 +156,7 @@
     <string name="CloudConfigDesc">Збережіть свої N-налаштування у хмарі Telegram.</string>
     <string name="CloudConfigSyncDate">Остання синхронізація: %s, хмара: %s</string>
     <string name="CloudConfigSyncDateNever">ніколи</string>
-    <string name="CloudConfigSync">Синхронізація у хмару</string>
+    <string name="CloudConfigSync">Синхронізувати до хмари</string>
     <string name="CloudConfigSyncShort">Синхронізувати</string>
     <string name="CloudConfigRestore">Відновити з хмари</string>
     <string name="CloudConfigRestoreShort">Відновити</string>
@@ -183,8 +183,8 @@
     <string name="CustomApiInput">Ручне введення</string>
     <string name="LinkedGroupChat">Зв\'язана група</string>
     <string name="LinkedChannelChat">Зв\'язаний канал</string>
-    <string name="ChangeTranslateProvider">Змінити провайдера</string>
-    <string name="ProviderYandexTranslate">Яндекс Перекладач</string>
+    <string name="ChangeTranslateProvider">Змінити сервіс перекладу</string>
+    <string name="ProviderYandexTranslate">Яндекс</string>
     <string name="GoogleCloudTransKeyNotice">Встановіть ключ Google Cloud Translation, щоб викликати хмарне API перекладу замість імітації надсилання форми у веб-версію (швидше, стабільніше й заощаджує трафік).</string>
     <string name="TransToLang">Цільова мова</string>
     <string name="TransInputToLang">Перекладати з</string>
@@ -227,8 +227,8 @@
     <string name="UserRestrictionsSendGames">Надіслати ігри</string>
     <string name="UserRestrictionsSendInline">Надіслати через вбудованих ботів</string>
     <string name="TabletMode">Режим планшета</string>
-    <string name="TabletModeDefault">Автоматично</string>
-    <string name="ReplaceText">Змінити текст</string>
+    <string name="TabletModeDefault">Авто</string>
+    <string name="ReplaceText">Замінити текст</string>
     <string name="TextOrigin">Оригінал</string>
     <string name="TextReplace">Замінити</string>
     <string name="ReplaceRegex">Використовувати регулярні вирази</string>

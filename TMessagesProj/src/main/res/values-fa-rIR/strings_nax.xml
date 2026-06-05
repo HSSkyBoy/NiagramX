@@ -234,7 +234,7 @@
     <string name="MarkdownParser">تجزیه‌کننده مارک‌داون</string>
     <string name="KeepTranslatorPreferences">حفظ تنظیمات مترجم</string>
     <string name="KeepTranslatorPreferencesNotice">حفظ تنظیمات فعلی مترجم هنگام تغییر زبان برنامه.</string>
-    <string name="UsePersianCalendar">استفاده از تقویم فارسی</string>
+    <string name="UsePersianCalendar">استفاده از تقویم هجری شمسی</string>
     <string name="UsePersianCalendarInfo">نمایش تاریخ با تقویم هجری شمسی</string>
     <string name="DisplayPersianCalendarByLatin">نمایش تقویم فارسی با حروف لاتین</string>
     <string name="TestBackendOn">این حساب به بک‌اند آزمایشی متصل خواهد شد.</string>
@@ -251,10 +251,10 @@
     <string name="PinnedReactions_Description_Channels">شما می‌توانید فقط واکنش‌های پیش‌فرض را پین کنید.</string>
     <string name="PinnedReactions_Limit">شما می‌توانید تا %d واکنش را انتخاب کنید.</string>
     <string name="PinnedReactions_Type">این ایموجی پشتیبانی نمی‌شود.</string>
-    <string name="PinnedReactions_Apply">به‌روزرسانی واکنش‌های پین‌شده</string>
-    <string name="HideStoriesFromHeader">پنهان کردن از سربرگ</string>
+    <string name="PinnedReactions_Apply">به‌روزرسانی واکنش‌های پین شده</string>
+    <string name="HideStoriesFromHeader">پنهان کردن از هدر</string>
     <string name="DisableAvatarBlur">غیرفعال کردن تاری آواتار</string>
-    <string name="ExportSettingsIncludeApiKeys">کلیدهای API را هم وارد کن</string>
+    <string name="ExportSettingsIncludeApiKeys">کلیدهای API را وارد کنید</string>
     <string name="DisableInAppBrowserGestures">غیرفعال کردن حرکات</string>
     <string name="HowToObtain">چگونه به دست آورم؟</string>
     <string name="BlockChannel">مسدود کردن کانال</string>
@@ -307,18 +307,18 @@
     <string name="BackAnimationStyle">انیمیشن پیمایش</string>
     <string name="BackAnimationClassic">کلاسیک</string>
     <string name="BackAnimationSpring">بهار</string>
-    <string name="BackAnimationPredictive">پیش بینی کننده</string>
+    <string name="BackAnimationPredictive">پیش‌بینی کننده</string>
     <string name="AddToFilter">اضافه کردن به فیلتر</string>
     <string name="UnifiedPushNeverReceivedNotifications">از زمانی که ناگرام ایکس شروع به کار کرده است، شما هرگز اعلانی با UnifiedPush دریافت نکرده‌اید.</string>
     <string name="UnifiedPushLastReceivedNotification">آخرین اعلان دریافتی با UnifiedPush مربوط به %1$d ثانیه پیش بود.\n\nشما از زمان شروع ناگرام ایکس اعلان‌های %2$d دریافت کرده‌اید.</string>
     <string name="UnifiedPushCurrentEndpoint">نقطه پایانی فعلی UnifiedPush عبارت است از: %1$s</string>
     <string name="PlayOnce">یک بار پخش</string>
-    <string name="StorageSettings">فضای ذخیره‌ سازی</string>
+    <string name="StorageSettings">فضای ذخیره‌‌سازی</string>
     <string name="MainTabsSettingsHeader">تب‌های اصلی</string>
     <string name="MainTabsHideTitles">پنهان کردن عنوان‌ها</string>
     <string name="MainTabsHideContacts">تب مخاطبین را مخفی کنید</string>
     <string name="PasscodeShowMessagePreviewWhenLocked">نمایش پیش‌نمایش پیام‌ها</string>
-    <string name="PasscodeShowMessagePreviewWhenLockedAbout">نمایش محتوای اعلان حتی زمانی که قفل رمز عبور فعال است.</string>
+    <string name="PasscodeShowMessagePreviewWhenLockedAbout">حتی زمانی که قفل رمز عبور فعال است، محتوای اعلان را نمایش می‌دهد.</string>
     <string name="StickerSavedHint">استیکر در گالری ذخیره شد.</string>
     <string name="StickerCopied">استیکر در کلیپ‌بورد کپی شد.</string>
     <string name="StrokeOnViews">جلوه‌های درخشش</string>
@@ -334,4 +334,5 @@
     <string name="HideDialogsSearchField">مخفی کردن کادر جستجو</string>
     <string name="DeepLTranslateKey">کلید API سرویس DeepL</string>
     <string name="DeepLTranslateKeyNotice">کلید رابط برنامه‌نویسی DeepL را پیکربندی کنید، برای استفاده از اعتبارنامه‌های داخلی آن را خالی بگذارید.</string>
+    <string name="DefaultScheduleDelay">تاخیر پیش‌فرض</string>
 </resources>

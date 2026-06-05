@@ -63,9 +63,9 @@
     <string name="RegexFiltersImportSuccess">Фільтри імпортовано.</string>
     <string name="RegexFiltersImportError">Не вдалося імпортувати фільтри з буфера обміну.</string>
     <string name="RegexFiltersExportError">Не вдалося експортувати фільтри.</string>
-    <string name="RegexFiltersUserHeader">Фільтри користувачів</string>
+    <string name="RegexFiltersUserHeader">Користувацькі фільтри</string>
     <string name="RegexFiltersUserFilterHint">Введіть ID користувача</string>
-    <string name="RegexFiltersGlobalHeader">Глобальні фільтри</string>
+    <string name="RegexFiltersGlobalHeader">Загальні фільтри</string>
     <string name="RegexFiltersTextSelectionAddtoShared">Додати до спільних фільтрів</string>
     <string name="ShadowBan">Тіньовий бан</string>
     <string name="UnshadowBan">Зняти тіньовий бан</string>
@@ -75,7 +75,7 @@
     <string name="ShadowBanChannelRemoved">Видалено з **фільтрів каналів**.</string>
     <string name="botCommandConfirmTitle">Надіслати команду</string>
     <string name="botCommandConfirmText">Ви хочете відправити цю команду? \n\n%s</string>
-    <string name="MessageSavingSaveMedia">Зберегти медіа</string>
+    <string name="MessageSavingSaveMedia">Зберігати медіа</string>
     <string name="MessageSavingSaveMediaHint">Натисніть, щоб побачити більше.</string>
     <string name="MessageSavingSaveMediaInPrivateChats">… у приватних чатах</string>
     <string name="MessageSavingSaveMediaInPublicChannels">… у публічних каналах</string>
@@ -84,7 +84,7 @@
     <string name="MessageSavingSaveMediaInPrivateGroups">… у приватних групах</string>
     <string name="TelegramUIAutoTranslate">Перекласти весь чат</string>
     <string name="Translated">перекладено</string>
-    <string name="ProviderRealMicrosoftTranslator">Перекладач Microsoft</string>
+    <string name="ProviderRealMicrosoftTranslator">Microsoft</string>
     <string name="TranslatorSettings">Перекладач</string>
     <string name="SettingsOnly">Лише в налаштуваннях</string>
     <string name="ChatsOnly">Лише в чатах</string>
@@ -150,14 +150,14 @@
     <string name="PerformanceClassHigh">Високий</string>
     <string name="PerformanceClassAverage">Середній</string>
     <string name="PerformanceClassLow">Низький</string>
-    <string name="PerformanceClassUnknown">Невизначено</string>
+    <string name="PerformanceClassUnknown">Невідомий</string>
     <string name="TranscribeProviderShort">Провайдер</string>
     <string name="TranscribeProviderAuto">Автовибір</string>
     <string name="TranscribeProviderWorkersAI">Whisper (Workers AI)</string>
     <string name="TranscribeProviderGemini">Gemini</string>
     <string name="CloudflareCredentials">Облікові дані Cloudflare</string>
     <string name="CloudflareCredentialsNotSet">Облікові дані Cloudflare не налаштовані.</string>
-    <string name="CloudflareAccountID">ID Акаунта</string>
+    <string name="CloudflareAccountID">ID акаунту</string>
     <string name="CloudflareAPIToken">Токен API</string>
     <string name="CloudflareCredentialsDialog">Налаштуйте ID облікового запису Cloudflare та токен API.\n**Як отримати?**\n</string>
     <string name="GeminiApiKeyNotSet">Ключ API Gemini не налаштовано.</string>
@@ -186,7 +186,7 @@
     <string name="DebugMenuMakeMemoryDump">Зробити дамп пам\'яті</string>
     <string name="DebugMenuShowFrameMetrics">Показувати статистику кадрів</string>
     <string name="DebugMenuHideFrameMetrics">Приховати статистику кадрів</string>
-    <string name="TranslateMessageLLM">Перекладач AI</string>
+    <string name="TranslateMessageLLM">Перекласти за допомогою ШІ</string>
     <string name="EditLocalNameOverride">Редагування локального імені.</string>
     <string name="ResetChatNameOverrides">Скинути змінені назви чатів</string>
     <string name="ResetChatNameNotification">Змінені назви чатів очищені.</string>
@@ -216,7 +216,7 @@
     <string name="AutoCheckUpdateRelease">Стабільна версія</string>
     <string name="AutoCheckUpdateBeta">Бета</string>
     <string name="YourVersionIsLatestNax">Ваша версія актуальна.</string>
-    <string name="PremiumElements">Преміум Елементи</string>
+    <string name="PremiumElements">Преміум елементи</string>
     <string name="PremiumItemBoosts">Лічильник бустів</string>
     <string name="PremiumItemStickerEffects">Ефекти наклейок</string>
     <string name="PremiumItemEmojiStatus">Емоджі-статуси</string>
