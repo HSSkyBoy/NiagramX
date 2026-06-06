@@ -7846,12 +7846,11 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             final boolean showSoundToggle = !(canEdit && canReplace) && !userIsSelf;
             final boolean showCaptionTranslate = captionEdit != null && captionEdit.getText().length() > 0 && (!canEdit || canReplace);
             final boolean showSpoiler = canSpoiler && (!canEdit || canReplace);
-            final boolean multipleSelected = placeProvider != null && placeProvider.getSelectedCount() > 1;
+            final boolean multipleSelected = placeProvider != null &&  placeProvider.getSelectedCount() > 1;
             final String languageText = Translator.getInputTranslateLangForChat(ChatsHelper.getChatId()).toUpperCase();
 
             final ItemOptions options = ItemOptions.makeOptions(containerView, new DarkThemeResourceProvider(), view)
-                .setGravity(Gravity.RIGHT)
-                .setMinWidth(196);
+                .setGravity(Gravity.RIGHT);
             if (showCaptionTranslate && LlmConfig.isLLMTranslatorAvailable() && !LlmConfig.llmIsDefaultProvider()) {
                 addTranslateCommentOption(options, R.drawable.magic_stick_solar, getString(R.string.TranslateMessageLLM) + ' ' + "(" + languageText + ")", Translator.providerLLMTranslator);
             }
