@@ -204,7 +204,6 @@
     <string name="AddProxySocks5">Додати проксі SOCKS5</string>
     <string name="AddProxyTelegram">Додати MTProto проксі</string>
     <string name="RetestPing">Повторно перевірити ping для всіх серверів</string>
-    <string name="ImportProxyList">Імпортувати проксі-сервери</string>
     <string name="ExportStickers">Експорт наліпок</string>
     <string name="ImportStickersX">Імпорт наліпок з файлу</string>
     <string name="ImportStickersList">Імпорт наліпок</string>

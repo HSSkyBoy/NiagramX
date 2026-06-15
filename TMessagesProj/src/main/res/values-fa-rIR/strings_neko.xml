@@ -204,7 +204,6 @@
     <string name="AddProxySocks5">افزودن پروکسی SOCKS5</string>
     <string name="AddProxyTelegram">افزودن پروکسی MTProto</string>
     <string name="RetestPing">تست مجدد پینگ برای همه سرورها</string>
-    <string name="ImportProxyList">وارد کردن لیست پروکسی</string>
     <string name="ExportStickers">خروجی گرفتن از استیکرها</string>
     <string name="ImportStickersX">وارد کردن استیکرها از فایل</string>
     <string name="ImportStickersList">وارد کردن استیکرها</string>

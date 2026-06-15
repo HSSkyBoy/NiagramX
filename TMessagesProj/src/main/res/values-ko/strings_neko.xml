@@ -204,7 +204,6 @@
     <string name="AddProxySocks5">SOCKS5 프록시 추가</string>
     <string name="AddProxyTelegram">MTProto 프록시 추가</string>
     <string name="RetestPing">모든 서버의 핑 다시 테스트</string>
-    <string name="ImportProxyList">프록시 서버 가져오기</string>
     <string name="ExportStickers">스티커 내보내기</string>
     <string name="ImportStickersX">파일에서 스티커 가져오기</string>
     <string name="ImportStickersList">스티커 가져오기</string>

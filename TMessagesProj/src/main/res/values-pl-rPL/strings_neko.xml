@@ -204,7 +204,6 @@
     <string name="AddProxySocks5">Dodaj serwer proxy SOCKS5</string>
     <string name="AddProxyTelegram">Dodaj serwer proxy MTProto</string>
     <string name="RetestPing">Ponowny test ping dla wszystkich serwerów</string>
-    <string name="ImportProxyList">Importuj serwery proxy</string>
     <string name="ExportStickers">Eksportuj naklejki</string>
     <string name="ImportStickersX">Importuj naklejki z pliku</string>
     <string name="ImportStickersList">Importuj naklejki</string>
