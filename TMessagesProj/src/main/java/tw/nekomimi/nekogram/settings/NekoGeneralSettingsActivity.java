@@ -9,19 +9,12 @@ import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.os.SystemClock;
-import android.text.TextPaint;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.telegram.messenger.AndroidUtilities;
@@ -38,11 +31,8 @@ import org.telegram.ui.ActionBar.ActionBar;
 import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.INavigationLayout;
 import org.telegram.ui.ActionBar.SimpleTextView;
-import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Components.ItemOptions;
-import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.RecyclerListView;
-import org.telegram.ui.Components.SeekBarView;
 import org.telegram.ui.Components.UndoView;
 import org.telegram.ui.LaunchActivity;
 
@@ -52,7 +42,6 @@ import java.util.Locale;
 import tw.nekomimi.nekogram.NekoConfig;
 import tw.nekomimi.nekogram.config.CellGroup;
 import tw.nekomimi.nekogram.config.cell.AbstractConfigCell;
-import tw.nekomimi.nekogram.config.cell.ConfigCellCustom;
 import tw.nekomimi.nekogram.config.cell.ConfigCellDivider;
 import tw.nekomimi.nekogram.config.cell.ConfigCellHeader;
 import tw.nekomimi.nekogram.config.cell.ConfigCellSelectBox;
@@ -85,7 +74,6 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     }
 
     private ValueAnimator statusBarColorAnimator;
-    private ChatBlurAlphaSeekBar chatBlurAlphaSeekbar;
     private Parcelable recyclerViewState = null;
 
     private boolean wasCentered = false;
@@ -244,9 +232,6 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     private final AbstractConfigCell headerBlur = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.LiteOptionsBlur2)));
     private final AbstractConfigCell strokeOnViews = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getStrokeOnViews()));
     private final AbstractConfigCell disableAvatarBlurRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getDisableAvatarBlur()));
-    private final AbstractConfigCell forceBlurInChatRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.forceBlurInChat));
-    private final AbstractConfigCell headerChatBlur = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.ChatBlurAlphaValue)));
-    private final AbstractConfigCell chatBlurAlphaValueRow = cellGroup.appendCell(new ConfigCellCustom("ChatBlurAlphaValue", ConfigCellCustom.CUSTOM_ITEM_CharBlurAlpha, NekoConfig.forceBlurInChat.Bool()));
     private final AbstractConfigCell dividerBlur = cellGroup.appendCell(new ConfigCellDivider());
 
     // Main Tabs
@@ -329,11 +314,6 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
                         ContactsController.getInstance(a).checkAppAccount();
                     }
                 }
-            } else if (key.equals(NekoConfig.forceBlurInChat.getKey())) {
-                boolean enabled = (Boolean) newValue;
-                if (chatBlurAlphaSeekbar != null)
-                    chatBlurAlphaSeekbar.setEnabled(enabled);
-                ((ConfigCellCustom) chatBlurAlphaValueRow).enabled = enabled;
             } else if (key.equals(NekoConfig.useOSMDroidMap.getKey())) {
                 checkMapDriftingFixRows();
             } else if (key.equals(NaConfig.INSTANCE.getPushServiceType().getKey())) {
@@ -476,71 +456,6 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
             super(context);
         }
 
-        @Override
-        protected View onCreateCustomViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = null;
-            if (viewType == ConfigCellCustom.CUSTOM_ITEM_CharBlurAlpha) {
-                view = chatBlurAlphaSeekbar = new ChatBlurAlphaSeekBar(mContext);
-                chatBlurAlphaSeekbar.setEnabled(NekoConfig.forceBlurInChat.Bool());
-            }
-            return view;
-        }
-    }
-
-    private static class ChatBlurAlphaSeekBar extends FrameLayout {
-
-        private final SeekBarView sizeBar;
-        private final TextPaint textPaint;
-        private boolean enabled = true;
-
-        @SuppressLint("ClickableViewAccessibility")
-        public ChatBlurAlphaSeekBar(Context context) {
-            super(context);
-
-            setWillNotDraw(false);
-            setClickable(true);
-
-            textPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-            textPaint.setTextSize(dp(16));
-
-            sizeBar = new SeekBarView(context);
-            sizeBar.setReportChanges(true);
-            sizeBar.setSeparatorsCount(256);
-            sizeBar.setDelegate((stop, progress) -> {
-                NekoConfig.chatBlueAlphaValue.setConfigInt(Math.min(255, (int) (255 * progress)));
-                invalidate();
-            });
-            sizeBar.setOnTouchListener((v, event) -> !enabled);
-            sizeBar.setProgress(NekoConfig.chatBlueAlphaValue.Int());
-            addView(sizeBar, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 38, Gravity.LEFT | Gravity.TOP, 9, 5, 43, 11));
-        }
-
-        @Override
-        protected void onDraw(Canvas canvas) {
-            textPaint.setColor(Theme.getColor(Theme.key_windowBackgroundWhiteValueText));
-            canvas.drawText(String.valueOf(NekoConfig.chatBlueAlphaValue.Int()), getMeasuredWidth() - dp(39), dp(28), textPaint);
-        }
-
-        @Override
-        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-            sizeBar.setProgress((NekoConfig.chatBlueAlphaValue.Int() / 255.0f));
-        }
-
-        @Override
-        public void invalidate() {
-            super.invalidate();
-            sizeBar.invalidate();
-        }
-
-        @Override
-        public void setEnabled(boolean enabled) {
-            super.setEnabled(enabled);
-            this.enabled = enabled;
-            sizeBar.setAlpha(enabled ? 1.0f : 0.5f);
-            textPaint.setAlpha((int) ((enabled ? 1.0f : 0.3f) * 255));
-            this.invalidate();
-        }
     }
 
     private void checkCustomDoHRows() {

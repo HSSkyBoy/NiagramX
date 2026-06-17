@@ -103,8 +103,6 @@
     <string name="customSavePath">Percorso di archiviazione personalizzato</string>
     <string name="customSavePathHint">Lasciare vuoto per salvare direttamente</string>
     <string name="channelLabel">canale</string>
-    <string name="forceBlurInChat">Forza l\'attivazione della sfocatura della chat</string>
-    <string name="ChatBlurAlphaValue">Sfocatura chat alfa</string>
     <string name="MutualContact">Contatto in comune</string>
     <string name="MutualContactDescription">Questo contatto è un contatto in comune.</string>
     <string name="DatacenterStatusAbout">Controlla lo stato dei **datacenter** di Telegram.</string>

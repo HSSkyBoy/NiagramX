@@ -103,8 +103,6 @@
     <string name="customSavePath">Niestandardowa ścieżka do przechowywania</string>
     <string name="customSavePathHint">Pozostaw puste, aby zapisać bezpośrednio</string>
     <string name="channelLabel">kanał</string>
-    <string name="forceBlurInChat">Wymuś włączenie rozmycia czatu</string>
-    <string name="ChatBlurAlphaValue">Wymuś połączenie rozmycia czatu</string>
     <string name="MutualContact">Wzajemny kontakt</string>
     <string name="MutualContactDescription">Ten kontakt jest kontaktem wzajemnym.</string>
     <string name="DatacenterStatusAbout">Sprawdź status **centrów danych** Telegramu.</string>

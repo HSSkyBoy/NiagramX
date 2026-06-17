@@ -103,8 +103,6 @@
     <string name="customSavePath">Özel Depolama Yolu</string>
     <string name="customSavePathHint">Doğrudan kaydetmek için boş bırakın</string>
     <string name="channelLabel">kanal</string>
-    <string name="forceBlurInChat">Sohbet Bulanıklığını (Blur) Zorla Etkinleştir</string>
-    <string name="ChatBlurAlphaValue">Sohbet Bulanıklığı (Alpha)</string>
     <string name="MutualContact">Ortak kişi</string>
     <string name="MutualContactDescription">Bu kişi ortak bir kişidir.</string>
     <string name="DatacenterStatusAbout">Telegram\'ın **veri merkezlerinin** (datacenter) durumunu kontrol edin.</string>

@@ -103,8 +103,6 @@
     <string name="customSavePath">Caminho de armazenamento personalizado</string>
     <string name="customSavePathHint">Deixe em branco para salvar diretamente</string>
     <string name="channelLabel">canal</string>
-    <string name="forceBlurInChat">Forçar desfoque no chat</string>
-    <string name="ChatBlurAlphaValue">Opacidade do desfoque do chat</string>
     <string name="MutualContact">Contato comum</string>
     <string name="MutualContactDescription">Este é um contato em comum.</string>
     <string name="DatacenterStatusAbout">Verifique o status dos **datacenters** do Telegram.</string>

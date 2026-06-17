@@ -103,8 +103,6 @@
     <string name="customSavePath">Jalur Penyimpanan Khusus</string>
     <string name="customSavePathHint">Biarkan kosong untuk langsung menyimpan</string>
     <string name="channelLabel">saluran</string>
-    <string name="forceBlurInChat">Paksa Aktifkan Keburaman Obrolan</string>
-    <string name="ChatBlurAlphaValue">Keburaman Obrolan Alpha</string>
     <string name="MutualContact">Kontak bersama</string>
     <string name="MutualContactDescription">Kontak ini merupakan kontak bersama.</string>
     <string name="DatacenterStatusAbout">Periksa status **pusat data** Telegram.</string>

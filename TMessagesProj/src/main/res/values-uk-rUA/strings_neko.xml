@@ -103,8 +103,6 @@
     <string name="customSavePath">Шлях зберігання завантажень</string>
     <string name="customSavePathHint">Залишити пустим для завантаження безпосередньо в \"Завантаження\"</string>
     <string name="channelLabel">канал</string>
-    <string name="forceBlurInChat">Примусове розмиття чатів</string>
-    <string name="ChatBlurAlphaValue">Розмиття чатів (Альфа)</string>
     <string name="MutualContact">Взаємний контакт</string>
     <string name="MutualContactDescription">Цей контакт є взаємним контактом.</string>
     <string name="DatacenterStatusAbout">Перевірте стан **дата-центрів** Telegram.</string>

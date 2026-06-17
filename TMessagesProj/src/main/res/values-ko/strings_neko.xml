@@ -103,8 +103,6 @@
     <string name="customSavePath">사용자 지정 저장 경로</string>
     <string name="customSavePathHint">비워 두면 바로 저장됩니다</string>
     <string name="channelLabel">채널</string>
-    <string name="forceBlurInChat">채팅 흐림 강제 활성화</string>
-    <string name="ChatBlurAlphaValue">채팅 흐림 투명도</string>
     <string name="MutualContact">상호 연락처</string>
     <string name="MutualContactDescription">이 연락처는 상호 연락처입니다.</string>
     <string name="DatacenterStatusAbout">Telegram **데이터센터** 상태를 확인합니다.</string>

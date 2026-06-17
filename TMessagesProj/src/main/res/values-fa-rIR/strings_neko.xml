@@ -103,8 +103,6 @@
     <string name="customSavePath">مسیر ذخیره‌سازی سفارشی</string>
     <string name="customSavePathHint">برای ذخیره مستقیم، خالی بگذارید</string>
     <string name="channelLabel">کانال</string>
-    <string name="forceBlurInChat">فعال‌سازی اجباری تاری در گفتگو</string>
-    <string name="ChatBlurAlphaValue">شفافیت تاری گفتگو</string>
     <string name="MutualContact">مخاطب دوطرفه</string>
     <string name="MutualContactDescription">این مخاطب، یک مخاطب دوطرفه است.</string>
     <string name="DatacenterStatusAbout">وضعیت **دیتاسنترهای** تلگرام را بررسی کنید.</string>
