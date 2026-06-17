@@ -49,6 +49,7 @@ import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.Emoji;
 import org.telegram.messenger.FileLog;
+import org.telegram.messenger.LanguageDetector;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.MessageObject;
 import org.telegram.messenger.R;
@@ -65,7 +66,6 @@ import org.telegram.ui.ArticleViewer;
 import org.telegram.ui.Components.AnimatedEmojiSpan;
 import org.telegram.ui.Components.CornerPath;
 import org.telegram.ui.Components.LayoutHelper;
-import org.telegram.ui.Components.LinkPath;
 import org.telegram.ui.Components.RecyclerListView;
 import org.telegram.ui.RestrictedLanguagesSelectActivity;
 
@@ -78,11 +78,6 @@ import tw.nekomimi.nekogram.translate.Translator;
 import tw.nekomimi.nekogram.translate.TranslatorKt;
 import tw.nekomimi.nekogram.utils.AlertUtil;
 import tw.nekomimi.nekogram.utils.ProxyUtil;
-import xyz.nextalone.nagram.NaConfig;
-
-import static com.google.zxing.common.detector.MathUtils.distance;
-import static org.telegram.ui.ActionBar.FloatingToolbar.STYLE_THEME;
-import static org.telegram.ui.ActionBar.Theme.key_chat_inTextSelectionHighlight;
 
 public abstract class TextSelectionHelper<Cell extends TextSelectionHelper.SelectableView> {
 
@@ -241,7 +236,7 @@ public abstract class TextSelectionHelper<Cell extends TextSelectionHelper.Selec
                     offset = text.length() - 1;
                 }
             }
-            if (offset >= 0 && offset < text.length() && (text.charAt(offset) != '\n' || EntitiesHelper.isInsideTableSelectionSpan(text, offset))) {
+            if (offset >= 0 && offset < text.length() && text.charAt(offset) != '\n') {
                 int maybeTextX = TextSelectionHelper.this.maybeTextX;
                 int maybeTextY = TextSelectionHelper.this.maybeTextY;
                 clear();
@@ -250,13 +245,7 @@ public abstract class TextSelectionHelper<Cell extends TextSelectionHelper.Selec
                 selectionStart = offset;
                 selectionEnd = selectionStart;
 
-                int[] tableRange = EntitiesHelper.getTableSelectionRange(text, selectionStart);
-                if (tableRange != null) {
-                    selectionStart = tableRange[0];
-                    selectionEnd = tableRange[1];
-                }
-
-                if (selectionStart == selectionEnd && text instanceof Spanned) {
+                if (text instanceof Spanned) {
                     boolean found = false;
                     Emoji.EmojiSpan[] spans = ((Spanned) text).getSpans(0, text.length(), Emoji.EmojiSpan.class);
                     for (Emoji.EmojiSpan emojiSpan : spans) {
@@ -398,7 +387,7 @@ public abstract class TextSelectionHelper<Cell extends TextSelectionHelper.Selec
                             offset = text.length() - 1;
                         }
                     }
-                    if (offset >= 0 && offset < text.length() && (text.charAt(offset) != '\n' || EntitiesHelper.isInsideTableSelectionSpan(text, offset))) {
+                    if (offset >= 0 && offset < text.length() && text.charAt(offset) != '\n') {
                         AndroidUtilities.cancelRunOnUIThread(startSelectionRunnable);
                         AndroidUtilities.runOnUIThread(startSelectionRunnable, longpressDelay);
                         tryCapture = true;
