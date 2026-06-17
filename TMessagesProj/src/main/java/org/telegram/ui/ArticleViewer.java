@@ -2876,10 +2876,10 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
     }
 
     private CharSequence getText(WebpageAdapter adapter, View parentView, TL_iv.RichText parentRichText, TL_iv.RichText richText, TL_iv.PageBlock parentBlock, int maxWidth) {
-        return getText(adapter.currentPage, parentView, parentRichText, richText, parentBlock, maxWidth);
+        return getText(this, adapter, parentView, parentRichText, richText, parentBlock, maxWidth);
     }
     public static CharSequence getText(IArticleViewer parent, WebpageAdapter adapter, View parentView, TL_iv.RichText parentRichText, TL_iv.RichText richText, TL_iv.PageBlock parentBlock, int maxWidth) {
-        return getText(parent, adapter != null ? adapter.currentPage : null, parentView, parentRichText, richText, parentBlock, maxWidth);
+        return getText(parent, adapter, adapter != null ? adapter.currentPage : null, parentView, parentRichText, richText, parentBlock, maxWidth);
     }
 
     private CharSequence getText(TLRPC.WebPage page, View parentView, TL_iv.RichText parentRichText, TL_iv.RichText richText, TL_iv.PageBlock parentBlock, int maxWidth) {
@@ -2894,21 +2894,33 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
         TL_iv.PageBlock parentBlock,
         int maxWidth
     ) {
+        return getText(parent, parent != null ? parent.getAdapter() : null, page, parentView, parentRichText, richText, parentBlock, maxWidth);
+    }
+    private static CharSequence getText(
+        IArticleViewer parent,
+        WebpageAdapter adapter,
+        TLRPC.WebPage page,
+        View parentView,
+        TL_iv.RichText parentRichText,
+        TL_iv.RichText richText,
+        TL_iv.PageBlock parentBlock,
+        int maxWidth
+    ) {
         if (richText == null) {
             return null;
         }
         if (richText instanceof TL_iv.textFixed) {
-            return getText(parent, page, parentView, parentRichText, ((TL_iv.textFixed) richText).text, parentBlock, maxWidth);
+            return getText(parent, adapter, page, parentView, parentRichText, ((TL_iv.textFixed) richText).text, parentBlock, maxWidth);
         } else if (richText instanceof TL_iv.textItalic) {
-            return getText(parent, page, parentView, parentRichText, ((TL_iv.textItalic) richText).text, parentBlock, maxWidth);
+            return getText(parent, adapter, page, parentView, parentRichText, ((TL_iv.textItalic) richText).text, parentBlock, maxWidth);
         } else if (richText instanceof TL_iv.textBold) {
-            return getText(parent, page, parentView, parentRichText, ((TL_iv.textBold) richText).text, parentBlock, maxWidth);
+            return getText(parent, adapter, page, parentView, parentRichText, ((TL_iv.textBold) richText).text, parentBlock, maxWidth);
         } else if (richText instanceof TL_iv.textUnderline) {
-            return getText(parent, page, parentView, parentRichText, ((TL_iv.textUnderline) richText).text, parentBlock, maxWidth);
+            return getText(parent, adapter, page, parentView, parentRichText, ((TL_iv.textUnderline) richText).text, parentBlock, maxWidth);
         } else if (richText instanceof TL_iv.textStrike) {
-            return getText(parent, page, parentView, parentRichText, ((TL_iv.textStrike) richText).text, parentBlock, maxWidth);
+            return getText(parent, adapter, page, parentView, parentRichText, ((TL_iv.textStrike) richText).text, parentBlock, maxWidth);
         } else if (richText instanceof TL_iv.textEmail) {
-            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(getText(parent, page, parentView, parentRichText, ((TL_iv.textEmail) richText).text, parentBlock, maxWidth));
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(getText(parent, adapter, page, parentView, parentRichText, ((TL_iv.textEmail) richText).text, parentBlock, maxWidth));
             MetricAffectingSpan[] innerSpans = spannableStringBuilder.getSpans(0, spannableStringBuilder.length(), MetricAffectingSpan.class);
             if (spannableStringBuilder.length() != 0) {
                 spannableStringBuilder.setSpan(new TextPaintUrlSpan(innerSpans == null || innerSpans.length == 0 ? getTextPaint(parent, parentRichText, richText, parentBlock) : null, "mailto:" + getUrl(richText)), 0, spannableStringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -2916,7 +2928,7 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
             return spannableStringBuilder;
         } else if (richText instanceof TL_iv.textUrl) {
             TL_iv.textUrl textUrl = (TL_iv.textUrl) richText;
-            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(getText(parent, page, parentView, parentRichText, ((TL_iv.textUrl) richText).text, parentBlock, maxWidth));
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(getText(parent, adapter, page, parentView, parentRichText, ((TL_iv.textUrl) richText).text, parentBlock, maxWidth));
             MetricAffectingSpan[] innerSpans = spannableStringBuilder.getSpans(0, spannableStringBuilder.length(), MetricAffectingSpan.class);
             TextPaint paint = innerSpans == null || innerSpans.length == 0 ? getTextPaint(parent, parentRichText, richText, parentBlock) : null;
             MetricAffectingSpan span;
@@ -2931,8 +2943,8 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
             return spannableStringBuilder;
         } else if (richText instanceof TL_iv.textPlain) {
             String plainText = ((TL_iv.textPlain) richText).text;
-            if (!TextUtils.isEmpty(plainText) && Instance != null && Instance.pages != null && Instance.pages.length > 0 && Instance.pages[0].adapter != null && Instance.pages[0].adapter.trans && Instance.pages[0].adapter.translatedTextCache.containsKey(plainText)) {
-                String translatedText = Instance.pages[0].adapter.translatedTextCache.get(plainText);
+            if (!TextUtils.isEmpty(plainText) && adapter != null && adapter.trans && adapter.translatedTextCache.containsKey(plainText)) {
+                String translatedText = adapter.translatedTextCache.get(plainText);
                 if (translatedText != null) {
                     plainText = translatedText;
                 }
@@ -2940,7 +2952,7 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
             return plainText == null ? "" : plainText;
         } else if (richText instanceof TL_iv.textAnchor) {
             TL_iv.textAnchor textAnchor = (TL_iv.textAnchor) richText;
-            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(getText(parent, page, parentView, parentRichText, textAnchor.text, parentBlock, maxWidth));
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(getText(parent, adapter, page, parentView, parentRichText, textAnchor.text, parentBlock, maxWidth));
             spannableStringBuilder.setSpan(new AnchorSpan(textAnchor.name), 0, spannableStringBuilder.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
             return spannableStringBuilder;
         } else if (richText instanceof TL_iv.textEmpty) {
@@ -2957,7 +2969,7 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
                     spannableStringBuilder.setSpan(new TextSelectionHelper.IgnoreCopySpannable(), spannableStringBuilder.length() - 1, spannableStringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
 
-                CharSequence innerText = getText(parent, page, parentView, parentRichText, innerRichText, parentBlock, maxWidth);
+                CharSequence innerText = getText(parent, adapter, page, parentView, parentRichText, innerRichText, parentBlock, maxWidth);
                 int flags = getTextFlags(lastRichText);
                 int startLength = spannableStringBuilder.length();
                 if (innerText == null) {
@@ -2992,18 +3004,18 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
             }
             return spannableStringBuilder;
         } else if (richText instanceof TL_iv.textSubscript) {
-            return getText(parent, page, parentView, parentRichText, ((TL_iv.textSubscript) richText).text, parentBlock, maxWidth);
+            return getText(parent, adapter, page, parentView, parentRichText, ((TL_iv.textSubscript) richText).text, parentBlock, maxWidth);
         } else if (richText instanceof TL_iv.textSuperscript) {
-            return getText(parent, page, parentView, parentRichText, ((TL_iv.textSuperscript) richText).text, parentBlock, maxWidth);
+            return getText(parent, adapter, page, parentView, parentRichText, ((TL_iv.textSuperscript) richText).text, parentBlock, maxWidth);
         } else if (richText instanceof TL_iv.textMarked) {
-            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(getText(parent, page, parentView, parentRichText, ((TL_iv.textMarked) richText).text, parentBlock, maxWidth));
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(getText(parent, adapter, page, parentView, parentRichText, ((TL_iv.textMarked) richText).text, parentBlock, maxWidth));
             MetricAffectingSpan[] innerSpans = spannableStringBuilder.getSpans(0, spannableStringBuilder.length(), MetricAffectingSpan.class);
             if (spannableStringBuilder.length() != 0) {
                 spannableStringBuilder.setSpan(new TextPaintMarkSpan(innerSpans == null || innerSpans.length == 0 ? getTextPaint(parent, parentRichText, richText, parentBlock) : null), 0, spannableStringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }
             return spannableStringBuilder;
         } else if (richText instanceof TL_iv.textSpoiler) {
-            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(getText(parent, page, parentView, parentRichText, ((TL_iv.textSpoiler) richText).text, parentBlock, maxWidth));
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(getText(parent, adapter, page, parentView, parentRichText, ((TL_iv.textSpoiler) richText).text, parentBlock, maxWidth));
             if (spannableStringBuilder.length() != 0) {
                 TextStyleSpan.TextStyleRun run = new TextStyleSpan.TextStyleRun();
                 run.flags |= TextStyleSpan.FLAG_STYLE_SPOILER;
@@ -3011,7 +3023,7 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
             }
             return spannableStringBuilder;
         } else if (richText instanceof TL_iv.textPhone) {
-            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(getText(parent, page, parentView, parentRichText, ((TL_iv.textPhone) richText).text, parentBlock, maxWidth));
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(getText(parent, adapter, page, parentView, parentRichText, ((TL_iv.textPhone) richText).text, parentBlock, maxWidth));
             MetricAffectingSpan[] innerSpans = spannableStringBuilder.getSpans(0, spannableStringBuilder.length(), MetricAffectingSpan.class);
             if (spannableStringBuilder.length() != 0) {
                 spannableStringBuilder.setSpan(new TextPaintUrlSpan(innerSpans == null || innerSpans.length == 0 ? getTextPaint(parent, parentRichText, richText, parentBlock) : null, "tel:" + getUrl(richText)), 0, spannableStringBuilder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
