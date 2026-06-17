@@ -211,9 +211,9 @@
     <string name="GroupedMessageMenuNotice">La agrupación mueve las acciones principales a la parte inferior del menú de mensajes.</string>
     <string name="CopySticker">Copiar sticker</string>
     <string name="CheckUpdate">Comprobar actualizaciones</string>
-    <string name="AutoCheckUpdateOFF">DESACTIVADO</string>
+    <string name="AutoCheckUpdateOFF">Apagado</string>
     <string name="AutoCheckUpdateSwitch">Canal de actualización</string>
-    <string name="AutoCheckUpdateRelease">Versión</string>
+    <string name="AutoCheckUpdateRelease">Release - Estable</string>
     <string name="AutoCheckUpdateBeta">Beta</string>
     <string name="YourVersionIsLatestNax">Su versión está actualizada.</string>
     <string name="PremiumElements">Elementos prémium</string>
@@ -332,4 +332,7 @@
     <string name="TabletModeOn">Activado</string>
     <string name="TabletModeOff">Desactivado</string>
     <string name="HideDialogsSearchField">Ocultar cuadro de búsqueda</string>
+    <string name="DeepLTranslateKey">Clave de API de DeepL</string>
+    <string name="DeepLTranslateKeyNotice">Configura la clave de la API de DeepL, deja en blanco para usar las credenciales integradas.</string>
+    <string name="DefaultScheduleDelay">Retraso predeterminado</string>
 </resources>
