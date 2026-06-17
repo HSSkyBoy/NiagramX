@@ -31,9 +31,7 @@ public class TextStyleSpan extends MetricAffectingSpan {
         public TLRPC.MessageEntity urlEntity;
         public String lng;
 
-        public TextStyleRun() {
-
-        }
+        public TextStyleRun() {}
 
         public TextStyleRun(TextStyleRun run) {
             flags = run.flags;

@@ -11,6 +11,7 @@ package tw.nekomimi.nekogram.utils;
 import static org.telegram.messenger.LocaleController.getString;
 
 import org.telegram.messenger.AndroidUtilities;
+import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.R;
 import org.telegram.messenger.SharedConfig;
 import org.telegram.messenger.browser.Browser;
@@ -18,9 +19,9 @@ import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.LaunchActivity;
 
 public class BrowserUtils {
-    public static void openBrowserHome(OnHomePageOpened callback, boolean forceInAppBrowser) {
+    public static void openBrowserHome(int currentAccount, OnHomePageOpened callback, boolean forceInAppBrowser) {
         final String url = getDefaultBrowserHome();
-        if (SharedConfig.inappBrowser) {
+        if (MessagesController.getInstance(currentAccount).isWebBrowserInAppEnabled()) {
             if (callback != null) {
                 callback.onHomePageOpened();
             }
@@ -43,7 +44,7 @@ public class BrowserUtils {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(LaunchActivity.instance);
         alertBuilder.setTitle(getString(R.string.TgBrowserOpenFail));
         alertBuilder.setMessage(getString(R.string.TgBrowserOpenFail_Desc));
-        alertBuilder.setPositiveButton(getString(R.string.Enable), (__, ___) -> SharedConfig.toggleInappBrowser());
+        alertBuilder.setPositiveButton(getString(R.string.Enable), (__, ___) -> MessagesController.getInstance(currentAccount).toggleWebBrowserInAppEnabled());
         alertBuilder.setNegativeButton(getString(R.string.Cancel), null);
         alertBuilder.show();
     }
