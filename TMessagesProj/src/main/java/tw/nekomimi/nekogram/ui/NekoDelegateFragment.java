@@ -41,6 +41,7 @@ import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.BottomSheet;
 import org.telegram.ui.Cells.ChatMessageCell;
 import org.telegram.ui.ChatActivity;
+import org.telegram.ui.Components.Bulletin;
 import org.telegram.ui.Components.BulletinFactory;
 import org.telegram.ui.Components.RecyclerListView;
 import org.telegram.ui.Components.SizeNotifierFrameLayout;
@@ -295,11 +296,8 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
                 if (!TextUtils.isEmpty(url)) {
                     Browser.openUrl(getParentActivity(), url);
                 }
-            } else if (button instanceof TLRPC.TL_keyboardButtonSwitchInline) {
-                // show toast since we can't switch
-                BulletinFactory.of(this).createSimpleBulletin(R.raw.error, getString(R.string.ErrorOccurred)).show();
             } else {
-                BulletinFactory.of(this).createSimpleBulletin(R.raw.error, getString(R.string.ErrorOccurred)).show();
+                BulletinFactory.of(this).createSimpleBulletin(R.raw.error, getString(R.string.Nya)).show();
             }
         } catch (Exception e) {
             FileLog.e(e);
@@ -574,14 +572,27 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        Bulletin.addDelegate(this, new Bulletin.Delegate() {
+            @Override
+            public int getBottomOffset(int tag) {
+                return getBottomInset();
+            }
+        });
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
+        Bulletin.removeDelegate(this);
         cancelAyuMessageAnimations();
         dimBehindView(false);
     }
 
     @Override
     public void onFragmentDestroy() {
+        Bulletin.removeDelegate(this);
         cancelAyuMessageAnimations();
         dimBehindView(false);
         super.onFragmentDestroy();
