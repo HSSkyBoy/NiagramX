@@ -76,7 +76,9 @@ public class UpdateAppAlertDialog extends BottomSheet {
 
             background = new View(context);
             if (hasBackground) {
-                background.setBackground(Theme.AdaptiveRipple.filledRectByKey(Theme.key_featuredStickers_addButton, 4));
+                background.setBackground(Theme.AdaptiveRipple.filledRectByKey(Theme.key_featuredStickers_addButton, 24));
+                background.setDuplicateParentStateEnabled(true);
+                ScaleStateListAnimator.apply(this, .02f, 1.2f);
             }
             addView(background, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, 0, 16, withoutBackground ? 0 : 16, 16, 16));
 
@@ -292,7 +294,7 @@ public class UpdateAppAlertDialog extends BottomSheet {
 
         BottomSheetCell doneButton = new BottomSheetCell(context, false);
         doneButton.setText(LocaleController.formatString("AppUpdateDownloadNow", R.string.AppUpdateDownloadNow), false);
-        doneButton.background.setOnClickListener(v -> {
+        doneButton.setOnClickListener(v -> {
             FileLoader.getInstance(accountNum).loadFile(appUpdate.document, "update", FileLoader.PRIORITY_NORMAL, 1);
             dismiss();
         });
