@@ -2940,6 +2940,18 @@ public class ChannelAdminLogActivity extends BaseFragment implements Notificatio
                     }
 
                     @Override
+                    public void forceUpdate(ChatMessageCell cell, boolean anchorScroll) {
+                        MessageObject messageObject = cell.getPrimaryMessageObject();
+                        if (messageObject == null) {
+                            return;
+                        }
+                        messageObject.forceUpdate = true;
+                        cell.setMessageObject(messageObject, cell.getCurrentMessagesGroup(), cell.isPinnedBottom(), cell.isPinnedTop(), cell.isFirstInChat(), cell.isLastInChatList());
+                        messageObject.forceUpdate = false;
+                        cell.relayout();
+                    }
+
+                    @Override
                     public void didPressSideButton(ChatMessageCell cell) {
                         if (getParentActivity() == null) {
                             return;
