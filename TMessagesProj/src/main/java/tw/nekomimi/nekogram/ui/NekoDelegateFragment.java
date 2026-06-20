@@ -167,7 +167,8 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
             contentGlassSource.setScrollableNoiseSuppressor(contentGlassNoiseSuppressor, DownscaleScrollableNoiseSuppressor.DRAW_GLASS);
             actionBarDrawableFactory = new BlurredBackgroundDrawableViewFactory(contentGlassSource);
             actionBarDrawableFactory.setSourceRootView(viewPositionWatcher, container);
-            actionBarDrawableFactory.setLiquidGlassEffectAllowed(liquidGlassEnabled);setupContentGlassSource(container, listView, contentGlassSource, contentGlassNoiseSuppressor, liquidGlassEnabled ? dp(8) : dp(48));
+            actionBarDrawableFactory.setLiquidGlassEffectAllowed(liquidGlassEnabled);
+            setupContentGlassSource(container, listView, contentGlassSource, contentGlassNoiseSuppressor, liquidGlassEnabled ? dp(8) : dp(48));
         }
         actionBar.setAddToContainer(false);
         actionBar.setCastShadows(false);
@@ -892,10 +893,10 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
         int save = canvas.save();
         canvas.translate(viewLeft, viewTop);
         canvas.clipRect(
-            scrimTmpRect.left - viewLeft,
-            scrimTmpRect.top - viewTop,
-            scrimTmpRect.right - viewLeft,
-            scrimTmpRect.bottom - viewTop
+                scrimTmpRect.left - viewLeft,
+                scrimTmpRect.top - viewTop,
+                scrimTmpRect.right - viewLeft,
+                scrimTmpRect.bottom - viewTop
         );
         scrimView.draw(canvas);
         canvas.restoreToCount(save);
