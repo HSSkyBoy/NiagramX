@@ -1,5 +1,6 @@
 package tw.nekomimi.nekogram.ui;
 
+import static org.telegram.messenger.AndroidUtilities.dp;
 import static org.telegram.messenger.LocaleController.getString;
 
 import android.animation.Animator;
@@ -12,10 +13,13 @@ import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.HapticFeedbackConstants;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,29 +27,46 @@ import android.view.ViewTreeObserver;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.ChatListItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.telegram.PhoneFormat.PhoneFormat;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.FileLog;
+import org.telegram.messenger.LiteMode;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MessageObject;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
+import org.telegram.messenger.SharedConfig;
 import org.telegram.messenger.TranslateController;
 import org.telegram.messenger.browser.Browser;
 import org.telegram.tgnet.TLRPC;
+import org.telegram.ui.ActionBar.ActionBar;
 import org.telegram.ui.ActionBar.BaseFragment;
 import org.telegram.ui.ActionBar.BottomSheet;
+import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Cells.ChatMessageCell;
 import org.telegram.ui.ChatActivity;
 import org.telegram.ui.Components.Bulletin;
 import org.telegram.ui.Components.BulletinFactory;
+import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.RecyclerListView;
 import org.telegram.ui.Components.SizeNotifierFrameLayout;
 import org.telegram.ui.Components.StickersAlert;
+import org.telegram.ui.Components.blur3.BlurredBackgroundDrawableViewFactory;
+import org.telegram.ui.Components.blur3.DownscaleScrollableNoiseSuppressor;
+import org.telegram.ui.Components.blur3.capture.IBlur3Capture;
+import org.telegram.ui.Components.blur3.drawable.color.impl.BlurredBackgroundProviderImpl;
+import org.telegram.ui.Components.blur3.source.BlurredBackgroundSource;
+import org.telegram.ui.Components.blur3.source.BlurredBackgroundSourceBitmap;
+import org.telegram.ui.Components.blur3.source.BlurredBackgroundSourceRenderNode;
+import org.telegram.ui.Components.blur3.source.BlurredBackgroundSourceWrapped;
+import org.telegram.ui.Components.chat.ViewPositionWatcher;
+import org.telegram.ui.Components.chat.WallpaperBitmapProvider;
+import org.telegram.ui.Components.chat.layouts.ChatActivityFadeView;
 import org.telegram.ui.ContactAddActivity;
 import org.telegram.ui.ProfileActivity;
 
@@ -87,8 +108,32 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
 
     protected class ScrimFrameLayout extends SizeNotifierFrameLayout {
 
+        private final WallpaperBitmapProvider wallpaperBitmapProvider = new WallpaperBitmapProvider();
+        private final BlurredBackgroundSourceWrapped glassBackgroundSourceWallpaper = new BlurredBackgroundSourceWrapped();
+
         public ScrimFrameLayout(Context context) {
             super(context);
+        }
+
+        @Override
+        public void onUpdateBackgroundDrawable(Drawable drawable) {
+            super.onUpdateBackgroundDrawable(drawable);
+            BlurredBackgroundSource source = wallpaperBitmapProvider.updateSourceFromBackgroundViewDrawable(drawable);
+            glassBackgroundSourceWallpaper.setSource(source);
+            updateGlassBackgroundSourceSize();
+        }
+
+        @Override
+        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+            updateGlassBackgroundSourceSize();
+        }
+
+        private void updateGlassBackgroundSourceSize() {
+            BlurredBackgroundSource source = glassBackgroundSourceWallpaper.getSource();
+            if (source instanceof BlurredBackgroundSourceBitmap bitmapSource) {
+                bitmapSource.setParentSize(getMeasuredWidth(), getMeasuredHeight(), 0);
+            }
         }
 
         @Override
@@ -96,6 +141,145 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
             super.dispatchDraw(canvas);
             NekoDelegateFragment.this.drawScrimOverlay(this, canvas);
         }
+    }
+
+    protected void setupGlassActionBar(@NonNull ViewGroup container, @NonNull RecyclerListView listView) {
+        if (actionBar == null) {
+            return;
+        }
+        BlurredBackgroundSource source;
+        if (container instanceof ScrimFrameLayout scrimFrameLayout) {
+            source = scrimFrameLayout.glassBackgroundSourceWallpaper;
+        } else {
+            BlurredBackgroundSourceWrapped sourceWallpaper = new BlurredBackgroundSourceWrapped();
+            sourceWallpaper.setSource(new WallpaperBitmapProvider().updateSourceFromBackgroundViewDrawable(Theme.getCachedWallpaper()));
+            source = sourceWallpaper;
+        }
+        BlurredBackgroundDrawableViewFactory wallpaperDrawableFactory = new BlurredBackgroundDrawableViewFactory(source);
+        ViewPositionWatcher viewPositionWatcher = new ViewPositionWatcher(container);
+        wallpaperDrawableFactory.setSourceRootView(viewPositionWatcher, container);
+        BlurredBackgroundDrawableViewFactory actionBarDrawableFactory = wallpaperDrawableFactory;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S && SharedConfig.chatBlurEnabled()) {
+            boolean liquidGlassEnabled = LiteMode.isEnabled(LiteMode.FLAG_LIQUID_GLASS);
+            BlurredBackgroundSourceRenderNode contentGlassSource = new BlurredBackgroundSourceRenderNode(source);
+            DownscaleScrollableNoiseSuppressor contentGlassNoiseSuppressor = new DownscaleScrollableNoiseSuppressor();
+            contentGlassSource.setUnderSource(source);
+            contentGlassSource.setScrollableNoiseSuppressor(contentGlassNoiseSuppressor, DownscaleScrollableNoiseSuppressor.DRAW_GLASS);
+            actionBarDrawableFactory = new BlurredBackgroundDrawableViewFactory(contentGlassSource);
+            actionBarDrawableFactory.setSourceRootView(viewPositionWatcher, container);
+            actionBarDrawableFactory.setLiquidGlassEffectAllowed(liquidGlassEnabled);setupContentGlassSource(container, listView, contentGlassSource, contentGlassNoiseSuppressor, liquidGlassEnabled ? dp(8) : dp(48));
+        }
+        actionBar.setAddToContainer(false);
+        actionBar.setCastShadows(false);
+        actionBar.setOccupyStatusBar(!AndroidUtilities.isTablet());
+        actionBar.setupGlass(actionBarDrawableFactory, BlurredBackgroundProviderImpl.topPanelChatActivity(getResourceProvider()));
+        AndroidUtilities.removeFromParent(actionBar);
+        ChatActivityFadeView fadeView = new ChatActivityFadeView(container.getContext());
+        fadeView.setup(wallpaperDrawableFactory);
+        fadeView.setFadeHeightTop(dp(60));
+        fadeView.setFadeHeightBottom(0);
+        container.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
+            fadeView.setFadeZoneTop(actionBar.getBottom() + dp(2));
+            applyGlassMessageListPadding(listView, listView.getPaddingBottom());
+        });
+        container.addView(fadeView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
+        container.addView(actionBar, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.TOP));
+    }
+
+    @RequiresApi(Build.VERSION_CODES.S)
+    private void setupContentGlassSource(@NonNull ViewGroup container, @NonNull RecyclerListView listView, @NonNull BlurredBackgroundSourceRenderNode source, @NonNull DownscaleScrollableNoiseSuppressor noiseSuppressor, int capturePadding) {
+        ContentGlassSourceUpdater updater = new ContentGlassSourceUpdater(container, listView, source, noiseSuppressor, capturePadding);
+        View.OnLayoutChangeListener updateListener = (v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> updater.requestUpdate();
+        container.addOnLayoutChangeListener(updateListener);
+        listView.addOnLayoutChangeListener(updateListener);
+        listView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                noiseSuppressor.onScrolled(dx, dy);
+                updater.requestUpdate();
+            }
+        });
+        source.setOnDrawablesRelativePositionChangeListener(updater::requestUpdate);
+        updater.requestUpdate();
+    }
+
+    @RequiresApi(Build.VERSION_CODES.S)
+    private final class ContentGlassSourceUpdater {
+
+        private final ViewGroup container;
+        private final RecyclerListView listView;
+        private final BlurredBackgroundSourceRenderNode source;
+        private final DownscaleScrollableNoiseSuppressor noiseSuppressor;
+        private final int capturePadding;
+        private final ArrayList<RectF> positions = new ArrayList<>();
+        private final IBlur3Capture capture = new IBlur3Capture() {
+            @Override
+            public void capture(Canvas canvas, RectF position) {
+                canvas.save();
+                canvas.clipRect(position);
+                canvas.translate(listView.getX(), listView.getY());
+                listView.draw(canvas);
+                canvas.restore();
+            }
+        };
+        private boolean updateScheduled;
+
+        private ContentGlassSourceUpdater(@NonNull ViewGroup container, @NonNull RecyclerListView listView, @NonNull BlurredBackgroundSourceRenderNode source, @NonNull DownscaleScrollableNoiseSuppressor noiseSuppressor, int capturePadding) {
+            this.container = container;
+            this.listView = listView;
+            this.source = source;
+            this.noiseSuppressor = noiseSuppressor;
+            this.capturePadding = capturePadding;
+        }
+
+        private void requestUpdate() {
+            if (updateScheduled) {
+                return;
+            }
+            updateScheduled = true;
+            container.post(() -> {
+                updateScheduled = false;
+                update();
+            });
+        }
+
+        private void update() {
+            if (container.getWidth() == 0 || container.getHeight() == 0) {
+                return;
+            }
+            int count = source.getVisiblePositions(positions, 0, capturePadding);
+            noiseSuppressor.setupRenderNodes(positions, count);
+            if (noiseSuppressor.invalidateResultRenderNodes(capture, container.getWidth(), container.getHeight())) {
+                source.invalidateDisplayListForDrawables();
+                actionBar.invalidate();
+            }
+        }
+    }
+
+    protected int getGlassActionBarOffset() {
+        return ActionBar.getCurrentActionBarHeight() + AndroidUtilities.statusBarHeight;
+    }
+
+    protected int getGlassActionBarBottomInWindow() {
+        if (actionBar == null || actionBar.getHeight() == 0) {
+            return getGlassActionBarOffset();
+        }
+        int[] location = new int[2];
+        actionBar.getLocationInWindow(location);
+        return location[1] + actionBar.getHeight();
+    }
+
+    protected void applyGlassMessageListPadding(@NonNull RecyclerListView listView, int bottomPadding) {
+        int actionBarBottom = actionBar == null ? 0 : actionBar.getBottom() + dp(4);
+        int topPadding = Math.max(getGlassActionBarOffset(), actionBarBottom);
+        if (listView.getPaddingTop() != topPadding || listView.getPaddingBottom() != bottomPadding) {
+            listView.setPadding(0, topPadding, 0, bottomPadding);
+        }
+        listView.setClipToPadding(false);
+    }
+
+    protected void applyMessageListNavigationBarInset(@NonNull RecyclerListView listView, int navigationBarInset) {
+        applyGlassMessageListPadding(listView, navigationBarInset + dp(8));
     }
 
     protected void setupMessageListItemAnimator(@NonNull RecyclerListView listView) {
@@ -360,18 +544,9 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
         return true;
     }
 
-    @Nullable
-    protected RecyclerListView getMessageListView() {
-        return null;
-    }
-
     @Override
-    public void onInsets(int left, int top, int right, int bottom) {
-        RecyclerListView lv = getMessageListView();
-        if (lv != null) {
-            lv.setPadding(0, 0, 0, bottom);
-            lv.setClipToPadding(false);
-        }
+    public boolean drawEdgeNavigationBar() {
+        return false;
     }
 
     protected TranslateController getTranslateController() {
@@ -700,6 +875,10 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
         }
 
         if (!scrimView.getGlobalVisibleRect(scrimTmpRect)) {
+            return;
+        }
+        scrimTmpRect.top = Math.max(scrimTmpRect.top, getGlassActionBarBottomInWindow());
+        if (scrimTmpRect.isEmpty()) {
             return;
         }
         container.getLocationInWindow(scrimTmpLocation);
