@@ -516,18 +516,29 @@ public class ChatAvatarContainer extends FrameLayout implements NotificationCent
 
     @Override
     protected boolean drawChild(@NonNull Canvas canvas, View child, long drawingTime) {
+        final boolean unscaleAvatar = glassMode && isCentered() && (child == avatarImageView || child == timeItem);
+        if (unscaleAvatar) {
+            final float scale = bounce.getScale(.02f);
+            canvas.save();
+            canvas.scale(1f / scale, 1f / scale, getWidth() / 2f, getHeight() - ActionBar.getCurrentActionBarHeight() / 2f);
+        }
+        final boolean b;
         if (child == avatarImageView && timeItem != null && timeItem.getVisibility() == VISIBLE) {
             AndroidUtilities.rectTmp.set(child.getX(), child.getY(), child.getX() + child.getWidth(), child.getY() + child.getHeight());
             canvas.saveLayer(AndroidUtilities.rectTmp, null);
-            final boolean b = super.drawChild(canvas, child, drawingTime);
+            b = super.drawChild(canvas, child, drawingTime);
             final float cx = timeItem.getX() + timeItem.getWidth() / 2f;    // AndroidUtilities.rectTmp.left + dpf2(68 / 3f + 11);
             final float cy = timeItem.getY() + timeItem.getHeight() / 2f;   // AndroidUtilities.rectTmp.top + dpf2(66 / 3f + 11);
             final float r = dpf2(11.5f) * timeItem.getScaleX();         //dpf2(11) * ttlFactor;
             canvas.drawCircle(cx, cy, r, Theme.PAINT_CLEAR);
             canvas.restore();
-            return b;
+        } else {
+            b = super.drawChild(canvas, child, drawingTime);
         }
-        return super.drawChild(canvas, child, drawingTime);
+        if (unscaleAvatar) {
+            canvas.restore();
+        }
+        return b;
     }
 
     public boolean ignoreTouches;
