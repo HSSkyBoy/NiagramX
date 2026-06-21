@@ -58,6 +58,7 @@ import org.telegram.ui.Components.SizeNotifierFrameLayout;
 import org.telegram.ui.Components.StickersAlert;
 import org.telegram.ui.Components.blur3.BlurredBackgroundDrawableViewFactory;
 import org.telegram.ui.Components.blur3.DownscaleScrollableNoiseSuppressor;
+import org.telegram.ui.Components.blur3.ViewGroupPartRenderer;
 import org.telegram.ui.Components.blur3.capture.IBlur3Capture;
 import org.telegram.ui.Components.blur3.drawable.color.impl.BlurredBackgroundProviderImpl;
 import org.telegram.ui.Components.blur3.source.BlurredBackgroundSource;
@@ -208,29 +209,19 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
     private final class ContentGlassSourceUpdater {
 
         private final ViewGroup container;
-        private final RecyclerListView listView;
         private final BlurredBackgroundSourceRenderNode source;
         private final DownscaleScrollableNoiseSuppressor noiseSuppressor;
         private final int capturePadding;
         private final ArrayList<RectF> positions = new ArrayList<>();
-        private final IBlur3Capture capture = new IBlur3Capture() {
-            @Override
-            public void capture(Canvas canvas, RectF position) {
-                canvas.save();
-                canvas.clipRect(position);
-                canvas.translate(listView.getX(), listView.getY());
-                listView.draw(canvas);
-                canvas.restore();
-            }
-        };
+        private final IBlur3Capture capture;
         private boolean updateScheduled;
 
         private ContentGlassSourceUpdater(@NonNull ViewGroup container, @NonNull RecyclerListView listView, @NonNull BlurredBackgroundSourceRenderNode source, @NonNull DownscaleScrollableNoiseSuppressor noiseSuppressor, int capturePadding) {
             this.container = container;
-            this.listView = listView;
             this.source = source;
             this.noiseSuppressor = noiseSuppressor;
             this.capturePadding = capturePadding;
+            this.capture = new ViewGroupPartRenderer(listView, container, listView::drawChild);
         }
 
         private void requestUpdate() {
