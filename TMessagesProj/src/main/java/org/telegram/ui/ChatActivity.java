@@ -11532,8 +11532,11 @@ public class ChatActivity extends BaseFragment implements
 
     private void updatePagedownButtonsPosition(boolean hideBottomForGesture) {
         if (sideControlsButtonsLayout != null) {
+            final float bottomOffset = hideBottomForGesture
+                ? chatInputViewsContainer.getInputBubbleHeight() * bottomViewsVisibilityController.getVisibility(MESSAGE_ACTION_CONTAINER)
+                : chatInputViewsContainer.getInputBubbleHeight();
             float baseTranslationY2 = -windowInsetsStateHolder.getAnimatedMaxBottomInset()
-                - (hideBottomForGesture ? 0 : chatInputViewsContainer.getInputBubbleHeight())
+                - bottomOffset
                 - getTopicTabsSideSize(TopicsTabsView.Position.BOTTOM)
                 - dp(ChatInputViewsContainer.INPUT_BUBBLE_BOTTOM + 4);
             sideControlsButtonsLayout.setTranslationY(baseTranslationY2);
@@ -28623,9 +28626,6 @@ public class ChatActivity extends BaseFragment implements
             return false;
         }
         if (bottomOverlayLinksText != null && bottomOverlayLinksText.getVisibility() == View.VISIBLE) {
-            return false;
-        }
-        if (actionBar != null && actionBar.isActionModeShowed()) {
             return false;
         }
         if (searchItem != null && searchItemVisible) {
