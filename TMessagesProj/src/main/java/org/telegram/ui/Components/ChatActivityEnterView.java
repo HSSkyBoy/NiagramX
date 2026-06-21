@@ -7771,24 +7771,24 @@ public class ChatActivityEnterView extends FrameLayout implements
             AnimatorSet botIconAnimator = null;
             if (attachButton != null && NekoConfig.useChatAttachMediaMenu.Bool() && !isStories) {
                 checkAttachButton(false, 150);
-                if (!attachButton.isShown()) {
-                    if (attachButtonAnimator != null) {
+                if (attachButtonAnimator != null) {
                     attachButtonAnimator.cancel();
                     attachButtonAnimator = null;
                 }
-                attachButton.setAlpha(attachButtonAlpha =0f);
-                    attachButton.setScaleX(0);
-                    attachButton.setScaleY(0);
+                attachButton.setAlpha(attachButtonAlpha = 0f);
+                attachButton.setScaleX(0);
+                attachButton.setScaleY(0);
 
-                    attachIconAnimator = new AnimatorSet();
-                    attachIconAnimator.playTogether(
-                            ObjectAnimator.ofFloat(attachButton, View.ALPHA, attachButtonAlpha = 1.0f),
-                            ObjectAnimator.ofFloat(attachButton, View.SCALE_X, 1.0f),
-                            ObjectAnimator.ofFloat(attachButton, View.SCALE_Y, 1.0f)
-                    );
-                    attachIconAnimator.setDuration(150);
-                }
-                if (checkBotButton()) {
+                attachIconAnimator = new AnimatorSet();
+                attachIconAnimator.playTogether(
+                        ObjectAnimator.ofFloat(attachButton, View.ALPHA, attachButtonAlpha = 1.0f),
+                        ObjectAnimator.ofFloat(attachButton, View.SCALE_X, 1.0f),
+                        ObjectAnimator.ofFloat(attachButton, View.SCALE_Y, 1.0f)
+                );
+                attachIconAnimator.setDuration(150);
+
+                updateBotButton(false);
+                if (botButton != null && botButton.getVisibility() == VISIBLE) {
                     botButton.setAlpha(0f);
                     botButton.setScaleX(0);
                     botButton.setScaleY(0);
