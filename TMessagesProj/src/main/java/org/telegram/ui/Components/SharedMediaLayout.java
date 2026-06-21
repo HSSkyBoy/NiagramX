@@ -2236,7 +2236,7 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
         if (!DialogObject.isEncryptedDialog(dialog_id)) {
             if (!isStoriesView()) {
                 forwardNoQuoteItem = new ActionBarMenuItem(context, null, getThemedColor(Theme.key_actionBarActionModeDefaultSelector), getThemedColor(Theme.key_actionBarActionModeDefaultIcon), false);
-                forwardNoQuoteItem.setIcon(R.drawable.msg_forward_noquote);
+                forwardNoQuoteItem.setIcon(R.drawable.msg_share_solar);
                 forwardNoQuoteItem.setContentDescription(LocaleController.getString("NoQuoteForward", R.string.NoQuoteForward));
                 forwardNoQuoteItem.setDuplicateParentStateEnabled(false);
                 actionModeLayout.addView(forwardNoQuoteItem, new LinearLayout.LayoutParams(dp(54), ViewGroup.LayoutParams.MATCH_PARENT));
@@ -2252,7 +2252,7 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
                 gotoItem.setOnClickListener(v -> onActionBarItemClick(v, gotochat));
 
                 forwardItem = new ActionBarMenuItem(context, null, getThemedColor(Theme.key_actionBarActionModeDefaultSelector), getThemedColor(Theme.key_actionBarActionModeDefaultIcon), false);
-                forwardItem.setIcon(R.drawable.msg_forward);
+                forwardItem.setIcon(R.drawable.msg_share_quote_solar);
                 forwardItem.setContentDescription(getString(R.string.Forward));
                 forwardItem.setDuplicateParentStateEnabled(false);
                 actionModeLayout.addView(forwardItem, new LinearLayout.LayoutParams(dp(54), ViewGroup.LayoutParams.MATCH_PARENT));
