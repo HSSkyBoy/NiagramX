@@ -67,7 +67,6 @@ import org.telegram.ui.Components.inset.WindowInsetsStateHolder;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Locale;
 
 import kotlin.Unit;
 import tw.nekomimi.nekogram.helpers.MessageHelper;
@@ -924,15 +923,15 @@ public class BookmarksActivity extends NekoDelegateFragment {
         if (TextUtils.isEmpty(searchQuery)) {
             filteredMessages.addAll(bookmarkedMessages);
         } else {
-            String q = searchQuery.toLowerCase(Locale.getDefault());
+            String q = searchQuery.toLowerCase();
             for (MessageObject msg : bookmarkedMessages) {
                 String text = msg.messageOwner != null ? msg.messageOwner.message : null;
-                if (!TextUtils.isEmpty(text) && text.toLowerCase(Locale.getDefault()).contains(q)) {
+                if (!TextUtils.isEmpty(text) && text.toLowerCase().contains(q)) {
                     filteredMessages.add(msg);
                     continue;
                 }
                 String attachPath = msg.messageOwner != null ? msg.messageOwner.attachPath : null;
-                if (!TextUtils.isEmpty(attachPath) && attachPath.toLowerCase(Locale.getDefault()).contains(q)) {
+                if (!TextUtils.isEmpty(attachPath) && attachPath.toLowerCase().contains(q)) {
                     filteredMessages.add(msg);
                 }
             }
