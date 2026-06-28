@@ -374,6 +374,7 @@ import tw.nekomimi.nekogram.menu.translate.TranslatePopupWrapper;
 import tw.nekomimi.nekogram.parts.DialogTransKt;
 import tw.nekomimi.nekogram.parts.MessageTransKt;
 import tw.nekomimi.nekogram.parts.PollTransUpdatesKt;
+import tw.nekomimi.nekogram.parts.RichMessageTransHelper;
 import tw.nekomimi.nekogram.helpers.SettingsBackupHelper;
 import tw.nekomimi.nekogram.translate.Translator;
 import tw.nekomimi.nekogram.translate.TranslatorKt;
@@ -32967,7 +32968,8 @@ public class ChatActivity extends BaseFragment implements
                     }
                     if (option == nkbtn_translate && !NaConfig.INSTANCE.getShowTranslateMessageLLM().Bool()) {
                         MessageObject msg = getMessageForTranslate();
-                        if (msg != null && !msg.isTranslated()) {
+                        boolean isRichMessage = msg != null && msg.isRich();
+                        if (msg != null && !isRichMessage && !msg.isTranslated()) {
                             var translatePopupWrapper = new TranslatePopupWrapper(this, popupLayout.getSwipeBack(), this::processSelectedOption, getResourceProvider());
                             int swipeBackIndex = popupLayout.addViewToSwipeBack(translatePopupWrapper.windowLayout);
                             cell.setRightIcon(R.drawable.msg_arrowright, v12 -> popupLayout.getSwipeBack().openForeground(swipeBackIndex));
@@ -48117,6 +48119,11 @@ public class ChatActivity extends BaseFragment implements
                     boolean showTranslateLLM = NaConfig.INSTANCE.getShowTranslateMessageLLM().Bool() && LlmConfig.isLLMTranslatorAvailable() && !LlmConfig.llmIsDefaultProvider();
                     boolean isTranslatableMessage = msg != null && !msg.isAnimatedEmoji() && !msg.isDice();
                     if ((showTranslate || showTranslateLLM) && isTranslatableMessage) {
+                        boolean isRichMessage = msg != null && msg.isRich();
+                        if (isRichMessage) {
+                            showTranslate = true;
+                            showTranslateLLM = false;
+                        }
                         String fromLang = msg.messageOwner.originalLanguage;
                         // check if language is restricted but don't detect language here to avoid extra delay
                         if (fromLang != null && RestrictedLanguagesSelectActivity.getRestrictedLanguages().contains(fromLang)) {
@@ -48132,7 +48139,7 @@ public class ChatActivity extends BaseFragment implements
                         if (showTranslate && (isOutgoingOrNotTranslatingDialog || isLLMDefault)) {
                             items.add(canUndoTranslate ? getString(R.string.UndoTranslate) : getString(R.string.Translate));
                             options.add(nkbtn_translate);
-                            icons.add(isLLMDefault ? R.drawable.magic_stick_solar : R.drawable.msg_translate);
+                            icons.add(isLLMDefault && !isRichMessage ? R.drawable.magic_stick_solar : R.drawable.msg_translate);
                         }
                         boolean shouldShowLLM = !showTranslate || !isTranslated || !isOutgoingOrNotTranslatingDialog;
                         if (showTranslateLLM && shouldShowLLM) {
@@ -48341,6 +48348,11 @@ public class ChatActivity extends BaseFragment implements
                 boolean showTranslateLLM = NaConfig.INSTANCE.getShowTranslateMessageLLM().Bool() && LlmConfig.isLLMTranslatorAvailable() && !LlmConfig.llmIsDefaultProvider();
                 boolean isTranslatableMessage = msg != null && !msg.isAnimatedEmoji() && !msg.isDice();
                 if ((showTranslate || showTranslateLLM) && isTranslatableMessage) {
+                    boolean isRichMessage = msg != null && msg.isRich();
+                    if (isRichMessage) {
+                        showTranslate = true;
+                        showTranslateLLM = false;
+                    }
                     String fromLang = msg.messageOwner.originalLanguage;
                     if (fromLang != null && RestrictedLanguagesSelectActivity.getRestrictedLanguages().contains(fromLang)) {
                         showTranslate = false;
@@ -48353,7 +48365,7 @@ public class ChatActivity extends BaseFragment implements
                     if (showTranslate && (isOutgoingOrNotTranslatingDialog || isLLMDefault)) {
                         items.add(canUndoTranslate ? getString(R.string.UndoTranslate) : getString(R.string.Translate));
                         options.add(nkbtn_translate);
-                        icons.add(isLLMDefault ? R.drawable.magic_stick_solar : R.drawable.msg_translate);
+                        icons.add(isLLMDefault && !isRichMessage ? R.drawable.magic_stick_solar : R.drawable.msg_translate);
                     }
                     boolean shouldShowLLM = !showTranslate || !isTranslated || !isOutgoingOrNotTranslatingDialog;
                     if (showTranslateLLM && shouldShowLLM) {
@@ -48443,7 +48455,7 @@ public class ChatActivity extends BaseFragment implements
         boolean isDocuments = selectedObjectGroup != null && selectedObjectGroup.isDocuments;
         if (selectedObjectGroup != null && !isDocuments) {
             for (MessageObject object : selectedObjectGroup.messages) {
-                if (!TextUtils.isEmpty(object.messageOwner.message)) {
+                if (canTranslateSelectedMessage(object)) {
                     if (messageObject != null) {
                         messageObject = null;
                         break;
@@ -48452,17 +48464,27 @@ public class ChatActivity extends BaseFragment implements
                     }
                 }
             }
-        } else if (selectedObject != null && (!TextUtils.isEmpty(selectedObject.messageOwner.message) || selectedObject.isPoll())) {
+        } else if (canTranslateSelectedMessage(selectedObject)) {
             messageObject = selectedObject;
         }
         if (messageObject == null && isDocuments) {
             for (MessageObject obj : selectedObjectGroup.messages) {
-                if (!TextUtils.isEmpty(obj.messageOwner.message)) {
+                if (canTranslateSelectedMessage(obj)) {
                     messageObject = obj;
                 }
             }
         }
         return messageObject;
+    }
+
+    private boolean canTranslateSelectedMessage(MessageObject messageObject) {
+        if (messageObject == null || messageObject.messageOwner == null) {
+            return false;
+        }
+        if (!TextUtils.isEmpty(messageObject.messageOwner.message) || messageObject.isPoll()) {
+            return true;
+        }
+        return messageObject.isRich() && !RichMessageTransHelper.collectPlainTexts(messageObject.messageOwner.rich_message).isEmpty();
     }
 
     private boolean handleTranslateDuringAutoTrans(String toLang) {

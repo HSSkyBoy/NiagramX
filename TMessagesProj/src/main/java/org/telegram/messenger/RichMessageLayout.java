@@ -101,6 +101,7 @@ import java.util.Stack;
 import java.util.concurrent.atomic.AtomicReference;
 
 import ru.noties.jlatexmath.JLatexMathDrawable;
+import tw.nekomimi.nekogram.parts.RichMessageTransHelper;
 
 public class RichMessageLayout {
 
@@ -150,6 +151,8 @@ public class RichMessageLayout {
 
     private int fontSize;
     private float density;
+    private boolean translated;
+    private String translatedLanguage;
 
     public boolean isRtl() { return richMessage != null && richMessage.rtl; }
     public boolean isOut() { return messageObject.isOutOwner(); }
@@ -162,11 +165,15 @@ public class RichMessageLayout {
     }
 
     public boolean needsUpdate(TL_iv.RichMessage newRichMessage, int maxWidth) {
+        boolean newTranslated = RichMessageTransHelper.isTranslated(messageObject);
+        String newTranslatedLanguage = RichMessageTransHelper.getTranslatedLanguage(messageObject);
         return (
             richMessage != newRichMessage ||
             fontSize != SharedConfig.fontSize ||
             Math.abs(density - AndroidUtilities.density) > 0.1f ||
-            maxWidth != this.maxWidth
+            maxWidth != this.maxWidth ||
+            translated != newTranslated ||
+            !TextUtils.equals(translatedLanguage, newTranslatedLanguage)
         );
     }
 
@@ -204,6 +211,8 @@ public class RichMessageLayout {
         joinedText = "";
         fontSize = SharedConfig.fontSize;
         density = AndroidUtilities.density;
+        translated = RichMessageTransHelper.isTranslated(messageObject);
+        translatedLanguage = RichMessageTransHelper.getTranslatedLanguage(messageObject);
         textPaint.setTextSize(dp(SharedConfig.fontSize));
         numTextPaint.setTextSize(dp(SharedConfig.fontSize));
         isPart = false;
@@ -1296,7 +1305,9 @@ public class RichMessageLayout {
         if (text instanceof TL_iv.textEmpty) {
 
         } else if (text instanceof TL_iv.textPlain) {
-            out.append(((TL_iv.textPlain) text).text);
+            String plainText = ((TL_iv.textPlain) text).text;
+            String translatedText = RichMessageTransHelper.getCachedTranslation(messageObject, plainText);
+            out.append(translatedText != null ? translatedText : (plainText == null ? "" : plainText));
         } else if (text instanceof TL_iv.textBold) {
             flags |= TEXT_FLAG_BOLD;
             formatTextAndSetSpan(text.text, out, flags, new StyleSpan(this, flags));
