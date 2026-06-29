@@ -179,7 +179,7 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
         AndroidUtilities.removeFromParent(actionBar);
         ChatActivityFadeView fadeView = new ChatActivityFadeView(container.getContext());
         fadeView.setup(wallpaperDrawableFactory);
-        fadeView.setFadeHeightTop(dp(60));
+        fadeView.setFadeHeightTop(dp(48));
         fadeView.setFadeHeightBottom(0);
         container.addOnLayoutChangeListener((v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom) -> {
             fadeView.setFadeZoneTop(actionBar.getBottom() + dp(2));
