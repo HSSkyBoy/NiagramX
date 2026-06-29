@@ -43,6 +43,7 @@ import org.telegram.messenger.R;
 import org.telegram.messenger.SharedConfig;
 import org.telegram.messenger.TranslateController;
 import org.telegram.messenger.browser.Browser;
+import org.telegram.messenger.utils.RectFMergeBounding;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.ActionBar;
 import org.telegram.ui.ActionBar.BaseFragment;
@@ -213,6 +214,7 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
         private final DownscaleScrollableNoiseSuppressor noiseSuppressor;
         private final int capturePadding;
         private final ArrayList<RectF> positions = new ArrayList<>();
+        private final ArrayList<RectF> positionsMerged = new ArrayList<>();
         private final IBlur3Capture capture;
         private boolean updateScheduled;
 
@@ -240,7 +242,8 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
                 return;
             }
             int count = source.getVisiblePositions(positions, 0, capturePadding);
-            noiseSuppressor.setupRenderNodes(positions, count);
+            count = RectFMergeBounding.mergeOverlapping(positions, count, positionsMerged);
+            noiseSuppressor.setupRenderNodes(positionsMerged, count);
             if (noiseSuppressor.invalidateResultRenderNodes(capture, container.getWidth(), container.getHeight())) {
                 source.invalidateDisplayListForDrawables();
                 actionBar.invalidate();
