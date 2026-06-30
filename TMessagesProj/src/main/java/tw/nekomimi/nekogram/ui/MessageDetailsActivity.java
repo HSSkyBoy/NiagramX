@@ -57,6 +57,7 @@ import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
 import org.telegram.messenger.TranslateController;
 import org.telegram.messenger.Utilities;
+import org.telegram.tgnet.TLObject;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.tgnet.tl.TL_iv;
 import org.telegram.ui.ActionBar.ActionBar;
@@ -88,6 +89,7 @@ import java.util.Locale;
 import tw.nekomimi.nekogram.helpers.MessageHelper;
 import tw.nekomimi.nekogram.ui.cells.HeaderCell;
 
+@SuppressWarnings("IfCanBeSwitch")
 public class MessageDetailsActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
     public static final Gson gson = new GsonBuilder()
@@ -137,10 +139,13 @@ public class MessageDetailsActivity extends BaseFragment implements Notification
     private int dcRow;
     private int languageRow;
     private int buttonsRow;
+    private int richMessageRow;
+    private String richMessageText;
     private int emptyRow;
     private int jsonTextRow;
     private int exportRow;
     private int endRow;
+    private int fullRichMessageRequestId;
 
     public MessageDetailsActivity(MessageObject messageObject, MessageObject.GroupedMessages messageGroup) {
         this.messageObject = messageObject;
@@ -357,6 +362,7 @@ public class MessageDetailsActivity extends BaseFragment implements Notification
         super.onFragmentCreate();
         NotificationCenter.getGlobalInstance().addObserver(this, NotificationCenter.emojiLoaded);
         updateRows();
+        loadFullRichMessage();
         return true;
     }
 
@@ -533,6 +539,8 @@ public class MessageDetailsActivity extends BaseFragment implements Notification
         dcRow = dc != 0 ? rowCount++ : -1;
         languageRow = TextUtils.isEmpty(MessageHelper.getMessagePlainText(messageObject, messageGroup)) ? -1 : rowCount++;
         buttonsRow = messageObject.messageOwner.reply_markup instanceof TLRPC.TL_replyInlineMarkup ? rowCount++ : -1;
+        richMessageText = getRichMessageText();
+        richMessageRow = TextUtils.isEmpty(richMessageText) ? -1 : rowCount++;
         emptyRow = rowCount++;
         jsonTextRow = rowCount++;
         exportRow = rowCount++;
@@ -596,6 +604,10 @@ public class MessageDetailsActivity extends BaseFragment implements Notification
     public void onFragmentDestroy() {
         super.onFragmentDestroy();
         fragmentDestroyed = true;
+        if (fullRichMessageRequestId != 0) {
+            getConnectionsManager().cancelRequest(fullRichMessageRequestId, true);
+            fullRichMessageRequestId = 0;
+        }
         NotificationCenter.getGlobalInstance().removeObserver(this, NotificationCenter.emojiLoaded);
     }
 
@@ -624,6 +636,395 @@ public class MessageDetailsActivity extends BaseFragment implements Notification
         public boolean shouldSkipClass(Class<?> clazz) {
             return false;
         }
+    }
+
+    private void loadFullRichMessage() {
+        if (messageObject == null || messageObject.messageOwner == null || messageObject.messageOwner.rich_message == null || !messageObject.messageOwner.rich_message.part) {
+            return;
+        }
+        TLRPC.InputPeer peer = getMessagesController().getInputPeer(messageObject.getDialogId());
+        if (peer == null) {
+            return;
+        }
+
+        TL_iv.getRichMessage req = new TL_iv.getRichMessage();
+        req.peer = peer;
+        req.id = messageObject.getId();
+        fullRichMessageRequestId = getConnectionsManager().sendRequestTyped(req, AndroidUtilities::runOnUIThread, (response, error) -> {
+            fullRichMessageRequestId = 0;
+            if (fragmentDestroyed || isFinishing() || response == null) {
+                return;
+            }
+            getMessagesController().putUsers(response.users, false);
+            getMessagesController().putChats(response.chats, false);
+            TL_iv.RichMessage richMessage = null;
+            for (int i = 0; i < response.messages.size(); i++) {
+                TLRPC.Message message = response.messages.get(i);
+                if (message != null && message.id == messageObject.getId() && message.rich_message != null) {
+                    richMessage = message.rich_message;
+                    break;
+                }
+            }
+            if (richMessage == null) {
+                return;
+            }
+            messageObject.messageOwner.rich_message = richMessage;
+            messageObject.richLayout = null;
+            updateRows();
+        });
+    }
+
+    private String getRichMessageText() {
+        if (messageObject.richLayout != null && !TextUtils.isEmpty(messageObject.richLayout.joinedText)) {
+            StringBuilder builder = new StringBuilder();
+            TL_iv.RichMessage richMessage = messageObject.messageOwner.rich_message;
+            if (richMessage != null) {
+                for (int i = 0; i < richMessage.blocks.size(); i++) {
+                    appendRichMessageBlockText(richMessage.blocks.get(i), builder);
+                }
+            }
+            if (builder.length() > 0) {
+                return builder.toString();
+            }
+            return messageObject.richLayout.joinedText.toString();
+        }
+        StringBuilder builder = new StringBuilder();
+        TL_iv.RichMessage richMessage = messageObject.messageOwner.rich_message;
+        if (richMessage != null) {
+            for (int i = 0; i < richMessage.blocks.size(); i++) {
+                appendRichMessageBlockText(richMessage.blocks.get(i), builder);
+            }
+        }
+        return builder.toString();
+    }
+
+    private static void appendRichMessageBlockText(TL_iv.PageBlock block, StringBuilder builder) {
+        if (block == null) return;
+        appendMarkdownBlock(builder, richMessageBlockToMarkdown(block, 0));
+    }
+
+    private static String richMessageBlockToMarkdown(TL_iv.PageBlock block, int indent) {
+        if (block == null) {
+            return "";
+        }
+        if (block instanceof TL_iv.pageBlockHeading1) {
+            return headingMarkdown(1, block.text);
+        } else if (block instanceof TL_iv.pageBlockTitle || block instanceof TL_iv.pageBlockHeader || block instanceof TL_iv.pageBlockHeading2) {
+            return headingMarkdown(2, block.text);
+        } else if (block instanceof TL_iv.pageBlockSubtitle || block instanceof TL_iv.pageBlockSubheader || block instanceof TL_iv.pageBlockHeading3) {
+            return headingMarkdown(3, block.text);
+        } else if (block instanceof TL_iv.pageBlockHeading4) {
+            return headingMarkdown(4, block.text);
+        } else if (block instanceof TL_iv.pageBlockHeading5) {
+            return headingMarkdown(5, block.text);
+        } else if (block instanceof TL_iv.pageBlockHeading6) {
+            return headingMarkdown(6, block.text);
+        } else if (block instanceof TL_iv.pageBlockParagraph || block instanceof TL_iv.pageBlockFooter || block instanceof TL_iv.pageBlockKicker) {
+            return richTextToMarkdown(block.text);
+        } else if (block instanceof TL_iv.pageBlockPreformatted preformatted) {
+            String language = TextUtils.isEmpty(preformatted.language) ? "" : preformatted.language;
+            return "```" + language + "\n" + richTextToRawText(preformatted.text) + "\n```";
+        } else if (block instanceof TL_iv.pageBlockDivider) {
+            return "---";
+        } else if (block instanceof TL_iv.pageBlockMath) {
+            return "$$\n" + ((TL_iv.pageBlockMath) block).source + "\n$$";
+        } else if (block instanceof TL_iv.pageBlockAuthorDate) {
+            return richTextToMarkdown(((TL_iv.pageBlockAuthorDate) block).author);
+        } else if (block instanceof TL_iv.pageBlockList list) {
+            StringBuilder out = new StringBuilder();
+            for (int i = 0; i < list.items.size(); i++) {
+                TL_iv.PageListItem item = list.items.get(i);
+                appendListIndent(out, indent);
+                if (list.ordered) {
+                    out.append(i + 1).append(". ");
+                } else {
+                    out.append("- ");
+                }
+                if (item instanceof TL_iv.TL_pageListItemText textItem) {
+                    if (textItem.checkbox) {
+                        out.append(textItem.checked ? "[x] " : "[ ] ");
+                    }
+                    out.append(richTextToMarkdown(textItem.text));
+                } else if (item instanceof TL_iv.TL_pageListItemBlocks blocksItem) {
+                    if (blocksItem.checkbox) {
+                        out.append(blocksItem.checked ? "[x] " : "[ ] ");
+                    }
+                    out.append(renderBlocks(blocksItem.blocks, indent + 1));
+                }
+                if (i != list.items.size() - 1) {
+                    out.append('\n');
+                }
+            }
+            return out.toString();
+        } else if (block instanceof TL_iv.pageBlockOrderedList list) {
+            StringBuilder out = new StringBuilder();
+            for (int i = 0; i < list.items.size(); i++) {
+                TL_iv.PageListOrderedItem item = list.items.get(i);
+                appendListIndent(out, indent);
+                if (item instanceof TL_iv.TL_pageListOrderedItemText textItem) {
+                    out.append(TextUtils.isEmpty(textItem.num) ? getOrderedListNumber(list, i) : textItem.num).append(". ");
+                    if (textItem.checkbox) {
+                        out.append(textItem.checked ? "[x] " : "[ ] ");
+                    }
+                    out.append(richTextToMarkdown(textItem.text));
+                } else if (item instanceof TL_iv.TL_pageListOrderedItemBlocks blocksItem) {
+                    out.append(TextUtils.isEmpty(blocksItem.num) ? getOrderedListNumber(list, i) : blocksItem.num).append(". ");
+                    if (blocksItem.checkbox) {
+                        out.append(blocksItem.checked ? "[x] " : "[ ] ");
+                    }
+                    out.append(renderBlocks(blocksItem.blocks, indent + 1));
+                }
+                if (i != list.items.size() - 1) {
+                    out.append('\n');
+                }
+            }
+            return out.toString();
+        } else if (block instanceof TL_iv.pageBlockBlockquote quote) {
+            return quoteMarkdown(joinMarkdownParts(richTextToMarkdown(quote.text), richTextToMarkdown(quote.caption)));
+        } else if (block instanceof TL_iv.pageBlockBlockquoteBlocks quote) {
+            return quoteMarkdown(joinMarkdownParts(renderBlocks(quote.blocks, indent), richTextToMarkdown(quote.caption)));
+        } else if (block instanceof TL_iv.pageBlockPullquote quote) {
+            return quoteMarkdown(joinMarkdownParts(richTextToMarkdown(quote.text), richTextToMarkdown(quote.caption)));
+        } else if (block instanceof TL_iv.pageBlockCover) {
+            return richMessageBlockToMarkdown(((TL_iv.pageBlockCover) block).cover, indent);
+        } else if (block instanceof TL_iv.pageBlockEmbedPost post) {
+            return joinMarkdownParts(renderBlocks(post.blocks, indent), captionToMarkdown(post.caption));
+        } else if (block instanceof TL_iv.pageBlockCollage collage) {
+            return joinMarkdownParts(renderBlocks(collage.items, indent), captionToMarkdown(collage.caption));
+        } else if (block instanceof TL_iv.pageBlockSlideshow slideshow) {
+            return joinMarkdownParts(renderBlocks(slideshow.items, indent), captionToMarkdown(slideshow.caption));
+        } else if (block instanceof TL_iv.pageBlockTable table) {
+            return joinMarkdownParts(richTextToMarkdown(table.title), tableToMarkdown(table));
+        } else if (block instanceof TL_iv.pageBlockDetails details) {
+            return "<details>\n<summary>" + richTextToMarkdown(details.title) + "</summary>\n\n" + renderBlocks(details.blocks, indent) + "\n</details>";
+        } else if (block instanceof TL_iv.pageBlockRelatedArticles relatedArticles) {
+            StringBuilder out = new StringBuilder(richTextToMarkdown(relatedArticles.title));
+            for (int i = 0; i < relatedArticles.articles.size(); i++) {
+                TL_iv.pageRelatedArticle article = relatedArticles.articles.get(i);
+                String title = TextUtils.isEmpty(article.title) ? article.url : escapeMarkdown(article.title);
+                if (!TextUtils.isEmpty(title)) {
+                    appendMarkdownBlock(out, TextUtils.isEmpty(article.url) ? "- " + title : "- [" + title + "](" + escapeLinkUrl(article.url) + ")");
+                }
+                if (!TextUtils.isEmpty(article.description)) {
+                    appendMarkdownBlock(out, escapeMarkdown(article.description));
+                }
+            }
+            return out.toString();
+        } else if (block instanceof TL_iv.pageBlockPhoto || block instanceof TL_iv.pageBlockVideo || block instanceof TL_iv.pageBlockAudio || block instanceof TL_iv.pageBlockMap || block instanceof TL_iv.pageBlockEmbed) {
+            return captionToMarkdown(block.caption);
+        } else {
+            return joinMarkdownParts(richTextToMarkdown(block.text), captionToMarkdown(block.caption));
+        }
+    }
+
+    private static String renderBlocks(ArrayList<TL_iv.PageBlock> blocks, int indent) {
+        StringBuilder builder = new StringBuilder();
+        if (blocks != null) {
+            for (int i = 0; i < blocks.size(); i++) {
+                appendMarkdownBlock(builder, richMessageBlockToMarkdown(blocks.get(i), indent));
+            }
+        }
+        return builder.toString();
+    }
+
+    private static String headingMarkdown(int level, TL_iv.RichText text) {
+        String value = richTextToMarkdown(text);
+        if (TextUtils.isEmpty(value)) {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < level; i++) {
+            builder.append('#');
+        }
+        return builder.append(' ').append(value).toString();
+    }
+
+    private static String captionToMarkdown(TL_iv.PageCaption caption) {
+        if (caption == null) {
+            return "";
+        }
+        return joinMarkdownParts(richTextToMarkdown(caption.text), richTextToMarkdown(caption.credit));
+    }
+
+    private static void appendMarkdownBlock(StringBuilder builder, String text) {
+        if (TextUtils.isEmpty(text)) {
+            return;
+        }
+        if (builder.length() > 0) {
+            builder.append("\n\n");
+        }
+        builder.append(text);
+    }
+
+    private static String joinMarkdownParts(String... parts) {
+        StringBuilder builder = new StringBuilder();
+        if (parts != null) {
+            for (String part : parts) {
+                appendMarkdownBlock(builder, part);
+            }
+        }
+        return builder.toString();
+    }
+
+    private static String quoteMarkdown(String text) {
+        if (TextUtils.isEmpty(text)) {
+            return "";
+        }
+        String[] lines = text.split("\n", -1);
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < lines.length; i++) {
+            if (i > 0) {
+                builder.append('\n');
+            }
+            builder.append("> ").append(lines[i]);
+        }
+        return builder.toString();
+    }
+
+    private static String tableToMarkdown(TL_iv.pageBlockTable table) {
+        if (table.rows.isEmpty()) {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder();
+        int columns = 0;
+        for (int i = 0; i < table.rows.size(); i++) {
+            columns = Math.max(columns, table.rows.get(i).cells.size());
+        }
+        if (columns == 0) {
+            return "";
+        }
+        for (int i = 0; i < table.rows.size(); i++) {
+            TL_iv.pageTableRow row = table.rows.get(i);
+            builder.append('|');
+            for (int j = 0; j < columns; j++) {
+                String cell = j < row.cells.size() ? richTextToMarkdown(row.cells.get(j).text).replace("\n", "<br>") : "";
+                builder.append(' ').append(cell).append(" |");
+            }
+            builder.append('\n');
+            if (i == 0) {
+                builder.append('|');
+                for (int j = 0; j < columns; j++) {
+                    builder.append(" --- |");
+                }
+                builder.append('\n');
+            }
+        }
+        return builder.toString().trim();
+    }
+
+    private static int getOrderedListNumber(TL_iv.pageBlockOrderedList list, int index) {
+        int start = TLObject.hasFlag(list.flags, TLObject.FLAG_0) ? list.start : (list.reversed ? list.items.size() : 1);
+        return list.reversed ? start - index : start + index;
+    }
+
+    private static void appendListIndent(StringBuilder builder, int indent) {
+        for (int i = 0; i < indent; i++) {
+            builder.append("  ");
+        }
+    }
+
+    private static String richTextToMarkdown(TL_iv.RichText text) {
+        if (text == null || text instanceof TL_iv.textEmpty) {
+            return "";
+        }
+        if (text instanceof TL_iv.textPlain) {
+            return escapeMarkdown(((TL_iv.textPlain) text).text);
+        } else if (text instanceof TL_iv.textConcat) {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < text.texts.size(); i++) {
+                builder.append(richTextToMarkdown(text.texts.get(i)));
+            }
+            return builder.toString();
+        } else if (text instanceof TL_iv.textBold) {
+            return wrapMarkdown("**", richTextToMarkdown(text.text), "**");
+        } else if (text instanceof TL_iv.textItalic) {
+            return wrapMarkdown("*", richTextToMarkdown(text.text), "*");
+        } else if (text instanceof TL_iv.textUnderline) {
+            return wrapMarkdown("<u>", richTextToMarkdown(text.text), "</u>");
+        } else if (text instanceof TL_iv.textStrike) {
+            return wrapMarkdown("~~", richTextToMarkdown(text.text), "~~");
+        } else if (text instanceof TL_iv.textFixed) {
+            return inlineCodeMarkdown(richTextToRawText(text.text));
+        } else if (text instanceof TL_iv.textUrl) {
+            String label = richTextToMarkdown(text.text);
+            return TextUtils.isEmpty(label) ? escapeMarkdown(text.url) : "[" + label + "](" + escapeLinkUrl(text.url) + ")";
+        } else if (text instanceof TL_iv.textEmail) {
+            String label = richTextToMarkdown(text.text);
+            return TextUtils.isEmpty(label) ? escapeMarkdown(text.email) : "[" + label + "](mailto:" + escapeLinkUrl(text.email) + ")";
+        } else if (text instanceof TL_iv.textPhone phone) {
+            String label = richTextToMarkdown(phone.text);
+            return TextUtils.isEmpty(label) ? escapeMarkdown(phone.phone) : "[" + label + "](tel:" + escapeLinkUrl(phone.phone) + ")";
+        } else if (text instanceof TL_iv.textMarked) {
+            return wrapMarkdown("<mark>", richTextToMarkdown(text.text), "</mark>");
+        } else if (text instanceof TL_iv.textSubscript) {
+            return wrapMarkdown("<sub>", richTextToMarkdown(text.text), "</sub>");
+        } else if (text instanceof TL_iv.textSuperscript) {
+            return wrapMarkdown("<sup>", richTextToMarkdown(text.text), "</sup>");
+        } else if (text instanceof TL_iv.textSpoiler) {
+            return wrapMarkdown("||", richTextToMarkdown(text.text), "||");
+        } else if (text instanceof TL_iv.textMath) {
+            return "$" + ((TL_iv.textMath) text).source + "$";
+        } else if (text instanceof TL_iv.textCustomEmoji) {
+            return escapeMarkdown(((TL_iv.textCustomEmoji) text).alt);
+        }
+        return richTextToMarkdown(text.text);
+    }
+
+    private static String richTextToRawText(TL_iv.RichText text) {
+        if (text == null || text instanceof TL_iv.textEmpty) {
+            return "";
+        }
+        if (text instanceof TL_iv.textPlain) {
+            return ((TL_iv.textPlain) text).text;
+        } else if (text instanceof TL_iv.textConcat) {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < text.texts.size(); i++) {
+                builder.append(richTextToRawText(text.texts.get(i)));
+            }
+            return builder.toString();
+        } else if (text instanceof TL_iv.textMath) {
+            return ((TL_iv.textMath) text).source;
+        } else if (text instanceof TL_iv.textCustomEmoji) {
+            return ((TL_iv.textCustomEmoji) text).alt;
+        }
+        return richTextToRawText(text.text);
+    }
+
+    private static String wrapMarkdown(String prefix, String value, String suffix) {
+        if (TextUtils.isEmpty(value)) {
+            return "";
+        }
+        return prefix + value + suffix;
+    }
+
+    private static String inlineCodeMarkdown(String value) {
+        if (TextUtils.isEmpty(value)) {
+            return "";
+        }
+        String fence = value.contains("`") ? "``" : "`";
+        return fence + value + fence;
+    }
+
+    private static String escapeMarkdown(String value) {
+        if (TextUtils.isEmpty(value)) {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder(value.length());
+        for (int i = 0; i < value.length(); i++) {
+            char c = value.charAt(i);
+            if ("\\`*_[]|".indexOf(c) >= 0) {
+                builder.append('\\');
+            }
+            builder.append(c);
+        }
+        return builder.toString();
+    }
+
+    private static String escapeLinkUrl(String value) {
+        if (TextUtils.isEmpty(value)) {
+            return "";
+        }
+        return value.replace("\\", "\\\\").replace(")", "\\)");
     }
 
     private static class RichTextTypeAdapter implements JsonSerializer<TL_iv.RichText> {
@@ -864,6 +1265,8 @@ public class MessageDetailsActivity extends BaseFragment implements Notification
                         }
                     } else if (position == buttonsRow) {
                         textCell.setTextAndValue("Buttons", gson.toJson(messageObject.messageOwner.reply_markup), divider);
+                    } else if (position == richMessageRow) {
+                        textCell.setTextAndValue("Rich Message", richMessageText, divider);
                     } else if (position == jsonTextRow) {
                         try {
                             String jsonString = toPrettyJson(messageObject.messageOwner);
