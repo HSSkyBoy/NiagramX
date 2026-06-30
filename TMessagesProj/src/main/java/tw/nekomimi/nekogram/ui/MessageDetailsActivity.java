@@ -28,11 +28,14 @@ import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
@@ -55,6 +58,7 @@ import org.telegram.messenger.R;
 import org.telegram.messenger.TranslateController;
 import org.telegram.messenger.Utilities;
 import org.telegram.tgnet.TLRPC;
+import org.telegram.tgnet.tl.TL_iv;
 import org.telegram.ui.ActionBar.ActionBar;
 import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.BaseFragment;
@@ -73,9 +77,12 @@ import org.telegram.ui.Components.UndoView;
 import org.telegram.ui.ProfileActivity;
 
 import java.io.File;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Locale;
 
 import tw.nekomimi.nekogram.helpers.MessageHelper;
@@ -85,6 +92,8 @@ public class MessageDetailsActivity extends BaseFragment implements Notification
 
     public static final Gson gson = new GsonBuilder()
             .registerTypeHierarchyAdapter(byte[].class, new ByteArrayToBase64TypeAdapter())
+            .registerTypeHierarchyAdapter(TL_iv.RichText.class, new RichTextTypeAdapter())
+            .registerTypeHierarchyAdapter(TL_iv.PageBlock.class, new PageBlockTypeAdapter())
             .setExclusionStrategies(new CustomExclusionStrategy()).create();
     public static final Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
     private final MessageObject messageObject;
@@ -590,6 +599,11 @@ public class MessageDetailsActivity extends BaseFragment implements Notification
         NotificationCenter.getGlobalInstance().removeObserver(this, NotificationCenter.emojiLoaded);
     }
 
+    private static String toPrettyJson(Object object) {
+        JsonElement jsonElement = JsonParser.parseString(gson.toJson(object));
+        return prettyGson.toJson(jsonElement);
+    }
+
     private static class ByteArrayToBase64TypeAdapter implements JsonSerializer<byte[]>, JsonDeserializer<byte[]> {
         public byte[] deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             return Base64.decode(json.getAsString(), Base64.NO_WRAP);
@@ -600,16 +614,77 @@ public class MessageDetailsActivity extends BaseFragment implements Notification
         }
     }
 
-    private static class CustomExclusionStrategy implements com.google.gson.ExclusionStrategy {
+    private static class CustomExclusionStrategy implements ExclusionStrategy {
         @Override
-        public boolean shouldSkipField(com.google.gson.FieldAttributes f) {
-            return "parentRichText".equals(f.getName()) || "mChangingConfigurations".equals(f.getName());
+        public boolean shouldSkipField(FieldAttributes f) {
+            return shouldSkipJsonField(f.getDeclaringClass(), f.getName());
         }
 
         @Override
         public boolean shouldSkipClass(Class<?> clazz) {
             return false;
         }
+    }
+
+    private static class RichTextTypeAdapter implements JsonSerializer<TL_iv.RichText> {
+        @Override
+        public JsonElement serialize(TL_iv.RichText src, Type typeOfSrc, JsonSerializationContext context) {
+            return serializeTlObject(src, TL_iv.RichText.class, context);
+        }
+    }
+
+    private static class PageBlockTypeAdapter implements JsonSerializer<TL_iv.PageBlock> {
+        @Override
+        public JsonElement serialize(TL_iv.PageBlock src, Type typeOfSrc, JsonSerializationContext context) {
+            return serializeTlObject(src, TL_iv.PageBlock.class, context);
+        }
+    }
+
+    private static JsonObject serializeTlObject(Object src, Class<?> rootClass, JsonSerializationContext context) {
+        JsonObject object = new JsonObject();
+        object.addProperty("_type", src.getClass().getSimpleName());
+        HashSet<String> names = new HashSet<>();
+        for (Class<?> clazz = src.getClass(); clazz != null && rootClass.isAssignableFrom(clazz); clazz = clazz.getSuperclass()) {
+            Field[] fields = clazz.getDeclaredFields();
+            for (Field field : fields) {
+                int modifiers = field.getModifiers();
+                if (field.isSynthetic() || Modifier.isStatic(modifiers) || Modifier.isTransient(modifiers)) {
+                    continue;
+                }
+                String name = field.getName();
+                if (!names.add(name) || shouldSkipJsonField(field.getDeclaringClass(), name)) {
+                    continue;
+                }
+                try {
+                    field.setAccessible(true);
+                    Object value = field.get(src);
+                    if (value != null) {
+                        object.add(name, context.serialize(value));
+                    }
+                } catch (Exception e) {
+                    FileLog.e(e);
+                }
+            }
+        }
+        return object;
+    }
+
+    private static boolean shouldSkipJsonField(Class<?> declaringClass, String name) {
+        if ("parentRichText".equals(name) || "bitmap".equals(name) || "mChangingConfigurations".equals(name)) {
+            return true;
+        }
+        if (TL_iv.Page.class.isAssignableFrom(declaringClass)) {
+            return "web".equals(name) || "local".equals(name);
+        }
+        if (TL_iv.textMath.class.isAssignableFrom(declaringClass)) {
+            return "w".equals(name) || "h".equals(name) || "depth".equals(name) || "tried".equals(name);
+        }
+        if (TL_iv.PageBlock.class.isAssignableFrom(declaringClass)) {
+            return "first".equals(name) || "bottom".equals(name) || "level".equals(name) || "quoteLevels".equals(name) ||
+                    "mid".equals(name) || "groupId".equals(name) || "thumb".equals(name) || "thumbObject".equals(name) ||
+                    "cachedWidth".equals(name) || "cachedHeight".equals(name);
+        }
+        return false;
     }
 
     private class ListAdapter extends RecyclerListView.SelectionAdapter {
@@ -791,9 +866,7 @@ public class MessageDetailsActivity extends BaseFragment implements Notification
                         textCell.setTextAndValue("Buttons", gson.toJson(messageObject.messageOwner.reply_markup), divider);
                     } else if (position == jsonTextRow) {
                         try {
-                            String jsonTempString = gson.toJson(messageObject.messageOwner);
-                            JsonElement jsonElement = JsonParser.parseString(jsonTempString);
-                            String jsonString = prettyGson.toJson(jsonElement);
+                            String jsonString = toPrettyJson(messageObject.messageOwner);
                             final SpannableString[] sb = new SpannableString[1];
                             new CountDownTimer(300, 100) {
                                 @Override
@@ -803,11 +876,14 @@ public class MessageDetailsActivity extends BaseFragment implements Notification
 
                                 @Override
                                 public void onFinish() {
-                                    textCell.setTextAndValue("JSON", sb[0], divider);
+                                    if (!TextUtils.isEmpty(sb[0])) {
+                                        textCell.setTextAndValue("JSON", sb[0], divider);
+                                    }
                                 }
                             }.start();
                         } catch (Exception e) {
                             FileLog.e(e);
+                            textCell.setTextAndValue("JSON", e.toString(), divider);
                         }
                     }
                     break;
