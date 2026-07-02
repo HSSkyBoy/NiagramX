@@ -747,9 +747,13 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
         Bulletin.addDelegate(this, new Bulletin.Delegate() {
             @Override
             public int getBottomOffset(int tag) {
-                return getBottomInset();
+                return getBulletinBottomOffset();
             }
         });
+    }
+
+    protected int getBulletinBottomOffset() {
+        return getBottomInset();
     }
 
     @Override
