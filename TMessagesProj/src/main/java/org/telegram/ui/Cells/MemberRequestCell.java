@@ -90,7 +90,7 @@ public class MemberRequestCell extends FrameLayout {
         addView(dismissButton, dismissLayoutParams);
 
         TextView banButton = new TextView(getContext());
-        banButton.setBackground(Theme.AdaptiveRipple.filledRectByKey(Theme.key_text_RedRegular, 4));
+        banButton.setBackground(Theme.AdaptiveRipple.filledRectByKey(Theme.key_text_RedRegular, 16));
         banButton.setGravity((LocaleController.isRTL ? Gravity.RIGHT : Gravity.LEFT) | Gravity.CENTER_VERTICAL);
         banButton.setMaxLines(1);
         banButton.setPadding(btnPadding, 0, btnPadding, 0);

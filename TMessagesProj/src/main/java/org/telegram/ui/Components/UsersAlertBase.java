@@ -541,6 +541,11 @@ public class UsersAlertBase extends BottomSheet {
                 }
             }
 
+            // some devices(Pixel 9 ~) may report large status bar insets
+            if (height < getMeasuredHeight()) {
+                height = getMeasuredHeight();
+            }
+
             shadowDrawable.setBounds(0, top, getMeasuredWidth(), height);
             shadowDrawable.draw(canvas);
 
