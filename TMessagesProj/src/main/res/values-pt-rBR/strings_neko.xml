@@ -198,7 +198,7 @@
     <string name="DisableProxyWhenVpnEnabled">Desativar proxy quando a VPN estiver ativada</string>
     <string name="SkipOpenLinkConfirm">Ignorar confirmação ao abrir links</string>
     <string name="DeleteAllInChatAlert">Aviso! Isso irá **excluir todas as mensagens** neste chat para **todos** os participantes.</string>
-    <string name="UnblockAll">Desbloquear tudo</string>
+    <string name="UnblockAll">Desbloquear todos</string>
     <string name="UnblockAllWarn">Tem certeza de que deseja desbloquear **todos os usuários e bots**?</string>
     <string name="BlockedListEmpty">Ninguém bloqueado por aqui :)</string>
     <string name="AddProxySocks5">Adicionar proxy SOCKS5</string>
@@ -222,7 +222,7 @@
     <string name="ShareMessages">Compartilhar</string>
     <string name="DisableVibration">Desativar vibração</string>
     <string name="SendCommentAfterForward">Enviar comentário antes de encaminhar</string>
-    <string name="ImportLogin">Entrar via QR</string>
+    <string name="ImportLogin">Entrar com QR</string>
     <string name="UserRestrictionsSendGames">Enviar jogos</string>
     <string name="UserRestrictionsSendInline">Enviar via bots inline</string>
     <string name="TabletMode">Modo tablet</string>

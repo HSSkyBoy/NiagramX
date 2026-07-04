@@ -335,4 +335,5 @@
     <string name="DeepLTranslateKey">DeepL API キー</string>
     <string name="DeepLTranslateKeyNotice">DeepL API キーを設定します。組み込みの認証情報を使用する場合は空白のままにしてください。</string>
     <string name="DefaultScheduleDelay">デフォルトの遅延</string>
+    <string name="ExportAyuDB">データベースをエクスポート</string>
 </resources>

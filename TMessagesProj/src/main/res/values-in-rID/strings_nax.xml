@@ -335,4 +335,5 @@
     <string name="DeepLTranslateKey">Kunci API DeepL</string>
     <string name="DeepLTranslateKeyNotice">Konfigurasikan Kunci API DeepL, biarkan kosong untuk menggunakan kredensial bawaan.</string>
     <string name="DefaultScheduleDelay">Penundaan bawaan</string>
+    <string name="ExportAyuDB">Ekspor Basis Data</string>
 </resources>

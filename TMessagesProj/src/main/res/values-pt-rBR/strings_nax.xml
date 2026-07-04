@@ -7,7 +7,7 @@
     <string name="EditsHistoryMenuText">Histórico de edições</string>
     <string name="DeleteKeepLocally">Manter localmente</string>
     <string name="ClearMessageDatabase">Limpar BD de mensagens</string>
-    <string name="ClearMessageDatabaseNotification">Dados de mensagens limpos.</string>
+    <string name="ClearMessageDatabaseNotification">Banco de dados de mensagens limpo.</string>
     <string name="CustomDeletedMark">Marca de exclusão personalizada</string>
     <string name="HidePremiumSection">Ocultar premium nas configurações</string>
     <string name="HideHelpSection">Ocultar ajuda nas configurações</string>
@@ -67,8 +67,7 @@
     <string name="RegexFiltersUserFilterHint">Inserir ID do usuário</string>
     <string name="RegexFiltersGlobalHeader">Filtros globais</string>
     <string name="RegexFiltersTextSelectionAddtoShared">Adicionar aos filtros compartilhados</string>
-    <string name="ShadowBan">Bloqueio oculto</string>
-    <string name="UnshadowBan">Remover bloqueio oculto</string>
+    <string name="UnshadowBan">Remover Shadow Ban</string>
     <string name="ShadowBanAdded">Adicionado aos **filtros de usuário**.</string>
     <string name="ShadowBanRemoved">Removido dos **filtros de usuário**.</string>
     <string name="ShadowBanChannelAdded">Adicionado aos **filtros de canal**.</string>
@@ -126,7 +125,7 @@
     <string name="TgBrowserOpenFail_Desc">A operação selecionada não está disponível porque o navegador interno foi desativado.</string>
     <string name="MapPreviewProviderYandexNax">Yandex</string>
     <string name="GhostMode">Modo fantasma</string>
-    <string name="GhostEssentialsHeader">Essencial do fantasma</string>
+    <string name="GhostEssentialsHeader">Essenciais do modo fantasma</string>
     <string name="EnableGhostMode">Ativar fantasma</string>
     <string name="DisableGhostMode">Desativar fantasma</string>
     <string name="GhostModeEnabled">Modo fantasma ativado</string>
@@ -335,4 +334,5 @@
     <string name="DeepLTranslateKey">Chave da API do DeepL</string>
     <string name="DeepLTranslateKeyNotice">Configure sua chave da API do DeepL; deixe em branco para usar as credenciais integradas.</string>
     <string name="DefaultScheduleDelay">Atraso padrão</string>
+    <string name="ExportAyuDB">Exportar banco de dados</string>
 </resources>
