@@ -455,6 +455,7 @@ public class PinnedReactionsActivity extends BaseFragment {
             switchLayout.addView(editText, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
 
             actionButton = new ButtonWithCounterView(context, getResourceProvider());
+            actionButton.setRound();
             actionButton.setText(new SpannableStringBuilder(getString(R.string.PinnedReactions_Apply)), false);
             actionButton.setOnClickListener(v -> buttonClick());
             addView(scrollView);
@@ -989,6 +990,11 @@ public class PinnedReactionsActivity extends BaseFragment {
                     public void onAnimationEnd(Animator animation) {
                         NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.startAllHeavyOperations, 512);
                         bottomDialogLayout.setVisibility(View.INVISIBLE);
+                        if (checked) {
+                            actionButton.animate().setListener(null).cancel();
+                            actionButton.setVisibility(View.VISIBLE);
+                            actionButton.animate().alpha(1.0f).start();
+                        }
                         if (isClearFocusNotWorking()) {
                             switchLayout.setFocusableInTouchMode(false);
                         }
