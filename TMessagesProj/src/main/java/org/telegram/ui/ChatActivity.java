@@ -2069,7 +2069,7 @@ public class ChatActivity extends BaseFragment implements
                         return allowRepeat && !message.isSponsored() && chatMode != MODE_SCHEDULED && !message.needDrawBluredPreview() && !message.isLiveLocation() && message.type != 16;
                     case DoubleTap.DOUBLE_TAP_ACTION_REPEAT_AS_COPY:
                         allowRepeat = allowChatActions && (currentChat == null || ((!ChatObject.isNotInChat(currentChat) || isThreadChat()) && (!ChatObject.isChannel(currentChat) || currentChat.megagroup) && ChatObject.canSendMessages(currentChat))) &&
-                                (!isThreadChat() || getMessageHelper().getMessageForRepeat(message, selectedObjectGroup) != null);
+                                (!noforwards || getMessageHelper().canSendMessageAsCopy(message, selectedObjectGroup)) && (!isThreadChat() || getMessageHelper().getMessageForRepeat(message, selectedObjectGroup) != null);
                         return allowRepeat && !message.isSponsored() && chatMode != MODE_SCHEDULED && !message.needDrawBluredPreview() && !message.isLiveLocation() && message.type != 16;
                     case DoubleTap.DOUBLE_TAP_ACTION_EDIT:
                         return allowEdit;
@@ -19969,7 +19969,7 @@ public class ChatActivity extends BaseFragment implements
                     repeatItem.setVisibility(canForward && canSendMessage);
                 }
                 if (RepeatAsCopyItem != null) {
-                    RepeatAsCopyItem.setVisibility(canSendMessage);
+                    RepeatAsCopyItem.setVisibility(canSendMessage && (!noforwards || getMessageHelper().canSendMessagesAsCopy(getSelectedMessages1())));
                 }
                 if (reportItem != null) {
                     reportItem.setVisibility(canReport);
@@ -45912,14 +45912,11 @@ public class ChatActivity extends BaseFragment implements
             return;
         }
         final ArrayList<MessageObject> messages = new ArrayList<>();
-        if (selectedObject != null) {
+        if (hasSelectedMessages()) {
+            messages.addAll(getSelectedMessages1());
+            selectedObject = null;
+        } else if (selectedObject != null) {
             messages.add(selectedObject);
-        } else {
-            for (int k = 0; k < selectedMessagesIds[0].size(); k++) {
-                if (selectedMessagesIds[0].get(selectedMessagesIds[0].keyAt(k)) != null) {
-                    messages.add(selectedMessagesIds[0].get(selectedMessagesIds[0].keyAt(k)));
-                }
-            }
         }
         if (!NekoConfig.repeatConfirm.Bool()) {
             doRepeatMessage(isLongClick, messages, isRepeatasCopy);
@@ -45937,8 +45934,8 @@ public class ChatActivity extends BaseFragment implements
     }
 
     private void doRepeatMessage(boolean isLongClick, ArrayList<MessageObject> messages, boolean isRepeatAsCopy) {
-        boolean noforwards = getMessagesController().isChatNoForwards(currentChat);
-        if (selectedObject == null && noforwards && !messages.isEmpty()) {
+        boolean noforwards = getMessageHelper().shouldRepeatMessagesAsCopy(messages, currentChat);
+        if (selectedObject == null && noforwards && messages.size() == 1) {
             selectedObject = messages.get(0);
         }
         if (selectedObject != null && selectedObject.messageOwner != null && (isLongClick || (isThreadChat() && !isTopic) || noforwards)) {
@@ -45947,26 +45944,19 @@ public class ChatActivity extends BaseFragment implements
             // When not LongClick but in a threadchat: reply to the Thread
             MessageObject replyTo = selectedObject.replyMessageObject != null ? isLongClick ? selectedObject.replyMessageObject : getThreadMessage() : getThreadMessage();
             if (replyTo != null || noforwards) {
-                if (selectedObject.type == 0 || selectedObject.isAnimatedEmoji() || getMessageCaption(selectedObject, selectedObjectGroup) != null) {
-                    CharSequence caption = getMessageCaption(selectedObject, selectedObjectGroup);
-                    if (caption == null) {
-                        caption = getMessageContent(selectedObject, 0, false);
-                    }
-                    if (!TextUtils.isEmpty(caption)) {
-                        SendMessagesHelper.getInstance(currentAccount)
-                                .sendMessage(caption.toString(), dialog_id, replyTo,
-                                        getThreadMessage(), null,
-                                        false, selectedObject.messageOwner.entities, null, null,
-                                        true, 0, 0, null, false);
-                    }
-                } else if ((selectedObject.isSticker() || selectedObject.isAnimatedSticker()) && selectedObject.getDocument() != null) {
-                    SendMessagesHelper.getInstance(currentAccount)
-                            .sendSticker(selectedObject.getDocument(), null, dialog_id, null, null, replyTo, getThreadMessage(), null, replyingQuote, null, true, 0, 0, false, null, quickReplyShortcut, getQuickReplyId(), 0, 0, null);
+                if (!getMessageHelper().sendMessageAsCopy(selectedObject, selectedObjectGroup, dialog_id, replyTo, getThreadMessage(), replyingQuote, true, 0, chatMode, quickReplyShortcut, getQuickReplyId(), 0, getSendMonoForumPeerId(), getSendMessageSuggestionParams())) {
+                    BulletinFactory.of(this).createErrorBulletin(getString(R.string.PleaseDownload), themeDelegate).show();
                 }
                 return;
             }
         }
-
+        if (selectedObject == null && noforwards) {
+            MessageObject replyTo = getThreadMessage();
+            if (!getMessageHelper().sendMessagesAsCopy(messages, dialog_id, replyTo, getThreadMessage(), replyingQuote, true, 0, chatMode, quickReplyShortcut, getQuickReplyId(), 0, getSendMonoForumPeerId(), getSendMessageSuggestionParams())) {
+                BulletinFactory.of(this).createErrorBulletin(getString(R.string.PleaseDownload), themeDelegate).show();
+            }
+            return;
+        }
         forwardMessages(messages, isLongClick || isRepeatAsCopy, false, true, 0, 0);
     }
 
@@ -48098,7 +48088,7 @@ public class ChatActivity extends BaseFragment implements
                         options.add(nkbtn_repeat);
                         icons.add(R.drawable.msg_repeat);
                     }
-                    if (allowRepeat && !selectedObject.needDrawBluredPreview() && (NaConfig.INSTANCE.getShowRepeatAsCopy().Bool() || (NekoConfig.showRepeat.Bool() && noforwards))){
+                    if ((NaConfig.INSTANCE.getShowRepeatAsCopy().Bool() || (NekoConfig.showRepeat.Bool() && noforwards)) && allowRepeat && !selectedObject.needDrawBluredPreview() && (!noforwards || getMessageHelper().canSendMessageAsCopy(selectedObject, selectedObjectGroup))){
                         items.add(LocaleController.getString(R.string.RepeatAsCopy));
                         options.add(nkbtn_repeatascopy);
                         icons.add(R.drawable.msg_repeat);

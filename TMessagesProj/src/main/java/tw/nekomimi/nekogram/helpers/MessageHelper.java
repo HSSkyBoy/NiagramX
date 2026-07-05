@@ -41,12 +41,14 @@ import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
 import org.telegram.messenger.MessageObject;
+import org.telegram.messenger.MessageSuggestionParams;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
 import org.telegram.messenger.SendMessagesHelper;
 import org.telegram.messenger.UserConfig;
 import org.telegram.messenger.Utilities;
+import org.telegram.messenger.VideoEditedInfo;
 import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.NativeByteBuffer;
 import org.telegram.tgnet.TLRPC;
@@ -1067,5 +1069,185 @@ public class MessageHelper extends BaseController {
             return false;
         }
         return translatedSummaryText.text.startsWith(summaryText.text + MessageTransKt.TRANSLATION_SEPARATOR);
+    }
+
+    public boolean sendMessageAsCopy(MessageObject messageObject, MessageObject.GroupedMessages messageGroup, long targetDialogId, MessageObject replyTo, MessageObject replyToTopMsg, ChatActivity.ReplyQuote quote, boolean notify, int scheduleDate, int mode, String quickReplyShortcut, int quickReplyShortcutId, long payStars, long monoForumPeerId, MessageSuggestionParams suggestionParams) {
+        if (messageObject == null || messageObject.messageOwner == null) {
+            return false;
+        }
+        CharSequence caption = ChatActivity.getMessageCaption(messageObject, messageGroup, null);
+        if (caption == null && (messageObject.type == 0 || messageObject.isAnimatedEmoji())) {
+            caption = ChatActivity.getMessageContent(messageObject, 0, false);
+        }
+        if ((messageObject.isSticker() || messageObject.isAnimatedSticker()) && messageObject.getDocument() != null) {
+            SendMessagesHelper.getInstance(currentAccount).sendSticker(messageObject.getDocument(), null, targetDialogId, null, null, replyTo, replyToTopMsg, null, quote, null, notify, scheduleDate, 0, false, null, quickReplyShortcut, quickReplyShortcutId, payStars, monoForumPeerId, suggestionParams);
+            return true;
+        }
+        String path = getPathToMessage(messageObject, currentAccount);
+        if (!TextUtils.isEmpty(path)) {
+            ArrayList<TLRPC.MessageEntity> entities = caption != null ? messageObject.messageOwner.entities : null;
+            if (messageObject.isRoundVideo()) {
+                VideoEditedInfo info = messageObject.videoEditedInfo != null ? messageObject.videoEditedInfo : new VideoEditedInfo();
+                info.roundVideo = true;
+                SendMessagesHelper.prepareSendingVideo(getAccountInstance(), path, info, null, null, targetDialogId, replyTo, replyToTopMsg, null, quote, entities, messageObject.messageOwner.ttl, null, notify, scheduleDate, 0, false, messageObject.hasMediaSpoilers(), caption, quickReplyShortcut, quickReplyShortcutId, 0, payStars, monoForumPeerId, suggestionParams, messageObject.messageOwner.invert_media);
+                return true;
+            } else if (messageObject.isPhoto() || messageObject.isVideo()) {
+                ArrayList<SendMessagesHelper.SendingMediaInfo> media = new ArrayList<>();
+                media.add(createSendingMediaInfo(messageObject, path, caption, entities));
+                SendMessagesHelper.prepareSendingMedia(getAccountInstance(), media, targetDialogId, replyTo, replyToTopMsg, null, quote, false, false, null, notify, scheduleDate, 0, mode, false, null, quickReplyShortcut, quickReplyShortcutId, 0, messageObject.messageOwner.invert_media, payStars, monoForumPeerId, suggestionParams);
+                return true;
+            } else if (messageObject.getDocument() != null) {
+                ArrayList<String> paths = new ArrayList<>();
+                paths.add(path);
+                String mime = messageObject.getDocument().mime_type;
+                SendMessagesHelper.prepareSendingDocuments(getAccountInstance(), paths, paths, null, caption != null ? caption.toString() : null, entities, mime, targetDialogId, replyTo, replyToTopMsg, null, quote, null, notify, scheduleDate, 0, null, quickReplyShortcut, quickReplyShortcutId, 0, messageObject.messageOwner.invert_media, payStars, monoForumPeerId, suggestionParams);
+                return true;
+            }
+        }
+        if (caption != null && (messageObject.type == 0 || messageObject.isAnimatedEmoji()) && !TextUtils.isEmpty(caption)) {
+            SendMessagesHelper.SendMessageParams params = SendMessagesHelper.SendMessageParams.of(caption.toString(), targetDialogId, replyTo, replyToTopMsg, null, false, messageObject.messageOwner.entities, null, null, notify, scheduleDate, 0, null, false);
+            params.quick_reply_shortcut = quickReplyShortcut;
+            params.quick_reply_shortcut_id = quickReplyShortcutId;
+            params.payStars = payStars;
+            params.monoForumPeer = monoForumPeerId;
+            params.suggestionParams = suggestionParams;
+            SendMessagesHelper.getInstance(currentAccount).sendMessage(params);
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean sendMessagesAsCopy(ArrayList<MessageObject> messages, long targetDialogId, MessageObject replyTo, MessageObject replyToTopMsg, ChatActivity.ReplyQuote quote, boolean notify, int scheduleDate, int mode, String quickReplyShortcut, int quickReplyShortcutId, long payStars, long monoForumPeerId, MessageSuggestionParams suggestionParams) {
+        if (messages == null || messages.isEmpty()) {
+            return false;
+        }
+        if (!canSendMessagesAsCopy(messages)) {
+            return false;
+        }
+        for (int i = 0; i < messages.size(); i++) {
+            MessageObject messageObject = messages.get(i);
+            boolean needsFile = messageObject != null && messageObject.messageOwner != null && !messageObject.isSticker() && !messageObject.isAnimatedSticker() && !messageObject.isAnimatedEmoji() &&
+                    (messageObject.isPhoto() || messageObject.isVideo() || messageObject.isRoundVideo() || messageObject.getDocument() != null);
+            if (needsFile && TextUtils.isEmpty(getPathToMessage(messageObject, currentAccount))) {
+                return false;
+            }
+        }
+        boolean sentAny = false;
+        long currentGroupId = 0;
+        boolean currentInvertMedia = false;
+        ArrayList<SendMessagesHelper.SendingMediaInfo> media = null;
+
+        for (int i = 0; i < messages.size(); i++) {
+            MessageObject messageObject = messages.get(i);
+            boolean batchMedia = messageObject != null && messageObject.messageOwner != null && !messageObject.isRoundVideo() && (messageObject.isPhoto() || messageObject.isVideo());
+            if (batchMedia) {
+                String path = getPathToMessage(messageObject, currentAccount);
+                long groupId = messageObject.getGroupIdForUse();
+                boolean invertMedia = messageObject.messageOwner.invert_media;
+                if (media != null && (groupId == 0 || groupId != currentGroupId || invertMedia != currentInvertMedia)) {
+                    flushSendingMedia(media, targetDialogId, replyTo, replyToTopMsg, quote, notify, scheduleDate, mode, quickReplyShortcut, quickReplyShortcutId, currentInvertMedia, payStars, monoForumPeerId, suggestionParams);
+                    sentAny = true;
+                    media = null;
+                }
+                if (media == null) {
+                    media = new ArrayList<>();
+                    currentGroupId = groupId;
+                    currentInvertMedia = invertMedia;
+                }
+                CharSequence caption = ChatActivity.getMessageCaption(messageObject, null, null);
+                ArrayList<TLRPC.MessageEntity> entities = caption != null ? messageObject.messageOwner.entities : null;
+                media.add(createSendingMediaInfo(messageObject, path, caption, entities));
+            } else {
+                if (media != null) {
+                    flushSendingMedia(media, targetDialogId, replyTo, replyToTopMsg, quote, notify, scheduleDate, mode, quickReplyShortcut, quickReplyShortcutId, currentInvertMedia, payStars, monoForumPeerId, suggestionParams);
+                    sentAny = true;
+                    media = null;
+                    currentGroupId = 0;
+                }
+                if (sendMessageAsCopy(messageObject, null, targetDialogId, replyTo, replyToTopMsg, quote, notify, scheduleDate, mode, quickReplyShortcut, quickReplyShortcutId, payStars, monoForumPeerId, suggestionParams)) {
+                    sentAny = true;
+                }
+            }
+        }
+        if (media != null) {
+            flushSendingMedia(media, targetDialogId, replyTo, replyToTopMsg, quote, notify, scheduleDate, mode, quickReplyShortcut, quickReplyShortcutId, currentInvertMedia, payStars, monoForumPeerId, suggestionParams);
+            sentAny = true;
+        }
+        return sentAny;
+    }
+
+    public boolean canSendMessageAsCopy(MessageObject messageObject, MessageObject.GroupedMessages messageGroup) {
+        if (messageObject == null || messageObject.messageOwner == null) {
+            return false;
+        }
+        if (messageGroup != null && !messageGroup.isDocuments) {
+            for (int i = 0; i < messageGroup.messages.size(); i++) {
+                if (!canSendSingleMessageAsCopy(messageGroup.messages.get(i))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return canSendSingleMessageAsCopy(messageObject);
+    }
+
+    public boolean canSendMessagesAsCopy(ArrayList<MessageObject> messages) {
+        if (messages == null || messages.isEmpty()) {
+            return false;
+        }
+        for (int i = 0; i < messages.size(); i++) {
+            if (!canSendSingleMessageAsCopy(messages.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean canSendSingleMessageAsCopy(MessageObject messageObject) {
+        if (messageObject == null || messageObject.messageOwner == null) {
+            return false;
+        }
+        if (messageObject.isPoll() || messageObject.isTodo() || messageObject.isLocation() || messageObject.isLiveLocation() || messageObject.isGame() || messageObject.isInvoice() || messageObject.isStoryMedia()) {
+            return false;
+        }
+        if (messageObject.type == MessageObject.TYPE_CONTACT || messageObject.type == MessageObject.TYPE_GEO) {
+            return false;
+        }
+        return messageObject.type == MessageObject.TYPE_TEXT || messageObject.isAnimatedEmoji() || messageObject.isSticker() || messageObject.isAnimatedSticker() || messageObject.isPhoto() || messageObject.isVideo() || messageObject.getDocument() != null || ChatActivity.getMessageCaption(messageObject, null, null) != null;
+    }
+
+    public boolean shouldRepeatMessagesAsCopy(ArrayList<MessageObject> messages, TLRPC.Chat currentChat) {
+        if (getMessagesController().isChatNoForwards(currentChat)) {
+            return true;
+        }
+        if (messages == null) {
+            return false;
+        }
+        for (int i = 0; i < messages.size(); i++) {
+            MessageObject message = messages.get(i);
+            if (message != null && ((message.messageOwner != null && message.messageOwner.noforwards) || message.isAyuDeleted())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private SendMessagesHelper.SendingMediaInfo createSendingMediaInfo(MessageObject messageObject, String path, CharSequence caption, ArrayList<TLRPC.MessageEntity> entities) {
+        SendMessagesHelper.SendingMediaInfo info = new SendMessagesHelper.SendingMediaInfo();
+        info.path = path;
+        info.isVideo = messageObject.isVideo();
+        info.caption = caption != null ? caption.toString() : null;
+        info.entities = entities;
+        info.ttl = messageObject.messageOwner.ttl;
+        info.hasMediaSpoilers = messageObject.hasMediaSpoilers();
+        return info;
+    }
+
+    private void flushSendingMedia(ArrayList<SendMessagesHelper.SendingMediaInfo> media, long targetDialogId, MessageObject replyTo, MessageObject replyToTopMsg, ChatActivity.ReplyQuote quote, boolean notify, int scheduleDate, int mode, String quickReplyShortcut, int quickReplyShortcutId, boolean invertMedia, long payStars, long monoForumPeerId, MessageSuggestionParams suggestionParams) {
+        if (media == null || media.isEmpty()) {
+            return;
+        }
+        SendMessagesHelper.prepareSendingMedia(getAccountInstance(), media, targetDialogId, replyTo, replyToTopMsg, null, quote, false, media.size() > 1, null, notify, scheduleDate, 0, mode, false, null, quickReplyShortcut, quickReplyShortcutId, 0, invertMedia, payStars, monoForumPeerId, suggestionParams);
     }
 }
