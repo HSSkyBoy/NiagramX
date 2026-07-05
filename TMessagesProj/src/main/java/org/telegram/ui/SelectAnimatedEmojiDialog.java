@@ -1265,8 +1265,8 @@ public class SelectAnimatedEmojiDialog extends FrameLayout implements Notificati
     private void updateTabsPosition(int position) {
         if (position != RecyclerView.NO_POSITION) {
             final int recentmaxlen = SPAN_COUNT_FOR_EMOJI * RECENT_MAX_LINES;
-            final int recentSize = recent.size() > recentmaxlen && !recentExpanded ? recentmaxlen : recent.size() + (includeEmpty ? 1 : 0);
-            if (position <= recentSize || position <= recentReactions.size()) {
+            final int recentSize = type == TYPE_CHAT_REACTIONS ? recentStickers.size() : recent.size() > recentmaxlen && !recentExpanded ? recentmaxlen : recent.size() + (includeEmpty ? 1 : 0);
+            if (type == TYPE_CHAT_REACTIONS ? position < recentSize || position < recentReactions.size() : position <= recentSize || position <= recentReactions.size()) {
                 emojiTabs.select(0); // recent
             } else {
                 final int maxlen = SPAN_COUNT_FOR_EMOJI * EXPAND_MAX_LINES;
@@ -1278,7 +1278,7 @@ public class SelectAnimatedEmojiDialog extends FrameLayout implements Notificati
                         continue;
                     }
                     final int count = pack.expanded ? pack.documents.size() : Math.min(maxlen, pack.documents.size());
-                    if (position > startPosition && position <= startPosition + 1 + count) {
+                    if (type == TYPE_CHAT_REACTIONS ? position >= startPosition && position < startPosition + 1 + count : position > startPosition && position <= startPosition + 1 + count) {
                         emojiTabs.select((emojiTabs.recentTab != null ? 1 : 0) + (emojiTabs.isGiftsVisible() ? 1 : 0) + index);
                         return;
                     }
