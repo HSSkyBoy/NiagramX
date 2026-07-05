@@ -3670,7 +3670,7 @@ public class MessageObject {
         final boolean keepOriginal = MessageHelper.shouldKeepOriginalForDisplay(translatorMode, manualTranslated, autoTranslated);
         final TLRPC.TL_textWithEntities translatedText = messageOwner != null ? (voiceTranscriptionOpen ? messageOwner.translatedVoiceTranscription : messageOwner.translatedText) : null;
         final TLRPC.TL_textWithEntities summarizedText = messageOwner != null && messageOwner.summarizedOpen ? messageOwner.summaryText : null;
-        final TLRPC.TL_textWithEntities summarizeTranslatedText = messageOwner != null && messageOwner.summarizedOpen && !MessageHelper.isLegacyTranslatedSummary(summarizedText, messageOwner.translatedSummaryText) ? messageOwner.translatedSummaryText : null;
+        final TLRPC.TL_textWithEntities summarizeTranslatedText = messageOwner != null && messageOwner.summarizedOpen ? messageOwner.translatedSummaryText : null;
         final boolean showSummarizedTranslated =
             summarizeTranslatedText != null &&
             messageOwner != null &&

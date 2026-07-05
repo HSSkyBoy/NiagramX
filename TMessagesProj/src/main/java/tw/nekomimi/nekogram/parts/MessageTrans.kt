@@ -552,8 +552,7 @@ private fun ChatActivity.applyCachedTranslations(
             (msg.messageOwner.translatedText?.text?.isNotEmpty() == true) ||
             (
                 msg.messageOwner.summarizedOpen &&
-                    msg.messageOwner.translatedSummaryText?.text?.isNotEmpty() == true &&
-                    !MessageHelper.isLegacyTranslatedSummary(msg.messageOwner.summaryText, msg.messageOwner.translatedSummaryText)
+                msg.messageOwner.translatedSummaryText?.text?.isNotEmpty() == true
             )
     }
     if (!hasCachedTranslation) return
@@ -641,7 +640,6 @@ private fun MessageObject.needsSummaryTranslation(
 
     return !canReuseCache ||
             messageOwner.translatedSummaryText?.text.isNullOrEmpty() ||
-            MessageHelper.isLegacyTranslatedSummary(messageOwner.summaryText, messageOwner.translatedSummaryText) ||
             !messageOwner.translatedSummaryLanguage.equals(targetLanguage, ignoreCase = true)
 }
 
@@ -668,7 +666,6 @@ private fun MessageObject.needsOriginalTranslation(
 private fun MessageObject.matchesCachedLanguage(targetLanguage: String): Boolean {
     return if (messageOwner.summarizedOpen) {
         messageOwner.translatedSummaryText?.text?.isNotEmpty() == true &&
-                !MessageHelper.isLegacyTranslatedSummary(messageOwner.summaryText, messageOwner.translatedSummaryText) &&
                 messageOwner.translatedSummaryLanguage.equals(targetLanguage, ignoreCase = true)
     } else {
         messageOwner.translatedToLanguage.equals(targetLanguage, ignoreCase = true)

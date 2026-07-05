@@ -1064,13 +1064,6 @@ public class MessageHelper extends BaseController {
         return originalText + MessageTransKt.TRANSLATION_SEPARATOR + translatedText;
     }
 
-    public static boolean isLegacyTranslatedSummary(TLRPC.TL_textWithEntities summaryText, TLRPC.TL_textWithEntities translatedSummaryText) {
-        if (summaryText == null || translatedSummaryText == null || TextUtils.isEmpty(summaryText.text) || TextUtils.isEmpty(translatedSummaryText.text)) {
-            return false;
-        }
-        return translatedSummaryText.text.startsWith(summaryText.text + MessageTransKt.TRANSLATION_SEPARATOR);
-    }
-
     public boolean sendMessageAsCopy(MessageObject messageObject, MessageObject.GroupedMessages messageGroup, long targetDialogId, MessageObject replyTo, MessageObject replyToTopMsg, ChatActivity.ReplyQuote quote, boolean notify, int scheduleDate, int mode, String quickReplyShortcut, int quickReplyShortcutId, long payStars, long monoForumPeerId, MessageSuggestionParams suggestionParams) {
         if (messageObject == null || messageObject.messageOwner == null) {
             return false;
