@@ -1219,7 +1219,7 @@ public class MessageHelper extends BaseController {
         }
         for (int i = 0; i < messages.size(); i++) {
             MessageObject message = messages.get(i);
-            if (message != null && ((message.messageOwner != null && message.messageOwner.noforwards) || message.isAyuDeleted())) {
+            if (message != null && message.messageOwner != null && message.messageOwner.noforwards) {
                 return true;
             }
         }

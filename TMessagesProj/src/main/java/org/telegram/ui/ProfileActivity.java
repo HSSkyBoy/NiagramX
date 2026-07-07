@@ -632,7 +632,6 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private final static int message_filter = 103;
     private final static int clear_cache = 104;
     private final static int add_to_folder = 105;
-    private final static int block_channel = 106;
 
     private Rect rect = new Rect();
 
