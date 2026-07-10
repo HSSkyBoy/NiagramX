@@ -237,36 +237,44 @@ public class MemberRequestsDelegate implements MemberRequestCell.OnClickListener
 
     public void onItemClick(View view, int position) {
         if (view instanceof MemberRequestCell) {
-            if (isSearchExpanded) {
-                AndroidUtilities.hideKeyboard(fragment.getParentActivity().getCurrentFocus());
-            }
-            MemberRequestCell cell = (MemberRequestCell) view;
-            AndroidUtilities.runOnUIThread(() -> {
-                importer = cell.getImporter();
-                TLRPC.User user = users.get(importer.user_id);
-                if (user == null) {
-                    return;
-                }
-                fragment.getMessagesController().putUser(user, false);
-                boolean isLandscape = AndroidUtilities.displaySize.x > AndroidUtilities.displaySize.y;
-                boolean showProfile = user.photo == null || isLandscape;
-                if (showProfile) {
-                    isNeedRestoreList = true;
-                    fragment.dismissCurrentDialog();
-                    Bundle args = new Bundle();
-                    ProfileActivity profileActivity = new ProfileActivity(args);
-                    args.putLong("user_id", user.id);
-                    args.putBoolean("removeFragmentOnChatOpen", false);
-                    fragment.presentFragment(profileActivity);
-                } else if (previewDialog == null) {
-                    RecyclerListView parentListView = (RecyclerListView) cell.getParent();
-                    previewDialog = new PreviewDialog(fragment.getParentActivity(), parentListView, fragment.getResourceProvider(), isChannel);
-                    previewDialog.setImporter(importer, cell.getAvatarImageView());
-                    previewDialog.setOnDismissListener(dialog -> previewDialog = null);
-                    previewDialog.show();
-                }
-            }, isSearchExpanded ? 100 : 0);
+            openImporter((MemberRequestCell) view, false);
         }
+    }
+
+    @Override
+    public void onAvatarClicked(MemberRequestCell cell) {
+        openImporter(cell, true);
+    }
+
+    private void openImporter(MemberRequestCell cell, boolean fromAvatar) {
+        if (isSearchExpanded) {
+            AndroidUtilities.hideKeyboard(fragment.getParentActivity().getCurrentFocus());
+        }
+        AndroidUtilities.runOnUIThread(() -> {
+            importer = cell.getImporter();
+            TLRPC.User user = users.get(importer.user_id);
+            if (user == null) {
+                return;
+            }
+            fragment.getMessagesController().putUser(user, false);
+            boolean isLandscape = AndroidUtilities.displaySize.x > AndroidUtilities.displaySize.y;
+            boolean showProfile = !fromAvatar || user.photo == null || isLandscape;
+            if (showProfile) {
+                isNeedRestoreList = true;
+                fragment.dismissCurrentDialog();
+                Bundle args = new Bundle();
+                ProfileActivity profileActivity = new ProfileActivity(args);
+                args.putLong("user_id", user.id);
+                args.putBoolean("removeFragmentOnChatOpen", false);
+                fragment.presentFragment(profileActivity);
+            } else if (previewDialog == null) {
+                RecyclerListView parentListView = (RecyclerListView) cell.getParent();
+                previewDialog = new PreviewDialog(fragment.getParentActivity(), parentListView, fragment.getResourceProvider(), isChannel);
+                previewDialog.setImporter(importer, cell.getAvatarImageView());
+                previewDialog.setOnDismissListener(dialog -> previewDialog = null);
+                previewDialog.show();
+            }
+        }, isSearchExpanded ? 100 : 0);
     }
 
     public boolean onBackPressed(boolean invoked) {
