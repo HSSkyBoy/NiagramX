@@ -18938,7 +18938,7 @@ public class ChatActivity extends BaseFragment implements
                 bottom = (int) chatInputViewsContainer.getInputBubbleBottom();
 
                 top -= (int) ((pullingDownAnimateToActivity == null ? 0 : pullingDownAnimateToActivity.pullingBottomOffset) * pullingDownAnimateProgress);
-                if (!shouldHideBottomForGesture()) {
+                if (actionBar.isSearchFieldVisible() || !shouldHideBottomForGesture()) {
                     pullingDownDrawable.drawBottomPanel(canvas, top, bottom, getMeasuredWidth());
                 }
             }
