@@ -1022,6 +1022,9 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
                     final int currentAccount = parentFragment != null ? parentFragment.getCurrentAccount() : -1;
                     for (int a = 0; a < arr.size(); a++) {
                         MessageObject obj = arr.get(a);
+                        if (obj.isEphemeral()) {
+                            continue;
+                        }
                         if (topicId != 0 && topicId != MessageObject.getTopicId(currentAccount, obj.messageOwner, true)) {
                             continue;
                         }
@@ -10366,7 +10369,7 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
             }));
             addView(gradientView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 60));
 
-            button = new ButtonWithCounterView(context, resourcesProvider);
+            button = new ButtonWithCounterView(context, resourcesProvider).setRound();
             final SpannableStringBuilder buttonText = new SpannableStringBuilder();
             buttonText.append(getString(bots ? R.string.MoreSimilarBotsButton : R.string.MoreSimilarButton));
             buttonText.append(" ");

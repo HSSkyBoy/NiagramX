@@ -55,6 +55,10 @@ public class TimeStringHelper {
     }
 
     public static CharSequence createEditedString(MessageObject messageObject, boolean isTranslated, boolean isBookmarked, int senderNameColor) {
+        return createEditedString(messageObject, isTranslated, isBookmarked, senderNameColor, messageObject.messageOwner.edit_date);
+    }
+
+    public static CharSequence createEditedString(MessageObject messageObject, boolean isTranslated, boolean isBookmarked, int senderNameColor, int editDate) {
         String editedStr = NaConfig.INSTANCE.getCustomEditedMessage().String();
         String editedStrFin = editedStr.isEmpty() ? getString(R.string.EditedMessage) : editedStr;
         boolean primaryEditedDate = AppGlobalConfig.getInstance(messageObject.currentAccount).messagePrimaryEditedDate.get();
@@ -64,7 +68,7 @@ public class TimeStringHelper {
 
         spannableStringBuilder
                 .append(messageObject.messageOwner.post_author != null ? " " : "")
-                .append(primaryEditedDate ? LocaleController.formatPmEditedDate(messageObject.messageOwner.edit_date) : (NaConfig.INSTANCE.getUseEditedIcon().Bool() ? editedSpan : editedStrFin));
+                .append(primaryEditedDate ? LocaleController.formatPmEditedDate(editDate) : (NaConfig.INSTANCE.getUseEditedIcon().Bool() ? editedSpan : editedStrFin));
         if (isTranslated) {
             spannableStringBuilder
                     .append("  ")

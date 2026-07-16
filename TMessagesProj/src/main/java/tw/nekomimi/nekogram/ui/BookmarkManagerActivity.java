@@ -298,7 +298,7 @@ public class BookmarkManagerActivity extends BaseFragment {
         ViewConfiguration configuration = ViewConfiguration.get(context);
         maximumVelocity = configuration.getScaledMaximumFlingVelocity();
         contentLayout = new ContentLayout(context);
-        contentLayout.setTag(0xFF112233, new Object());
+        contentLayout.setTag(R.id.sheet_attached_to_fragment_tag, new Object());
         contentLayout.setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite));
         tabsViewPositionWatcher = new ViewPositionWatcher(contentLayout);
         tabsBackgroundDrawableFactory.setSourceRootView(tabsViewPositionWatcher, contentLayout);

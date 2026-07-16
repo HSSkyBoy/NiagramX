@@ -163,7 +163,7 @@ public class FiltersListBottomSheet extends BottomSheet implements NotificationC
                     height = getMeasuredHeight();
                 }
 
-                shadowDrawable.setBounds(0, top, getMeasuredWidth(), height);
+                shadowDrawable.setBounds(0, top, getMeasuredWidth(), getMeasuredHeight());
                 shadowDrawable.draw(canvas);
 
                 if (radProgress != 1.0f) {
