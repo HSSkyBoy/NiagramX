@@ -335,4 +335,5 @@
     <string name="DeepLTranslateKey">DeepL API 密钥</string>
     <string name="DeepLTranslateKeyNotice">输入 DeepL API 密钥，留空以使用内置凭据。</string>
     <string name="DefaultScheduleDelay">默认延迟</string>
+    <string name="ExportAyuDB">导出数据库</string>
 </resources>

@@ -83,7 +83,7 @@
     <string name="SelectBetween">Выберите диапазон</string>
     <string name="ProviderDeepLTranslate">DeepL</string>
     <string name="ProviderMicrosoftTranslator">Bing</string>
-    <string name="DontSendGreetingSticker">Не отправлять приветственный стикер</string>
+    <string name="DontSendGreetingSticker">Отключить приветственный стикер</string>
     <string name="TakeGIFasVideo">Воспринимать GIF как видео</string>
     <string name="HideTimeForSticker">Скрыть время на стикерах</string>
     <string name="hideGroupSticker">Скрыть стикер группы</string>

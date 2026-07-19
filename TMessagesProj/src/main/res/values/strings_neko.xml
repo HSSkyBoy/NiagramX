@@ -83,7 +83,7 @@
     <string name="SelectBetween">Select Range</string>
     <string name="ProviderDeepLTranslate">DeepL Translate</string>
     <string name="ProviderMicrosoftTranslator">Bing Translator</string>
-    <string name="DontSendGreetingSticker">Don\'t Send Greeting Sticker</string>
+    <string name="DontSendGreetingSticker">Disable Greeting Sticker</string>
     <string name="TakeGIFasVideo">Take GIF as Video</string>
     <string name="HideTimeForSticker">Hide Time on Stickers</string>
     <string name="hideGroupSticker">Hide Group Sticker</string>
