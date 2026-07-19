@@ -7,6 +7,7 @@ import androidx.core.content.edit
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.BuildVars
+import org.telegram.messenger.FileLog
 import org.telegram.messenger.SharedConfig
 import tw.nekomimi.nekogram.NekoConfig
 import tw.nekomimi.nekogram.config.ConfigItem
@@ -1337,6 +1338,13 @@ object NaConfig {
         }
     }
 
+    private fun resetInvalidConfig(o: ConfigItem, e: RuntimeException) {
+        val key = if (o is ConfigItemKeyLinked) o.keyLinked.key else o.key
+        FileLog.e("Invalid config value for $key", e)
+        o.value = o.defaultValue
+        getPreferences().edit { remove(key) }
+    }
+
     private fun addConfig(
         k: String, t: Int, d: Any?
     ): ConfigItem {
@@ -1379,82 +1387,88 @@ object NaConfig {
             }
             for (i in configs.indices) {
                 val o = configs[i]
-                if (o.type == ConfigItem.configTypeBool) {
-                    o.value = getPreferences().getBoolean(
-                        o.key, o.defaultValue as Boolean
-                    )
-                }
-                if (o.type == ConfigItem.configTypeInt) {
-                    o.value = getPreferences().getInt(
-                        o.key, o.defaultValue as Int
-                    )
-                }
-                if (o.type == ConfigItem.configTypeLong) {
-                    o.value = getPreferences().getLong(
-                        o.key, (o.defaultValue as Long)
-                    )
-                }
-                if (o.type == ConfigItem.configTypeFloat) {
-                    o.value = getPreferences().getFloat(
-                        o.key, (o.defaultValue as Float)
-                    )
-                }
-                if (o.type == ConfigItem.configTypeString) {
-                    o.value = getPreferences().getString(
-                        o.key, o.defaultValue as String
-                    )
-                }
-                if (o.type == ConfigItem.configTypeSetInt) {
-                    val ss = getPreferences().getStringSet(
-                        o.key, HashSet()
-                    )
-                    val si = HashSet<Int>()
-                    for (s in ss!!) {
-                        si.add(
-                            s.toInt()
+                try {
+                    if (o.type == ConfigItem.configTypeBool) {
+                        o.value = getPreferences().getBoolean(
+                            o.key, o.defaultValue as Boolean
                         )
                     }
-                    o.value = si
-                }
-                if (o.type == ConfigItem.configTypeMapIntInt) {
-                    val cv = getPreferences().getString(
-                        o.key, ""
-                    )
-                    // Log.e("NC", String.format("Getting pref %s val %s", o.key, cv));
-                    if (cv!!.isEmpty()) {
-                        o.value = HashMap<Int, Int>()
-                    } else {
-                        try {
-                            val data = Base64.decode(
-                                cv, Base64.DEFAULT
+                    if (o.type == ConfigItem.configTypeInt) {
+                        o.value = getPreferences().getInt(
+                            o.key, o.defaultValue as Int
+                        )
+                    }
+                    if (o.type == ConfigItem.configTypeLong) {
+                        o.value = getPreferences().getLong(
+                            o.key, (o.defaultValue as Long)
+                        )
+                    }
+                    if (o.type == ConfigItem.configTypeFloat) {
+                        o.value = getPreferences().getFloat(
+                            o.key, (o.defaultValue as Float)
+                        )
+                    }
+                    if (o.type == ConfigItem.configTypeString) {
+                        o.value = getPreferences().getString(
+                            o.key, o.defaultValue as String
+                        )
+                    }
+                    if (o.type == ConfigItem.configTypeSetInt) {
+                        val ss = getPreferences().getStringSet(
+                            o.key, HashSet()
+                        )
+                        val si = HashSet<Int>()
+                        for (s in ss!!) {
+                            si.add(
+                                s.toInt()
                             )
-                            val ois = ObjectInputStream(
-                                ByteArrayInputStream(
-                                    data
+                        }
+                        o.value = si
+                    }
+                    if (o.type == ConfigItem.configTypeMapIntInt) {
+                        val cv = getPreferences().getString(
+                            o.key, ""
+                        )
+                        // Log.e("NC", String.format("Getting pref %s val %s", o.key, cv));
+                        if (cv!!.isEmpty()) {
+                            o.value = HashMap<Int, Int>()
+                        } else {
+                            try {
+                                val data = Base64.decode(
+                                    cv, Base64.DEFAULT
                                 )
-                            )
-                            o.value = ois.readObject() as HashMap<*, *>
-                            if (o.value == null) {
+                                val ois = ObjectInputStream(
+                                    ByteArrayInputStream(
+                                        data
+                                    )
+                                )
+                                o.value = ois.readObject() as HashMap<*, *>
+                                if (o.value == null) {
+                                    o.value = HashMap<Int, Int>()
+                                }
+                                ois.close()
+                            } catch (_: Exception) {
                                 o.value = HashMap<Int, Int>()
                             }
-                            ois.close()
-                        } catch (_: Exception) {
-                            o.value = HashMap<Int, Int>()
                         }
                     }
-                }
-                if (o.type == ConfigItem.configTypeBoolLinkInt) {
-                    o as ConfigItemKeyLinked
-                    o.changedFromKeyLinked(getPreferences().getInt(o.keyLinked.key, 0))
+                    if (o.type == ConfigItem.configTypeBoolLinkInt) {
+                        o as ConfigItemKeyLinked
+                        o.changedFromKeyLinked(getPreferences().getInt(o.keyLinked.key, 0))
+                    }
+                } catch (e: ClassCastException) {
+                    resetInvalidConfig(o, e)
+                } catch (e: NumberFormatException) {
+                    resetInvalidConfig(o, e)
                 }
             }
             configLoaded = true
         }
     }
 
-    fun getAllKeys(): Set<String> {
+    fun getConfigTypes(): Map<String, Int> {
         synchronized(sync) {
-            return configs.map { it.key }.toSet()
+            return configs.associate { it.key to it.type }
         }
     }
 

@@ -14,12 +14,14 @@ import android.content.SharedPreferences;
 import android.util.Base64;
 
 import org.telegram.messenger.ApplicationLoader;
+import org.telegram.messenger.FileLog;
 
 import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import tw.nekomimi.nekogram.config.ConfigItem;
@@ -195,47 +197,53 @@ public class NekoConfig {
             for (int i = 0; i < configs.size(); i++) {
                 ConfigItem o = configs.get(i);
 
-                if (o.type == configTypeBool) {
-                    o.value = getPreferences().getBoolean(o.key, (boolean) o.defaultValue);
-                }
-                if (o.type == configTypeInt) {
-                    o.value = getPreferences().getInt(o.key, (int) o.defaultValue);
-                }
-                if (o.type == configTypeLong) {
-                    o.value = getPreferences().getLong(o.key, (Long) o.defaultValue);
-                }
-                if (o.type == configTypeFloat) {
-                    o.value = getPreferences().getFloat(o.key, (Float) o.defaultValue);
-                }
-                if (o.type == configTypeString) {
-                    o.value = getPreferences().getString(o.key, (String) o.defaultValue);
-                }
-                if (o.type == configTypeSetInt) {
-                    Set<String> ss = getPreferences().getStringSet(o.key, new HashSet<>());
-                    HashSet<Integer> si = new HashSet<>();
-                    for (String s : ss) {
-                        si.add(Integer.parseInt(s));
+                try {
+                    if (o.type == configTypeBool) {
+                        o.value = getPreferences().getBoolean(o.key, (boolean) o.defaultValue);
                     }
-                    o.value = si;
-                }
-                if (o.type == configTypeMapIntInt) {
-                    String cv = getPreferences().getString(o.key, "");
-                    if (cv.isEmpty()) {
-                        o.value = new HashMap<Integer, Integer>();
-                    } else {
-                        try {
-                            byte[] data = Base64.decode(cv, Base64.DEFAULT);
-                            ObjectInputStream ois = new ObjectInputStream(
-                                    new ByteArrayInputStream(data));
-                            o.value = ois.readObject();
-                            if (o.value == null) {
+                    if (o.type == configTypeInt) {
+                        o.value = getPreferences().getInt(o.key, (int) o.defaultValue);
+                    }
+                    if (o.type == configTypeLong) {
+                        o.value = getPreferences().getLong(o.key, (Long) o.defaultValue);
+                    }
+                    if (o.type == configTypeFloat) {
+                        o.value = getPreferences().getFloat(o.key, (Float) o.defaultValue);
+                    }
+                    if (o.type == configTypeString) {
+                        o.value = getPreferences().getString(o.key, (String) o.defaultValue);
+                    }
+                    if (o.type == configTypeSetInt) {
+                        Set<String> ss = getPreferences().getStringSet(o.key, new HashSet<>());
+                        HashSet<Integer> si = new HashSet<>();
+                        for (String s : ss) {
+                            si.add(Integer.parseInt(s));
+                        }
+                        o.value = si;
+                    }
+                    if (o.type == configTypeMapIntInt) {
+                        String cv = getPreferences().getString(o.key, "");
+                        if (cv.isEmpty()) {
+                            o.value = new HashMap<Integer, Integer>();
+                        } else {
+                            try {
+                                byte[] data = Base64.decode(cv, Base64.DEFAULT);
+                                ObjectInputStream ois = new ObjectInputStream(
+                                        new ByteArrayInputStream(data));
+                                o.value = ois.readObject();
+                                if (o.value == null) {
+                                    o.value = new HashMap<Integer, Integer>();
+                                }
+                                ois.close();
+                            } catch (Exception e) {
                                 o.value = new HashMap<Integer, Integer>();
                             }
-                            ois.close();
-                        } catch (Exception e) {
-                            o.value = new HashMap<Integer, Integer>();
                         }
                     }
+                } catch (ClassCastException | NumberFormatException e) {
+                    FileLog.e("Invalid config value for " + o.key, e);
+                    o.value = o.defaultValue;
+                    getPreferences().edit().remove(o.key).apply();
                 }
             }
             if (!configLoaded)
@@ -266,13 +274,13 @@ public class NekoConfig {
         return !useOSMDroidMap.Bool() && mapDriftingFixForGoogleMaps.Bool();
     }
 
-    public static Set<String> getAllKeys() {
+    public static Map<String, Integer> getConfigTypes() {
         synchronized (sync) {
-            Set<String> keys = new HashSet<>();
+            Map<String, Integer> types = new HashMap<>();
             for (ConfigItem o : configs) {
-                keys.add(o.getKey());
+                types.put(o.getKey(), o.type);
             }
-            return keys;
+            return types;
         }
     }
 }
