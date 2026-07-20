@@ -923,14 +923,18 @@ public class ImageLoader {
                 if (cacheImage.filter != null) {
                     String[] args = cacheImage.filter.split("_");
                     if (args.length >= 2) {
-                        float w_filter = Float.parseFloat(args[0]);
-                        float h_filter = Float.parseFloat(args[1]);
-                        w = Math.min(512, (int) (w_filter * AndroidUtilities.density));
-                        h = Math.min(512, (int) (h_filter * AndroidUtilities.density));
-                        if (w_filter <= 90 && h_filter <= 90 && !cacheImage.filter.contains("nolimit")) {
-                            w = Math.min(w, 160);
-                            h = Math.min(h, 160);
-                            limitFps = true;
+                        try {
+                            float w_filter = Float.parseFloat(args[0]);
+                            float h_filter = Float.parseFloat(args[1]);
+                            w = Math.min(512, (int) (w_filter * AndroidUtilities.density));
+                            h = Math.min(512, (int) (h_filter * AndroidUtilities.density));
+                            if (w_filter <= 90 && h_filter <= 90 && !cacheImage.filter.contains("nolimit")) {
+                                w = Math.min(w, 160);
+                                h = Math.min(h, 160);
+                                limitFps = true;
+                            }
+                        } catch (NumberFormatException e) {
+                            FileLog.e(e);
                         }
                         if (args.length >= 3 && "pcache".equals(args[2])) {
                             precache = true;
