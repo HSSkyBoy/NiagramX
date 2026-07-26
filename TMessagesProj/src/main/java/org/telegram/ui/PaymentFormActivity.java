@@ -73,15 +73,6 @@ import androidx.dynamicanimation.animation.FloatValueHolder;
 import androidx.dynamicanimation.animation.SpringAnimation;
 import androidx.dynamicanimation.animation.SpringForce;
 
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.wallet.AutoResolveHelper;
-import com.google.android.gms.wallet.IsReadyToPayRequest;
-import com.google.android.gms.wallet.PaymentData;
-import com.google.android.gms.wallet.PaymentDataRequest;
-import com.google.android.gms.wallet.PaymentsClient;
-import com.google.android.gms.wallet.Wallet;
-import com.google.android.gms.wallet.WalletConstants;
 import com.stripe.android.Stripe;
 import com.stripe.android.TokenCallback;
 import com.stripe.android.exception.APIConnectionException;
@@ -219,8 +210,6 @@ public class PaymentFormActivity extends BaseFragment implements NotificationCen
     private HashMap<String, String> countriesMap = new HashMap<>();
     private HashMap<String, String> codesMap = new HashMap<>();
     private HashMap<String, String> phoneFormatMap = new HashMap<>();
-
-    private PaymentsClient paymentsClient;
 
     private EditTextBoldCursor[] inputFields;
     private RadioCell[] radioCells;
@@ -1187,11 +1176,11 @@ public class PaymentFormActivity extends BaseFragment implements NotificationCen
                 }
             }
             if (isWebView || paymentFormMethod != null) {
-                if (googlePayPublicKey != null || googlePayParameters != null) {
+                /*if (googlePayPublicKey != null || googlePayParameters != null) {
                     initGooglePay(context);
                 }
                 createGooglePayButton(context);
-                linearLayout2.addView(googlePayContainer, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 50));
+                linearLayout2.addView(googlePayContainer, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 50));*/
 
                 webviewLoading = true;
                 showEditDoneProgress(true, true);
@@ -1752,8 +1741,8 @@ public class PaymentFormActivity extends BaseFragment implements NotificationCen
                         updateSavePaymentField();
                         linearLayout2.addView(bottomCell[0], LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
                     } else if (a == FIELD_CARD) {
-                        createGooglePayButton(context);
-                        container.addView(googlePayContainer, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL | (LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT), 0, 0, 4, 0));
+                        //createGooglePayButton(context);
+                        //container.addView(googlePayContainer, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.CENTER_VERTICAL | (LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT), 0, 0, 4, 0));
                     }
 
                     if (allowDivider) {
@@ -2947,103 +2936,7 @@ public class PaymentFormActivity extends BaseFragment implements NotificationCen
     }
 
     private void createGooglePayButton(Context context) {
-        googlePayContainer = new FrameLayout(context);
-        googlePayContainer.setBackgroundDrawable(Theme.getSelectorDrawable(true));
-        googlePayContainer.setVisibility(View.GONE);
 
-        googlePayButton = new FrameLayout(context);
-        googlePayButton.setClickable(true);
-        googlePayButton.setFocusable(true);
-        googlePayButton.setBackgroundResource(R.drawable.googlepay_button_no_shadow_background);
-        if (googlePayPublicKey == null) {
-            googlePayButton.setPadding(AndroidUtilities.dp(10), AndroidUtilities.dp(2), AndroidUtilities.dp(10), AndroidUtilities.dp(2));
-        } else {
-            googlePayButton.setPadding(AndroidUtilities.dp(2), AndroidUtilities.dp(2), AndroidUtilities.dp(2), AndroidUtilities.dp(2));
-        }
-        googlePayContainer.addView(googlePayButton, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 48));
-        googlePayButton.setOnClickListener(v -> {
-            googlePayButton.setClickable(false);
-            try {
-                JSONObject paymentDataRequest = getBaseRequest();
-
-                JSONObject cardPaymentMethod = getBaseCardPaymentMethod();
-                if (googlePayPublicKey != null && googlePayParameters == null) {
-                    cardPaymentMethod.put("tokenizationSpecification", new JSONObject() {{
-                        put("type", "DIRECT");
-                        put("parameters", new JSONObject() {{
-                            put("protocolVersion", "ECv2");
-                            put("publicKey", googlePayPublicKey);
-                        }});
-                    }});
-                } else {
-                    cardPaymentMethod.put("tokenizationSpecification", new JSONObject() {{
-                        put("type", "PAYMENT_GATEWAY");
-                        if (googlePayParameters != null) {
-                            put("parameters", googlePayParameters);
-                        } else {
-                            put("parameters", new JSONObject() {{
-                                put("gateway", "stripe");
-                                put("stripe:publishableKey", providerApiKey);
-                                put("stripe:version", StripeApiHandler.VERSION);
-                            }});
-                        }
-                    }});
-                }
-
-                paymentDataRequest.put("allowedPaymentMethods", new JSONArray().put(cardPaymentMethod));
-
-                JSONObject transactionInfo = new JSONObject();
-                ArrayList<TLRPC.TL_labeledPrice> arrayList = new ArrayList<>(paymentForm.invoice.prices);
-                if (shippingOption != null) {
-                    arrayList.addAll(shippingOption.prices);
-                }
-                transactionInfo.put("totalPrice", totalPriceDecimal = getTotalPriceDecimalString(arrayList));
-                transactionInfo.put("totalPriceStatus", "FINAL");
-                if (!TextUtils.isEmpty(googlePayCountryCode)) {
-                    transactionInfo.put("countryCode", googlePayCountryCode);
-                }
-                transactionInfo.put("currencyCode", paymentForm.invoice.currency);
-                transactionInfo.put("checkoutOption", "COMPLETE_IMMEDIATE_PURCHASE");
-                paymentDataRequest.put("transactionInfo", transactionInfo);
-
-                paymentDataRequest.put("merchantInfo", new JSONObject().put("merchantName", currentBotName));
-
-                /*paymentDataRequest.put("shippingAddressRequired", true);
-
-                JSONObject shippingAddressParameters = new JSONObject();
-                shippingAddressParameters.put("phoneNumberRequired", false);
-
-                JSONArray allowedCountryCodes = new JSONArray(Constants.SHIPPING_SUPPORTED_COUNTRIES);
-                shippingAddressParameters.put("allowedCountryCodes", allowedCountryCodes);
-                paymentDataRequest.put("shippingAddressParameters", shippingAddressParameters);*/
-
-                PaymentDataRequest request = PaymentDataRequest.fromJson(paymentDataRequest.toString());
-                if (request != null) {
-                    AutoResolveHelper.resolveTask(paymentsClient.loadPaymentData(request), getParentActivity(), LOAD_PAYMENT_DATA_REQUEST_CODE);
-                }
-            } catch (JSONException e) {
-                FileLog.e(e);
-            }
-        });
-
-        LinearLayout linearLayout = new LinearLayout(context);
-        linearLayout.setWeightSum(2);
-        linearLayout.setGravity(Gravity.CENTER_VERTICAL);
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.setDuplicateParentStateEnabled(true);
-        googlePayButton.addView(linearLayout, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
-
-        ImageView imageView = new ImageView(context);
-        imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        imageView.setDuplicateParentStateEnabled(true);
-        imageView.setImageResource(R.drawable.buy_with_googlepay_button_content);
-        linearLayout.addView(imageView, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 0, 1.0f));
-
-        imageView = new ImageView(context);
-        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-        imageView.setDuplicateParentStateEnabled(true);
-        imageView.setImageResource(R.drawable.googlepay_button_overlay);
-        googlePayButton.addView(imageView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT));
     }
 
     private void updatePasswordFields() {
@@ -3206,7 +3099,7 @@ public class PaymentFormActivity extends BaseFragment implements NotificationCen
     }
 
     private void initGooglePay(Context context) {
-        if (Build.VERSION.SDK_INT < 19 || getParentActivity() == null) {
+        /*if (Build.VERSION.SDK_INT < 19 || getParentActivity() == null) {
             return;
         }
         Wallet.WalletOptions walletOptions = new Wallet.WalletOptions.Builder()
@@ -3234,7 +3127,7 @@ public class PaymentFormActivity extends BaseFragment implements NotificationCen
                     } else {
                         FileLog.e("isReadyToPay failed", task1.getException());
                     }
-                });
+                });*/
     }
 
     private String getTotalPriceString(ArrayList<TLRPC.TL_labeledPrice> prices) {
@@ -3391,7 +3284,7 @@ public class PaymentFormActivity extends BaseFragment implements NotificationCen
 
     @Override
     public void onActivityResultFragment(int requestCode, int resultCode, Intent data) {
-        if (requestCode == LOAD_PAYMENT_DATA_REQUEST_CODE) {
+        /*if (requestCode == LOAD_PAYMENT_DATA_REQUEST_CODE) {
             AndroidUtilities.runOnUIThread(() -> {
                 if (resultCode == Activity.RESULT_OK) {
                     PaymentData paymentData = PaymentData.getFromIntent(data);
@@ -3440,7 +3333,7 @@ public class PaymentFormActivity extends BaseFragment implements NotificationCen
                     googlePayButton.setClickable(true);
                 }
             });
-        }
+        }*/
     }
 
     private void goToNextStep() {
