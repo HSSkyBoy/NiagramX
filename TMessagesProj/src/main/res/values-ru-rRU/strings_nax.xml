@@ -336,4 +336,5 @@
     <string name="DeepLTranslateKeyNotice">Настройте ключ API DeepL. Оставьте поле пустым, чтобы использовать встроенные учётные данные.</string>
     <string name="DefaultScheduleDelay">Задержка по умолчанию</string>
     <string name="ExportAyuDB">Экспорт базы данных</string>
+    <string name="DisableSwipeToNext">Отключить переход к следующему пролистыванием</string>
 </resources>

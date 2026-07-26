@@ -83,7 +83,7 @@
     <string name="SelectBetween">範囲内のメッセージを選択</string>
     <string name="ProviderDeepLTranslate">DeepL 翻訳</string>
     <string name="ProviderMicrosoftTranslator">Bing 翻訳</string>
-    <string name="DontSendGreetingSticker">挨拶ステッカーを送信しない</string>
+    <string name="DontSendGreetingSticker">挨拶ステッカーを無効化</string>
     <string name="TakeGIFasVideo">GIF をビデオとして表示</string>
     <string name="HideTimeForSticker">ステッカーの送信時間を非表示</string>
     <string name="hideGroupSticker">グループステッカーを非表示</string>

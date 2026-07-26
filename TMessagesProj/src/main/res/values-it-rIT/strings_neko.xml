@@ -83,7 +83,6 @@
     <string name="SelectBetween">Seleziona messaggi</string>
     <string name="ProviderDeepLTranslate">Traduttore DeepL</string>
     <string name="ProviderMicrosoftTranslator">Traduttore Bing</string>
-    <string name="DontSendGreetingSticker">Non inviare adesivi di saluto</string>
     <string name="TakeGIFasVideo">Acquisisci GIF come Video</string>
     <string name="HideTimeForSticker">Nascondi l\'ora sugli sticker</string>
     <string name="hideGroupSticker">Nascondi sticker di gruppo</string>

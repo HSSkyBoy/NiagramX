@@ -336,4 +336,7 @@
     <string name="DeepLTranslateKeyNotice">設定 DeepL API 金鑰，留空則使用內建金鑰。</string>
     <string name="DefaultScheduleDelay">預設延遲</string>
     <string name="ExportAyuDB">匯出資料庫</string>
+    <string name="ImportAyuDB">匯入資料庫</string>
+    <string name="ImportAyuDBAlert">目前的訊息資料庫將被取代。匯入後應用程式將重新啟動。</string>
+    <string name="DisableSwipeToNext">停用滑動到下一個</string>
 </resources>
