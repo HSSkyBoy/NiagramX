@@ -1631,6 +1631,8 @@ public class MessagesStorage extends BaseController {
 
     private void saveTopicsInternal(long dialogId, List<TLRPC.TL_forumTopic> topics, boolean replace, boolean inTransaction, int date) {
         SQLitePreparedStatement state = null;
+        SQLiteDatabase transactionDatabase = null;
+        boolean transactionStarted = false;
         try {
             HashSet<Integer> existingTopics = new HashSet<>();
             HashMap<Integer, Integer> pinnedValues = new HashMap<>();
@@ -1652,7 +1654,9 @@ public class MessagesStorage extends BaseController {
             }
             state = database.executeFast("REPLACE INTO topics VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             if (inTransaction) {
-                database.beginTransaction();
+                transactionDatabase = database;
+                transactionDatabase.beginTransaction();
+                transactionStarted = true;
             }
 
             for (int i = 0; i < topics.size(); i++) {
@@ -1717,7 +1721,9 @@ public class MessagesStorage extends BaseController {
             if (state != null) {
                 state.dispose();
             }
-            database.commitTransaction();
+            if (transactionStarted && database == transactionDatabase) {
+                transactionDatabase.commitTransaction();
+            }
         }
     }
 
