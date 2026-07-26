@@ -4607,7 +4607,7 @@ public class ChatActivity extends BaseFragment implements
         });
 
         ActionBarMenu menu = actionBar.createMenu();
-        menu.setCenteredTitle(isTitleCentered());
+        menu.setCenteredTitle(isTitleCentered() && chatMode != MODE_QUICK_REPLIES);
 
         if (isThreadChat() && threadMessageId != 0 && !isTopic) {
             viewInChatItem = menu.addItem(nkbtn_view_in_chat, R.drawable.msg_viewreplies);
