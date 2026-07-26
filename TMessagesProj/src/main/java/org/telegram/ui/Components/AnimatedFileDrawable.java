@@ -192,7 +192,11 @@ public class AnimatedFileDrawable extends BitmapDrawable implements Animatable, 
                 loadFrameTask = null;
                 BitmapsCache.incrementTaskCounter();
                 RLottieDrawable.lottieCacheGenerateQueue.postRunnable(cacheGenRunnable = () -> {
-                    bitmapsCache.createCache();
+                    try {
+                        bitmapsCache.createCache();
+                    } catch (Throwable e) {
+                        FileLog.e(e);
+                    }
                     AndroidUtilities.runOnUIThread(() -> {
                         if (cacheGenRunnable != null) {
                             BitmapsCache.decrementTaskCounter();
