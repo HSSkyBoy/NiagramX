@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.PixelFormat;
 import android.os.Build;
+import android.os.Looper;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -127,6 +128,10 @@ public class VoIPWindowView extends FrameLayout {
     }
 
     public void finish(long animDuration) {
+        if (Looper.myLooper() != Looper.getMainLooper()) {
+            AndroidUtilities.runOnUIThread(() -> finish(animDuration));
+            return;
+        }
         if (!finished) {
             finished = true;
             VoIPFragment.clearInstance();
@@ -228,4 +233,3 @@ public class VoIPWindowView extends FrameLayout {
         }
     }
 }
-
