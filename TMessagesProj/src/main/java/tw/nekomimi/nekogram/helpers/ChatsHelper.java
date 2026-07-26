@@ -35,6 +35,7 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import tw.nekomimi.nekogram.NekoConfig;
 import xyz.nextalone.nagram.NaConfig;
 
 public class ChatsHelper extends BaseController {
@@ -499,5 +500,9 @@ public class ChatsHelper extends BaseController {
         return scheduled
                 ? getScheduledSelectBetweenPositions(messages, selectedMessagesIds, dialogId)
                 : getSelectBetweenBounds(selectedMessagesIds);
+    }
+
+    public boolean allowSwipeToNext(boolean isTopic) {
+        return !(isTopic ? NekoConfig.disableSwipeToNextTopic : NekoConfig.disableSwipeToNext).Bool();
     }
 }
