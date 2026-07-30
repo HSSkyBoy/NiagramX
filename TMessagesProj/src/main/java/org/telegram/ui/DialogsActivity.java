@@ -1461,10 +1461,12 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                         }
                     }
                 } else if (ev == null || ev.getPointerId(0) == startedTrackingPointerId && (ev.getAction() == MotionEvent.ACTION_CANCEL || ev.getAction() == MotionEvent.ACTION_UP || ev.getAction() == MotionEvent.ACTION_POINTER_UP)) {
-                    velocityTracker.computeCurrentVelocity(1000, maximumVelocity);
+                    if (velocityTracker != null) {
+                        velocityTracker.computeCurrentVelocity(1000, maximumVelocity);
+                    }
                     float velX;
                     float velY;
-                    if (ev != null && ev.getAction() != MotionEvent.ACTION_CANCEL) {
+                    if (velocityTracker != null && ev != null && ev.getAction() != MotionEvent.ACTION_CANCEL) {
                         velX = velocityTracker.getXVelocity();
                         velY = velocityTracker.getYVelocity();
                         if (!startedTracking) {
