@@ -7542,27 +7542,6 @@ public class ChatActivity extends BaseFragment implements
             jumpToDate((int) (calendar.getTime().getTime() / 1000));
         });
 
-        floatingDateView.setOnLongClickListener(view -> {
-            if (getParentActivity() == null) {
-                return false;
-            }
-            AndroidUtilities.hideKeyboard(searchItem.getSearchField());
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTimeInMillis((long) floatingDateView.getCustomDate() * 1000);
-            int year = calendar.get(Calendar.YEAR);
-            int monthOfYear = calendar.get(Calendar.MONTH);
-            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-
-            calendar.clear();
-            calendar.set(year, monthOfYear, dayOfMonth);
-            Bundle bundle = new Bundle();
-            bundle.putLong("dialog_id", dialog_id);
-            bundle.putLong("topic_id", getTopicId());
-            bundle.putInt("type", CalendarActivity.TYPE_CHAT_ACTIVITY);
-            CalendarActivity calendarActivity = new CalendarActivity(bundle, SharedMediaLayout.FILTER_PHOTOS_AND_VIDEOS, (int) (calendar.getTime().getTime() / 1000));
-            presentFragment(calendarActivity);
-            return true;
-        });
         if (currentChat != null) {
             pendingRequestsDelegate = new ChatActivityMemberRequestsDelegate(this, currentChat);
             topPanelLayout.addView(pendingRequestsDelegate.getView(), LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 40));
