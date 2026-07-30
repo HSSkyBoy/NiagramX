@@ -84,7 +84,7 @@ class PipSourcePlaceholder {
 
         @Override
         public void draw(@NonNull Canvas canvas) {
-            if (bitmap.isRecycled()) {
+            if (bitmap == null || bitmap.isRecycled()) {
                 return;
             }
 
