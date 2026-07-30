@@ -8,7 +8,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.os.SystemClock;
@@ -18,11 +17,9 @@ import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.telegram.messenger.AndroidUtilities;
-import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.ContactsController;
 import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.NotificationCenter;
-import org.telegram.messenger.NotificationsService;
 import org.telegram.messenger.R;
 import org.telegram.messenger.SharedConfig;
 import org.telegram.messenger.UnifiedPushService;
@@ -319,16 +316,13 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
             } else if (key.equals(NaConfig.INSTANCE.getPushServiceType().getKey())) {
                 if ((int) newValue == 0) {
                     AndroidUtil.setPushService(false);
-                    ApplicationLoader.startPushService();
                 } else {
                     NaConfig.INSTANCE.getPushServiceTypeInAppDialog().setConfigBool(false);
-                    AndroidUtilities.runOnUIThread(() -> context.stopService(new Intent(context, NotificationsService.class)));
                 }
                 checkPushServiceTypeRows();
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
             } else if (key.equals(NaConfig.INSTANCE.getPushServiceTypeInAppDialog().getKey())) {
-                ApplicationLoader.applicationContext.stopService(new Intent(ApplicationLoader.applicationContext, NotificationsService.class));
-                ApplicationLoader.startPushService();
+                tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
             } else if (key.equals(NaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
             } else if (key.equals(NaConfig.INSTANCE.getDisableCrashlyticsCollection().getKey())) {
