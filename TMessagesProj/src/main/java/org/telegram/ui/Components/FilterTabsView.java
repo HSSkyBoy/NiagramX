@@ -1437,8 +1437,11 @@ public class FilterTabsView extends FrameLayout {
     public void finishAddingTabs(boolean animated) {
         listView.setItemAnimator(animated ? itemAnimator : null);
         adapter.notifyDataSetChanged();
-        delegate.onTabSelected(tabs.get(currentPosition), false, false);
-        oldAnimatedTab = currentPosition;
+        Tab currentTab = getTab(currentPosition);
+        if (delegate != null && currentTab != null) {
+            delegate.onTabSelected(currentTab, false, false);
+            oldAnimatedTab = currentPosition;
+        }
     }
 
     public void setColors(int line, int active, int unactive, int selector, int background) {
