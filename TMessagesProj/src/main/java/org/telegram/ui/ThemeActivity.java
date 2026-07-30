@@ -528,6 +528,10 @@ public class ThemeActivity extends BaseFragment implements NotificationCenter.No
     }
 
     private void updateRows(boolean notify) {
+        if (listView != null && listView.isComputingLayout()) {
+            listView.post(() -> updateRows(notify));
+            return;
+        }
         int oldRowCount = rowCount;
 
         int prevThemeAccentListRow = themeAccentListRow;
