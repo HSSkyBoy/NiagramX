@@ -370,6 +370,10 @@ public class MessagesController extends BaseController implements NotificationCe
     public boolean updatingState;
     public boolean firstGettingTask;
     public boolean registeringForPush;
+    private int pushRegistrationId;
+    private boolean registeringSimplePush;
+    private String registeredSimplePushToken;
+    private int simplePushRegistrationId;
     private long lastPushRegisterSendTime;
     private boolean resetingDialogs;
     private TLRPC.TL_messages_peerDialogs resetDialogsPinned;
@@ -6696,6 +6700,8 @@ public class MessagesController extends BaseController implements NotificationCe
         lastStatusUpdateTime = 0;
         offlineSent = false;
         registeringForPush = false;
+        pushRegistrationId++;
+        clearSimplePushRegistration();
         getDifferenceFirstSync = true;
         uploadingAvatar = null;
         uploadingWallpaper = null;
@@ -10911,8 +10917,8 @@ public class MessagesController extends BaseController implements NotificationCe
             AndroidUtilities.runOnUIThread(passwordCheckRunnable);
             lastPasswordCheckTime = currentTime;
         }
-        if (lastPushRegisterSendTime != 0 && Math.abs(SystemClock.elapsedRealtime() - lastPushRegisterSendTime) >= 3 * 60 * 60 * 1000) {
-            PushListenerController.sendRegistrationToServer(SharedConfig.pushType, SharedConfig.pushString);
+        if (lastPushRegisterSendTime != 0 && !TextUtils.isEmpty(SharedConfig.pushString) && Math.abs(SystemClock.elapsedRealtime() - lastPushRegisterSendTime) >= 3 * 60 * 60 * 1000) {
+            PushListenerController.refreshRegistration();
         }
         getLocationController().update();
         checkPromoInfoInternal(false);
@@ -16235,13 +16241,24 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public void registerForPush(@PushListenerController.PushType int pushType, String regid) {
-        if (TextUtils.isEmpty(regid) || registeringForPush || getUserConfig().getClientUserId() == 0) {
+        if (TextUtils.isEmpty(regid) || getUserConfig().getClientUserId() == 0) {
             return;
         }
-        if (getUserConfig().registeredForPush && regid.equals(SharedConfig.pushString)) {
+        if (registeringForPush) {
+            return;
+        }
+        boolean registeredForCurrentPush = getUserConfig().registeredForPush && pushType == SharedConfig.pushType && regid.equals(SharedConfig.pushString);
+        if (pushType == PushListenerController.PUSH_TYPE_WEB) {
+            String simplePushToken = NaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().String();
+            if (!registeredForCurrentPush || !simplePushToken.equals(registeredSimplePushToken)) {
+                registerSimplePush(simplePushToken);
+            }
+        }
+        if (registeredForCurrentPush) {
             return;
         }
         registeringForPush = true;
+        int registrationId = ++pushRegistrationId;
         lastPushRegisterSendTime = SystemClock.elapsedRealtime();
         if (SharedConfig.pushAuthKey == null) {
             SharedConfig.pushAuthKey = new byte[256];
@@ -16264,16 +16281,21 @@ public class MessagesController extends BaseController implements NotificationCe
             }
         }
         getConnectionsManager().sendRequest(req, (response, error) -> {
-            if (response instanceof TLRPC.TL_boolTrue) {
-                if (BuildVars.LOGS_ENABLED) {
-                    FileLog.d("account " + currentAccount + " registered for push, push type: " + pushType);
+            AndroidUtilities.runOnUIThread(() -> {
+                if (registrationId != pushRegistrationId) {
+                    return;
                 }
-                getUserConfig().registeredForPush = true;
-                SharedConfig.pushString = regid;
-                SharedConfig.pushType = pushType;
-                getUserConfig().saveConfig(false);
-            }
-            AndroidUtilities.runOnUIThread(() -> registeringForPush = false);
+                boolean currentToken = pushType == SharedConfig.pushType && regid.equals(SharedConfig.pushString);
+                if (response instanceof TLRPC.TL_boolTrue && currentToken) {
+                    FileLog.d("account " + currentAccount + " registered for push, push type: " + pushType);
+                    getUserConfig().registeredForPush = true;
+                    getUserConfig().saveConfig(false);
+                }
+                registeringForPush = false;
+                if (!currentToken && !TextUtils.isEmpty(SharedConfig.pushString)) {
+                    registerForPush(SharedConfig.pushType, SharedConfig.pushString);
+                }
+            });
         });
     }
 
@@ -25586,4 +25608,79 @@ public class MessagesController extends BaseController implements NotificationCe
         }
         setWebBrowserSettings(webBrowserSettings);
     }
+
+    // UP start
+    private void registerSimplePush(String token) {
+        if (TextUtils.isEmpty(token) || getUserConfig().getClientUserId() == 0) {
+            return;
+        }
+        if (registeringSimplePush) {
+            return;
+        }
+        registeringSimplePush = true;
+        int registrationId = ++simplePushRegistrationId;
+        if (SharedConfig.pushAuthKey == null) {
+            SharedConfig.pushAuthKey = new byte[256];
+            Utilities.random.nextBytes(SharedConfig.pushAuthKey);
+            SharedConfig.saveConfig();
+        }
+        TL_account.registerDevice req = new TL_account.registerDevice();
+        req.token_type = PushListenerController.PUSH_TYPE_SIMPLE;
+        req.token = token;
+        req.no_muted = false;
+        req.secret = SharedConfig.pushAuthKey;
+        for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
+            UserConfig userConfig = UserConfig.getInstance(a);
+            if (a != currentAccount && userConfig.isClientActivated()) {
+                req.other_uids.add(userConfig.getClientUserId());
+            }
+        }
+        getConnectionsManager().sendRequest(req, (response, error) -> {
+            AndroidUtilities.runOnUIThread(() -> {
+                if (registrationId != simplePushRegistrationId) {
+                    return;
+                }
+                String currentToken = NaConfig.getPreferences().getString(NaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().getKey(), "");
+                boolean currentRegistration = token.equals(currentToken);
+                if (response instanceof TLRPC.TL_boolTrue && currentRegistration) {
+                    FileLog.d("account " + currentAccount + " registered simple push");
+                    registeredSimplePushToken = token;
+                } else if (!(response instanceof TLRPC.TL_boolTrue)) {
+                    FileLog.e("account " + currentAccount + " simple push registration failed: " + error);
+                }
+                registeringSimplePush = false;
+                if (!currentRegistration && !TextUtils.isEmpty(currentToken)) {
+                    registerSimplePush(currentToken);
+                }
+            });
+        });
+    }
+
+    public void clearSimplePushRegistration() {
+        registeringSimplePush = false;
+        registeredSimplePushToken = null;
+        simplePushRegistrationId++;
+    }
+
+    public void unregisterPush(@PushListenerController.PushType int pushType, String token) {
+        if (pushType == PushListenerController.PUSH_TYPE_WEB && TextUtils.isEmpty(SharedConfig.pushString)) {
+            registeringForPush = false;
+            lastPushRegisterSendTime = 0;
+            pushRegistrationId++;
+        }
+        if (TextUtils.isEmpty(token) || getUserConfig().getClientUserId() == 0) {
+            return;
+        }
+        TL_account.unregisterDevice req = new TL_account.unregisterDevice();
+        req.token_type = pushType;
+        req.token = token;
+        for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
+            UserConfig userConfig = UserConfig.getInstance(a);
+            if (a != currentAccount && userConfig.isClientActivated()) {
+                req.other_uids.add(userConfig.getClientUserId());
+            }
+        }
+        getConnectionsManager().sendRequest(req, null);
+    }
+    // UP end
 }

@@ -11,11 +11,6 @@ import androidx.annotation.IntDef;
 import androidx.annotation.Keep;
 import androidx.collection.LongSparseArray;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.messaging.FirebaseMessaging;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.telegram.messenger.voip.VoIPGroupNotification;
@@ -23,6 +18,7 @@ import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.NativeByteBuffer;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.tgnet.tl.TL_update;
+import org.unifiedpush.android.connector.UnifiedPush;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -37,71 +33,73 @@ import xyz.nextalone.nagram.NaConfig;
 public class PushListenerController {
     public static final int PUSH_TYPE_FIREBASE = 2,
         PUSH_TYPE_SIMPLE = 4,
+        PUSH_TYPE_WEB = 10,
         PUSH_TYPE_HUAWEI = 13;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({
             PUSH_TYPE_FIREBASE,
             PUSH_TYPE_SIMPLE,
+            PUSH_TYPE_WEB,
             PUSH_TYPE_HUAWEI
     })
     public @interface PushType {}
 
     public static final int NOTIFICATION_ID = 1;
-    private static CountDownLatch countDownLatch = new CountDownLatch(1);
 
-    public static void sendRegistrationToServer(@PushType int pushType, String token) {
-        Utilities.stageQueue.postRunnable(() -> {
-            ConnectionsManager.setRegId(token, pushType, SharedConfig.pushStringStatus);
-            if (token == null) {
-                return;
-            }
-            boolean sendStat = false;
-            if (SharedConfig.pushStringGetTimeStart != 0 && SharedConfig.pushStringGetTimeEnd != 0 && (!SharedConfig.pushStatSent || !TextUtils.equals(SharedConfig.pushString, token))) {
-                sendStat = true;
-                SharedConfig.pushStatSent = false;
-            }
-            SharedConfig.pushString = token;
-            SharedConfig.pushType = pushType;
-            for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
-                UserConfig userConfig = UserConfig.getInstance(a);
-                userConfig.registeredForPush = false;
-                userConfig.saveConfig(false);
-                if (userConfig.getClientUserId() != 0) {
-                    final int currentAccount = a;
-                    if (sendStat) {
-                        String tag = pushType == PUSH_TYPE_FIREBASE ? "fcm" : (pushType == PUSH_TYPE_HUAWEI ? "hcm" : "up");
-                        TLRPC.TL_help_saveAppLog req = new TLRPC.TL_help_saveAppLog();
-                        TLRPC.TL_inputAppEvent event = new TLRPC.TL_inputAppEvent();
-                        event.time = SharedConfig.pushStringGetTimeStart;
-                        event.type = tag + "_token_request";
-                        event.peer = 0;
-                        event.data = new TLRPC.TL_jsonNull();
-                        req.events.add(event);
 
-                        event = new TLRPC.TL_inputAppEvent();
-                        event.time = SharedConfig.pushStringGetTimeEnd;
-                        event.type = tag + "_token_response";
-                        event.peer = SharedConfig.pushStringGetTimeEnd - SharedConfig.pushStringGetTimeStart;
-                        event.data = new TLRPC.TL_jsonNull();
-                        req.events.add(event);
+    private static void sendRegistrationToServerInternal(@PushType int pushType, String token) {
+        if (isPushTypeDisabled(pushType)) {
+            return;
+        }
+        ConnectionsManager.setRegId(token, pushType, SharedConfig.pushStringStatus);
+        if (token == null) {
+            return;
+        }
+        boolean sendStat = false;
+        if (SharedConfig.pushStringGetTimeStart != 0 && SharedConfig.pushStringGetTimeEnd != 0 && (!SharedConfig.pushStatSent || !TextUtils.equals(SharedConfig.pushString, token))) {
+            sendStat = true;
+            SharedConfig.pushStatSent = false;
+        }
+        SharedConfig.pushString = token;
+        SharedConfig.pushType = pushType;
+        for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
+            UserConfig userConfig = UserConfig.getInstance(a);
+            userConfig.registeredForPush = false;
+            userConfig.saveConfig(false);
+            if (userConfig.getClientUserId() != 0) {
+                final int currentAccount = a;
+                if (sendStat) {
+                    String tag = pushType == PUSH_TYPE_FIREBASE ? "fcm" : (pushType == PUSH_TYPE_HUAWEI ? "hcm" : "up");
+                    TLRPC.TL_help_saveAppLog req = new TLRPC.TL_help_saveAppLog();
+                    TLRPC.TL_inputAppEvent event = new TLRPC.TL_inputAppEvent();
+                    event.time = SharedConfig.pushStringGetTimeStart;
+                    event.type = tag + "_token_request";
+                    event.peer = 0;
+                    event.data = new TLRPC.TL_jsonNull();
+                    req.events.add(event);
 
-                        sendStat = false;
-                        SharedConfig.pushStatSent = true;
-                        SharedConfig.saveConfig();
-                        ConnectionsManager.getInstance(currentAccount).sendRequest(req, null);
-                    }
-                    AndroidUtilities.runOnUIThread(() -> MessagesController.getInstance(currentAccount).registerForPush(pushType, token));
+                    event = new TLRPC.TL_inputAppEvent();
+                    event.time = SharedConfig.pushStringGetTimeEnd;
+                    event.type = tag + "_token_response";
+                    event.peer = SharedConfig.pushStringGetTimeEnd - SharedConfig.pushStringGetTimeStart;
+                    event.data = new TLRPC.TL_jsonNull();
+                    req.events.add(event);
+
+                    sendStat = false;
+                    SharedConfig.pushStatSent = true;
+                    SharedConfig.saveConfig();
+                    ConnectionsManager.getInstance(currentAccount).sendRequest(req, null);
                 }
+                AndroidUtilities.runOnUIThread(() -> MessagesController.getInstance(currentAccount).registerForPush(pushType, token));
             }
-        });
+        }
     }
 
     public static void processRemoteMessage(@PushType int pushType, String data, long time) {
         String tag = pushType == PUSH_TYPE_FIREBASE ? "FCM" : (pushType == PUSH_TYPE_HUAWEI ? "HCM" : "UP");
-        if (BuildVars.LOGS_ENABLED) {
-            FileLog.d(tag + " PRE START PROCESSING");
-        }
+        CountDownLatch countDownLatch = new CountDownLatch(1);
+        FileLog.d(tag + " PRE START PROCESSING");
         long receiveTime = SystemClock.elapsedRealtime();
         AndroidUtilities.runOnUIThread(() -> {
             if (BuildVars.LOGS_ENABLED) {
@@ -132,7 +130,7 @@ public class PushListenerController {
                     byte[] inAuthKeyId = new byte[8];
                     buffer.readBytes(inAuthKeyId, true);
                     if (!Arrays.equals(SharedConfig.pushAuthKeyId, inAuthKeyId)) {
-                        onDecryptError();
+                        onDecryptError(countDownLatch);
                         if (BuildVars.LOGS_ENABLED) {
                             FileLog.d(String.format(Locale.US, tag + " DECRYPT ERROR 2 k1=%s k2=%s, key=%s", Utilities.bytesToHex(SharedConfig.pushAuthKeyId), Utilities.bytesToHex(inAuthKeyId), Utilities.bytesToHex(SharedConfig.pushAuthKey)));
                         }
@@ -147,7 +145,7 @@ public class PushListenerController {
 
                     byte[] messageKeyFull = Utilities.computeSHA256(SharedConfig.pushAuthKey, 88 + 8, 32, buffer.buffer, 24, buffer.buffer.limit());
                     if (!Utilities.arraysEquals(messageKey, 0, messageKeyFull, 8)) {
-                        onDecryptError();
+                        onDecryptError(countDownLatch);
                         if (BuildVars.LOGS_ENABLED) {
                             FileLog.d(String.format(tag + " DECRYPT ERROR 3, key = %s", Utilities.bytesToHex(SharedConfig.pushAuthKey)));
                         }
@@ -283,12 +281,19 @@ public class PushListenerController {
                                     args[a] = loc_args.getString(a);
                                 }
                             } else {
+                                countDownLatch.countDown();
                                 return;
                             }
-                            if (args.length < 2) return;
+                            if (args.length < 2) {
+                                countDownLatch.countDown();
+                                return;
+                            }
 
                             final String data_url = custom.optString("url");
-                            if (TextUtils.isEmpty(data_url)) return;
+                            if (TextUtils.isEmpty(data_url)) {
+                                countDownLatch.countDown();
+                                return;
+                            }
 
                             final long dialogId = UserObject.OAUTH; // UserConfig.getInstance(currentAccount).getClientUserId();
                             final String messageText = LocaleController.formatString(R.string.BotAuthNotification, args[0], args[1]);
@@ -1504,7 +1509,7 @@ public class PushListenerController {
                         ConnectionsManager.getInstance(currentAccount).resumeNetworkMaybe();
                         countDownLatch.countDown();
                     } else {
-                        onDecryptError();
+                        onDecryptError(countDownLatch);
                     }
                     if (BuildVars.LOGS_ENABLED) {
                         FileLog.e("error in loc_key = " + loc_key + " json " + jsonString);
@@ -1647,7 +1652,7 @@ public class PushListenerController {
         return null;
     }
 
-    private static void onDecryptError() {
+    private static void onDecryptError(CountDownLatch countDownLatch) {
         for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
             if (UserConfig.getInstance(a).isClientActivated()) {
                 ConnectionsManager.onInternalPushReceived(a);
@@ -1711,4 +1716,104 @@ public class PushListenerController {
         return instance;
     }
 
+    // UP start
+    public static void sendRegistrationToServer(@PushType int pushType, String token) {
+        Utilities.stageQueue.postRunnable(() -> sendRegistrationToServerInternal(pushType, token));
+    }
+
+    public static void sendWebPushRegistrationToServer(String token, String simplePushToken) {
+        Utilities.stageQueue.postRunnable(() -> {
+            if (isPushTypeDisabled(PUSH_TYPE_WEB)) {
+                return;
+            }
+            NaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().setConfigString(simplePushToken);
+            sendRegistrationToServerInternal(PUSH_TYPE_WEB, token);
+        });
+    }
+
+    public static void refreshRegistration() {
+        Utilities.stageQueue.postRunnable(() -> {
+            if (!TextUtils.isEmpty(SharedConfig.pushString)) {
+                sendRegistrationToServerInternal(SharedConfig.pushType, SharedConfig.pushString);
+            }
+        });
+    }
+
+    public static void reconcilePushRegistration() {
+        Utilities.stageQueue.postRunnable(() -> {
+            int serviceType = NaConfig.INSTANCE.getPushServiceType().Int();
+            boolean googlePush = serviceType == 1 || serviceType == 3;
+            boolean unifiedPushAvailable = serviceType == 2 && UnifiedPush.getAckDistributor(ApplicationLoader.applicationContext) != null;
+            int expectedPushType = serviceType == 2 ? PUSH_TYPE_WEB : PUSH_TYPE_FIREBASE;
+            if ((!googlePush && !unifiedPushAvailable) || SharedConfig.pushType != expectedPushType) {
+                unregisterCurrentPushInternal();
+            }
+            if (!unifiedPushAvailable) {
+                unregisterSimplePush();
+            }
+            if (serviceType != 2) {
+                UnifiedPush.unregister(ApplicationLoader.applicationContext, "default");
+            }
+        });
+    }
+
+    public static void unregisterSimplePush() {
+        String token = NaConfig.getPreferences().getString(NaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().getKey(), "");
+        NaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().setConfigString("");
+        unregisterPush(PUSH_TYPE_SIMPLE, token);
+    }
+
+    public static void unregisterWebPush() {
+        Utilities.stageQueue.postRunnable(() -> {
+            if (SharedConfig.pushType != PUSH_TYPE_WEB) {
+                return;
+            }
+            unregisterCurrentPushInternal();
+        });
+    }
+
+    private static void unregisterCurrentPushInternal() {
+        int pushType = SharedConfig.pushType;
+        String token = SharedConfig.pushString;
+        ConnectionsManager.setRegId(null, pushType, SharedConfig.pushStringStatus);
+        SharedConfig.pushString = "";
+        SharedConfig.pushType = PUSH_TYPE_FIREBASE;
+        for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
+            UserConfig userConfig = UserConfig.getInstance(a);
+            userConfig.registeredForPush = false;
+            userConfig.saveConfig(false);
+        }
+        SharedConfig.saveConfig();
+        unregisterPush(pushType, token);
+    }
+
+    private static void unregisterPush(@PushType int pushType, String token) {
+        if (TextUtils.isEmpty(token)) {
+            return;
+        }
+        Utilities.stageQueue.postRunnable(() -> {
+            for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
+                UserConfig userConfig = UserConfig.getInstance(a);
+                if (userConfig.getClientUserId() != 0) {
+                    final int currentAccount = a;
+                    AndroidUtilities.runOnUIThread(() -> {
+                        MessagesController messagesController = MessagesController.getInstance(currentAccount);
+                        if (pushType == PUSH_TYPE_SIMPLE) {
+                            messagesController.clearSimplePushRegistration();
+                        }
+                        messagesController.unregisterPush(pushType, token);
+                    });
+                }
+            }
+        });
+    }
+
+    private static boolean isPushTypeDisabled(@PushType int pushType) {
+        int serviceType = NaConfig.INSTANCE.getPushServiceType().Int();
+        if (pushType == PUSH_TYPE_WEB || pushType == PUSH_TYPE_SIMPLE) {
+            return serviceType != 2;
+        }
+        return serviceType != 1 && serviceType != 3;
+    }
+    // UP end
 }

@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.PushListenerController;
 import org.telegram.messenger.R;
 import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.Theme;
@@ -138,6 +139,9 @@ public final class SettingsBackupHelper {
         JSONObject jsonConfig = new JSONObject();
         for (Map.Entry<String, ?> entry : preferences.getAll().entrySet()) {
             String key = entry.getKey();
+            if ("nkmrcfg".equals(sp) && isDeviceSpecificPushKey(key)) {
+                continue;
+            }
             if (!includeApiKeys && (key.endsWith("Key") || key.contains("Token") || key.contains("AccountID"))) {
                 continue;
             }
@@ -199,6 +203,9 @@ public final class SettingsBackupHelper {
             SharedPreferences.Editor editor = preferences.edit();
             for (Map.Entry<String, JsonElement> config : ((JsonObject) element.getValue()).entrySet()) {
                 String key = config.getKey();
+                if ("nkmrcfg".equals(spName) && isDeviceSpecificPushKey(key)) {
+                    continue;
+                }
                 if (!config.getValue().isJsonPrimitive()) {
                     continue;
                 }
@@ -250,9 +257,13 @@ public final class SettingsBackupHelper {
             }
             editor.commit();
         }
+        PushListenerController.reconcilePushRegistration();
     }
 
     private static boolean isCompatibleConfigValue(String key, JsonPrimitive value, int type) {
+        if (key.equals(NaConfig.INSTANCE.getPushServiceType().getKey())) {
+            return value.isNumber() && value.getAsInt() >= 0 && value.getAsInt() <= 3;
+        }
         if (type == ConfigItem.configTypeBool || type == ConfigItem.configTypeBoolLinkInt) {
             return value.isBoolean();
         }
@@ -301,5 +312,12 @@ public final class SettingsBackupHelper {
         });
         builder.setNegativeButton(getString(R.string.Cancel), null);
         builder.show();
+    }
+
+    private static boolean isDeviceSpecificPushKey(String key) {
+        return key.equals(NaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().getKey())
+                || key.equals(NaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPrivateKey().getKey())
+                || key.equals(NaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPublicKey().getKey())
+                || key.equals(NaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushAuthSecret().getKey());
     }
 }
