@@ -34,7 +34,7 @@
     <string name="LlmUseContextInAutoTranslateNotice">Pode aumentar o uso de tokens e a latência.</string>
     <string name="LlmTemperature">Temperatura</string>
     <string name="LlmModelsLoadFailed">Falha ao carregar a lista de modelos.</string>
-    <string name="LlmTest">Teste</string>
+    <string name="LlmTest">Testar</string>
     <string name="LlmTestResultHttpStatusCode">Código HTTP</string>
     <string name="LlmTestResultDuration">Duração</string>
     <string name="LlmTestResultResponse">Resposta</string>
@@ -335,5 +335,7 @@
     <string name="DeepLTranslateKeyNotice">Configure sua chave da API do DeepL; deixe em branco para usar as credenciais integradas.</string>
     <string name="DefaultScheduleDelay">Atraso padrão</string>
     <string name="ExportAyuDB">Exportar banco de dados</string>
+    <string name="ImportAyuDB">Importar banco de dados</string>
+    <string name="ImportAyuDBAlert">O banco de dados de mensagens atual será substituído. O aplicativo será reiniciado após a importação.</string>
     <string name="DisableSwipeToNext">Desativar deslizar para o próximo</string>
 </resources>

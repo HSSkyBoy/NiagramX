@@ -29,14 +29,14 @@
     <string name="DeleteDownloadedFile">Wyczyść</string>
     <string name="TestBackend">Testuj backend</string>
     <string name="ViewHistory">Historia</string>
-    <string name="Nya">Miał!</string>
+    <string name="Nya">Miau!</string>
     <string name="SensitiveDisableFiltering">Wyłącz filtrowanie treści wrażliwych</string>
     <string name="SensitiveAbout">Wyświetlaj poufne treści multimedialne w kanałach publicznych na wszystkich swoich urządzeniach.</string>
     <string name="StickerSize">Rozmiar naklejek</string>
-    <string name="StickerSizeDialogMessageBigOne">Duże</string>
-    <string name="StickerSizeDialogMessageSmallOne">Małe</string>
-    <string name="StickerSizeDialogMessageReplyTo">Miał</string>
-    <string name="StickerSizeDialogName">Duang</string>
+    <string name="StickerSizeDialogMessageBigOne">Duży</string>
+    <string name="StickerSizeDialogMessageSmallOne">Mały</string>
+    <string name="StickerSizeDialogMessageReplyTo">Miau</string>
+    <string name="StickerSizeDialogName">Kotek</string>
     <string name="Experimental">Opcje eksperymentalne</string>
     <string name="UnlimitedFavoredStickers">Nieograniczona liczba ulubionych naklejek</string>
     <string name="UnlimitedFavoredStickersAbout">Dodaj nieograniczoną liczbę naklejek do ulubionych. Naklejki mogą nie być synchronizowane z innymi urządzeniami.</string>
@@ -75,7 +75,7 @@
     <string name="IgnoreBlockedAbout">Nie będziesz już widzieć wiadomości od zablokowanych użytkowników w grupach.</string>
     <string name="SourceCode">Kod źródłowy</string>
     <string name="ResetStickerSize">Zresetuj rozmiar naklejki</string>
-    <string name="RestartAppToTakeEffect">Zresetuj aplikację, aby zastosować zmiany.</string>
+    <string name="RestartAppToTakeEffect">Zrestartuj, aby zastosować.</string>
     <string name="MediaPreview">Podgląd multimediów na liście czatów</string>
     <string name="AutoPauseVideo">Automatyczne wstrzymywanie wideo</string>
     <string name="AutoPauseVideoAbout">Podczas blokady ekranu/przełączenia na tło.</string>
@@ -173,7 +173,7 @@
     <string name="ChatAttachEnterMenuDisableLinkPreview">Wyłącz podgląd linku</string>
     <string name="ChatAttachEnterMenuEnableLinkPreview">Włącz podgląd linku</string>
     <string name="UseChatAttachEnterMenu">Użyj menu wprowadzania</string>
-    <string name="UseChatAttachEnterMenuNotice">Zmień przycisk nagrywania na menu wejściowe i dodaj przełącznik podglądu łącza.</string>
+    <string name="UseChatAttachEnterMenuNotice">Zmień przycisk nagrywania na menu wprowadzania i dodaj przełącznik podglądu linku.</string>
     <string name="DisableLinkPreviewByDefault">Wyłącz podgląd linku domyślnie</string>
     <string name="CustomApi">Niestandardowe API</string>
     <string name="UseCustomApiNotice">Zaloguj się za pomocą niestandardowego interfejsu API. Jeśli nie możesz się zarejestrować lub zalogować, to może pomóc.\n\n Uwaga: FCM nie będzie działać, jeśli używasz niestandardowego interfejsu API.</string>

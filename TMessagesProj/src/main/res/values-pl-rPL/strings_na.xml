@@ -44,7 +44,7 @@
     <string name="DoActionsInCommonGroups">Zastosowano w grupach wspólnych</string>
     <string name="ShowFullAbout">Zawsze rozwijaj opis czatu</string>
     <string name="TypeMessageHintUseGroupName">Użyj nazwy grupy jako tekstu podpowiedzi</string>
-    <string name="HideBotButtonInInputField">Ukryj przycisk bota w polu wprowadzania danych</string>
+    <string name="HideBotButtonInInputField">Ukryj przycisk bota w polu wprowadzania</string>
     <string name="ShowSendAsUnderMessageHint">Pokaż nadawcę pod wskazówką wiadomości</string>
     <string name="CheckAllForum">Dodaj forum</string>
     <string name="DecorationNone">Brak</string>
@@ -97,7 +97,7 @@
     <string name="SendWithoutPangu">Wyślij bez Pangu</string>
     <string name="DefaultHlsVideoQuality">Domyślna jakość wideo HLS</string>
     <string name="DisableBotOpenButton">Wyłącz przycisk otwierania bota</string>
-    <string name="CustomTitleUserName">Używaj pseudonimu użytkownika jako tytułu</string>
+    <string name="CustomTitleUserName">Używaj pseudonimu jako tytułu</string>
     <string name="EnhancedVideoBitrate">Ulepszona współdzielona szybkość transmisji wideo</string>
     <string name="ActionBarButtons">Przyciski paska akcji</string>
     <string name="VideoPlayerDecoder">Dekoder wideo</string>
