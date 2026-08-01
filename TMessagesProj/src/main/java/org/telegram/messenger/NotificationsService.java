@@ -15,6 +15,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ServiceInfo;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
@@ -45,7 +46,11 @@ public class NotificationsService extends Service {
                     .setContentText(LocaleController.getString(R.string.NagramXPushService))
                     .build();
             try {
-                startForeground(9999, notification);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                    startForeground(9999, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_REMOTE_MESSAGING);
+                } else {
+                    startForeground(9999, notification);
+                }
             } catch (Throwable e) {
                 Log.e("TFOSS", "Failed to start push service");
             }
@@ -78,11 +83,5 @@ public class NotificationsService extends Service {
                 // 辣鷄miui 就你事最多.jpg
             }
         }
-    }
-
-    @Override
-    public void onTimeout(int startId, int fgsType) {
-        super.onTimeout(startId, fgsType);
-        stopSelf();
     }
 }
