@@ -9493,7 +9493,7 @@ public class Theme {
         d.setColorFilter(new ColorMatrixColorFilter(colorMatrix));
         d.draw(new Canvas(bitmap));
         d.setColorFilter(wasColorFilter);
-        Utilities.blurBitmap(bitmap, 3, 1, bitmap.getWidth(), bitmap.getHeight(), bitmap.getRowBytes());
+        Utilities.blurBitmap(bitmap, 3);
         return blurredBitmap = bitmap;
     }
 

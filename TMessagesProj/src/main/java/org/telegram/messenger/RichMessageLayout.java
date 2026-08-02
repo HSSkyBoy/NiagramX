@@ -1,6 +1,7 @@
 package org.telegram.messenger;
 
 import static org.telegram.messenger.AndroidUtilities.dp;
+import static org.telegram.messenger.AndroidUtilities.dpf2;
 import static org.telegram.tgnet.TLObject.hasFlag;
 import static org.telegram.tgnet.TLObject.setFlag;
 
@@ -96,6 +97,7 @@ import org.telegram.ui.Components.LinkSpanDrawable;
 import org.telegram.ui.Components.MediaActionDrawable;
 import org.telegram.ui.Components.RadialProgress2;
 import org.telegram.ui.Components.SeekBar;
+import org.telegram.ui.Components.SquigglyLinesSpan;
 import org.telegram.ui.Components.TableLayout;
 import org.telegram.ui.Components.TextPaintImageReceiverSpan;
 import org.telegram.ui.Components.TextStyleSpan;
@@ -105,6 +107,7 @@ import org.telegram.ui.Components.URLSpanReplacement;
 import org.telegram.ui.Components.spoilers.SpoilerEffect;
 import org.telegram.ui.Components.spoilers.SpoilerEffect2;
 import org.telegram.ui.iv.RichHtml;
+import org.telegram.ui.iv.RichTextStyle;
 import org.telegram.ui.PremiumPreviewFragment;
 import org.telegram.ui.SettingsActivity;
 import org.telegram.ui.web.WebInstantView;
@@ -573,6 +576,22 @@ public class RichMessageLayout {
         }
     }
 
+    public boolean setSlideshowPage(TL_iv.PageBlock target) {
+        if (target == null) return false;
+        for (int i = 0; i < blocks.size(); ++i) {
+            final RichBlock block = blocks.get(i);
+            if (!(block instanceof RichSlideshowBlock)) continue;
+            final RichSlideshowBlock slideshow = (RichSlideshowBlock) block;
+            for (int page = 0; page < slideshow.cells.size(); ++page) {
+                if (slideshow.cells.get(page).pageBlock == target) {
+                    slideshow.setCurrentPage(page);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public ImageReceiver findMediaImageReceiver(TL_iv.PageBlock target, int[] outOffset) {
         for (int i = 0; i < blocks.size(); ++i) {
             final RichBlock block = blocks.get(i);
@@ -931,9 +950,15 @@ public class RichMessageLayout {
                     final TLRPC.TL_message message = new TLRPC.TL_message();
                     message.out = true;
                     message.id = blockAudio.mid = -((Long) blockAudio.audio_id).hashCode();
-                    message.peer_id = new TLRPC.TL_peerUser();
+                    message.realId = messageObject.getRealId();
+                    message.dialog_id = messageObject.getDialogId();
+                    message.peer_id = messageObject.messageOwner.peer_id;
+                    if (message.peer_id == null) {
+                        message.peer_id = new TLRPC.TL_peerUser();
+                        message.peer_id.user_id = UserConfig.getInstance(currentAccount).getClientUserId();
+                    }
                     message.from_id = new TLRPC.TL_peerUser();
-                    message.from_id.user_id = message.peer_id.user_id = UserConfig.getInstance(currentAccount).getClientUserId();
+                    message.from_id.user_id = UserConfig.getInstance(currentAccount).getClientUserId();
                     message.date = (int) (System.currentTimeMillis() / 1000);
                     message.message = "";
                     message.media = new TLRPC.TL_messageMediaDocument();
@@ -1692,6 +1717,17 @@ public class RichMessageLayout {
             String plainText = ((TL_iv.textPlain) text).text;
             String translatedText = RichMessageTransHelper.getCachedTranslation(messageObject, plainText);
             out.append(translatedText != null ? translatedText : (plainText == null ? "" : plainText));
+        } else if (text instanceof TL_iv.textDiff) {
+            final TL_iv.textDiff textDiff = (TL_iv.textDiff) text;
+            final boolean textEmpty = RichTextStyle.isEmpty(textDiff.text);
+            final boolean oldTextEmpty = RichTextStyle.isEmpty(textDiff.old_text);
+            if (textEmpty && !oldTextEmpty) {
+                formatTextAndSetSpan(textDiff.old_text, out, flags, new TextStyleSpan(getTextStyleRun(TextStyleSpan.FLAG_STYLE_STRIKE_RED)));
+            } else if (!textEmpty && oldTextEmpty) {
+                formatTextAndSetSpan(textDiff.text, out, flags, new TextStyleSpan(getTextStyleRun(TextStyleSpan.FLAG_STYLE_ACCENT)));
+            } else if (!textEmpty) {
+                formatTextAndSetSpan(textDiff.text, out, flags, new SquigglyLinesSpan());
+            }
         } else if (text instanceof TL_iv.textBold) {
             flags |= TEXT_FLAG_BOLD;
             formatTextAndSetSpan(text.text, out, flags, new StyleSpan(this, flags));
@@ -1853,6 +1889,13 @@ public class RichMessageLayout {
     public static void getString(TL_iv.RichText text, StringBuilder out) {
         if (text instanceof TL_iv.textPlain) {
             out.append(((TL_iv.textPlain) text).text);
+        } else if (text instanceof TL_iv.textDiff) {
+            final TL_iv.textDiff textDiff = (TL_iv.textDiff) text;
+            if (!RichTextStyle.isEmpty(textDiff.text)) {
+                getString(textDiff.text, out);
+            } else if (!RichTextStyle.isEmpty(textDiff.old_text)) {
+                getString(textDiff.old_text, out);
+            }
         } else if (text instanceof TL_iv.textConcat) {
             for (int i = 0; i < text.texts.size(); ++i) {
                 getString(text.texts.get(i), out);
@@ -2103,6 +2146,7 @@ public class RichMessageLayout {
                 v.invalidate();
             }
             SpoilerEffect.renderWithRipple(v, false, color, 0, spoilersPatchedTextLayout, 0, layout, spoilers, canvas, false);
+            SquigglyLinesSpan.drawOnText(canvas, layout);
             if (!root.isOverlayActive()) {
                 AnimatedEmojiSpan.drawAnimatedEmojis(canvas, layout, animatedEmojiStack, 0, spoilers, 0, 0, 0, 1.0f);
             }
@@ -2160,6 +2204,7 @@ public class RichMessageLayout {
             final View v = view;
             MultiLayoutTypingAnimator.drawLayoutWithLastLineFade(canvas, layout, lineIndex, xPosition, c -> {
                 SpoilerEffect.renderWithRipple(v, false, color, 0, spoilersPatchedTextLayout, 0, layout, spoilers, c, false);
+                SquigglyLinesSpan.drawOnText(c, layout);
                 AnimatedEmojiSpan.drawAnimatedEmojis(c, layout, animatedEmojiStack, 0, spoilers, 0, 0, 0, 1f);
             });
             canvas.restore();
@@ -2996,7 +3041,7 @@ public class RichMessageLayout {
             final ChatMessageCell cell = root.getCell();
             final ChatMessageCell.ChatMessageCellDelegate delegate = root.getDelegate();
             if (cell != null && delegate != null) {
-                delegate.forceUpdate(cell, false);
+                delegate.forceUpdate(cell, true, true);
             }
         }
     }
@@ -3482,7 +3527,7 @@ public class RichMessageLayout {
         private int titleDrawX() {
             if (title == null) return 0;
             final int tableWidth = Math.max(0, Math.min(viewportWidth, contentMeasuredWidth));
-            return Math.max(0, Math.round((tableWidth - (title.right - title.left)) / 2f));
+            return Math.round((tableWidth - (title.right - title.left)) / 2f - title.left);
         }
 
         @Override
@@ -5160,6 +5205,7 @@ public class RichMessageLayout {
         private int seekBarX;
         private int seekBarY;
         private int seekBarWidth;
+        private int layoutWidth = -1;
 
         private int buttonState;
         private boolean buttonPressed;
@@ -5188,8 +5234,9 @@ public class RichMessageLayout {
         }
 
         private void layoutInner() {
+            layoutWidth = this.maxWidth + root.padLeft + root.padRight;
             seekBarX = buttonX + dp(50) + size;
-            seekBarWidth = Math.max(0, this.maxWidth - seekBarX - dp(18));
+            seekBarWidth = Math.max(0, layoutWidth - seekBarX - dp(18));
 
             String author = currentMessageObject != null ? currentMessageObject.getMusicAuthor(false) : null;
             String title = currentMessageObject != null ? currentMessageObject.getMusicTitle(false) : null;
@@ -5207,8 +5254,9 @@ public class RichMessageLayout {
                     stringBuilder.setSpan(span, 0, author.length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
                 }
                 audioTimePaint.setTextSize(dp(16));
-                final CharSequence stringFinal = TextUtils.ellipsize(stringBuilder, Theme.chat_audioTitlePaint, seekBarWidth, TextUtils.TruncateAt.END);
-                titleLayout = new StaticLayout(stringFinal, audioTimePaint, seekBarWidth + dp(50), Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
+                final int titleWidth = seekBarWidth + dp(50);
+                final CharSequence stringFinal = TextUtils.ellipsize(stringBuilder, Theme.chat_audioTitlePaint, titleWidth, TextUtils.TruncateAt.END);
+                titleLayout = new StaticLayout(stringFinal, audioTimePaint, titleWidth, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0.0f, false);
                 seekBarY = buttonY + (size - dp(30)) / 2 + dp(11);
             } else {
                 titleLayout = null;
@@ -5237,6 +5285,14 @@ public class RichMessageLayout {
             if (buttonState == 2) return MediaActionDrawable.ICON_DOWNLOAD;
             if (buttonState == 3) return MediaActionDrawable.ICON_CANCEL;
             return MediaActionDrawable.ICON_PLAY;
+        }
+
+        private boolean canStream() {
+            return SharedConfig.streamMedia
+                && currentMessageObject != null
+                && currentMessageObject.isMusic()
+                && !currentMessageObject.shouldEncryptPhotoOrVideo()
+                && !DialogObject.isEncryptedDialog(currentMessageObject.getDialogId());
         }
 
         public void updatePlayingMessageProgress() {
@@ -5287,7 +5343,11 @@ public class RichMessageLayout {
                 radialProgress.setIcon(getIconForCurrentState(), false, animated);
             } else {
                 DownloadController.getInstance(currentAccount).addLoadingFileObserver(fileName, null, this);
-                if (!FileLoader.getInstance(currentAccount).isLoadingFile(fileName)) {
+                if (canStream()) {
+                    final boolean playing = MediaController.getInstance().isPlayingMessage(currentMessageObject);
+                    buttonState = playing && !MediaController.getInstance().isMessagePaused() ? 1 : 0;
+                    radialProgress.setIcon(getIconForCurrentState(), false, animated);
+                } else if (!FileLoader.getInstance(currentAccount).isLoadingFile(fileName)) {
                     buttonState = 2;
                     radialProgress.setProgress(0, animated);
                     radialProgress.setIcon(getIconForCurrentState(), false, animated);
@@ -5332,6 +5392,9 @@ public class RichMessageLayout {
         @Override
         protected void onDraw(Canvas canvas) {
             if (currentMessageObject == null || currentDocument == null) return;
+            if (layoutWidth != this.maxWidth + root.padLeft + root.padRight) {
+                layoutInner();
+            }
 
             canvas.save();
             canvas.translate(-root.padLeft, 0);
@@ -5377,8 +5440,8 @@ public class RichMessageLayout {
         @Override
         public boolean onTouchEvent(MotionEvent event) {
             final int act = event.getActionMasked();
-            final float x = event.getX() - padding.left - root.padLeft;
-            final float y = event.getY() - padding.top;
+            final float x = event.getX() + root.padLeft;
+            final float y = event.getY();
 
             final boolean seekHandled = seekBar.onTouch(act, x - seekBarX, y - seekBarY);
             if (seekHandled) {
@@ -5389,7 +5452,7 @@ public class RichMessageLayout {
             }
 
             if (act == MotionEvent.ACTION_DOWN) {
-                if (buttonState != -1 && x >= buttonX && x <= buttonX + dp(48) && y >= buttonY && y <= buttonY + dp(48) || buttonState == 0) {
+                if (buttonState != -1 && x >= buttonX && x <= buttonX + dp(48) && y >= buttonY && y <= buttonY + dp(48)) {
                     buttonPressed = true;
                     if (view != null) view.invalidate();
                     return true;
@@ -6145,7 +6208,7 @@ public class RichMessageLayout {
         private int dotsHeight;
         private int currentPage;
         private float pageOffset;
-        private boolean dragging;
+        private boolean dragging, verticalDragging;
         private float downX, downY;
         private int touchSlop, minFlingVelocity, maxFlingVelocity;
         private VelocityTracker velocityTracker;
@@ -6253,6 +6316,7 @@ public class RichMessageLayout {
                 if (slideDotPaint == null) {
                     slideDotPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
                     slideDotPaint.setColor(0xFFFFFFFF);
+                    slideDotPaint.setShadowLayer(dpf2(3), 0, dpf2(1), 0x80000000);
                 }
                 final float dotsY = slideHeight - dp(7 + 16) + dp(5);
                 final int totalWidth = n * dp(7) + (n - 1) * dp(6) + dp(4);
@@ -6324,6 +6388,7 @@ public class RichMessageLayout {
                     }
                     downX = event.getX(); downY = event.getY();
                     dragging = false;
+                    verticalDragging = false;
                     if (velocityTracker == null) velocityTracker = VelocityTracker.obtain();
                     else velocityTracker.clear();
                     velocityTracker.addMovement(event);
@@ -6335,9 +6400,21 @@ public class RichMessageLayout {
                     return true;
                 }
                 if (act == MotionEvent.ACTION_MOVE) {
+                    if (verticalDragging) return true;
                     if (velocityTracker != null) velocityTracker.addMovement(event);
                     final float ddx = event.getX() - downX;
                     final float ddy = event.getY() - downY;
+                    if (!dragging && Math.abs(ddy) > touchSlop && Math.abs(ddy) > Math.abs(ddx)) {
+                        verticalDragging = true;
+                        if (currentPage >= 0 && currentPage < cells.size()) {
+                            final MotionEvent cancel = MotionEvent.obtain(event);
+                            cancel.setAction(MotionEvent.ACTION_CANCEL);
+                            cells.get(currentPage).onTouchEvent(cancel, view);
+                            cancel.recycle();
+                        }
+                        requestDisallowParentIntercept(false);
+                        return true;
+                    }
                     if (!dragging && Math.abs(ddx) > touchSlop && Math.abs(ddx) > Math.abs(ddy)) {
                         dragging = true;
                         if (currentPage >= 0 && currentPage < cells.size()) {
@@ -6359,8 +6436,10 @@ public class RichMessageLayout {
                     return false;
                 }
                 if (act == MotionEvent.ACTION_UP || act == MotionEvent.ACTION_CANCEL) {
+                    final boolean wasVerticalDragging = verticalDragging;
+                    verticalDragging = false;
                     float velocityX = 0;
-                    if (act == MotionEvent.ACTION_UP && velocityTracker != null) {
+                    if (!wasVerticalDragging && act == MotionEvent.ACTION_UP && velocityTracker != null) {
                         velocityTracker.addMovement(event);
                         velocityTracker.computeCurrentVelocity(1000, maxFlingVelocity);
                         final float x = velocityTracker.getXVelocity();
@@ -6374,6 +6453,7 @@ public class RichMessageLayout {
                         velocityTracker = null;
                     }
                     requestDisallowParentIntercept(false);
+                    if (wasVerticalDragging) return true;
                     if (dragging) {
                         dragging = false;
                         settle(velocityX);
@@ -6416,6 +6496,20 @@ public class RichMessageLayout {
 
         public int getCurrentPage() { return currentPage; }
 
+        public void setCurrentPage(int page) {
+            final int newPage = Math.max(0, Math.min(page, cells.size() - 1));
+            if (settleAnimator != null) {
+                settleAnimator.cancel();
+                settleAnimator = null;
+            }
+            if (currentPage == newPage && pageOffset == 0) return;
+            currentPage = newPage;
+            pageOffset = 0;
+            dragging = false;
+            verticalDragging = false;
+            if (view != null) view.invalidate();
+        }
+
         @Override
         public boolean isHorizontallyDragging() {
             return dragging || (settleAnimator != null && settleAnimator.isRunning());
@@ -6424,6 +6518,8 @@ public class RichMessageLayout {
         @Override protected void onAttachedToWindow() { for (MediaCell c : cells) c.attach(view); }
         @Override protected void onDetachedFromWindow() {
             requestDisallowParentIntercept(false);
+            dragging = false;
+            verticalDragging = false;
             if (velocityTracker != null) {
                 velocityTracker.recycle();
                 velocityTracker = null;
@@ -7061,7 +7157,7 @@ public class RichMessageLayout {
                 final Text t = (Text) tb;
                 if (t.animatedEmojiStack == null || t.animatedEmojiStack.holders.isEmpty()) continue;
                 canvas.save();
-                canvas.translate(t.x - t.left, t.y - currY);
+                canvas.translate(t.x, t.y - currY);
                 AnimatedEmojiSpan.drawAnimatedEmojis(canvas, t.layout, t.animatedEmojiStack, 0, t.spoilers, 0, 0, 0, 1.0f, colorFilter);
                 canvas.restore();
                 drew = true;

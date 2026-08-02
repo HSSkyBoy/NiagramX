@@ -81,7 +81,6 @@ import android.text.style.ForegroundColorSpan;
 import android.text.style.ImageSpan;
 import android.text.style.URLSpan;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.Pair;
 import android.util.Property;
 import android.util.SparseArray;
@@ -13341,7 +13340,7 @@ public class ChatActivity extends BaseFragment implements
                                     }
                                     if (!isVideo && photoEntry.imagePath != null) {
                                         info.path = photoEntry.imagePath;
-                                        if (photoEntry.isHighQuality()) {
+                                        if (!isStickerMode && photoEntry.isHighQuality()) {
                                             info.originalPhotoEntry = photoEntry.clone();
                                         }
                                     } else if (photoEntry.path != null) {
@@ -13363,7 +13362,7 @@ public class ChatActivity extends BaseFragment implements
                                     info.updateStickersOrder = SendMessagesHelper.checkUpdateStickersOrder(photoEntry.caption);
                                     info.hasMediaSpoilers = photoEntry.hasSpoiler;
                                     info.stars = photoEntry.starsAmount;
-                                    info.highQuality = photoEntry.editedInfo == null && photoEntry.isHighQuality();
+                                    info.highQuality = photoEntry.editedInfo == null && !isStickerMode && photoEntry.isHighQuality();
                                     photos.add(info);
                                     photoEntry.reset();
                                 }
@@ -15601,7 +15600,7 @@ public class ChatActivity extends BaseFragment implements
                         if (messageObjectToEdit.messageOwner != null) {
                             cs = MessageObject.replaceAnimatedEmoji(cs, messageObjectToEdit.messageOwner.entities, replyObjectTextView.getPaint().getFontMetricsInt());
                         }
-                        replyObjectTextView.setText(AnimatedEmojiSpan.cloneSpans(cs));
+                        replyObjectTextView.setText(AnimatedEmojiSpan.cloneSpans(cs, -1, replyObjectTextView.getPaint().getFontMetricsInt()));
                     }
                 }
 
@@ -15848,24 +15847,25 @@ public class ChatActivity extends BaseFragment implements
                     replyObjectText = Emoji.replaceEmoji(messageObjectToReply.messageOwner.media.game.title, replyObjectTextView.getPaint().getFontMetricsInt(), false);
                     sourceText = messageObjectToReply.messageOwner.media.game.title;
                 } else if (messageObjectToReply.messageText != null || messageObjectToReply.caption != null) {
-                    CharSequence mess = messageObjectToReply.caption != null ? messageObjectToReply.caption : messageObjectToReply.messageText;
+                    CharSequence mess = new SpannableStringBuilder(messageObjectToReply.caption != null ? messageObjectToReply.caption : messageObjectToReply.messageText);
                     mess = FormattedDateSpan.restoreFormatedDateEntities(mess);
                     sourceText = mess;
                     if (mess.length() > 150) {
                         mess = mess.subSequence(0, 150);
                     }
                     mess = AndroidUtilities.replaceNewLines(mess);
+                    mess = Emoji.replaceEmoji(mess, replyObjectTextView.getPaint().getFontMetricsInt(), false);
                     if (messageObjectToReply.messageOwner != null && messageObjectToReply.messageOwner.entities != null) {
                         mess = MessageObject.replaceAnimatedEmoji(mess, messageObjectToReply.messageOwner.entities, replyObjectTextView.getPaint().getFontMetricsInt());
                     }
-                    replyObjectText = Emoji.replaceEmoji(mess, replyObjectTextView.getPaint().getFontMetricsInt(), false);
+                    replyObjectText = mess;
                 }
                 if (replyObjectText != null) {
                     if (replyObjectText instanceof Spannable && sourceText != null) {
                         MediaDataController.addTextStyleRuns(entities, sourceText, (Spannable) replyObjectText);
                     }
 
-                    replyObjectTextView.setText(AnimatedEmojiSpan.cloneSpans(replyObjectText));
+                    replyObjectTextView.setText(AnimatedEmojiSpan.cloneSpans(replyObjectText, -1, replyObjectTextView.getPaint().getFontMetricsInt()));
                 }
                 updateBottomOverlay();
             } else if (messageObjectsToForward != null) {
@@ -20919,7 +20919,7 @@ public class ChatActivity extends BaseFragment implements
         PhotoViewer photoViewer = PhotoViewer.getInstance();
         photoViewer.setParentActivity(this);
         return photoViewer.openPhoto(index,
-            new ChatArticlePageBlocksAdapter(richMessage, pageBlocks),
+            new ChatArticlePageBlocksAdapter(richMessage, pageBlocks, messageObject),
             new ChatArticlePhotoViewerProvider(pageBlocks));
     }
 
@@ -20974,10 +20974,12 @@ public class ChatActivity extends BaseFragment implements
     private static class ChatArticlePageBlocksAdapter implements PhotoViewer.PageBlocksAdapter {
         private final TL_iv.RichMessage page;
         private final List<TL_iv.PageBlock> blocks;
+        private final MessageObject messageObject;
 
-        ChatArticlePageBlocksAdapter(TL_iv.RichMessage page, List<TL_iv.PageBlock> blocks) {
+        ChatArticlePageBlocksAdapter(TL_iv.RichMessage page, List<TL_iv.PageBlock> blocks, MessageObject messageObject) {
             this.page = page;
             this.blocks = blocks;
+            this.messageObject = messageObject;
         }
 
         @Override
@@ -21047,10 +21049,14 @@ public class ChatActivity extends BaseFragment implements
         }
 
         @Override
-        public void updateSlideshowCell(TL_iv.PageBlock currentPageBlock) {}
+        public void updateSlideshowCell(TL_iv.PageBlock currentPageBlock) {
+            if (messageObject != null && messageObject.richLayout != null) {
+                messageObject.richLayout.setSlideshowPage(currentPageBlock);
+            }
+        }
 
         @Override
-        public Object getParentObject() { return page; }
+        public Object getParentObject() { return messageObject != null ? messageObject : page; }
 
         @Override
         public boolean isHardwarePlayer(int index) { return false; }
@@ -40358,6 +40364,7 @@ public class ChatActivity extends BaseFragment implements
             forceUpdate(cell, anchorScroll, true, false);
         }
 
+        @Override
         public void forceUpdate(ChatMessageCell cell, boolean anchorScroll, boolean scrollByTop) {
             forceUpdate(cell, anchorScroll, false, scrollByTop);
         }
@@ -45224,7 +45231,7 @@ public class ChatActivity extends BaseFragment implements
                     src.set(0, 0, source.getWidth(), source.getHeight());
                     dst.set(0, 0, serviceBitmap.getWidth(), serviceBitmap.getHeight());
                     serviceCanvas.drawBitmap(source, src, dst, null);
-                    Utilities.blurBitmap(serviceBitmap, 3, 1, serviceBitmap.getWidth(), serviceBitmap.getHeight(), serviceBitmap.getRowBytes());
+                    Utilities.blurBitmap(serviceBitmap, 3);
                     serviceCanvas.drawColor(ColorUtils.setAlphaComponent(0xff000000, (int) (0xFF * dimAmount)));
                     serviceShader = new BitmapShader(serviceBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
                     serviceBitmapSource = Bitmap.createBitmap(serviceBitmap);
