@@ -29,6 +29,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.os.Process;
 import android.os.SystemClock;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -58,6 +59,7 @@ import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 
 import tw.nekomimi.nekogram.NekoConfig;
+import tw.nekomimi.nekogram.utils.AndroidUtil;
 import xyz.nextalone.nagram.NaConfig;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
@@ -94,17 +96,16 @@ public class ApplicationLoader extends Application {
     private static PushListenerController.IPushListenerServiceProvider pushProvider;
     private static IMapsProvider mapsProvider;
     private static ILocationServiceProvider locationServiceProvider;
+    private Thread.UncaughtExceptionHandler systemUncaughtExceptionHandler;
 
     @Override
     protected void attachBaseContext(Context base) {
+        systemUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         super.attachBaseContext(base);
         try {
             applicationContext = getApplicationContext();
         } catch (Throwable ignore) {
         }
-        Thread.currentThread().setUncaughtExceptionHandler((thread, error) -> {
-            Log.e("nekox", "from " + thread.toString(), error);
-        });
     }
 
     public static ILocationServiceProvider getLocationServiceProvider() {
@@ -275,7 +276,7 @@ public class ApplicationLoader extends Application {
         NekoConfig.init();
         NaConfig.init();
         SharedPrefsHelper.init(applicationContext);
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!NaConfig.INSTANCE.getDisableCrashlyticsCollection().Bool());
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(AndroidUtil.shouldEnableCrashlytics());
         for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) { //TODO improve account
             UserConfig.getInstance(a).loadConfig();
             MessagesController.getInstance(a);
@@ -319,6 +320,7 @@ public class ApplicationLoader extends Application {
         }
 
         super.onCreate();
+        installCrashReportFilter();
 
         if (BuildVars.LOGS_ENABLED) {
             FileLog.d("app start time = " + (startTime = SystemClock.elapsedRealtime()));
@@ -814,5 +816,22 @@ public class ApplicationLoader extends Application {
     }
     public File getDownloadedUpdateFile() {
         return null;
+    }
+
+    private void installCrashReportFilter() {
+        Thread.UncaughtExceptionHandler crashlyticsHandler = Thread.getDefaultUncaughtExceptionHandler();
+        Thread.setDefaultUncaughtExceptionHandler((thread, error) -> {
+            if (AndroidUtil.shouldReportCrashToCrashlytics(error)) {
+                if (crashlyticsHandler != null) {
+                    crashlyticsHandler.uncaughtException(thread, error);
+                    return;
+                }
+            } else if (systemUncaughtExceptionHandler != null) {
+                systemUncaughtExceptionHandler.uncaughtException(thread, error);
+                return;
+            }
+            Process.killProcess(Process.myPid());
+            System.exit(10);
+        });
     }
 }

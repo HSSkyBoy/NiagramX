@@ -37,8 +37,8 @@ import org.telegram.ui.Components.AlertsCreator;
 import org.telegram.ui.Components.BulletinFactory;
 import org.telegram.ui.LaunchActivity;
 
-import java.io.File;
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -296,5 +296,64 @@ public class AndroidUtil {
             }
         }
         return secondBuffered.read() == -1;
+    }
+
+    private static final String[] HOOK_STACK_SIGNATURES = {
+            ".xposed",
+            ".lsposed",
+            "libxposed",
+            "xposedhelpers",
+            "xposedbridge",
+            "edxposedbridge",
+            "xc_methodhook",
+            "lsphooker_",
+            "callbeforehookedmethod",
+            "callafterhookedmethod",
+            "invokeoriginalmethod",
+            "tianci.dev",
+            "televip"
+    };
+
+    public static boolean shouldReportCrashToCrashlytics(Throwable error) {
+        Throwable current = error;
+        for (int depth = 0; current != null && depth < 32; depth++) {
+            if (current instanceof OutOfMemoryError) {
+                return false;
+            }
+            current = current.getCause();
+        }
+        current = error;
+        for (int depth = 0; current != null && depth < 32; depth++) {
+            if (containsHookSignature(current.getClass().getName())) {
+                return false;
+            }
+            for (StackTraceElement element : current.getStackTrace()) {
+                if (containsHookSignature(element.getClassName())
+                        || containsHookSignature(element.getMethodName())) {
+                    return false;
+                }
+            }
+            current = current.getCause();
+        }
+        return true;
+    }
+
+    private static boolean containsHookSignature(String value) {
+        for (String signature : HOOK_STACK_SIGNATURES) {
+            int length = signature.length();
+            for (int i = 0; i <= value.length() - length; i++) {
+                if (value.regionMatches(true, i, signature, 0, length)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    @SuppressWarnings("ConstantValue")
+    public static boolean shouldEnableCrashlytics() {
+        return !BuildConfig.DEBUG
+                && "nu.gpu.nagramx".equals(BuildConfig.APPLICATION_ID)
+                && !NaConfig.INSTANCE.getDisableCrashlyticsCollection().Bool();
     }
 }
