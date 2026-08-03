@@ -12,14 +12,8 @@ artifacts_path = Path("artifacts")
 test_version = argv[3] == "test" if len(argv) > 2 else None
 metadata_chat_id = argv[4] if len(argv) > 3 else None
 
-def find_apk(abi: str) -> Path:
-    dirs = list(artifacts_path.glob("*"))
-    for dir in dirs:
-        if dir.is_dir():
-            apks = list(dir.glob("*.apk"))
-            for apk in apks:
-                if abi in apk.name:
-                    return apk
+def find_apk(abi: str) -> Path | None:
+    return next((apk for apk in artifacts_path.rglob("*.apk") if abi in apk.name), None)
 
 def get_commit_info():
     commit_id_raw = os.environ.get("COMMIT_ID") or "unknown"
@@ -47,18 +41,11 @@ def get_document() -> list["InputMediaDocument"]:
                 )
             )
     if not documents:
-        documents.append(
-        InputMediaDocument(
-            media = str("TMessagesProj/src/main/" + "ic_launcher_nagram_block_round-playstore.png")
-        ))
+        raise FileNotFoundError("No APK artifacts found")
     base_caption = get_caption()
     if base_caption and len(base_caption) > 1024:
         base_caption = base_caption[:1020] + "..."
-    ai_summary = get_ai_summary()
-    if ai_summary and len(base_caption + ai_summary) > 1024:
-        ai_summary = ""
-    documents[-1].caption = base_caption + ai_summary
-    print(documents)
+    documents[-1].caption = base_caption
     return documents
 
 def get_metadata():
@@ -67,31 +54,28 @@ def get_metadata():
     build_timestamp = "<code>" + (os.environ.get("BUILD_TIMESTAMP") or "-1") + "</code>"
     return build_timestamp + " " + commit_id + "\n" + commit_message
 
-def get_ai_summary():
-    ai_summary = os.environ.get("AI_SUMMARY", "")
-    if ai_summary:
-        return "\n\n" + "<blockquote expandable>" + normalize_message(ai_summary) + "</blockquote>"
-    return ""
-
-def normalize_message(text: str) -> str:
-    return (text or "").replace("\\n", "\n")
-
 def retry(func):
     async def wrapper(*args, **kwargs):
-        for _ in range(3):
+        for attempt in range(3):
             try:
                 return await func(*args, **kwargs)
             except Exception as e:
                 print(e)
+                if attempt == 2:
+                    raise
     return wrapper
 
 @retry
 async def send_to_channel(client: "Client", cid: str):
     with contextlib.suppress(ValueError):
         cid = int(cid)
+    documents = get_document()
+    print("Uploading to Telegram:", flush=True)
+    for document in documents:
+        print(f"- {document.media}", flush=True)
     await client.send_media_group(
         cid,
-        media = get_document(),
+        media = documents,
     )
 
 @retry
