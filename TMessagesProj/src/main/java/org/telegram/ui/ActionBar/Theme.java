@@ -72,8 +72,6 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.UiThread;
-import androidx.collection.IntSet;
-import androidx.collection.MutableIntSet;
 import androidx.core.graphics.ColorUtils;
 import androidx.core.math.MathUtils;
 
