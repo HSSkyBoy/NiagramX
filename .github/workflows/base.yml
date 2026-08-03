@@ -29,7 +29,7 @@ jobs:
       CCACHE_HARDLINK: "true"
       CCACHE_NOHASHDIR: "true"
       CCACHE_MAXSIZE: "10G"
-      NATIVE_TARGET: "arm64-v8a"
+      NATIVE_TARGET: "universal"
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -55,6 +55,10 @@ jobs:
         uses: android-actions/setup-android@v3
         with:
           packages: "build-tools;36.0.0 ndk;27.2.12479018 platforms;android-36"
+      - name: Install Native Build Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends --yes nasm
       - name: Configure Android SDK Path
         run: |
           echo "sdk.dir=${ANDROID_HOME}" >> local.properties
@@ -77,14 +81,12 @@ jobs:
           export BUILD_TIMESTAMP=$(date +%s)
           echo "build_timestamp=$BUILD_TIMESTAMP" >> "$GITHUB_OUTPUT"
           ./gradlew TMessagesProj:assembleBase
-
-          APK=$(find TMessagesProj/build/outputs/apk -name '*arm64-v8a*.apk')
-          APK=$(dirname $APK)
-          echo "APK=$APK" >> $GITHUB_ENV
       - uses: actions/upload-artifact@v4
         with:
           name: Base
-          path: ${{ env.APK }}
+          path: |
+            TMessagesProj/build/outputs/apk/base/*-arm64-v8a.apk
+            TMessagesProj/build/outputs/apk/base/*-universal.apk
   upload:
     name: Upload base
     if: github.event.inputs.upload != 'y' && !contains(github.event.head_commit.message, '[skip upload]')
@@ -111,8 +113,5 @@ jobs:
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
           BUILD_TIMESTAMP: ${{ needs.build.outputs.build_timestamp }}
         run: |
-          # send apk via telegram bot api
-          export mini64=$(find artifacts -name "*arm64-v8a.apk")
-          echo $mini64
           python -m pip install -r Tools/scripts/requirements.txt
           python Tools/scripts/upload.py ${{ secrets.HELPER_BOT_TOKEN }} ${{ secrets.HELPER_BOT_CANARY_TARGET }} test ${{ secrets.HELPER_BOT_CANARY_TARGET }}
