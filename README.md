@@ -18,14 +18,26 @@ Official APKs use the following Android signing certificate:
 
 ## Compilation Guide
 
-1. Obtain API credentials (`TELEGRAM_APP_ID` and `TELEGRAM_APP_HASH`) from [Telegram Developer Portal](https://my.telegram.org/auth). Create `local.properties` in the project root with:
+1. Clone the repository with its submodules:
+
+    ```bash
+    git clone --recursive --shallow-submodules https://github.com/risin42/NagramX.git NagramX
+    ```
+
+    If you already cloned the repository without submodules, run:
+
+    ```bash
+    git submodule update --init --recursive --depth=1
+    ```
+
+2. Obtain API credentials (`TELEGRAM_APP_ID` and `TELEGRAM_APP_HASH`) from [Telegram Developer Portal](https://my.telegram.org/auth). Create `local.properties` in the project root with:
 
    ```properties
    TELEGRAM_APP_ID=<your_telegram_app_id>
    TELEGRAM_APP_HASH=<your_telegram_app_hash>
    ```
 
-2. For APK signing: Replace `release.keystore` with your keystore and add signing configuration to `local.properties`:
+3. For APK signing: Replace `release.keystore` with your keystore and add signing configuration to `local.properties`:
 
    ```properties
    KEYSTORE_PASS=<your_keystore_password>
@@ -33,9 +45,14 @@ Official APKs use the following Android signing certificate:
    ALIAS_PASS=<your_alias_password>
    ```
 
-3. For FCM support: Replace `TMessagesProj/google-services.json` with your own configuration file.
+4. For FCM support: Replace `TMessagesProj/google-services.json` with your own configuration file.
 
-4. Open the project in Android Studio to start building.
+5. Replace project-specific metadata:
+
+    - Set your Google Maps API key in the `com.google.android.maps.v2.API_KEY` meta-data entry in `TMessagesProj/src/main/AndroidManifest.xml`.
+    - Set `BaseRemoteHelper.CHANNEL_METADATA_ID` in `TMessagesProj/src/main/java/tw/nekomimi/nekogram/helpers/remote/BaseRemoteHelper.java` to your metadata channel's numeric ID, without the `-100` prefix.
+
+6. Open the project in Android Studio to start building.
 
 ## GitHub Actions Build
 
