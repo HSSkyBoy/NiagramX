@@ -7632,7 +7632,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 }
             }
         }
-        return array.get(uid);
+        return array != null ? array.get(uid) : null;
     }
 
     public boolean isAdmin(long chatId, long uid) {
@@ -7649,7 +7649,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 }
             }
         }
-        final TLRPC.ChannelParticipant participant = array.get(uid);
+        final TLRPC.ChannelParticipant participant = array != null ? array.get(uid) : null;
         return participant instanceof TLRPC.TL_channelParticipantAdmin || participant instanceof TLRPC.TL_channelParticipantCreator;
     }
 
