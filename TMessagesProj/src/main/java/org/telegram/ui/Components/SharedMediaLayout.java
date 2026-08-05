@@ -2294,7 +2294,7 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
                 super.notifyDataSetChanged();
                 MediaPage mediaPage = getMediaPage(0);
                 if (mediaPage != null && mediaPage.animationSupportingListView.getVisibility() == View.VISIBLE) {
-                    animationSupportingPhotoVideoAdapter.notifyDataSetChanged();
+                    AndroidUtilities.notifyDataSetChanged(mediaPage.animationSupportingListView);
                 }
             }
         };
