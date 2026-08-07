@@ -37,10 +37,10 @@
     <string name="StickerSizeDialogMessageSmallOne">Mały</string>
     <string name="StickerSizeDialogMessageReplyTo">Miau</string>
     <string name="StickerSizeDialogName">Kotek</string>
-    <string name="Experimental">Opcje eksperymentalne</string>
+    <string name="Experimental">Eksperymentalne</string>
     <string name="UnlimitedFavoredStickers">Nieograniczona liczba ulubionych naklejek</string>
     <string name="UnlimitedFavoredStickersAbout">Dodaj nieograniczoną liczbę naklejek do ulubionych. Naklejki mogą nie być synchronizowane z innymi urządzeniami.</string>
-    <string name="MessageDetails">Detale</string>
+    <string name="MessageDetails">Szczegóły</string>
     <string name="ExportAsJson">Eksportuj jako JSON</string>
     <string name="Translate">Przetłumacz</string>
     <string name="TranslateFailed">Błąd serwera tłumaczeń</string>
@@ -87,7 +87,7 @@
     <string name="TakeGIFasVideo">Traktuj GIF-y jako wideo</string>
     <string name="HideTimeForSticker">Ukryj czas na naklejkach</string>
     <string name="hideGroupSticker">Ukryj naklejkę grupową</string>
-    <string name="customGroupVoipAudioBitrate">Przepływność dźwięku grupowych połączeń VoIP</string>
+    <string name="customGroupVoipAudioBitrate">Bitrate VoIP w grupach</string>
     <string name="maxRecentStickerCount">Maksymalna liczba ostatnich naklejek</string>
     <string name="disableSwipeToNextChannel">Wyłącz przesuwanie do następnego kanału</string>
     <string name="disableChoosingSticker">Wyślij informację o pisaniu zamiast wybierania naklejki</string>
@@ -238,7 +238,7 @@
     <string name="ImportSettings">Importuj ustawienia</string>
     <string name="ImportSettingsAlert">Nadpisać ustawienia\? Importowanie ustawień z nieznanych źródeł może spowodować nadpisanie kodu PIN i zablokowanie aplikacji.</string>
     <string name="nekoXPaymentRemovedToast">Funkcje płatności zostały usunięte.</string>
-    <string name="unreadBadgeOnBackButton">Odznaka nieprzeczytana na przycisku Wstecz</string>
+    <string name="unreadBadgeOnBackButton">Odznaka nieprzeczytanych na przycisku Wstecz</string>
     <string name="DeleteDownloadedFileConfirm">Usunąć ten plik z pamięci podręcznej?</string>
     <string name="DeleteDownloadedFileSucceed">Usunięto</string>
     <string name="DeleteDownloadedFileExternal">Plik zewnętrzny został pominięty.</string>

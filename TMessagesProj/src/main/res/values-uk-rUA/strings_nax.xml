@@ -335,4 +335,8 @@
     <string name="DeepLTranslateKey">DeepL API ключ</string>
     <string name="DeepLTranslateKeyNotice">Налаштуйте ключ DeepL API, залиште поле порожнім, щоб використовувати вбудовані облікові дані.</string>
     <string name="DefaultScheduleDelay">Затримка за замовчуванням</string>
+    <string name="ExportAyuDB">Експорт бази даних</string>
+    <string name="ImportAyuDB">Імпорт бази даних</string>
+    <string name="ImportAyuDBAlert">Поточну базу даних повідомлень буде замінено. Після імпорту програма перезапуститься.</string>
+    <string name="DisableSwipeToNext">Вимкнути свайп вперед</string>
 </resources>

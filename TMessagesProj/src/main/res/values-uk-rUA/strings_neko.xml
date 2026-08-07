@@ -83,7 +83,7 @@
     <string name="SelectBetween">Виберіть діапазон</string>
     <string name="ProviderDeepLTranslate">DeepL</string>
     <string name="ProviderMicrosoftTranslator">Bing</string>
-    <string name="DontSendGreetingSticker">Не надсилати вітальну наліпку</string>
+    <string name="DontSendGreetingSticker">Вимкнути вітальну наліпку</string>
     <string name="TakeGIFasVideo">Сприймати GIF як відео</string>
     <string name="HideTimeForSticker">Приховати час на наліпках</string>
     <string name="hideGroupSticker">Приховати наліпку групи</string>

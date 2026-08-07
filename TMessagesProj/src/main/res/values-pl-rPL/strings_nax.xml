@@ -9,7 +9,7 @@
     <string name="ClearMessageDatabase">Wyczyść bazę danych wiadomości</string>
     <string name="ClearMessageDatabaseNotification">Baza wiadomości została wyczyszczona.</string>
     <string name="CustomDeletedMark">Niestandardowy usunięty znak</string>
-    <string name="HidePremiumSection">Ukryj Premium w ustawieniach</string>
+    <string name="HidePremiumSection">Ukryj premium w ustawieniach</string>
     <string name="HideHelpSection">Ukryj pomoc w ustawieniach</string>
     <string name="ProviderLLMTranslator">Tłumacz AI</string>
     <string name="LlmApiUrl">Adres URL interfejsu API</string>
@@ -163,7 +163,7 @@
     <string name="GeminiApiKeyNotSet">Klucz API Gemini nie jest skonfigurowany.</string>
     <string name="GeminiApiKeyDialog">Skonfiguruj klucz API Gemini, używając klucza z ustawień tłumacza, jeśli pozostawiono puste.\n**Jak go uzyskać?**\n</string>
     <string name="GeminiNotSupport">Gemini nie jest obsługiwane na tym urządzeniu.</string>
-    <string name="ReplyInPrivate">Odpowiedz na prywatnym czacie</string>
+    <string name="ReplyInPrivate">Odpowiedz prywatnie</string>
     <string name="TranscribeProviderGeminiPrompt">Polecenie (opcjonalnie)</string>
     <string name="uploadBoost">Zwiększ prędkość przesyłania</string>
     <string name="HideDividers">Ukryj dzielniki</string>
@@ -207,8 +207,8 @@
     <string name="NoCaptionForwardShort">Bez podpisu</string>
     <string name="PreferCommonGroupsTab">Preferuj kartę grup</string>
     <string name="PreferCommonGroupsTabNotice">Automatycznie wybieraj kartę „Grupy” zamiast „Prezenty”, gdy jest to możliwe.</string>
-    <string name="GroupedMessageMenu">Menu wiadomości grupowych</string>
-    <string name="GroupedMessageMenuNotice">Grupowanie przenosi główne akcje na dół menu wiadomości.</string>
+    <string name="GroupedMessageMenu">Grupuj menu wiadomości</string>
+    <string name="GroupedMessageMenuNotice">Po włączeniu główne akcje są wyświetlane na dole menu wiadomości.</string>
     <string name="CopySticker">Kopiuj naklejkę</string>
     <string name="CheckUpdate">Sprawdź aktualizacje</string>
     <string name="AutoCheckUpdateOFF">Wyłącz</string>
@@ -268,7 +268,7 @@
     <string name="BlockedChannelsEmpty">Jeszcze nie zablokowano kanałów</string>
     <string name="UnblockAllChannelsWarn">Czy na pewno chcesz odblokować **wszystkie kanały**?</string>
     <string name="BlockChannelsUnavailable">Niektóre kanały są tymczasowo niedostępne.</string>
-    <string name="FixLinkPreview">Napraw podgląd łącza</string>
+    <string name="FixLinkPreview">Napraw podgląd linku</string>
     <string name="NoQuoteForwardShort">Przekaż bez śledzenia</string>
     <string name="ViewDeleted">Wyświetl usunięte</string>
     <string name="PasskeyLogin">Logowanie za pomocą klucza</string>
@@ -289,8 +289,8 @@
     <string name="SortByUnread">Sortuj według nieprzeczytanych</string>
     <string name="MediaSettings">Media</string>
     <string name="CameraInVideoMessages">Kamera w wiadomościach wideo</string>
-    <string name="CameraInVideoMessagesFront">Kamera przednia</string>
-    <string name="CameraInVideoMessagesRear">Kamera tylnia</string>
+    <string name="CameraInVideoMessagesFront">Przednia kamera</string>
+    <string name="CameraInVideoMessagesRear">Tylna kamera</string>
     <string name="CameraInVideoMessagesAsk">Zapytaj</string>
     <string name="CameraSettings">Kamera</string>
     <string name="ContactNotes">Notatki</string>
