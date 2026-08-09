@@ -135,7 +135,6 @@ public class MonoColorLottieList {
             R.raw.photo_spoiler,
             R.raw.photo_suggest_icon,
             R.raw.photo_text_allign,
-            R.raw.player_prev,
             R.raw.position_above,
             R.raw.position_below,
             R.raw.profile_leave,
