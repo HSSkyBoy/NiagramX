@@ -14,6 +14,7 @@ import tw.nekomimi.nekogram.translate.source.fallback.DeepLTranslatorNeko
 import tw.nekomimi.nekogram.utils.HttpClient
 import xyz.nextalone.nagram.NaConfig
 import java.io.IOException
+import java.util.Locale
 
 object DeepLTranslator : Translator {
 
@@ -38,7 +39,15 @@ object DeepLTranslator : Translator {
         val apiKey = NaConfig.deepLTranslateKey.String().trim()
         val translatedText = if (apiKey.isEmpty()) {
             try {
-                DeepLTranslatorNeko.translate(textToTranslate, from, to)
+                DeepLTranslatorNeko.translate(
+                    textToTranslate,
+                    from,
+                    when (to.lowercase(Locale.ROOT)) {
+                        "zh", "zh-cn", "zh-hans" -> "zh-CN"
+                        "zh-tw", "zh-hk", "zh-hant" -> "zh-TW"
+                        else -> to
+                    }
+                )
             } catch (e: Exception) {
                 error("DeepL API request failed: ${e.message}")
             }
@@ -69,7 +78,14 @@ object DeepLTranslator : Translator {
     ): String {
         val formBodyBuilder = FormBody.Builder()
             .add("text", text)
-            .add("target_lang", to)
+            .add(
+                "target_lang",
+                when (to.lowercase(Locale.ROOT)) {
+                    "zh-cn", "zh-hans" -> "ZH-HANS"
+                    "zh-tw", "zh-hk", "zh-hant" -> "ZH-HANT"
+                    else -> to.uppercase(Locale.ROOT)
+                }
+            )
 
         if (from.isNotEmpty() && from != "auto") {
             formBodyBuilder.add("source_lang", from)

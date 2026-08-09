@@ -10,32 +10,29 @@ import org.json.JSONObject;
 import org.telegram.messenger.ApplicationLoader;
 import org.telegram.messenger.BuildVars;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.PushbackInputStream;
-import java.net.HttpURLConnection;
-import java.net.SocketTimeoutException;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.zip.GZIPInputStream;
+
+import okhttp3.FormBody;
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import tw.nekomimi.nekogram.utils.HttpClient;
 
 public class BingTranslatorRaw {
     private static final String NAX = "BingTranslatorRaw";
 
     private static final String PREF_NAME = "bing_translator_config";
-    private static final String TRANSLATOR_URL = "https://www.bing.com/translator";
-    private static final String TRANSLATE_API_URL = "https://www.bing.com/ttranslatev3";
-    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0";
+    private static final String DEFAULT_HOST = "www.bing.com";
+    private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36 Edg/151.0.4129.59";
 
-    private int count = 0; // EPT
+    private final OkHttpClient httpClient = HttpClient.INSTANCE.getInstance();
+    private final AtomicInteger count = new AtomicInteger();
 
+    private String host = DEFAULT_HOST;
     private String ig;
     private String iid;
     private String key;
@@ -55,159 +52,114 @@ public class BingTranslatorRaw {
 
         if (BuildVars.LOGS_ENABLED) Log.d(NAX, "performTranslation parameters - ig: " + ig + ", iid: " + iid + ", key: " + key + ", token: " + token);
 
-        String jsonResponse = performTranslation(ig, iid, from, to, text, key, token);
-        if (jsonResponse == null) {
-            if (BuildVars.LOGS_ENABLED) Log.e(NAX, "Translation failed, received null response");
-            throw new IOException("Failed to get translation result");
-        }
-
-        String translatedText = extractTranslatedText(jsonResponse);
-        return translatedText;
+        return performTranslation(from, to, text);
     }
 
     private void fetchConfig() throws IOException {
         if (BuildVars.LOGS_ENABLED) Log.d(NAX, "Fetching config from Bing translator");
-        HttpURLConnection connection = null;
-        try {
-            URL url = new URL(TRANSLATOR_URL);
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("User-Agent", USER_AGENT);
+        Request request = new Request.Builder()
+            .url(getTranslatorUrl())
+            .header("User-Agent", USER_AGENT)
+            .get()
+            .build();
 
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))) {
-                StringBuilder content = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    content.append(line);
-                }
-                if (BuildVars.LOGS_ENABLED) Log.d(NAX, "Config fetched successfully");
-
-                String html = content.toString();
-                ig = extractValue(html, "(?<=IG:\")[^\"]*");
-                iid = extractValue(html, "(?<=data-iid=\")[^\"]*");
-                String params = extractValue(html, "(?<=params_AbusePreventionHelper = )\\[[^\\]]+\\]");
-                key = extractArrayValue(params, 0);
-                token = extractArrayValue(params, 1);
-                tokenTs = Long.parseLong(key);
-                tokenExpiryInterval = Long.parseLong(extractArrayValue(params, 2));
-
-                saveConfigToPrefs();
+        try (Response response = httpClient.newCall(request).execute()) {
+            String body = response.body().string();
+            if (!response.isSuccessful()) {
+                throw new IOException("Failed to fetch Bing config: HTTP " + response.code() + ": " + body);
             }
-        } catch (IOException e) {
-            if (BuildVars.LOGS_ENABLED) Log.e(NAX, "Config fetch failed, received null response", e);
-            throw e;
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
+
+            host = response.request().url().host();
+            ig = extractValue(body, "IG:\\s*\"([^\"]+)\"");
+            iid = extractValue(body, "data-iid=\"([^\"]+)\"");
+            String params = extractValue(body, "params_AbusePreventionHelper\\s*=\\s*(\\[[^\\]]+\\])");
+            JSONArray values = new JSONArray(params);
+            key = String.valueOf(values.get(0));
+            token = values.getString(1);
+            tokenTs = Long.parseLong(key);
+            tokenExpiryInterval = values.getLong(2);
+            count.set(0);
+
+            saveConfigToPrefs();
+            if (BuildVars.LOGS_ENABLED) Log.d(NAX, "Config fetched successfully");
+        } catch (JSONException | IllegalArgumentException e) {
+            throw new IOException("Failed to parse Bing config", e);
         }
     }
 
     private static String extractValue(String text, String regex) {
-        if (BuildVars.LOGS_ENABLED) Log.d(NAX, "Extracting value using regex: " + regex);
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(text);
         if (matcher.find()) {
-            String result = matcher.group(0);
-            if (BuildVars.LOGS_ENABLED) Log.d(NAX, "Extracted value: " + result);
-            return result;
+            return matcher.group(1);
         }
-        if (BuildVars.LOGS_ENABLED) Log.e(NAX, "Failed to extract value using regex: " + regex);
-        return null;
+        throw new IllegalArgumentException("Failed to extract Bing config value");
     }
 
-    private static String extractArrayValue(String text, int index) {
-        if (text == null) return null;
-        try {
-            String[] parts = text.substring(1, text.length() - 1).split(",");
-            if (index < parts.length) {
-                return parts[index].replaceAll("\"", "").trim();
+    private String performTranslation(String from, String to, String text) throws IOException {
+        HttpUrl url = new HttpUrl.Builder()
+            .scheme("https")
+            .host(host)
+            .addPathSegment("ttranslatev3")
+            .addQueryParameter("isVertical", "1")
+            .addQueryParameter("IG", ig)
+            .addQueryParameter("IID", iid)
+            .addQueryParameter("SFX", String.valueOf(count.incrementAndGet()))
+            .addQueryParameter("ref", "TThis")
+            .addQueryParameter("edgepdftranslator", "1")
+            .build();
+
+        FormBody.Builder formBody = createFormBody(from, to, text);
+        Request request = createTranslationRequest(url, formBody.build());
+
+        try (Response response = httpClient.newCall(request).execute()) {
+            String body = response.body().string();
+            if (!response.isSuccessful()) {
+                throw new IOException("Bing translation failed: HTTP " + response.code() + ": " + body);
             }
-        } catch (Exception e) {
-            Log.e(NAX, "Failed to extract array value at index " + index + " from string: '" + text + "'", e);
+
+            String contentType = response.header("Content-Type", "");
+            if (contentType.startsWith("application/json")) {
+                return extractTranslatedText(body);
+            }
+            if (response.header("isgenderdebiasedtranslation") != null) {
+                formBody.add("isGenderDebiasViewPresent", "true");
+                return performGenderDebiasedTranslation(url, formBody.build());
+            }
+            throw new IOException("Unexpected Bing translation response: " + body);
         }
-        return null;
     }
 
-    private String performTranslation(String ig, String iid, String from, String to, String text, String key, String token) throws IOException {
-        HttpURLConnection connection = null;
-        try {
-            String eptIid = iid + "." + (++count);
-            URL url = new URL(TRANSLATE_API_URL + "?isVertical=1&IG=" + ig + "&IID=" + eptIid + "&ref=TThis&edgepdftranslator=1");
-            connection = (HttpURLConnection) url.openConnection();
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("User-Agent", USER_AGENT);
-            connection.setRequestProperty("Referer", TRANSLATOR_URL);
-            connection.setRequestProperty("Accept-Encoding", "gzip");
-            connection.setDoOutput(true);
+    private FormBody.Builder createFormBody(String from, String to, String text) {
+        return new FormBody.Builder()
+            .add("fromLang", from)
+            .add("to", to)
+            .add("text", text)
+            .add("token", token)
+            .add("key", key)
+            .add("tryFetchingGenderDebiasedTranslations", "true");
+    }
 
-            String postData = "fromLang=" + URLEncoder.encode(from, StandardCharsets.UTF_8) +
-                "&to=" + URLEncoder.encode(to, StandardCharsets.UTF_8) +
-                "&text=" + URLEncoder.encode(text, StandardCharsets.UTF_8) +
-                "&token=" + URLEncoder.encode(token, StandardCharsets.UTF_8) +
-                "&key=" + URLEncoder.encode(key, StandardCharsets.UTF_8) +
-                "&tryFetchingGenderDebiasedTranslations=true";
-            try (OutputStream os = connection.getOutputStream()) {
-                byte[] input = postData.getBytes(StandardCharsets.UTF_8);
-                os.write(input, 0, input.length);
-                os.flush();
+    private Request createTranslationRequest(HttpUrl url, FormBody body) {
+        return new Request.Builder()
+            .url(url)
+            .header("User-Agent", USER_AGENT)
+            .header("Referer", getTranslatorUrl())
+            .post(body)
+            .build();
+    }
+
+    private String performGenderDebiasedTranslation(HttpUrl url, FormBody body) throws IOException {
+        try (Response response = httpClient.newCall(createTranslationRequest(url, body)).execute()) {
+            String responseBody = response.body().string();
+            if (!response.isSuccessful()) {
+                throw new IOException("Bing gender-debiased translation failed: HTTP " + response.code() + ": " + responseBody);
             }
-
-            InputStream inputStream;
-            boolean error = false;
             try {
-                inputStream = decompressStream(connection.getInputStream());
-            } catch (IOException e) {
-                error = true;
-                inputStream = decompressStream(connection.getErrorStream());
-                if (inputStream == null) {
-                    throw e;
-                }
+                return new JSONObject(responseBody).getString("masculineTranslation");
+            } catch (JSONException e) {
+                throw new IOException("Failed to parse Bing gender-debiased translation", e);
             }
-
-            try (ByteArrayOutputStream result = new ByteArrayOutputStream()) {
-                byte[] buffer = new byte[32768];
-                int length;
-                while ((length = inputStream.read(buffer)) != -1) {
-                    result.write(buffer, 0, length);
-                }
-                String response = result.toString(StandardCharsets.UTF_8.name());
-
-                if (error) {
-                    if (BuildVars.LOGS_ENABLED) Log.e(NAX, "Server returned error: " + connection.getResponseCode() + ", " + response);
-                    throw new IOException("Server returned " + connection.getResponseCode() + ": " + response);
-                }
-
-                return response;
-            } finally {
-                inputStream.close();
-            }
-        } catch (SocketTimeoutException e) {
-            if (BuildVars.LOGS_ENABLED) Log.e(NAX, "Connection timeout", e);
-            throw new IOException("Connection timeout", e);
-        } catch (IOException e) {
-            if (BuildVars.LOGS_ENABLED) Log.e(NAX, "Error during translation request", e);
-            throw e;
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
-    }
-
-    private static InputStream decompressStream(InputStream input) throws IOException {
-        if (input == null) return null;
-        PushbackInputStream pushbackInputStream = new PushbackInputStream(input, 2);
-        byte[] signature = new byte[2];
-        int bytesRead = pushbackInputStream.read(signature);
-        pushbackInputStream.unread(signature, 0, bytesRead);
-
-        if (signature[0] == (byte) 0x1f && signature[1] == (byte) 0x8b) {
-            return new GZIPInputStream(pushbackInputStream);
-        } else {
-            return pushbackInputStream;
         }
     }
 
@@ -228,8 +180,13 @@ public class BingTranslatorRaw {
         return System.currentTimeMillis() - tokenTs > tokenExpiryInterval;
     }
 
+    private String getTranslatorUrl() {
+        return "https://" + host + "/translator";
+    }
+
     private void loadConfigFromPrefs() throws IOException {
         SharedPreferences prefs = ApplicationLoader.applicationContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        host = prefs.getString("host", DEFAULT_HOST);
         ig = prefs.getString("ig", null);
         iid = prefs.getString("iid", null);
         key =  prefs.getString("key", null);
@@ -242,6 +199,7 @@ public class BingTranslatorRaw {
 
     private void saveConfigToPrefs() {
         SharedPreferences.Editor editor = ApplicationLoader.applicationContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE).edit();
+        editor.putString("host", host);
         editor.putString("ig", ig);
         editor.putString("iid", iid);
         editor.putString("key", key);

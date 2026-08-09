@@ -284,17 +284,36 @@ interface Translator {
 
             if (language == "in") language = "id"
             if (country.lowercase() == "duang") country = "CN"
+            val countryUpperCase = country.uppercase(Locale.ROOT)
 
             when (provider) {
-                providerDeepL -> language = language.uppercase()
-                providerMicrosoft, providerRealMicrosoft, providerGoogle -> if (language == "zh") {
-                    val countryUpperCase = country.uppercase()
-                    if (countryUpperCase == "CN" || countryUpperCase == "DUANG") {
-                        language =
-                            if (provider == providerMicrosoft || provider == providerRealMicrosoft) "zh-Hans" else "zh-CN"
-                    } else if (countryUpperCase == "TW" || countryUpperCase == "HK") {
-                        language =
-                            if (provider == providerMicrosoft || provider == providerRealMicrosoft) "zh-HanT" else "zh-TW"
+                providerDeepL -> language = when {
+                    language == "en" && (countryUpperCase == "GB" || countryUpperCase == "US") ->
+                        "en-$countryUpperCase"
+                    language == "pt" && (countryUpperCase == "BR" || countryUpperCase == "PT") ->
+                        "pt-$countryUpperCase"
+                    language == "zh" && countryUpperCase == "CN" -> "zh-CN"
+                    language == "zh" && (countryUpperCase == "TW" || countryUpperCase == "HK") ->
+                        "zh-TW"
+                    else -> language
+                }
+                providerYandex -> if (language == "pt" && countryUpperCase == "BR") {
+                    language = "pt-BR"
+                }
+                providerMicrosoft, providerRealMicrosoft, providerGoogle -> {
+                    if (language == "zh") {
+                        if (countryUpperCase == "CN") {
+                            language =
+                                if (provider == providerMicrosoft || provider == providerRealMicrosoft) "zh-Hans" else "zh-CN"
+                        } else if (countryUpperCase == "TW" || countryUpperCase == "HK") {
+                            language =
+                                if (provider == providerMicrosoft || provider == providerRealMicrosoft) "zh-Hant" else "zh-TW"
+                        }
+                    } else if (
+                        language == "pt" && countryUpperCase == "PT" &&
+                        (provider == providerMicrosoft || provider == providerRealMicrosoft)
+                    ) {
+                        language = "pt-PT"
                     }
                 }
 
