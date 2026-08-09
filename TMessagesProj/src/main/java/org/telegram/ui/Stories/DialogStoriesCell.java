@@ -103,6 +103,7 @@ import me.vkryl.android.animator.FactorAnimator;
 import me.vkryl.android.animator.ReplaceAnimator;
 import tw.nekomimi.nekogram.NekoConfig;
 import tw.nekomimi.nekogram.helpers.TypefaceHelper;
+import tw.nekomimi.nekogram.ui.components.AnimatedTitleView;
 
 @SuppressLint("ViewConstructor")
 public class DialogStoriesCell extends FrameLayout implements NotificationCenter.NotificationCenterDelegate, FactorAnimator.Target {
@@ -160,8 +161,7 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
     LinearLayoutManager layoutManager;
     AnimatedTextView titleView;
     ActionBarAnimatedSubtitleOverlayContainer subtitleOverlayContainer;
-    AnimatedTextView telegramLogoView;
-    ImageView emojiStatusView;
+    AnimatedTitleView telegramLogoView;
     AnimatedEmojiDrawable.SwapAnimatedEmojiDrawable statusDrawable;
     boolean drawCircleForce;
     ArrayList<Runnable> afterNextLayout = new ArrayList<>();
@@ -334,27 +334,12 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
         titleView.setFocusableInTouchMode(true);
         addView(titleView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
 
-        telegramLogoView = new AnimatedTextView(getContext(), true, true, false);
-        telegramLogoView.setGravity(Gravity.LEFT);
-        telegramLogoView.setTextColor(getTextColor());
-        telegramLogoView.setEllipsizeByGradient(true);
-        telegramLogoView.setContentDescription(getString(R.string.AppName));
-        telegramLogoView.setTypeface(AndroidUtilities.bold());
-        telegramLogoView.setPadding(0, dp(8), 0, dp(8));
-        telegramLogoView.setTextSize(dp(!AndroidUtilities.isTablet() && getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? 18 : 20));
-        telegramLogoView.setText(TypefaceHelper.getTitleText(currentAccount));
-        telegramLogoView.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
-        telegramLogoView.setFocusableInTouchMode(true);
+        telegramLogoView = new AnimatedTitleView(context, TypefaceHelper.getTitleText(currentAccount), getTextLogoColor());
         addView(telegramLogoView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT));
 
         statusDrawable = new AnimatedEmojiDrawable.SwapAnimatedEmojiDrawable(null, dp(26));
         statusDrawable.center = true;
         statusDrawable.setCallback(this);
-
-        emojiStatusView = new ImageView(context);
-        emojiStatusView.setScaleType(ImageView.ScaleType.CENTER);
-        emojiStatusView.setImageDrawable(statusDrawable);
-        addView(emojiStatusView, LayoutHelper.createFrame(40, 40));
 
         subtitleOverlayContainer = new ActionBarAnimatedSubtitleOverlayContainer(context, null, ellipsizeSpanAnimator) {
             @Override
@@ -581,6 +566,7 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
     private float collapsedSpringCoef = 0.95f;
     private float expandedSpringCoef = 0.9f;
     private float rightSlidingProgress;
+    private boolean showLogoStatus = true;
 
     public float getOverScrollCoef() {
         return overScrollCoef;
@@ -960,9 +946,6 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
             offset = (telegramLogoView.getMeasuredHeight() - telegramLogoView.getTextHeight()) / 2f;
             telegramLogoView.setTranslationX(titleView.getTranslationX() + dp(1));
             telegramLogoView.setTranslationY(bottomY + dp(14) - offset + AndroidUtilities.dp(FAKE_TOP_PADDING) + translationOffset /*titleView.getTranslationY() + dpf2(37.33f)*/);
-
-            emojiStatusView.setTranslationX(titleView.getTranslationX() - dpf2(3.33f) + telegramLogoView.getMeasuredWidth());
-            emojiStatusView.setTranslationY(bottomY + dp(14 - 11 + FAKE_TOP_PADDING + 4.333f) + translationOffset);
 
             subtitleOverlayContainer.setTranslationX(titleView.getTranslationX());
             subtitleOverlayContainer.setTranslationY(bottomY + dp(15 + FAKE_TOP_PADDING + 4.333f + 8));
@@ -1373,6 +1356,16 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
 
     public void setActionBar(ActionBar actionBar) {
         this.actionBar = actionBar;
+    }
+
+    public void setLogoTitle(CharSequence title, boolean showStatus, boolean animated, boolean forward) {
+        showLogoStatus = showStatus;
+        Drawable rightDrawable = showStatus ? statusDrawable : null;
+        if (animated && isAttachedToWindow() && telegramLogoView.getAlpha() > 0) {
+            telegramLogoView.setTitleAnimatedX(title, rightDrawable, forward, 250);
+        } else {
+            telegramLogoView.setTitle(title, rightDrawable);
+        }
     }
 
     public float overscrollProgress() {
@@ -2204,7 +2197,10 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
             statusDrawable.setParticles(false, animated);
         }
         statusDrawable.setColor(getThemedColor(Theme.key_profile_verifiedBackground));
-        emojiStatusView.invalidate();
+        if (showLogoStatus) {
+            telegramLogoView.setRightDrawable(statusDrawable);
+        }
+        telegramLogoView.invalidate();
     }
 
     private int getThemedColor(int key) {
@@ -2237,10 +2233,6 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
         if (telegramLogoView != null) {
             telegramLogoView.setAlpha(logoAlpha);
             telegramLogoView.setVisibility(logoAlpha > 0 ? VISIBLE : GONE);
-        }
-        if (emojiStatusView != null) {
-            emojiStatusView.setAlpha(logoAlpha);
-            emojiStatusView.setVisibility(logoAlpha > 0 ? VISIBLE : GONE);
         }
         if (subtitleOverlayContainer != null) {
             final float subtitleAlpha = progress * rightSlidingFactor;
