@@ -8,17 +8,16 @@ import android.os.ProxyFileDescriptorCallback;
 import android.os.storage.StorageManager;
 import android.system.ErrnoException;
 import android.system.OsConstants;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+
+import org.telegram.messenger.FileLog;
 
 import java.io.IOException;
 
 // Thanks to https://gist.github.com/fython/924f8d9019bca75d22de116bb69a54a1
 public final class StorageManagerCompat {
-
-    private final static String TAG = "StorageManagerCompat";
 
     @NonNull
     public static StorageManagerCompat from(@NonNull Context context) {
@@ -60,12 +59,12 @@ public final class StorageManagerCompat {
                     }
                     callback.onRelease();
                 } catch (IOException | ErrnoException e) {
-                    Log.e(TAG, "Failed to read file.", e);
+                    FileLog.e("Failed to read file.", e);
 
                     try {
                         pipe[1].closeWithError(e.getMessage());
                     } catch (IOException exc) {
-                        Log.e(TAG, "Can't even close PFD with error.", exc);
+                        FileLog.e("Can't even close PFD with error.", exc);
                     }
                 }
             });

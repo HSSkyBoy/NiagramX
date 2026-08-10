@@ -8,13 +8,6 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import org.telegram.messenger.ApplicationLoader;
-import org.telegram.messenger.BuildVars;
-import org.telegram.messenger.FileLog;
-import org.telegram.messenger.PushListenerController;
-import org.telegram.messenger.SharedConfig;
-import org.telegram.messenger.Utilities;
-
 public class GooglePushListenerServiceProvider implements PushListenerController.IPushListenerServiceProvider {
 
     private Boolean hasServices;
@@ -35,13 +28,11 @@ public class GooglePushListenerServiceProvider implements PushListenerController
     public void onRequestPushToken() {
         String currentPushString = SharedConfig.pushString;
         if (!TextUtils.isEmpty(currentPushString)) {
-            if (BuildVars.DEBUG_PRIVATE_VERSION && BuildVars.LOGS_ENABLED) {
+            if (BuildVars.DEBUG_PRIVATE_VERSION) {
                 FileLog.d("FCM regId = " + currentPushString);
             }
         } else {
-            if (BuildVars.LOGS_ENABLED) {
-                FileLog.d("FCM Registration not found.");
-            }
+            FileLog.d("FCM Registration not found.");
         }
         Utilities.globalQueue.postRunnable(() -> {
             try {
@@ -51,9 +42,7 @@ public class GooglePushListenerServiceProvider implements PushListenerController
                         .addOnCompleteListener(task -> {
                             SharedConfig.pushStringGetTimeEnd = SystemClock.elapsedRealtime();
                             if (!task.isSuccessful()) {
-                                if (BuildVars.LOGS_ENABLED) {
-                                    FileLog.d("Failed to get regid");
-                                }
+                                FileLog.d("Failed to get regid");
                                 SharedConfig.pushStringStatus = "__FIREBASE_FAILED__";
                                 PushListenerController.sendRegistrationToServer(getPushType(), null);
                                 return;

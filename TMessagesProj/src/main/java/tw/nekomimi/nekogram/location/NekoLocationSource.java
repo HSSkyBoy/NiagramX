@@ -17,7 +17,6 @@ import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.LocationSource;
 
-import org.telegram.messenger.BuildVars;
 import org.telegram.messenger.FileLog;
 
 import java.util.Collections;
@@ -58,9 +57,7 @@ public class NekoLocationSource implements LocationSource {
 
         recent.add(trans.hashCode());
 
-        if (BuildVars.LOGS_ENABLED) {
-            FileLog.d(String.format(Locale.US, "%.4f,%.4f => %.4f,%.4f", latitude, longitude, trans.first, trans.second));
-        }
+        FileLog.d(String.format(Locale.US, "%.4f,%.4f => %.4f,%.4f", latitude, longitude, trans.first, trans.second));
     }
 
     @Override

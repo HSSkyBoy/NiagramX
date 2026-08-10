@@ -1,13 +1,12 @@
 package tw.nekomimi.nekogram.translate.source
 
 import android.os.SystemClock
-import android.util.Log
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import org.telegram.messenger.BuildVars
+import org.telegram.messenger.FileLog
 import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.R
 import org.telegram.tgnet.TLRPC
@@ -19,14 +18,12 @@ import java.io.IOException
 
 object LingoTranslator : Translator {
 
-    private const val NAX = "LingoTranslator"
-
     private val httpClient = HttpClient.instance
 
     override suspend fun doTranslate(
         from: String, to: String, query: String, entities: ArrayList<TLRPC.MessageEntity>
     ): TLRPC.TL_textWithEntities {
-        if (BuildVars.LOGS_ENABLED) Log.d(NAX, "doTranslate: from=$from, to=$to, query=$query")
+        FileLog.d("doTranslate: from=$from, to=$to, query=$query")
 
         if (to !in listOf("zh", "en", "es", "fr", "ja", "ru")) {
             throw UnsupportedOperationException(getString(R.string.TranslateApiUnsupported) + " " + to)
@@ -49,7 +46,7 @@ object LingoTranslator : Translator {
         for (s in textToTranslate.split("\n")) {
             sourceJsonArray.put(s)
         }
-        if (BuildVars.LOGS_ENABLED) Log.d(NAX, "doTranslate: source JSONArray: $sourceJsonArray")
+        FileLog.d("doTranslate: source JSONArray: $sourceJsonArray")
 
         val requestJsonPayload = JSONObject().apply {
             put("source", sourceJsonArray)
@@ -57,7 +54,7 @@ object LingoTranslator : Translator {
             put("request_id", SystemClock.elapsedRealtime().toString())
             put("detect", true)
         }.toString()
-        if (BuildVars.LOGS_ENABLED) Log.d(NAX, "doTranslate: request body: $requestJsonPayload")
+        FileLog.d("doTranslate: request body: $requestJsonPayload")
 
         val requestBody = requestJsonPayload.toRequestBody(HttpClient.MEDIA_TYPE_JSON)
 
@@ -71,12 +68,8 @@ object LingoTranslator : Translator {
         try {
             responseString = httpClient.newCall(request).await().use { response ->
                     val bodyString = response.body.string()
-                    if (BuildVars.LOGS_ENABLED) Log.d(
-                        NAX, "doTranslate: HTTP response status: ${response.code}"
-                    )
-                    if (BuildVars.LOGS_ENABLED) Log.d(
-                        NAX, "doTranslate: HTTP response body: $bodyString"
-                    )
+                    FileLog.d("doTranslate: HTTP response status: ${response.code}")
+                    FileLog.d("doTranslate: HTTP response body: $bodyString")
                     if (!response.isSuccessful) {
                         error("HTTP ${response.code} : $bodyString")
                     }
@@ -90,13 +83,13 @@ object LingoTranslator : Translator {
 
         try {
             val target: JSONArray = JSONObject(responseString).getJSONArray("target")
-            if (BuildVars.LOGS_ENABLED) Log.d(NAX, "doTranslate: target JSONArray: $target")
+            FileLog.d("doTranslate: target JSONArray: $target")
 
             for (i in 0 until target.length()) {
                 var translatedLine = target.getString(i)
                 if (translatedLine == "\ud835") { // wtf
                     translatedLine = ""
-                    if (BuildVars.LOGS_ENABLED) Log.d(NAX, "doTranslate: skip invalid character")
+                    FileLog.d("doTranslate: skip invalid character")
                 }
                 finalString.append(translatedLine)
                 if (i != target.length() - 1) {
@@ -104,7 +97,7 @@ object LingoTranslator : Translator {
                 }
             }
         } catch (e: JSONException) {
-            if (BuildVars.LOGS_ENABLED) Log.e(NAX, "JSONException parsing Lingo API response", e)
+            FileLog.e("JSONException parsing Lingo API response", e)
             error("Lingo API response parsing failed: ${e.message}")
         }
 
