@@ -215,16 +215,12 @@ object LLMTranslator : Translator {
         }
         if (BuildVars.LOGS_ENABLED) Log.d("LLMTranslator", "Requesting LLM API with model: $model, messages: $messages")
 
-        val requestJson = JSONObject().apply {
-            put("model", model)
-            put("messages", messages)
-            if (LlmModelUtil.supportsTemperature(model)) {
-                put("temperature", NaConfig.llmTemperature.Float())
-            }
-            LlmModelUtil.applyReasoningParameters(this, apiUrl, model)
-        }.toString()
-
-        val response = OpenAICompatClient.chatCompletions(apiUrl, apiKey, requestJson)
+        val response = OpenAICompatClient.chatCompletions(
+            apiUrl,
+            apiKey,
+            model,
+            messages
+        )
 
         if (!response.isSuccess) {
             val code = response.httpCode()

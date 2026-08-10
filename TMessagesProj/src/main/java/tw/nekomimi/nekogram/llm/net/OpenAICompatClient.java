@@ -4,12 +4,15 @@ import static org.telegram.messenger.LocaleController.getString;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.telegram.messenger.FileLog;
 import org.telegram.messenger.R;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -18,6 +21,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import tw.nekomimi.nekogram.llm.utils.LlmModelUtil;
 import tw.nekomimi.nekogram.utils.HttpClient;
+import xyz.nextalone.nagram.NaConfig;
 
 public final class OpenAICompatClient {
 
@@ -25,6 +29,7 @@ public final class OpenAICompatClient {
     private static final OkHttpClient testHttpClient = httpClient.newBuilder()
             .callTimeout(20, TimeUnit.SECONDS)
             .build();
+    private static final Set<String> optionalParametersDisabledModels = ConcurrentHashMap.newKeySet();
 
     private OpenAICompatClient() {
     }
@@ -87,34 +92,53 @@ public final class OpenAICompatClient {
             return new LlmResponse<>(null, "Model is empty", 0, 0);
         }
 
-        JSONObject requestJson;
         try {
             JSONArray messages = new JSONArray();
             messages.put(new JSONObject()
                     .put("role", "user")
                     .put("content", "This is a test. Reply with a single word: OK"));
-            requestJson = new JSONObject()
-                    .put("model", modelName)
-                    .put("messages", messages);
-            LlmModelUtil.applyReasoningParameters(requestJson, baseUrl, modelName);
+            LlmResponse<String> response = chatCompletions(baseUrl, apiKey, modelName, messages, null, testHttpClient);
+            if (!response.isSuccess()) {
+                return response;
+            }
+            return new LlmResponse<>(
+                    LlmModelUtil.sanitizeResponse(modelName, response.data()),
+                    null,
+                    response.durationMs(),
+                    response.httpCode()
+            );
         } catch (Exception e) {
             return new LlmResponse<>(null, e.toString(), 0, 0);
         }
-
-        LlmResponse<String> response = chatCompletions(baseUrl, apiKey, requestJson.toString(), testHttpClient);
-        if (!response.isSuccess()) {
-            return response;
-        }
-        return new LlmResponse<>(
-                LlmModelUtil.sanitizeResponse(modelName, response.data()),
-                null,
-                response.durationMs(),
-                response.httpCode()
-        );
     }
 
-    public static LlmResponse<String> chatCompletions(String baseUrl, String apiKey, String requestJson) {
-        return chatCompletions(baseUrl, apiKey, requestJson, httpClient);
+    public static LlmResponse<String> chatCompletions(String baseUrl, String apiKey, String model, JSONArray messages) {
+        return chatCompletions(baseUrl, apiKey, model, messages, NaConfig.INSTANCE.getLlmTemperature().Float(), httpClient);
+    }
+
+    private static LlmResponse<String> chatCompletions(String baseUrl, String apiKey, String model, JSONArray messages, Float temperature, OkHttpClient client) {
+        try {
+            boolean optionalParametersDisabled = optionalParametersDisabledModels.contains(optionalParametersKey(baseUrl, model));
+            LlmResponse<String> response = chatCompletions(
+                    baseUrl,
+                    apiKey,
+                    buildRequest(baseUrl, model, messages, temperature, !optionalParametersDisabled),
+                    client
+            );
+            if (!response.isSuccess() && response.httpCode() == 400 && !optionalParametersDisabled) {
+                optionalParametersDisabledModels.add(optionalParametersKey(baseUrl, model));
+                FileLog.d("HTTP 400 with optional parameters, retrying without them for model: " + model);
+                response = chatCompletions(
+                        baseUrl,
+                        apiKey,
+                        buildRequest(baseUrl, model, messages, temperature, false),
+                        client
+                );
+            }
+            return response;
+        } catch (Exception e) {
+            return new LlmResponse<>(null, e.toString(), 0, 0);
+        }
     }
 
     private static LlmResponse<String> chatCompletions(String baseUrl, String apiKey, String requestJson, OkHttpClient client) {
@@ -153,6 +177,25 @@ public final class OpenAICompatClient {
             long duration = System.currentTimeMillis() - start;
             return new LlmResponse<>(null, e.toString(), duration, 0);
         }
+    }
+
+    private static String buildRequest(String baseUrl, String model, JSONArray messages, Float temperature, boolean withOptionalParameters) throws Exception {
+        JSONObject requestJson = new JSONObject()
+                .put("model", model)
+                .put("messages", messages);
+        if (withOptionalParameters) {
+            if (temperature != null && LlmModelUtil.supportsTemperature(model)) {
+                requestJson.put("temperature", temperature);
+            }
+            LlmModelUtil.applyReasoningParameters(requestJson, baseUrl, model);
+        }
+        return requestJson.toString();
+    }
+
+    private static String optionalParametersKey(String baseUrl, String model) {
+        String url = baseUrl != null ? baseUrl.trim() : "";
+        String modelName = model != null ? model.trim() : "";
+        return url + "|" + modelName;
     }
 
     private static String formatHttpError(int code, String body) {
