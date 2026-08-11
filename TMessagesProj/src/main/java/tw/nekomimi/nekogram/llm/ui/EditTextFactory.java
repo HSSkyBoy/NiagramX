@@ -10,9 +10,9 @@ import org.telegram.messenger.AndroidUtilities;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Components.EditTextBoldCursor;
 
-public final class LlmEditTextFactory {
+public final class EditTextFactory {
 
-    private LlmEditTextFactory() {
+    private EditTextFactory() {
     }
 
     public static EditTextBoldCursor createAndSetupEditText(

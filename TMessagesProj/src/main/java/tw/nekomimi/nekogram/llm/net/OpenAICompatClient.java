@@ -19,7 +19,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import tw.nekomimi.nekogram.llm.utils.LlmModelUtil;
+import tw.nekomimi.nekogram.llm.utils.ModelUtil;
 import tw.nekomimi.nekogram.utils.HttpClient;
 import xyz.nextalone.nagram.NaConfig;
 
@@ -74,7 +74,7 @@ public final class OpenAICompatClient {
                 return new LlmResponse<>(null, "Parse error: " + e + " ; raw=" + truncate(body), duration, code);
             }
             if (isGeminiModelsEndpoint(requestBaseUrl)) {
-                models = LlmModelUtil.stripModelsPrefix(models);
+                models = ModelUtil.stripModelsPrefix(models);
             }
             if (models.isEmpty()) {
                 return new LlmResponse<>(null, "No models found: " + truncate(body), duration, code);
@@ -102,7 +102,7 @@ public final class OpenAICompatClient {
                 return response;
             }
             return new LlmResponse<>(
-                    LlmModelUtil.sanitizeResponse(modelName, response.data()),
+                    ModelUtil.sanitizeResponse(modelName, response.data()),
                     null,
                     response.durationMs(),
                     response.httpCode()
@@ -184,10 +184,10 @@ public final class OpenAICompatClient {
                 .put("model", model)
                 .put("messages", messages);
         if (withOptionalParameters) {
-            if (temperature != null && LlmModelUtil.supportsTemperature(model)) {
+            if (temperature != null && ModelUtil.supportsTemperature(model)) {
                 requestJson.put("temperature", temperature);
             }
-            LlmModelUtil.applyReasoningParameters(requestJson, baseUrl, model);
+            ModelUtil.applyReasoningParameters(requestJson, baseUrl, model);
         }
         return requestJson.toString();
     }

@@ -2,7 +2,7 @@ package tw.nekomimi.nekogram.llm.preset
 
 import org.telegram.messenger.R
 
-object LlmPresetRegistry {
+object PresetRegistry {
 
     const val CUSTOM = 0
     const val OPENAI = 1

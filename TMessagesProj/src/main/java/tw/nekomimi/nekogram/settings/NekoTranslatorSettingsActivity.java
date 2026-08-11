@@ -82,10 +82,10 @@ import tw.nekomimi.nekogram.config.cell.ConfigCellTextDetail;
 import tw.nekomimi.nekogram.config.cell.ConfigCellTextInput;
 import tw.nekomimi.nekogram.llm.LlmConfig;
 import tw.nekomimi.nekogram.llm.net.OpenAICompatClient;
-import tw.nekomimi.nekogram.llm.preset.LlmPresetRegistry;
-import tw.nekomimi.nekogram.llm.ui.LlmEditTextFactory;
-import tw.nekomimi.nekogram.llm.utils.LlmModelUtil;
-import tw.nekomimi.nekogram.llm.utils.LlmUrlNormalizer;
+import tw.nekomimi.nekogram.llm.preset.PresetRegistry;
+import tw.nekomimi.nekogram.llm.ui.EditTextFactory;
+import tw.nekomimi.nekogram.llm.utils.ModelUtil;
+import tw.nekomimi.nekogram.llm.utils.UrlNormalizer;
 import tw.nekomimi.nekogram.translate.Translator;
 import tw.nekomimi.nekogram.translate.TranslatorKt;
 import tw.nekomimi.nekogram.ui.PopupBuilder;
@@ -165,26 +165,26 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
     private final Map<Integer, List<AbstractConfigCell>> llmProviderConfigMap = new HashMap<>();
 
     {
-        llmProviderConfigMap.put(LlmPresetRegistry.CUSTOM, List.of(
+        llmProviderConfigMap.put(PresetRegistry.CUSTOM, List.of(
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmApiKey(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmApiKey(), getString(R.string.LlmApiKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true),
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmApiUrl(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmApiUrl(), getString(R.string.LlmApiUrlNotice), getString(R.string.LlmApiUrlHint)), getString(R.string.LlmApiUrlDefault))));
-        llmProviderConfigMap.put(LlmPresetRegistry.OPENAI, List.of(
+        llmProviderConfigMap.put(PresetRegistry.OPENAI, List.of(
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmProviderOpenAIKey(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmProviderOpenAIKey(), getString(R.string.LlmApiKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true, getString(R.string.LlmApiKey))));
-        llmProviderConfigMap.put(LlmPresetRegistry.GEMINI, List.of(
+        llmProviderConfigMap.put(PresetRegistry.GEMINI, List.of(
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmProviderGeminiKey(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmProviderGeminiKey(), getString(R.string.LlmApiKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true, getString(R.string.LlmApiKey))));
-        llmProviderConfigMap.put(LlmPresetRegistry.GROQ, List.of(
+        llmProviderConfigMap.put(PresetRegistry.GROQ, List.of(
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmProviderGroqKey(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmProviderGroqKey(), getString(R.string.LlmApiKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true, getString(R.string.LlmApiKey))));
-        llmProviderConfigMap.put(LlmPresetRegistry.DEEPSEEK, List.of(
+        llmProviderConfigMap.put(PresetRegistry.DEEPSEEK, List.of(
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmProviderDeepSeekKey(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmProviderDeepSeekKey(), getString(R.string.LlmApiKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true, getString(R.string.LlmApiKey))));
-        llmProviderConfigMap.put(LlmPresetRegistry.XAI, List.of(
+        llmProviderConfigMap.put(PresetRegistry.XAI, List.of(
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmProviderXAIKey(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmProviderXAIKey(), getString(R.string.LlmApiKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true, getString(R.string.LlmApiKey))));
-        llmProviderConfigMap.put(LlmPresetRegistry.CEREBRAS, List.of(
+        llmProviderConfigMap.put(PresetRegistry.CEREBRAS, List.of(
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmProviderCerebrasKey(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmProviderCerebrasKey(), getString(R.string.LlmApiKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true, getString(R.string.LlmApiKey))));
-        llmProviderConfigMap.put(LlmPresetRegistry.OLLAMA_CLOUD, List.of(
+        llmProviderConfigMap.put(PresetRegistry.OLLAMA_CLOUD, List.of(
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmProviderOllamaCloudKey(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmProviderOllamaCloudKey(), getString(R.string.LlmApiKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true, getString(R.string.LlmApiKey))));
-        llmProviderConfigMap.put(LlmPresetRegistry.OPENROUTER, List.of(
+        llmProviderConfigMap.put(PresetRegistry.OPENROUTER, List.of(
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmProviderOpenRouterKey(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmProviderOpenRouterKey(), getString(R.string.LlmApiKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true, getString(R.string.LlmApiKey))));
-        llmProviderConfigMap.put(LlmPresetRegistry.VERCEL_AI_GATEWAY, List.of(
+        llmProviderConfigMap.put(PresetRegistry.VERCEL_AI_GATEWAY, List.of(
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmProviderVercelAIGatewayKey(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmProviderVercelAIGatewayKey(), getString(R.string.LlmApiKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true, getString(R.string.LlmApiKey))));
     }
 
@@ -542,16 +542,16 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
 
     private ConfigItem getCurrentLlmProviderApiKeyItem() {
         return switch (NaConfig.INSTANCE.getLlmProviderPreset().Int()) {
-            case LlmPresetRegistry.CUSTOM -> NaConfig.INSTANCE.getLlmApiKey();
-            case LlmPresetRegistry.OPENAI -> NaConfig.INSTANCE.getLlmProviderOpenAIKey();
-            case LlmPresetRegistry.GEMINI -> NaConfig.INSTANCE.getLlmProviderGeminiKey();
-            case LlmPresetRegistry.GROQ -> NaConfig.INSTANCE.getLlmProviderGroqKey();
-            case LlmPresetRegistry.DEEPSEEK -> NaConfig.INSTANCE.getLlmProviderDeepSeekKey();
-            case LlmPresetRegistry.XAI -> NaConfig.INSTANCE.getLlmProviderXAIKey();
-            case LlmPresetRegistry.CEREBRAS -> NaConfig.INSTANCE.getLlmProviderCerebrasKey();
-            case LlmPresetRegistry.OLLAMA_CLOUD -> NaConfig.INSTANCE.getLlmProviderOllamaCloudKey();
-            case LlmPresetRegistry.OPENROUTER -> NaConfig.INSTANCE.getLlmProviderOpenRouterKey();
-            case LlmPresetRegistry.VERCEL_AI_GATEWAY -> NaConfig.INSTANCE.getLlmProviderVercelAIGatewayKey();
+            case PresetRegistry.CUSTOM -> NaConfig.INSTANCE.getLlmApiKey();
+            case PresetRegistry.OPENAI -> NaConfig.INSTANCE.getLlmProviderOpenAIKey();
+            case PresetRegistry.GEMINI -> NaConfig.INSTANCE.getLlmProviderGeminiKey();
+            case PresetRegistry.GROQ -> NaConfig.INSTANCE.getLlmProviderGroqKey();
+            case PresetRegistry.DEEPSEEK -> NaConfig.INSTANCE.getLlmProviderDeepSeekKey();
+            case PresetRegistry.XAI -> NaConfig.INSTANCE.getLlmProviderXAIKey();
+            case PresetRegistry.CEREBRAS -> NaConfig.INSTANCE.getLlmProviderCerebrasKey();
+            case PresetRegistry.OLLAMA_CLOUD -> NaConfig.INSTANCE.getLlmProviderOllamaCloudKey();
+            case PresetRegistry.OPENROUTER -> NaConfig.INSTANCE.getLlmProviderOpenRouterKey();
+            case PresetRegistry.VERCEL_AI_GATEWAY -> NaConfig.INSTANCE.getLlmProviderVercelAIGatewayKey();
             default -> null;
         };
     }
@@ -661,7 +661,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
     private void checkTemperatureRows() {
         int preset = NaConfig.INSTANCE.getLlmProviderPreset().Int();
         String modelName = LlmConfig.getEffectiveModelName(preset);
-        boolean showTemperature = LlmModelUtil.supportsTemperature(modelName);
+        boolean showTemperature = ModelUtil.supportsTemperature(modelName);
         if (listAdapter == null) {
             if (!showTemperature) {
                 cellGroup.rows.remove(headerTemperature);
@@ -745,8 +745,8 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
 
         boolean isPrompt = bind == NaConfig.INSTANCE.getLlmSystemPrompt() || bind == NaConfig.INSTANCE.getLlmUserPrompt();
         EditTextBoldCursor editText = isPrompt
-                ? LlmEditTextFactory.createAndSetupMultilineEditText(context, resourcesProvider, bind.String(), hint, EditorInfo.IME_ACTION_DONE, true)
-                : LlmEditTextFactory.createAndSetupEditText(context, resourcesProvider, bind.String(), hint, EditorInfo.IME_ACTION_DONE, true);
+                ? EditTextFactory.createAndSetupMultilineEditText(context, resourcesProvider, bind.String(), hint, EditorInfo.IME_ACTION_DONE, true)
+                : EditTextFactory.createAndSetupEditText(context, resourcesProvider, bind.String(), hint, EditorInfo.IME_ACTION_DONE, true);
         ll.addView(editText, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0, 24, 0, 24, 0));
 
         CharSequence enhancedSubtitle = getEnhancedSubtitleWithLink(bind, subtitle);
@@ -767,7 +767,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
             button.setOnClickListener(v -> {
                 String value = editText.getText() != null ? editText.getText().toString() : "";
                 if (bind == NaConfig.INSTANCE.getLlmApiUrl()) {
-                    if (!LlmUrlNormalizer.isValidBaseUrl(value)) {
+                    if (!UrlNormalizer.isValidBaseUrl(value)) {
                         AndroidUtil.showInputError(editText);
                         return;
                     }
@@ -879,14 +879,14 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
             return false;
         }
         String model = item.text != null ? item.text.trim().toLowerCase(Locale.ROOT) : "";
-        return forceEnabledModels.contains(model) || LlmModelUtil.isTextGenerationModel(item.text);
+        return forceEnabledModels.contains(model) || ModelUtil.isTextGenerationModel(item.text);
     }
 
     private static void sortModelsForProvider(int preset, ArrayList<String> models) {
-        if (preset == LlmPresetRegistry.OPENROUTER) {
+        if (preset == PresetRegistry.OPENROUTER) {
             models.sort((a, b) -> {
-                boolean aFree = LlmModelUtil.isOpenRouterFreeModel(a);
-                boolean bFree = LlmModelUtil.isOpenRouterFreeModel(b);
+                boolean aFree = ModelUtil.isOpenRouterFreeModel(a);
+                boolean bFree = ModelUtil.isOpenRouterFreeModel(b);
                 if (aFree != bFree) {
                     return aFree ? -1 : 1;
                 }
@@ -943,7 +943,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
         String initialText = LlmConfig.getEffectiveModelName(preset);
         final boolean pinDefaultModel;
 
-        if (preset == LlmPresetRegistry.CUSTOM) {
+        if (preset == PresetRegistry.CUSTOM) {
             String userUrl = NaConfig.INSTANCE.getLlmApiUrl().String();
             boolean hasCustomUrl = userUrl != null && !userUrl.trim().isEmpty();
             pinDefaultModel = !hasCustomUrl && !TextUtils.isEmpty(defaultModel);
@@ -958,7 +958,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
         final int listCellSideInsetDp = 20;
         final int listSidePaddingPx = dp(Math.max(0, dialogSideInsetDp - listCellSideInsetDp));
 
-        EditTextBoldCursor editText = LlmEditTextFactory.createAndSetupEditText(
+        EditTextBoldCursor editText = EditTextFactory.createAndSetupEditText(
                 context,
                 resourcesProvider,
                 initialText,
@@ -1172,7 +1172,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
         listView.setOnItemLongClickListener((view, position) -> {
             if (position < 0 || position >= items.size()) return false;
             ModelDialogItem item = items.get(position);
-            if ((item.type != MODEL_ITEM_TYPE_MODEL && item.type != MODEL_ITEM_TYPE_DEFAULT) || LlmModelUtil.isTextGenerationModel(item.text)) {
+            if ((item.type != MODEL_ITEM_TYPE_MODEL && item.type != MODEL_ITEM_TYPE_DEFAULT) || ModelUtil.isTextGenerationModel(item.text)) {
                 return false;
             }
             String model = item.text != null ? item.text.trim().toLowerCase(Locale.ROOT) : "";
