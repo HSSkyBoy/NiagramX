@@ -5834,6 +5834,10 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                         }
                     });
                 } else if (id == gallery_menu_set_photo) {
+                    BaseFragment fragment = parentFragment;
+                    if (fragment == null || fragment.getParentLayout() == null) {
+                        return;
+                    }
                     File f = null;
                     if (currentMessageObject != null) {
                         if (currentMessageObject.messageOwner.media instanceof TLRPC.TL_messageMediaWebPage && currentMessageObject.messageOwner.media.webpage != null && currentMessageObject.messageOwner.media.webpage.document == null) {
@@ -5849,6 +5853,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                     }
                     if (f == null || !f.exists()) {
                         showDownloadAlert();
+                        return;
                     }
                     final ArrayList<Object> arrayList = new ArrayList<>();
                     MediaController.PhotoEntry photoEntry = new MediaController.PhotoEntry(0, 0, 0, f.getAbsolutePath(), 0, false, 0, 0, 0);
@@ -5857,8 +5862,8 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                         @Override
                         public void sendButtonPressed(int index, VideoEditedInfo videoEditedInfo, boolean notify, int scheduleDate, int scheduleRepeatPeriod, boolean forceDocument) {
                             MediaController.PhotoEntry photoEntry = (MediaController.PhotoEntry) arrayList.get(0);
-                            if (photoEntry.imagePath != null || photoEntry.isVideo) {
-                                PhotoUtilities.setImageAsAvatar(photoEntry, parentFragment, null);
+                            if ((photoEntry.imagePath != null || photoEntry.isVideo) && fragment.getParentLayout() != null) {
+                                PhotoUtilities.setImageAsAvatar(photoEntry, fragment, null);
                             }
                         }
 
@@ -6090,6 +6095,9 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         menuItem.setSubMenuDelegate(new ActionBarMenuItem.ActionBarSubMenuItemDelegate() {
             @Override
             public void onShowSubMenu() {
+                if (parentFragment == null || parentFragment.getParentLayout() == null) {
+                    menuItem.hideSubItem(gallery_menu_set_photo);
+                }
                 if (videoPlayerControlVisible && isPlaying) {
                     AndroidUtilities.cancelRunOnUIThread(hideActionBarRunnable);
                 }
