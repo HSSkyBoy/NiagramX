@@ -871,6 +871,17 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
         return s.substring(0, max) + "…";
     }
 
+    private static boolean isSelectableModelItem(ModelDialogItem item, HashSet<String> forceEnabledModels) {
+        if (item.type == MODEL_ITEM_TYPE_ERROR) {
+            return true;
+        }
+        if (item.type != MODEL_ITEM_TYPE_MODEL && item.type != MODEL_ITEM_TYPE_DEFAULT) {
+            return false;
+        }
+        String model = item.text != null ? item.text.trim().toLowerCase(Locale.ROOT) : "";
+        return forceEnabledModels.contains(model) || LlmModelUtil.isTextGenerationModel(item.text);
+    }
+
     private static void sortModelsForProvider(int preset, ArrayList<String> models) {
         if (preset == LlmPresetRegistry.OPENROUTER) {
             models.sort((a, b) -> {
@@ -970,6 +981,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
         boolean[] userEdited = new boolean[]{false};
         boolean[] suppressWatcher = new boolean[]{false};
         String[] currentQuery = new String[]{""};
+        HashSet<String> forceEnabledModels = new HashSet<>();
         final AlertDialog[] dialogRef = new AlertDialog[]{null};
 
         Runnable rebuildItems = () -> {
@@ -1031,10 +1043,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
                 if (position < 0 || position >= items.size()) {
                     return false;
                 }
-                int type = items.get(position).type;
-                return type == MODEL_ITEM_TYPE_MODEL
-                        || type == MODEL_ITEM_TYPE_DEFAULT
-                        || type == MODEL_ITEM_TYPE_ERROR;
+                return isSelectableModelItem(items.get(position), forceEnabledModels);
             }
 
             @Override
@@ -1078,16 +1087,22 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
                 int highlightColor = Theme.getColor(Theme.key_windowBackgroundWhiteBlueText4, resourcesProvider);
                 switch (holder.itemView) {
                     case TextSettingsCell cell -> {
+                        boolean enabled = isSelectableModelItem(item, forceEnabledModels);
+                        cell.setTextColor(Theme.getColor(enabled ? Theme.key_windowBackgroundWhiteBlackText : Theme.key_windowBackgroundWhiteGrayText, resourcesProvider));
+                        cell.setTextValueColor(Theme.getColor(enabled ? Theme.key_windowBackgroundWhiteValueText : Theme.key_windowBackgroundWhiteGrayText, resourcesProvider));
+                        cell.setEnabled(enabled);
                         if (item.type == MODEL_ITEM_TYPE_DEFAULT) {
                             CharSequence text = formatModelNameForList(item.text);
-                            text = highlightQueryInText(text, query, highlightColor);
+                            if (enabled) {
+                                text = highlightQueryInText(text, query, highlightColor);
+                            }
                             cell.setTextAndValue(text, item.value, divider);
                             cell.setIcon(0);
                         } else if (item.type == MODEL_ITEM_TYPE_LOADING) {
                             cell.setText(item.text, divider);
                             cell.setIcon(0);
                         } else if (item.type == MODEL_ITEM_TYPE_MODEL) {
-                            CharSequence text = highlightQueryInText(item.text, query, highlightColor);
+                            CharSequence text = enabled ? highlightQueryInText(item.text, query, highlightColor) : item.text;
                             cell.setText(text, divider);
                             cell.setIcon(0);
                         } else {
@@ -1140,6 +1155,9 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
             if (position < 0 || position >= items.size()) return;
             ModelDialogItem item = items.get(position);
             if (item.type == MODEL_ITEM_TYPE_MODEL || item.type == MODEL_ITEM_TYPE_DEFAULT) {
+                if (!isSelectableModelItem(item, forceEnabledModels)) {
+                    return;
+                }
                 suppressWatcher[0] = true;
                 editText.setText(item.text);
                 editText.setSelection(editText.length());
@@ -1149,6 +1167,20 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
             } else if (item.type == MODEL_ITEM_TYPE_ERROR) {
                 loadModels.run();
             }
+        });
+
+        listView.setOnItemLongClickListener((view, position) -> {
+            if (position < 0 || position >= items.size()) return false;
+            ModelDialogItem item = items.get(position);
+            if ((item.type != MODEL_ITEM_TYPE_MODEL && item.type != MODEL_ITEM_TYPE_DEFAULT) || LlmModelUtil.isTextGenerationModel(item.text)) {
+                return false;
+            }
+            String model = item.text != null ? item.text.trim().toLowerCase(Locale.ROOT) : "";
+            if (!forceEnabledModels.add(model)) {
+                return false;
+            }
+            adapter.notifyItemChanged(position);
+            return true;
         });
 
         editText.addTextChangedListener(new TextWatcher() {
