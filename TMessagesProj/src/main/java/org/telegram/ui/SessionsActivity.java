@@ -1376,7 +1376,12 @@ public class SessionsActivity extends BaseFragment implements NotificationCenter
         listView.setPadding(0, 0, 0, bottom);
         listView.setClipToPadding(false);
         if (undoView != null) {
-            undoView.setTranslationY(-bottom);
+            FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) undoView.getLayoutParams();
+            int bottomMargin = bottom + dp(8);
+            if (lp != null && lp.bottomMargin != bottomMargin) {
+                lp.bottomMargin = bottomMargin;
+                undoView.setLayoutParams(lp);
+            }
         }
     }
 }
