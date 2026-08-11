@@ -160,7 +160,7 @@ public class ConfigCellTextDetail extends AbstractConfigCell implements WithBind
             bindConfig.setConfigString(output);
             cellGroup.listAdapter.notifyItemChanged(cellGroup.rows.indexOf(this));
             dialog.dismiss();
-            cellGroup.thisFragment.getParentLayout().rebuildAllFragmentViews(false, false);
+            cellGroup.thisFragment.getParentLayout().rebuildFragments(0);
             cellGroup.runCallback(bindConfig.getKey(), output);
         }));
         cellGroup.thisFragment.showDialog(dialog);

@@ -40,18 +40,18 @@ class BottomBuilder(val ctx: Context, val needFocus: Boolean = true, val bgColor
     }
     private val rtl = (if (LocaleController.isRTL) Gravity.RIGHT else Gravity.LEFT)
 
-    private val _root = LinearLayout(ctx).apply {
+    init {
+        builder.setCustomView(LinearLayout(ctx).apply {
 
-        addView(ScrollView(ctx).apply {
+            addView(ScrollView(ctx).apply {
 
-            addView(this@BottomBuilder.rootView)
-            isFillViewport = true
-            isVerticalScrollBarEnabled = false
+                addView(this@BottomBuilder.rootView)
+                isFillViewport = true
+                isVerticalScrollBarEnabled = false
 
-        }, LinearLayout.LayoutParams(-1, -1))
+            }, LinearLayout.LayoutParams(-1, -1))
 
-        builder.setCustomView(this)
-
+        })
     }
 
 
@@ -178,17 +178,6 @@ class BottomBuilder(val ctx: Context, val needFocus: Boolean = true, val bgColor
 
     }
 
-    @JvmOverloads
-    fun addRadioItems(text: Array<String>, value: (Int, String) -> Boolean, valueText: ((Int, String) -> String)? = null, listener: (index: Int, text: String, cell: RadioButtonCell) -> Unit): List<RadioButtonCell> {
-        val list = mutableListOf<RadioButtonCell>()
-        text.forEachIndexed { index, textI ->
-            list.add(addRadioItem(textI, value(index, textI), valueText?.invoke(index, textI)) { cell ->
-                listener(index, textI, cell)
-            })
-        }
-        return list
-    }
-
     fun addCancelItem() {
         addItem(getString(R.string.Cancel), R.drawable.msg_cancel) {}
     }
@@ -196,12 +185,6 @@ class BottomBuilder(val ctx: Context, val needFocus: Boolean = true, val bgColor
     @JvmOverloads
     fun addCancelButton(left: Boolean = true) {
         addButton(getString(R.string.Cancel), left = left) {}
-    }
-
-
-    @JvmOverloads
-    fun addOkButton(listener: ((TextView) -> Unit), noAutoDismiss: Boolean = false) {
-        addButton(getString(R.string.OK), noAutoDismiss) { listener(it); }
     }
 
     @JvmOverloads

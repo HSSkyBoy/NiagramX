@@ -9,6 +9,7 @@ import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
 import org.telegram.messenger.AndroidUtilities
+import org.telegram.messenger.FileLog
 import org.telegram.messenger.LocaleController
 import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.R
@@ -214,14 +215,14 @@ interface Translator {
             AppScope.io.launch {
                 runCatching {
                     val effectiveProvider = getBulkTranslateProvider(NekoConfig.translationProvider.Int())
-                    var translatedPoll = TranslateController.PollText()
+                    val translatedPoll = TranslateController.PollText()
                     if (query.question != null) {
                         translatedPoll.question = translateBase(
                             to, query.question.text, ArrayList(), effectiveProvider
                         )
                     }
                     for (answer in query.answers) {
-                        var translatedAnswer = TLRPC.TL_pollAnswer()
+                        val translatedAnswer = TLRPC.TL_pollAnswer()
                         translatedAnswer.text = translateBase(
                             to, answer.text.text, ArrayList(), effectiveProvider
                         )
@@ -287,13 +288,15 @@ interface Translator {
             val countryUpperCase = country.uppercase(Locale.ROOT)
 
             when (provider) {
-                providerDeepL -> language = when {
-                    language == "en" && (countryUpperCase == "GB" || countryUpperCase == "US") ->
+                providerDeepL -> language = when (language) {
+                    "en" if (countryUpperCase == "GB" || countryUpperCase == "US") ->
                         "en-$countryUpperCase"
-                    language == "pt" && (countryUpperCase == "BR" || countryUpperCase == "PT") ->
+
+                    "pt" if (countryUpperCase == "BR" || countryUpperCase == "PT") ->
                         "pt-$countryUpperCase"
-                    language == "zh" && countryUpperCase == "CN" -> "zh-CN"
-                    language == "zh" && (countryUpperCase == "TW" || countryUpperCase == "HK") ->
+
+                    "zh" if countryUpperCase == "CN" -> "zh-CN"
+                    "zh" if (countryUpperCase == "TW" || countryUpperCase == "HK") ->
                         "zh-TW"
                     else -> language
                 }
@@ -398,6 +401,7 @@ interface Translator {
                 try {
                     lang.code2Locale
                 } catch (e: Exception) {
+                    FileLog.e(e)
                     null
                 }
             }
@@ -422,7 +426,7 @@ interface Translator {
             }
 
             val currLocale = LocaleController.getInstance().currentLocale
-            val localeNames = arrayOfNulls<String>(if (full) locales.size else locales.size + 1)
+            val localeNames = arrayOfNulls<CharSequence>(if (full) locales.size else locales.size + 1)
 
             for (i in locales.indices) {
                 localeNames[i] = if (i == 0) {
@@ -438,9 +442,7 @@ interface Translator {
                 localeNames[localeNames.size - 1] = getString(R.string.More)
             }
 
-            builder.setItems(
-                localeNames.filterIsInstance<CharSequence>().toTypedArray()
-            ) { index: Int, _ ->
+            builder.setItems(localeNames) { index: Int, _ ->
                 if (index == locales.size) {
                     showTargetLangSelect(anchor, input, true, callback)
                 } else {

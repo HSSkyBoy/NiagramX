@@ -7,10 +7,13 @@ import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader;
 import android.text.TextUtils;
 import android.view.View;
+
+import androidx.annotation.NonNull;
 
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.qrcode.QRCodeWriter;
@@ -66,7 +69,7 @@ public class QrView extends View {
             loadingMatrix = new RLottieDrawable(R.raw.qr_matrix, "qr_matrix", AndroidUtilities.dp(200), AndroidUtilities.dp(200));
             loadingMatrix.setMasterParent(this);
             loadingMatrix.setAutoRepeat(1);
-            loadingMatrix.setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+            loadingMatrix.setColorFilter(new PorterDuffColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY));
             loadingMatrix.start();
         }
         int width = getWidth();
@@ -77,21 +80,25 @@ public class QrView extends View {
             imageBloks++;
         }
         int imageSize = imageBloks * multiple - 24;
-        int imageX = (size - imageSize) / 2;
+        int imageOffset = (size - imageSize) / 2;
         canvas.save();
         canvas.scale(scale, scale);
         paint.setColor(Color.BLACK);
         QRCodeWriter.drawSideQuads(canvas, 0, 0, paint, 7, multiple, 16, size, .75f, radii, true);
-        if (qrLogo == null) {
+        Bitmap logo = qrLogo;
+        if (logo == null) {
             String svg = AndroidUtilities.readRes(null, R.raw.qr_logo);
-            qrLogo = SvgHelper.getBitmap(svg, imageSize, imageSize, false);
+            logo = SvgHelper.getBitmap(svg, imageSize, imageSize, false);
+            qrLogo = logo;
         }
-        canvas.drawBitmap(qrLogo, imageX, imageX, null);
+        if (logo != null) {
+            canvas.drawBitmap(logo, imageOffset, imageOffset, null);
+        }
         canvas.restore();
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         super.onDraw(canvas);
 
         paint.setColor(Color.WHITE);
@@ -109,7 +116,7 @@ public class QrView extends View {
         if (crossfadeAlpha < 1f) {
             if (crossfading) {
                 AndroidUtilities.rectTmp.set(0, 0, size, size);
-                canvas.saveLayerAlpha(AndroidUtilities.rectTmp, 255, Canvas.ALL_SAVE_FLAG);
+                canvas.saveLayerAlpha(AndroidUtilities.rectTmp, 255);
             }
             if (oldContentBitmap != null) {
                 canvas.save();
@@ -131,7 +138,7 @@ public class QrView extends View {
         if (crossfadeAlpha > 0f) {
             if (crossfading) {
                 AndroidUtilities.rectTmp.set(0, 0, getWidth(), getHeight());
-                canvas.saveLayerAlpha(AndroidUtilities.rectTmp, 255, Canvas.ALL_SAVE_FLAG);
+                canvas.saveLayerAlpha(AndroidUtilities.rectTmp, 255);
             }
             if (contentBitmap != null) {
                 canvas.save();

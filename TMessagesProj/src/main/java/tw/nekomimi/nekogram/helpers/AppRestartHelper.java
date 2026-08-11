@@ -9,6 +9,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Process;
 
+import androidx.core.content.IntentCompat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,7 +31,7 @@ public final class AppRestartHelper extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Process.killProcess(getIntent().getIntExtra(KEY_MAIN_PROCESS_PID, -1));
-        ArrayList<Intent> intents = getIntent().getParcelableArrayListExtra(KEY_RESTART_INTENTS);
+        ArrayList<Intent> intents = IntentCompat.getParcelableArrayListExtra(getIntent(), KEY_RESTART_INTENTS, Intent.class);
         if (intents != null) {
             startActivities(intents.toArray(new Intent[0]));
             finish();
@@ -37,4 +39,3 @@ public final class AppRestartHelper extends Activity {
         }
     }
 }
-

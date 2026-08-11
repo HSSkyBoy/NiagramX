@@ -11,6 +11,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ContactsController;
 import org.telegram.messenger.LocaleController;
@@ -29,8 +31,6 @@ public class AccountCell extends FrameLayout {
     private final ImageView checkImageView;
     private final AvatarDrawable avatarDrawable;
     private boolean needDivider;
-
-    private int accountNumber;
 
     public AccountCell(Context context) {
         super(context);
@@ -61,7 +61,7 @@ public class AccountCell extends FrameLayout {
     }
 
     @Override
-    protected void onDraw(Canvas canvas) {
+    protected void onDraw(@NonNull Canvas canvas) {
         if (needDivider) {
             canvas.drawLine(LocaleController.isRTL ? 0 : AndroidUtilities.dp(68), getMeasuredHeight() - 1, getMeasuredWidth(), getMeasuredHeight() - 1, Theme.dividerPaint);
         }
@@ -81,8 +81,7 @@ public class AccountCell extends FrameLayout {
     }
 
     public void setAccount(int account, boolean check, boolean divider) {
-        accountNumber = account;
-        TLRPC.User user = UserConfig.getInstance(accountNumber).getCurrentUser();
+        TLRPC.User user = UserConfig.getInstance(account).getCurrentUser();
         avatarDrawable.setInfo(user);
         textView.setText(ContactsController.formatName(user.first_name, user.last_name));
         imageView.getImageReceiver().setCurrentAccount(account);
@@ -90,9 +89,5 @@ public class AccountCell extends FrameLayout {
         checkImageView.setVisibility(check ? VISIBLE : INVISIBLE);
         needDivider = divider;
         setWillNotDraw(!divider);
-    }
-
-    public int getAccountNumber() {
-        return accountNumber;
     }
 }

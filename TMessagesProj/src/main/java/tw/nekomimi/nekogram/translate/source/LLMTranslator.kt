@@ -23,6 +23,7 @@ import java.io.IOException
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.CoroutineContext
 import kotlin.random.Random
+import kotlin.time.Duration.Companion.milliseconds
 
 object LLMTranslator : Translator {
 
@@ -138,7 +139,7 @@ object LLMTranslator : Translator {
                 if (BuildVars.LOGS_ENABLED) {
                     AndroidUtil.showErrorDialog("Rate limited, retrying in ${actualWaitTimeMillis}ms, retry count: $retryCount")
                 }
-                delay(actualWaitTimeMillis)
+                delay(actualWaitTimeMillis.milliseconds)
             } catch (e: IOException) {
                 retryCount++
                 if (BuildVars.LOGS_ENABLED) {
@@ -151,7 +152,7 @@ object LLMTranslator : Translator {
                     return GoogleAppTranslator.doTranslate(from, to, query, entities)
                 }
                 val waitTimeMillis = backoffDelayMillis(retryCount)
-                delay(waitTimeMillis)
+                delay(waitTimeMillis.milliseconds)
             } catch (e: UnsupportedOperationException) {
                 throw e
             } catch (e: Exception) {

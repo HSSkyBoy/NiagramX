@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ProfileDateHelper {
-    private static String JSON_FILE = "id_date.json";
+    private static final String JSON_FILE = "id_date.json";
     private static final ArrayList<ProfileDateData> profileDateDataList = new ArrayList<>();
 
     private static void loadData() {
@@ -55,12 +55,12 @@ public class ProfileDateHelper {
         for (int i = 1; i < profileDateDataList.size(); i++){
             ProfileDateData data1 = profileDateDataList.get(i - 1);
             ProfileDateData data2 = profileDateDataList.get(i);
-            if (userId >= data1.getId() && userId <= data2.getId()) {
-                long idx = userId - data1.getId();
-                long idxRange = data2.getId() - data1.getId();
+            if (userId >= data1.id() && userId <= data2.id()) {
+                long idx = userId - data1.id();
+                long idxRange = data2.id() - data1.id();
                 double t = (double) idx / idxRange;
-                long date1 = data1.getDate();
-                long date2 = data2.getDate();
+                long date1 = data1.date();
+                long date2 = data2.date();
                 double date = (date1 + t * (date2 - date1)) * 1000.0;
                 long dateLong = Math.round(date);
                 return getUserTime("~", dateLong);
@@ -72,21 +72,6 @@ public class ProfileDateHelper {
         return getUserTime(">", 1711889200000L);
     }
 
-    public static class ProfileDateData {
-        private final long id;
-        private final long date;
-
-        public ProfileDateData(long id, long date) {
-            this.id = id;
-            this.date = date;
-        }
-
-        public long getId() {
-            return id;
-        }
-
-        public long getDate() {
-            return date;
-        }
+    public record ProfileDateData(long id, long date) {
     }
 }

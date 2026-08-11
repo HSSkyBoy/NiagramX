@@ -141,7 +141,7 @@ public class ConfigCellTextInput extends AbstractConfigCell implements WithBindC
             // refresh
             cellGroup.listAdapter.notifyItemChanged(cellGroup.rows.indexOf(this));
             dialog.dismiss();
-            cellGroup.thisFragment.getParentLayout().rebuildAllFragmentViews(false, false);
+            cellGroup.thisFragment.getParentLayout().rebuildFragments(0);
 
             cellGroup.runCallback(bindConfig.getKey(), newV);
         }));

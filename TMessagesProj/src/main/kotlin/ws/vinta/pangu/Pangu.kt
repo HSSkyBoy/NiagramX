@@ -4,7 +4,6 @@
  */
 package ws.vinta.pangu
 
-import java.io.IOException
 import java.util.regex.Pattern
 
 /**
@@ -38,11 +37,11 @@ class Pangu {
          */
         private val CJK_ANS = Pattern.compile(
             "([\\p{InHiragana}\\p{InKatakana}\\p{InBopomofo}\\p{InCJKCompatibilityIdeographs}\\p{InCJKUnifiedIdeographs}])" +
-                    "([a-z0-9`~@\\$%\\^&\\*\\-_\\+=\\|\\\\/])",
+                    "([a-z0-9`~@$%^&*\\-_+=|\\\\/])",
             Pattern.CASE_INSENSITIVE
         )
         private val ANS_CJK = Pattern.compile(
-            "([a-z0-9`~!\\$%\\^&\\*\\-_\\+=\\|\\\\;:,\\./\\?])" +
+            "([a-z0-9`~!$%^&*\\-_+=|\\\\;:,./?])" +
                     "([\\p{InHiragana}\\p{InKatakana}\\p{InBopomofo}\\p{InCJKCompatibilityIdeographs}\\p{InCJKUnifiedIdeographs}])",
             Pattern.CASE_INSENSITIVE
         )
@@ -57,18 +56,18 @@ class Pangu {
         private val FIX_QUOTE = Pattern.compile("([\"'])(\\s*)(.+?)(\\s*)([\"'])")
         private val CJK_BRACKET_CJK = Pattern.compile(
             "([\\p{InHiragana}\\p{InKatakana}\\p{InBopomofo}\\p{InCJKCompatibilityIdeographs}\\p{InCJKUnifiedIdeographs}])" +
-                    "([\\({\\[]+(.*?)[\\)}\\]]+)" +
+                    "([({\\[]+(.*?)[)}\\]]+)" +
                     "([\\p{InHiragana}\\p{InKatakana}\\p{InBopomofo}\\p{InCJKCompatibilityIdeographs}\\p{InCJKUnifiedIdeographs}])"
         )
         private val CJK_BRACKET = Pattern.compile(
             "([\\p{InHiragana}\\p{InKatakana}\\p{InBopomofo}\\p{InCJKCompatibilityIdeographs}\\p{InCJKUnifiedIdeographs}])" +
-                    "([\\(\\){}\\[\\]<>])"
+                    "([(){}\\[\\]<>])"
         )
         private val BRACKET_CJK = Pattern.compile(
-            "([\\(\\){}\\[\\]<>])" +
+            "([(){}\\[\\]<>])" +
                     "([\\p{InHiragana}\\p{InKatakana}\\p{InBopomofo}\\p{InCJKCompatibilityIdeographs}\\p{InCJKUnifiedIdeographs}])"
         )
-        private val FIX_BRACKET = Pattern.compile("([(\\({\\[)]+)(\\s*)(.+?)(\\s*)([\\)}\\]]+)")
+        private val FIX_BRACKET = Pattern.compile("([({\\[)]+)(\\s*)(.+?)(\\s*)([)}\\]]+)")
         private val CJK_HASH = Pattern.compile(
             "([\\p{InHiragana}\\p{InKatakana}\\p{InBopomofo}\\p{InCJKCompatibilityIdeographs}\\p{InCJKUnifiedIdeographs}])" +
                     "(#(\\S+))"

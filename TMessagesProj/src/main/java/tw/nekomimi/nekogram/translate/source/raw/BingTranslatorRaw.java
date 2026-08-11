@@ -115,8 +115,8 @@ public class BingTranslatorRaw {
                 throw new IOException("Bing translation failed: HTTP " + response.code() + ": " + body);
             }
 
-            String contentType = response.header("Content-Type", "");
-            if (contentType.startsWith("application/json")) {
+            String contentType = response.header("Content-Type");
+            if (contentType != null && contentType.startsWith("application/json")) {
                 return extractTranslatedText(body);
             }
             if (response.header("isgenderdebiasedtranslation") != null) {

@@ -378,14 +378,14 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
             } else if (key.equals(NaConfig.INSTANCE.getSaveToChatSubfolder().getKey())) {
                 listAdapter.notifyItemChanged(cellGroup.rows.indexOf(customSavePathRow));
             } else if (key.equals(NaConfig.INSTANCE.getMainTabsHideTitles().getKey())) {
-                parentLayout.rebuildAllFragmentViews(false, false);
+                parentLayout.rebuildFragments(0);
             } else if (key.equals(NaConfig.INSTANCE.getMainTabsHideContacts().getKey())) {
-                parentLayout.rebuildAllFragmentViews(false, false);
+                parentLayout.rebuildFragments(0);
             } else if (key.equals(NaConfig.INSTANCE.getHideBottomNavigationBar().getKey())) {
                 checkMainTabsRows();
-                parentLayout.rebuildAllFragmentViews(false, false);
+                parentLayout.rebuildFragments(0);
             } else if (key.equals(NaConfig.INSTANCE.getHideDialogsSearchField().getKey())) {
-                parentLayout.rebuildAllFragmentViews(false, false);
+                parentLayout.rebuildFragments(0);
             }
         };
 

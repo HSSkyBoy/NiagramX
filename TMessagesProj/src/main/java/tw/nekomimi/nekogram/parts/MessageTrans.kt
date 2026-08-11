@@ -499,7 +499,7 @@ private suspend fun ChatActivity.finalizeTranslation(
         }
     } else {
         withContext(Dispatchers.Main) {
-            clearTranslated(msg, currentAccount, false)
+            clearTranslated(msg, currentAccount)
             messageHelper.resetMessageContent(dialogId, msg)
         }
     }
@@ -719,11 +719,7 @@ private fun handleTranslationError(
 private fun clearTranslated(
     messageObject: MessageObject,
     currentAccount: Int,
-    clearTranslatedText: Boolean
 ) {
-    if (clearTranslatedText) {
-        messageObject.messageOwner.translatedText = null
-    }
     messageObject.messageOwner.translatedPoll = null
     MessagesStorage.getInstance(currentAccount).updateMessageCustomParams(
         messageObject.dialogId, messageObject.messageOwner

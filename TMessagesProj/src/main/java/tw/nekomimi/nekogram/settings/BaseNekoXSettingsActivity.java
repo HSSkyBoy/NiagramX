@@ -496,31 +496,16 @@ public class BaseNekoXSettingsActivity extends BaseFragment {
         }
 
         protected View createDefaultViewByType(int viewType) {
-            View view = null;
-            switch (viewType) {
-                case CellGroup.ITEM_TYPE_DIVIDER:
-                    view = new ShadowSectionCell(mContext);
-                    break;
-                case CellGroup.ITEM_TYPE_TEXT_SETTINGS_CELL:
-                    view = new TextSettingsCell(mContext);
-                    break;
-                case CellGroup.ITEM_TYPE_TEXT_CHECK:
-                    view = new TextCheckCell(mContext);
-                    break;
-                case CellGroup.ITEM_TYPE_HEADER:
-                    view = new HeaderCell(mContext);
-                    break;
-                case CellGroup.ITEM_TYPE_TEXT_DETAIL:
-                    view = new TextDetailSettingsCell(mContext);
-                    break;
-                case CellGroup.ITEM_TYPE_TEXT:
-                    view = new TextInfoPrivacyCell(mContext);
-                    break;
-                case CellGroup.ITEM_TYPE_TEXT_CHECK_ICON:
-                    view = new TextCell(mContext);
-                    break;
-            }
-            return view;
+            return switch (viewType) {
+                case CellGroup.ITEM_TYPE_DIVIDER -> new ShadowSectionCell(mContext);
+                case CellGroup.ITEM_TYPE_TEXT_SETTINGS_CELL -> new TextSettingsCell(mContext);
+                case CellGroup.ITEM_TYPE_TEXT_CHECK -> new TextCheckCell(mContext);
+                case CellGroup.ITEM_TYPE_HEADER -> new HeaderCell(mContext);
+                case CellGroup.ITEM_TYPE_TEXT_DETAIL -> new TextDetailSettingsCell(mContext);
+                case CellGroup.ITEM_TYPE_TEXT -> new TextInfoPrivacyCell(mContext);
+                case CellGroup.ITEM_TYPE_TEXT_CHECK_ICON -> new TextCell(mContext);
+                default -> null;
+            };
         }
     }
 

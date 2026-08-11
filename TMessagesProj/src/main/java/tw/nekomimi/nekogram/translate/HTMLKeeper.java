@@ -268,7 +268,7 @@ public class HTMLKeeper {
         text = PATTERN_NEWLINE_TO_BR.matcher(text).replaceAll("<br/>");
         SpannableString htmlParsed = new SpannableString(fromHtml("<inject>" + text + "</inject>", new HTMLTagAttributesHandler(new CustomElementHandler())));
         if (internalLinks) {
-            AndroidUtilities.addLinksSafe(htmlParsed, Linkify.ALL, false, true);
+            AndroidUtilities.addLinksSafe(htmlParsed, Linkify.WEB_URLS | Linkify.PHONE_NUMBERS, false, true);
         }
         CharacterStyle[] mSpans = htmlParsed.getSpans(0, htmlParsed.length(), CharacterStyle.class);
         for (CharacterStyle mSpan : mSpans) {

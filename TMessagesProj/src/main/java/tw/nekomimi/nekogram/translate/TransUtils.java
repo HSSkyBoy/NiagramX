@@ -1,8 +1,6 @@
 package tw.nekomimi.nekogram.translate;
 
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Bin

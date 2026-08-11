@@ -303,7 +303,7 @@ public final class SettingsBackupHelper {
         builder.setPositiveButton(getString(R.string.ExportTheme), (dialog, which) -> {
             boolean includeApiKeys = checkBoxCell.isChecked();
             try {
-                File cacheFile = new File(AndroidUtilities.getCacheDir(), new Date().toLocaleString() + ".nekox-settings.json");
+                File cacheFile = new File(AndroidUtilities.getCacheDir(), new Date() + ".nekox-settings.json");
                 FileUtil.writeUtf8String(SettingsBackupHelper.backupSettingsJson(false, 4, includeApiKeys), cacheFile);
                 ShareUtil.shareFile(context, cacheFile);
             } catch (Exception e) {

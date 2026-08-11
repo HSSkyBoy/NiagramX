@@ -97,7 +97,7 @@ public class ConfigCellSelectBox extends AbstractConfigCell implements WithBindC
             if (cellGroup.listAdapter != null)
                 cellGroup.listAdapter.notifyItemChanged(cellGroup.rows.indexOf(this));
             if (cellGroup.thisFragment != null)
-                cellGroup.thisFragment.getParentLayout().rebuildAllFragmentViews(false, false);
+                cellGroup.thisFragment.getParentLayout().rebuildFragments(0);
 
             cellGroup.runCallback(bindConfig.getKey(), selectedValue);
 

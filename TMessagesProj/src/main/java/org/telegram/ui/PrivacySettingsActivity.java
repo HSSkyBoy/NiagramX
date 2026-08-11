@@ -93,6 +93,7 @@ public class PrivacySettingsActivity extends BaseFragment implements Notificatio
     private int privacySectionRow;
     @Keep
     private int blockedRow;
+    @Keep
     private int phoneNumberRow;
     @Keep
     private int lastSeenRow;
@@ -508,11 +509,7 @@ public class PrivacySettingsActivity extends BaseFragment implements Notificatio
                     return;
                 }
                 if (currentPasskeys == null) return;
-                // if (currentPasskeys != null && currentPasskeys.size() > 0) {
                 presentFragment(new PasskeysActivity(currentPasskeys));
-                // } else {
-                //     PasskeysActivity.showLearnSheet(context, currentAccount, resourceProvider, true);
-                // }
             } else if (position == passcodeRow) {
                 presentFragment(PasscodeActivity.determineOpenFragment());
             } else if (position == secretWebpageRow) {

@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.telegram.messenger.AndroidUtilities;
@@ -45,7 +46,7 @@ public class IconSelectorAlert {
         @NonNull
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            var view = new ImageView(parent.getContext()) {
+            var view = new AppCompatImageView(parent.getContext()) {
                 @Override
                 protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
                     int iconSize = MeasureSpec.makeMeasureSpec(parent.getMeasuredWidth() / 6, MeasureSpec.EXACTLY);

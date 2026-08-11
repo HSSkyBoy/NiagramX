@@ -7,7 +7,6 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
-import android.graphics.Region;
 import android.text.Layout;
 import android.text.Spanned;
 import android.view.MotionEvent;
@@ -118,7 +117,7 @@ public class TextViewEffects extends LinkSpanDrawable.LinksTextView {
             Rect bounds = eff.getBounds();
             path.addRect(bounds.left + pl, bounds.top + pt, bounds.right + pl, bounds.bottom + pt, Path.Direction.CW);
         }
-        canvas.clipPath(path, Region.Op.DIFFERENCE);
+        canvas.clipOutPath(path);
         updateAnimatedEmoji(false);
         super.onDraw(canvas);
         if (animatedEmojiDrawables != null) {
@@ -139,7 +138,7 @@ public class TextViewEffects extends LinkSpanDrawable.LinksTextView {
         if (!spoilers.isEmpty()) {
             boolean useAlphaLayer = spoilers.get(0).getRippleProgress() != -1;
             if (useAlphaLayer) {
-                canvas.saveLayer(0, 0, getMeasuredWidth(), getMeasuredHeight(), null, Canvas.ALL_SAVE_FLAG);
+                canvas.saveLayer(0, 0, getMeasuredWidth(), getMeasuredHeight(), null);
             } else {
                 canvas.save();
             }
@@ -164,8 +163,9 @@ public class TextViewEffects extends LinkSpanDrawable.LinksTextView {
     }
 
     public void updateAnimatedEmoji(boolean force) {
-        int newTextLength = (getLayout() == null || getLayout().getText() == null) ? 0 : getLayout().getText().length();
-        if (force || lastLayout != getLayout() || lastTextLength != newTextLength) {
+        Layout layout = getLayout();
+        int newTextLength = layout == null ? 0 : layout.getText().length();
+        if (force || lastLayout != layout || lastTextLength != newTextLength) {
             int cacheType = -1;
             switch (emojiOnlyCount) {
                 case 0:
@@ -188,8 +188,8 @@ public class TextViewEffects extends LinkSpanDrawable.LinksTextView {
                     }
                     break;
             }
-            animatedEmojiDrawables = AnimatedEmojiSpan.update(cacheType, this, animatedEmojiDrawables, getLayout());
-            lastLayout = getLayout();
+            animatedEmojiDrawables = AnimatedEmojiSpan.update(cacheType, this, animatedEmojiDrawables, layout);
+            lastLayout = layout;
             lastTextLength = newTextLength;
         }
     }
