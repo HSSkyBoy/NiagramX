@@ -23996,7 +23996,12 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         }
         if (usedSurfaceView) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Bitmap bitmap = Bitmaps.createBitmap(videoSurfaceView.getWidth(), videoSurfaceView.getHeight(), Bitmap.Config.ARGB_8888);
+                int width = videoSurfaceView.getWidth();
+                int height = videoSurfaceView.getHeight();
+                if (width <= 0 || height <= 0) {
+                    return null;
+                }
+                Bitmap bitmap = Bitmaps.createBitmap(width, height, Bitmap.Config.ARGB_8888);
                 AndroidUtilities.getBitmapFromSurface(videoSurfaceView, bitmap);
                 return bitmap;
             }
