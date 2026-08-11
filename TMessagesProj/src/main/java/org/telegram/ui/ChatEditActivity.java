@@ -85,6 +85,7 @@ import org.telegram.ui.Components.AlertsCreator;
 import org.telegram.ui.Components.AnimatedEmojiDrawable;
 import org.telegram.ui.Components.AvatarDrawable;
 import org.telegram.ui.Components.BackupImageView;
+import org.telegram.ui.Components.Bulletin;
 import org.telegram.ui.Components.BulletinFactory;
 import org.telegram.ui.Components.CubicBezierInterpolator;
 import org.telegram.ui.Components.EditTextBoldCursor;
@@ -138,6 +139,7 @@ public class ChatEditActivity extends BaseFragment implements ImageUpdater.Image
     private AvatarDrawable avatarDrawable;
     private ImageUpdater imageUpdater;
     private EditTextEmoji nameTextView;
+    private boolean localNameOverrideBulletinShown;
     private LinearLayout linearLayout;
     private SectionsScrollView scrollView;
 
@@ -468,14 +470,13 @@ public class ChatEditActivity extends BaseFragment implements ImageUpdater.Image
         updateFields(true, true);
         imageUpdater.onResume();
 
-        if (currentUser != null && currentUser.bot && !currentUser.bot_can_edit || currentUser == null && currentChat != null && !ChatObject.canChangeChatInfo(currentChat)) {
-            AndroidUtilities.runOnUIThread(() -> {
-                if (getParentActivity() == null) {
-                    return;
-                }
-                BulletinFactory.of(this).createSimpleBulletin(R.raw.info, getString(R.string.EditLocalNameOverride)).show();
-            }, 500);
-        }
+        Bulletin.addDelegate(this, new Bulletin.Delegate() {
+            @Override
+            public int getBottomOffset(int tag) {
+                int keyboardHeight = fragmentView instanceof SizeNotifierFrameLayout ? ((SizeNotifierFrameLayout) fragmentView).measureKeyboardHeight() : 0;
+                return keyboardHeight + getBottomInset();
+            }
+        });
     }
 
     @Override
@@ -485,6 +486,7 @@ public class ChatEditActivity extends BaseFragment implements ImageUpdater.Image
         if (nameTextView != null) {
             nameTextView.onPause();
         }
+        Bulletin.removeDelegate(this);
         if (undoView != null) {
             undoView.hide(true, 0);
         }
@@ -787,6 +789,17 @@ public class ChatEditActivity extends BaseFragment implements ImageUpdater.Image
         // nameTextView.setEnabled(currentChat != null || ChatObject.canChangeChatInfo(currentChat));
         nameTextView.setEnabled(true);
         nameTextView.setFocusable(nameTextView.isEnabled());
+        nameTextView.getEditText().setOnClickListener(v -> {
+            if (!localNameOverrideBulletinShown && (currentUser != null && currentUser.bot && !currentUser.bot_can_edit || currentUser == null && currentChat != null && !ChatObject.canChangeChatInfo(currentChat))) {
+                localNameOverrideBulletinShown = true;
+                AndroidUtilities.runOnUIThread(() -> {
+                    if (isPaused() || getParentActivity() == null) {
+                        return;
+                    }
+                    BulletinFactory.of(this).createSimpleBulletin(R.raw.info, getString(R.string.EditLocalNameOverride), 2, Bulletin.DURATION_SHORT).show();
+                }, 250);
+            }
+        });
         nameTextView.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
