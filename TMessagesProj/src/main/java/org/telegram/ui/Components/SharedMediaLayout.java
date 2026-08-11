@@ -6816,6 +6816,12 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
     }
 
     public void updateAdapters() {
+        for (MediaPage mediaPage : mediaPages) {
+            if (mediaPage != null && (mediaPage.listView.isComputingLayout() || mediaPage.animationSupportingListView.isComputingLayout())) {
+                post(this::updateAdapters);
+                return;
+            }
+        }
         if (photoVideoAdapter != null) {
             photoVideoAdapter.notifyDataSetChanged();
         }
