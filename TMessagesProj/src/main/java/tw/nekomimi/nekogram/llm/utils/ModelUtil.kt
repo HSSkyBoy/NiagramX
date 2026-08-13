@@ -6,11 +6,6 @@ import java.util.Locale
 
 object ModelUtil {
 
-    private val gemma4ThoughtTagRegex = Regex(
-        "<thought>.*?</thought>",
-        setOf(RegexOption.IGNORE_CASE, RegexOption.DOT_MATCHES_ALL)
-    )
-
     private val nonTextGenerationModelKeywords = listOf(
         "-live-",
         "-research",
@@ -78,7 +73,7 @@ object ModelUtil {
         if (model.isNullOrBlank()) {
             return ""
         }
-        return model.trim().substringAfterLast('/')
+        return model.trim().substringAfterLast('/').lowercase()
     }
 
     @JvmStatic
@@ -91,69 +86,48 @@ object ModelUtil {
     }
 
     @JvmStatic
-    fun isGPT5(model: String?): Boolean {
-        val base = getBaseModelName(model).lowercase()
-        return !base.startsWith("gpt-5.") && base.startsWith("gpt-5") && !base.contains("instant") && !base.contains("chat")
-    }
-
-    @JvmStatic
     fun isGemma4(model: String?): Boolean {
-        val base = getBaseModelName(model).lowercase()
+        val base = getBaseModelName(model)
         return base.contains("gemma4") || base.contains("gemma-4")
     }
 
     @JvmStatic
-    fun isGemini3(model: String?): Boolean {
-        return getBaseModelName(model).lowercase().startsWith("gemini-3")
-    }
-
-    @JvmStatic
     fun isGeminiLegacy(model: String?): Boolean {
-        val base = getBaseModelName(model).lowercase()
+        val base = getBaseModelName(model)
         return base.startsWith("gemini-2") || base.startsWith("gemini-3-") || base.startsWith("gemini-3.1")
     }
 
     @JvmStatic
     fun isDeepSeekV4(model: String?): Boolean {
-        return getBaseModelName(model).lowercase().startsWith("deepseek-v4")
+        return getBaseModelName(model).startsWith("deepseek-v4")
     }
 
-    @JvmStatic
-    fun isReasoning(model: String?): Boolean {
-        return isOpenaiCompatibleReasoning(model) || isGemma4(model) || isDeepSeekV4(model)
-    }
-
-    @JvmStatic
-    fun isOpenaiCompatibleReasoning(model: String?): Boolean {
-        val base = getBaseModelName(model).lowercase()
-        return base.contains("gemini") && base.contains("flash")
-                || (base.startsWith("gpt-5") && !base.contains("instant") && !base.contains("chat"))
-                || base.startsWith("gpt-oss")
-                || base.startsWith("grok-4.3")
-                || base.startsWith("glm-5")
-                || base.startsWith("hy3")
-                || base.startsWith("inkling")
-                || base.startsWith("kimi-k2.5") || base.startsWith("kimi-k2.6") || base.startsWith("kimi-k3")
-                || base.startsWith("nemotron-3")
-                || base.startsWith("qwen3")
+    private fun isNonReasoningModel(model: String?): Boolean {
+        val base = getBaseModelName(model)
+        return (base.startsWith("gpt-5") && (base.contains("instant") || base.contains("chat")))
+                || base.contains("non-reasoning")
     }
 
     @JvmStatic
     fun getReasoningEffort(model: String?): String {
-        val base = getBaseModelName(model).lowercase()
+        val base = getBaseModelName(model)
         return when {
             base.startsWith("gpt-oss") -> "low"
             base.startsWith("gpt-5.") -> "none"
             base.startsWith("gpt-5") -> "minimal"
+            base.contains("gemini") && base.contains("pro") -> "low"
             base.startsWith("gemini") && (base.endsWith("latest") || !isGeminiLegacy(model)) -> "minimal"
             isGemma4(model) -> "minimal"
+            base.startsWith("grok-4") -> "low"
+            base.startsWith("glm-5.3") -> "low"
+            base.startsWith("muse-spark") -> "minimal"
             else -> "none"
         }
     }
 
     @JvmStatic
     fun applyReasoningParameters(requestJson: JSONObject, url: String?, model: String?) {
-        if (!isReasoning(model)) {
+        if (isNonReasoningModel(model)) {
             return
         }
         val providerPreset = when (url) {
@@ -161,9 +135,6 @@ object ModelUtil {
             PresetRegistry.getPresetBaseUrl(PresetRegistry.OPENROUTER) -> PresetRegistry.OPENROUTER
             PresetRegistry.getPresetBaseUrl(PresetRegistry.VERCEL_AI_GATEWAY) -> PresetRegistry.VERCEL_AI_GATEWAY
             else -> null
-        }
-        if (isGemma4(model) && providerPreset != PresetRegistry.GEMINI) {
-            return
         }
         applyReasoningParametersInternal(requestJson, providerPreset, model)
     }
@@ -176,36 +147,29 @@ object ModelUtil {
     }
 
     private fun applyReasoningParametersOriginal(requestJson: JSONObject, model: String?) {
-        if (isOpenaiCompatibleReasoning(model) || isGemma4(model)) {
-            requestJson.put("reasoning_effort", getReasoningEffort(model))
-        } else if (isDeepSeekV4(model)) {
+        if (isDeepSeekV4(model)) {
             requestJson.put("thinking", JSONObject().put("type", "disabled"))
+        } else {
+            requestJson.put("reasoning_effort", getReasoningEffort(model))
         }
     }
 
     private fun applyReasoningParametersRouter(requestJson: JSONObject, providerPreset: Int, model: String?): Boolean {
-        val routerProvider = getRouterModelProvider(model) ?: return false
+        val provider = getModelProvider(model) ?: return false
         return when (providerPreset) {
             PresetRegistry.OPENROUTER -> {
-                when (routerProvider) {
-                    "google" -> {
-                        requestJson.put("reasoning", JSONObject().put("effort", getReasoningEffort(model)))
-                        return true
-                    }
-                    "openai" -> {
-                        if (model?.contains("gpt-oss") ?: return false) {
-                            requestJson.put("reasoning", JSONObject().put("effort", "minimal"))
-                            return true
-                        }
-                    }
-                }
-                requestJson.put("reasoning", JSONObject().put("effort", "none"))
+                requestJson.put("reasoning", JSONObject().put("effort", getReasoningEffort(model)))
                 true
             }
             PresetRegistry.VERCEL_AI_GATEWAY -> {
-                when (routerProvider) {
+                putProviderOptions(
+                    requestJson,
+                    "gateway",
+                    JSONObject().put("sort", "ttft")
+                )
+                when (provider) {
                     "google" -> {
-                        val thinkingConfig = if (isGemini3(model)) {
+                        val thinkingConfig = if (getBaseModelName(model).startsWith("gemini-3") || isGemma4(model)) {
                             JSONObject().put("thinkingLevel", "minimal")
                         } else {
                             JSONObject().put("thinkingBudget", 0)
@@ -228,18 +192,14 @@ object ModelUtil {
                         }
                     }
                 }
-                putProviderOptions(
-                    requestJson,
-                    routerProvider,
-                    JSONObject().put("reasoning", JSONObject().put("effort", "none"))
-                )
+                requestJson.put("reasoning", JSONObject().put("effort", getReasoningEffort(model)))
                 true
             }
             else -> false
         }
     }
 
-    private fun getRouterModelProvider(model: String?): String? {
+    private fun getModelProvider(model: String?): String? {
         if (model.isNullOrBlank() || !model.contains('/')) {
             return null
         }
@@ -255,7 +215,7 @@ object ModelUtil {
 
     @JvmStatic
     fun supportsTemperature(model: String?): Boolean {
-        val base = getBaseModelName(model).lowercase()
+        val base = getBaseModelName(model)
         return !base.startsWith("gpt-5") && (!base.startsWith("gemini") || isGeminiLegacy(model))
     }
 
@@ -286,17 +246,5 @@ object ModelUtil {
             return false
         }
         return modelId.trim().endsWith(":free", ignoreCase = true)
-    }
-
-    @JvmStatic
-    fun sanitizeResponse(model: String?, content: String?): String {
-        if (content.isNullOrBlank()) {
-            return ""
-        }
-        var sanitized = content.trim()
-        if (isGemma4(model)) {
-            sanitized = gemma4ThoughtTagRegex.replace(sanitized, "").trim()
-        }
-        return sanitized
     }
 }

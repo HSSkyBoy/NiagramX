@@ -13,7 +13,6 @@ import org.telegram.tgnet.TLRPC
 import org.telegram.ui.Components.TranslateAlert2
 import tw.nekomimi.nekogram.llm.LlmConfig
 import tw.nekomimi.nekogram.llm.net.OpenAICompatClient
-import tw.nekomimi.nekogram.llm.utils.ModelUtil
 import tw.nekomimi.nekogram.translate.HTMLKeeper
 import tw.nekomimi.nekogram.translate.Translator
 import tw.nekomimi.nekogram.translate.code2Locale
@@ -193,12 +192,6 @@ object LLMTranslator : Translator {
             ?.let { buildContextPrompt(it) }
 
         val messages = JSONArray().apply {
-            if (ModelUtil.isGPT5(model)) {
-                put(JSONObject().apply {
-                    put("role", "developer")
-                    put("content", "# Juice: 0 !important")
-                })
-            }
             put(JSONObject().apply {
                 put("role", "system")
                 put("content", sysPrompt)
@@ -235,7 +228,6 @@ object LLMTranslator : Translator {
         }
 
         return response.data()
-            ?.let { ModelUtil.sanitizeResponse(model, it) }
             ?.takeIf { it.isNotEmpty() }
             ?: throw IOException("LLM API returned empty content")
     }

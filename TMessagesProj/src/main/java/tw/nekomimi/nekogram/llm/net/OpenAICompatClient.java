@@ -97,12 +97,12 @@ public final class OpenAICompatClient {
             messages.put(new JSONObject()
                     .put("role", "user")
                     .put("content", "This is a test. Reply with a single word: OK"));
-            LlmResponse<String> response = chatCompletions(baseUrl, apiKey, modelName, messages, null, testHttpClient);
+            LlmResponse<String> response = chatCompletions(baseUrl, apiKey, modelName, messages, NaConfig.INSTANCE.getLlmTemperature().Float(), testHttpClient);
             if (!response.isSuccess()) {
                 return response;
             }
             return new LlmResponse<>(
-                    ModelUtil.sanitizeResponse(modelName, response.data()),
+                    response.data(),
                     null,
                     response.durationMs(),
                     response.httpCode()
