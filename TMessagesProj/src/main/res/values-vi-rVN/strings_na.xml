@@ -33,7 +33,7 @@
     <string name="AlwaysShowDownloadIcon">Luôn hiện thị biểu tượng tải xuống</string>
     <string name="HideTitle">Ẩn tiêu đề</string>
     <string name="IgnoreUnreadCount">Ẩn số lượng tin nhắn chưa đọc</string>
-    <string name="SendWithoutMarkdown">Gửi mà không có định dạng Markdown</string>
+    <string name="SendWithoutMarkdown">Gửi không định dạng Markdown</string>
     <string name="SendAsEmoji">Gửi dưới dạng emoji</string>
     <string name="NotificationIcon">Biểu tượng thông báo</string>
     <string name="Official">Official</string>
@@ -93,7 +93,7 @@
     <string name="EnablePanguOnSending">Bật Pangu khi Gửi</string>
     <string name="PanguInfo">Khoảng cách văn bản được thiết kế cẩn thận để đảm bảo tính dễ đọc, tự động chèn khoảng trắng giữa các ký tự CJK (Trung Quốc, Nhật Bản, Hàn Quốc), ký tự tiếng Anh nửa chiều rộng, số và ký hiệu.</string>
     <string name="SendWithPangu">Gửi bằng Pangu</string>
-    <string name="SendWithoutPangu">Gửi mà không cần Pangu</string>
+    <string name="SendWithoutPangu">Gửi không cần Pangu</string>
     <string name="DefaultHlsVideoQuality">Chất lượng video HLS mặc định</string>
     <string name="DisableBotOpenButton">Vô hiệu hóa Nút Mở Bot</string>
     <string name="CustomTitleUserName">Sử dụng Biệt danh người dùng làm Tiêu đề</string>

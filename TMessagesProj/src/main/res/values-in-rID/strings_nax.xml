@@ -336,4 +336,7 @@
     <string name="DeepLTranslateKeyNotice">Konfigurasikan Kunci API DeepL, biarkan kosong untuk menggunakan kredensial bawaan.</string>
     <string name="DefaultScheduleDelay">Penundaan bawaan</string>
     <string name="ExportAyuDB">Ekspor Basis Data</string>
+    <string name="ImportAyuDB">Impor Basis Data</string>
+    <string name="ImportAyuDBAlert">Basis data pesan saat ini akan diganti. Aplikasi akan dimulai ulang setelah proses impor selesai.</string>
+    <string name="DisableSwipeToNext">Nonaktifkan Geser ke Berikutnya</string>
 </resources>
