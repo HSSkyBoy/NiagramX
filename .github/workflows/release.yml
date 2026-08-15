@@ -65,13 +65,16 @@ jobs:
           export BUILD_TIMESTAMP=$(date +%s)
           echo "build_timestamp=$BUILD_TIMESTAMP" >> "$GITHUB_OUTPUT"
           ./gradlew TMessagesProj:assembleRelease
-      - name: Upload Artifacts
+      - name: Upload arm64-v8a Artifact
         uses: actions/upload-artifact@v7
         with:
-          name: Release
-          path: |
-            TMessagesProj/build/outputs/apk/release/*-arm64-v8a.apk
-            TMessagesProj/build/outputs/apk/release/*-universal.apk
+          name: Release-arm64-v8a
+          path: TMessagesProj/build/outputs/apk/release/*-arm64-v8a.apk
+      - name: Upload universal Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: Release-universal
+          path: TMessagesProj/build/outputs/apk/release/*-universal.apk
   upload:
     name: Upload release
     if: github.event.inputs.upload != 'y' && !contains(github.event.head_commit.message, '[skip upload]')

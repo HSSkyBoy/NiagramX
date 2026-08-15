@@ -83,13 +83,16 @@ jobs:
           export BUILD_TIMESTAMP=$(date +%s)
           echo "build_timestamp=$BUILD_TIMESTAMP" >> "$GITHUB_OUTPUT"
           ./gradlew TMessagesProj:assembleStaging
-      - name: Upload Artifacts
+      - name: Upload arm64-v8a Artifact
         uses: actions/upload-artifact@v7
         with:
-          name: Staging
-          path: |
-            TMessagesProj/build/outputs/apk/staging/*-arm64-v8a.apk
-            TMessagesProj/build/outputs/apk/staging/*-universal.apk
+          name: Staging-arm64-v8a
+          path: TMessagesProj/build/outputs/apk/staging/*-arm64-v8a.apk
+      - name: Upload universal Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: Staging-universal
+          path: TMessagesProj/build/outputs/apk/staging/*-universal.apk
   upload:
     name: Upload staging
     if: github.event.inputs.upload != 'y' && !contains(github.event.head_commit.message, '[skip upload]')

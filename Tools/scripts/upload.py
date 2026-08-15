@@ -1,5 +1,6 @@
 import os
 import contextlib
+import html
 from pathlib import Path
 from sys import argv
 
@@ -26,7 +27,7 @@ def get_caption() -> str:
     commit_id, commit_url, commit_message = get_commit_info()
     pre = "Test version." if test_version else "Release version."
     caption = f"{pre}\n\n"
-    caption += f"Commit Message:\n<blockquote expandable>{commit_message}</blockquote>\n\n"
+    caption += f"Commit Message:\n<blockquote expandable>{html.escape(commit_message)}</blockquote>\n\n"
     caption += f"See commit details [{commit_id}]({commit_url})"
     return caption
 
@@ -50,7 +51,7 @@ def get_document() -> list["InputMediaDocument"]:
 
 def get_metadata():
     commit_id = "<code>" + (os.environ.get("COMMIT_ID") or "unknown")[:7] + "</code>"
-    commit_message = "<code>" + (os.environ.get("COMMIT_MESSAGE") or "unknown") + "</code>"
+    commit_message = "<code>" + html.escape(os.environ.get("COMMIT_MESSAGE") or "unknown") + "</code>"
     build_timestamp = "<code>" + (os.environ.get("BUILD_TIMESTAMP") or "-1") + "</code>"
     return build_timestamp + " " + commit_id + "\n" + commit_message
 
