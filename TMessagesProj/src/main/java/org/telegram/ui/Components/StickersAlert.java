@@ -1131,7 +1131,7 @@ public class StickersAlert extends BottomSheet implements NotificationCenter.Not
         containerView.addView(optionsButton, LayoutHelper.createFrame(40, 40, Gravity.TOP | Gravity.RIGHT, 0, 5, 5, 0));
         optionsButton.addSubItem(1, R.drawable.msg_share, getString(R.string.StickersShare));
         optionsButton.addSubItem(2, R.drawable.msg_link, getString(R.string.CopyLink));
-        optionsButton.addSubItem(menu_user_profile, R.drawable.msg_openprofile, getString(R.string.ChannelAdmin));
+        optionsButton.addSubItem(menu_user_profile, R.drawable.msg_openprofile, getString(R.string.ChannelCreator));
         optionsButton.addSubItem(menu_archive, R.drawable.msg_archive, getString(R.string.Archive));
         optionsButton.addSubItem(menu_refresh, R.drawable.msg_retry, getString(R.string.Refresh));
         optionsButton.addSubItem(menu_copy_sticker_set, R.drawable.msg_copy, getString(R.string.StickersCopyStickerSet));
