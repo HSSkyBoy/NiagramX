@@ -154,7 +154,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
             "Google AI Studio",
             "Groq",
             "DeepSeek",
-            "xAI",
+            "SpaceXAI",
             "Cerebras",
             "Ollama",
             "OpenRouter",
