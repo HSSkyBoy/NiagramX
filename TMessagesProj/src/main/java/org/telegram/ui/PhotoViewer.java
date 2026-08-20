@@ -6360,6 +6360,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         });
 
         videoForwardDrawable = new VideoForwardDrawable(false);
+        videoForwardDrawable.setDrawBackground(false);
         videoForwardDrawable.setDelegate(new VideoForwardDrawable.VideoForwardDrawableDelegate() {
             @Override
             public void onAnimationEnd() {
