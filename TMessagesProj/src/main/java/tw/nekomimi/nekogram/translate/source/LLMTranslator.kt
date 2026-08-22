@@ -13,6 +13,8 @@ import org.telegram.tgnet.TLRPC
 import org.telegram.ui.Components.TranslateAlert2
 import tw.nekomimi.nekogram.llm.LlmConfig
 import tw.nekomimi.nekogram.llm.net.OpenAICompatClient
+import tw.nekomimi.nekogram.llm.net.VertexGeminiClient
+import tw.nekomimi.nekogram.llm.preset.PresetRegistry
 import tw.nekomimi.nekogram.translate.HTMLKeeper
 import tw.nekomimi.nekogram.translate.Translator
 import tw.nekomimi.nekogram.translate.code2Locale
@@ -209,12 +211,11 @@ object LLMTranslator : Translator {
         }
         FileLog.d("Requesting LLM API with model: $model, messages: $messages")
 
-        val response = OpenAICompatClient.chatCompletions(
-            apiUrl,
-            apiKey,
-            model,
-            messages
-        )
+        val response = if (llmProviderPreset == PresetRegistry.GOOGLE_AGENT_PLATFORM) {
+            VertexGeminiClient.generateContent(apiUrl, apiKey, model, messages)
+        } else {
+            OpenAICompatClient.chatCompletions(apiUrl, apiKey, model, messages)
+        }
 
         if (!response.isSuccess) {
             val code = response.httpCode()

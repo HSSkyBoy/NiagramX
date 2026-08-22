@@ -81,7 +81,9 @@ import tw.nekomimi.nekogram.config.cell.ConfigCellTextCheck;
 import tw.nekomimi.nekogram.config.cell.ConfigCellTextDetail;
 import tw.nekomimi.nekogram.config.cell.ConfigCellTextInput;
 import tw.nekomimi.nekogram.llm.LlmConfig;
+import tw.nekomimi.nekogram.llm.net.LlmResponse;
 import tw.nekomimi.nekogram.llm.net.OpenAICompatClient;
+import tw.nekomimi.nekogram.llm.net.VertexGeminiClient;
 import tw.nekomimi.nekogram.llm.preset.PresetRegistry;
 import tw.nekomimi.nekogram.llm.ui.EditTextFactory;
 import tw.nekomimi.nekogram.llm.utils.ModelUtil;
@@ -152,6 +154,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
             getString(R.string.LlmProviderCustom),
             "OpenAI",
             "Google AI Studio",
+            "Google Vertex",
             "Groq",
             "DeepSeek",
             "SpaceXAI",
@@ -159,6 +162,18 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
             "Ollama",
             "OpenRouter",
             "Vercel AI Gateway",
+    }, new int[]{
+            PresetRegistry.CUSTOM,
+            PresetRegistry.OPENAI,
+            PresetRegistry.GOOGLE_AI_STUDIO,
+            PresetRegistry.GOOGLE_AGENT_PLATFORM,
+            PresetRegistry.GROQ,
+            PresetRegistry.DEEPSEEK,
+            PresetRegistry.XAI,
+            PresetRegistry.CEREBRAS,
+            PresetRegistry.OLLAMA_CLOUD,
+            PresetRegistry.OPENROUTER,
+            PresetRegistry.VERCEL_AI_GATEWAY,
     }, null));
     private final AbstractConfigCell llmModelRow = cellGroup.appendCell(new ConfigCellCustom("LlmModelName", CellGroup.ITEM_TYPE_TEXT_SETTINGS_CELL, true));
 
@@ -170,7 +185,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmApiUrl(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmApiUrl(), getString(R.string.LlmApiUrlNotice), getString(R.string.LlmApiUrlHint)), getString(R.string.LlmApiUrlDefault))));
         llmProviderConfigMap.put(PresetRegistry.OPENAI, List.of(
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmProviderOpenAIKey(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmProviderOpenAIKey(), getString(R.string.LlmApiKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true, getString(R.string.LlmApiKey))));
-        llmProviderConfigMap.put(PresetRegistry.GEMINI, List.of(
+        llmProviderConfigMap.put(PresetRegistry.GOOGLE_AI_STUDIO, List.of(
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmProviderGeminiKey(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmProviderGeminiKey(), getString(R.string.LlmApiKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true, getString(R.string.LlmApiKey))));
         llmProviderConfigMap.put(PresetRegistry.GROQ, List.of(
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmProviderGroqKey(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmProviderGroqKey(), getString(R.string.LlmApiKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true, getString(R.string.LlmApiKey))));
@@ -186,6 +201,8 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmProviderOpenRouterKey(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmProviderOpenRouterKey(), getString(R.string.LlmApiKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true, getString(R.string.LlmApiKey))));
         llmProviderConfigMap.put(PresetRegistry.VERCEL_AI_GATEWAY, List.of(
                 new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmProviderVercelAIGatewayKey(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmProviderVercelAIGatewayKey(), getString(R.string.LlmApiKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true, getString(R.string.LlmApiKey))));
+        llmProviderConfigMap.put(PresetRegistry.GOOGLE_AGENT_PLATFORM, List.of(
+                new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmProviderVertexKey(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmProviderVertexKey(), getString(R.string.LlmApiKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true, getString(R.string.LlmApiKey))));
     }
 
     private final AbstractConfigCell llmSystemPromptRow = cellGroup.appendCell(new ConfigCellTextDetail(NaConfig.INSTANCE.getLlmSystemPrompt(), (view, position) -> showConfigDialog(position, NaConfig.INSTANCE.getLlmSystemPrompt(), getString(R.string.LlmSystemPromptNotice) + "\n", getString(R.string.LlmSystemPromptHint)), getString(R.string.Default)));
@@ -247,6 +264,8 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
             return "https://platform.openai.com/api-keys";
         } else if (bind == NaConfig.INSTANCE.getLlmProviderGeminiKey()) {
             return "https://aistudio.google.com/app/apikey";
+        } else if (bind == NaConfig.INSTANCE.getLlmProviderVertexKey()) {
+            return "https://console.cloud.google.com/agent-platform/studio/settings/api-keys";
         } else if (bind == NaConfig.INSTANCE.getLlmProviderGroqKey()) {
             return "https://console.groq.com/keys";
         } else if (bind == NaConfig.INSTANCE.getLlmProviderDeepSeekKey()) {
@@ -544,7 +563,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
         return switch (NaConfig.INSTANCE.getLlmProviderPreset().Int()) {
             case PresetRegistry.CUSTOM -> NaConfig.INSTANCE.getLlmApiKey();
             case PresetRegistry.OPENAI -> NaConfig.INSTANCE.getLlmProviderOpenAIKey();
-            case PresetRegistry.GEMINI -> NaConfig.INSTANCE.getLlmProviderGeminiKey();
+            case PresetRegistry.GOOGLE_AI_STUDIO -> NaConfig.INSTANCE.getLlmProviderGeminiKey();
             case PresetRegistry.GROQ -> NaConfig.INSTANCE.getLlmProviderGroqKey();
             case PresetRegistry.DEEPSEEK -> NaConfig.INSTANCE.getLlmProviderDeepSeekKey();
             case PresetRegistry.XAI -> NaConfig.INSTANCE.getLlmProviderXAIKey();
@@ -552,6 +571,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
             case PresetRegistry.OLLAMA_CLOUD -> NaConfig.INSTANCE.getLlmProviderOllamaCloudKey();
             case PresetRegistry.OPENROUTER -> NaConfig.INSTANCE.getLlmProviderOpenRouterKey();
             case PresetRegistry.VERCEL_AI_GATEWAY -> NaConfig.INSTANCE.getLlmProviderVercelAIGatewayKey();
+            case PresetRegistry.GOOGLE_AGENT_PLATFORM -> NaConfig.INSTANCE.getLlmProviderVertexKey();
             default -> null;
         };
     }
@@ -661,7 +681,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
     private void checkTemperatureRows() {
         int preset = NaConfig.INSTANCE.getLlmProviderPreset().Int();
         String modelName = LlmConfig.getEffectiveModelName(preset);
-        boolean showTemperature = ModelUtil.supportsTemperature(modelName);
+        boolean showTemperature = preset != PresetRegistry.GOOGLE_AGENT_PLATFORM && ModelUtil.supportsTemperature(modelName);
         if (listAdapter == null) {
             if (!showTemperature) {
                 cellGroup.rows.remove(headerTemperature);
@@ -788,6 +808,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
     private static boolean shouldUseGenericApiKeyTitle(ConfigItem bind) {
         return bind == NaConfig.INSTANCE.getLlmProviderOpenAIKey()
                 || bind == NaConfig.INSTANCE.getLlmProviderGeminiKey()
+                || bind == NaConfig.INSTANCE.getLlmProviderVertexKey()
                 || bind == NaConfig.INSTANCE.getLlmProviderGroqKey()
                 || bind == NaConfig.INSTANCE.getLlmProviderDeepSeekKey()
                 || bind == NaConfig.INSTANCE.getLlmProviderXAIKey()
@@ -883,6 +904,9 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
     }
 
     private static void sortModelsForProvider(int preset, ArrayList<String> models) {
+        if (preset == PresetRegistry.GOOGLE_AGENT_PLATFORM) {
+            return;
+        }
         if (preset == PresetRegistry.OPENROUTER) {
             models.sort((a, b) -> {
                 boolean aFree = ModelUtil.isOpenRouterFreeModel(a);
@@ -1121,7 +1145,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
 
         Runnable loadModels = () -> {
             if (isLoading[0]) return;
-            if (TextUtils.isEmpty(apiKey)) {
+            if (preset != PresetRegistry.GOOGLE_AGENT_PLATFORM && TextUtils.isEmpty(apiKey)) {
                 allModels.clear();
                 rawError[0] = getString(R.string.ApiKeyNotSet);
                 rebuildItems.run();
@@ -1133,7 +1157,9 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
             rebuildItems.run();
 
             Utilities.globalQueue.postRunnable(() -> {
-                OpenAICompatClient.LlmResponse<List<String>> res = OpenAICompatClient.fetchModels(baseUrl, apiKey);
+                LlmResponse<List<String>> res = preset == PresetRegistry.GOOGLE_AGENT_PLATFORM
+                        ? VertexGeminiClient.getModels()
+                        : OpenAICompatClient.fetchModels(baseUrl, apiKey);
                 AndroidUtilities.runOnUIThread(() -> {
                     AlertDialog activeDialog = dialogRef[0];
                     if (activeDialog == null || !activeDialog.isShowing()) {
@@ -1348,7 +1374,9 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
                 testButton.setText(getString(R.string.Loading));
 
                 Utilities.globalQueue.postRunnable(() -> {
-                    OpenAICompatClient.LlmResponse<String> res = OpenAICompatClient.testChatCompletions(baseUrl, apiKey, modelToTest);
+                    LlmResponse<String> res = preset == PresetRegistry.GOOGLE_AGENT_PLATFORM
+                            ? VertexGeminiClient.testGenerateContent(baseUrl, apiKey, modelToTest)
+                            : OpenAICompatClient.testChatCompletions(baseUrl, apiKey, modelToTest);
                     AndroidUtilities.runOnUIThread(() -> {
                         testButton.setEnabled(true);
                         testButton.setText(originalText);

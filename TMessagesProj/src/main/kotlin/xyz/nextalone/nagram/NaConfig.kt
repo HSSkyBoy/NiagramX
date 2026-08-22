@@ -654,6 +654,18 @@ object NaConfig {
             ConfigItem.configTypeString,
             ""
         )
+    val llmProviderVertexKey =
+        addConfig(
+            "LlmProviderVertexKey",
+            ConfigItem.configTypeString,
+            ""
+        )
+    val llmProviderVertexModel =
+        addConfig(
+            "LlmProviderVertexModel",
+            ConfigItem.configTypeString,
+            ""
+        )
     val llmTemperature =
         addConfig(
             "LlmTemperature",

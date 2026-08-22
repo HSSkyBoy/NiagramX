@@ -6,7 +6,7 @@ object PresetRegistry {
 
     const val CUSTOM = 0
     const val OPENAI = 1
-    const val GEMINI = 2
+    const val GOOGLE_AI_STUDIO = 2
     const val GROQ = 3
     const val DEEPSEEK = 4
     const val XAI = 5
@@ -14,10 +14,11 @@ object PresetRegistry {
     const val OLLAMA_CLOUD = 7
     const val OPENROUTER = 8
     const val VERCEL_AI_GATEWAY = 9
+    const val GOOGLE_AGENT_PLATFORM = 10
 
     private val presetBaseUrls = mapOf(
         OPENAI to "https://api.openai.com/v1",
-        GEMINI to "https://generativelanguage.googleapis.com/v1beta/openai",
+        GOOGLE_AI_STUDIO to "https://generativelanguage.googleapis.com/v1beta/openai",
         GROQ to "https://api.groq.com/openai/v1",
         DEEPSEEK to "https://api.deepseek.com/v1",
         XAI to "https://api.x.ai/v1",
@@ -25,12 +26,13 @@ object PresetRegistry {
         OLLAMA_CLOUD to "https://ollama.com/v1",
         OPENROUTER to "https://openrouter.ai/api/v1",
         VERCEL_AI_GATEWAY to "https://ai-gateway.vercel.sh/v1",
+        GOOGLE_AGENT_PLATFORM to "https://aiplatform.googleapis.com/v1",
     )
 
     private val defaultModelResIds = mapOf(
         CUSTOM to R.string.LlmModelNameDefault,
         OPENAI to R.string.LlmProviderOpenAIModel,
-        GEMINI to R.string.LlmProviderGeminiModel,
+        GOOGLE_AI_STUDIO to R.string.LlmProviderGeminiModel,
         GROQ to R.string.LlmProviderGroqModel,
         DEEPSEEK to R.string.LlmProviderDeepSeekModel,
         XAI to R.string.LlmProviderXAIModel,

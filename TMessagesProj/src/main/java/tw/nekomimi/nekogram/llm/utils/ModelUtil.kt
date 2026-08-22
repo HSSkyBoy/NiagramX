@@ -2,6 +2,7 @@ package tw.nekomimi.nekogram.llm.utils
 
 import org.json.JSONObject
 import tw.nekomimi.nekogram.llm.preset.PresetRegistry
+import xyz.nextalone.nagram.ThinkingLevel
 import java.util.Locale
 
 object ModelUtil {
@@ -86,12 +87,6 @@ object ModelUtil {
     }
 
     @JvmStatic
-    fun isGemma4(model: String?): Boolean {
-        val base = getBaseModelName(model)
-        return base.contains("gemma4") || base.contains("gemma-4")
-    }
-
-    @JvmStatic
     fun isGeminiLegacy(model: String?): Boolean {
         val base = getBaseModelName(model)
         return base.startsWith("gemini-2") || base.startsWith("gemini-3-") || base.startsWith("gemini-3.1")
@@ -115,9 +110,10 @@ object ModelUtil {
             base.startsWith("gpt-oss") -> "low"
             base.startsWith("gpt-5.") -> "none"
             base.startsWith("gpt-5") -> "minimal"
-            base.contains("gemini") && base.contains("pro") -> "low"
-            base.startsWith("gemini") && (base.endsWith("latest") || !isGeminiLegacy(model)) -> "minimal"
-            isGemma4(model) -> "minimal"
+            base.startsWith("gemini") && base.contains("pro") -> "low"
+            base.startsWith("gemini") && base.contains("flash-lite") && !isGeminiLegacy(model) -> "minimal"
+            base.startsWith("gemini") && (base.endsWith("latest") || !isGeminiLegacy(model)) -> "low"
+            base.contains("gemma4") || base.contains("gemma-4") -> "minimal"
             base.startsWith("grok-4") -> "low"
             base.startsWith("glm-5.3") -> "low"
             base.startsWith("muse-spark") -> "minimal"
@@ -126,15 +122,45 @@ object ModelUtil {
     }
 
     @JvmStatic
+    fun getGeminiThinkingConfig(model: String?): JSONObject {
+        val base = getBaseModelName(model)
+        if (base.startsWith("gemini-2")) {
+            return JSONObject().put("thinkingBudget", if (base.contains("pro")) 128 else 0)
+        }
+        val level = when {
+            base.contains("flash-latest") -> ThinkingLevel.LOW
+
+            base.startsWith("gemini-3") &&
+                (base.contains("pro") || base.startsWith("gemini-3.7")) ->
+                    ThinkingLevel.LOW
+
+            base.startsWith("gemini-3") ||
+                base.contains("gemma4") || base.contains("gemma-4") ->
+                    ThinkingLevel.MINIMAL
+
+            else -> ThinkingLevel.LOW
+        }
+        return JSONObject().put("thinkingLevel", level)
+    }
+
+    @JvmStatic
     fun applyReasoningParameters(requestJson: JSONObject, url: String?, model: String?) {
         if (isNonReasoningModel(model)) {
             return
         }
         val providerPreset = when (url) {
-            PresetRegistry.getPresetBaseUrl(PresetRegistry.GEMINI) -> PresetRegistry.GEMINI
+            PresetRegistry.getPresetBaseUrl(PresetRegistry.GOOGLE_AI_STUDIO) -> PresetRegistry.GOOGLE_AI_STUDIO
+            PresetRegistry.getPresetBaseUrl(PresetRegistry.GOOGLE_AGENT_PLATFORM) -> PresetRegistry.GOOGLE_AGENT_PLATFORM
             PresetRegistry.getPresetBaseUrl(PresetRegistry.OPENROUTER) -> PresetRegistry.OPENROUTER
             PresetRegistry.getPresetBaseUrl(PresetRegistry.VERCEL_AI_GATEWAY) -> PresetRegistry.VERCEL_AI_GATEWAY
             else -> null
+        }
+        if (providerPreset == PresetRegistry.GOOGLE_AGENT_PLATFORM) {
+            val generationConfig = requestJson.optJSONObject("generationConfig") ?: JSONObject().also {
+                requestJson.put("generationConfig", it)
+            }
+            generationConfig.put("thinkingConfig", getGeminiThinkingConfig(model))
+            return
         }
         applyReasoningParametersInternal(requestJson, providerPreset, model)
     }
@@ -168,19 +194,6 @@ object ModelUtil {
                     JSONObject().put("sort", "ttft")
                 )
                 when (provider) {
-                    "google" -> {
-                        val thinkingConfig = if (getBaseModelName(model).startsWith("gemini-3") || isGemma4(model)) {
-                            JSONObject().put("thinkingLevel", "minimal")
-                        } else {
-                            JSONObject().put("thinkingBudget", 0)
-                        }
-                        putProviderOptions(
-                            requestJson,
-                            "google",
-                            JSONObject().put("thinkingConfig", thinkingConfig)
-                        )
-                        return true
-                    }
                     "deepseek" -> {
                         if (isDeepSeekV4(model)) {
                             putProviderOptions(

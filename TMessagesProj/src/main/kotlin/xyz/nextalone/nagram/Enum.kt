@@ -5,3 +5,8 @@ enum class ToggleResult {
     REMOVED,
     LIMIT_REACHED,
 }
+
+enum class ThinkingLevel {
+    MINIMAL,
+    LOW,
+}
