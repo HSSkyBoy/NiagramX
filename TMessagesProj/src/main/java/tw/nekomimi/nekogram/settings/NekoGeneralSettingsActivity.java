@@ -435,6 +435,26 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
         if (a == pushServiceTypeUnifiedGatewayRow) {
             ItemOptions options = makeLongClickOptions(view);
             options.add(R.drawable.msg_stats, getString(R.string.Statistics), this::showUnifiedPushStatistics);
+            options.add(R.drawable.msg_retry, "p2p.belloworld.it (Default)", () -> {
+                NaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().setConfigString(UnifiedPushService.UP_GATEWAY_DEFAULT);
+                listAdapter.notifyItemChanged(cellGroup.rows.indexOf(pushServiceTypeUnifiedGatewayRow));
+            });
+            options.add(R.drawable.msg_retry, "up.vern.cc", () -> {
+                NaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().setConfigString(UnifiedPushService.UP_GATEWAY_VERN);
+                listAdapter.notifyItemChanged(cellGroup.rows.indexOf(pushServiceTypeUnifiedGatewayRow));
+            });
+            options.add(R.drawable.msg_retry, "up.graupel.net", () -> {
+                NaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().setConfigString(UnifiedPushService.UP_GATEWAY_GRAUPEL);
+                listAdapter.notifyItemChanged(cellGroup.rows.indexOf(pushServiceTypeUnifiedGatewayRow));
+            });
+            options.add(R.drawable.msg_retry, "up.00100111.de", () -> {
+                NaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().setConfigString(UnifiedPushService.UP_GATEWAY_00100111);
+                listAdapter.notifyItemChanged(cellGroup.rows.indexOf(pushServiceTypeUnifiedGatewayRow));
+            });
+            options.add(R.drawable.msg_retry, "gateway.unifiedpush.org", () -> {
+                NaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().setConfigString(UnifiedPushService.UP_GATEWAY_OFFICIAL);
+                listAdapter.notifyItemChanged(cellGroup.rows.indexOf(pushServiceTypeUnifiedGatewayRow));
+            });
             addDefaultLongClickOptions(options, "general", position);
             showLongClickOptions(view, options);
             return true;

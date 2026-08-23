@@ -29,6 +29,10 @@ import xyz.nextalone.nagram.NaConfig;
 public class UnifiedPushService extends PushService {
 
     public static final String UP_GATEWAY_DEFAULT = "https://p2p.belloworld.it/"; // https://github.com/Mercurygram/Mercurygram?tab=readme-ov-file#unifiedpush-put-to-post-gateway
+    public static final String UP_GATEWAY_VERN = "https://up.vern.cc/";
+    public static final String UP_GATEWAY_GRAUPEL = "https://up.graupel.net/";
+    public static final String UP_GATEWAY_00100111 = "https://up.00100111.de/";
+    public static final String UP_GATEWAY_OFFICIAL = "https://gateway.unifiedpush.org/";
 
     private static final String DISTRIBUTOR_NTFY = "io.heckel.ntfy";
     private static final String UP_FAILED = "__UNIFIEDPUSH_FAILED__";
@@ -175,7 +179,7 @@ public class UnifiedPushService extends PushService {
     }
 
     private static boolean isUnifiedPushDisabled() {
-        return NaConfig.getPreferences().getInt(NaConfig.INSTANCE.getPushServiceType().getKey(), 1) != 2;
+        return NaConfig.getPreferences().getInt(NaConfig.INSTANCE.getPushServiceType().getKey(), 2) != 2;
     }
 
     private static synchronized void loadWebPushKeys() {

@@ -368,7 +368,7 @@ object NaConfig {
         addConfig(
             "PushServiceType",
             ConfigItem.configTypeInt,
-            1
+            2
         )
     val pushServiceTypeInAppDialog =
         addConfig(
