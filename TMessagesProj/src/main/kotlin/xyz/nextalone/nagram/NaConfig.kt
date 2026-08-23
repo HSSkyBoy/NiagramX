@@ -370,6 +370,12 @@ object NaConfig {
             ConfigItem.configTypeBool,
             false
         )
+    val scrollToSeenPhotoOnClose =
+        addConfig(
+            "ScrollToSeenPhotoOnClose",
+            ConfigItem.configTypeBool,
+            false
+        )
     val showQuickReplyInBotCommands =
         addConfig(
             "ShowQuickReplyInBotCommands",

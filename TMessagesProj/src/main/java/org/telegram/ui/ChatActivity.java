@@ -1680,6 +1680,9 @@ public class ChatActivity extends BaseFragment implements
 
         @Override
         public PhotoViewer.PlaceProviderObject getPlaceForPhoto(MessageObject messageObject, TLRPC.FileLocation fileLocation, int index, boolean needPreview, boolean closing) {
+            if (closing && xyz.nextalone.nagram.NaConfig.INSTANCE.getScrollToSeenPhotoOnClose().Bool() && messageObject != null) {
+                scrollToMessageId(messageObject.getId(), 0, false, 0, false, 0);
+            }
             return ChatActivity.this.getPlaceForPhoto(messageObject, fileLocation, index, needPreview, false);
         }
 

@@ -1365,10 +1365,12 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
                     return object;
                 }
             }
-            if (mediaPages[0].selectedType == 0 && firstVisiblePosition >= 0 && lastVisiblePosition >= 0) {
+            if (mediaPages[0].selectedType == 0 && (closing ? (xyz.nextalone.nagram.NaConfig.INSTANCE.getScrollToSeenPhotoOnClose().Bool() || (firstVisiblePosition >= 0 && lastVisiblePosition >= 0)) : (firstVisiblePosition >= 0 && lastVisiblePosition >= 0))) {
                 int position = photoVideoAdapter.getPositionForIndex(index);
-
-                if (position <= firstVisiblePosition) {
+                if (closing && xyz.nextalone.nagram.NaConfig.INSTANCE.getScrollToSeenPhotoOnClose().Bool() && position >= 0) {
+                    mediaPages[0].layoutManager.scrollToPositionWithOffset(position, 0);
+                    delegate.scrollToSharedMedia();
+                } else if (position <= firstVisiblePosition) {
                     mediaPages[0].layoutManager.scrollToPositionWithOffset(position, 0);
                     delegate.scrollToSharedMedia();
                 } else if (position >= lastVisiblePosition && lastVisiblePosition >= 0) {

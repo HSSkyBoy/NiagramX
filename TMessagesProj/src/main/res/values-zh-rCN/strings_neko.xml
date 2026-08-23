@@ -6,6 +6,7 @@
     <string name="HidePhone">隐藏手机号码</string>
     <string name="HideStarsRating">隐藏星星数量</string>
     <string name="HideGiftButton">隐藏送礼按钮</string>
+    <string name="ScrollToSeenPhotoOnClose">关闭媒体查看器时滚动到已看照片</string>
     <string name="DeleteAllFromSelf">删除自己所有消息</string>
     <string name="DeleteAllFromSelfAlert">警告！这将为此聊天中的 **所有人** 删除 **你发出的所有消息**。</string>
     <string name="DeleteAllFromSelfAlertBefore">警告！这将为此聊天中的 **所有人** 删除 **全部您在%s前发出的消息**。</string>
