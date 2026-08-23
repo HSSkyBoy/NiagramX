@@ -31,13 +31,7 @@ val String.code2Locale: Locale by receiveLazy<String, Locale> {
     val ret: Locale = if (this.isBlank()) {
         LocaleController.getInstance().currentLocale
     } else {
-        val args = replace('-', '_').split('_')
-
-        if (args.size == 1) {
-            Locale(args[0])
-        } else {
-            Locale(args[0], args[1])
-        }
+        Locale.forLanguageTag(replace('_', '-'))
     }
     ret
 }

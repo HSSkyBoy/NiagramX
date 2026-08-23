@@ -106,7 +106,33 @@ public final class OpenAICompatClient {
             if (message == null) {
                 return null;
             }
-            return message.optString("content", null);
+            if (message.has("content")) {
+                Object contentObj = message.get("content");
+                if (contentObj instanceof String s) {
+                    return s;
+                } else if (contentObj instanceof JSONArray contentArray) {
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < contentArray.length(); i++) {
+                        Object part = contentArray.opt(i);
+                        if (part instanceof JSONObject partObj) {
+                            String type = partObj.optString("type", "text");
+                            if ("text".equals(type) || "output_text".equals(type)) {
+                                sb.append(partObj.optString("text", ""));
+                            }
+                        } else if (part instanceof String partStr) {
+                            sb.append(partStr);
+                        }
+                    }
+                    if (sb.length() > 0) {
+                        return sb.toString();
+                    }
+                }
+            }
+            if (message.has("reasoning_content") && !message.isNull("reasoning_content")) {
+                // In case content is empty but model provided delta text elsewhere
+                return null;
+            }
+            return null;
         } catch (Exception ignore) {
             return null;
         }
