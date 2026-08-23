@@ -537,6 +537,17 @@ public class NekoEmojiSettingsActivity extends BaseNekoSettingsActivity implemen
         }
 
         private void notifyEmojiSetsChanged() {
+            if (listView != null && listView.isComputingLayout()) {
+                listView.post(this::notifyEmojiSetsChangedInternal);
+            } else {
+                notifyEmojiSetsChangedInternal();
+            }
+        }
+
+        private void notifyEmojiSetsChangedInternal() {
+            if (listView != null && listView.isComputingLayout()) {
+                return;
+            }
             notifyItemRangeChanged(customEmojiStartRow, customEmojiEndRow - customEmojiStartRow, PARTIAL);
             notifyItemRangeChanged(emojiPacksStartRow, emojiPacksEndRow - emojiPacksStartRow, PARTIAL);
         }
