@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-Config</string>
     <string name="CombineMessage">Unisci Messaggi</string>
@@ -9,7 +9,7 @@
     <string name="SendReactions">Manda Reazioni</string>
     <string name="ShowReactions">Mostra Reazioni</string>
     <string name="CustomTitle">Titolo Personalizzato</string>
-    <string name="CustomTitleHint">Lascia vuoto per usare Nagram X</string>
+    <string name="CustomTitleHint">Lascia vuoto per usare Niagram X</string>
     <string name="CreateMono">Crea monospazio</string>
     <string name="CreateMonoLanguage">Linguaggio Codice</string>
     <string name="CopyPhoto">Copia foto</string>

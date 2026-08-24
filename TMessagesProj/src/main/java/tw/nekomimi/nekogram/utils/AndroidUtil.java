@@ -353,7 +353,7 @@ public class AndroidUtil {
     @SuppressWarnings("ConstantValue")
     public static boolean shouldEnableCrashlytics() {
         return !BuildConfig.DEBUG
-                && "nu.gpu.nagram".equals(BuildConfig.APPLICATION_ID)
+                && "top.nkbe.niagram".equals(BuildConfig.APPLICATION_ID)
                 && !NaConfig.INSTANCE.getDisableCrashlyticsCollection().Bool();
     }
 }

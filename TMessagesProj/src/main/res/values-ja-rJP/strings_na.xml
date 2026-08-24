@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-設定</string>
     <string name="CombineMessage">メッセージを結合</string>
@@ -9,7 +9,7 @@
     <string name="SendReactions">リアクションを送信</string>
     <string name="ShowReactions">リアクションメニューを表示</string>
     <string name="CustomTitle">カスタムタイトル</string>
-    <string name="CustomTitleHint">空白のままにすると、Nagram X が使用されます</string>
+    <string name="CustomTitleHint">空白のままにすると、Niagram X が使用されます</string>
     <string name="CreateMono">等幅フォントを作成</string>
     <string name="CreateMonoLanguage">等幅フォントの言語</string>
     <string name="CopyPhoto">画像をコピー</string>

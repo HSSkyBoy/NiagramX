@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="N_Config">Cấu hình NagramX</string>
+    <string name="N_Config">Cấu hình Niagram X</string>
     <string name="CombineMessage">Kết hợp Tin nhắn</string>
     <string name="TextStyle">Kiểu chữ</string>
     <string name="NoiseSuppressAndVoiceEnhance">Cải thiện giọng nói</string>
@@ -9,7 +9,7 @@
     <string name="SendReactions">Gửi Phản ứng</string>
     <string name="ShowReactions">Hiện phản ứng</string>
     <string name="CustomTitle">Tùy chỉnh Tiêu Đề</string>
-    <string name="CustomTitleHint">Để trống để sử dụng Nagram X</string>
+    <string name="CustomTitleHint">Để trống để sử dụng Niagram X</string>
     <string name="CreateMono">Tạo Monospace</string>
     <string name="CreateMonoLanguage">Ngôn ngữ code</string>
     <string name="CopyPhoto">Sao chép Ảnh</string>

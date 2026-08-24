@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">پیکربندی N</string>
     <string name="CombineMessage">ترکیب پیام‌ها</string>
@@ -9,7 +9,7 @@
     <string name="SendReactions">ارسال واکنش‌ها</string>
     <string name="ShowReactions">نمایش واکنش‌ها</string>
     <string name="CustomTitle">عنوان سفارشی</string>
-    <string name="CustomTitleHint">خالی بگذارید تا از Nagram X استفاده شود</string>
+    <string name="CustomTitleHint">خالی بگذارید تا از Niagram X استفاده شود</string>
     <string name="CreateMono">ایجاد Monospace</string>
     <string name="CreateMonoLanguage">زبان کد</string>
     <string name="CopyPhoto">کپی‌ کردن عکس</string>

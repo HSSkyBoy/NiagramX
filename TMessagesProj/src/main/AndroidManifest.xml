@@ -111,7 +111,7 @@
         android:backupAgent=".BackupAgent"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher_nagram_blue"
-        android:label="@string/NagramX"
+        android:label="@string/AppName"
         android:largeHeap="true"
         android:theme="@style/Theme.TMessages.Start"
         android:manageSpaceActivity="org.telegram.ui.ExternalActionActivity"
@@ -413,7 +413,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="vnd.android.cursor.item/vnd.nu.gpu.nagram.android.profile"/>
+                <data android:mimeType="vnd.android.cursor.item/vnd.top.nkbe.niagram.android.profile"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -460,8 +460,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <data android:mimeType="vnd.android.cursor.item/vnd.nu.gpu.nagram.android.call"/>
-                <data android:mimeType="vnd.android.cursor.item/vnd.nu.gpu.nagram.android.call.video"/>
+                <data android:mimeType="vnd.android.cursor.item/vnd.top.nkbe.niagram.android.call"/>
+                <data android:mimeType="vnd.android.cursor.item/vnd.top.nkbe.niagram.android.call.video"/>
             </intent-filter>
         </activity-alias>
         <activity

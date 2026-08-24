@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="XChannel">Kênh Nagram X</string>
+    <string name="XChannel">Kênh Niagram X</string>
     <string name="EnableSaveDeletedMessages">Lưu tin nhắn đã xóa</string>
     <string name="DeletedMessage">đã xóa</string>
     <string name="EnableSaveEditsHistory">Lưu lịch sử chỉnh sửa</string>
@@ -296,8 +296,8 @@
     <string name="BackAnimationClassic">Cổ điển</string>
     <string name="BackAnimationSpring">Spring</string>
     <string name="BackAnimationPredictive">Dự đoán</string>
-    <string name="UnifiedPushNeverReceivedNotifications">Bạn chưa từng nhận được thông báo nào từ UnifiedPush kể từ khi Nagram X được khởi chạy.</string>
-    <string name="UnifiedPushLastReceivedNotification">Thông báo gần nhất nhận được qua UnifiedPush là từ %1$d giây trước.\n\nBạn đã nhận được %2$d thông báo kể từ khi Nagram X khởi động.</string>
+    <string name="UnifiedPushNeverReceivedNotifications">Bạn chưa từng nhận được thông báo nào từ UnifiedPush kể từ khi Niagram X được khởi chạy.</string>
+    <string name="UnifiedPushLastReceivedNotification">Thông báo gần nhất nhận được qua UnifiedPush là từ %1$d giây trước.\n\nBạn đã nhận được %2$d thông báo kể từ khi Niagram X khởi động.</string>
     <string name="StorageSettings">Bộ nhớ</string>
     <string name="TranslatorWithOriginalTextOff">Tắt</string>
     <string name="TranslatorWithOriginalTextOn">Bật</string>

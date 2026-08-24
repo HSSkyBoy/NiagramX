@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Konfig-N</string>
     <string name="CombineMessage">Gabungkan Pesan</string>
@@ -9,7 +9,7 @@
     <string name="SendReactions">Kirim Reaksi</string>
     <string name="ShowReactions">Tampilkan Reaksi</string>
     <string name="CustomTitle">Judul Khusus</string>
-    <string name="CustomTitleHint">Biarkan kosong untuk menggunakan Nagram X</string>
+    <string name="CustomTitleHint">Biarkan kosong untuk menggunakan Niagram X</string>
     <string name="CreateMono">Buat Monospace</string>
     <string name="CreateMonoLanguage">Bahasa Kode</string>
     <string name="CopyPhoto">Salin Foto</string>

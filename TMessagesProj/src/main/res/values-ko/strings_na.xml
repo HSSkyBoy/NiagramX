@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-설정</string>
     <string name="CombineMessage">메시지 합치기</string>
@@ -9,7 +9,7 @@
     <string name="SendReactions">반응 보내기</string>
     <string name="ShowReactions">반응 표시</string>
     <string name="CustomTitle">사용자 지정 제목</string>
-    <string name="CustomTitleHint">비워 두면 Nagram X를 사용합니다</string>
+    <string name="CustomTitleHint">비워 두면 Niagram X를 사용합니다</string>
     <string name="CreateMono">고정폭 만들기</string>
     <string name="CreateMonoLanguage">코드 언어</string>
     <string name="CopyPhoto">사진 복사</string>

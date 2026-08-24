@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-Ayarları</string>
     <string name="CombineMessage">Mesajları Birleştir</string>
@@ -9,7 +9,7 @@
     <string name="SendReactions">Tepki Gönder</string>
     <string name="ShowReactions">Tepkileri Göster</string>
     <string name="CustomTitle">Özel Başlık</string>
-    <string name="CustomTitleHint">Nagram X kullanmak için boş bırakın</string>
+    <string name="CustomTitleHint">Niagram X kullanmak için boş bırakın</string>
     <string name="CreateMono">Eşaralıklı (Monospace) Oluştur</string>
     <string name="CreateMonoLanguage">Kod Dili</string>
     <string name="CopyPhoto">Fotoğrafı Kopyala</string>

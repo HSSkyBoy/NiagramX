@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="NekoSettings">Cài đặt Nagram X</string>
+    <string name="NekoSettings">Cài đặt Niagram X</string>
     <string name="IPv6">Ưu tiên IPv6</string>
     <string name="MessageMenu">Menu tin nhắn</string>
     <string name="HidePhone">Ẩn số điện thoại</string>
@@ -151,7 +151,7 @@
     <string name="ClearRecentChats">Xóa các cuộc trò chuyện gần đây</string>
     <string name="ClearRecentChatAlert">Bạn có muốn xóa các cuộc trò chuyện gần đây không?</string>
     <string name="CloudConfig">Cài đặt đám mây</string>
-    <string name="CloudConfigDesc">Lưu Cài đặt NagramX của bạn vào đám mây Telegram.</string>
+    <string name="CloudConfigDesc">Lưu Cài đặt Niagram X của bạn vào đám mây Telegram.</string>
     <string name="CloudConfigSyncDate">Lần đồng bộ cuối: %s, đám mây: %s</string>
     <string name="CloudConfigSyncDateNever">không bao giờ</string>
     <string name="CloudConfigSync">Đồng bộ lên cloud</string>

@@ -1,28 +1,28 @@
-# Nagram X
+# NiagramX
+[![Crowdin](https://badges.crowdin.net/NagramX/localized.svg)](https://crowdin.com/project/NagramX)  
+A customized variant based on [Nagram](https://github.com/NextAlone/Nagram), [Nekogram](https://github.com/Nekogram/Nekogram), and [NagramX](https://github.com/risin42/NagramX) with additional enhancements.
 
-> [!IMPORTANT]
-> This project is archived and no longer maintained. No further updates, bug fixes, or support will be provided. The source code and existing releases remain available for reference and for anyone who wishes to continue development in a fork.
+Special thanks to upstream developers and contributors for their outstanding work.
 
-## Archived Downloads
+## Download
 
-Previously published versions remain available through:
-
-* [Telegram Channel](https://t.me/NagramX)
-* [GitHub Releases](https://github.com/risin42/NagramX/releases)
+Latest versions are available through:
+* [Telegram Channel](https://t.me/NiagramX) (Latest Beta)
+* [GitHub Releases](https://github.com/HSSkyBoy/NigramX/releases) (Latest Stable)
 
 ## Verify APK
 
 Official APKs use the following Android signing certificate:
 
-* Package name: `nu.gpu.nagram` / `nu.gpu.nagramx` (base version)
-* SHA-256: `0D:51:91:56:E8:0C:91:8C:28:C4:80:BF:D1:3F:31:6A:3B:3B:F7:22:DB:53:2F:AB:74:66:0E:C8:E5:C5:06:A1`
+* Package name: `top.nkbe.niagram`
+* SHA-256: `D6:A6:0D:55:15:ED:1F:5A:3B:29:A7:9C:47:ED:94:26:07:2F:F2:11:EA:40:97:0B:98:51:81:58:01:5A:1C:C6`
 
 ## Compilation Guide
 
 1. Clone the repository with its submodules:
 
     ```bash
-    git clone --recursive --shallow-submodules https://github.com/risin42/NagramX.git NagramX
+    git clone --recursive --shallow-submodules https://github.com/HSSkyBoy/NigramX.git NigramX
     ```
 
     If you already cloned the repository without submodules, run:
@@ -57,8 +57,6 @@ Official APKs use the following Android signing certificate:
 
 ## GitHub Actions Build
 
-The workflow can be used from a fork of this repository.
-
 1. Replace `TMessagesProj/release.keystore` with your keystore file.
 
 2. Configure `local.properties` with the following:
@@ -88,5 +86,7 @@ The workflow can be used from a fork of this repository.
 - [Dr4iv3rNope](https://github.com/Dr4iv3rNope/NotSoAndroidAyuGram)
 - [exteraGram](https://github.com/exteraSquad/exteraGram)
 - [Nagram](https://github.com/NextAlone/Nagram)
+- [NagramX](https://github.com/risin42/NagramX)
+- [NagramXTurbo](https://github.com/temporaryna/NagramXTurbo)
 - [Nekogram](https://github.com/Nekogram/Nekogram)
 - [OctoGram](https://github.com/OctoGramApp/OctoGram)

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-設定</string>
     <string name="CombineMessage">合併訊息</string>
@@ -9,7 +9,7 @@
     <string name="SendReactions">表情符號反應</string>
     <string name="ShowReactions">顯示表情符號反應選單</string>
     <string name="CustomTitle">自訂標題</string>
-    <string name="CustomTitleHint">留空則使用 Nagram X</string>
+    <string name="CustomTitleHint">留空則使用 Niagram X</string>
     <string name="CreateMono">建立等寬</string>
     <string name="CreateMonoLanguage">等寬語言</string>
     <string name="CopyPhoto">複製圖片</string>
@@ -64,7 +64,7 @@
     <string name="CenterActionBarTitleType">標題置中</string>
     <string name="ShowQuickReplyInBotCommands">在與機器人聊天時顯示快速回覆按鈕</string>
     <string name="PushServiceType">推播服務類型</string>
-    <string name="PushServiceTypeInApp">Nagram X</string>
+    <string name="PushServiceTypeInApp">Niagram X</string>
     <string name="PushServiceTypeInAppDialog">使用常駐通知</string>
     <string name="SendMp4DocumentAsVideo">MP4 影片作為檔案傳送時可預覽</string>
     <string name="StickersChooseShortNameForStickerPack">為您的貼圖包選擇一個簡短的名稱</string>

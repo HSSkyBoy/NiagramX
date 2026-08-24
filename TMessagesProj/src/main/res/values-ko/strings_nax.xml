@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="XChannel">Nagram X 채널</string>
+    <string name="XChannel">Niagram X 채널</string>
     <string name="EnableSaveDeletedMessages">삭제된 메시지 저장</string>
     <string name="DeletedMessage">삭제됨</string>
     <string name="EnableSaveEditsHistory">수정 기록 저장</string>
@@ -309,8 +309,8 @@
     <string name="BackAnimationSpring">스프링</string>
     <string name="BackAnimationPredictive">예측형</string>
     <string name="AddToFilter">필터에 추가</string>
-    <string name="UnifiedPushNeverReceivedNotifications">Nagram X가 시작된 이후 UnifiedPush로 알림을 받은 적이 없습니다.</string>
-    <string name="UnifiedPushLastReceivedNotification">마지막으로 UnifiedPush 알림을 받은 것은 %1$d초 전입니다.\n\nNagram X가 시작된 이후 %2$d개의 알림을 받았습니다.</string>
+    <string name="UnifiedPushNeverReceivedNotifications">Niagram X가 시작된 이후 UnifiedPush로 알림을 받은 적이 없습니다.</string>
+    <string name="UnifiedPushLastReceivedNotification">마지막으로 UnifiedPush 알림을 받은 것은 %1$d초 전입니다.\n\nNiagram X가 시작된 이후 %2$d개의 알림을 받았습니다.</string>
     <string name="UnifiedPushCurrentEndpoint">현재 UnifiedPush 엔드포인트: %1$s</string>
     <string name="PlayOnce">한 번 재생</string>
     <string name="StorageSettings">저장소</string>

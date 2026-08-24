@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="XChannel">Kanał Nagram X</string>
+    <string name="XChannel">Kanał Niagram X</string>
     <string name="EnableSaveDeletedMessages">Zapisz usunięte wiadomości</string>
     <string name="DeletedMessage">usunięto</string>
     <string name="EnableSaveEditsHistory">Zapisz historię edycji</string>
@@ -309,8 +309,8 @@
     <string name="BackAnimationSpring">Efekt sprężyny</string>
     <string name="BackAnimationPredictive">Predictive</string>
     <string name="AddToFilter">Dodaj do filtra</string>
-    <string name="UnifiedPushNeverReceivedNotifications">Od uruchomienia Nagram X nie otrzymano powiadomień przez UnifiedPush.</string>
-    <string name="UnifiedPushLastReceivedNotification">Ostatnie powiadomienie przez UnifiedPush otrzymano %1$d s temu.\n\nOd uruchomienia Nagram X otrzymano %2$d powiadomień.</string>
+    <string name="UnifiedPushNeverReceivedNotifications">Od uruchomienia Niagram X nie otrzymano powiadomień przez UnifiedPush.</string>
+    <string name="UnifiedPushLastReceivedNotification">Ostatnie powiadomienie przez UnifiedPush otrzymano %1$d s temu.\n\nOd uruchomienia Niagram X otrzymano %2$d powiadomień.</string>
     <string name="UnifiedPushCurrentEndpoint">Aktualny punkt końcowy UnifiedPush to: %1$s</string>
     <string name="PlayOnce">Odtwórz raz</string>
     <string name="StorageSettings">Pamięć</string>

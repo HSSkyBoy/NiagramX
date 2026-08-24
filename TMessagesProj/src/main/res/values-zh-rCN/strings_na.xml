@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-设置</string>
     <string name="CombineMessage">合并消息</string>
@@ -9,7 +9,7 @@
     <string name="SendReactions">表情回应</string>
     <string name="ShowReactions">显示表情回应菜单</string>
     <string name="CustomTitle">自定义标题</string>
-    <string name="CustomTitleHint">留空则使用 Nagram X</string>
+    <string name="CustomTitleHint">留空则使用 Niagram X</string>
     <string name="CreateMono">创建等宽</string>
     <string name="CreateMonoLanguage">等宽语言</string>
     <string name="CopyPhoto">复制图片</string>

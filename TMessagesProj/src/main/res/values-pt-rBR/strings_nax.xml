@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="XChannel">Canal Nagram X</string>
+    <string name="XChannel">Canal Niagram X</string>
     <string name="EnableSaveDeletedMessages">Salvar mensagens apagadas</string>
     <string name="DeletedMessage">apagada</string>
     <string name="EnableSaveEditsHistory">Salvar histórico de edições</string>
@@ -308,8 +308,8 @@
     <string name="BackAnimationSpring">Mola</string>
     <string name="BackAnimationPredictive">Preditiva</string>
     <string name="AddToFilter">Adicionar ao filtro</string>
-    <string name="UnifiedPushNeverReceivedNotifications">Você não recebeu notificações via UnifiedPush desde que o Nagram X foi iniciado.</string>
-    <string name="UnifiedPushLastReceivedNotification">A última notificação recebida via UnifiedPush foi há %1$d segundos.\n\nVocê recebeu %2$d notificações desde que o Nagram X foi iniciado.</string>
+    <string name="UnifiedPushNeverReceivedNotifications">Você não recebeu notificações via UnifiedPush desde que o Niagram X foi iniciado.</string>
+    <string name="UnifiedPushLastReceivedNotification">A última notificação recebida via UnifiedPush foi há %1$d segundos.\n\nVocê recebeu %2$d notificações desde que o Niagram X foi iniciado.</string>
     <string name="UnifiedPushCurrentEndpoint">O endpoint atual do UnifiedPush é: %1$s</string>
     <string name="PlayOnce">Reproduzir uma vez</string>
     <string name="StorageSettings">Armazenamento</string>

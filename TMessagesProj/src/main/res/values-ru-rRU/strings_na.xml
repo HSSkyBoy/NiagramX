@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Настройки N</string>
     <string name="CombineMessage">Объединить сообщения</string>
@@ -9,7 +9,7 @@
     <string name="SendReactions">Отправить реакцию</string>
     <string name="ShowReactions">Показать реакции</string>
     <string name="CustomTitle">Пользовательский заголовок</string>
-    <string name="CustomTitleHint">Оставьте поле пустым, чтобы использовать «Nagram X»</string>
+    <string name="CustomTitleHint">Оставьте поле пустым, чтобы использовать «Niagram X»</string>
     <string name="CreateMono">Создать монопространство</string>
     <string name="CreateMonoLanguage">Язык кода</string>
     <string name="CopyPhoto">Копировать фото</string>
