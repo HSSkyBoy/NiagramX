@@ -816,6 +816,10 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
             req.channel = getMessagesController().getInputChannel(CHANNEL_METADATA_ID);
             req.id.addAll(previews.values());
             req.id.addAll(files.values());
+            if (req.id.isEmpty()) {
+                delegate.onTLResponse(null, null);
+                return;
+            }
             getConnectionsManager().sendRequest(req, (response1, error1) -> {
                 if (error1 == null) {
                     getNewVersionMessagesCallback(delegate, packs, response1);

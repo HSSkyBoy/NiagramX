@@ -344,8 +344,12 @@ public class ProfileChannelCell extends FrameLayout implements Theme.Colorable {
                     req.channel = MessagesController.getInstance(currentAccount).getInputChannel(channel_id);
                     for (int i = 10; i >= 0; --i) {
                         final int id = message_id - i;
-                        if (id >= 0)
+                        if (id > 0)
                             req.id.add(id);
+                    }
+                    if (req.id.isEmpty()) {
+                        done(false);
+                        return;
                     }
                     ConnectionsManager.getInstance(currentAccount).sendRequest(req, (response, err) -> AndroidUtilities.runOnUIThread(() -> {
                         if (response instanceof TLRPC.messages_Messages) {

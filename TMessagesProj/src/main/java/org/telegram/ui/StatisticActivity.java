@@ -2536,6 +2536,9 @@ public class StatisticActivity extends BaseFragment implements NotificationCente
                 }
             }
         }
+        if (req.id.isEmpty()) {
+            return;
+        }
         req.channel = MessagesController.getInstance(currentAccount).getInputChannel(chatId);
         messagesIsLoading = true;
 
