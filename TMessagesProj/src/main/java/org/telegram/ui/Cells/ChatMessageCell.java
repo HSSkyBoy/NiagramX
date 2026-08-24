@@ -11546,6 +11546,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             } else {
                 docTitleOffsetX = 0;
             }
+        }
         measureTime(messageObject);
         int w = maxWidth - dp(messageObject.isOutOwner() ? 28 : 8);
         if (timeWidth > 0) {

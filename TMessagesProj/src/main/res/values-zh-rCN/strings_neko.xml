@@ -156,7 +156,7 @@
     <string name="ClearRecentChatAlert">您确定要清除您的最近聊天吗？</string>
     <string name="CloudConfig">云设置</string>
     <string name="CloudConfigDesc">保存 N-设置 到 Telegram 云。</string>
-    <string name="CloudConfigSyncDate">最后同步：%s，云端：%s</string>
+    <string name="CloudConfigSyncDate">最后同步：%1$s，云端：%2$s</string>
     <string name="CloudConfigSyncDateNever">从未</string>
     <string name="CloudConfigSync">同步到云端</string>
     <string name="CloudConfigSyncShort">同步</string>

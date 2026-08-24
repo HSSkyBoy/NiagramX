@@ -153,7 +153,7 @@
     <string name="ClearRecentChatAlert">Apakah Anda ingin membersihkan obrolan terbaru Anda?</string>
     <string name="CloudConfig">Pengaturan Cloud</string>
     <string name="CloudConfigDesc">Simpan Pengaturan-N Anda ke cloud Telegram.</string>
-    <string name="CloudConfigSyncDate">Terakhir disinkronkan: %s, cloud: %s</string>
+    <string name="CloudConfigSyncDate">Terakhir disinkronkan: %1$s, cloud: %2$s</string>
     <string name="CloudConfigSyncDateNever">tidak pernah</string>
     <string name="CloudConfigSync">Sinkronkan ke cloud</string>
     <string name="CloudConfigSyncShort">Sinkron</string>

@@ -152,7 +152,7 @@
     <string name="ClearRecentChatAlert">Ви хочете очистити останні чати?</string>
     <string name="CloudConfig">Налаштування хмарного Сховища</string>
     <string name="CloudConfigDesc">Збережіть свої N-налаштування у хмарі Telegram.</string>
-    <string name="CloudConfigSyncDate">Остання синхронізація: %s, хмара: %s</string>
+    <string name="CloudConfigSyncDate">Остання синхронізація: %1$s, хмара: %2$s</string>
     <string name="CloudConfigSyncDateNever">ніколи</string>
     <string name="CloudConfigSync">Синхронізувати до хмари</string>
     <string name="CloudConfigSyncShort">Синхронізувати</string>
