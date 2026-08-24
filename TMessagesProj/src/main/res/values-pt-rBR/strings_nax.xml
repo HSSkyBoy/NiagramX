@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Canal Niagram X</string>
     <string name="EnableSaveDeletedMessages">Salvar mensagens apagadas</string>
@@ -353,8 +353,6 @@
     <string name="FontInvalidFile">Arquivo de fonte inválido ou corrompido.</string>
     <string name="InputFieldTextSize">Tamanho do texto no campo de entrada</string>
     <string name="InputFieldTextSizeDefault">Padrão</string>
-    <string name="ScrollToSeenPhotoOnClose">Rolar para a foto vista ao fechar</string>
-    <string name="ScrollToSeenPhotoOnCloseNotice">Rola automaticamente para a última foto vista ao fechar o visualizador de mídia.</string>
     <string name="HideStarRating">Ocultar avaliação por estrelas nos perfis</string>
     <string name="HideGiftButton">Ocultar botão de presente nos perfis</string>
     <string name="EnableQuickSchedule">Agendamento rápido</string>

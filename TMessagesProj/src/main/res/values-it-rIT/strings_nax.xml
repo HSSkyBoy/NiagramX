@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Canale Niagram X</string>
     <string name="EnableSaveDeletedMessages">Salva i messaggi eliminati</string>
@@ -358,8 +358,6 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="FontInvalidFile">File carattere non valido o corrotto.</string>
     <string name="InputFieldTextSize">Dimensione testo campo input</string>
     <string name="InputFieldTextSizeDefault">Predefinito</string>
-    <string name="ScrollToSeenPhotoOnClose">Scorri alla foto vista alla chiusura</string>
-    <string name="ScrollToSeenPhotoOnCloseNotice">Scorri automaticamente all\'ultima foto vista alla chiusura del visualizzatore multimediale.</string>
     <string name="HideStarRating">Nascondi valutazione a stelle nei profili</string>
     <string name="HideGiftButton">Nascondi pulsante regalo nei profili</string>
     <string name="EnableQuickSchedule">Programmazione rapida</string>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Niagram X 채널</string>
     <string name="EnableSaveDeletedMessages">삭제된 메시지 저장</string>
@@ -354,8 +354,6 @@
     <string name="FontInvalidFile">잘못되거나 손상된 폰트 파일입니다.</string>
     <string name="InputFieldTextSize">입력 필드 텍스트 크기</string>
     <string name="InputFieldTextSizeDefault">기본값</string>
-    <string name="ScrollToSeenPhotoOnClose">닫을 때 본 사진으로 스크롤</string>
-    <string name="ScrollToSeenPhotoOnCloseNotice">미디어 뷰어를 닫을 때 마지막으로 본 사진으로 자동 스크롤합니다.</string>
     <string name="HideStarRating">프로필의 별점 숨기기</string>
     <string name="HideGiftButton">프로필의 선물 버튼 숨기기</string>
     <string name="EnableQuickSchedule">빠른 일정</string>

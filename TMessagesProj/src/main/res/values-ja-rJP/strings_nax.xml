@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Niagram X チャンネル</string>
     <string name="EnableSaveDeletedMessages">削除済みメッセージを保存</string>
@@ -354,8 +354,6 @@
     <string name="FontInvalidFile">無効または破損したフォントファイルです。</string>
     <string name="InputFieldTextSize">入力フィールドのテキストサイズ</string>
     <string name="InputFieldTextSizeDefault">デフォルト</string>
-    <string name="ScrollToSeenPhotoOnClose">閉じるときに閲覧済み写真にスクロール</string>
-    <string name="ScrollToSeenPhotoOnCloseNotice">メディアビューアを閉じたとき、最後に表示した写真に自動スクロールします。</string>
     <string name="HideStarRating">プロフィールの星評価を非表示</string>
     <string name="HideGiftButton">プロフィールのギフトボタンを非表示</string>
     <string name="EnableQuickSchedule">クイックスケジュール</string>

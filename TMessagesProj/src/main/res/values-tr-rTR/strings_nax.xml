@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Niagram X Kanalı</string>
     <string name="EnableSaveDeletedMessages">Silinen Mesajları Kaydet</string>
@@ -353,8 +353,6 @@
     <string name="FontInvalidFile">Geçersiz veya bozuk yazı tipi dosyası.</string>
     <string name="InputFieldTextSize">Giriş Alanı Metin Boyutu</string>
     <string name="InputFieldTextSizeDefault">Varsayılan</string>
-    <string name="ScrollToSeenPhotoOnClose">Kapatırken Görülen Fotoğrafa Git</string>
-    <string name="ScrollToSeenPhotoOnCloseNotice">Medya görüntüleyici kapatıldığında son görüntülenen fotoğrafa otomatik kaydırır.</string>
     <string name="HideStarRating">Profillerde Yıldız Derecelendirmeyi Gizle</string>
     <string name="HideGiftButton">Profillerde Hediye Düğmesini Gizle</string>
     <string name="EnableQuickSchedule">Hızlı Zamanlama</string>

@@ -5515,7 +5515,7 @@ public class ChatActivityEnterView extends FrameLayout implements
             if (NaConfig.INSTANCE.getEnableQuickSchedule().Bool()) {
                 int defaultDelay = NaConfig.INSTANCE.getDefaultScheduledTime().Int();
                 if (defaultDelay > 0) {
-                    options.add(R.drawable.msg_schedule, LocaleController.getString("DefaultScheduleDelay", R.string.DefaultScheduleDelay) + " (" + defaultDelay + "s)", () -> {
+                    options.add(R.drawable.msg_calendar2, LocaleController.getString("DefaultScheduleDelay", R.string.DefaultScheduleDelay) + " (" + defaultDelay + "s)", () -> {
                         sendMessageInternal(!sendWithoutSoundNax, (int)(System.currentTimeMillis() / 1000) + defaultDelay, 0, 0, true);
                         if (messageSendPreview != null) {
                             messageSendPreview.dismiss(false);
