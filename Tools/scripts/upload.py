@@ -7,11 +7,11 @@ from sys import argv
 from pyrogram import Client
 from pyrogram.types import InputMediaDocument, LinkPreviewOptions
 
-api_id = os.environ.get("APP_ID")
-api_hash = os.environ.get("APP_HASH")
+api_id = os.environ.get("APP_ID") or 6
+api_hash = os.environ.get("APP_HASH") or "eb06d4abfb49dc3eeb1aeb98ae0f581e"
 artifacts_path = Path("artifacts")
-test_version = argv[3] == "test" if len(argv) > 2 else None
-metadata_chat_id = argv[4] if len(argv) > 3 else None
+test_version = argv[3] == "test" if len(argv) > 3 else None
+metadata_chat_id = argv[4].strip() if len(argv) > 4 and argv[4].strip() else None
 
 def find_apk(abi: str) -> Path | None:
     return next((apk for apk in artifacts_path.rglob("*.apk") if abi in apk.name), None)
@@ -102,7 +102,7 @@ async def main():
     client = get_client(bot_token)
     await client.start()
     await send_to_channel(client, chat_id)
-    if metadata_chat_id:
+    if metadata_chat_id and str(metadata_chat_id).strip() != str(chat_id).strip():
         await send_metadata(client, metadata_chat_id)
     await client.log_out()
 

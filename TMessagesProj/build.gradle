@@ -49,9 +49,9 @@ if (properties != null) {
     pwd = properties.getProperty('ALIAS_PASS')
 }
 
-keystorePwd = keystorePwd ?: System.getenv('KEYSTORE_PASS')
-alias = alias ?: System.getenv('ALIAS_NAME')
-pwd = pwd ?: System.getenv('ALIAS_PASS')
+keystorePwd = keystorePwd ?: System.getenv('KEYSTORE_PASS') ?: ''
+alias = alias ?: System.getenv('ALIAS_NAME') ?: 'NPigramX'
+pwd = pwd ?: System.getenv('ALIAS_PASS') ?: ''
 
 def nativeTarget = System.getenv('NATIVE_TARGET') ?: ''
 
