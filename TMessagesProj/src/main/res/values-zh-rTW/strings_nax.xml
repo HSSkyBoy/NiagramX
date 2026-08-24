@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Niagram X 頻道</string>
     <string name="EnableSaveDeletedMessages">儲存已刪除訊息</string>
@@ -339,4 +339,31 @@
     <string name="ImportAyuDB">匯入資料庫</string>
     <string name="ImportAyuDBAlert">目前的訊息資料庫將被取代。匯入後應用程式將重新啟動。</string>
     <string name="DisableSwipeToNext">停用滑動到下一個</string>
+    <string name="ForceFontWeightFallback">強制字重回退</string>
+    <string name="FontSettings">字體設定</string>
+    <string name="FontCategoryRegular">常規字體 (Regular)</string>
+    <string name="FontCategoryBold">粗體字體 (Bold)</string>
+    <string name="FontCategoryItalic">斜體字體 (Italic)</string>
+    <string name="FontCategoryMono">等寬字體 (Monospace)</string>
+    <string name="FontSelectFile">選取 .ttf / .otf 字體檔案</string>
+    <string name="FontResetToDefault">重設為系統預設</string>
+    <string name="FontPreviewTitle">字體預覽</string>
+    <string name="FontApply">套用</string>
+    <string name="FontApplyAs">套用字體為…</string>
+    <string name="FontAppliedSuccess">字體已成功套用！</string>
+    <string name="FontInvalidFile">無效或已損壞的字體檔案。</string>
+    <string name="InputFieldTextSize">輸入框文字大小</string>
+    <string name="InputFieldTextSizeDefault">預設</string>
+    <string name="ScrollToSeenPhotoOnClose">關閉時自動定位已查看照片</string>
+    <string name="ScrollToSeenPhotoOnCloseNotice">在聊天室或共享媒體檢視器關閉時，自動滾動並定位到最後瀏覽的照片。</string>
+    <string name="HideStarRating">隱藏個人檔案中的星星評分</string>
+    <string name="HideGiftButton">隱藏個人檔案中的送禮按鈕</string>
+    <string name="EnableQuickSchedule">快速定時發送</string>
+    <string name="EnableQuickScheduleNotice">長按發送按鈕時顯示定時選項（稍後發送 / 上線時發送），並自動繼承靜音狀態。</string>
+    <string name="UseSystemPhotoPicker">系統相片選取器相容</string>
+    <string name="UseSystemPhotoPickerDesc">在 Android 13 及更高版本上，使用系統相片選取器選取圖庫附件，無需請求完整的相片與影片存取權限。</string>
+    <string name="ProviderVolcengineTranslate">火山引擎翻譯</string>
+    <string name="DisableAiEditor">停用 AI 編輯器</string>
+    <string name="DisableGlareEffects">停用炫光效果</string>
+    <string name="ShowRecentForwardTab">轉發時顯示最近聊天標籤</string>
 </resources>

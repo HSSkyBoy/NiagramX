@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Niagram X Kanalı</string>
     <string name="EnableSaveDeletedMessages">Silinen Mesajları Kaydet</string>
@@ -331,4 +331,38 @@
     <string name="TabletModeOn">Açık</string>
     <string name="TabletModeOff">Kapalı</string>
     <string name="HideDialogsSearchField">Arama Kutusunu Gizle</string>
+    <string name="DeepLTranslateKey">DeepL API Anahtarı</string>
+    <string name="DeepLTranslateKeyNotice">DeepL API anahtarını yapılandırın, dahili kimlik bilgilerini kullanmak için boş bırakın.</string>
+    <string name="DefaultScheduleDelay">Varsayılan gecikme</string>
+    <string name="ExportAyuDB">Veritabanını Dışa Aktar</string>
+    <string name="ImportAyuDB">Veritabanını İçe Aktar</string>
+    <string name="ImportAyuDBAlert">Mevcut mesaj veritabanı değiştirilecek. İçe aktarma işleminden sonra uygulama yeniden başlatılacak.</string>
+    <string name="DisableSwipeToNext">Sonrakine Geçmeyi Devre Dışı Bırak</string>
+    <string name="ForceFontWeightFallback">Yazı Tipi Ağırlığı Yedeklemesini Zorla</string>
+    <string name="FontSettings">Yazı Tipi Ayarları</string>
+    <string name="FontCategoryRegular">Normal Yazı Tipi</string>
+    <string name="FontCategoryBold">Kalın Yazı Tipi</string>
+    <string name="FontCategoryItalic">İtalik Yazı Tipi</string>
+    <string name="FontCategoryMono">Sabit Genişlikli Yazı Tipi</string>
+    <string name="FontSelectFile">.ttf / .otf Dosyası Seç</string>
+    <string name="FontResetToDefault">Sistem Varsayılanına Sıfırla</string>
+    <string name="FontPreviewTitle">Yazı Tipi Önizlemesi</string>
+    <string name="FontApply">Uygula</string>
+    <string name="FontApplyAs">Yazı Tipini Şu Olarak Uygula…</string>
+    <string name="FontAppliedSuccess">Yazı tipi başarıyla uygulandı!</string>
+    <string name="FontInvalidFile">Geçersiz veya bozuk yazı tipi dosyası.</string>
+    <string name="InputFieldTextSize">Giriş Alanı Metin Boyutu</string>
+    <string name="InputFieldTextSizeDefault">Varsayılan</string>
+    <string name="ScrollToSeenPhotoOnClose">Kapatırken Görülen Fotoğrafa Git</string>
+    <string name="ScrollToSeenPhotoOnCloseNotice">Medya görüntüleyici kapatıldığında son görüntülenen fotoğrafa otomatik kaydırır.</string>
+    <string name="HideStarRating">Profillerde Yıldız Derecelendirmeyi Gizle</string>
+    <string name="HideGiftButton">Profillerde Hediye Düğmesini Gizle</string>
+    <string name="EnableQuickSchedule">Hızlı Zamanlama</string>
+    <string name="EnableQuickScheduleNotice">Gönder düğmesine uzun basıldığında, sessiz durumuna göre zamanlama seçeneklerini gösterir.</string>
+    <string name="UseSystemPhotoPicker">Sistem fotoğraf seçici uyumluluğu</string>
+    <string name="UseSystemPhotoPickerDesc">Android 13 ve sonrasında, fotoğraf ve video için tam erişim izni istemeden galeri ekleri için sistem fotoğraf seçiciyi kullanın.</string>
+    <string name="ProviderVolcengineTranslate">Volcengine Çevirisi</string>
+    <string name="DisableAiEditor">Yapay Zeka Editörünü Devre Dışı Bırak</string>
+    <string name="DisableGlareEffects">Parıltı Efektlerini Devre Dışı Bırak</string>
+    <string name="ShowRecentForwardTab">İletirken son sohbetler sekmesini göster</string>
 </resources>

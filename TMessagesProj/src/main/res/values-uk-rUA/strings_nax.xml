@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Канал Niagram X</string>
     <string name="EnableSaveDeletedMessages">Зберігати видаленні повідомлення</string>
@@ -339,4 +339,31 @@
     <string name="ImportAyuDB">Імпорт бази даних</string>
     <string name="ImportAyuDBAlert">Поточну базу даних повідомлень буде замінено. Після імпорту програма перезапуститься.</string>
     <string name="DisableSwipeToNext">Вимкнути свайп вперед</string>
+    <string name="ForceFontWeightFallback">Примусовий запасний варіант накреслення</string>
+    <string name="FontSettings">Налаштування шрифту</string>
+    <string name="FontCategoryRegular">Звичайний шрифт</string>
+    <string name="FontCategoryBold">Жирний шрифт</string>
+    <string name="FontCategoryItalic">Курсивний шрифт</string>
+    <string name="FontCategoryMono">Моноширинний шрифт</string>
+    <string name="FontSelectFile">Вибрати файл .ttf / .otf</string>
+    <string name="FontResetToDefault">Скинути до системного</string>
+    <string name="FontPreviewTitle">Попередній перегляд шрифту</string>
+    <string name="FontApply">Застосувати</string>
+    <string name="FontApplyAs">Застосувати шрифт як…</string>
+    <string name="FontAppliedSuccess">Шрифт успішно застосовано!</string>
+    <string name="FontInvalidFile">Недійсний або пошкоджений файл шрифту.</string>
+    <string name="InputFieldTextSize">Розмір тексту в полі введення</string>
+    <string name="InputFieldTextSizeDefault">За замовчуванням</string>
+    <string name="ScrollToSeenPhotoOnClose">Прокрутити до переглянутого фото при закритті</string>
+    <string name="ScrollToSeenPhotoOnCloseNotice">Автоматично прокручує до останнього переглянутого фото при закритті медіапереглядача.</string>
+    <string name="HideStarRating">Приховати зіркові оцінки в профілях</string>
+    <string name="HideGiftButton">Приховати кнопку подарунка в профілях</string>
+    <string name="EnableQuickSchedule">Швидке планування</string>
+    <string name="EnableQuickScheduleNotice">Показує параметри планування при довгому натисканні кнопки відправки з урахуванням стану беззвучного режиму.</string>
+    <string name="UseSystemPhotoPicker">Сумісність із системним вибором фото</string>
+    <string name="UseSystemPhotoPickerDesc">На Android 13 і вище використовуйте системний вибір фото для вкладень із галереї без запиту повного доступу до фото та відео.</string>
+    <string name="ProviderVolcengineTranslate">Переклад Volcengine</string>
+    <string name="DisableAiEditor">Вимкнути редактор ШІ</string>
+    <string name="DisableGlareEffects">Вимкнути ефекти відблиску</string>
+    <string name="ShowRecentForwardTab">Показувати вкладку нещодавніх чатів під час пересилання</string>
 </resources>

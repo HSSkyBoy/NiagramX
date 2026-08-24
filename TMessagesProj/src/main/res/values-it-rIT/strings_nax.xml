@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Canale Niagram X</string>
     <string name="EnableSaveDeletedMessages">Salva i messaggi eliminati</string>
@@ -343,4 +343,31 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="ImportAyuDB">Importa Database</string>
     <string name="ImportAyuDBAlert">L\'attuale database dei messaggi verrà sostituito. L\'app si riavvierà al termine dell\'importazione.</string>
     <string name="DisableSwipeToNext">Disabilita \"Scorri verso il Prossimo\"</string>
+    <string name="ForceFontWeightFallback">Forza fallback peso carattere</string>
+    <string name="FontSettings">Impostazioni carattere</string>
+    <string name="FontCategoryRegular">Carattere normale</string>
+    <string name="FontCategoryBold">Carattere grassetto</string>
+    <string name="FontCategoryItalic">Carattere corsivo</string>
+    <string name="FontCategoryMono">Carattere monospazio</string>
+    <string name="FontSelectFile">Seleziona file .ttf / .otf</string>
+    <string name="FontResetToDefault">Ripristina impostazione predefinita di sistema</string>
+    <string name="FontPreviewTitle">Anteprima carattere</string>
+    <string name="FontApply">Applica</string>
+    <string name="FontApplyAs">Applica carattere come…</string>
+    <string name="FontAppliedSuccess">Carattere applicato con successo!</string>
+    <string name="FontInvalidFile">File carattere non valido o corrotto.</string>
+    <string name="InputFieldTextSize">Dimensione testo campo input</string>
+    <string name="InputFieldTextSizeDefault">Predefinito</string>
+    <string name="ScrollToSeenPhotoOnClose">Scorri alla foto vista alla chiusura</string>
+    <string name="ScrollToSeenPhotoOnCloseNotice">Scorri automaticamente all\'ultima foto vista alla chiusura del visualizzatore multimediale.</string>
+    <string name="HideStarRating">Nascondi valutazione a stelle nei profili</string>
+    <string name="HideGiftButton">Nascondi pulsante regalo nei profili</string>
+    <string name="EnableQuickSchedule">Programmazione rapida</string>
+    <string name="EnableQuickScheduleNotice">Mostra le opzioni di programmazione tenendo premuto il pulsante di invio, rispettando lo stato di silenziamento.</string>
+    <string name="UseSystemPhotoPicker">Compatibilità selettore foto di sistema</string>
+    <string name="UseSystemPhotoPickerDesc">Su Android 13 e versioni successive, usa il selettore foto di sistema per gli allegati dalla galleria senza richiedere l\'accesso completo a foto e video.</string>
+    <string name="ProviderVolcengineTranslate">Traduzione Volcengine</string>
+    <string name="DisableAiEditor">Disabilita editor AI</string>
+    <string name="DisableGlareEffects">Disabilita effetti di riflesso</string>
+    <string name="ShowRecentForwardTab">Mostra scheda chat recenti all\'inoltro</string>
 </resources>

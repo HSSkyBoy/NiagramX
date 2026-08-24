@@ -352,4 +352,17 @@
     <string name="FontInvalidFile">无效或已损坏的字体文件。</string>
     <string name="InputFieldTextSize">输入框文字大小</string>
     <string name="InputFieldTextSizeDefault">默认</string>
+    <string name="ForceFontWeightFallback">强制字重回退</string>
+    <string name="ScrollToSeenPhotoOnClose">关闭时自动定位已查看照片</string>
+    <string name="ScrollToSeenPhotoOnCloseNotice">在聊天室或共享媒体查看器关闭时，自动滚动并定位到最后浏览的照片。</string>
+    <string name="HideStarRating">隐藏个人资料中的星星评分</string>
+    <string name="HideGiftButton">隐藏个人资料中的送礼按钮</string>
+    <string name="EnableQuickSchedule">快速定时发送</string>
+    <string name="EnableQuickScheduleNotice">长按发送按钮时显示定时选项（稍后发送 / 上线时发送），并自动继承静音状态。</string>
+    <string name="UseSystemPhotoPicker">系统照片选择器兼容</string>
+    <string name="UseSystemPhotoPickerDesc">在 Android 13 及更高版本上，使用系统照片选择器选择相册附件，无需申请完整的照片和视频权限。</string>
+    <string name="ProviderVolcengineTranslate">火山引擎翻译</string>
+    <string name="DisableAiEditor">禁用 AI 编辑器</string>
+    <string name="DisableGlareEffects">禁用眩光效果</string>
+    <string name="ShowRecentForwardTab">转发时显示最近聊天标签</string>
 </resources>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Canal Niagram X</string>
     <string name="EnableSaveDeletedMessages">Salvar mensagens apagadas</string>
@@ -338,4 +338,31 @@
     <string name="ImportAyuDB">Importar banco de dados</string>
     <string name="ImportAyuDBAlert">O banco de dados de mensagens atual será substituído. O aplicativo será reiniciado após a importação.</string>
     <string name="DisableSwipeToNext">Desativar deslizar para o próximo</string>
+    <string name="ForceFontWeightFallback">Forçar fallback de peso de fonte</string>
+    <string name="FontSettings">Configurações de fonte</string>
+    <string name="FontCategoryRegular">Fonte regular</string>
+    <string name="FontCategoryBold">Fonte negrito</string>
+    <string name="FontCategoryItalic">Fonte itálico</string>
+    <string name="FontCategoryMono">Fonte monoespaçada</string>
+    <string name="FontSelectFile">Selecionar arquivo .ttf / .otf</string>
+    <string name="FontResetToDefault">Redefinir para o padrão do sistema</string>
+    <string name="FontPreviewTitle">Pré-visualização de fonte</string>
+    <string name="FontApply">Aplicar</string>
+    <string name="FontApplyAs">Aplicar fonte como…</string>
+    <string name="FontAppliedSuccess">Fonte aplicada com sucesso!</string>
+    <string name="FontInvalidFile">Arquivo de fonte inválido ou corrompido.</string>
+    <string name="InputFieldTextSize">Tamanho do texto no campo de entrada</string>
+    <string name="InputFieldTextSizeDefault">Padrão</string>
+    <string name="ScrollToSeenPhotoOnClose">Rolar para a foto vista ao fechar</string>
+    <string name="ScrollToSeenPhotoOnCloseNotice">Rola automaticamente para a última foto vista ao fechar o visualizador de mídia.</string>
+    <string name="HideStarRating">Ocultar avaliação por estrelas nos perfis</string>
+    <string name="HideGiftButton">Ocultar botão de presente nos perfis</string>
+    <string name="EnableQuickSchedule">Agendamento rápido</string>
+    <string name="EnableQuickScheduleNotice">Exibe opções de agendamento ao pressionar longamente o botão de enviar, respeitando o estado de silêncio.</string>
+    <string name="UseSystemPhotoPicker">Compatibilidade com o seletor de fotos do sistema</string>
+    <string name="UseSystemPhotoPickerDesc">No Android 13 e versões posteriores, use o seletor de fotos do sistema para anexos da galeria sem solicitar acesso completo a fotos e vídeos.</string>
+    <string name="ProviderVolcengineTranslate">Tradução Volcengine</string>
+    <string name="DisableAiEditor">Desativar editor de IA</string>
+    <string name="DisableGlareEffects">Desativar efeitos de brilho</string>
+    <string name="ShowRecentForwardTab">Mostrar aba de chats recentes ao encaminhar</string>
 </resources>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Niagram X 채널</string>
     <string name="EnableSaveDeletedMessages">삭제된 메시지 저장</string>
@@ -335,4 +335,35 @@
     <string name="DeepLTranslateKey">DeepL API 키</string>
     <string name="DeepLTranslateKeyNotice">DeepL API 키를 구성하세요. 비워 두면 내장 자격 증명을 사용합니다.</string>
     <string name="DefaultScheduleDelay">기본 지연</string>
+    <string name="ExportAyuDB">데이터베이스 내보내기</string>
+    <string name="ImportAyuDB">데이터베이스 가져오기</string>
+    <string name="ImportAyuDBAlert">현재 메시지 데이터베이스가 교체됩니다. 가져오기 후 앱이 재시작됩니다.</string>
+    <string name="DisableSwipeToNext">다음으로 스와이프 비활성화</string>
+    <string name="ForceFontWeightFallback">폰트 굵기 대체 강제 적용</string>
+    <string name="FontSettings">폰트 설정</string>
+    <string name="FontCategoryRegular">일반 폰트</string>
+    <string name="FontCategoryBold">굵은 폰트</string>
+    <string name="FontCategoryItalic">기울임 폰트</string>
+    <string name="FontCategoryMono">고정폭 폰트</string>
+    <string name="FontSelectFile">.ttf / .otf 폰트 파일 선택</string>
+    <string name="FontResetToDefault">시스템 기본값으로 재설정</string>
+    <string name="FontPreviewTitle">폰트 미리보기</string>
+    <string name="FontApply">적용</string>
+    <string name="FontApplyAs">폰트를 다음으로 적용…</string>
+    <string name="FontAppliedSuccess">폰트가 성공적으로 적용되었습니다!</string>
+    <string name="FontInvalidFile">잘못되거나 손상된 폰트 파일입니다.</string>
+    <string name="InputFieldTextSize">입력 필드 텍스트 크기</string>
+    <string name="InputFieldTextSizeDefault">기본값</string>
+    <string name="ScrollToSeenPhotoOnClose">닫을 때 본 사진으로 스크롤</string>
+    <string name="ScrollToSeenPhotoOnCloseNotice">미디어 뷰어를 닫을 때 마지막으로 본 사진으로 자동 스크롤합니다.</string>
+    <string name="HideStarRating">프로필의 별점 숨기기</string>
+    <string name="HideGiftButton">프로필의 선물 버튼 숨기기</string>
+    <string name="EnableQuickSchedule">빠른 일정</string>
+    <string name="EnableQuickScheduleNotice">음소거 상태를 존중하며, 보내기 버튼을 길게 눌렀을 때 일정 옵션을 표시합니다.</string>
+    <string name="UseSystemPhotoPicker">시스템 사진 선택기 호환성</string>
+    <string name="UseSystemPhotoPickerDesc">Android 13 이상에서 갤러리 첨부 파일에 시스템 사진 선택기를 사용하여 사진 및 동영상에 대한 전체 액세스 권한을 요청하지 않습니다.</string>
+    <string name="ProviderVolcengineTranslate">Volcengine 번역</string>
+    <string name="DisableAiEditor">AI 편집기 비활성화</string>
+    <string name="DisableGlareEffects">눈부심 효과 비활성화</string>
+    <string name="ShowRecentForwardTab">전달 시 최근 채팅 탭 표시</string>
 </resources>

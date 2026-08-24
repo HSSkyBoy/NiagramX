@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Saluran Niagram X</string>
     <string name="EnableSaveDeletedMessages">Simpan Pesan yang Dihapus</string>
@@ -339,4 +339,31 @@
     <string name="ImportAyuDB">Impor Basis Data</string>
     <string name="ImportAyuDBAlert">Basis data pesan saat ini akan diganti. Aplikasi akan dimulai ulang setelah proses impor selesai.</string>
     <string name="DisableSwipeToNext">Nonaktifkan Geser ke Berikutnya</string>
+    <string name="ForceFontWeightFallback">Paksa Fallback Bobot Font</string>
+    <string name="FontSettings">Pengaturan Font</string>
+    <string name="FontCategoryRegular">Font Reguler</string>
+    <string name="FontCategoryBold">Font Tebal</string>
+    <string name="FontCategoryItalic">Font Miring</string>
+    <string name="FontCategoryMono">Font Monospasi</string>
+    <string name="FontSelectFile">Pilih File .ttf / .otf</string>
+    <string name="FontResetToDefault">Setel Ulang ke Bawaan Sistem</string>
+    <string name="FontPreviewTitle">Pratinjau Font</string>
+    <string name="FontApply">Terapkan</string>
+    <string name="FontApplyAs">Terapkan Font Sebagai…</string>
+    <string name="FontAppliedSuccess">Font berhasil diterapkan!</string>
+    <string name="FontInvalidFile">File font tidak valid atau rusak.</string>
+    <string name="InputFieldTextSize">Ukuran Teks Bidang Masukan</string>
+    <string name="InputFieldTextSizeDefault">Bawaan</string>
+    <string name="ScrollToSeenPhotoOnClose">Gulir ke Foto Terakhir Dilihat saat Menutup</string>
+    <string name="ScrollToSeenPhotoOnCloseNotice">Gulir otomatis ke foto terakhir yang dilihat saat menutup penampil media.</string>
+    <string name="HideStarRating">Sembunyikan Penilaian Bintang di Profil</string>
+    <string name="HideGiftButton">Sembunyikan Tombol Hadiah di Profil</string>
+    <string name="EnableQuickSchedule">Jadwal Cepat</string>
+    <string name="EnableQuickScheduleNotice">Tampilkan opsi penjadwalan saat menekan lama tombol kirim, mempertimbangkan status senyap.</string>
+    <string name="UseSystemPhotoPicker">Kompatibilitas pemilih foto sistem</string>
+    <string name="UseSystemPhotoPickerDesc">Di Android 13 dan yang lebih baru, gunakan pemilih foto sistem untuk lampiran galeri tanpa meminta akses penuh ke foto dan video.</string>
+    <string name="ProviderVolcengineTranslate">Terjemahan Volcengine</string>
+    <string name="DisableAiEditor">Nonaktifkan Editor AI</string>
+    <string name="DisableGlareEffects">Nonaktifkan Efek Silau</string>
+    <string name="ShowRecentForwardTab">Tampilkan tab obrolan terbaru saat meneruskan</string>
 </resources>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">کانال Niagram X</string>
     <string name="EnableSaveDeletedMessages">نمایش پیام‌های حذف شده</string>
@@ -335,4 +335,35 @@
     <string name="DeepLTranslateKey">کلید API سرویس DeepL</string>
     <string name="DeepLTranslateKeyNotice">کلید رابط برنامه‌نویسی DeepL را پیکربندی کنید، برای استفاده از اعتبارنامه‌های داخلی آن را خالی بگذارید.</string>
     <string name="DefaultScheduleDelay">تاخیر پیش‌فرض</string>
+    <string name="ExportAyuDB">صادرکردن پایگاه داده</string>
+    <string name="ImportAyuDB">واردکردن پایگاه داده</string>
+    <string name="ImportAyuDBAlert">پایگاه داده پیام‌های فعلی جایگزین خواهد شد. پس از وارد کردن، برنامه راه‌اندازی مجدد خواهد شد.</string>
+    <string name="DisableSwipeToNext">غیرفعال کردن کشیدن به بعدی</string>
+    <string name="ForceFontWeightFallback">اجبار به استفاده از وزن پشتیبان فونت</string>
+    <string name="FontSettings">تنظیمات فونت</string>
+    <string name="FontCategoryRegular">فونت معمولی</string>
+    <string name="FontCategoryBold">فونت ضخیم</string>
+    <string name="FontCategoryItalic">فونت کج</string>
+    <string name="FontCategoryMono">فونت تک‌فاصله</string>
+    <string name="FontSelectFile">انتخاب فایل .ttf / .otf</string>
+    <string name="FontResetToDefault">بازنشانی به پیش‌فرض سیستم</string>
+    <string name="FontPreviewTitle">پیش‌نمایش فونت</string>
+    <string name="FontApply">اعمال</string>
+    <string name="FontApplyAs">اعمال فونت به‌عنوان…</string>
+    <string name="FontAppliedSuccess">فونت با موفقیت اعمال شد!</string>
+    <string name="FontInvalidFile">فایل فونت نامعتبر یا خراب است.</string>
+    <string name="InputFieldTextSize">اندازه متن فیلد ورودی</string>
+    <string name="InputFieldTextSizeDefault">پیش‌فرض</string>
+    <string name="ScrollToSeenPhotoOnClose">پیمایش به عکس مشاهده‌شده هنگام بستن</string>
+    <string name="ScrollToSeenPhotoOnCloseNotice">هنگام بستن نمایشگر رسانه، به آخرین عکس مشاهده‌شده بروید.</string>
+    <string name="HideStarRating">پنهان کردن امتیاز ستاره در پروفایل‌ها</string>
+    <string name="HideGiftButton">پنهان کردن دکمه هدیه در پروفایل‌ها</string>
+    <string name="EnableQuickSchedule">زمان‌بندی سریع</string>
+    <string name="EnableQuickScheduleNotice">با نگه‌داشتن دکمه ارسال، گزینه‌های زمان‌بندی را نمایش می‌دهد.</string>
+    <string name="UseSystemPhotoPicker">سازگاری انتخابگر عکس سیستم</string>
+    <string name="UseSystemPhotoPickerDesc">در اندروید ۱۳ و بالاتر، از انتخابگر عکس سیستم برای پیوست‌های گالری بدون درخواست دسترسی کامل به عکس‌ها و ویدیوها استفاده کنید.</string>
+    <string name="ProviderVolcengineTranslate">ترجمه Volcengine</string>
+    <string name="DisableAiEditor">غیرفعال کردن ویرایشگر هوش مصنوعی</string>
+    <string name="DisableGlareEffects">غیرفعال کردن افکت‌های درخشش</string>
+    <string name="ShowRecentForwardTab">نمایش برگه چت‌های اخیر هنگام ارسال مجدد</string>
 </resources>

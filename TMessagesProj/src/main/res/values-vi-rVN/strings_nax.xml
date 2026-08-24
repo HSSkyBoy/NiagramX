@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Kênh Niagram X</string>
     <string name="EnableSaveDeletedMessages">Lưu tin nhắn đã xóa</string>
@@ -307,4 +307,31 @@
     <string name="TabletModeOff">Tắt</string>
     <string name="DefaultScheduleDelay">Độ trể mặc định</string>
     <string name="DisableSwipeToNext">Tắt tính năng vuốt để chuyển sang mục tiếp theo</string>
+    <string name="ForceFontWeightFallback">Buộc dùng trọng số phông chữ dự phòng</string>
+    <string name="FontSettings">Cài đặt phông chữ</string>
+    <string name="FontCategoryRegular">Phông chữ thường</string>
+    <string name="FontCategoryBold">Phông chữ đậm</string>
+    <string name="FontCategoryItalic">Phông chữ nghiêng</string>
+    <string name="FontCategoryMono">Phông chữ đơn cách</string>
+    <string name="FontSelectFile">Chọn tệp .ttf / .otf</string>
+    <string name="FontResetToDefault">Đặt lại về mặc định hệ thống</string>
+    <string name="FontPreviewTitle">Xem trước phông chữ</string>
+    <string name="FontApply">Áp dụng</string>
+    <string name="FontApplyAs">Áp dụng phông chữ dưới dạng…</string>
+    <string name="FontAppliedSuccess">Phông chữ được áp dụng thành công!</string>
+    <string name="FontInvalidFile">Tệp phông chữ không hợp lệ hoặc bị hỏng.</string>
+    <string name="InputFieldTextSize">Cỡ chữ ô nhập liệu</string>
+    <string name="InputFieldTextSizeDefault">Mặc định</string>
+    <string name="ScrollToSeenPhotoOnClose">Cuộn đến ảnh đã xem khi đóng</string>
+    <string name="ScrollToSeenPhotoOnCloseNotice">Tự động cuộn đến ảnh cuối cùng đã xem khi đóng trình xem phương tiện.</string>
+    <string name="HideStarRating">Ẩn xếp hạng sao trong hồ sơ</string>
+    <string name="HideGiftButton">Ẩn nút quà tặng trong hồ sơ</string>
+    <string name="EnableQuickSchedule">Lên lịch nhanh</string>
+    <string name="EnableQuickScheduleNotice">Hiển thị tùy chọn lên lịch gửi khi nhấn giữ nút gửi, tôn trọng trạng thái tắt tiếng.</string>
+    <string name="UseSystemPhotoPicker">Tương thích bộ chọn ảnh hệ thống</string>
+    <string name="UseSystemPhotoPickerDesc">Trên Android 13 trở lên, sử dụng bộ chọn ảnh hệ thống cho tệp đính kèm từ thư viện mà không cần yêu cầu quyền truy cập đầy đủ vào ảnh và video.</string>
+    <string name="ProviderVolcengineTranslate">Dịch thuật Volcengine</string>
+    <string name="DisableAiEditor">Tắt trình chỉnh sửa AI</string>
+    <string name="DisableGlareEffects">Tắt hiệu ứng lóa sáng</string>
+    <string name="ShowRecentForwardTab">Hiển thị tab chat gần đây khi chuyển tiếp</string>
 </resources>

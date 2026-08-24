@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Niagram X チャンネル</string>
     <string name="EnableSaveDeletedMessages">削除済みメッセージを保存</string>
@@ -339,4 +339,31 @@
     <string name="ImportAyuDB">データベースをインポート</string>
     <string name="ImportAyuDBAlert">現在のメッセージデータベースは置き換えられます。インポート後、アプリが再起動します。</string>
     <string name="DisableSwipeToNext">「スワイプして次へ」を無効化</string>
+    <string name="ForceFontWeightFallback">フォントウェイトのフォールバックを強制</string>
+    <string name="FontSettings">フォント設定</string>
+    <string name="FontCategoryRegular">通常フォント</string>
+    <string name="FontCategoryBold">太字フォント</string>
+    <string name="FontCategoryItalic">斜体フォント</string>
+    <string name="FontCategoryMono">等幅フォント</string>
+    <string name="FontSelectFile">.ttf / .otf ファイルを選択</string>
+    <string name="FontResetToDefault">システムデフォルトにリセット</string>
+    <string name="FontPreviewTitle">フォントプレビュー</string>
+    <string name="FontApply">適用</string>
+    <string name="FontApplyAs">フォントを適用する形式…</string>
+    <string name="FontAppliedSuccess">フォントが正常に適用されました！</string>
+    <string name="FontInvalidFile">無効または破損したフォントファイルです。</string>
+    <string name="InputFieldTextSize">入力フィールドのテキストサイズ</string>
+    <string name="InputFieldTextSizeDefault">デフォルト</string>
+    <string name="ScrollToSeenPhotoOnClose">閉じるときに閲覧済み写真にスクロール</string>
+    <string name="ScrollToSeenPhotoOnCloseNotice">メディアビューアを閉じたとき、最後に表示した写真に自動スクロールします。</string>
+    <string name="HideStarRating">プロフィールの星評価を非表示</string>
+    <string name="HideGiftButton">プロフィールのギフトボタンを非表示</string>
+    <string name="EnableQuickSchedule">クイックスケジュール</string>
+    <string name="EnableQuickScheduleNotice">送信ボタンを長押しすると、ミュート状態に応じた送信タイミングの選択肢を表示します。</string>
+    <string name="UseSystemPhotoPicker">システム写真ピッカーの互換性</string>
+    <string name="UseSystemPhotoPickerDesc">Android 13以降では、完全な写真・動画アクセス権限を要求せずに、システム写真ピッカーを使用してギャラリーから添付ファイルを選択できます。</string>
+    <string name="ProviderVolcengineTranslate">Volcengine翻訳</string>
+    <string name="DisableAiEditor">AIエディターを無効にする</string>
+    <string name="DisableGlareEffects">グレアエフェクトを無効にする</string>
+    <string name="ShowRecentForwardTab">転送時に最近のチャットタブを表示</string>
 </resources>
