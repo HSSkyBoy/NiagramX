@@ -369,10 +369,7 @@
     <string name="FontInvalidFile">Invalid or corrupted font file.</string>
     <string name="InputFieldTextSize">Input Field Text Size</string>
     <string name="InputFieldTextSizeDefault">Default</string>
-    <string name="ScrollToSeenPhotoOnClose">Scroll to Seen Photo on Close</string>
-    <string name="ScrollToSeenPhotoOnCloseNotice">Automatically scroll and locate the last viewed photo when closing media viewer in chats and shared media.</string>
     <string name="HideStarRating">Hide Star Rating in Profiles</string>
-    <string name="HideGiftButton">Hide Gift Button in Profiles</string>
     <string name="EnableQuickSchedule">Quick Schedule</string>
     <string name="EnableQuickScheduleNotice">Show scheduling options (Send later / Send when online) on long pressing the send button, respecting mute state.</string>
     <string name="UseSystemPhotoPicker">System photo picker compatibility</string>

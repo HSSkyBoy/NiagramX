@@ -354,10 +354,7 @@
     <string name="FontInvalidFile">無效或已損壞的字體檔案。</string>
     <string name="InputFieldTextSize">輸入框文字大小</string>
     <string name="InputFieldTextSizeDefault">預設</string>
-    <string name="ScrollToSeenPhotoOnClose">關閉時自動定位已查看照片</string>
-    <string name="ScrollToSeenPhotoOnCloseNotice">在聊天室或共享媒體檢視器關閉時，自動滾動並定位到最後瀏覽的照片。</string>
     <string name="HideStarRating">隱藏個人檔案中的星星評分</string>
-    <string name="HideGiftButton">隱藏個人檔案中的送禮按鈕</string>
     <string name="EnableQuickSchedule">快速定時發送</string>
     <string name="EnableQuickScheduleNotice">長按發送按鈕時顯示定時選項（稍後發送 / 上線時發送），並自動繼承靜音狀態。</string>
     <string name="UseSystemPhotoPicker">系統相片選取器相容</string>
