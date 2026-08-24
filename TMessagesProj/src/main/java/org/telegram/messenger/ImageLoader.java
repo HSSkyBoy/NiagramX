@@ -2595,6 +2595,7 @@ public class ImageLoader {
                         File imagePath = new File(publicMediaDir, "Telegram Images");
                         imagePath.mkdir();
                         if (imagePath.isDirectory() && canMoveFiles(cachePath, imagePath, FileLoader.MEDIA_DIR_IMAGE)) {
+                            AndroidUtilities.createEmptyFile(new File(imagePath, ".nomedia"));
                             mediaDirs.put(FileLoader.MEDIA_DIR_IMAGE_PUBLIC, imagePath);
                             if (BuildVars.LOGS_ENABLED) {
                                 FileLog.d("image path = " + imagePath);
