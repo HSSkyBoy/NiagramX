@@ -146,9 +146,9 @@ public class PipActivityController {
 
         PipUtils.applyPictureInPictureParams(activity, newSource);
 
-        final boolean oldMediaSession = oldSource != null && oldSource.needMediaSession;
+        final boolean oldMediaSession = oldSource != null && oldSource.needMediaSession && mediaSession != null;
         final boolean newMediaSession = newSource != null && newSource.needMediaSession;
-        if (oldMediaSession != newMediaSession) {
+        if (oldMediaSession != newMediaSession || (newMediaSession && mediaSession == null)) {
             if (mediaSessionConnector != null) {
                 mediaSessionConnector.setPlayer(null);
                 mediaSessionConnector = null;
@@ -160,13 +160,16 @@ public class PipActivityController {
                 // Log.i(PipSource.TAG, "[MEDIA] stop media session");
             }
 
-            if (newSource != null) {
-                mediaSession = new MediaSessionCompat(activity, "pip-media-session");
-                mediaSession.setQueue(null);
-                mediaSession.setActive(true);
-                mediaSessionConnector = new MediaSessionConnector(mediaSession);
-
-                // Log.i(PipSource.TAG, "[MEDIA] start media session");
+            if (newSource != null && newSource.needMediaSession) {
+                try {
+                    mediaSession = new MediaSessionCompat(activity, "pip-media-session");
+                    mediaSession.setQueue(null);
+                    mediaSession.setActive(true);
+                    mediaSessionConnector = new MediaSessionConnector(mediaSession);
+                    // Log.i(PipSource.TAG, "[MEDIA] start media session");
+                } catch (Throwable t) {
+                    // ignore
+                }
             }
         }
 
