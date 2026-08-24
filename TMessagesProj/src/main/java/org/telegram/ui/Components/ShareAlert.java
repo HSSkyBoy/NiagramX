@@ -2065,6 +2065,9 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
                                     gridView.setVisibility(View.GONE);
                                     searchGridView.setVisibility(View.GONE);
                                     searchView.setVisibility(View.GONE);
+                                    if (switchView != null) {
+                                        switchView.setVisibility(View.GONE);
+                                    }
 
                                     topicsAnimation = null;
                                 });
@@ -2160,6 +2163,9 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
 
         getMainGridView().setVisibility(View.VISIBLE);
         searchView.setVisibility(View.VISIBLE);
+        if (switchView != null) {
+            switchView.setVisibility(View.VISIBLE);
+        }
 
         if (searchIsVisible || searchWasVisibleBeforeTopics) {
             sizeNotifierFrameLayout.adjustPanLayoutHelper.ignoreOnce();
@@ -2210,6 +2216,14 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
         searchView.setScaleX(0.9f + (1f - value) * 0.1f);
         searchView.setScaleY(0.9f + (1f - value) * 0.1f);
         searchView.setAlpha(1f - value);
+
+        if (switchView != null) {
+            switchView.setPivotX(switchView.getWidth() / 2f);
+            switchView.setPivotY(0);
+            switchView.setScaleX(0.9f + (1f - value) * 0.1f);
+            switchView.setScaleY(0.9f + (1f - value) * 0.1f);
+            switchView.setAlpha(1f - value);
+        }
 
         topicsBackActionBar.getBackButton().setTranslationX(-dp(16) * (1f - value));
         topicsBackActionBar.getTitleTextView().setTranslationY(dp(16) * (1f - value));
