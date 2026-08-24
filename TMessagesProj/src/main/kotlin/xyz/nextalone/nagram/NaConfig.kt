@@ -1345,6 +1345,12 @@ object NaConfig {
             ConfigItem.configTypeBool,
             false
         )
+    val disableAiEditor =
+        addConfig(
+            "DisableAiEditor",
+            ConfigItem.configTypeBool,
+            false
+        )
     val keepTranslatorPreferences =
         addConfig(
             "KeepTranslatorPreferences",
