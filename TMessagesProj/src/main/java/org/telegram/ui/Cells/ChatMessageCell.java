@@ -11546,8 +11546,11 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             } else {
                 docTitleOffsetX = 0;
             }
-        }
+        measureTime(messageObject);
         int w = maxWidth - dp(messageObject.isOutOwner() ? 28 : 8);
+        if (timeWidth > 0) {
+            w -= timeWidth + dp(12);
+        }
 
         if (!isBot) {
             TextPaint textPaint = !public_voters && !multiple_choice ? Theme.chat_livePaint : Theme.chat_locationAddressPaint;
