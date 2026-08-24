@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="NiagramX" translatable="false">Niagram X</string>
     <string name="NigramX" translatable="false">Niagram X</string>
@@ -354,6 +354,19 @@
     <string name="ExportAyuDB">Export Database</string>
     <string name="ImportAyuDB">Import Database</string>
     <string name="ImportAyuDBAlert">The current message database will be replaced. The app will restart after the import.</string>
-    <string name="DisableSwipeToNext">Disable Swipe to Next</string>
     <string name="ForceFontWeightFallback">Force Font Weight Fallback</string>
+    <string name="FontSettings">Font Settings</string>
+    <string name="FontCategoryRegular">Regular Font</string>
+    <string name="FontCategoryBold">Bold Font</string>
+    <string name="FontCategoryItalic">Italic Font</string>
+    <string name="FontCategoryMono">Monospace Font</string>
+    <string name="FontSelectFile">Select .ttf / .otf Font</string>
+    <string name="FontResetToDefault">Reset to System Default</string>
+    <string name="FontPreviewTitle">Font Preview</string>
+    <string name="FontApply">Apply</string>
+    <string name="FontApplyAs">Apply Font As…</string>
+    <string name="FontAppliedSuccess">Font successfully applied!</string>
+    <string name="FontInvalidFile">Invalid or corrupted font file.</string>
+    <string name="InputFieldTextSize">Input Field Text Size</string>
+    <string name="InputFieldTextSizeDefault">Default</string>
 </resources>

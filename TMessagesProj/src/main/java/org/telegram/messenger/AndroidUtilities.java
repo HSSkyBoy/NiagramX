@@ -2396,6 +2396,11 @@ public class AndroidUtilities {
         return result;
     }
 
+    public static void clearTypefaceCache() {
+        typefaceCache.clear();
+        mediumTypeface = null;
+    }
+
     public static Typeface getTypeface(String assetPath) {
         return typefaceCache.computeIfAbsent(assetPath, path -> {
             try {

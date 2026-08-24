@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Niagram X 频道</string>
     <string name="EnableSaveDeletedMessages">保存已删除消息</string>
@@ -337,6 +337,19 @@
     <string name="DefaultScheduleDelay">默认延迟</string>
     <string name="ExportAyuDB">导出数据库</string>
     <string name="ImportAyuDB">导入数据库</string>
-    <string name="ImportAyuDBAlert">当前消息数据库将被替换。导入后应用将重启。</string>
     <string name="DisableSwipeToNext">禁用滑动切到下一个</string>
+    <string name="FontSettings">字体设置</string>
+    <string name="FontCategoryRegular">常规字体 (Regular)</string>
+    <string name="FontCategoryBold">粗体字体 (Bold)</string>
+    <string name="FontCategoryItalic">斜体字体 (Italic)</string>
+    <string name="FontCategoryMono">等宽字体 (Monospace)</string>
+    <string name="FontSelectFile">选择 .ttf / .otf 字体文件</string>
+    <string name="FontResetToDefault">恢复系统默认</string>
+    <string name="FontPreviewTitle">字体预览</string>
+    <string name="FontApply">应用</string>
+    <string name="FontApplyAs">应用字体为…</string>
+    <string name="FontAppliedSuccess">字体应用成功！</string>
+    <string name="FontInvalidFile">无效或已损坏的字体文件。</string>
+    <string name="InputFieldTextSize">输入框文字大小</string>
+    <string name="InputFieldTextSizeDefault">默认</string>
 </resources>

@@ -551,6 +551,37 @@ object NaConfig {
             1
         )
 
+    val customFontRegular =
+        addConfig(
+            "customFontRegular",
+            ConfigItem.configTypeString,
+            ""
+        )
+    val customFontBold =
+        addConfig(
+            "customFontBold",
+            ConfigItem.configTypeString,
+            ""
+        )
+    val customFontItalic =
+        addConfig(
+            "customFontItalic",
+            ConfigItem.configTypeString,
+            ""
+        )
+    val customFontMono =
+        addConfig(
+            "customFontMono",
+            ConfigItem.configTypeString,
+            ""
+        )
+    val inputFieldTextSize =
+        addConfig(
+            "inputFieldTextSize",
+            ConfigItem.configTypeInt,
+            0
+        )
+
     // NagramX
     val enableSaveDeletedMessages =
         addConfig(

@@ -136,7 +136,24 @@ public class ConfigCellTextInput extends AbstractConfigCell implements WithBindC
                 AndroidUtil.showInputError(editText);
                 return;
             }
-            bindConfig.setConfigString(newV);
+            if (bindConfig.type == ConfigItem.configTypeInt) {
+                try {
+                    bindConfig.setConfigInt(Integer.parseInt(newV));
+                } catch (Exception ignored) {
+                }
+            } else if (bindConfig.type == ConfigItem.configTypeLong) {
+                try {
+                    bindConfig.setConfigLong(Long.parseLong(newV));
+                } catch (Exception ignored) {
+                }
+            } else if (bindConfig.type == ConfigItem.configTypeFloat) {
+                try {
+                    bindConfig.setConfigFloat(Float.parseFloat(newV));
+                } catch (Exception ignored) {
+                }
+            } else {
+                bindConfig.setConfigString(newV);
+            }
 
             // refresh
             cellGroup.listAdapter.notifyItemChanged(cellGroup.rows.indexOf(this));

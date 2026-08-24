@@ -59,6 +59,10 @@ public class TypefaceHelper {
     }
 
     public static Typeface createTypeface(String assetPath) {
+        Typeface custom = getCustomTypefaceByPath(assetPath);
+        if (custom != null) {
+            return custom;
+        }
         return switch (assetPath) {
             case AndroidUtilities.TYPEFACE_ROBOTO_MEDIUM -> {
                 if (NekoConfig.forceFontWeightFallback.Bool()) {
@@ -82,6 +86,24 @@ public class TypefaceHelper {
                     Typeface.MONOSPACE;
             default -> createTypefaceFromAsset(assetPath);
         };
+    }
+
+    private static Typeface getCustomTypefaceByPath(String assetPath) {
+        if (assetPath == null) return null;
+        if (assetPath.equals(AndroidUtilities.TYPEFACE_ROBOTO_MONO)) {
+            Typeface tf = FontHelper.getCustomTypeface(FontHelper.CATEGORY_MONO);
+            if (tf != null) return tf;
+        } else if (assetPath.contains("italic")) {
+            Typeface tf = FontHelper.getCustomTypeface(FontHelper.CATEGORY_ITALIC);
+            if (tf != null) return tf;
+        } else if (assetPath.contains("medium") || assetPath.contains("bold")) {
+            Typeface tf = FontHelper.getCustomTypeface(FontHelper.CATEGORY_BOLD);
+            if (tf != null) return tf;
+        } else {
+            Typeface tf = FontHelper.getCustomTypeface(FontHelper.CATEGORY_REGULAR);
+            if (tf != null) return tf;
+        }
+        return null;
     }
 
     public static Typeface createTypefaceFromAsset(String assetPath) {

@@ -418,7 +418,7 @@ public class EditTextBoldCursor extends EditTextEffects {
 
             }
         }
-        cursorSize = dp(24);
+        updateScaledCursorSize();
     }
 
     @SuppressLint("PrivateApi")
@@ -540,6 +540,13 @@ public class EditTextBoldCursor extends EditTextEffects {
 
     @Override
     public void setTextSize(int unit, float size) {
+        try {
+            int customSize = xyz.nextalone.nagram.NaConfig.INSTANCE.getInputFieldTextSize().Int();
+            if (customSize > 0) {
+                size = customSize;
+                unit = android.util.TypedValue.COMPLEX_UNIT_DIP;
+            }
+        } catch (Throwable ignore) {}
         if (hintAnimatedDrawable != null) {
             hintAnimatedDrawable.setTextSize(dp(size));
         }
@@ -547,6 +554,18 @@ public class EditTextBoldCursor extends EditTextEffects {
             hintAnimatedDrawable2.setTextSize(dp(size));
         }
         super.setTextSize(unit, size);
+        updateScaledCursorSize();
+    }
+
+    public void updateScaledCursorSize() {
+        float textSize = getTextSize();
+        if (textSize > 0) {
+            cursorSize = (int) (textSize * 1.15f);
+            cursorWidth = Math.max(1.5f, textSize / dp(9f));
+        } else {
+            cursorSize = dp(24);
+            cursorWidth = 2.0f;
+        }
     }
 
     public void setNextSetTextAnimated(boolean value) {
