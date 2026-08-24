@@ -1,4 +1,4 @@
-﻿package tw.nekomimi.nekogram.helpers
+package tw.nekomimi.nekogram.helpers
 
 import android.app.Activity
 import android.graphics.Typeface
@@ -140,7 +140,7 @@ object FontHelper {
         linearLayout.addView(titleView, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0f, 0f, 0f, 16f))
 
         val smallView = TextView(activity)
-        smallView.text = "NigramX is a Telegram client mod."
+        smallView.text = "NiagramX is a Telegram client mod."
         smallView.textSize = 14f
         smallView.typeface = typeface
         smallView.setTextColor(Theme.getColor(Theme.key_dialogTextGray))
