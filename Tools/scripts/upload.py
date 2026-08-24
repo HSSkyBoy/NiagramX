@@ -33,7 +33,7 @@ def get_caption() -> str:
 
 def get_document() -> list["InputMediaDocument"]:
     documents = []
-    abis = ["arm64-v8a", "universal"]
+    abis = ["universal", "arm64-v8a", "x86_64"]
     for abi in abis:
         if apk := find_apk(abi):
             documents.append(

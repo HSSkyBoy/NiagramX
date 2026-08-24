@@ -28,7 +28,7 @@ jobs:
       CCACHE_HARDLINK: "true"
       CCACHE_NOHASHDIR: "true"
       CCACHE_MAXSIZE: "10G"
-      NATIVE_TARGET: "arm64-v8a"
+      NATIVE_TARGET: "universal"
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -89,11 +89,21 @@ jobs:
           export BUILD_TIMESTAMP=$(date +%s)
           echo "build_timestamp=$BUILD_TIMESTAMP" >> "$GITHUB_OUTPUT"
           ./gradlew TMessagesProj:assembleStaging
+      - name: Upload universal Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: Staging-universal
+          path: TMessagesProj/build/outputs/apk/staging/*-universal.apk
       - name: Upload arm64-v8a Artifact
         uses: actions/upload-artifact@v7
         with:
           name: Staging-arm64-v8a
           path: TMessagesProj/build/outputs/apk/staging/*-arm64-v8a.apk
+      - name: Upload x86_64 Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: Staging-x86_64
+          path: TMessagesProj/build/outputs/apk/staging/*-x86_64.apk
   upload:
     name: Upload staging
     if: github.event.inputs.upload != 'y' && !contains(github.event.head_commit.message, '[skip upload]')
