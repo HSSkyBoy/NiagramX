@@ -194,7 +194,7 @@
     <string name="ShowIdAndDc">在個人資料中顯示 ID/DC</string>
     <string name="UseDefaultTheme">使用預設主題＊</string>
     <string name="DialogsSettings">聊天列表</string>
-    <string name="NagramXPushService">推播服務</string>
+    <string name="NiagramXPushService">推播服務</string>
     <string name="DisableSystemAccount">禁用系統帳戶</string>
     <string name="FilterMenu">分類選單</string>
     <string name="DisableProxyWhenVpnEnabled">啟用 VPN 時禁用代理</string>

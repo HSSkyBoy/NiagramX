@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="NekoSettings">تنظیمات ناگرام</string>
     <string name="IPv6">ترجیح دادن IPv6</string>
@@ -190,7 +190,7 @@
     <string name="ShowIdAndDc">نمایش شناسه (ID) / دیتاسنتر (DC) در پروفایل</string>
     <string name="UseDefaultTheme">استفاده از پوسته پیش‌فرض *</string>
     <string name="DialogsSettings">تنظیمات گفتگوها</string>
-    <string name="NagramXPushService">سرویس اعلان</string>
+    <string name="NiagramXPushService">سرویس اعلان</string>
     <string name="DisableSystemAccount">غیرفعال کردن حساب سیستمی</string>
     <string name="FilterMenu">منوی فیلتر گفتگوها</string>
     <string name="DisableProxyWhenVpnEnabled">غیرفعال کردن پروکسی هنگام روشن بودن VPN</string>

@@ -8,7 +8,7 @@ Special thanks to upstream developers and contributors for their outstanding wor
 
 Latest versions are available through:
 * [Telegram Channel](https://t.me/NiagramX) (Latest Beta)
-* [GitHub Releases](https://github.com/HSSkyBoy/NigramX/releases) (Latest Stable)
+* [GitHub Releases](https://github.com/HSSkyBoy/NiagramX/releases) (Latest Stable)
 
 ## Verify APK
 
@@ -22,7 +22,7 @@ Official APKs use the following Android signing certificate:
 1. Clone the repository with its submodules:
 
     ```bash
-    git clone --recursive --shallow-submodules https://github.com/HSSkyBoy/NigramX.git NigramX
+    git clone --recursive --shallow-submodules https://github.com/HSSkyBoy/NiagramX.git NigramX
     ```
 
     If you already cloned the repository without submodules, run:

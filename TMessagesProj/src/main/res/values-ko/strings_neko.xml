@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="NekoSettings">N-설정</string>
     <string name="IPv6">IPv6 우선 사용</string>
@@ -190,7 +190,7 @@
     <string name="ShowIdAndDc">프로필에 ID / DC 표시</string>
     <string name="UseDefaultTheme">기본 테마 사용 *</string>
     <string name="DialogsSettings">채팅</string>
-    <string name="NagramXPushService">푸시 서비스</string>
+    <string name="NiagramXPushService">푸시 서비스</string>
     <string name="DisableSystemAccount">시스템 계정 끄기</string>
     <string name="FilterMenu">채팅 필터 메뉴</string>
     <string name="DisableProxyWhenVpnEnabled">VPN이 켜져 있으면 프록시 끄기</string>

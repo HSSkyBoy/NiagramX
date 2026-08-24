@@ -144,7 +144,7 @@ public class UpdateLayout extends IUpdateLayout {
                     showSize = false;
                 } else {
                     updateLayoutIcon.setIcon(MediaActionDrawable.ICON_DOWNLOAD, true, animated);
-                    setUpdateText(LocaleController.getString(R.string.AppUpdate).replace("Telegram", LocaleController.getString(R.string.NagramX)), animated);
+                    setUpdateText(LocaleController.getString(R.string.AppUpdate).replace("Telegram", LocaleController.getString(R.string.NiagramX)), animated);
                     showSize = true;
                 }
             }

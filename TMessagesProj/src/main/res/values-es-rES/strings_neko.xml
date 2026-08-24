@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="NekoSettings">N-Ajustes</string>
     <string name="IPv6">IPv6 preferido</string>
@@ -190,7 +190,7 @@
     <string name="ShowIdAndDc">Mostrar ID / DC en el perfil</string>
     <string name="UseDefaultTheme">Usar tema por defecto *</string>
     <string name="DialogsSettings">Cuadros de diálogo</string>
-    <string name="NagramXPushService">Servicio Push</string>
+    <string name="NiagramXPushService">Servicio Push</string>
     <string name="DisableSystemAccount">Desactivar cuenta del sistema</string>
     <string name="FilterMenu">Menú de filtros de diálogos</string>
     <string name="DisableProxyWhenVpnEnabled">Desactivar proxy cuando la VPN está habilitada</string>

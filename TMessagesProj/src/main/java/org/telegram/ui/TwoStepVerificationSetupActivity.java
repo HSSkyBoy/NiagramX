@@ -1399,9 +1399,9 @@ public class TwoStepVerificationSetupActivity extends BaseFragment {
                                     } else {
                                         timeString = LocaleController.formatPluralString("Minutes", time / 60);
                                     }
-                                    showAlertWithText(LocaleController.getString(R.string.NagramX), LocaleController.formatString("FloodWaitTime", R.string.FloodWaitTime, timeString));
+                                    showAlertWithText(LocaleController.getString(R.string.NiagramX), LocaleController.formatString("FloodWaitTime", R.string.FloodWaitTime, timeString));
                                 } else {
-                                    showAlertWithText(LocaleController.getString(R.string.NagramX), error.text);
+                                    showAlertWithText(LocaleController.getString(R.string.NiagramX), error.text);
                                 }
                             });
                         }
@@ -1588,9 +1588,9 @@ public class TwoStepVerificationSetupActivity extends BaseFragment {
                             } else {
                                 timeString = LocaleController.formatPluralString("Minutes", time / 60);
                             }
-                            showAlertWithText(LocaleController.getString(R.string.NagramX), LocaleController.formatString("FloodWaitTime", R.string.FloodWaitTime, timeString));
+                            showAlertWithText(LocaleController.getString(R.string.NiagramX), LocaleController.formatString("FloodWaitTime", R.string.FloodWaitTime, timeString));
                         } else {
-                            showAlertWithText(LocaleController.getString(R.string.NagramX), error.text);
+                            showAlertWithText(LocaleController.getString(R.string.NiagramX), error.text);
                         }
                     }
                 }), ConnectionsManager.RequestFlagFailOnServerErrors | ConnectionsManager.RequestFlagWithoutLogin);
@@ -1998,7 +1998,7 @@ public class TwoStepVerificationSetupActivity extends BaseFragment {
                         presentFragment(fragment, true);
                     } else {
                         if ("EMAIL_INVALID".equals(error.text)) {
-                            showAlertWithText(LocaleController.getString(R.string.NagramX), LocaleController.getString(R.string.PasswordEmailInvalid));
+                            showAlertWithText(LocaleController.getString(R.string.NiagramX), LocaleController.getString(R.string.PasswordEmailInvalid));
                         } else if (error.text.startsWith("FLOOD_WAIT")) {
                             int time = Utilities.parseInt(error.text);
                             String timeString;
@@ -2007,9 +2007,9 @@ public class TwoStepVerificationSetupActivity extends BaseFragment {
                             } else {
                                 timeString = LocaleController.formatPluralString("Minutes", time / 60);
                             }
-                            showAlertWithText(LocaleController.getString(R.string.NagramX), LocaleController.formatString("FloodWaitTime", R.string.FloodWaitTime, timeString));
+                            showAlertWithText(LocaleController.getString(R.string.NiagramX), LocaleController.formatString("FloodWaitTime", R.string.FloodWaitTime, timeString));
                         } else {
-                            showAlertWithText(LocaleController.getString(R.string.NagramX), error.text);
+                            showAlertWithText(LocaleController.getString(R.string.NiagramX), error.text);
                         }
                     }
                 }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="NekoSettings">Cài đặt Niagram X</string>
     <string name="IPv6">Ưu tiên IPv6</string>
@@ -190,7 +190,7 @@
     <string name="ShowIdAndDc">Hiển thị ID / DC trong hồ sơ</string>
     <string name="UseDefaultTheme">Sử dụng chủ đề mặc định *</string>
     <string name="DialogsSettings">Hộp Thoại</string>
-    <string name="NagramXPushService">Dịch vụ Push</string>
+    <string name="NiagramXPushService">Dịch vụ Push</string>
     <string name="DisableSystemAccount">Vô hiệu hóa tài khoản hệ thống</string>
     <string name="FilterMenu">Bộ lọc hội thoại</string>
     <string name="DisableProxyWhenVpnEnabled">Tắt Proxy khi Vpn được bật</string>

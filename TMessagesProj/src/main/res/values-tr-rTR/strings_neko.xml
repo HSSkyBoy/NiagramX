@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="NekoSettings">N-Ayarları</string>
     <string name="IPv6">IPv6 Tercih Et</string>
@@ -190,7 +190,7 @@
     <string name="ShowIdAndDc">Profilde Kimlik (ID) / Veri Merkezini Göster</string>
     <string name="UseDefaultTheme">Varsayılan temayı kullan *</string>
     <string name="DialogsSettings">Sohbetler</string>
-    <string name="NagramXPushService">Bildirim (Push) Servisi</string>
+    <string name="NiagramXPushService">Bildirim (Push) Servisi</string>
     <string name="DisableSystemAccount">Sistem Hesabını Devre Dışı Bırak</string>
     <string name="FilterMenu">Sohbetler Filtre Menüsü</string>
     <string name="DisableProxyWhenVpnEnabled">VPN Etkinken Proxy\'yi Devre Dışı Bırak</string>

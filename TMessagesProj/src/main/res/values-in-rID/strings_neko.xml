@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="NekoSettings">Pengaturan-N</string>
     <string name="IPv6">Lebih suka IPv6</string>
@@ -192,7 +192,7 @@
     <string name="ShowIdAndDc">Tampilkan ID / DC di Profil</string>
     <string name="UseDefaultTheme">Gunakan tema default *</string>
     <string name="DialogsSettings">Dialog</string>
-    <string name="NagramXPushService">Layanan Dorong</string>
+    <string name="NiagramXPushService">Layanan Dorong</string>
     <string name="DisableSystemAccount">Nonaktifkan Akun Sistem</string>
     <string name="FilterMenu">Menu Penyaring Dialog</string>
     <string name="DisableProxyWhenVpnEnabled">Nonaktifkan Proksi Saat VPN Diaktifkan</string>

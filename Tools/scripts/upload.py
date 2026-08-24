@@ -19,7 +19,7 @@ def find_apk(abi: str) -> Path | None:
 def get_commit_info():
     commit_id_raw = os.environ.get("COMMIT_ID") or "unknown"
     commit_id = commit_id_raw[:7]
-    commit_url = os.environ.get("COMMIT_URL") or "https://github.com/HSSkyBoy/NigramX/commits"
+    commit_url = os.environ.get("COMMIT_URL") or "https://github.com/HSSkyBoy/NiagramX/commits"
     commit_message = os.environ.get("COMMIT_MESSAGE") or "unknown"
     return commit_id, commit_url, commit_message
 

@@ -561,7 +561,7 @@
         <activity
             android:name="tw.nekomimi.nekogram.helpers.AppRestartHelper"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:process=":nagramx"
+            android:process=":niagramx"
             android:exported="false"
         />
 

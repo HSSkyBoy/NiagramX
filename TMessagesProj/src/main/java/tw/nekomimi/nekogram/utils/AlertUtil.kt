@@ -80,7 +80,7 @@ object AlertUtil {
         if (ctx == null) return@Runnable
 
         val builder = AlertDialog.Builder(ctx)
-        builder.setTitle(title ?: getString(R.string.NagramX))
+        builder.setTitle(title ?: getString(R.string.NiagramX))
         builder.setMessage(text)
 
         builder.setPositiveButton(getString(R.string.OK)) { _, _ ->
