@@ -7127,7 +7127,8 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 canShowFilterTabsView = false;
                 updateFilterTabsVisibility(animated);
                 for (int a = 0; a < viewPages.length; a++) {
-                    if (viewPages[a].dialogsType == DIALOGS_TYPE_DEFAULT && viewPages[a].archivePullViewState == ARCHIVE_ITEM_STATE_HIDDEN && hasHiddenArchive()) {
+                    if (viewPages[a].dialogsType == DIALOGS_TYPE_DEFAULT && ((viewPages[a].archivePullViewState == ARCHIVE_ITEM_STATE_HIDDEN || SharedConfig.archiveHidden) && hasHiddenArchive())) {
+                        viewPages[a].archivePullViewState = ARCHIVE_ITEM_STATE_HIDDEN;
                         int p = viewPages[a].layoutManager.findFirstVisibleItemPosition();
                         if (p == 0 || p == 1) {
                             viewPages[a].layoutManager.scrollToPositionWithOffset(1, (int) scrollYOffset);
