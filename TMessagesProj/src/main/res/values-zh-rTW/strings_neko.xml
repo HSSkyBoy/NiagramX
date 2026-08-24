@@ -1,9 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="NekoSettings">N-設定</string>
     <string name="IPv6">偏好 IPv6</string>
     <string name="MessageMenu">訊息選單</string>
     <string name="HidePhone">隱藏手機號碼</string>
+    <string name="HideStarsRating">隱藏星星數量</string>
+    <string name="HideGiftButton">隱藏送禮按鈕</string>
     <string name="DeleteAllFromSelf">刪除我的所有訊息</string>
     <string name="DeleteAllFromSelfAlert">注意！這會為此聊天室中的 **所有人** 刪除您所發出的所有訊息。</string>
     <string name="DeleteAllFromSelfAlertBefore">**注意！**這會為此聊天室中的 **所有人** 刪除您在 %s 之前所發出的**所有訊息**。</string>

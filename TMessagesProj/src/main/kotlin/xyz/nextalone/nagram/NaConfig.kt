@@ -358,6 +358,18 @@ object NaConfig {
             ConfigItem.configTypeBool,
             false
         )
+    val hideStarsRating =
+        addConfig(
+            "HideStarsRating",
+            ConfigItem.configTypeBool,
+            false
+        )
+    val hideGiftButton =
+        addConfig(
+            "HideGiftButton",
+            ConfigItem.configTypeBool,
+            false
+        )
     val showQuickReplyInBotCommands =
         addConfig(
             "ShowQuickReplyInBotCommands",

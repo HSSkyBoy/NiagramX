@@ -5935,7 +5935,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         });
         ratingView.setOnClickListener(this::showStarRatingBottomSheet);
         if (userInfo != null) {
-            ratingView.set(userInfo.stars_rating);
+            ratingView.set(xyz.nextalone.nagram.NaConfig.INSTANCE.getHideStarsRating().Bool() ? null : userInfo.stars_rating);
         }
 
         avatarContainer2.addView(ratingView);
@@ -8450,7 +8450,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
     private void checkStarRatingVisible() {
         if (ratingView != null) {
-            ratingView.setVisibility(!mediaHeaderVisible && isStarRatingVisible1);
+            ratingView.setVisibility(!xyz.nextalone.nagram.NaConfig.INSTANCE.getHideStarsRating().Bool() && !mediaHeaderVisible && isStarRatingVisible1);
         }
     }
 
@@ -9459,7 +9459,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     avatarImage.setHasStories(needInsetForStories());
                 }
                 if (chatId != 0) {
-                    boolean gift = !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked() && chatInfo != null && chatInfo.stargifts_available;
+                    boolean gift = !xyz.nextalone.nagram.NaConfig.INSTANCE.getHideGiftButton().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked() && chatInfo != null && chatInfo.stargifts_available;
                     otherItem.setSubItemShown(gift_premium, gift);
                     if (actionsView != null) {
                         actionsView.set(ProfileActionsView.KEY_GIFT, gift);
@@ -9551,7 +9551,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             if (uid == userId) {
                 userInfo = (TLRPC.UserFull) args[1];
                 if (ratingView != null) {
-                    ratingView.set(userInfo.stars_rating);
+                    ratingView.set(xyz.nextalone.nagram.NaConfig.INSTANCE.getHideStarsRating().Bool() ? null : userInfo.stars_rating);
                 }
                 if (storyView != null) {
                     storyView.setStories(userInfo.stories);
@@ -10679,7 +10679,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         }
         fetchUsersFromChannelInfo();
         if (chatId != 0) {
-            boolean gift = !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked() && chatInfo != null && chatInfo.stargifts_available;
+            boolean gift = !xyz.nextalone.nagram.NaConfig.INSTANCE.getHideGiftButton().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked() && chatInfo != null && chatInfo.stargifts_available;
             otherItem.setSubItemShown(gift_premium, gift);
             if (actionsView != null) {
                 actionsView.set(ProfileActionsView.KEY_GIFT, gift);
@@ -10698,7 +10698,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     ) {
         userInfo = value;
         if (ratingView != null) {
-            ratingView.set(userInfo.stars_rating);
+            ratingView.set(xyz.nextalone.nagram.NaConfig.INSTANCE.getHideStarsRating().Bool() ? null : userInfo.stars_rating);
         }
         if (storyView != null) {
             storyView.setStories(userInfo.stories);
@@ -12599,7 +12599,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     otherItem.addSubItem(delete_contact, R.drawable.msg_delete, LocaleController.getString(R.string.DeleteContact));
                 }
                 if (!UserObject.isDeleted(user) && !isBot && currentEncryptedChat == null && !userBlocked && userId != 333000 && userId != 777000 && userId != 42777) {
-                    if (!BuildVars.IS_BILLING_UNAVAILABLE && !user.self && !user.bot && !MessagesController.isSupportUser(user) && !getMessagesController().premiumPurchaseBlocked()) {
+                    if (!xyz.nextalone.nagram.NaConfig.INSTANCE.getHideGiftButton().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !user.self && !user.bot && !MessagesController.isSupportUser(user) && !getMessagesController().premiumPurchaseBlocked()) {
                         StarsController.getInstance(currentAccount).loadStarGifts();
                         otherItem.addSubItem(gift_premium, R.drawable.msg_gift_premium, LocaleController.getString(R.string.ProfileSendAGift));
                         giftAction = true;
@@ -12691,7 +12691,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         leaveAction = true;
                     } else {
                         if (!chat.left && !chat.kicked && !isTopic) {
-                            otherItem.addSubItem(leave_group, R.drawable.msg_leave, getString(R.string.LeaveMega));
+                            otherItem.addSubItem(leave_group, R.drawable.msg_leave, LocaleController.getString(R.string.LeaveMega));
                             leaveAction = true;
                         }
                     }
@@ -12704,7 +12704,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         shareAction = !chat.creator;
                         otherItem.addSubItem(share, R.drawable.msg_shareout, getString(R.string.BotShare));
                     }
-                    if (!BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked()) {
+                    if (!xyz.nextalone.nagram.NaConfig.INSTANCE.getHideGiftButton().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked()) {
                         StarsController.getInstance(currentAccount).loadStarGifts();
                         otherItem.addSubItem(gift_premium, R.drawable.msg_gift_premium, LocaleController.getString(R.string.ProfileSendAGiftToChannel));
                         otherItem.setSubItemShown(gift_premium, chatInfo != null && chatInfo.stargifts_available);
@@ -12798,7 +12798,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             actionsView.set(ProfileActionsView.KEY_VOICE_CHAT, voiceChatAction);
             actionsView.set(ProfileActionsView.KEY_STREAM, streamAction);
 
-            actionsView.set(ProfileActionsView.KEY_GIFT, giftAction);
+            actionsView.set(ProfileActionsView.KEY_GIFT, !xyz.nextalone.nagram.NaConfig.INSTANCE.getHideGiftButton().Bool() && giftAction);
             callItemVisible = videoCallItemVisible = false;
             if (!discussAction) {
                 if (isTopic) {
@@ -16438,11 +16438,17 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
     private float lastRatingViewTranslationXOffset;
     private float getRatingViewTranslationXOffset() {
+        if (xyz.nextalone.nagram.NaConfig.INSTANCE.getHideStarsRating().Bool()) {
+            return 0;
+        }
         return (ratingView != null) ? dp(22) * ratingView.getVisibilityFactor() : 0;
     }
 
     private float lastRatingViewTranslationYOffset;
     private float getRatingViewTranslationYOffset() {
+        if (xyz.nextalone.nagram.NaConfig.INSTANCE.getHideStarsRating().Bool()) {
+            return 0;
+        }
         return (ratingView != null) ? dp(3) * ratingView.getVisibilityFactor() : 0;
     }
 

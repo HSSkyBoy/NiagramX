@@ -1,9 +1,11 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="NekoSettings">N-Settings</string>
     <string name="IPv6">Prefer IPv6</string>
     <string name="MessageMenu">Message Menu</string>
     <string name="HidePhone">Hide Phone Number</string>
+    <string name="HideStarsRating">Hide Stars rating</string>
+    <string name="HideGiftButton">Hide Gift button</string>
     <string name="DeleteAllFromSelf">Delete My Messages</string>
     <string name="DeleteAllFromSelfAlert">Warning! This will **delete all messages from you** in this chat for **all** participants.</string>
     <string name="DeleteAllFromSelfAlertBefore">Warning! This will **delete all messages from you before %s** in this chat for **all** participants.</string>
