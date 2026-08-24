@@ -4488,7 +4488,7 @@ public class AlertsCreator {
         titleLayout.addView(titleView, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.TOP, 0, 12, 0, 0));
         titleView.setOnTouchListener((v, event) -> true);
 
-        final boolean[] notify = new boolean[] { true };
+        final boolean[] notify = new boolean[] { !xyz.nextalone.nagram.NaConfig.INSTANCE.getSilentMessageByDefault().Bool() };
         ActionBarMenuItem optionsButton = null;
         if (DialogObject.isUserDialog(dialogId) && dialogId != selfUserId) {
             TLRPC.User user = MessagesController.getInstance(UserConfig.selectedAccount).getUser(dialogId);
@@ -4529,8 +4529,8 @@ public class AlertsCreator {
         notifyIcon.setAllowDecodeSingleFrame(true);
         notifyIcon.setPlayInDirectionOfCustomEndFrame(true);
         notifyIcon.start();
-        notifyIcon.setCurrentFrame(40);
-        notifyIcon.setCustomEndFrame(40);
+        notifyIcon.setCurrentFrame(notify[0] ? 40 : 80);
+        notifyIcon.setCustomEndFrame(notify[0] ? 40 : 80);
         notifyItem.setScaleType(ImageView.ScaleType.CENTER);
         notifyItem.setAnimation(notifyIcon);
         notifyItem.setColorFilter(new PorterDuffColorFilter(datePickerColors.textColor, PorterDuff.Mode.SRC_IN));

@@ -5512,15 +5512,27 @@ public class ChatActivityEnterView extends FrameLayout implements
                 }, resourcesProvider);
             });
 
-            if (!self && dialog_id > 0) {
-                options.add(R.drawable.msg_online, getString(R.string.SendWhenOnline), () -> {
-                    sendMessageInternal(true, 0x7FFFFFFE, 0, 0, true);
-                    if (messageSendPreview != null) {
-                        messageSendPreview.dismiss(false);
-                        messageSendPreview = null;
-                    }
-                });
-                sendWhenOnlineButton = options.getLast();
+            if (NaConfig.INSTANCE.getEnableQuickSchedule().Bool()) {
+                int defaultDelay = NaConfig.INSTANCE.getDefaultScheduledTime().Int();
+                if (defaultDelay > 0) {
+                    options.add(R.drawable.msg_schedule, LocaleController.getString("DefaultScheduleDelay", R.string.DefaultScheduleDelay) + " (" + defaultDelay + "s)", () -> {
+                        sendMessageInternal(!sendWithoutSoundNax, (int)(System.currentTimeMillis() / 1000) + defaultDelay, 0, 0, true);
+                        if (messageSendPreview != null) {
+                            messageSendPreview.dismiss(false);
+                            messageSendPreview = null;
+                        }
+                    });
+                }
+                if (!self && dialog_id > 0) {
+                    options.add(R.drawable.msg_online, getString(R.string.SendWhenOnline), () -> {
+                        sendMessageInternal(!sendWithoutSoundNax, 0x7FFFFFFE, 0, 0, true);
+                        if (messageSendPreview != null) {
+                            messageSendPreview.dismiss(false);
+                            messageSendPreview = null;
+                        }
+                    });
+                    sendWhenOnlineButton = options.getLast();
+                }
             }
         }
 

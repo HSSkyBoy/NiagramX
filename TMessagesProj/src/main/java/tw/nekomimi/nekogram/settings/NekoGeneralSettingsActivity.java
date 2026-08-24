@@ -86,6 +86,17 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     private final AbstractConfigCell customTitleRow = cellGroup.appendCell(new ConfigCellTextInput(null, NaConfig.INSTANCE.getCustomTitle(),
         getString(R.string.CustomTitleHint), null,
         (input) -> input.isEmpty() ? (String) NaConfig.INSTANCE.getCustomTitle().defaultValue : input));
+    private final AbstractConfigCell enableQuickScheduleRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getEnableQuickSchedule(), "Enable long-press 'Send later' & 'Send when online'"));
+    private final AbstractConfigCell defaultScheduledTimeRow = cellGroup.appendCell(new ConfigCellTextInput(null, NaConfig.INSTANCE.getDefaultScheduledTime(),
+        getString(R.string.DefaultScheduleDelay) + " (s)", null,
+        (input) -> {
+            try {
+                int val = Integer.parseInt(input);
+                return val > 0 ? input : "10";
+            } catch (Exception e) {
+                return "10";
+            }
+        }));
     private final AbstractConfigCell folderNameAsTitleRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getFolderNameAsTitle()));
     private final AbstractConfigCell customTitleUserNameRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getCustomTitleUserName()));
     private final AbstractConfigCell disableNumberRoundingRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.disableNumberRounding, "4.8K -> 4777"));

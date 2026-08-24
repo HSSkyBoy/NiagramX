@@ -1321,6 +1321,12 @@ object NaConfig {
             ConfigItem.configTypeInt,
             10
         )
+    val enableQuickSchedule =
+        addConfig(
+            "EnableQuickSchedule",
+            ConfigItem.configTypeBool,
+            false
+        )
     val keepTranslatorPreferences =
         addConfig(
             "KeepTranslatorPreferences",
