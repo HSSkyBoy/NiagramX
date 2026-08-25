@@ -74,7 +74,10 @@ public class FlagSecureReason {
     }
 
     public static boolean isSecuredNow(Window window) {
-        return false/*currentSecureReasons != null && currentSecureReasons.get(window) != null*/;
+        if (xyz.nextalone.nagram.NaConfig.INSTANCE.getAllowScreenCapture().Bool()) {
+            return false;
+        }
+        return currentSecureReasons != null && currentSecureReasons.get(window) != null;
     }
 
     public interface FlagSecureCondition {

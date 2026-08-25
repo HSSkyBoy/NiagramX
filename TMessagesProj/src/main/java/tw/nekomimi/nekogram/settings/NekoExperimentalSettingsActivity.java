@@ -181,6 +181,9 @@ public class NekoExperimentalSettingsActivity extends BaseNekoXSettingsActivity 
             getString(R.string.PerformanceClassAverage),
             getString(R.string.PerformanceClassLow),
     }, null));
+    private final AbstractConfigCell allowScreenCaptureRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getAllowScreenCapture(), getString(R.string.AllowScreenCaptureNotice)));
+    private final AbstractConfigCell allowCopyProtectedContentRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getAllowCopyProtectedContent(), getString(R.string.AllowCopyProtectedContentNotice)));
+    private final AbstractConfigCell saveTTLMediaRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getSaveTTLMedia(), getString(R.string.SaveTTLMediaNotice)));
     private final AbstractConfigCell dividerNConfig = cellGroup.appendCell(new ConfigCellDivider());
 
     // Story

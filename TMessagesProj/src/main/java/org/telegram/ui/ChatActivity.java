@@ -20068,7 +20068,8 @@ public class ChatActivity extends BaseFragment implements
             if (selectedMessagesIds[index].indexOfKey(messageObject.getId()) >= 0) {
                 selectedMessagesIds[index].remove(messageObject.getId());
                 if (!isReport()) {
-                    if ((messageObject.type == MessageObject.TYPE_TEXT || messageObject.isAnimatedEmoji() || messageObject.caption != null)/* && !(messageObject.messageOwner != null && messageObject.messageOwner.noforwards)*/) {
+                    boolean allowCopy = xyz.nextalone.nagram.NaConfig.INSTANCE.getAllowCopyProtectedContent().Bool();
+                    if ((messageObject.type == MessageObject.TYPE_TEXT || messageObject.isAnimatedEmoji() || messageObject.caption != null) && (allowCopy || !(messageObject.messageOwner != null && messageObject.messageOwner.noforwards))) {
                         selectedMessagesCanCopyIds[index].remove(messageObject.getId());
                     }
                     if (!messageObject.isAnimatedEmoji() && (messageObject.isSticker() || messageObject.isAnimatedSticker()) && MessageObject.isStickerHasSet(messageObject.getDocument())) {
@@ -20105,7 +20106,8 @@ public class ChatActivity extends BaseFragment implements
                 }
                 selectedMessagesIds[index].put(messageObject.getId(), messageObject);
                 if (!isReport()) {
-                    if ((messageObject.type == MessageObject.TYPE_TEXT || messageObject.isAnimatedEmoji() || messageObject.caption != null)/* && !(messageObject.messageOwner != null && messageObject.messageOwner.noforwards)*/) {
+                    boolean allowCopy = xyz.nextalone.nagram.NaConfig.INSTANCE.getAllowCopyProtectedContent().Bool();
+                    if ((messageObject.type == MessageObject.TYPE_TEXT || messageObject.isAnimatedEmoji() || messageObject.caption != null) && (allowCopy || !(messageObject.messageOwner != null && messageObject.messageOwner.noforwards))) {
                         selectedMessagesCanCopyIds[index].put(messageObject.getId(), messageObject);
                     }
                     if (!messageObject.isAnimatedEmoji() && (messageObject.isSticker() || messageObject.isAnimatedSticker()) && MessageObject.isStickerHasSet(messageObject.getDocument())) {
@@ -38039,14 +38041,15 @@ public class ChatActivity extends BaseFragment implements
                     builder.setTitleMultipleLines(true);
                 }
                 final int finalTimestamp = timestamp;
-                // boolean noforwards = isPeerNoForwards() || (messageObject != null && messageObject.messageOwner != null && messageObject.messageOwner.noforwards);
-                CharSequence[] items = new CharSequence[]{
+                boolean blockNoForwards = (isPeerNoForwards() || (messageObject != null && messageObject.messageOwner != null && messageObject.messageOwner.noforwards)) && !xyz.nextalone.nagram.NaConfig.INSTANCE.getAllowCopyProtectedContent().Bool();
+                CharSequence[] items = blockNoForwards ? new CharSequence[]{
+                        getString(R.string.Open)
+                } : new CharSequence[]{
                         getString(R.string.Open),
                         getString(R.string.Copy),
                         getString(R.string.ShareQRCode),
                         getString(R.string.ShareMessages)
                 };
-                // builder.setItems(noforwards ? new CharSequence[] {LocaleController.getString(R.string.Open)} : new CharSequence[]{LocaleController.getString(R.string.Open), LocaleController.getString(R.string.Copy)}, (dialog, which) -> {
                 builder.setItems(items, (dialog, which) -> {
                     if (which == 0) {
                         if (str.startsWith("video?")) {

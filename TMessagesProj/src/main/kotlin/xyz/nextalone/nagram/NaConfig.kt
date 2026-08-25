@@ -613,6 +613,24 @@ object NaConfig {
             ConfigItem.configTypeBool,
             false
         )
+    val allowScreenCapture =
+        addConfig(
+            "AllowScreenCapture",
+            ConfigItem.configTypeBool,
+            true
+        )
+    val allowCopyProtectedContent =
+        addConfig(
+            "AllowCopyProtectedContent",
+            ConfigItem.configTypeBool,
+            true
+        )
+    val saveTTLMedia =
+        addConfig(
+            "SaveTTLMedia",
+            ConfigItem.configTypeBool,
+            true
+        )
     val saveLocalLastSeen =
         addConfig(
             "SaveLocalLastSeen",

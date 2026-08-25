@@ -14987,15 +14987,17 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                 } else {
                     menuItem.hideSubItem(gallery_menu_delete);
                 }
-                menuItem.checkHideMenuItem();
-                boolean canPaint = !isLivePhoto && (newMessageObject.getDocument() == null || newMessageObject.canPreviewDocument() || newMessageObject.getMimeType().startsWith("video/")) && !(isEmbedVideo/* || newMessageObject.messageOwner.ttl != 0 && newMessageObject.messageOwner.ttl < 60 * 60 || noforwards*/) && canSendMediaToParentChatActivity() && !opennedFromMedia;
+                boolean isTTL = newMessageObject.messageOwner.ttl != 0 && newMessageObject.messageOwner.ttl < 60 * 60;
+                boolean blockTTL = isTTL && !xyz.nextalone.nagram.NaConfig.INSTANCE.getSaveTTLMedia().Bool();
+                boolean blockNoForwards = noforwards && !xyz.nextalone.nagram.NaConfig.INSTANCE.getAllowCopyProtectedContent().Bool();
+                boolean canPaint = !isLivePhoto && (newMessageObject.getDocument() == null || newMessageObject.canPreviewDocument() || newMessageObject.getMimeType().startsWith("video/")) && !(isEmbedVideo || blockTTL || blockNoForwards) && canSendMediaToParentChatActivity() && !opennedFromMedia;
                 if (isEmbedVideo) {
                     menuItem.showSubItem(gallery_menu_openin);
                     setItemVisible(editItem, false, false);
                     menuItem.hideSubItem(gallery_menu_paint2);
                     setItemVisible(pipItem, true, false);
                 } else if (isVideo && !isLivePhoto) {
-                    if (/*!noforwards*/true || (slideshowMessageId == 0 ? MessageObject.getMedia(newMessageObject.messageOwner).webpage != null && MessageObject.getMedia(newMessageObject.messageOwner).webpage.url != null :
+                    if ((!blockNoForwards) || (slideshowMessageId == 0 ? MessageObject.getMedia(newMessageObject.messageOwner).webpage != null && MessageObject.getMedia(newMessageObject.messageOwner).webpage.url != null :
                             MessageObject.getMedia(imagesArr.get(0).messageOwner).webpage != null && MessageObject.getMedia(imagesArr.get(0).messageOwner).webpage.url != null)) {
                         menuItem.showSubItem(gallery_menu_openin);
                     } else {
@@ -15005,9 +15007,9 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                     if (masksItemVisible) {
                         setItemVisible(masksItem, false, false);
                     }
-                    /*if (noforwards) {
+                    if (blockNoForwards) {
                         setItemVisible(pipItem, false, true);
-                    } else */if (!pipAvailable) {
+                    } else if (!pipAvailable) {
                         pipItem.setEnabled(false);
                         setItemVisible(pipItem, true, !masksItemVisible && editItem.getAlpha() <= 0, 0.5f);
                         pipInvalidateAvailability();
@@ -15182,7 +15184,10 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             if (DialogObject.isEncryptedDialog(currentDialogId) && !isEmbedVideo || noforwards) {
                 setItemVisible(sendItem, false, false);
             }
-            if (isEmbedVideo || newMessageObject.messageOwner.ttl != 0 && newMessageObject.messageOwner.ttl < 60 * 60/* || noforwards*/) {
+            boolean isTTL = newMessageObject.messageOwner.ttl != 0 && newMessageObject.messageOwner.ttl < 60 * 60;
+            boolean blockTTL = isTTL && !xyz.nextalone.nagram.NaConfig.INSTANCE.getSaveTTLMedia().Bool();
+            boolean blockNoForwards = noforwards && !xyz.nextalone.nagram.NaConfig.INSTANCE.getAllowCopyProtectedContent().Bool();
+            if (isEmbedVideo || blockTTL || blockNoForwards) {
                 allowShare = false;
                 galleryButton.setVisibility(View.GONE);
                 galleryGap.setVisibility(View.GONE);
@@ -15294,7 +15299,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             }
             actionBarContainer.setSubtitle(subtitle, animated);
             final boolean noforwards = avatarsDialogId != 0 && MessagesController.getInstance(currentAccount).isPeerNoForwards(avatarsDialogId);
-            if (false/*noforwards*/) {
+            if (noforwards && !xyz.nextalone.nagram.NaConfig.INSTANCE.getAllowCopyProtectedContent().Bool()) {
                 galleryButton.setVisibility(View.GONE);
                 galleryGap.setVisibility(View.GONE);
             } else {
