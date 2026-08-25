@@ -101,4 +101,12 @@
     <string name="VideoPlayerDecoderPreferSW">软解优先</string>
     <string name="VideoPlayerDecoderHardware">仅硬解</string>
     <string name="VideoPlayerDecoderPreferHW">硬解优先</string>
+    <string name="InputBar">输入栏</string>
+    <string name="IosButtonPlacement">iOS 按钮位置</string>
+    <string name="IosInputAppearance">iOS 外观风格</string>
+    <string name="CompactInputSize">紧凑尺寸</string>
+    <string name="ActionButtonStyle">操作按钮样式</string>
+    <string name="ActionButtonStyleAccent">主题强调色</string>
+    <string name="ActionButtonStyleNeutral">中性色</string>
+    <string name="ActionButtonStyleWhite">白色</string>
 </resources>

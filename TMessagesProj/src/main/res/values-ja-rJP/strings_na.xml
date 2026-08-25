@@ -101,5 +101,13 @@
     <string name="VideoPlayerDecoderPreferSW">SW 優先</string>
     <string name="VideoPlayerDecoderHardware">HW のみ</string>
     <string name="VideoPlayerDecoderPreferHW">HW 優先</string>
+    <string name="InputBar">入力バー</string>
+    <string name="IosButtonPlacement">ボタン配置 (iOS)</string>
+    <string name="IosInputAppearance">外観 (iOS)</string>
+    <string name="CompactInputSize">コンパクトサイズ</string>
+    <string name="ActionButtonStyle">アクションボタンスタイル</string>
+    <string name="ActionButtonStyleAccent">アクセント</string>
+    <string name="ActionButtonStyleNeutral">ニュートラル</string>
+    <string name="ActionButtonStyleWhite">ホワイト</string>
 </resources>
 

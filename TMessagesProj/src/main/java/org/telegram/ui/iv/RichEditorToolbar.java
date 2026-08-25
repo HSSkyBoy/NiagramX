@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import org.telegram.messenger.R;
 import org.telegram.messenger.UserConfig;
 import org.telegram.ui.ActionBar.Theme;
+import org.telegram.ui.Components.ActionButtonStyle;
 import org.telegram.ui.Components.AiButtonDrawable;
 import org.telegram.ui.Components.ChatActivityEnterView;
 import org.telegram.ui.Components.ChatActivityEnterViewAnimatedIconView;
@@ -408,8 +409,12 @@ public class RichEditorToolbar extends FrameLayout {
             public boolean isOpen() {
                 return sendLoading || super.isOpen();
             }
+            @Override
+            public boolean shouldDrawInternalCircle() {
+                return false;
+            }
         };
-        sendButton.setBackground(RichEditor.withShadow(Theme.createRoundRectDrawable(dp(22), color(Theme.key_chat_messagePanelSend))));
+        sendButton.setBackground(RichEditor.withShadow(Theme.createRoundRectDrawable(dp(22), ActionButtonStyle.resolveBackgroundColor(resourcesProvider))));
         ScaleStateListAnimator.apply(sendButton);
         bottomPanel.addView(sendButton, LayoutHelper.createLinear(44, 44, 0, Gravity.RIGHT, 8, 0, 0, 0));
         sendButton.setContentDescription("Send");

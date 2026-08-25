@@ -95,6 +95,7 @@ import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.RLottieDrawable;
 import org.telegram.ui.Components.RLottieImageView;
 import org.telegram.ui.Components.ScaleStateListAnimator;
+import org.telegram.ui.Components.ActionButtonStyle;
 import org.telegram.ui.Components.SizeNotifierFrameLayout;
 import org.telegram.ui.Components.blur3.drawable.BlurredBackgroundDrawable;
 import org.telegram.ui.Components.chat.ChatInputViewsContainer;
@@ -994,8 +995,12 @@ public class RichEditor extends BaseFragment implements NotificationCenter.Notif
             public boolean isInScheduleMode() {
                 return RichEditor.this.isInScheduleMode();
             }
+            @Override
+            public boolean shouldDrawInternalCircle() {
+                return false;
+            }
         };
-        sendButton.setBackground(withShadow(Theme.createRoundRectDrawable(dp(22), getThemedColor(Theme.key_chat_messagePanelSend))));
+        sendButton.setBackground(withShadow(Theme.createRoundRectDrawable(dp(22), ActionButtonStyle.resolveBackgroundColor(getResourceProvider()))));
         ScaleStateListAnimator.apply(sendButton);
         bottomPanel.addView(sendButton, LayoutHelper.createLinear(44, 44, 0, Gravity.RIGHT, 8, 0, 0, 0));
         sendButton.setContentDescription(getString(R.string.Send));

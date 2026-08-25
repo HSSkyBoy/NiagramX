@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="InputBar">Barre de saisie</string>
+    <string name="IosButtonPlacement">Disposition des boutons (iOS)</string>
+    <string name="IosInputAppearance">Apparence (iOS)</string>
+    <string name="CompactInputSize">Taille compacte</string>
+    <string name="ActionButtonStyle">Style du bouton d\'action</string>
+    <string name="ActionButtonStyleAccent">Accent</string>
+    <string name="ActionButtonStyleNeutral">Neutre</string>
+    <string name="ActionButtonStyleWhite">Blanc</string>
+</resources>

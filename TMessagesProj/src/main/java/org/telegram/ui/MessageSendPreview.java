@@ -74,6 +74,7 @@ import org.telegram.ui.Components.ScrimOptions;
 import org.telegram.ui.Components.SizeNotifierFrameLayout;
 import org.telegram.ui.Components.Text;
 import org.telegram.ui.Components.blur3.BlurredBackgroundDrawableViewFactory;
+import org.telegram.ui.Components.blur3.drawable.BlurredBackgroundDrawable;
 import org.telegram.ui.Components.blur3.drawable.color.impl.BlurredBackgroundProviderImpl;
 import org.telegram.ui.Components.blur3.source.BlurredBackgroundSourceBitmap;
 import org.telegram.ui.Components.blur3.utils.Blur3Utils;
@@ -148,6 +149,7 @@ public class MessageSendPreview extends Dialog implements NotificationCenter.Not
 
     private final BlurredBackgroundSourceBitmap iBlur3SourceBitmap;
     private final BlurredBackgroundDrawableViewFactory iBlur3Factory;
+    private BlurredBackgroundDrawable sendButtonGlassDrawable;
 
     public MessageSendPreview(Context context, Theme.ResourcesProvider resourcesProvider) {
         super(context, R.style.TransparentDialog);
@@ -1257,6 +1259,14 @@ public class MessageSendPreview extends Dialog implements NotificationCenter.Not
             public int getFillColor() {
                 return sendButton.getFillColor();
             }
+            @Override
+            public boolean shouldDrawInternalCircle() {
+                return anchorSendButton.shouldDrawInternalCircle() || anchorSendButton.getActionBubbleColorProvider() == null;
+            }
+            @Override
+            public int resolveSendIconColor(int themeColor) {
+                return anchorSendButton.resolveSendIconColor(themeColor);
+            }
         };
         this.sendButton.setScaleX(anchorSendButton.getScaleX());
         this.sendButton.setScaleY(anchorSendButton.getScaleY());
@@ -1264,6 +1274,10 @@ public class MessageSendPreview extends Dialog implements NotificationCenter.Not
         this.sendButton.open.set(sendButton.open.get(), true);
         this.sendButton.setOnClickListener(onClick);
         containerView.addView(this.sendButton, new ViewGroup.LayoutParams(sendButton.getWidth(), sendButton.getHeight()));
+        if (!anchorSendButton.shouldDrawInternalCircle() && anchorSendButton.getActionBubbleColorProvider() != null) {
+            sendButtonGlassDrawable = iBlur3Factory.create(this.sendButton, anchorSendButton.getActionBubbleColorProvider());
+            this.sendButton.setBlurredBackgroundDrawable(sendButtonGlassDrawable);
+        }
         sendButtonWidth = anchorSendButton.width(sendButton.getHeight());
         sendButtonInitialPosition[0] += anchorSendButton.getWidth() - anchorSendButton.width(sendButton.getHeight()) - dp(6);
         return this.sendButton;

@@ -1345,6 +1345,30 @@ object NaConfig {
             ConfigItem.configTypeInt,
             0 // 0: default; 1: Modern; 2: MD3
         )
+    val iosButtonPlacement =
+        addConfig(
+            "IosButtonPlacement",
+            ConfigItem.configTypeBool,
+            false
+        )
+    val iosInputAppearance =
+        addConfig(
+            "IosInputAppearance",
+            ConfigItem.configTypeBool,
+            false
+        )
+    val compactInputSize =
+        addConfig(
+            "CompactInputSize",
+            ConfigItem.configTypeBool,
+            false
+        )
+    val actionButtonStyle =
+        addConfig(
+            "ActionButtonStyle",
+            ConfigItem.configTypeInt,
+            0
+        )
     val ignoreUnreadCount =
         addConfig(
             "IgnoreUnreadCount",
@@ -1585,6 +1609,14 @@ object NaConfig {
         }
         if (!getPreferences().contains(strokeOnViews.key)) {
             strokeOnViews.changed(SharedConfig.getDevicePerformanceClass() != SharedConfig.PERFORMANCE_CLASS_LOW)
+        }
+        if (!getPreferences().contains(compactInputSize.key) && getPreferences().contains(compactChatInput.key)) {
+            compactInputSize.setConfigBool(compactChatInput.Bool())
+        }
+        if (!getPreferences().contains(actionButtonStyle.key)) {
+            val legacyWhiteSend = getPreferences().getBoolean("WhiteSendButton", false)
+            actionButtonStyle.setConfigInt(if (legacyWhiteSend) 2 else 0)
+            getPreferences().edit { remove("WhiteSendButton") }
         }
 
         val mainPreferences = ApplicationLoader.applicationContext.getSharedPreferences("mainconfig", Context.MODE_PRIVATE)

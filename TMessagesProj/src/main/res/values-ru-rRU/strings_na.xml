@@ -102,5 +102,13 @@
     <string name="VideoPlayerDecoderPreferSW">Предпочтение SW</string>
     <string name="VideoPlayerDecoderHardware">Только HW</string>
     <string name="VideoPlayerDecoderPreferHW">Предпочтение HW</string>
+    <string name="InputBar">Строка ввода</string>
+    <string name="IosButtonPlacement">Расположение кнопок как в iOS</string>
+    <string name="IosInputAppearance">Оформление как в iOS</string>
+    <string name="CompactInputSize">Компактный размер</string>
+    <string name="ActionButtonStyle">Стиль кнопки действия</string>
+    <string name="ActionButtonStyleAccent">Акцентная</string>
+    <string name="ActionButtonStyleNeutral">Нейтральная</string>
+    <string name="ActionButtonStyleWhite">Белая</string>
 </resources>
 

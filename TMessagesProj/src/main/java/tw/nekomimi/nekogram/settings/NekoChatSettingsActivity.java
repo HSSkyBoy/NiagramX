@@ -21,11 +21,18 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
+
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.BuildVars;
+import org.telegram.messenger.LiteMode;
 import org.telegram.messenger.MediaController;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
+import org.telegram.messenger.SharedConfig;
 import org.telegram.ui.ActionBar.ActionBarMenu;
 import org.telegram.ui.ActionBar.ActionBarMenuItem;
 import org.telegram.ui.ActionBar.AlertDialog;
@@ -35,12 +42,20 @@ import org.telegram.ui.Cells.CheckBoxCell;
 import org.telegram.ui.Cells.TextCheckCell;
 import org.telegram.ui.Cells.TextCheckCell2;
 import org.telegram.ui.Cells.TextSettingsCell;
+import org.telegram.ui.Components.ActionButtonStyle;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.RecyclerListView;
 import org.telegram.ui.Components.SeekBarView;
 import org.telegram.ui.Components.TextStyleSpan;
 import org.telegram.ui.Components.TypefaceSpan;
 import org.telegram.ui.Components.UndoView;
+import org.telegram.ui.Components.blur3.BlurredBackgroundDrawableViewFactory;
+import org.telegram.ui.Components.blur3.drawable.BlurredBackgroundDrawable;
+import org.telegram.ui.Components.blur3.drawable.color.BlurredBackgroundColorProviderThemed;
+import org.telegram.ui.Components.blur3.source.BlurredBackgroundSource;
+import org.telegram.ui.Components.blur3.source.BlurredBackgroundSourceColor;
+import org.telegram.ui.Components.blur3.source.BlurredBackgroundSourceWrapped;
+import org.telegram.ui.Components.chat.WallpaperBitmapProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -89,6 +104,23 @@ public class NekoChatSettingsActivity extends BaseNekoXSettingsActivity implemen
     }
 
     private final CellGroup cellGroup = new CellGroup(this);
+
+    // Input Bar
+    private final AbstractConfigCell headerInputBar = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.InputBar)));
+    private final AbstractConfigCell inputBarPreviewRow = cellGroup.appendCell(new ConfigCellCustom("InputBarPreview", ConfigCellCustom.CUSTOM_ITEM_InputBarPreview, false));
+    private final AbstractConfigCell iosButtonPlacementRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getIosButtonPlacement()));
+    private final AbstractConfigCell iosInputAppearanceRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getIosInputAppearance()));
+    private final AbstractConfigCell compactInputSizeRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getCompactInputSize()));
+    private final AbstractConfigCell actionButtonStyleRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NaConfig.INSTANCE.getActionButtonStyle(), new String[]{
+            getString(R.string.ActionButtonStyleAccent),
+            getString(R.string.ActionButtonStyleNeutral),
+            getString(R.string.ActionButtonStyleWhite)
+    }, new int[]{
+            ActionButtonStyle.ACCENT,
+            ActionButtonStyle.NEUTRAL,
+            ActionButtonStyle.WHITE
+    }, null));
+    private final AbstractConfigCell dividerInputBar = cellGroup.appendCell(new ConfigCellDivider());
 
     // Sticker Size
     private final AbstractConfigCell headerStickerSize = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.StickerSize)));
@@ -485,6 +517,7 @@ public class NekoChatSettingsActivity extends BaseNekoXSettingsActivity implemen
     private ListAdapter listAdapter;
     private ActionBarMenuItem menuItem;
     private StickerSizeCell stickerSizeCell;
+    private InputBarPreviewCell inputBarPreviewCell;
 
     public NekoChatSettingsActivity() {
         if (NaConfig.INSTANCE.getUseEditedIcon().Bool()) {
@@ -498,6 +531,9 @@ public class NekoChatSettingsActivity extends BaseNekoXSettingsActivity implemen
         }
         checkSkipOpenLinkConfirmRows();
         checkConfirmAVRows();
+        if (!NaConfig.INSTANCE.getIosInputAppearance().Bool()) {
+            cellGroup.rows.remove(compactInputSizeRow);
+        }
         addRowsToMap(cellGroup);
     }
 
@@ -527,6 +563,14 @@ public class NekoChatSettingsActivity extends BaseNekoXSettingsActivity implemen
 
         // Cells: Set OnSettingChanged Callbacks
         cellGroup.callBackSettingsChanged = (key, newValue) -> {
+            if (key.equals(NaConfig.INSTANCE.getIosButtonPlacement().getKey())
+                    || key.equals(NaConfig.INSTANCE.getIosInputAppearance().getKey())
+                    || key.equals(NaConfig.INSTANCE.getCompactInputSize().getKey())
+                    || key.equals(NaConfig.INSTANCE.getActionButtonStyle().getKey())) {
+                if (inputBarPreviewCell != null) {
+                    inputBarPreviewCell.updateInputBarState();
+                }
+            }
             if (key.equals(NekoConfig.disableProximityEvents.getKey())) {
                 MediaController.getInstance().recreateProximityWakeLock();
             } else if (key.equals(NekoConfig.showSeconds.getKey())) {
@@ -549,6 +593,16 @@ public class NekoChatSettingsActivity extends BaseNekoXSettingsActivity implemen
                         listAdapter.notifyItemInserted(index);
                     }
                 }
+            } else if (key.equals(NaConfig.INSTANCE.getIosInputAppearance().getKey())) {
+                boolean iosOn = NaConfig.INSTANCE.getIosInputAppearance().Bool();
+                if (iosOn) {
+                    if (!cellGroup.rows.contains(compactInputSizeRow)) {
+                        cellGroup.rows.add(cellGroup.rows.indexOf(actionButtonStyleRow), compactInputSizeRow);
+                    }
+                } else {
+                    cellGroup.rows.remove(compactInputSizeRow);
+                }
+                listAdapter.notifyDataSetChanged();
             } else if (key.equals(NaConfig.INSTANCE.getMessageColoredBackground().getKey())) {
                 stickerSizeCell.invalidate();
             } else if (key.equals(NekoConfig.hideTimeForSticker.getKey())) {
@@ -770,6 +824,200 @@ public class NekoChatSettingsActivity extends BaseNekoXSettingsActivity implemen
         }
     }
 
+    private class InputBarPreviewCell extends FrameLayout implements NotificationCenter.NotificationCenterDelegate {
+
+        private static final int BUBBLE_RADIUS_DP = 22;
+        private static final int BAR_HEIGHT_DP = 44;
+        private static final int GAP_NORMAL_DP = 8;
+        private static final int GAP_COMPACT_DP = 2;
+        private static final int CELL_VERTICAL_PADDING_DP = 12;
+
+        private final Theme.ResourcesProvider resourcesProvider;
+        private final WallpaperBitmapProvider wallpaperBitmapProvider = new WallpaperBitmapProvider();
+
+        private BlurredBackgroundDrawableViewFactory glassFactory;
+        private BlurredBackgroundColorProviderThemed colorProvider;
+        private BlurredBackgroundColorProviderThemed whiteColorProvider;
+        private BlurredBackgroundColorProviderThemed accentColorProvider;
+        private final Paint sendCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        private BlurredBackgroundDrawable oneBlockDrawable;
+        private BlurredBackgroundDrawable capsuleDrawable;
+        private BlurredBackgroundDrawable leftBubbleDrawable;
+        private BlurredBackgroundDrawable rightBubbleDrawable;
+
+        private final ImageView attachIconView;
+        private final ImageView emojiIconView;
+        private final ImageView sendIconView;
+
+        private boolean isPlacementEnabled;
+        private boolean isAppearanceEnabled;
+        private boolean isCompactEnabled;
+        private int gapPx;
+
+        private Drawable lastWallpaper;
+        private boolean lastIsBlurEnabled;
+        private boolean lastIsLiquidGlassEnabled;
+        private Drawable lastDrawnWallpaper;
+
+        public InputBarPreviewCell(Context context, Theme.ResourcesProvider provider) {
+            super(context);
+            resourcesProvider = provider;
+            setWillNotDraw(false);
+            setClipChildren(false);
+
+            int iconColor = Theme.getColor(Theme.key_glass_defaultIcon, provider);
+            int sendColor = Theme.getColor(Theme.key_chat_messagePanelSend, provider);
+
+            attachIconView = createIconView(context, R.drawable.msg_input_attach2, iconColor);
+            emojiIconView = createIconView(context, R.drawable.smiles_tab_smiles, iconColor);
+            sendIconView = createIconView(context, R.drawable.send_plane_24, sendColor);
+
+            buildGlassFactory();
+            updateInputBarState();
+        }
+
+        private ImageView createIconView(Context context, int resId, int color) {
+            ImageView view = new ImageView(context);
+            view.setImageResource(resId);
+            view.setScaleType(ImageView.ScaleType.CENTER);
+            view.setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN));
+            addView(view);
+            return view;
+        }
+
+        private void buildGlassFactory() {
+            Drawable wallpaper = Theme.getCachedWallpaperNonBlocking();
+            boolean isBlurEnabled = SharedConfig.chatBlurEnabled() && LiteMode.isEnabled(LiteMode.FLAG_CHAT_BLUR);
+            boolean isLiquidGlassEnabled = LiteMode.isEnabled(LiteMode.FLAG_LIQUID_GLASS);
+            if (glassFactory != null && wallpaper == lastWallpaper && isBlurEnabled == lastIsBlurEnabled && isLiquidGlassEnabled == lastIsLiquidGlassEnabled) {
+                return;
+            }
+            lastWallpaper = wallpaper;
+            lastIsBlurEnabled = isBlurEnabled;
+            lastIsLiquidGlassEnabled = isLiquidGlassEnabled;
+
+            BlurredBackgroundSource source;
+            if (isBlurEnabled && wallpaper != null) {
+                source = wallpaperBitmapProvider.updateSourceFromBackgroundViewDrawable(wallpaper);
+            } else {
+                source = new BlurredBackgroundSourceColor();
+            }
+            BlurredBackgroundSourceWrapped wrappedSource = new BlurredBackgroundSourceWrapped();
+            wrappedSource.setSource(source);
+            glassFactory = new BlurredBackgroundDrawableViewFactory(wrappedSource);
+            colorProvider = new BlurredBackgroundColorProviderThemed(resourcesProvider, Theme.key_chat_messagePanelBackground);
+            glassFactory.setLiquidGlassEffectAllowed(isLiquidGlassEnabled);
+            oneBlockDrawable = createBubble(colorProvider);
+            capsuleDrawable = createBubble(colorProvider);
+            leftBubbleDrawable = createBubble(colorProvider);
+            rightBubbleDrawable = createBubble(colorProvider);
+            final boolean previewBlurEnabled = isBlurEnabled;
+            final boolean previewLiquidGlass = isLiquidGlassEnabled;
+            whiteColorProvider = new BlurredBackgroundColorProviderThemed(resourcesProvider, Theme.key_windowBackgroundWhite) {
+                @Override
+                public int getBackgroundColor() {
+                    if (!previewBlurEnabled) return 0xFFFFFFFF;
+                    return previewLiquidGlass ? 0xD9FFFFFF : 0xC2FFFFFF;
+                }
+            };
+            accentColorProvider = new BlurredBackgroundColorProviderThemed(resourcesProvider, Theme.key_chat_messagePanelSend);
+            if (!isBlurEnabled) {
+                colorProvider.setAlpha(1.0f);
+            }
+        }
+
+        private BlurredBackgroundDrawable createBubble(BlurredBackgroundColorProviderThemed provider) {
+            BlurredBackgroundDrawable drawable = glassFactory.create(this, provider);
+            drawable.setRadius(AndroidUtilities.dp(BUBBLE_RADIUS_DP));
+            return drawable;
+        }
+
+        public void updateInputBarState() {
+            isPlacementEnabled = NaConfig.INSTANCE.getIosButtonPlacement().Bool();
+            isAppearanceEnabled = NaConfig.INSTANCE.getIosInputAppearance().Bool();
+            isCompactEnabled = NaConfig.INSTANCE.getCompactInputSize().Bool() && isAppearanceEnabled;
+            int gapDp = isCompactEnabled ? GAP_COMPACT_DP : GAP_NORMAL_DP;
+            gapPx = AndroidUtilities.dp(gapDp);
+
+            int edgeInsetDp = isAppearanceEnabled ? gapDp : 0;
+            ImageView leftIcon = isPlacementEnabled ? attachIconView : emojiIconView;
+            ImageView rightIcon = isPlacementEnabled ? emojiIconView : attachIconView;
+            leftIcon.setLayoutParams(LayoutHelper.createFrame(BAR_HEIGHT_DP, BAR_HEIGHT_DP, Gravity.BOTTOM | Gravity.LEFT, edgeInsetDp, 0, 0, 0));
+            rightIcon.setLayoutParams(LayoutHelper.createFrame(BAR_HEIGHT_DP, BAR_HEIGHT_DP, Gravity.BOTTOM | Gravity.RIGHT, 0, 0, BAR_HEIGHT_DP + edgeInsetDp + gapDp, 0));
+            sendIconView.setLayoutParams(LayoutHelper.createFrame(BAR_HEIGHT_DP, BAR_HEIGHT_DP, Gravity.BOTTOM | Gravity.RIGHT, 0, 0, edgeInsetDp, 0));
+
+            if (rightBubbleDrawable != null) {
+                rightBubbleDrawable.setColorProvider(ActionButtonStyle.resolveBubbleColorProvider(whiteColorProvider, colorProvider, accentColorProvider));
+            }
+            sendIconView.setColorFilter(new PorterDuffColorFilter(
+                    ActionButtonStyle.resolveIconColor(resourcesProvider),
+                    PorterDuff.Mode.SRC_IN));
+
+            invalidate();
+        }
+
+        @Override
+        protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+            int height = AndroidUtilities.dp(BAR_HEIGHT_DP + CELL_VERTICAL_PADDING_DP * 2);
+            super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
+        }
+
+        @Override
+        protected void dispatchDraw(Canvas canvas) {
+            Drawable wallpaper = Theme.getCachedWallpaperNonBlocking();
+            if (wallpaper != null) {
+                if (wallpaper != lastDrawnWallpaper) {
+                    lastDrawnWallpaper = wallpaper;
+                    invalidate();
+                }
+                wallpaper.setBounds(0, 0, getWidth(), getHeight());
+                wallpaper.draw(canvas);
+            }
+            int padding = AndroidUtilities.dp(CELL_VERTICAL_PADDING_DP);
+            int fieldTop = attachIconView.getTop();
+            int fieldBottom = attachIconView.getBottom();
+            if (isAppearanceEnabled) {
+                ImageView leftIcon = isPlacementEnabled ? attachIconView : emojiIconView;
+                int pillLeft = leftIcon.getRight() + gapPx;
+                int pillRight = sendIconView.getLeft() - gapPx;
+                capsuleDrawable.setBounds(pillLeft, fieldTop, pillRight, fieldBottom);
+                capsuleDrawable.draw(canvas);
+                leftBubbleDrawable.setBounds(leftIcon.getLeft(), leftIcon.getTop(), leftIcon.getRight(), leftIcon.getBottom());
+                leftBubbleDrawable.draw(canvas);
+                rightBubbleDrawable.setBounds(sendIconView.getLeft(), sendIconView.getTop(), sendIconView.getRight(), sendIconView.getBottom());
+                rightBubbleDrawable.draw(canvas);
+            } else {
+                oneBlockDrawable.setBounds(padding, fieldTop, getWidth() - padding, fieldBottom);
+                oneBlockDrawable.draw(canvas);
+                sendCirclePaint.setColor(ActionButtonStyle.resolveBackgroundColor(resourcesProvider));
+                float sendCx = (sendIconView.getLeft() + sendIconView.getRight()) / 2f;
+                float sendCy = (sendIconView.getTop() + sendIconView.getBottom()) / 2f;
+                canvas.drawCircle(sendCx, sendCy, (sendIconView.getRight() - sendIconView.getLeft()) / 2f - AndroidUtilities.dp(3), sendCirclePaint);
+            }
+            super.dispatchDraw(canvas);
+        }
+
+        @Override
+        protected void onAttachedToWindow() {
+            super.onAttachedToWindow();
+            NotificationCenter.getGlobalInstance().addObserver(this, NotificationCenter.didSetNewWallpapper);
+        }
+
+        @Override
+        protected void onDetachedFromWindow() {
+            super.onDetachedFromWindow();
+            NotificationCenter.getGlobalInstance().removeObserver(this, NotificationCenter.didSetNewWallpapper);
+        }
+
+        @Override
+        public void didReceivedNotification(int id, int account, Object... args) {
+            if (id == NotificationCenter.didSetNewWallpapper) {
+                buildGlassFactory();
+                invalidate();
+            }
+        }
+    }
+
     //impl ListAdapter
     private class ListAdapter extends BaseListAdapter {
 
@@ -804,6 +1052,9 @@ public class NekoChatSettingsActivity extends BaseNekoXSettingsActivity implemen
             switch (viewType) {
                 case ConfigCellCustom.CUSTOM_ITEM_StickerSize:
                     view = stickerSizeCell = new StickerSizeCell(mContext);
+                    break;
+                case ConfigCellCustom.CUSTOM_ITEM_InputBarPreview:
+                    view = inputBarPreviewCell = new InputBarPreviewCell(mContext, getResourceProvider());
                     break;
                 case ConfigCellCustom.CUSTOM_ITEM_EmojiSet:
                     view = new EmojiSetCell(mContext, false);

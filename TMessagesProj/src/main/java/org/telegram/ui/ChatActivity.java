@@ -509,6 +509,7 @@ public class ChatActivity extends BaseFragment implements
 
     private BlurredBackgroundColorProviderThemed blurredBackgroundColorProvider;
     private BlurredBackgroundColorProviderThemed blurredBackgroundColorProviderWhite;
+    private BlurredBackgroundColorProviderThemed blurredBackgroundColorProviderWhiteSend;
 
     private final ReferenceList<View> glassAttachedViews = new ReferenceList<>();
     private final ReferenceList<BlurredBackgroundDrawable> glassAttachedDrawables = new ReferenceList<>();
@@ -3948,6 +3949,15 @@ public class ChatActivity extends BaseFragment implements
                     return ColorUtils.setAlphaComponent(super.getBackgroundColor(), 216);
                 }
                 return super.getBackgroundColor();
+            }
+        };
+        blurredBackgroundColorProviderWhiteSend = new BlurredBackgroundColorProviderThemed(themeDelegate, Theme.key_windowBackgroundWhite) {
+            @Override
+            public int getBackgroundColor() {
+                if (!BlurredBackgroundProviderImpl.checkBlurEnabled(currentAccount, themeDelegate)) {
+                    return 0xFFFFFFFF;
+                }
+                return ColorUtils.setAlphaComponent(0xFFFFFFFF, LiteMode.isEnabled(LiteMode.FLAG_LIQUID_GLASS) ? 217 : 194);
             }
         };
 
@@ -8611,6 +8621,8 @@ public class ChatActivity extends BaseFragment implements
         checkSendButtonBlockedByTyping(false);
 
         chatInputBubbleContainer.addView(chatActivityEnterView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.BOTTOM, 7, 0, 7, 0));
+        chatActivityEnterView.setInputBarGlassFactory(glassBackgroundDrawableFactory, blurredBackgroundColorProvider, blurredBackgroundColorProviderWhiteSend);
+        chatInputViewsContainer.drawInputBackground = !chatActivityEnterView.isIosInputAppearance() || chatActivityEnterView.getVisibility() != View.VISIBLE;
 
         int chatListIndex = contentView.indexOfChild(chatListView);
         chatListIndex = chatListIndex < 0 ? contentView.getChildCount() : (chatListIndex + 1);
@@ -44567,6 +44579,9 @@ public class ChatActivity extends BaseFragment implements
             }
             if (blurredBackgroundColorProviderWhite != null) {
                 blurredBackgroundColorProviderWhite.updateColors();
+            }
+            if (blurredBackgroundColorProviderWhiteSend != null) {
+                blurredBackgroundColorProviderWhiteSend.updateColors();
             }
 
             if (chatActivityEnterView != null) {
