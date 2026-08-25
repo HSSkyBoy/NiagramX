@@ -60,75 +60,36 @@ public final class SettingsBackupHelper {
 
         ArrayList<String> userconfig = new ArrayList<>();
         userconfig.add("saveIncomingPhotos");
+        userconfig.add("passcodeHash1");
         userconfig.add("passcodeHash");
         userconfig.add("passcodeType");
-        userconfig.add("passcodeHash");
+        userconfig.add("passcodeSalt");
+        userconfig.add("passcodeRetryInMs");
         userconfig.add("autoLockIn");
         userconfig.add("useFingerprint");
+        userconfig.add("allowScreenCapture");
+        userconfig.add("proxyRotationEnabled");
+        userconfig.add("proxyRotationTimeout");
+        userconfig.add("storageCacheDir");
         spToJSON("userconfing", configJson, userconfig::contains, isCloud);
 
-        ArrayList<String> mainconfig = new ArrayList<>();
-        mainconfig.add("saveToGallery");
-        mainconfig.add("autoplayGifs");
-        mainconfig.add("autoplayVideo");
-        mainconfig.add("mapPreviewType");
-        mainconfig.add("raiseToSpeak");
-        mainconfig.add("customTabs");
-        mainconfig.add("directShare");
-        mainconfig.add("shuffleMusic");
-        mainconfig.add("playOrderReversed");
-        mainconfig.add("inappCamera");
-        mainconfig.add("repeatMode");
-        mainconfig.add("fontSize");
-        mainconfig.add("bubbleRadius");
-        mainconfig.add("ivFontSize");
-        mainconfig.add("allowBigEmoji");
-        mainconfig.add("streamMedia");
-        mainconfig.add("saveStreamMedia");
-        mainconfig.add("smoothKeyboard");
-        mainconfig.add("pauseMusicOnRecord");
-        mainconfig.add("streamAllVideo");
-        mainconfig.add("streamMkv");
-        mainconfig.add("suggestStickers");
-        mainconfig.add("sortContactsByName");
-        mainconfig.add("sortFilesByName");
-        mainconfig.add("noSoundHintShowed");
-        mainconfig.add("directShareHash");
-        mainconfig.add("useThreeLinesLayout");
-        mainconfig.add("archiveHidden");
-        mainconfig.add("distanceSystemType");
-        mainconfig.add("loopStickers");
-        mainconfig.add("keepMedia");
-        mainconfig.add("noStatusBar");
-        mainconfig.add("lastKeepMediaCheckTime");
-        mainconfig.add("searchMessagesAsListHintShows");
-        mainconfig.add("searchMessagesAsListUsed");
-        mainconfig.add("stickersReorderingHintUsed");
-        mainconfig.add("textSelectionHintShows");
-        mainconfig.add("scheduledOrNoSoundHintShows");
-        mainconfig.add("lockRecordAudioVideoHint");
-        mainconfig.add("disableVoiceAudioEffects");
-        mainconfig.add("chatSwipeAction");
+        ArrayList<String> mainconfigBlacklist = new ArrayList<>();
+        mainconfigBlacklist.add("directShareHash");
+        mainconfigBlacklist.add("directShareHash2");
+        mainconfigBlacklist.add("cameraCache");
+        mainconfigBlacklist.add("lastLogsCheckTime");
+        mainconfigBlacklist.add("lastKeepMediaCheckTime");
+        mainconfigBlacklist.add("floatingDebugActive");
+        mainconfigBlacklist.add("appUpdateCheckTime");
+        mainconfigBlacklist.add("appUpdate");
+        mainconfigBlacklist.add("appUpdateBuild");
 
-        if (!isCloud) mainconfig.add("theme");
-        mainconfig.add("selectedAutoNightType");
-        mainconfig.add("autoNightScheduleByLocation");
-        mainconfig.add("autoNightBrighnessThreshold");
-        mainconfig.add("autoNightDayStartTime");
-        mainconfig.add("autoNightDayEndTime");
-        mainconfig.add("autoNightSunriseTime");
-        mainconfig.add("autoNightCityName");
-        mainconfig.add("autoNightSunsetTime");
-        mainconfig.add("autoNightLocationLatitude3");
-        mainconfig.add("autoNightLocationLongitude3");
-        mainconfig.add("autoNightLastSunCheckDay");
-
-        mainconfig.add("lang_code");
-
-        mainconfig.add("web_restricted_domains2");
-
-        spToJSON("mainconfig", configJson, mainconfig::contains);
-        if (!isCloud) spToJSON("themeconfig", configJson, null);
+        spToJSON("mainconfig", configJson, key -> !mainconfigBlacklist.contains(key));
+        if (!isCloud) {
+            spToJSON("themeconfig", configJson, null);
+            spToJSON("nekox_config", configJson, null);
+            spToJSON("nekocloud", configJson, null);
+        }
         spToJSON("nkmrcfg", configJson, null, includeApiKeys);
 
         return configJson.toString(indentSpaces);
@@ -152,14 +113,24 @@ public final class SettingsBackupHelper {
             if (filter != null && !filter.apply(key)) {
                 continue;
             }
-            if (entry.getValue() instanceof Long) {
+            Object value = entry.getValue();
+            if (value instanceof java.util.Set) {
+                org.json.JSONArray array = new org.json.JSONArray();
+                for (Object item : (java.util.Set<?>) value) {
+                    array.put(item);
+                }
+                jsonConfig.put(key + "_string_set", array);
+                continue;
+            } else if (value instanceof Long) {
                 key = key + "_long";
-            } else if (entry.getValue() instanceof Float) {
+            } else if (value instanceof Float) {
                 key = key + "_float";
             }
-            jsonConfig.put(key, entry.getValue());
+            jsonConfig.put(key, value);
         }
-        object.put(sp, jsonConfig);
+        if (jsonConfig.length() > 0) {
+            object.put(sp, jsonConfig);
+        }
     }
 
     public static void importSettings(Context context, File settingsFile) {
@@ -213,6 +184,21 @@ public final class SettingsBackupHelper {
             for (Map.Entry<String, JsonElement> config : ((JsonObject) element.getValue()).entrySet()) {
                 String key = config.getKey();
                 if ("nkmrcfg".equals(spName) && isDeviceSpecificPushKey(key)) {
+                    continue;
+                }
+                if (config.getValue().isJsonArray()) {
+                    com.google.gson.JsonArray array = config.getValue().getAsJsonArray();
+                    java.util.HashSet<String> set = new java.util.HashSet<>();
+                    for (JsonElement item : array) {
+                        if (item.isJsonPrimitive()) {
+                            set.add(item.getAsString());
+                        }
+                    }
+                    String actualKey = key;
+                    if (key.endsWith("_string_set")) {
+                        actualKey = StringsKt.substringBeforeLast(key, "_string_set", key);
+                    }
+                    editor.putStringSet(actualKey, set);
                     continue;
                 }
                 if (!config.getValue().isJsonPrimitive()) {
