@@ -79,8 +79,6 @@ public class AppIconsSelectorCell extends RecyclerListView implements Notificati
                 LauncherIconController.LauncherIcon icon = availableIcons.get(position);
                 holderView.bind(icon);
                 holderView.iconView.setBackground(Theme.createSimpleSelectorRoundRectDrawable(AndroidUtilities.dp(ICONS_ROUND_RADIUS), Color.TRANSPARENT, Theme.getColor(Theme.key_listSelector), Color.BLACK));
-                holderView.iconView.setForeground(icon.foreground);
-                holderView.iconView.setIsNekoXIcon(icon.isNekoX());
             }
 
             @Override
@@ -181,7 +179,7 @@ public class AppIconsSelectorCell extends RecyclerListView implements Notificati
 
     @Override
     protected void onMeasure(int widthSpec, int heightSpec) {
-        super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthSpec), MeasureSpec.EXACTLY), heightSpec);
+        super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(104), MeasureSpec.EXACTLY));
     }
 
     @Override
@@ -221,7 +219,6 @@ public class AppIconsSelectorCell extends RecyclerListView implements Notificati
 
             setWillNotDraw(false);
             iconView = new AdaptiveIconImageView(context);
-            iconView.setPadding(AndroidUtilities.dp(8), AndroidUtilities.dp(8), AndroidUtilities.dp(8), AndroidUtilities.dp(8));
             addView(iconView, LayoutHelper.createLinear(58, 58, Gravity.CENTER_HORIZONTAL));
 
             titleView = new TextView(context);
@@ -233,17 +230,15 @@ public class AppIconsSelectorCell extends RecyclerListView implements Notificati
             outlinePaint.setStyle(Paint.Style.STROKE);
             outlinePaint.setStrokeWidth(Math.max(2, AndroidUtilities.dp(0.5f)));
 
-            fillPaint.setColor(Color.WHITE);
+            fillPaint.setColor(Color.TRANSPARENT);
         }
 
         @Override
         public void draw(Canvas canvas) {
-            float stroke = outlinePaint.getStrokeWidth();
-            AndroidUtilities.rectTmp.set(iconView.getLeft() + stroke, iconView.getTop() + stroke, iconView.getRight() - stroke, iconView.getBottom() - stroke);
-            canvas.drawRoundRect(AndroidUtilities.rectTmp, AndroidUtilities.dp(ICONS_ROUND_RADIUS), AndroidUtilities.dp(ICONS_ROUND_RADIUS), fillPaint);
-
             super.draw(canvas);
 
+            float stroke = outlinePaint.getStrokeWidth();
+            AndroidUtilities.rectTmp.set(iconView.getLeft() + stroke / 2f, iconView.getTop() + stroke / 2f, iconView.getRight() - stroke / 2f, iconView.getBottom() - stroke / 2f);
             canvas.drawRoundRect(AndroidUtilities.rectTmp, AndroidUtilities.dp(ICONS_ROUND_RADIUS), AndroidUtilities.dp(ICONS_ROUND_RADIUS), outlinePaint);
         }
 
@@ -252,7 +247,7 @@ public class AppIconsSelectorCell extends RecyclerListView implements Notificati
 
             titleView.setTextColor(ColorUtils.blendARGB(Theme.getColor(Theme.key_windowBackgroundWhiteBlackText), Theme.getColor(Theme.key_windowBackgroundWhiteValueText), progress));
             outlinePaint.setColor(ColorUtils.blendARGB(ColorUtils.setAlphaComponent(Theme.getColor(Theme.key_switchTrack), 0x3F), Theme.getColor(Theme.key_windowBackgroundWhiteValueText), progress));
-            outlinePaint.setStrokeWidth(Math.max(2, AndroidUtilities.dp(AndroidUtilities.lerp(0.5f, 2f, progress))));
+            outlinePaint.setStrokeWidth(Math.max(2, AndroidUtilities.dp(AndroidUtilities.lerp(0.5f, 2.5f, progress))));
             invalidate();
         }
 
@@ -274,6 +269,7 @@ public class AppIconsSelectorCell extends RecyclerListView implements Notificati
 
         private void bind(LauncherIconController.LauncherIcon icon) {
             iconView.setImageResource(icon.background);
+            iconView.setForeground(icon.foreground);
 
             MarginLayoutParams params = (MarginLayoutParams) titleView.getLayoutParams();
             if (icon.premium && !UserConfig.hasPremiumOnAccounts()) {
@@ -294,7 +290,6 @@ public class AppIconsSelectorCell extends RecyclerListView implements Notificati
     }
 
     public static class AdaptiveIconImageView extends ImageView {
-        private boolean isNekoXIcon = false;
         private Drawable foreground;
         private Path path = new Path();
         private int outerPadding = AndroidUtilities.dp(5);
@@ -305,12 +300,8 @@ public class AppIconsSelectorCell extends RecyclerListView implements Notificati
         }
 
         public void setForeground(int res) {
-            foreground = ContextCompat.getDrawable(getContext(), res);
+            foreground = res != 0 ? ContextCompat.getDrawable(getContext(), res) : null;
             invalidate();
-        }
-
-        public void setIsNekoXIcon(boolean value) {
-            this.isNekoXIcon = value;
         }
 
         @Override
@@ -335,20 +326,24 @@ public class AppIconsSelectorCell extends RecyclerListView implements Notificati
         public void draw(Canvas canvas) {
             canvas.save();
             canvas.clipPath(path);
-            if (!this.isNekoXIcon)
-                canvas.scale(1f + backgroundOuterPadding / (float) getWidth(), 1f + backgroundOuterPadding / (float) getHeight(), getWidth() / 2f, getHeight() / 2f);
+            canvas.scale(1f + backgroundOuterPadding / (float) getWidth(), 1f + backgroundOuterPadding / (float) getHeight(), getWidth() / 2f, getHeight() / 2f);
             super.draw(canvas);
             canvas.restore();
 
-            if (foreground != null && !this.isNekoXIcon) {
+            if (foreground != null) {
+                canvas.save();
+                canvas.clipPath(path);
                 foreground.setBounds(-outerPadding, -outerPadding, getWidth() + outerPadding, getHeight() + outerPadding);
                 foreground.draw(canvas);
+                canvas.restore();
             }
         }
 
         private void updatePath() {
             path.rewind();
-            path.addCircle(getWidth() / 2f, getHeight() / 2f, Math.min(getWidth() - getPaddingLeft() - getPaddingRight(), getHeight() - getPaddingTop() - getPaddingBottom()) / 2f, Path.Direction.CW);
+            float radius = AndroidUtilities.dp(ICONS_ROUND_RADIUS);
+            AndroidUtilities.rectTmp.set(0, 0, getWidth(), getHeight());
+            path.addRoundRect(AndroidUtilities.rectTmp, radius, radius, Path.Direction.CW);
         }
     }
 }
