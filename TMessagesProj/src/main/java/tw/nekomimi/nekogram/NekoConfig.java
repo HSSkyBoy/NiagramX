@@ -56,6 +56,13 @@ public class NekoConfig {
     public static final int DNS_TYPE_SYSTEM = 2;
     public static final int DNS_TYPE_CUSTOM_DOH = 3;
 
+    public static final int WEB_PROXY_MODE_FOLLOW_TELEGRAM = 0;
+    public static final int WEB_PROXY_MODE_DIRECT = 1;
+    public static final int WEB_PROXY_MODE_CUSTOM = 2;
+
+    public static final int WEB_PROXY_TYPE_HTTP = 0;
+    public static final int WEB_PROXY_TYPE_SOCKS5 = 1;
+
     public static final int ID_TYPE_HIDDEN = 0;
     public static final int ID_TYPE_API = 1;
     public static final int ID_TYPE_BOT_API = 2;
@@ -141,6 +148,13 @@ public class NekoConfig {
 
     public static ConfigItem dnsType = addConfig("DnsType", configTypeInt, DNS_TYPE_DEFAULT);
     public static ConfigItem customDoH = addConfig("CustomDoH", configTypeString, "");
+
+    public static ConfigItem webProxyMode = addConfig("WebProxyMode", configTypeInt, WEB_PROXY_MODE_FOLLOW_TELEGRAM);
+    public static ConfigItem webProxyType = addConfig("WebProxyType", configTypeInt, WEB_PROXY_TYPE_HTTP);
+    public static ConfigItem webProxyHost = addConfig("WebProxyHost", configTypeString, "");
+    public static ConfigItem webProxyPort = addConfig("WebProxyPort", configTypeString, "");
+    public static ConfigItem webProxyUsername = addConfig("WebProxyUsername", configTypeString, "");
+    public static ConfigItem webProxyPassword = addConfig("WebProxyPassword", configTypeString, "");
 
     public static ConfigItem mediaPreview = addConfig("MediaPreview", configTypeBool, true);
 

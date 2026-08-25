@@ -28,6 +28,7 @@ import java.util.regex.Pattern;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import tw.nekomimi.nekogram.utils.HttpClient;
 import xyz.nextalone.nagram.NaConfig;
 
 public class UpdateHelper extends BaseRemoteHelper {
@@ -102,7 +103,7 @@ public class UpdateHelper extends BaseRemoteHelper {
     private void checkGitHubReleaseUpdate(Delegate delegate) {
         Utilities.globalQueue.postRunnable(() -> {
             try {
-                OkHttpClient client = new OkHttpClient.Builder().build();
+                OkHttpClient client = HttpClient.INSTANCE.getInstance();
                 Request request = new Request.Builder()
                         .url(GITHUB_RELEASE_API_URL)
                         .header("Accept", "application/vnd.github.v3+json")

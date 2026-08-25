@@ -12,6 +12,8 @@ object HttpClient {
 
     val instance: OkHttpClient by lazy {
         OkHttpClient.Builder()
+            .proxySelector(WebProxyManager.createDynamicProxySelector())
+            .proxyAuthenticator(WebProxyManager.okHttpProxyAuthenticator)
             .connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(0, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)

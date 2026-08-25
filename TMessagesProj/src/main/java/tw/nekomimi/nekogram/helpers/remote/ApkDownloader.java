@@ -52,7 +52,7 @@ public class ApkDownloader {
 
     private static OkHttpClient getClient() {
         if (client == null) {
-            client = new OkHttpClient.Builder()
+            client = tw.nekomimi.nekogram.utils.HttpClient.INSTANCE.getInstance().newBuilder()
                     .connectTimeout(CONNECT_TIMEOUT_S, TimeUnit.SECONDS)
                     .readTimeout(READ_TIMEOUT_S, TimeUnit.SECONDS)
                     .writeTimeout(WRITE_TIMEOUT_S, TimeUnit.SECONDS)

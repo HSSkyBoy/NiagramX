@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Канал Niagram X</string>
     <string name="EnableSaveDeletedMessages">Сохранять удалённые сообщения</string>
@@ -244,6 +244,19 @@
     <string name="DnsType">DNS-резолвер</string>
     <string name="DnsTypeSystem">Системный</string>
     <string name="CustomDoH">Пользовательский DoH</string>
+    <string name="WebProxy">Веб / HTTP-прокси</string>
+    <string name="WebProxyMode">Веб / HTTP-прокси</string>
+    <string name="WebProxyAbout">Направлять внешние HTTP/HTTPS-запросы (такие как перевод LLM, проверка обновлений и расшифровка голоса) через прокси.</string>
+    <string name="WebProxyModeFollow">Использовать прокси Telegram (SOCKS5)</string>
+    <string name="WebProxyModeDirect">Напрямую (отключено)</string>
+    <string name="WebProxyModeCustom">Пользовательский прокси</string>
+    <string name="WebProxyType">Тип прокси</string>
+    <string name="WebProxyTypeHttp">HTTP / HTTPS</string>
+    <string name="WebProxyTypeSocks5">SOCKS5</string>
+    <string name="WebProxyHost">Сервер прокси</string>
+    <string name="WebProxyPort">Порт</string>
+    <string name="WebProxyUsername">Имя пользователя (необязательно)</string>
+    <string name="WebProxyPassword">Пароль (необязательно)</string>
     <string name="PinnedReactions">Закреплённые реакции</string>
     <string name="PinnedReactions_Status_Chats">Включить закреплённые реакции в чатах</string>
     <string name="PinnedReactions_Status_Channels">Включить закреплённые реакции в каналах</string>

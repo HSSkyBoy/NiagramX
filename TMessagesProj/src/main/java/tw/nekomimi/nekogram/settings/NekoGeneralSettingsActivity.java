@@ -146,6 +146,19 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
             getString(R.string.CustomDoH),
     }, null));
     private final AbstractConfigCell customDoHRow = cellGroup.appendCell(new ConfigCellTextInput2(null, NekoConfig.customDoH, "https://1.0.0.1/dns-query, https://...", null));
+    private final AbstractConfigCell webProxyModeRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NekoConfig.webProxyMode, new String[]{
+            getString(R.string.WebProxyModeFollow),
+            getString(R.string.WebProxyModeDirect),
+            getString(R.string.WebProxyModeCustom),
+    }, null));
+    private final AbstractConfigCell webProxyTypeRow = cellGroup.appendCell(new ConfigCellSelectBox(getString(R.string.WebProxyType), NekoConfig.webProxyType, new String[]{
+            getString(R.string.WebProxyTypeHttp),
+            getString(R.string.WebProxyTypeSocks5),
+    }, null));
+    private final AbstractConfigCell webProxyHostRow = cellGroup.appendCell(new ConfigCellTextInput2(getString(R.string.WebProxyHost), NekoConfig.webProxyHost, "127.0.0.1", null));
+    private final AbstractConfigCell webProxyPortRow = cellGroup.appendCell(new ConfigCellTextInput2(getString(R.string.WebProxyPort), NekoConfig.webProxyPort, "7890", null));
+    private final AbstractConfigCell webProxyUserRow = cellGroup.appendCell(new ConfigCellTextInput2(getString(R.string.WebProxyUsername), NekoConfig.webProxyUsername, "", null));
+    private final AbstractConfigCell webProxyPassRow = cellGroup.appendCell(new ConfigCellTextInput2(getString(R.string.WebProxyPassword), NekoConfig.webProxyPassword, "", null));
     private final AbstractConfigCell dividerConnection = cellGroup.appendCell(new ConfigCellDivider());
 
     // Map
@@ -291,6 +304,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
         wasCenteredAtBeginning = wasCentered;
 
         checkCustomDoHRows();
+        checkWebProxyRows();
         checkMapDriftingFixRows();
         checkCustomTitleRows();
         checkPushServiceTypeRows();
@@ -377,6 +391,8 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
             } else if (key.equals(NekoConfig.dnsType.getKey())) {
                 checkCustomDoHRows();
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
+            } else if (key.equals(NekoConfig.webProxyMode.getKey())) {
+                checkWebProxyRows();
             } else if (key.equals(NekoConfig.typeface.getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
             } else if (key.equals(NaConfig.INSTANCE.getDisableDialogsFloatingButton().getKey())) {
@@ -509,6 +525,46 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
                 listAdapter.notifyItemRemoved(customDoHRowIndex);
             }
         }
+    }
+
+    private void checkWebProxyRows() {
+        boolean isCustom = NekoConfig.webProxyMode.Int() == NekoConfig.WEB_PROXY_MODE_CUSTOM;
+        AbstractConfigCell[] customRows = new AbstractConfigCell[]{
+                webProxyTypeRow,
+                webProxyHostRow,
+                webProxyPortRow,
+                webProxyUserRow,
+                webProxyPassRow
+        };
+        if (listAdapter == null) {
+            if (!isCustom) {
+                for (AbstractConfigCell row : customRows) {
+                    cellGroup.rows.remove(row);
+                }
+            }
+            return;
+        }
+        if (isCustom) {
+            int insertIndex = cellGroup.rows.indexOf(webProxyModeRow);
+            if (insertIndex != -1) {
+                for (int i = 0; i < customRows.length; i++) {
+                    AbstractConfigCell row = customRows[i];
+                    if (!cellGroup.rows.contains(row)) {
+                        cellGroup.rows.add(insertIndex + 1 + i, row);
+                        listAdapter.notifyItemInserted(insertIndex + 1 + i);
+                    }
+                }
+            }
+        } else {
+            for (AbstractConfigCell row : customRows) {
+                int rowIndex = cellGroup.rows.indexOf(row);
+                if (rowIndex != -1) {
+                    cellGroup.rows.remove(row);
+                    listAdapter.notifyItemRemoved(rowIndex);
+                }
+            }
+        }
+        addRowsToMap(cellGroup);
     }
 
     private void checkMapDriftingFixRows() {
