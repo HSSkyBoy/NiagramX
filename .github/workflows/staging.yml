@@ -19,16 +19,20 @@ permissions:
 
 jobs:
   build:
-    name: Gradle Build
+    name: Gradle Build (${{ matrix.target }})
     runs-on: ubuntu-latest
-    outputs:
-      build_timestamp: ${{ steps.staging_build_step.outputs.build_timestamp }}
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [arm64-v8a, x86_64, universal]
     env:
       CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
       CCACHE_HARDLINK: "true"
       CCACHE_NOHASHDIR: "true"
       CCACHE_MAXSIZE: "10G"
-      NATIVE_TARGET: "universal"
+      CCACHE_SLOPPINESS: "include_file_ctime,include_file_mtime,time_macros"
+      CCACHE_BASEDIR: "${{ github.workspace }}"
+      NATIVE_TARGET: ${{ matrix.target }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -38,21 +42,15 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v5
         with:
-          distribution: 'zulu'
+          distribution: 'microsoft'
           java-version: '21'
       - name: Set up Ccache
         uses: hendrikmuhs/ccache-action@v1.2.23
         with:
+          key: ${{ matrix.target }}
           append-timestamp: false
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v6
-        with:
-          cache-disabled: true
-      - name: Set up Gradle cache
-        uses: actions/cache@v6
-        with:
-          path: ~/.gradle
-          key: gradle-${{ hashFiles('**/*.gradle') }}
+        uses: gradle/actions/setup-gradle@v4
       - name: Set up Android SDK Tools
         uses: android-actions/setup-android@v4
         with:
@@ -64,17 +62,6 @@ jobs:
       - name: Configure Android SDK Path
         run: |
           echo "sdk.dir=${ANDROID_HOME}" >> local.properties
-      - name: Modify Gradle JVM Args
-        run: |
-          MEMORY_KB=$(awk '/MemTotal/ {print $2}' /proc/meminfo)
-          MEMORY_GB=$((MEMORY_KB / 1024 / 1024))
-          echo "Detected memory size: ${MEMORY_GB}GB"
-          if [ $MEMORY_GB -ge 12 ]; then
-            sed -i '/^org\.gradle\.jvmargs=/d' gradle.properties
-            echo "" >> gradle.properties
-            echo "org.gradle.jvmargs=-Xmx8G -XX:MaxMetaspaceSize=2G -XX:+UseParallelGC -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" >> gradle.properties
-          fi
-          cat gradle.properties
       - name: Staging Build
         id: staging_build_step
         env:
@@ -87,24 +74,13 @@ jobs:
           if [ -n "$LOCAL_PROPERTIES" ]; then
             echo "$LOCAL_PROPERTIES" | base64 -d >> local.properties || true
           fi
-          export BUILD_TIMESTAMP=$(date +%s)
-          echo "build_timestamp=$BUILD_TIMESTAMP" >> "$GITHUB_OUTPUT"
-          ./gradlew TMessagesProj:assembleStaging
-      - name: Upload universal Artifact
-        uses: actions/upload-artifact@v7
+          ./gradlew TMessagesProj:assembleStaging --build-cache --parallel
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: Staging-universal
-          path: TMessagesProj/build/outputs/apk/staging/*-universal.apk
-      - name: Upload arm64-v8a Artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: Staging-arm64-v8a
-          path: TMessagesProj/build/outputs/apk/staging/*-arm64-v8a.apk
-      - name: Upload x86_64 Artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: Staging-x86_64
-          path: TMessagesProj/build/outputs/apk/staging/*-x86_64.apk
+          name: Staging-${{ matrix.target }}
+          path: TMessagesProj/build/outputs/apk/staging/*-${{ matrix.target }}.apk
+
   upload:
     name: Upload staging
     if: github.event.inputs.upload != 'y' && !contains(github.event.head_commit.message, '[skip upload]')
@@ -121,7 +97,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v7
         with:
-          python-version: 3.12
+          python-version: '3.12'
       - name: Send to Telegram
         env:
           APP_ID: ${{ secrets.APP_ID }}
@@ -129,7 +105,7 @@ jobs:
           COMMIT_ID: ${{ github.event.head_commit.id }}
           COMMIT_URL: ${{ github.event.head_commit.url }}
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
-          BUILD_TIMESTAMP: ${{ needs.build.outputs.build_timestamp }}
         run: |
+          export BUILD_TIMESTAMP=$(date +%s)
           python -m pip install -r Tools/scripts/requirements.txt
           python Tools/scripts/upload.py ${{ secrets.HELPER_BOT_TOKEN }} ${{ secrets.HELPER_BOT_TARGET }} test ${{ secrets.HELPER_BOT_CANARY_TARGET }}

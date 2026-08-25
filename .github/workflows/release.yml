@@ -16,12 +16,20 @@ on:
 
 jobs:
   build:
-    name: Gradle Build
+    name: Gradle Build (${{ matrix.target }})
     runs-on: ubuntu-latest
-    outputs:
-      build_timestamp: ${{ steps.release_build_step.outputs.build_timestamp }}
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [universal, arm64-v8a, x86_64]
     env:
-      NATIVE_TARGET: "universal"
+      CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
+      CCACHE_HARDLINK: "true"
+      CCACHE_NOHASHDIR: "true"
+      CCACHE_MAXSIZE: "10G"
+      CCACHE_SLOPPINESS: "include_file_ctime,include_file_mtime,time_macros"
+      CCACHE_BASEDIR: "${{ github.workspace }}"
+      NATIVE_TARGET: ${{ matrix.target }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -31,8 +39,13 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v5
         with:
-          distribution: 'temurin'
+          distribution: 'microsoft'
           java-version: '21'
+      - name: Set up Ccache
+        uses: hendrikmuhs/ccache-action@v1.2.23
+        with:
+          key: ${{ matrix.target }}
+          append-timestamp: false
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6
       - name: Set up Android SDK Tools
@@ -46,17 +59,6 @@ jobs:
       - name: Configure Android SDK Path
         run: |
           echo "sdk.dir=${ANDROID_HOME}" >> local.properties
-      - name: Modify Gradle JVM Args
-        run: |
-          MEMORY_KB=$(awk '/MemTotal/ {print $2}' /proc/meminfo)
-          MEMORY_GB=$((MEMORY_KB / 1024 / 1024))
-          echo "Detected memory size: ${MEMORY_GB}GB"
-          if [ $MEMORY_GB -ge 12 ]; then
-            sed -i '/^org\.gradle\.jvmargs=/d' gradle.properties
-            echo "" >> gradle.properties
-            echo "org.gradle.jvmargs=-Xmx8G -XX:MaxMetaspaceSize=2G -XX:+UseParallelGC -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" >> gradle.properties
-          fi
-          cat gradle.properties
       - name: Release Build
         id: release_build_step
         env:
@@ -69,24 +71,13 @@ jobs:
           if [ -n "$LOCAL_PROPERTIES" ]; then
             echo "$LOCAL_PROPERTIES" | base64 -d >> local.properties || true
           fi
-          export BUILD_TIMESTAMP=$(date +%s)
-          echo "build_timestamp=$BUILD_TIMESTAMP" >> "$GITHUB_OUTPUT"
-          ./gradlew TMessagesProj:assembleRelease
-      - name: Upload universal Artifact
-        uses: actions/upload-artifact@v7
+          ./gradlew TMessagesProj:assembleRelease --build-cache --parallel
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: Release-universal
-          path: TMessagesProj/build/outputs/apk/release/*-universal.apk
-      - name: Upload arm64-v8a Artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: Release-arm64-v8a
-          path: TMessagesProj/build/outputs/apk/release/*-arm64-v8a.apk
-      - name: Upload x86_64 Artifact
-        uses: actions/upload-artifact@v7
-        with:
-          name: Release-x86_64
-          path: TMessagesProj/build/outputs/apk/release/*-x86_64.apk
+          name: Release-${{ matrix.target }}
+          path: TMessagesProj/build/outputs/apk/release/*-${{ matrix.target }}.apk
+
   upload:
     name: Upload release
     if: github.event.inputs.upload != 'y' && !contains(github.event.head_commit.message, '[skip upload]')
@@ -103,7 +94,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v7
         with:
-          python-version: 3.12
+          python-version: '3.12'
       - name: Send to Telegram
         env:
           APP_ID: ${{ secrets.APP_ID }}
@@ -111,7 +102,7 @@ jobs:
           COMMIT_ID: ${{ github.event.head_commit.id }}
           COMMIT_URL: ${{ github.event.head_commit.url }}
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
-          BUILD_TIMESTAMP: ${{ needs.build.outputs.build_timestamp }}
         run: |
+          export BUILD_TIMESTAMP=$(date +%s)
           python -m pip install -r Tools/scripts/requirements.txt
           python Tools/scripts/upload.py ${{ secrets.HELPER_BOT_TOKEN }} ${{ secrets.HELPER_BOT_TARGET }} release ${{ secrets.HELPER_BOT_CANARY_TARGET }}
