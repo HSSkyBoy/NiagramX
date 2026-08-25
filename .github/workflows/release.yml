@@ -53,6 +53,7 @@ jobs:
           echo "Detected memory size: ${MEMORY_GB}GB"
           if [ $MEMORY_GB -ge 12 ]; then
             sed -i '/^org\.gradle\.jvmargs=/d' gradle.properties
+            echo "" >> gradle.properties
             echo "org.gradle.jvmargs=-Xmx8G -XX:MaxMetaspaceSize=2G -XX:+UseParallelGC -XX:+HeapDumpOnOutOfMemoryError -Dfile.encoding=UTF-8" >> gradle.properties
           fi
           cat gradle.properties
