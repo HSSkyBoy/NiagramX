@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -36,9 +37,11 @@ import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Components.voip.CellFlickerDrawable;
 
+import java.io.File;
 import java.util.Locale;
 
 import tw.nekomimi.nekogram.TextViewEffects;
+import tw.nekomimi.nekogram.helpers.remote.ApkDownloader;
 import tw.nekomimi.nekogram.helpers.remote.UpdateHelper;
 
 public class BlockingUpdateView extends FrameLayout implements NotificationCenter.NotificationCenterDelegate {
@@ -139,13 +142,32 @@ public class BlockingUpdateView extends FrameLayout implements NotificationCente
         acceptButton.setPadding(AndroidUtilities.dp(34), 0, AndroidUtilities.dp(34), 0);
         addView(acceptButton, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, 46, Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM, 0, 0, 0, 45));
         acceptButton.setOnClickListener(view1 -> {
-            if (appUpdate.document instanceof TLRPC.TL_document) {
+            if (!TextUtils.isEmpty(appUpdate.url)) {
+                if (!ApplicationLoader.applicationLoaderInstance.openApkInstall(AndroidUtilities.findActivity(getContext()), ApkDownloader.getDestFile(appUpdate.url))) {
+                    ApkDownloader.download(appUpdate.url, new ApkDownloader.Callback() {
+                        @Override
+                        public void onProgress(float progress) {
+                            radialProgress.setProgress(progress, true);
+                        }
+
+                        @Override
+                        public void onSuccess(File file) {
+                            showProgress(false);
+                            ApplicationLoader.applicationLoaderInstance.openApkInstall(AndroidUtilities.findActivity(getContext()), file);
+                        }
+
+                        @Override
+                        public void onError(String message) {
+                            showProgress(false);
+                        }
+                    });
+                    showProgress(true);
+                }
+            } else if (appUpdate.document instanceof TLRPC.TL_document) {
                 if (!ApplicationLoader.applicationLoaderInstance.openApkInstall((Activity) getContext(), appUpdate.document)) {
                     FileLoader.getInstance(accountNum).loadFile(appUpdate.document, "update", FileLoader.PRIORITY_HIGH, 1);
                     showProgress(true);
                 }
-            } else if (appUpdate.url != null) {
-                Browser.openUrl(getContext(), appUpdate.url);
             }
         });
 
@@ -280,7 +302,7 @@ public class BlockingUpdateView extends FrameLayout implements NotificationCente
         if (getVisibility() != VISIBLE) {
             setVisibility(VISIBLE);
         }
-        SpannableStringBuilder builder = new SpannableStringBuilder(update.text);
+        SpannableStringBuilder builder = new SpannableStringBuilder(TextUtils.isEmpty(update.text) ? "" : update.text);
         MessageObject.addEntitiesToText(builder, update.entities, false, false, false, false);
         MessageObject.replaceAnimatedEmoji(builder, update.entities, textView.getPaint().getFontMetricsInt());
         textView.setText(builder);

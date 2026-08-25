@@ -44,6 +44,7 @@ public class UpdateHelper extends BaseRemoteHelper {
                 });
             }
         }
+        ApkDownloader.cleanStaleFiles(null);
         SharedConfig.pendingAppUpdate = null;
         SharedConfig.saveConfig();
         NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.appUpdateAvailable);
@@ -68,6 +69,20 @@ public class UpdateHelper extends BaseRemoteHelper {
             }
         }
         return files.getOrDefault("universal", files.get("arm64-v8a"));
+    }
+
+    private String getPreferredUpdateUrl(String urlArm64, String urlArmeabiV7a) {
+        if (urlArmeabiV7a != null && !urlArmeabiV7a.isEmpty()) {
+            for (String abi : Build.SUPPORTED_ABIS) {
+                if ("armeabi-v7a".equals(abi)) {
+                    return urlArmeabiV7a;
+                }
+                if ("arm64-v8a".equals(abi)) {
+                    break;
+                }
+            }
+        }
+        return urlArm64;
     }
 
     private Map<String, Integer> jsonToMap(JSONObject obj) {
@@ -102,6 +117,8 @@ public class UpdateHelper extends BaseRemoteHelper {
                     if (updateAlways) {
                         updateAlways = false;
                     }
+                    String urlArm64 = string.optString("url", "");
+                    String urlArmeabiV7a = string.optString("url_armeabi_v7a", "");
                     ref = new Update(
                             string.getBoolean("can_not_skip"),
                             string.getString("version"),
@@ -109,7 +126,7 @@ public class UpdateHelper extends BaseRemoteHelper {
                             string.getInt("sticker"),
                             string.getInt("message"),
                             jsonToMap(string.getJSONObject("document")),
-                            string.getString("url")
+                            getPreferredUpdateUrl(urlArm64, urlArmeabiV7a)
                     );
                     break;
                 }
@@ -177,7 +194,7 @@ public class UpdateHelper extends BaseRemoteHelper {
         if (update.message != null) {
             ids.put("message", update.message);
         }
-        if (update.document != null) {
+        if (update.document != null && (update.url == null || update.url.isEmpty())) {
             ids.put("document", getPreferredAbiFile(update.document));
         }
         if (ids.isEmpty()) {
