@@ -108,6 +108,7 @@ import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
@@ -6827,15 +6828,32 @@ public class AndroidUtilities {
 
     /**
      * Fix for Build.VERSION.SDK_INT < Build.VERSION_CODES.R
+     *
+     * Also guards against NoSuchMethodError from androidx.core's
+     * WindowInsetsCompat$TypeImpl34.toPlatformType() calling
+     * WindowInsets.Type.systemOverlays() on API < 35 where the method
+     * doesn't exist yet.
      */
     @NonNull
     public static WindowInsets fixedDispatchApplyWindowInsets(@NonNull WindowInsets insets, ViewGroup view) {
         for (int a = 0, N = view.getChildCount(); a < N; a++) {
             final View child = view.getChildAt(a);
-            child.dispatchApplyWindowInsets(insets);
+            try {
+                child.dispatchApplyWindowInsets(insets);
+            } catch (NoSuchMethodError e) {
+                // androidx.core TypeImpl34 may call WindowInsets.Type.systemOverlays()
+                // which only exists on API 35+. Swallow the error and continue
+                // dispatching to remaining children.
+                FileLog.e("fixedDispatchApplyWindowInsets: api=" + Build.VERSION.SDK_INT + " " + e.getMessage());
+                try {
+                    FirebaseCrashlytics.getInstance().log("fixedDispatchApplyWindowInsets_NoSuchMethodError_caught api=" + Build.VERSION.SDK_INT + " msg=" + e.getMessage());
+                } catch (Throwable ignore) {
+                }
+            }
         }
         return insets;
     }
+
 
 
 
@@ -6893,15 +6911,45 @@ public class AndroidUtilities {
 
 
     public static Insets getDefaultWindowInsets(WindowInsetsCompat insets, boolean withIme) {
-        final int insetsType = WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout();
-        final Insets systemInsets = insets.getInsetsIgnoringVisibility(insetsType);
+        try {
+            final int insetsType = WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout();
+            final Insets systemInsets = insets.getInsetsIgnoringVisibility(insetsType);
 
-        if (withIme) {
-            final Insets imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime());
-            return Insets.max(systemInsets, imeInsets);
+            if (withIme) {
+                final Insets imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime());
+                return Insets.max(systemInsets, imeInsets);
+            }
+
+            return systemInsets;
+        } catch (NoSuchMethodError e) {
+            FileLog.e("getDefaultWindowInsets: api=" + Build.VERSION.SDK_INT + " " + e.getMessage());
+            try {
+                FirebaseCrashlytics.getInstance().log("getDefaultWindowInsets_NoSuchMethodError_caught api=" + Build.VERSION.SDK_INT + " msg=" + e.getMessage());
+            } catch (Throwable ignore) {
+            }
+
+            // Fallback 1: Try statusBars | navigationBars (without displayCutout which might include problematic bits)
+            try {
+                final Insets fallbackInsets = insets.getInsetsIgnoringVisibility(
+                        WindowInsetsCompat.Type.statusBars() | WindowInsetsCompat.Type.navigationBars()
+                );
+                if (withIme) {
+                    try {
+                        final Insets imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime());
+                        return Insets.max(fallbackInsets, imeInsets);
+                    } catch (Throwable ignore) {
+                    }
+                }
+                return fallbackInsets;
+            } catch (Throwable fallbackError) {
+                // Fallback 2: Try basic systemBars or return NONE
+                try {
+                    return insets.getInsets(WindowInsetsCompat.Type.systemBars());
+                } catch (Throwable ignored) {
+                    return Insets.NONE;
+                }
+            }
         }
-
-        return systemInsets;
     }
 
     public static void setViewLayoutMargins(View v, int l, int t, int r, int b) {

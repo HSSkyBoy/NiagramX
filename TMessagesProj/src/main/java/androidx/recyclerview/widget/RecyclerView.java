@@ -3850,10 +3850,11 @@ public class RecyclerView extends ViewGroup implements ScrollingView,
             dispatchLayoutStep1();
             mLayout.setExactMeasureSpecsFrom(this);
             dispatchLayoutStep2();
-        } else if (mAdapterHelper.hasUpdates() || mLayout.getWidth() != getWidth()
+        } else if (mAdapterHelper.hasUpdates() || mState.mLayoutStep == State.STEP_LAYOUT
+                || mLayout.getWidth() != getWidth()
                 || mLayout.getHeight() != getHeight()) {
             // First 2 steps are done in onMeasure but looks like we have to run again due to
-            // changed size.
+            // changed size or we only completed step 1 (STEP_LAYOUT).
             mLayout.setExactMeasureSpecsFrom(this);
             dispatchLayoutStep2();
         } else {

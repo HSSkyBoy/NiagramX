@@ -78,7 +78,7 @@ public class ActionBarPopupWindow extends PopupWindow {
         try {
             f = PopupWindow.class.getDeclaredField("mOnScrollChangedListener");
             f.setAccessible(true);
-        } catch (NoSuchFieldException e) {
+        } catch (Throwable e) {
             /* ignored */
         }
         superListenerField = f;
