@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public abstract class BaseRemoteHelper {
     public static final long CHANNEL_METADATA_ID = 2477822904L;
-    public static final String CHANNEL_METADATA_NAME = "niagramx_remote_metadata";
+    public static final String CHANNEL_METADATA_NAME = "NiagramX";
 
     protected static final SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoremoteconfig", Activity.MODE_PRIVATE);
 
@@ -99,15 +99,18 @@ public abstract class BaseRemoteHelper {
             req1.username = CHANNEL_METADATA_NAME;
             getConnectionsManager().sendRequest(req1, (response1, error1) -> {
                 if (error1 != null) {
+                    onError(error1.text, delegate);
                     return;
                 }
                 if (!(response1 instanceof TLRPC.TL_contacts_resolvedPeer resolvedPeer)) {
+                    onError("RESOLVE_FAILED", delegate);
                     return;
                 }
                 getMessagesController().putUsers(resolvedPeer.users, false);
                 getMessagesController().putChats(resolvedPeer.chats, false);
                 getMessagesStorage().putUsersAndChats(resolvedPeer.users, resolvedPeer.chats, false, true);
                 if ((resolvedPeer.chats == null || resolvedPeer.chats.size() == 0)) {
+                    onError("CHANNEL_NOT_FOUND", delegate);
                     return;
                 }
                 req.peer = new TLRPC.TL_inputPeerChannel();
