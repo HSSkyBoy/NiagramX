@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Konfig-N</string>
     <string name="CombineMessage">Gabungkan Pesan</string>
@@ -19,13 +19,10 @@
     <string name="ShowMessageID">Tampilkan ID Pesan</string>
     <string name="ShowRPCError">Beritahu Kesalahan RPC</string>
     <string name="ShowPremiumStickersAnimation">Tampilkan Animasi Stiker Premium</string>
-    <string name="AppIconColorful">Berwarna</string>
-    <string name="AppIconDarkGreen">Hijau Gelap</string>
-    <string name="AppIconNeon">Neon</string>
-    <string name="AppIconNiello">Niello</string>
-    <string name="AppIconBlue">Biru</string>
-    <string name="AppIconDarkBlue">Biru Gelap</string>
-    <string name="AppIconBlurBlue">Biru Buram</string>
+    <string name="AppIconNeko">Neko</string>
+    <string name="AppIconNekoDark">Neko Dark</string>
+    <string name="AppIconNekoColorful">Neko Colorful</string>
+    <string name="AppIconForkGram">ForkGram</string>
     <string name="InputMessageId">Masukkan ID Pesan</string>
     <string name="ToTheMessage">Pergi Ke</string>
     <string name="ZalgoFilter">Saring Simbol \"Zalgo\"</string>
@@ -106,3 +103,4 @@
     <string name="VideoPlayerDecoderHardware">Hanya HW</string>
     <string name="VideoPlayerDecoderPreferHW">Lebih suka HW</string>
 </resources>
+

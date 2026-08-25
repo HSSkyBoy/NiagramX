@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Настройки N</string>
     <string name="CombineMessage">Объединить сообщения</string>
@@ -19,13 +19,10 @@
     <string name="ShowMessageID">Показывать ID сообщения</string>
     <string name="ShowRPCError">Показывать ошибки RPC</string>
     <string name="ShowPremiumStickersAnimation">Показывать анимацию Premium-стикеров</string>
-    <string name="AppIconColorful">Красочная</string>
-    <string name="AppIconDarkGreen">Тёмно-зелёная</string>
-    <string name="AppIconNeon">Неон</string>
-    <string name="AppIconNiello">Ниелло</string>
-    <string name="AppIconBlue">Синяя</string>
-    <string name="AppIconDarkBlue">Тёмно-синяя</string>
-    <string name="AppIconBlurBlue">Размытая синяя</string>
+    <string name="AppIconNeko">Neko</string>
+    <string name="AppIconNekoDark">Neko Dark</string>
+    <string name="AppIconNekoColorful">Neko Colorful</string>
+    <string name="AppIconForkGram">ForkGram</string>
     <string name="InputMessageId">Введите ID сообщения</string>
     <string name="ToTheMessage">К сообщению</string>
     <string name="ZalgoFilter">Фильтровать символы «Zalgo»</string>
@@ -106,3 +103,4 @@
     <string name="VideoPlayerDecoderHardware">Только HW</string>
     <string name="VideoPlayerDecoderPreferHW">Предпочтение HW</string>
 </resources>
+

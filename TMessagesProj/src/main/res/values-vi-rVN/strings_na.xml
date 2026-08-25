@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Cấu hình Niagram X</string>
     <string name="CombineMessage">Kết hợp Tin nhắn</string>
@@ -19,13 +19,10 @@
     <string name="ShowMessageID">Hiển thị ID tin nhắn</string>
     <string name="ShowRPCError">Lỗi RPC Toast</string>
     <string name="ShowPremiumStickersAnimation">Hiển thị hoạt ảnh của nhãn dán cao cấp</string>
-    <string name="AppIconColorful">Màu sắc</string>
-    <string name="AppIconDarkGreen">Xanh đen</string>
-    <string name="AppIconNeon">Neon</string>
-    <string name="AppIconNiello">Niello</string>
-    <string name="AppIconBlue">Xanh biển</string>
-    <string name="AppIconDarkBlue">Xanh biển đen</string>
-    <string name="AppIconBlurBlue">Xanh phản quang</string>
+    <string name="AppIconNeko">Neko</string>
+    <string name="AppIconNekoDark">Neko Dark</string>
+    <string name="AppIconNekoColorful">Neko Colorful</string>
+    <string name="AppIconForkGram">ForkGram</string>
     <string name="InputMessageId">Nhập ID tin nhắn</string>
     <string name="ToTheMessage">Đi đến</string>
     <string name="ZalgoFilter">Lọc ký tự \"Zalgo\"</string>
@@ -104,3 +101,4 @@
     <string name="VideoPlayerDecoderHardware">Chỉ HW</string>
     <string name="VideoPlayerDecoderPreferHW">Ưu tiên HW</string>
 </resources>
+

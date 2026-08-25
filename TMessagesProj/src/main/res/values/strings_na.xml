@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-Config</string>
     <string name="CombineMessage">Combine Messages</string>
@@ -19,14 +19,10 @@
     <string name="ShowMessageID">Show Message ID</string>
     <string name="ShowRPCError">Toast RPC Errors</string>
     <string name="ShowPremiumStickersAnimation">Show Premium Stickers Animation</string>
-    <string name="AppIconGoogle" translatable="false">Google</string>
-    <string name="AppIconColorful">Colorful</string>
-    <string name="AppIconDarkGreen">Dark Green</string>
-    <string name="AppIconNeon">Neon</string>
-    <string name="AppIconNiello">Niello</string>
-    <string name="AppIconBlue">Blue</string>
-    <string name="AppIconDarkBlue">Dark Blue</string>
-    <string name="AppIconBlurBlue">Blur Blue</string>
+    <string name="AppIconNeko">Neko</string>
+    <string name="AppIconNekoDark">Neko Dark</string>
+    <string name="AppIconNekoColorful">Neko Colorful</string>
+    <string name="AppIconForkGram">ForkGram</string>
     <string name="InputMessageId">Enter Message ID</string>
     <string name="ToTheMessage">Go To</string>
     <string name="ZalgoFilter">Filter \"Zalgo\" Symbols</string>

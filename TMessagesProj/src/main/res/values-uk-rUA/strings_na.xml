@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Налаштування N</string>
     <string name="CombineMessage">Об\'єднати повідомлення</string>
@@ -19,13 +19,10 @@
     <string name="ShowMessageID">Показати ID повідомлення</string>
     <string name="ShowRPCError">Показувати помилки RPC</string>
     <string name="ShowPremiumStickersAnimation">Показувати анімацію Premium наліпок</string>
-    <string name="AppIconColorful">Барвистість</string>
-    <string name="AppIconDarkGreen">Темно-зелений</string>
-    <string name="AppIconNeon">Неон</string>
-    <string name="AppIconNiello">Ніелло</string>
-    <string name="AppIconBlue">Синій</string>
-    <string name="AppIconDarkBlue">Темний синій</string>
-    <string name="AppIconBlurBlue">Розмитий синій</string>
+    <string name="AppIconNeko">Neko</string>
+    <string name="AppIconNekoDark">Neko Dark</string>
+    <string name="AppIconNekoColorful">Neko Colorful</string>
+    <string name="AppIconForkGram">ForkGram</string>
     <string name="InputMessageId">Введіть ID повідомлення</string>
     <string name="ToTheMessage">Перейти до</string>
     <string name="ZalgoFilter">Фільтр символів «Zalgo»</string>
@@ -105,3 +102,4 @@
     <string name="VideoPlayerDecoderHardware">Тільки апаратне декодування</string>
     <string name="VideoPlayerDecoderPreferHW">Перевага HW</string>
 </resources>
+

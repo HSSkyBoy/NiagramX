@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-设置</string>
     <string name="CombineMessage">合并消息</string>
@@ -18,14 +18,10 @@
     <string name="DateOfForwardedMsg">显示转发消息日期</string>
     <string name="ShowMessageID">显示消息 ID</string>
     <string name="ShowRPCError">显示 RPC 错误</string>
-    <string name="ShowPremiumStickersAnimation">显示 Premium 贴纸动画</string>
-    <string name="AppIconColorful">缤纷</string>
-    <string name="AppIconDarkGreen">深翠</string>
-    <string name="AppIconNeon">霓虹</string>
-    <string name="AppIconNiello">黑金</string>
-    <string name="AppIconBlue">几何</string>
-    <string name="AppIconDarkBlue">几何蓝</string>
-    <string name="AppIconBlurBlue">轻盈</string>
+    <string name="AppIconNeko">Neko</string>
+    <string name="AppIconNekoDark">Neko 暗黑</string>
+    <string name="AppIconNekoColorful">Neko 缤纷</string>
+    <string name="AppIconForkGram">ForkGram</string>
     <string name="InputMessageId">输入消息 ID</string>
     <string name="ToTheMessage">前往消息</string>
     <string name="ZalgoFilter">过滤 \"Zalgo\" 符号</string>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-設定</string>
     <string name="CombineMessage">メッセージを結合</string>
@@ -19,13 +19,10 @@
     <string name="ShowMessageID">メッセージ ID を表示</string>
     <string name="ShowRPCError">RPC エラーを表示</string>
     <string name="ShowPremiumStickersAnimation">プレミアムステッカーアニメーションを表示</string>
-    <string name="AppIconColorful">カラフル</string>
-    <string name="AppIconDarkGreen">ダークグリーン</string>
-    <string name="AppIconNeon">ネオン</string>
-    <string name="AppIconNiello">ニエロ</string>
-    <string name="AppIconBlue">ブルー</string>
-    <string name="AppIconDarkBlue">ダークブルー</string>
-    <string name="AppIconBlurBlue">ブラーブルー</string>
+    <string name="AppIconNeko">Neko</string>
+    <string name="AppIconNekoDark">Neko Dark</string>
+    <string name="AppIconNekoColorful">Neko Colorful</string>
+    <string name="AppIconForkGram">ForkGram</string>
     <string name="InputMessageId">メッセージ ID を入力</string>
     <string name="ToTheMessage">メッセージに移動</string>
     <string name="ZalgoFilter">「Zalgo」文字をフィルタリング</string>
@@ -105,3 +102,4 @@
     <string name="VideoPlayerDecoderHardware">HW のみ</string>
     <string name="VideoPlayerDecoderPreferHW">HW 優先</string>
 </resources>
+

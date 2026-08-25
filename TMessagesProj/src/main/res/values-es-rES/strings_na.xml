@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-Configuración</string>
     <string name="CombineMessage">Combinar mensajes</string>
@@ -19,13 +19,10 @@
     <string name="ShowMessageID">Mostrar ID del mensaje</string>
     <string name="ShowRPCError">Errores RPC Toast</string>
     <string name="ShowPremiumStickersAnimation">Mostrar Animación de Stickers Premium</string>
-    <string name="AppIconColorful">Colorido</string>
-    <string name="AppIconDarkGreen">Verde Obscuro</string>
-    <string name="AppIconNeon">Neón</string>
-    <string name="AppIconNiello">Niello</string>
-    <string name="AppIconBlue">Azul</string>
-    <string name="AppIconDarkBlue">Azul oscuro</string>
-    <string name="AppIconBlurBlue">Desenfoque Azul</string>
+    <string name="AppIconNeko">Neko</string>
+    <string name="AppIconNekoDark">Neko Dark</string>
+    <string name="AppIconNekoColorful">Neko Colorful</string>
+    <string name="AppIconForkGram">ForkGram</string>
     <string name="InputMessageId">Introducir ID del mensaje</string>
     <string name="ToTheMessage">Ir a</string>
     <string name="ZalgoFilter">Filtrar símbolos \"Zalgo\"</string>
@@ -106,3 +103,4 @@ También puede utilizar texto sin formato, pero no olvide escapar los paréntesi
     <string name="VideoPlayerDecoderHardware">Solo HW</string>
     <string name="VideoPlayerDecoderPreferHW">Preferir HW</string>
 </resources>
+
