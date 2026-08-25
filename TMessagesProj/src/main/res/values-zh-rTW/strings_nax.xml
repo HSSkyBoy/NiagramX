@@ -6,8 +6,10 @@
     <string name="AllowScreenCaptureNotice">解除全域 FLAG_SECURE 限制，允許在受保護頻道、秘密聊天、閱後即焚與密碼鎖介面中自由截圖與錄影。</string>
     <string name="AllowCopyProtectedContent">允許複製受保護內容</string>
     <string name="AllowCopyProtectedContentNotice">解除頻道或群組「禁止轉發 / 禁止複製 (noforwards)」限制，允許複製文字、儲存圖片/影片與轉發副本。</string>
-    <string name="SaveTTLMedia">保存閱後即焚媒體</string>
-    <string name="SaveTTLMediaNotice">允許直接下載並留存計時自動銷毀的照片與影片。</string>
+    <string name="SaveTTLMedia">儲存閱後即焚與限時媒體</string>
+    <string name="SaveTTLMediaNotice">無限制儲存、轉發與檢視閱後即焚照片與影片，防止媒體自動銷毀與刪除。</string>
+    <string name="CompactChatInput">緊湊模式</string>
+    <string name="CompactChatInputNotice">將輸入框高度壓縮至 40dp，邊距更緊湊。</string>
     <string name="DeletedMessage">已刪除</string>
     <string name="EnableSaveEditsHistory">儲存編輯歷史</string>
     <string name="EditsHistoryMenuText">編輯歷史</string>

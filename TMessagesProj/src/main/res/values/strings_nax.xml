@@ -7,8 +7,10 @@
     <string name="AllowScreenCaptureNotice">Disable FLAG_SECURE restrictions to allow screenshots and screen recording in all chats, TTL media, and protected views.</string>
     <string name="AllowCopyProtectedContent">Allow Copy Protected Content</string>
     <string name="AllowCopyProtectedContentNotice">Allow copying text, saving photos/videos, and repeating messages from protected (noforwards) channels and chats.</string>
-    <string name="SaveTTLMedia">Save Disappearing (TTL) Media</string>
-    <string name="SaveTTLMediaNotice">Allow saving and retaining disappearing photos and videos without auto-destruction from cache.</string>
+    <string name="SaveTTLMedia">Save Disappearing &amp; TTL Media</string>
+    <string name="SaveTTLMediaNotice">Always allow saving, sharing, and viewing disappearing photos and videos without restrictions.</string>
+    <string name="CompactChatInput">Compact mode</string>
+    <string name="CompactChatInputNotice">Compress input bar height to 40dp and tighten margins.</string>
     <string name="DeletedMessage">deleted</string>
     <string name="EnableSaveEditsHistory">Save Edits History</string>
     <string name="EditsHistoryMenuText">Edits History</string>

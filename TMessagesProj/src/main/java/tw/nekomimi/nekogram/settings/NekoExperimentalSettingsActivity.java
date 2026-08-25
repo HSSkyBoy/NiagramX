@@ -184,6 +184,7 @@ public class NekoExperimentalSettingsActivity extends BaseNekoXSettingsActivity 
     private final AbstractConfigCell allowScreenCaptureRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getAllowScreenCapture(), getString(R.string.AllowScreenCaptureNotice)));
     private final AbstractConfigCell allowCopyProtectedContentRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getAllowCopyProtectedContent(), getString(R.string.AllowCopyProtectedContentNotice)));
     private final AbstractConfigCell saveTTLMediaRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getSaveTTLMedia(), getString(R.string.SaveTTLMediaNotice)));
+    private final AbstractConfigCell compactChatInputRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getCompactChatInput(), getString(R.string.CompactChatInputNotice)));
     private final AbstractConfigCell dividerNConfig = cellGroup.appendCell(new ConfigCellDivider());
 
     // Story

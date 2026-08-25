@@ -631,6 +631,12 @@ object NaConfig {
             ConfigItem.configTypeBool,
             true
         )
+    val compactChatInput =
+        addConfig(
+            "CompactChatInput",
+            ConfigItem.configTypeBool,
+            false
+        )
     val saveLocalLastSeen =
         addConfig(
             "SaveLocalLastSeen",
