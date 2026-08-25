@@ -39,7 +39,7 @@ public class LauncherIconController {
         DEFAULT("DefaultIcon", R.mipmap.icon_9_launcher_background, R.mipmap.icon_9_launcher_foreground, R.string.AppIconNekoColorful),
         NEKO("NekoIcon", R.mipmap.icon_7_launcher_background, R.mipmap.icon_7_launcher_foreground, R.string.AppIconNeko),
         NEKO_DARK("NekoDarkIcon", R.mipmap.icon_2_background_sa, R.mipmap.icon_8_launcher_foreground, R.string.AppIconNekoDark),
-        FORKGRAM("ForkGramIcon", R.drawable.icon_background_sa, R.mipmap.ic_launcher_fork, R.string.AppIconForkGram),
+        FORKGRAM("ForkGramIcon", R.mipmap.ic_launcher_fork, 0, R.string.AppIconForkGram),
         TELEGRAM("TelegramIcon", R.drawable.icon_background_sa, R.mipmap.icon_foreground_sa, R.string.AppIconTelegramOriginal),
         VINTAGE("VintageIcon", R.drawable.icon_6_background_sa, R.mipmap.icon_6_foreground_sa, R.string.AppIconVintage),
         AQUA("AquaIcon", R.drawable.icon_4_background_sa, R.mipmap.icon_foreground_sa, R.string.AppIconAqua),

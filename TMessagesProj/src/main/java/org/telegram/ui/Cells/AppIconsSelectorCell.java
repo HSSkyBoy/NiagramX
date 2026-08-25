@@ -268,7 +268,11 @@ public class AppIconsSelectorCell extends RecyclerListView implements Notificati
         }
 
         private void bind(LauncherIconController.LauncherIcon icon) {
-            iconView.setImageResource(icon.background);
+            try {
+                iconView.setImageResource(icon.background);
+            } catch (Throwable e) {
+                iconView.setImageDrawable(null);
+            }
             iconView.setForeground(icon.foreground);
 
             MarginLayoutParams params = (MarginLayoutParams) titleView.getLayoutParams();
@@ -300,7 +304,11 @@ public class AppIconsSelectorCell extends RecyclerListView implements Notificati
         }
 
         public void setForeground(int res) {
-            foreground = res != 0 ? ContextCompat.getDrawable(getContext(), res) : null;
+            try {
+                foreground = res != 0 ? ContextCompat.getDrawable(getContext(), res) : null;
+            } catch (Throwable e) {
+                foreground = null;
+            }
             invalidate();
         }
 
