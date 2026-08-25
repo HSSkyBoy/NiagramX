@@ -4114,8 +4114,7 @@ public class ChatActivityEnterView extends FrameLayout implements
         recordDeleteImageView.getAnimatedDrawable().setInvalidateOnProgressSet(true);
         updateRecordedDeleteIconColors();
         recordDeleteImageView.setContentDescription(getString("Delete", R.string.Delete));
-        recordDeleteImageView.setBackgroundDrawable(Theme.createSelectorDrawable(getThemedColor(Theme.key_listSelector)));
-        recordedAudioPanel.addView(recordDeleteImageView, LayoutHelper.createFrame(DEFAULT_HEIGHT, DEFAULT_HEIGHT));
+        recordedAudioPanel.addView(recordDeleteImageView, LayoutHelper.createFrame(36, 36, Gravity.CENTER_VERTICAL | Gravity.LEFT, 4, 0, 0, 0));
         recordDeleteImageView.setOnClickListener(v -> {
             if (runningAnimationAudio != null && runningAnimationAudio.isRunning()) {
                 return;
@@ -4156,14 +4155,14 @@ public class ChatActivityEnterView extends FrameLayout implements
                 delegate.needChangeVideoPreviewState(0, 0);
             }
         });
-        recordedAudioPanel.addView(videoTimelineView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, Gravity.CENTER_VERTICAL | Gravity.LEFT, 56, 0, 8, 0));
+        recordedAudioPanel.addView(videoTimelineView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.MATCH_PARENT, Gravity.CENTER_VERTICAL | Gravity.LEFT, 48, 0, 8, 0));
 
         VideoTimelineView.TimeHintView videoTimeHintView = new VideoTimelineView.TimeHintView(getContext());
         videoTimelineView.setTimeHintView(videoTimeHintView);
         sizeNotifierLayout.addView(videoTimeHintView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM, 0, 0, 0, 52));
 
         audioTimelineView = new RecordedAudioPlayerView(getContext(), resourcesProvider);
-        recordedAudioPanel.addView(audioTimelineView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 32, Gravity.CENTER_VERTICAL | Gravity.LEFT, DEFAULT_HEIGHT, 0, 4, 0));
+        recordedAudioPanel.addView(audioTimelineView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 32, Gravity.CENTER_VERTICAL | Gravity.LEFT, 48, 0, 8, 0));
 
         updateFieldRight(lastAttachVisible);
     }
@@ -11501,6 +11500,9 @@ public class ChatActivityEnterView extends FrameLayout implements
         int greyColor = getThemedColor(Theme.key_chat_messagePanelVoiceDelete);
 
         if (recordDeleteImageView != null) {
+            int deleteBgColor = Theme.multAlpha(getThemedColor(Theme.key_chat_recordVoiceCancel), 0.15f);
+            int pressedDeleteBgColor = Theme.multAlpha(getThemedColor(Theme.key_chat_recordVoiceCancel), 0.28f);
+            recordDeleteImageView.setBackground(Theme.createSimpleSelectorCircleDrawable(dp(36), deleteBgColor, pressedDeleteBgColor));
             recordDeleteImageView.setLayerColor("Cup Red", dotColor);
             recordDeleteImageView.setLayerColor("Box Red", dotColor);
             recordDeleteImageView.setLayerColor("Cup Grey", greyColor);
