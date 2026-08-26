@@ -939,12 +939,13 @@ public class NekoChatSettingsActivity extends BaseNekoXSettingsActivity implemen
             int gapDp = isCompactEnabled ? GAP_COMPACT_DP : GAP_NORMAL_DP;
             gapPx = AndroidUtilities.dp(gapDp);
 
-            int edgeInsetDp = isAppearanceEnabled ? gapDp : 0;
+            int edgeInsetDp = isAppearanceEnabled ? gapDp : CELL_VERTICAL_PADDING_DP;
+            int rightIconMarginDp = isAppearanceEnabled ? (BAR_HEIGHT_DP + edgeInsetDp + gapDp) : (BAR_HEIGHT_DP + edgeInsetDp);
             ImageView leftIcon = isPlacementEnabled ? attachIconView : emojiIconView;
             ImageView rightIcon = isPlacementEnabled ? emojiIconView : attachIconView;
-            leftIcon.setLayoutParams(LayoutHelper.createFrame(BAR_HEIGHT_DP, BAR_HEIGHT_DP, Gravity.BOTTOM | Gravity.LEFT, edgeInsetDp, 0, 0, 0));
-            rightIcon.setLayoutParams(LayoutHelper.createFrame(BAR_HEIGHT_DP, BAR_HEIGHT_DP, Gravity.BOTTOM | Gravity.RIGHT, 0, 0, BAR_HEIGHT_DP + edgeInsetDp + gapDp, 0));
-            sendIconView.setLayoutParams(LayoutHelper.createFrame(BAR_HEIGHT_DP, BAR_HEIGHT_DP, Gravity.BOTTOM | Gravity.RIGHT, 0, 0, edgeInsetDp, 0));
+            leftIcon.setLayoutParams(LayoutHelper.createFrame(BAR_HEIGHT_DP, BAR_HEIGHT_DP, Gravity.CENTER_VERTICAL | Gravity.LEFT, edgeInsetDp, 0, 0, 0));
+            rightIcon.setLayoutParams(LayoutHelper.createFrame(BAR_HEIGHT_DP, BAR_HEIGHT_DP, Gravity.CENTER_VERTICAL | Gravity.RIGHT, 0, 0, rightIconMarginDp, 0));
+            sendIconView.setLayoutParams(LayoutHelper.createFrame(BAR_HEIGHT_DP, BAR_HEIGHT_DP, Gravity.CENTER_VERTICAL | Gravity.RIGHT, 0, 0, edgeInsetDp, 0));
 
             if (rightBubbleDrawable != null) {
                 rightBubbleDrawable.setColorProvider(ActionButtonStyle.resolveBubbleColorProvider(whiteColorProvider, colorProvider, accentColorProvider));
