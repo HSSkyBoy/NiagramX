@@ -22,6 +22,11 @@
     <string name="AppIconNeko">Neko</string>
     <string name="AppIconNekoDark">Neko Dark</string>
     <string name="AppIconNekoColorful">Neko Colorful</string>
+    <string name="AppIconMusheen">Musheen</string>
+    <string name="AppIconSpace">Space</string>
+    <string name="AppIconCloud">Cloud</string>
+    <string name="AppIconNeon">Neon</string>
+    <string name="AppIconMaterial">Material</string>
     <string name="AppIconForkGram">ForkGram</string>
     <string name="InputMessageId">Enter Message ID</string>
     <string name="ToTheMessage">Go To</string>
