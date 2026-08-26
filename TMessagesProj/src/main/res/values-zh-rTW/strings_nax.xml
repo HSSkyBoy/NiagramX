@@ -250,8 +250,14 @@
     <string name="DidNotGetTheCodeBlameDurov">如果您沒有在另一台裝置上收到驗證碼，或者您沒有在其他裝置上登入 Telegram，請使用官方 Telegram 應用程式接收驗證碼。\n\nTelegram **已停用在第三方應用使用簡訊登入**的能力。登入第三方應用的使用者只能透過 Telegram 接收驗證碼。\n\n我們無法幫助您，如果登入有任何問題，請聯絡 Telegram 支援。</string>
     <string name="QRLoginMessage">使用其他裝置掃描 QR 碼以登入。</string>
     <string name="DnsType">DNS 解析器</string>
+    <string name="DnsTypeCloudflare">Cloudflare</string>
+    <string name="DnsTypeGoogle">Google Public DNS</string>
+    <string name="DnsTypeTencent">騰訊 DNS</string>
+    <string name="DnsTypeAliDNS">阿里 DNS</string>
     <string name="DnsTypeSystem">系統</string>
     <string name="CustomDoH">自訂 DoH</string>
+    <string name="CustomDoHHint">https://1.0.0.1/dns-query, ...（長按可選擇預設）</string>
+    <string name="PresetDoHServers">預設 DoH 伺服器</string>
     <string name="WebProxy">Web / HTTP 代理</string>
     <string name="WebProxyMode">Web / HTTP 代理</string>
     <string name="WebProxyAbout">讓外部 HTTP/HTTPS 網路請求（如 LLM 翻譯、更新檢查、語音轉文字等）透過代理傳送。</string>

@@ -29,15 +29,18 @@ import org.telegram.ui.ActionBar.ActionBar;
 import org.telegram.ui.ActionBar.AlertDialog;
 import org.telegram.ui.ActionBar.INavigationLayout;
 import org.telegram.ui.ActionBar.SimpleTextView;
+import org.telegram.ui.Components.BulletinFactory;
 import org.telegram.ui.Components.ItemOptions;
 import org.telegram.ui.Components.RecyclerListView;
 import org.telegram.ui.Components.UndoView;
 import org.telegram.ui.LaunchActivity;
 
 import java.io.File;
+import java.util.List;
 import java.util.Locale;
 
 import tw.nekomimi.nekogram.NekoConfig;
+import tw.nekomimi.nekogram.utils.DnsFactory;
 import tw.nekomimi.nekogram.config.CellGroup;
 import tw.nekomimi.nekogram.config.cell.AbstractConfigCell;
 import tw.nekomimi.nekogram.config.cell.ConfigCellDivider;
@@ -141,11 +144,14 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     }, null));
     private final AbstractConfigCell dnsTypeRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NekoConfig.dnsType, new String[]{
             getString(R.string.MapPreviewProviderTelegram),
-            getString(R.string.NiagramX),
+            getString(R.string.DnsTypeCloudflare),
+            getString(R.string.DnsTypeGoogle),
+            getString(R.string.DnsTypeTencent),
+            getString(R.string.DnsTypeAliDNS),
             getString(R.string.DnsTypeSystem),
             getString(R.string.CustomDoH),
     }, null));
-    private final AbstractConfigCell customDoHRow = cellGroup.appendCell(new ConfigCellTextInput2(null, NekoConfig.customDoH, "https://1.0.0.1/dns-query, https://...", null));
+    private final AbstractConfigCell customDoHRow = cellGroup.appendCell(new ConfigCellTextInput2(null, NekoConfig.customDoH, getString(R.string.CustomDoHHint), null));
     private final AbstractConfigCell webProxyModeRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NekoConfig.webProxyMode, new String[]{
             getString(R.string.WebProxyModeFollow),
             getString(R.string.WebProxyModeDirect),
@@ -476,6 +482,9 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
             addDefaultLongClickOptions(options, "general", position);
             showLongClickOptions(view, options);
             return true;
+        } else if (a == customDoHRow) {
+            showPresetDoHDialog();
+            return true;
         }
         return false;
     }
@@ -502,6 +511,43 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
             super(context);
         }
 
+    }
+
+    private void showPresetDoHDialog() {
+        Context context = getParentActivity();
+        if (context == null) return;
+
+        List<DnsFactory.DohServer> servers = DnsFactory.PRESET_DOH_SERVERS;
+        CharSequence[] items = new CharSequence[servers.size()];
+        for (int i = 0; i < servers.size(); i++) {
+            DnsFactory.DohServer s = servers.get(i);
+            items[i] = s.getTitle() + "\n" + s.getUrl();
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(getString(R.string.PresetDoHServers));
+        builder.setItems(items, (dialog, which) -> {
+            if (which >= 0 && which < servers.size()) {
+                String selectedUrl = servers.get(which).getUrl();
+                String current = NekoConfig.customDoH.String().trim();
+                String newV;
+                if (current.isEmpty()) {
+                    newV = selectedUrl;
+                } else if (current.contains(selectedUrl)) {
+                    BulletinFactory.of(this).createSimpleBulletin(R.raw.done, selectedUrl).show();
+                    return;
+                } else {
+                    newV = current + ", " + selectedUrl;
+                }
+                NekoConfig.customDoH.setConfigString(newV);
+                if (listAdapter != null) {
+                    listAdapter.notifyItemChanged(cellGroup.rows.indexOf(customDoHRow));
+                }
+                BulletinFactory.of(this).createSimpleBulletin(R.raw.done, selectedUrl).show();
+            }
+        });
+        builder.setNegativeButton(getString(R.string.Cancel), null);
+        showDialog(builder.create());
     }
 
     private void checkCustomDoHRows() {

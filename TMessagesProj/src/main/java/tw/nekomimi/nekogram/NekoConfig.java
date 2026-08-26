@@ -52,9 +52,12 @@ public class NekoConfig {
     public static final int DRAWER_BACKGROUND_WALLPAPER = 3;
 
     public static final int DNS_TYPE_DEFAULT = 0;
-    public static final int DNS_TYPE_NAX = 1;
-    public static final int DNS_TYPE_SYSTEM = 2;
-    public static final int DNS_TYPE_CUSTOM_DOH = 3;
+    public static final int DNS_TYPE_CLOUDFLARE = 1;
+    public static final int DNS_TYPE_GOOGLE = 2;
+    public static final int DNS_TYPE_TENCENT = 3;
+    public static final int DNS_TYPE_ALIDNS = 4;
+    public static final int DNS_TYPE_SYSTEM = 5;
+    public static final int DNS_TYPE_CUSTOM_DOH = 6;
 
     public static final int WEB_PROXY_MODE_FOLLOW_TELEGRAM = 0;
     public static final int WEB_PROXY_MODE_DIRECT = 1;

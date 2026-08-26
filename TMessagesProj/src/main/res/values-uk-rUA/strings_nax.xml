@@ -242,8 +242,14 @@
     <string name="DidNotGetTheCodeBlameDurov">Якщо ви не отримали код на інший пристрій або ви не входили у Telegram на інших пристроях, будь ласка, скористайтеся офіційним клієнтом Telegram для отримання коду.\n\nTelegram **заблокував можливість входу через СМС** для сторонніх додатків. При вході через сторонні додатки користувачі можуть отримувати коди лише безпосередньо у Telegram.\n\nМи не можемо з цим нічого зробити, якщо у вас виникли будь-які складнощі зі входом, будь ласка, зверніться до служби підтримки Telegram.</string>
     <string name="QRLoginMessage">Для входу проскануйте QR-код з іншого пристрою.</string>
     <string name="DnsType">DNS-резолвер</string>
+    <string name="DnsTypeCloudflare">Cloudflare</string>
+    <string name="DnsTypeGoogle">Google Public DNS</string>
+    <string name="DnsTypeTencent">Tencent DNS</string>
+    <string name="DnsTypeAliDNS">AliDNS</string>
     <string name="DnsTypeSystem">Системний</string>
     <string name="CustomDoH">Власний DoH</string>
+    <string name="CustomDoHHint">https://1.0.0.1/dns-query, ... (Затисніть для вибору пресету)</string>
+    <string name="PresetDoHServers">Попередньо встановлені сервери DoH</string>
     <string name="WebProxy">Веб / HTTP-проксі</string>
     <string name="WebProxyMode">Веб / HTTP-проксі</string>
     <string name="WebProxyAbout">Спрямовувати зовнішні HTTP/HTTPS-запити (такі як переклад LLM, перевірка оновлень та розпізнавання голосу) через проксі.</string>

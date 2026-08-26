@@ -897,7 +897,7 @@ public class ConnectionsManager extends BaseController {
                 }
                 lastDnsRequestTime = System.currentTimeMillis();
 
-                if (NekoConfig.dnsType.Int() == NekoConfig.DNS_TYPE_NAX || NekoConfig.dnsType.Int() == NekoConfig.DNS_TYPE_CUSTOM_DOH) {
+                if (NekoConfig.dnsType.Int() != NekoConfig.DNS_TYPE_DEFAULT && NekoConfig.dnsType.Int() != NekoConfig.DNS_TYPE_SYSTEM) {
                     FileLog.d("start custom dns txt task");
                     DnsTxtLoadTask task = new DnsTxtLoadTask(currentAccount);
                     task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);

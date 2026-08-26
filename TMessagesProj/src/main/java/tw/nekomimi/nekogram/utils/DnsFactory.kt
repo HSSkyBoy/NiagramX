@@ -57,31 +57,66 @@ object DnsFactory {
 
     private val cache = Cache()
 
-    private val DEFAULT_DOH_PROVIDERS = arrayOf(
+    data class DohServer(val title: String, val url: String)
+
+    @JvmField
+    val PRESET_DOH_SERVERS = listOf(
+        DohServer("Cloudflare IPv4 (主要)", "https://1.1.1.1/dns-query"),
+        DohServer("Cloudflare IPv4 (備用)", "https://1.0.0.1/dns-query"),
+        DohServer("Google Public DNS IPv4 (主要)", "https://8.8.8.8/dns-query"),
+        DohServer("Cloudflare IPv6", "https://[2606:4700:4700::1001]/dns-query"),
+        DohServer("Google Public DNS IPv6", "https://[2001:4860:4860::8844]/dns-query"),
+        DohServer("騰訊國密", "https://sm2.doh.pub/dns-query"),
+        DohServer("騰訊備用", "https://doh.pub/dns-query"),
+        DohServer("阿里雲", "https://dns.alidns.com/dns-query"),
+        DohServer("阿里備用", "https://223.6.6.6/dns-query"),
+        DohServer("360", "https://doh.360.cn/dns-query"),
+        DohServer("OneDNS", "https://doh-pure.onedns.net/dns-query"),
+        DohServer("TWNIC", "https://dns.twnic.tw/dns-query"),
+        DohServer("DNSSB", "https://doh.dns.sb/dns-query"),
+    )
+
+    private val CLOUDFLARE_PROVIDERS = arrayOf(
         "https://1.1.1.1/dns-query",
         "https://1.0.0.1/dns-query",
+        "https://[2606:4700:4700::1001]/dns-query",
+    )
+
+    private val GOOGLE_PROVIDERS = arrayOf(
         "https://8.8.8.8/dns-query",
-        "https://8.8.4.4/dns-query",
-        "https://[2606:4700:4700::1001]/dns-query", // Cloudflare IPv6
-        "https://[2001:4860:4860::8844]/dns-query", // Google IPv6
+        "https://[2001:4860:4860::8844]/dns-query",
+    )
+
+    private val TENCENT_PROVIDERS = arrayOf(
+        "https://sm2.doh.pub/dns-query",
+        "https://doh.pub/dns-query",
+    )
+
+    private val ALIDNS_PROVIDERS = arrayOf(
+        "https://dns.alidns.com/dns-query",
+        "https://223.6.6.6/dns-query",
     )
 
     private fun providers(): Array<String> {
-        if (NekoConfig.dnsType.Int() != NekoConfig.DNS_TYPE_CUSTOM_DOH) {
-            return DEFAULT_DOH_PROVIDERS
-        }
-
-        val validCustomProviders = NekoConfig.customDoH.String()
-            .split(",")
-            .map { it.trim() }
-            .filter { url ->
-                url.toHttpUrlOrNull()?.isHttps == true
+        return when (NekoConfig.dnsType.Int()) {
+            NekoConfig.DNS_TYPE_CLOUDFLARE -> CLOUDFLARE_PROVIDERS
+            NekoConfig.DNS_TYPE_GOOGLE -> GOOGLE_PROVIDERS
+            NekoConfig.DNS_TYPE_TENCENT -> TENCENT_PROVIDERS
+            NekoConfig.DNS_TYPE_ALIDNS -> ALIDNS_PROVIDERS
+            NekoConfig.DNS_TYPE_CUSTOM_DOH -> {
+                val validCustomProviders = NekoConfig.customDoH.String()
+                    .split(",")
+                    .map { it.trim() }
+                    .filter { url ->
+                        url.toHttpUrlOrNull()?.isHttps == true
+                    }
+                if (validCustomProviders.isNotEmpty()) {
+                    validCustomProviders.toTypedArray()
+                } else {
+                    CLOUDFLARE_PROVIDERS
+                }
             }
-
-        return if (validCustomProviders.isNotEmpty()) {
-            validCustomProviders.toTypedArray()
-        } else {
-            DEFAULT_DOH_PROVIDERS
+            else -> CLOUDFLARE_PROVIDERS
         }
     }
 
