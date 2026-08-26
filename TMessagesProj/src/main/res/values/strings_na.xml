@@ -115,4 +115,6 @@
     <string name="ActionButtonStyleAccent">Accent</string>
     <string name="ActionButtonStyleNeutral">Neutral</string>
     <string name="ActionButtonStyleWhite">White</string>
+    <string name="LiquidGlassAngle">Liquid Glass angle</string>
+    <string name="LiquidGlassIntensity">Liquid Glass intensity</string>
 </resources>

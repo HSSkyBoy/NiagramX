@@ -1519,6 +1519,18 @@ object NaConfig {
             ConfigItem.configTypeBool,
             true
         )
+    val liquidGlassAngle =
+        addConfig(
+            "LiquidGlassAngle",
+            ConfigItem.configTypeInt,
+            0
+        )
+    val liquidGlassIntensity =
+        addConfig(
+            "LiquidGlassIntensity",
+            ConfigItem.configTypeInt,
+            75
+        )
     val hideBottomNavigationBar =
         addConfig(
             "HideBottomNavigationBar",

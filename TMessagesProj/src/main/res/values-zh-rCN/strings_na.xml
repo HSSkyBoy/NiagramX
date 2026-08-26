@@ -109,4 +109,6 @@
     <string name="ActionButtonStyleAccent">主题强调色</string>
     <string name="ActionButtonStyleNeutral">中性色</string>
     <string name="ActionButtonStyleWhite">白色</string>
+    <string name="LiquidGlassAngle">液态玻璃角度</string>
+    <string name="LiquidGlassIntensity">液态玻璃强度</string>
 </resources>
