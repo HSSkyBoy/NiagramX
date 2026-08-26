@@ -29542,6 +29542,12 @@ public class ChatActivity extends BaseFragment implements
         bottomChannelButtonsLayout.showButton(ChatActivityChannelButtonsLayout.BUTTON_GIFT, !showSuggestButton && showGiftButton && bottomChannelButtonsLayout.getVisibility() == View.VISIBLE, animated);
         bottomChannelButtonsLayout.showButton(ChatActivityChannelButtonsLayout.BUTTON_GIGA_GROUP_INFO, showGigaGroupButton && bottomChannelButtonsLayout.getVisibility() == View.VISIBLE, animated);
 
+        if (chatInputViewsContainer != null && chatActivityEnterView != null) {
+            boolean enterViewVisible = chatActivityEnterView.getVisibility() == View.VISIBLE;
+            chatInputViewsContainer.drawInputBackground = !chatActivityEnterView.isIosInputAppearance() || !enterViewVisible;
+            chatInputViewsContainer.invalidate();
+        }
+
         checkRaiseSensors();
     }
 
