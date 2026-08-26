@@ -8,8 +8,14 @@ import org.telegram.tgnet.TLRPC;
 public class LocaleHelper {
 
     public static String getSuggestedBetaLanguageCode(String systemLang) {
-        if (systemLang != null && systemLang.toLowerCase().startsWith("ja")) {
-            return "ja_beta";
+        if (systemLang != null) {
+            String lower = systemLang.toLowerCase();
+            if (lower.startsWith("zh")) {
+                return "zh2nya";
+            }
+            if (lower.startsWith("ja")) {
+                return "ja_beta";
+            }
         }
         return null;
     }

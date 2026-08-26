@@ -546,6 +546,17 @@ public class IntroActivity extends BaseFragment implements NotificationCenter.No
             return;
         }
 
+        LocaleController.LocaleInfo localPreset = LocaleController.getInstance().getLanguageFromDict(betaLangCode);
+        if (localPreset == null) {
+            localPreset = LocaleController.getInstance().getLanguageFromDict("unofficial_" + betaLangCode);
+        }
+        if (localPreset != null) {
+            localeInfo = localPreset;
+            if (switchLanguageTextView != null) {
+                switchLanguageTextView.setText(LocaleController.getString("ContinueOnThisLanguage", R.string.ContinueOnThisLanguage));
+            }
+        }
+
         TLRPC.TL_langpack_getLanguage req = new TLRPC.TL_langpack_getLanguage();
         req.lang_pack = "android";
         req.lang_code = betaLangCode.replace('_', '-');

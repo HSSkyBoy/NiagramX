@@ -747,12 +747,28 @@ public class LocaleController {
             }
 
             if (currentInfo == null && systemDefaultLocale.getLanguage() != null) {
-                currentInfo = getLanguageFromDict(systemDefaultLocale.getLanguage());
+                String sysLang = systemDefaultLocale.getLanguage().toLowerCase();
+                if (sysLang.startsWith("zh")) {
+                    currentInfo = getLanguageFromDict("unofficial_zh2nya");
+                    if (currentInfo == null) {
+                        currentInfo = getLanguageFromDict("zh2nya");
+                    }
+                } else {
+                    currentInfo = getLanguageFromDict(systemDefaultLocale.getLanguage());
+                }
             }
             if (currentInfo == null) {
                 currentInfo = getLanguageFromDict(getLocaleString(systemDefaultLocale));
                 if (currentInfo == null) {
-                    currentInfo = getLanguageFromDict("en");
+                    if (systemDefaultLocale.getLanguage() != null && systemDefaultLocale.getLanguage().toLowerCase().startsWith("zh")) {
+                        currentInfo = getLanguageFromDict("unofficial_zh2nya");
+                        if (currentInfo == null) {
+                            currentInfo = getLanguageFromDict("zh2nya");
+                        }
+                    }
+                    if (currentInfo == null) {
+                        currentInfo = getLanguageFromDict("en");
+                    }
                 }
             }
 
@@ -1141,7 +1157,7 @@ public class LocaleController {
     }
 
     public boolean deleteLanguage(LocaleInfo localeInfo, int currentAccount) {
-        if (localeInfo.pathToFile == null || localeInfo.isRemote() && localeInfo.serverIndex != Integer.MAX_VALUE) {
+        if (localeInfo == null || "zh2nya".equals(localeInfo.shortName) || localeInfo.pathToFile == null || localeInfo.isRemote() && localeInfo.serverIndex != Integer.MAX_VALUE) {
             return false;
         }
         if (currentLocaleInfo == localeInfo) {
@@ -1206,6 +1222,55 @@ public class LocaleController {
                 localeInfo.shortName = localeInfo.shortName.replace("-", "_");
                 unofficialLanguages.add(localeInfo);
             }
+        }
+        ensureZh2nyaLanguage();
+    }
+
+    private void ensureZh2nyaLanguage() {
+        extractBuiltinLocaleFile(new File(ApplicationLoader.getFilesDirFixed(), "unofficial_zh2nya.xml"));
+        LocaleInfo zh2nyaInfo = null;
+        for (int a = 0; a < unofficialLanguages.size(); a++) {
+            if ("zh2nya".equals(unofficialLanguages.get(a).shortName)) {
+                zh2nyaInfo = unofficialLanguages.get(a);
+                break;
+            }
+        }
+        if (zh2nyaInfo == null) {
+            zh2nyaInfo = new LocaleInfo();
+            zh2nyaInfo.name = "喵喵中文";
+            zh2nyaInfo.nameEnglish = "Chinese (Neko喵喵)";
+            zh2nyaInfo.shortName = "zh2nya";
+            zh2nyaInfo.pathToFile = "unofficial";
+            zh2nyaInfo.pluralLangCode = "zh";
+            zh2nyaInfo.baseLangCode = "zh";
+            zh2nyaInfo.serverIndex = Integer.MAX_VALUE;
+            zh2nyaInfo.version = 0;
+            zh2nyaInfo.baseVersion = 0;
+            unofficialLanguages.add(0, zh2nyaInfo);
+        }
+        languagesDict.put(zh2nyaInfo.getKey(), zh2nyaInfo);
+        languagesDict.put("zh2nya", zh2nyaInfo);
+    }
+
+    private static void extractBuiltinLocaleFile(File destFile) {
+        if (destFile.exists() && destFile.length() > 0) {
+            return;
+        }
+        try {
+            File parent = destFile.getParentFile();
+            if (parent != null && !parent.exists()) {
+                parent.mkdirs();
+            }
+            try (java.io.InputStream is = ApplicationLoader.applicationContext.getAssets().open("locales/" + destFile.getName());
+                 java.io.OutputStream os = new java.io.FileOutputStream(destFile)) {
+                byte[] buffer = new byte[8192];
+                int length;
+                while ((length = is.read(buffer)) > 0) {
+                    os.write(buffer, 0, length);
+                }
+            }
+        } catch (Exception e) {
+            FileLog.e(e);
         }
     }
 
