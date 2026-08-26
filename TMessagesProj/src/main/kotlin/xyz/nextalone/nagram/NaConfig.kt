@@ -1369,6 +1369,12 @@ object NaConfig {
             ConfigItem.configTypeBool,
             false
         )
+    val disableGooeyAvatarAnimation =
+        addConfig(
+            "DisableGooeyAvatarAnimation",
+            ConfigItem.configTypeBool,
+            false
+        )
     val actionButtonStyle =
         addConfig(
             "ActionButtonStyle",

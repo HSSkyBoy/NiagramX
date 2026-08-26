@@ -110,5 +110,6 @@
     <string name="ActionButtonStyleAccent">Акцентная</string>
     <string name="ActionButtonStyleNeutral">Нейтральная</string>
     <string name="ActionButtonStyleWhite">Белая</string>
+    <string name="DisableGooeyAvatarAnimation">Отключить плавную анимацию аватара</string>
 </resources>
 

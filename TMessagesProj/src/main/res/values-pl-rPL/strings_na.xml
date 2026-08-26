@@ -101,5 +101,6 @@
     <string name="VideoPlayerDecoderPreferSW">Preferuj SW</string>
     <string name="VideoPlayerDecoderHardware">Tylko HW</string>
     <string name="VideoPlayerDecoderPreferHW">Preferuj HW</string>
+    <string name="DisableGooeyAvatarAnimation">Wyłącz płynną animację awatara</string>
 </resources>
 

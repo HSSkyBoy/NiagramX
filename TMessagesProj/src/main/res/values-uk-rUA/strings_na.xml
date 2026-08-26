@@ -101,5 +101,6 @@
     <string name="VideoPlayerDecoderPreferSW">Перевага програмному</string>
     <string name="VideoPlayerDecoderHardware">Тільки апаратне декодування</string>
     <string name="VideoPlayerDecoderPreferHW">Перевага HW</string>
+    <string name="DisableGooeyAvatarAnimation">Вимкнути плавну анімацію аватара</string>
 </resources>
 

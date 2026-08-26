@@ -100,5 +100,6 @@
     <string name="VideoPlayerDecoderPreferSW">Ưu tiên SW</string>
     <string name="VideoPlayerDecoderHardware">Chỉ HW</string>
     <string name="VideoPlayerDecoderPreferHW">Ưu tiên HW</string>
+    <string name="DisableGooeyAvatarAnimation">Tắt hoạt ảnh ảnh đại diện dạng lỏng</string>
 </resources>
 

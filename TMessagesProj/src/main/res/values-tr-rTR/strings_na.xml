@@ -101,5 +101,6 @@
     <string name="VideoPlayerDecoderPreferSW">Yazılım (SW) Tercih Et</string>
     <string name="VideoPlayerDecoderHardware">Sadece Donanım (HW)</string>
     <string name="VideoPlayerDecoderPreferHW">Donanım (HW) Tercih Et</string>
+    <string name="DisableGooeyAvatarAnimation">Akışkan avatar animasyonunu devre dışı bırak</string>
 </resources>
 

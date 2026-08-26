@@ -110,4 +110,5 @@
     <string name="ActionButtonStyleWhite">白色</string>
     <string name="LiquidGlassAngle">液態玻璃角度</string>
     <string name="LiquidGlassIntensity">液態玻璃強度</string>
+    <string name="DisableGooeyAvatarAnimation">停用頭像流體動畫</string>
 </resources>

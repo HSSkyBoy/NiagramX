@@ -102,5 +102,6 @@
     <string name="VideoPlayerDecoderPreferSW">Lebih suka SW</string>
     <string name="VideoPlayerDecoderHardware">Hanya HW</string>
     <string name="VideoPlayerDecoderPreferHW">Lebih suka HW</string>
+    <string name="DisableGooeyAvatarAnimation">Nonaktifkan animasi avatar cair</string>
 </resources>
 

@@ -102,5 +102,6 @@ También puede utilizar texto sin formato, pero no olvide escapar los paréntesi
     <string name="VideoPlayerDecoderPreferSW">Preferir SW</string>
     <string name="VideoPlayerDecoderHardware">Solo HW</string>
     <string name="VideoPlayerDecoderPreferHW">Preferir HW</string>
+    <string name="DisableGooeyAvatarAnimation">Desactivar animación fluida del avatar</string>
 </resources>
 
