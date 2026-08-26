@@ -89,8 +89,8 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     private final AbstractConfigCell customTitleRow = cellGroup.appendCell(new ConfigCellTextInput(null, NaConfig.INSTANCE.getCustomTitle(),
         getString(R.string.CustomTitleHint), null,
         (input) -> input.isEmpty() ? (String) NaConfig.INSTANCE.getCustomTitle().defaultValue : input));
-    private final AbstractConfigCell enableQuickScheduleRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getEnableQuickSchedule(), "Enable long-press 'Send later' & 'Send when online'"));
-    private final AbstractConfigCell defaultScheduledTimeRow = cellGroup.appendCell(new ConfigCellTextInput(null, NaConfig.INSTANCE.getDefaultScheduledTime(),
+    private final AbstractConfigCell enableQuickScheduleRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getEnableQuickSchedule(), getString(R.string.EnableQuickScheduleNotice)));
+    private final AbstractConfigCell defaultScheduledTimeRow = cellGroup.appendCell(new ConfigCellTextInput(getString(R.string.DefaultScheduleDelay), NaConfig.INSTANCE.getDefaultScheduledTime(),
         getString(R.string.DefaultScheduleDelay) + " (s)", null,
         (input) -> {
             try {
@@ -316,6 +316,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
         checkPushServiceTypeRows();
         checkOpenArchiveOnPullRows();
         checkMainTabsRows();
+        checkQuickScheduleRows();
         addRowsToMap(cellGroup);
     }
 
@@ -422,6 +423,8 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
                 parentLayout.rebuildFragments(0);
             } else if (key.equals(NaConfig.INSTANCE.getHideDialogsSearchField().getKey())) {
                 parentLayout.rebuildFragments(0);
+            } else if (key.equals(NaConfig.INSTANCE.getEnableQuickSchedule().getKey())) {
+                checkQuickScheduleRows();
             }
         };
 
@@ -766,6 +769,30 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
         if (changed) {
             addRowsToMap(cellGroup);
         }
+    }
+
+    private void checkQuickScheduleRows() {
+        boolean enable = NaConfig.INSTANCE.getEnableQuickSchedule().Bool();
+        if (listAdapter == null) {
+            if (!enable) {
+                cellGroup.rows.remove(defaultScheduledTimeRow);
+            }
+            return;
+        }
+        if (enable) {
+            final int index = cellGroup.rows.indexOf(enableQuickScheduleRow);
+            if (index != -1 && !cellGroup.rows.contains(defaultScheduledTimeRow)) {
+                cellGroup.rows.add(index + 1, defaultScheduledTimeRow);
+                listAdapter.notifyItemInserted(index + 1);
+            }
+        } else {
+            int rowIndex = cellGroup.rows.indexOf(defaultScheduledTimeRow);
+            if (rowIndex != -1) {
+                cellGroup.rows.remove(defaultScheduledTimeRow);
+                listAdapter.notifyItemRemoved(rowIndex);
+            }
+        }
+        addRowsToMap(cellGroup);
     }
 
     private boolean shouldShowPersian() {
