@@ -1381,6 +1381,12 @@ object NaConfig {
             ConfigItem.configTypeBool,
             false
         )
+    val showForwardTextEdit =
+        addConfig(
+            "ShowForwardTextEdit",
+            ConfigItem.configTypeBool,
+            true
+        )
     val actionButtonStyle =
         addConfig(
             "ActionButtonStyle",

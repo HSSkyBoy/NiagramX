@@ -103,5 +103,10 @@
     <string name="VideoPlayerDecoderPreferHW">Donanım (HW) Tercih Et</string>
     <string name="DisableGooeyAvatarAnimation">Akışkan avatar animasyonunu devre dışı bırak</string>
     <string name="ShowSquareAvatar">Kare avatarlar</string>
+    <string name="ShowForwardTextEdit">İletirken mesaj metnini düzenle</string>
+    <string name="AccDescrForwardTextEdit">Mesaj metnini düzenle</string>
+    <string name="ForwardTextPlaceholder">Mesaj metni</string>
+    <string name="ForwardTextCopyNotice">İletildi etiketi olmadan, sizin tarafınızdan bir kopya olarak gönderilecektir</string>
+    <string name="ForwardTextEmptyNotice">Mesaj metni boş olamaz</string>
 </resources>
 

@@ -104,5 +104,10 @@
     <string name="VideoPlayerDecoderPreferHW">Lebih suka HW</string>
     <string name="DisableGooeyAvatarAnimation">Nonaktifkan animasi avatar cair</string>
     <string name="ShowSquareAvatar">Avatar persegi</string>
+    <string name="ShowForwardTextEdit">Edit teks pesan saat meneruskan</string>
+    <string name="AccDescrForwardTextEdit">Edit teks pesan</string>
+    <string name="ForwardTextPlaceholder">Teks pesan</string>
+    <string name="ForwardTextCopyNotice">Akan dikirim sebagai salinan dari Anda, tanpa label diteruskan</string>
+    <string name="ForwardTextEmptyNotice">Teks pesan tidak boleh kosong</string>
 </resources>
 

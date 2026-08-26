@@ -103,5 +103,10 @@
     <string name="VideoPlayerDecoderPreferHW">Preferuj HW</string>
     <string name="DisableGooeyAvatarAnimation">Wyłącz płynną animację awatara</string>
     <string name="ShowSquareAvatar">Kwadratowe awatary</string>
+    <string name="ShowForwardTextEdit">Edytuj tekst wiadomości podczas przekazywania</string>
+    <string name="AccDescrForwardTextEdit">Edytuj tekst wiadomości</string>
+    <string name="ForwardTextPlaceholder">Tekst wiadomości</string>
+    <string name="ForwardTextCopyNotice">Zostanie wysłana jako kopia od Ciebie, bez etykiety przekazania</string>
+    <string name="ForwardTextEmptyNotice">Tekst wiadomości nie może być pusty</string>
 </resources>
 

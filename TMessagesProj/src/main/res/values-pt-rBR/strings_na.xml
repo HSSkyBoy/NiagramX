@@ -103,5 +103,10 @@
     <string name="VideoPlayerDecoderPreferHW">Preferir HW</string>
     <string name="DisableGooeyAvatarAnimation">Desativar animação fluida do avatar</string>
     <string name="ShowSquareAvatar">Avatares quadrados</string>
+    <string name="ShowForwardTextEdit">Editar texto da mensagem ao encaminhar</string>
+    <string name="AccDescrForwardTextEdit">Editar texto da mensagem</string>
+    <string name="ForwardTextPlaceholder">Texto da mensagem</string>
+    <string name="ForwardTextCopyNotice">Será enviada como uma cópia sua, sem indicador de encaminhamento</string>
+    <string name="ForwardTextEmptyNotice">O texto da mensagem não pode ficar vazio</string>
 </resources>
 

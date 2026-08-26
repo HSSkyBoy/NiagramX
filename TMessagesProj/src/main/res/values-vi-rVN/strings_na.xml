@@ -102,5 +102,10 @@
     <string name="VideoPlayerDecoderPreferHW">Ưu tiên HW</string>
     <string name="DisableGooeyAvatarAnimation">Tắt hoạt ảnh ảnh đại diện dạng lỏng</string>
     <string name="ShowSquareAvatar">Ảnh đại diện hình vuông</string>
+    <string name="ShowForwardTextEdit">Chỉnh sửa văn bản tin nhắn khi chuyển tiếp</string>
+    <string name="AccDescrForwardTextEdit">Chỉnh sửa văn bản tin nhắn</string>
+    <string name="ForwardTextPlaceholder">Văn bản tin nhắn</string>
+    <string name="ForwardTextCopyNotice">Sẽ được gửi dưới dạng bản sao từ bạn, không có nhãn chuyển tiếp</string>
+    <string name="ForwardTextEmptyNotice">Văn bản tin nhắn không được để trống</string>
 </resources>
 

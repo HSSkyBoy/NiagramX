@@ -104,5 +104,10 @@
     <string name="VideoPlayerDecoderPreferHW">Preferisci HW</string>
     <string name="DisableGooeyAvatarAnimation">Disattiva animazione fluida dell\'avatar</string>
     <string name="ShowSquareAvatar">Avatar quadrati</string>
+    <string name="ShowForwardTextEdit">Modifica testo del messaggio durante l\'inoltro</string>
+    <string name="AccDescrForwardTextEdit">Modifica testo del messaggio</string>
+    <string name="ForwardTextPlaceholder">Testo del messaggio</string>
+    <string name="ForwardTextCopyNotice">Verrà inviato come copia a tuo nome, senza etichetta di inoltro</string>
+    <string name="ForwardTextEmptyNotice">Il testo del messaggio non può essere vuoto</string>
 </resources>
 

@@ -103,5 +103,10 @@
     <string name="VideoPlayerDecoderPreferHW">HW 우선</string>
     <string name="DisableGooeyAvatarAnimation">프로필 아바타 유체 애니메이션 비활성화</string>
     <string name="ShowSquareAvatar">사각형 프로필 사진</string>
+    <string name="ShowForwardTextEdit">전달 시 메시지 텍스트 수정</string>
+    <string name="AccDescrForwardTextEdit">메시지 텍스트 수정</string>
+    <string name="ForwardTextPlaceholder">메시지 텍스트</string>
+    <string name="ForwardTextCopyNotice">전달 라벨 없이 본인 명의의 복사본으로 전송됩니다</string>
+    <string name="ForwardTextEmptyNotice">메시지 텍스트는 비워둘 수 없습니다</string>
 </resources>
 

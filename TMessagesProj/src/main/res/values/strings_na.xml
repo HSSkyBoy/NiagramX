@@ -119,4 +119,9 @@
     <string name="LiquidGlassIntensity">Liquid Glass intensity</string>
     <string name="DisableGooeyAvatarAnimation">Disable \"Gooey\" avatar animation</string>
     <string name="ShowSquareAvatar">Square avatars</string>
+    <string name="ShowForwardTextEdit">Edit message text when forwarding</string>
+    <string name="AccDescrForwardTextEdit">Edit message text</string>
+    <string name="ForwardTextPlaceholder">Message text</string>
+    <string name="ForwardTextCopyNotice">Will be sent as a copy from you, without a forward label</string>
+    <string name="ForwardTextEmptyNotice">Message text can\'t be empty</string>
 </resources>

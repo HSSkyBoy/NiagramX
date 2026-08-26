@@ -10,4 +10,9 @@
     <string name="ActionButtonStyleWhite">Blanc</string>
     <string name="DisableGooeyAvatarAnimation">Désactiver l\'animation fluide de l\'avatar</string>
     <string name="ShowSquareAvatar">Avatars carrés</string>
+    <string name="ShowForwardTextEdit">Modifier le texte du message lors du transfert</string>
+    <string name="AccDescrForwardTextEdit">Modifier le texte du message</string>
+    <string name="ForwardTextPlaceholder">Texte du message</string>
+    <string name="ForwardTextCopyNotice">Sera envoyé comme une copie de votre part, sans étiquette de transfert</string>
+    <string name="ForwardTextEmptyNotice">Le texte du message ne peut pas être vide</string>
 </resources>

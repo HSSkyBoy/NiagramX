@@ -111,5 +111,10 @@
     <string name="ActionButtonStyleWhite">ホワイト</string>
     <string name="DisableGooeyAvatarAnimation">アバターの流体アニメーションを無効化</string>
     <string name="ShowSquareAvatar">四角いアバター</string>
+    <string name="ShowForwardTextEdit">転送時にメッセージ本文を編集</string>
+    <string name="AccDescrForwardTextEdit">メッセージ本文を編集</string>
+    <string name="ForwardTextPlaceholder">メッセージ本文</string>
+    <string name="ForwardTextCopyNotice">転送元ラベルなしで、あなたからのコピーとして送信されます</string>
+    <string name="ForwardTextEmptyNotice">メッセージ本文を空にすることはできません</string>
 </resources>
 

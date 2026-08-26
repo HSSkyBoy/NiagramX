@@ -103,5 +103,10 @@
     <string name="VideoPlayerDecoderPreferHW">Перевага HW</string>
     <string name="DisableGooeyAvatarAnimation">Вимкнути плавну анімацію аватара</string>
     <string name="ShowSquareAvatar">Квадратні аватари</string>
+    <string name="ShowForwardTextEdit">Редагувати текст повідомлення під час пересилання</string>
+    <string name="AccDescrForwardTextEdit">Змінити текст повідомлення</string>
+    <string name="ForwardTextPlaceholder">Текст повідомлення</string>
+    <string name="ForwardTextCopyNotice">Буде надіслано як копію від вас, без мітки пересилання</string>
+    <string name="ForwardTextEmptyNotice">Текст повідомлення не може бути порожнім</string>
 </resources>
 

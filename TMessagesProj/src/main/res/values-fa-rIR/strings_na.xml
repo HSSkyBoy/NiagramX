@@ -103,5 +103,10 @@
     <string name="VideoPlayerDecoderPreferHW">ترجیح دادن HW</string>
     <string name="DisableGooeyAvatarAnimation">غیرفعال کردن پویانمایی کشسانی آواتار</string>
     <string name="ShowSquareAvatar">آواتارهای مربعی</string>
+    <string name="ShowForwardTextEdit">ویرایش متن پیام هنگام فوروارد</string>
+    <string name="AccDescrForwardTextEdit">ویرایش متن پیام</string>
+    <string name="ForwardTextPlaceholder">متن پیام</string>
+    <string name="ForwardTextCopyNotice">به صورت یک کپی از طرف شما و بدون برچسب فوروارد ارسال خواهد شد</string>
+    <string name="ForwardTextEmptyNotice">متن پیام نمی‌تواند خالی باشد</string>
 </resources>
 

@@ -113,4 +113,9 @@
     <string name="LiquidGlassIntensity">液态玻璃强度</string>
     <string name="DisableGooeyAvatarAnimation">禁用头像流体动画</string>
     <string name="ShowSquareAvatar">方形头像</string>
+    <string name="ShowForwardTextEdit">转发时编辑消息文本</string>
+    <string name="AccDescrForwardTextEdit">编辑消息文本</string>
+    <string name="ForwardTextPlaceholder">消息文本</string>
+    <string name="ForwardTextCopyNotice">将以副本形式发送 — 由您发送，不带转发来源标签</string>
+    <string name="ForwardTextEmptyNotice">消息文本不能为空</string>
 </resources>

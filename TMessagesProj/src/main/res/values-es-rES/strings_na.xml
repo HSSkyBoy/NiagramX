@@ -104,5 +104,10 @@ También puede utilizar texto sin formato, pero no olvide escapar los paréntesi
     <string name="VideoPlayerDecoderPreferHW">Preferir HW</string>
     <string name="DisableGooeyAvatarAnimation">Desactivar animación fluida del avatar</string>
     <string name="ShowSquareAvatar">Avatares cuadrados</string>
+    <string name="ShowForwardTextEdit">Editar texto del mensaje al reenviar</string>
+    <string name="AccDescrForwardTextEdit">Editar texto del mensaje</string>
+    <string name="ForwardTextPlaceholder">Texto del mensaje</string>
+    <string name="ForwardTextCopyNotice">Se enviará como una copia tuya, sin etiqueta de reenvío</string>
+    <string name="ForwardTextEmptyNotice">El texto del mensaje no puede estar vacío</string>
 </resources>
 
