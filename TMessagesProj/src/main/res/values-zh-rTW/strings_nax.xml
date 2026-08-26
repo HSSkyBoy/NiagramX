@@ -30,10 +30,10 @@
     <string name="LlmProviderOpenAIKey">OpenAI API 金鑰</string>
     <string name="LlmProviderGeminiKey">Gemini API 金鑰</string>
     <string name="LlmSystemPrompt">系統提示詞</string>
-    <string name="LlmSystemPromptHint">您是一名專業的譯者。</string>
-    <string name="LlmSystemPromptNotice">定義 AI 的角色和行為。\n\n該提示詞決定 AI 的語調、個性和限制。試著描述 AI 應該成為何種類型的助手。</string>
+    <string name="LlmSystemPromptHint">您是一名專業的多國語言譯者。</string>
+    <string name="LlmSystemPromptNotice">定義 AI 的角色和行為。\n\n該提示詞決定 AI 的語調、個性與風格。</string>
     <string name="LlmUserPrompt">使用者提示詞</string>
-    <string name="LlmUserPromptHint">將 @text 翻譯為 @toLang。</string>
+    <string name="LlmUserPromptHint">將 @text 自然且地道地翻譯為 @toLang。</string>
     <string name="LlmUserPromptNotice">使用 @text 作為原始訊息的佔位符，使用 @toLang 作為目標語言的佔位符（可選）。\n\n留空將使用預設提示詞。</string>
     <string name="LlmUseContext">使用上下文</string>
     <string name="LlmUseContextNotice">提高翻譯品質，但會消耗更多的 Token。</string>

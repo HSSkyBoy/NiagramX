@@ -43,10 +43,10 @@
     <string name="LlmProviderOpenAIKey">OpenAI API Key</string>
     <string name="LlmProviderGeminiKey">Gemini API Key</string>
     <string name="LlmSystemPrompt">System Prompt</string>
-    <string name="LlmSystemPromptHint">You are a professional translator.</string>
-    <string name="LlmSystemPromptNotice">Define the AI\'s role and behavior.\n\nThis prompt sets the tone, personality, and limitations for the AI. Consider describing what type of assistant the AI should be.</string>
+    <string name="LlmSystemPromptHint">You are a professional multilingual translator.</string>
+    <string name="LlmSystemPromptNotice">Define the AI\'s role and behavior.\n\nThis prompt sets the tone, personality, and style for the AI.</string>
     <string name="LlmUserPrompt">User Prompt</string>
-    <string name="LlmUserPromptHint">Translate @text to @toLang.</string>
+    <string name="LlmUserPromptHint">Translate to @toLang:\n@text</string>
     <string name="LlmUserPromptNotice">Use @text as a placeholder for the original message, and @toLang for the target language (optional).\n\nLeaving this blank will use the default prompt.</string>
     <string name="LlmUseContext">Use Context</string>
     <string name="LlmUseContextNotice">Improves translation quality at the cost of more tokens.</string>
