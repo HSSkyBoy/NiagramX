@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Niagram X チャンネル</string>
     <string name="EnableSaveDeletedMessages">削除済みメッセージを保存</string>
@@ -364,4 +364,7 @@
     <string name="DisableAiEditor">AIエディターを無効にする</string>
     <string name="DisableGlareEffects">グレアエフェクトを無効にする</string>
     <string name="ShowRecentForwardTab">転送時に最近のチャットタブを表示</string>
+    <string name="ForceForward">強制転送</string>
+    <string name="ForceForwardNotice">テキストを自動的にコピーしメディア添付ファイルをダウンロードして、転送制限のあるチャンネルからでもメッセージを再送信します。</string>
+    <string name="ForceForwardPremiumOnly">**Telegram Premium** に加入して強制転送を使用します。</string>
 </resources>

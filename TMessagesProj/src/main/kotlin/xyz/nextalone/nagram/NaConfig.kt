@@ -150,6 +150,12 @@ object NaConfig {
             ConfigItem.configTypeBool,
             false
         )
+    val showForceForward =
+        addConfig(
+            "ShowForceForward",
+            ConfigItem.configTypeBool,
+            true
+        )
     val doubleTapAction =
         addConfig(
             "DoubleTapAction",

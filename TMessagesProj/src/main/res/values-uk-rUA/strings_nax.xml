@@ -383,4 +383,7 @@
     <string name="DisableAiEditor">Вимкнути редактор ШІ</string>
     <string name="DisableGlareEffects">Вимкнути ефекти відблиску</string>
     <string name="ShowRecentForwardTab">Показувати вкладку нещодавніх чатів під час пересилання</string>
+    <string name="ForceForward">Примусове пересилання</string>
+    <string name="ForceForwardNotice">Автоматично копіює текст та завантажує медіавкладення для повторного надсилання повідомлень із захищених каналів без обмежень пересилання.</string>
+    <string name="ForceForwardPremiumOnly">Оформіть підписку **Telegram Premium**, щоб використовувати примусове пересилання.</string>
 </resources>

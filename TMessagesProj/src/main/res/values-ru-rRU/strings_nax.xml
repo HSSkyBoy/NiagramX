@@ -386,4 +386,7 @@
     <string name="DisableAiEditor">Отключить редактор ИИ</string>
     <string name="DisableGlareEffects">Отключить эффекты блика</string>
     <string name="ShowRecentForwardTab">Показывать вкладку недавних чатов при пересылке</string>
+    <string name="ForceForward">Принудительная пересылка</string>
+    <string name="ForceForwardNotice">Автоматически копирует текст и скачивает медиавложения для повторной отправки сообщений из защищённых каналов без ограничений пересылки.</string>
+    <string name="ForceForwardPremiumOnly">Оформите подписку **Telegram Premium**, чтобы использовать принудительную пересылку.</string>
 </resources>

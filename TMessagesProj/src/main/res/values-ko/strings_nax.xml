@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Niagram X 채널</string>
     <string name="EnableSaveDeletedMessages">삭제된 메시지 저장</string>
@@ -364,4 +364,7 @@
     <string name="DisableAiEditor">AI 편집기 비활성화</string>
     <string name="DisableGlareEffects">눈부심 효과 비활성화</string>
     <string name="ShowRecentForwardTab">전달 시 최근 채팅 탭 표시</string>
+    <string name="ForceForward">강제 전달</string>
+    <string name="ForceForwardNotice">전달이 제한된 채널에서도 제한 없이 메시지를 다시 보낼 수 있도록 텍스트를 자동으로 복사하고 미디어 첨부 파일을 다운로드합니다.</string>
+    <string name="ForceForwardPremiumOnly">강제 전달 기능을 사용하려면 **Telegram Premium**을 구독하세요.</string>
 </resources>

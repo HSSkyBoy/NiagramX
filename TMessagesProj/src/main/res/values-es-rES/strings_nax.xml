@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Canal de Niagram X</string>
     <string name="EnableSaveDeletedMessages">Guardar Mensajes Borrados</string>
@@ -364,4 +364,7 @@
     <string name="DisableAiEditor">Desactivar editor de IA</string>
     <string name="DisableGlareEffects">Desactivar efectos de brillo</string>
     <string name="ShowRecentForwardTab">Mostrar pestaña de chats recientes al reenviar</string>
+    <string name="ForceForward">Reenvío forzado</string>
+    <string name="ForceForwardNotice">Copia automáticamente el texto y descarga los archivos adjuntos para reenviar mensajes de canales restringidos sin limitaciones de reenvío.</string>
+    <string name="ForceForwardPremiumOnly">Suscríbete a **Telegram Premium** para usar el reenvío forzado.</string>
 </resources>

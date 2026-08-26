@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="XChannel">Niagram X Kanalı</string>
     <string name="EnableSaveDeletedMessages">Silinen Mesajları Kaydet</string>
@@ -363,4 +363,7 @@
     <string name="DisableAiEditor">Yapay Zeka Editörünü Devre Dışı Bırak</string>
     <string name="DisableGlareEffects">Parıltı Efektlerini Devre Dışı Bırak</string>
     <string name="ShowRecentForwardTab">İletirken son sohbetler sekmesini göster</string>
+    <string name="ForceForward">Zorla İlet</string>
+    <string name="ForceForwardNotice">İletme kısıtlaması olan kanallardan iletme sınırı olmaksızın mesajları yeniden göndermek için metni otomatik olarak kopyalar ve medya eklerini indirir.</string>
+    <string name="ForceForwardPremiumOnly">Zorla ilet özelliğini kullanmak için **Telegram Premium** abonesi olun.</string>
 </resources>

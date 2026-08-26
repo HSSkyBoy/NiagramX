@@ -486,6 +486,7 @@ public class ChatActivity extends BaseFragment implements
     private final static int nkbtn_bookmark = 2039;
     private final static int nkbtn_bookmarks_manager = 2040;
     private final static int nkbtn_report = 2041;
+    private final static int nkbtn_force_forward = 2042;
     private final static int nkbtn_clearDeleted = 2100;
     private final static int nkbtn_viewDeleted = 2101;
 
@@ -11061,6 +11062,7 @@ public class ChatActivity extends BaseFragment implements
         if (canSendMessages) {
             actionModeOtherItem.addSubItem(nkbtn_repeatascopy, R.drawable.msg_repeat, LocaleController.getString(R.string.RepeatAsCopy));
         }
+        actionModeOtherItem.addSubItem(nkbtn_force_forward, R.drawable.msg_forward, LocaleController.getString(R.string.ForceForward));
         actionModeOtherItem.addSubItem(nkbtn_hide, R.drawable.msg_disable, LocaleController.getString(R.string.Hide));
         actionModeOtherItem.addSubItem(nkbtn_report, R.drawable.msg_report, LocaleController.getString(R.string.ReportChat));
         actionModeOtherItem.addSubItem(nkbtn_detail,R.drawable.msg_info,LocaleController.getString(R.string.MessageDetails));
@@ -13200,6 +13202,62 @@ public class ChatActivity extends BaseFragment implements
         DialogsActivity fragment = new DialogsActivity(args);
         fragment.setDelegate(ChatActivity.this);
         presentFragment(fragment);
+    }
+
+    public void openForceForward(boolean fromActionBar) {
+        ArrayList<MessageObject> fmessages = new ArrayList<>();
+        if (forwardingMessage != null) {
+            if (forwardingMessageGroup != null) {
+                fmessages.addAll(forwardingMessageGroup.messages);
+            } else {
+                fmessages.add(forwardingMessage);
+            }
+        } else {
+            fmessages.addAll(getSelectedMessages());
+        }
+        if (fmessages.isEmpty()) {
+            return;
+        }
+        Bundle args = new Bundle();
+        args.putBoolean("onlySelect", true);
+        args.putInt("dialogsType", DialogsActivity.DIALOGS_TYPE_FORWARD);
+        args.putInt("messagesCount", fmessages.size());
+        args.putBoolean("canSelectTopics", true);
+        DialogsActivity fragment = new DialogsActivity(args);
+        fragment.setDelegate((dialogsFragment, dids, message, param, notify, scheduleDate, scheduleRepeatPeriod, topicsFragment) -> {
+            if (forwardingMessage != null) {
+                forwardingMessage = null;
+                forwardingMessageGroup = null;
+            } else {
+                clearSelectionMode();
+            }
+            dialogsFragment.finishFragment();
+            if (dids == null || dids.isEmpty()) {
+                return true;
+            }
+            AndroidUtilities.runOnUIThread(() -> {
+                createUndoView();
+                if (undoView != null) {
+                    if (dids.size() == 1) {
+                        undoView.showWithAction(dids.get(0).dialogId, UndoView.ACTION_FWD_MESSAGES, fmessages.size());
+                    } else {
+                        undoView.showWithAction(0, UndoView.ACTION_FWD_MESSAGES, fmessages.size(), dids.size(), null, null);
+                    }
+                }
+            });
+            getMessageHelper().forceForwardMessages(ChatActivity.this, fmessages, dids, message, notify, scheduleDate, themeDelegate, null);
+            return true;
+        });
+        presentFragment(fragment);
+    }
+
+    private void showForceForwardPremiumBulletin() {
+        BulletinFactory.of(this).createSimpleBulletin(
+            R.raw.star_premium_2,
+            AndroidUtilities.premiumText(LocaleController.getString(R.string.ForceForwardPremiumOnly), () -> {
+                showDialog(new PremiumFeatureBottomSheet(this, PremiumPreviewFragment.PREMIUM_FEATURE_LIMITS, true));
+            })
+        ).show();
     }
 
     public void showBottomOverlayProgress(boolean show, boolean animated) {
@@ -20174,12 +20232,14 @@ public class ChatActivity extends BaseFragment implements
                 ActionBarMenuSubItem forwardNoQuoteItem = null;
                 ActionBarMenuSubItem repeatItem = null;
                 ActionBarMenuSubItem RepeatAsCopyItem = null;
+                ActionBarMenuSubItem forceForwardItem = null;
                 ActionBarMenuSubItem reportItem = null;
                 if (actionModeOtherItem != null) {
                     saveMessageItem = actionModeOtherItem.getSubItem(nkbtn_savemessage);
                     forwardNoQuoteItem = actionModeOtherItem.getSubItem(nkbtn_forward_noquote);
                     repeatItem = actionModeOtherItem.getSubItem(nkbtn_repeat);
                     RepeatAsCopyItem = actionModeOtherItem.getSubItem(nkbtn_repeatascopy);
+                    forceForwardItem = actionModeOtherItem.getSubItem(nkbtn_force_forward);
                     reportItem = actionModeOtherItem.getSubItem(nkbtn_report);
                 }
 
@@ -20207,6 +20267,9 @@ public class ChatActivity extends BaseFragment implements
                 }
                 if (RepeatAsCopyItem != null) {
                     RepeatAsCopyItem.setVisibility(canSendMessage && (!noforwards || getMessageHelper().canSendMessagesAsCopy(getSelectedMessages1())));
+                }
+                if (forceForwardItem != null) {
+                    forceForwardItem.setVisibility(chatMode != MODE_SCHEDULED && NaConfig.INSTANCE.getShowForceForward().Bool() && getMessageHelper().canSendMessagesAsCopy(getSelectedMessages1()) ? View.VISIBLE : View.GONE);
                 }
                 if (reportItem != null) {
                     reportItem.setVisibility(canReport);
@@ -36199,6 +36262,14 @@ public class ChatActivity extends BaseFragment implements
                 repeatMessage(true, true);
                 return 2;
             }
+            case nkbtn_force_forward: {
+                if (!getUserConfig().isPremium()) {
+                    showForceForwardPremiumBulletin();
+                    return 2;
+                }
+                openForceForward(false);
+                return 2;
+            }
         }
         return 0;
     }
@@ -46642,6 +46713,13 @@ public class ChatActivity extends BaseFragment implements
         } else if (id == nkbtn_repeatascopy) {
             repeatMessage(false, true);
             clearSelectionMode();
+        } else if (id == nkbtn_force_forward) {
+            if (!getUserConfig().isPremium()) {
+                showForceForwardPremiumBulletin();
+                return;
+            }
+            openForceForward(true);
+            clearSelectionMode();
         } else if (id == nkheaderbtn_hide_title) {
             if (avatarContainer != null) {
                 avatarContainer.setTitle("");
@@ -46704,6 +46782,16 @@ public class ChatActivity extends BaseFragment implements
             }
             case nkbtn_repeatascopy: {
                 repeatMessage(false, true);
+                break;
+            }
+            case nkbtn_force_forward: {
+                if (!getUserConfig().isPremium()) {
+                    showForceForwardPremiumBulletin();
+                    break;
+                }
+                forwardingMessage = selectedObject;
+                forwardingMessageGroup = selectedObjectGroup;
+                openForceForward(false);
                 break;
             }
             case nkbtn_forward_nocaption:
@@ -49175,6 +49263,11 @@ public class ChatActivity extends BaseFragment implements
                         items.add(LocaleController.getString(R.string.RepeatAsCopy));
                         options.add(nkbtn_repeatascopy);
                         icons.add(R.drawable.msg_repeat);
+                    }
+                    if (chatMode != MODE_WELCOME_MESSAGES && !isAyuDeleted && !selectedObject.needDrawBluredPreview() && getMessageHelper().canSendMessageAsCopy(selectedObject, selectedObjectGroup) && (noforwards || !selectedObject.canForwardMessage() || NaConfig.INSTANCE.getShowForceForward().Bool())) {
+                        items.add(LocaleController.getString(R.string.ForceForward));
+                        options.add(nkbtn_force_forward);
+                        icons.add(R.drawable.msg_forward);
                     }
                     if (NekoConfig.showDeleteDownloadedFile.Bool() && getMessageHelper().messageObjectIsFile(type, selectedObject)) {
                         items.add(LocaleController.getString(R.string.DeleteDownloadedFile));

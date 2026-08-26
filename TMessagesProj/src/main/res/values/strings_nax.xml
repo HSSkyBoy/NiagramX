@@ -407,4 +407,7 @@
     <string name="DisableAiEditor">Disable AI Editor</string>
     <string name="DisableGlareEffects">Disable Glare effects</string>
     <string name="ShowRecentForwardTab">Show recent chats tab when forwarding</string>
+    <string name="ForceForward">Force Forward</string>
+    <string name="ForceForwardNotice">Automatically copy text and download media attachments to re-send messages from restricted channels without forward limits.</string>
+    <string name="ForceForwardPremiumOnly">Subscribe to **Telegram Premium** to force forward messages.</string>
 </resources>

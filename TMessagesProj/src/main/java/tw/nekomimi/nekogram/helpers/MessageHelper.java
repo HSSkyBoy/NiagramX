@@ -47,7 +47,9 @@ import org.telegram.messenger.MediaController;
 import org.telegram.messenger.MediaDataController;
 import org.telegram.messenger.MessageObject;
 import org.telegram.messenger.MessageSuggestionParams;
+import org.telegram.messenger.ImageLocation;
 import org.telegram.messenger.MessagesController;
+import org.telegram.messenger.MessagesStorage;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
 import org.telegram.messenger.SendMessageChatArguments;
@@ -83,6 +85,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
@@ -148,18 +151,35 @@ public class MessageHelper extends BaseController {
                 }
             }
         }
-        if (TextUtils.isEmpty(path)) {
+        if (TextUtils.isEmpty(path) && messageObject.isPhoto()) {
+            TLRPC.Photo photo = MessageObject.getMedia(messageObject.messageOwner) != null ? MessageObject.getMedia(messageObject.messageOwner).photo : null;
+            if (photo != null) {
+                TLRPC.PhotoSize photoSize = FileLoader.getClosestPhotoSizeWithSize(photo.sizes, AndroidUtilities.getPhotoSize(true), false, null, true);
+                if (photoSize != null) {
+                    File f = FileLoader.getInstance(accountId).getPathToAttach(photoSize, null, true);
+                    if (f != null && f.exists()) {
+                        path = f.getAbsolutePath();
+                    } else {
+                        f = FileLoader.getInstance(accountId).getPathToAttach(photoSize, null, false);
+                        if (f != null && f.exists()) {
+                            path = f.getAbsolutePath();
+                        }
+                    }
+                }
+            }
+        }
+        if (TextUtils.isEmpty(path) && messageObject.getDocument() != null) {
             File f = FileLoader.getInstance(accountId).getPathToAttach(messageObject.getDocument(), true);
-            if (f.exists() && !f.getAbsolutePath().endsWith("/cache")) {
+            if (f.exists()) {
                 path = f.getAbsolutePath();
             } else {
-                f = FileLoader.getInstance(accountId).getPathToAttach(messageObject.getDocument());
+                f = FileLoader.getInstance(accountId).getPathToAttach(messageObject.getDocument(), false);
                 if (f.exists()) {
                     path = f.getAbsolutePath();
                 }
             }
         }
-        return path != null && !path.endsWith("/cache") ? path : null;
+        return path;
     }
 
     public void resetMessageContent(long dialog_id, MessageObject messageObject) {
@@ -1287,22 +1307,36 @@ public class MessageHelper extends BaseController {
         return originalText + MessageTransKt.TRANSLATION_SEPARATOR + translatedText;
     }
 
+    private CharSequence extractMessageCaption(MessageObject messageObject, MessageObject.GroupedMessages messageGroup) {
+        if (messageObject == null) return null;
+        if (messageObject.caption != null) {
+            return messageObject.caption;
+        }
+        if (messageObject.messageOwner != null && !TextUtils.isEmpty(messageObject.messageOwner.message)) {
+            return messageObject.messageOwner.message;
+        }
+        if (messageObject.messageText != null) {
+            return messageObject.messageText;
+        }
+        return ChatActivity.getMessageCaption(messageObject, messageGroup, null);
+    }
+
     public boolean sendMessageAsCopy(MessageObject messageObject, MessageObject.GroupedMessages messageGroup, long targetDialogId, MessageObject replyTo, MessageObject replyToTopMsg, ChatActivity.ReplyQuote quote, boolean notify, int scheduleDate, int mode, String quickReplyShortcut, int quickReplyShortcutId, long payStars, long monoForumPeerId, MessageSuggestionParams suggestionParams) {
         if (messageObject == null || messageObject.messageOwner == null) {
             return false;
         }
         SendMessageChatArguments sendMessageChatArguments = createSendMessageChatArguments(quickReplyShortcut, quickReplyShortcutId);
-        CharSequence caption = ChatActivity.getMessageCaption(messageObject, messageGroup, null);
+        CharSequence caption = extractMessageCaption(messageObject, messageGroup);
         if (caption == null && (messageObject.type == 0 || messageObject.isAnimatedEmoji())) {
             caption = ChatActivity.getMessageContent(messageObject, 0, false);
         }
+        ArrayList<TLRPC.MessageEntity> entities = messageObject.messageOwner != null ? messageObject.messageOwner.entities : null;
         if ((messageObject.isSticker() || messageObject.isAnimatedSticker()) && messageObject.getDocument() != null) {
             SendMessagesHelper.getInstance(currentAccount).sendSticker(messageObject.getDocument(), null, targetDialogId, null, null, replyTo, replyToTopMsg, null, quote, null, notify, scheduleDate, 0, false, null, sendMessageChatArguments, payStars, monoForumPeerId, suggestionParams);
             return true;
         }
         String path = getPathToMessage(messageObject, currentAccount);
         if (!TextUtils.isEmpty(path)) {
-            ArrayList<TLRPC.MessageEntity> entities = caption != null ? messageObject.messageOwner.entities : null;
             if (messageObject.isRoundVideo()) {
                 VideoEditedInfo info = messageObject.videoEditedInfo != null ? messageObject.videoEditedInfo : new VideoEditedInfo();
                 info.roundVideo = true;
@@ -1322,11 +1356,14 @@ public class MessageHelper extends BaseController {
             }
         }
         if (caption != null && (messageObject.type == 0 || messageObject.isAnimatedEmoji()) && !TextUtils.isEmpty(caption)) {
-            SendMessagesHelper.SendMessageParams params = SendMessagesHelper.SendMessageParams.of(caption.toString(), targetDialogId, replyTo, replyToTopMsg, null, false, messageObject.messageOwner.entities, null, null, notify, scheduleDate, 0, null, false);
+            SendMessagesHelper.SendMessageParams params = SendMessagesHelper.SendMessageParams.of(caption.toString(), targetDialogId, replyTo, replyToTopMsg, null, false, entities, null, null, notify, scheduleDate, 0, null, false);
             params.sendMessageChatArguments = sendMessageChatArguments;
             params.payStars = payStars;
             params.monoForumPeer = monoForumPeerId;
             params.suggestionParams = suggestionParams;
+            if (messageObject.messageOwner != null && messageObject.messageOwner.media instanceof TLRPC.TL_messageMediaWebPage) {
+                params.webPage = messageObject.messageOwner.media.webpage;
+            }
             SendMessagesHelper.getInstance(currentAccount).sendMessage(params);
             return true;
         }
@@ -1371,8 +1408,8 @@ public class MessageHelper extends BaseController {
                     currentGroupId = groupId;
                     currentInvertMedia = invertMedia;
                 }
-                CharSequence caption = ChatActivity.getMessageCaption(messageObject, null, null);
-                ArrayList<TLRPC.MessageEntity> entities = caption != null ? messageObject.messageOwner.entities : null;
+                CharSequence caption = extractMessageCaption(messageObject, null);
+                ArrayList<TLRPC.MessageEntity> entities = messageObject.messageOwner != null ? messageObject.messageOwner.entities : null;
                 media.add(createSendingMediaInfo(messageObject, path, caption, entities));
             } else {
                 if (media != null) {
@@ -1471,5 +1508,193 @@ public class MessageHelper extends BaseController {
         SendMessageChatArguments.Builder builder = new SendMessageChatArguments.Builder();
         builder.setQuickReplyShortcut(quickReplyShortcut, quickReplyShortcutId);
         return builder.build();
+    }
+
+    public static boolean needsDownloadForCopy(MessageObject msg) {
+        if (msg == null || msg.messageOwner == null) {
+            return false;
+        }
+        if (msg.isSticker() || msg.isAnimatedSticker() || msg.isAnimatedEmoji()) {
+            return false;
+        }
+        if (!msg.isPhoto() && !msg.isVideo() && !msg.isRoundVideo() && msg.getDocument() == null) {
+            return false;
+        }
+        String path = getPathToMessage(msg, msg != null ? msg.currentAccount : UserConfig.selectedAccount);
+        if (!TextUtils.isEmpty(path)) {
+            File f = new File(path);
+            if (f.exists() && f.length() > 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static String getAttachFileNameForMessage(MessageObject msg) {
+        if (msg == null || msg.messageOwner == null) {
+            return null;
+        }
+        if (msg.isPhoto()) {
+            TLRPC.Photo photo = MessageObject.getMedia(msg.messageOwner) != null ? MessageObject.getMedia(msg.messageOwner).photo : null;
+            if (photo != null) {
+                TLRPC.PhotoSize photoSize = FileLoader.getClosestPhotoSizeWithSize(photo.sizes, AndroidUtilities.getPhotoSize(true), false, null, true);
+                if (photoSize != null) {
+                    return FileLoader.getAttachFileName(photoSize);
+                }
+            }
+        } else if (msg.getDocument() != null) {
+            return FileLoader.getAttachFileName(msg.getDocument());
+        }
+        return null;
+    }
+
+    public void startDownloadForMessage(MessageObject msg) {
+        if (msg == null || msg.messageOwner == null) {
+            return;
+        }
+        if (msg.isPhoto()) {
+            TLRPC.Photo photo = MessageObject.getMedia(msg.messageOwner) != null ? MessageObject.getMedia(msg.messageOwner).photo : null;
+            if (photo != null) {
+                TLRPC.PhotoSize photoSize = FileLoader.getClosestPhotoSizeWithSize(photo.sizes, AndroidUtilities.getPhotoSize(true), false, null, true);
+                if (photoSize != null) {
+                    getFileLoader().loadFile(ImageLocation.getForPhoto(photoSize, photo), msg, "jpg", FileLoader.PRIORITY_HIGH, 0);
+                }
+            }
+        } else if (msg.getDocument() != null) {
+            getFileLoader().loadFile(msg.getDocument(), msg, FileLoader.PRIORITY_HIGH, 0);
+        }
+    }
+
+    public void cancelDownloadForMessage(MessageObject msg) {
+        if (msg == null || msg.messageOwner == null) {
+            return;
+        }
+        if (msg.isPhoto()) {
+            TLRPC.Photo photo = MessageObject.getMedia(msg.messageOwner) != null ? MessageObject.getMedia(msg.messageOwner).photo : null;
+            if (photo != null) {
+                TLRPC.PhotoSize photoSize = FileLoader.getClosestPhotoSizeWithSize(photo.sizes, AndroidUtilities.getPhotoSize(true), false, null, true);
+                if (photoSize != null) {
+                    getFileLoader().cancelLoadFile(photoSize);
+                }
+            }
+        } else if (msg.getDocument() != null) {
+            getFileLoader().cancelLoadFile(msg.getDocument());
+        }
+    }
+
+    public void sendCopiedMessagesToDids(ArrayList<MessageObject> messages, ArrayList<MessagesStorage.TopicKey> dids, CharSequence comment, boolean notify, int scheduleDate) {
+        if (messages == null || messages.isEmpty() || dids == null || dids.isEmpty()) {
+            return;
+        }
+        for (int a = 0; a < dids.size(); a++) {
+            MessagesStorage.TopicKey key = dids.get(a);
+            long did = key.dialogId;
+            long topicId = key.topicId;
+            if (!TextUtils.isEmpty(comment)) {
+                SendMessagesHelper.SendMessageParams params = SendMessagesHelper.SendMessageParams.of(comment.toString(), did, null, null, null, true, null, null, null, notify, scheduleDate, 0, null, false);
+                if (topicId != 0) {
+                    params.monoForumPeer = topicId;
+                }
+                SendMessagesHelper.getInstance(currentAccount).sendMessage(params);
+            }
+            sendMessagesAsCopy(messages, did, null, null, null, notify, scheduleDate, 0, null, 0, 0, topicId, null);
+        }
+    }
+
+    public void forceForwardMessages(
+            BaseFragment parentFragment,
+            ArrayList<MessageObject> messages,
+            ArrayList<MessagesStorage.TopicKey> dids,
+            CharSequence comment,
+            boolean notify,
+            int scheduleDate,
+            Theme.ResourcesProvider resourcesProvider,
+            Utilities.Callback<Boolean> onDone
+    ) {
+        if (messages == null || messages.isEmpty() || dids == null || dids.isEmpty()) {
+            if (onDone != null) onDone.run(false);
+            return;
+        }
+
+        ArrayList<MessageObject> missingFiles = new ArrayList<>();
+        for (int i = 0; i < messages.size(); i++) {
+            MessageObject msg = messages.get(i);
+            if (needsDownloadForCopy(msg)) {
+                missingFiles.add(msg);
+            }
+        }
+
+        if (missingFiles.isEmpty()) {
+            sendCopiedMessagesToDids(messages, dids, comment, notify, scheduleDate);
+            if (onDone != null) onDone.run(true);
+            return;
+        }
+
+        HashSet<String> pendingFiles = new HashSet<>();
+        for (int i = 0; i < missingFiles.size(); i++) {
+            MessageObject msg = missingFiles.get(i);
+            String fileName = getAttachFileNameForMessage(msg);
+            if (!TextUtils.isEmpty(fileName)) {
+                pendingFiles.add(fileName);
+            }
+            startDownloadForMessage(msg);
+        }
+
+        if (pendingFiles.isEmpty()) {
+            sendCopiedMessagesToDids(messages, dids, comment, notify, scheduleDate);
+            if (onDone != null) onDone.run(true);
+            return;
+        }
+
+        Context context = parentFragment != null ? parentFragment.getParentActivity() : null;
+        if (context == null) {
+            context = ApplicationLoader.applicationContext;
+        }
+        AlertDialog progressDialog = parentFragment != null ? new AlertDialog(context, AlertDialog.ALERT_TYPE_SPINNER, resourcesProvider) : null;
+        if (progressDialog != null) {
+            progressDialog.setMessage(LocaleController.getString(R.string.Downloading));
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setCanCancel(true);
+            parentFragment.showDialog(progressDialog);
+        }
+
+        final boolean[] isCancelled = new boolean[]{false};
+        final NotificationCenter.NotificationCenterDelegate[] observer = new NotificationCenter.NotificationCenterDelegate[1];
+        observer[0] = (id, account, args) -> {
+            if (account != currentAccount) return;
+            if (id == NotificationCenter.fileLoaded || id == NotificationCenter.fileLoadFailed) {
+                String fileName = (String) args[0];
+                if (fileName != null && pendingFiles.remove(fileName)) {
+                    if (pendingFiles.isEmpty()) {
+                        NotificationCenter.getInstance(currentAccount).removeObserver(observer[0], NotificationCenter.fileLoaded);
+                        NotificationCenter.getInstance(currentAccount).removeObserver(observer[0], NotificationCenter.fileLoadFailed);
+                        try {
+                            if (progressDialog != null) {
+                                progressDialog.dismiss();
+                            }
+                        } catch (Exception ignore) {}
+                        if (!isCancelled[0]) {
+                            sendCopiedMessagesToDids(messages, dids, comment, notify, scheduleDate);
+                            if (onDone != null) onDone.run(true);
+                        }
+                    }
+                }
+            }
+        };
+
+        if (progressDialog != null) {
+            progressDialog.setOnCancelListener(dialog -> {
+                isCancelled[0] = true;
+                NotificationCenter.getInstance(currentAccount).removeObserver(observer[0], NotificationCenter.fileLoaded);
+                NotificationCenter.getInstance(currentAccount).removeObserver(observer[0], NotificationCenter.fileLoadFailed);
+                for (MessageObject msg : missingFiles) {
+                    cancelDownloadForMessage(msg);
+                }
+                if (onDone != null) onDone.run(false);
+            });
+        }
+
+        NotificationCenter.getInstance(currentAccount).addObserver(observer[0], NotificationCenter.fileLoaded);
+        NotificationCenter.getInstance(currentAccount).addObserver(observer[0], NotificationCenter.fileLoadFailed);
     }
 }

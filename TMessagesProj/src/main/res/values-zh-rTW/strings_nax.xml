@@ -393,4 +393,7 @@
     <string name="DisableAiEditor">停用 AI 編輯器</string>
     <string name="DisableGlareEffects">停用炫光效果</string>
     <string name="ShowRecentForwardTab">轉發時顯示最近聊天標籤</string>
+    <string name="ForceForward">強制轉發</string>
+    <string name="ForceForwardNotice">自動複製文字並下載媒體附件，突破頻道與群組限制以相同格式重新發送。</string>
+    <string name="ForceForwardPremiumOnly">訂閱 **Telegram Premium** 即可使用強制轉發功能。</string>
 </resources>
