@@ -112,4 +112,5 @@
     <string name="LiquidGlassAngle">液态玻璃角度</string>
     <string name="LiquidGlassIntensity">液态玻璃强度</string>
     <string name="DisableGooeyAvatarAnimation">禁用头像流体动画</string>
+    <string name="ShowSquareAvatar">方形头像</string>
 </resources>

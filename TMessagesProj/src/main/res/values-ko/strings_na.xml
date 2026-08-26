@@ -102,5 +102,6 @@
     <string name="VideoPlayerDecoderHardware">HW 전용</string>
     <string name="VideoPlayerDecoderPreferHW">HW 우선</string>
     <string name="DisableGooeyAvatarAnimation">프로필 아바타 유체 애니메이션 비활성화</string>
+    <string name="ShowSquareAvatar">사각형 프로필 사진</string>
 </resources>
 

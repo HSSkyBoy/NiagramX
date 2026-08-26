@@ -110,5 +110,6 @@
     <string name="ActionButtonStyleNeutral">ニュートラル</string>
     <string name="ActionButtonStyleWhite">ホワイト</string>
     <string name="DisableGooeyAvatarAnimation">アバターの流体アニメーションを無効化</string>
+    <string name="ShowSquareAvatar">四角いアバター</string>
 </resources>
 

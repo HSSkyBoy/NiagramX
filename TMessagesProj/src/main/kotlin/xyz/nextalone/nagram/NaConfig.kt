@@ -1375,6 +1375,12 @@ object NaConfig {
             ConfigItem.configTypeBool,
             false
         )
+    val showSquareAvatar =
+        addConfig(
+            "ShowSquareAvatar",
+            ConfigItem.configTypeBool,
+            false
+        )
     val actionButtonStyle =
         addConfig(
             "ActionButtonStyle",

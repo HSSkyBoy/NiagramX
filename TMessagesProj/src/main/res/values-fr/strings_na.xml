@@ -9,4 +9,5 @@
     <string name="ActionButtonStyleNeutral">Neutre</string>
     <string name="ActionButtonStyleWhite">Blanc</string>
     <string name="DisableGooeyAvatarAnimation">Désactiver l\'animation fluide de l\'avatar</string>
+    <string name="ShowSquareAvatar">Avatars carrés</string>
 </resources>

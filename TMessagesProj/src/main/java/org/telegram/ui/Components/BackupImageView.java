@@ -163,11 +163,13 @@ public class BackupImageView extends View {
     }
 
     public void setForUserOrChat(TLObject object, AvatarDrawable avatarDrawable) {
+        imageReceiver.isAvatar = true;
         imageReceiver.setForUserOrChat(object, avatarDrawable);
         onNewImageSet();
     }
 
     public void setForUserOrChat(TLObject object, AvatarDrawable avatarDrawable, Object parent) {
+        imageReceiver.isAvatar = true;
         imageReceiver.setForUserOrChat(object, avatarDrawable, parent);
         onNewImageSet();
     }

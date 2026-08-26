@@ -102,5 +102,6 @@
     <string name="VideoPlayerDecoderHardware">Тільки апаратне декодування</string>
     <string name="VideoPlayerDecoderPreferHW">Перевага HW</string>
     <string name="DisableGooeyAvatarAnimation">Вимкнути плавну анімацію аватара</string>
+    <string name="ShowSquareAvatar">Квадратні аватари</string>
 </resources>
 

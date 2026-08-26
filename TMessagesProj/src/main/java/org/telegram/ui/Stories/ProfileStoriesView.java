@@ -558,7 +558,7 @@ public class ProfileStoriesView extends View implements NotificationCenter.Notif
             if (radialProgress == null) {
                 radialProgress = new RadialProgress(this);
                 radialProgress.setBackground(null, true, false);
-                radialProgress.setRoundRectProgress(ChatObject.isForum(UserConfig.selectedAccount, dialogId));
+                radialProgress.setRoundRectProgress(ChatObject.isForum(UserConfig.selectedAccount, dialogId) || NaConfig.INSTANCE.getShowSquareAvatar().Bool());
             }
             float uploadingProgress = 0;
             if (!storiesController.hasUploadingStories(dialogId) || storiesController.isLastUploadingFailed(dialogId)) {
@@ -610,7 +610,7 @@ public class ProfileStoriesView extends View implements NotificationCenter.Notif
                 final Paint paint = StoriesUtilities.getErrorPaint(rect2);
                 paint.setStrokeWidth(AndroidUtilities.dp(2));
                 paint.setAlpha((int) (255 * segmentsAlpha));
-                boolean isForum = ChatObject.isForum(UserConfig.selectedAccount, dialogId);
+                boolean isForum = ChatObject.isForum(UserConfig.selectedAccount, dialogId) || NaConfig.INSTANCE.getShowSquareAvatar().Bool();
                 if (isForum) {
                     float r = rect2.height() * 0.32f;
                     canvas.drawRoundRect(rect2, r, r, paint);
@@ -903,7 +903,7 @@ public class ProfileStoriesView extends View implements NotificationCenter.Notif
     private final Path forumSegmentPath = new Path();
 
     private void drawArc(Canvas canvas, RectF oval, float startAngle, float sweepAngle, boolean useCenter, Paint paint) {
-        boolean isForum = ChatObject.isForum(UserConfig.selectedAccount, dialogId);
+        boolean isForum = ChatObject.isForum(UserConfig.selectedAccount, dialogId) || NaConfig.INSTANCE.getShowSquareAvatar().Bool();
         if (isForum) {
             float r = oval.height() * 0.32f;
             if (Math.abs(sweepAngle) == 360) {

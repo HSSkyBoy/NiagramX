@@ -58,6 +58,8 @@ import org.telegram.ui.Components.AnimatedTextView;
 import org.telegram.ui.Components.AvatarDrawable;
 import org.telegram.ui.Components.ButtonBounce;
 import org.telegram.ui.Components.ColoredImageSpan;
+
+import xyz.nextalone.nagram.NaConfig;
 import org.telegram.ui.Components.CubicBezierInterpolator;
 import org.telegram.ui.Components.GradientTools;
 import org.telegram.ui.Components.RecyclerListView;
@@ -132,7 +134,7 @@ public class StoriesUtilities {
         int state;
         int unreadState = 0;
         boolean showProgress = storiesController.isLoading(dialogId);
-        boolean isForum = ChatObject.isForum(UserConfig.selectedAccount, dialogId) && !params.isDialogStoriesCell;
+        boolean isForum = (ChatObject.isForum(UserConfig.selectedAccount, dialogId) || NaConfig.INSTANCE.getShowSquareAvatar().Bool()) && !params.isDialogStoriesCell;
         if (params.drawHiddenStoriesAsSegments) {
             hasStories = storiesController.hasHiddenStories();
         }

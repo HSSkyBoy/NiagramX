@@ -103,5 +103,6 @@
     <string name="VideoPlayerDecoderHardware">Solo HW</string>
     <string name="VideoPlayerDecoderPreferHW">Preferisci HW</string>
     <string name="DisableGooeyAvatarAnimation">Disattiva animazione fluida dell\'avatar</string>
+    <string name="ShowSquareAvatar">Avatar quadrati</string>
 </resources>
 

@@ -102,5 +102,6 @@
     <string name="VideoPlayerDecoderHardware">فقط HW</string>
     <string name="VideoPlayerDecoderPreferHW">ترجیح دادن HW</string>
     <string name="DisableGooeyAvatarAnimation">غیرفعال کردن پویانمایی کشسانی آواتار</string>
+    <string name="ShowSquareAvatar">آواتارهای مربعی</string>
 </resources>
 

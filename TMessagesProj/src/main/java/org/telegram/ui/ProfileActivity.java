@@ -6731,6 +6731,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 return dp(needInsetForStories() ? 24 : 38);
             }
         }
+        if (NaConfig.INSTANCE.getShowSquareAvatar().Bool()) {
+            return dp(needInsetForStories() ? 24 : 38);
+        }
         return dp(50);
     }
 

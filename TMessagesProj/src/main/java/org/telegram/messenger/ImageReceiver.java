@@ -326,8 +326,10 @@ public class ImageReceiver implements NotificationCenter.NotificationCenterDeleg
     private boolean forceCrossfade;
     private boolean useRoundRadius = true;
     private final int[] roundRadius = new int[4];
+    private final int[] squareRoundRadius = new int[4];
     private int[] emptyRoundRadius;
     private boolean isRoundRect = true;
+    public boolean isAvatar = false;
     private Object mark;
 
     private Paint roundPaint;
@@ -430,6 +432,7 @@ public class ImageReceiver implements NotificationCenter.NotificationCenterDeleg
         if (parentObject == null) {
             parentObject = object;
         }
+        isAvatar = true;
         setUseRoundForThumbDrawable(true);
         BitmapDrawable strippedBitmap = null;
         boolean hasStripped = false;
@@ -1284,7 +1287,7 @@ public class ImageReceiver implements NotificationCenter.NotificationCenterDeleg
             imageW = this.imageW;
             drawRegion = this.drawRegion;
             colorFilter = this.colorFilter;
-            roundRadius = this.roundRadius;
+            roundRadius = getRoundRadius(false);
         }
         if (!useRoundRadius) roundRadius = emptyRoundRadius;
         if (drawable instanceof BitmapDrawable) {
@@ -1932,7 +1935,7 @@ public class ImageReceiver implements NotificationCenter.NotificationCenterDeleg
             } else {
                 animation = getAnimation();
                 lottieDrawable = getLottieAnimation();
-                roundRadius = this.roundRadius;
+                roundRadius = getRoundRadius(false);
                 currentMediaDrawable = this.currentMediaDrawable;
                 mediaShader = this.mediaShader;
                 currentImageDrawable = this.currentImageDrawable;
@@ -2608,7 +2611,20 @@ public class ImageReceiver implements NotificationCenter.NotificationCenterDeleg
     }
 
     public int[] getRoundRadius(boolean includingEmpty) {
-        return !useRoundRadius && includingEmpty ? emptyRoundRadius : roundRadius;
+        if (!useRoundRadius && includingEmpty) {
+            return emptyRoundRadius;
+        }
+        if ((isAvatar || useRoundForThumb || (currentThumbDrawable instanceof AvatarDrawable || currentImageDrawable instanceof AvatarDrawable)) && NaConfig.INSTANCE.getShowSquareAvatar().Bool()) {
+            for (int a = 0; a < 4; a++) {
+                if (roundRadius[a] > AndroidUtilities.dp(14)) {
+                    squareRoundRadius[a] = Math.max(AndroidUtilities.dp(4), Math.round(roundRadius[a] * 0.45f));
+                } else {
+                    squareRoundRadius[a] = roundRadius[a];
+                }
+            }
+            return squareRoundRadius;
+        }
+        return roundRadius;
     }
 
     public Object getParentObject() {
