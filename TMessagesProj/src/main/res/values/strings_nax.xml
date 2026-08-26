@@ -272,6 +272,9 @@
     <string name="CustomDoH">Custom DoH</string>
     <string name="CustomDoHHint">https://1.0.0.1/dns-query, ... (Long press to pick presets)</string>
     <string name="PresetDoHServers">Preset DoH Servers</string>
+    <string name="CustomApiDefault">Default API</string>
+    <string name="CustomApiOfficial">Telegram Official</string>
+    <string name="CustomApiCustom">Custom API</string>
     <string name="WebProxy">Web / HTTP Proxy</string>
     <string name="WebProxyMode">Web / HTTP Proxy</string>
     <string name="WebProxyAbout">Route external HTTP/HTTPS requests (such as LLM translations, update checks, and voice transcription) through proxy.</string>

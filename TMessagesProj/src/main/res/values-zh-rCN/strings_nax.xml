@@ -256,8 +256,11 @@
     <string name="DnsTypeAliDNS">阿里 DNS</string>
     <string name="DnsTypeSystem">系统</string>
     <string name="CustomDoH">自定义 DoH</string>
-    <string name="CustomDoHHint">https://1.0.0.1/dns-query, ...（长按可选择预设）</string>
+    <string name="CustomDoHHint">https://1.1.1.1/dns-query, ...（长按可选择预设）</string>
     <string name="PresetDoHServers">预设 DoH 服务器</string>
+    <string name="CustomApiDefault">默认 API</string>
+    <string name="CustomApiOfficial">Telegram API</string>
+    <string name="CustomApiCustom">自定义 API</string>
     <string name="WebProxy">Web / HTTP 代理</string>
     <string name="WebProxyMode">Web / HTTP 代理</string>
     <string name="WebProxyAbout">让外部 HTTP/HTTPS 网络请求（如 LLM 翻译、更新检查、语音转文字等）通过代理发送。</string>

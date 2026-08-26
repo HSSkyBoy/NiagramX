@@ -38,7 +38,11 @@ public class NekoXConfig {
     public static final int TITLE_TYPE_MIX = 2;
 
     public static final int API_TYPE_DEFAULT = 0;
-    public static final int API_TYPE_CUSTOM = 3;
+    public static final int API_TYPE_OFFICIAL = 1;
+    public static final int API_TYPE_CUSTOM = 2;
+
+    public static final int OFFICIAL_APP_ID = 6;
+    public static final String OFFICIAL_APP_HASH = "eb06d4abfb49dc3eeb1aeb98ae0f581e";
 
     public static SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekox_config", Context.MODE_PRIVATE);
 
@@ -47,11 +51,23 @@ public class NekoXConfig {
     public static String customAppHash = preferences.getString("custom_app_hash", "");
 
     public static int currentAppId() {
-        return customApi == API_TYPE_CUSTOM ? customAppId : BuildConfig.APP_ID;
+        if (customApi == API_TYPE_OFFICIAL) {
+            return OFFICIAL_APP_ID;
+        } else if (customApi == API_TYPE_CUSTOM || customApi == 3) {
+            return customAppId;
+        } else {
+            return BuildConfig.APP_ID;
+        }
     }
 
     public static String currentAppHash() {
-        return customApi == API_TYPE_CUSTOM ? customAppHash : BuildConfig.APP_HASH;
+        if (customApi == API_TYPE_OFFICIAL) {
+            return OFFICIAL_APP_HASH;
+        } else if (customApi == API_TYPE_CUSTOM || customApi == 3) {
+            return customAppHash;
+        } else {
+            return BuildConfig.APP_HASH;
+        }
     }
 
     public static void saveCustomApi() {
@@ -96,13 +112,13 @@ public class NekoXConfig {
         final Context context = fragment.getContext();
         if (context == null) return;
 
-        AtomicInteger useApiType = new AtomicInteger(-1);
+        AtomicInteger useApiType = new AtomicInteger(customApi == 3 ? API_TYPE_CUSTOM : customApi);
         BottomBuilder builder = new BottomBuilder(context);
         EditText[] inputs = new EditText[2];
 
         builder.addTitle(getString(R.string.CustomApi), true, getString(R.string.UseCustomApiNotice));
 
-        builder.addRadioItem(getString(R.string.CustomApiNo), NekoXConfig.customApi != API_TYPE_CUSTOM, (cell) -> {
+        builder.addRadioItem(getString(R.string.CustomApiDefault), useApiType.get() == API_TYPE_DEFAULT, (cell) -> {
             useApiType.set(API_TYPE_DEFAULT);
             builder.doRadioCheck(cell);
             for (EditText input : inputs) {
@@ -111,7 +127,16 @@ public class NekoXConfig {
             return Unit.INSTANCE;
         });
 
-        builder.addRadioItem(getString(R.string.CustomApiInput), NekoXConfig.customApi == API_TYPE_CUSTOM, (cell) -> {
+        builder.addRadioItem(getString(R.string.CustomApiOfficial), useApiType.get() == API_TYPE_OFFICIAL, (cell) -> {
+            useApiType.set(API_TYPE_OFFICIAL);
+            builder.doRadioCheck(cell);
+            for (EditText input : inputs) {
+                input.setVisibility(View.GONE);
+            }
+            return Unit.INSTANCE;
+        });
+
+        builder.addRadioItem(getString(R.string.CustomApiCustom), useApiType.get() == API_TYPE_CUSTOM, (cell) -> {
             useApiType.set(API_TYPE_CUSTOM);
             builder.doRadioCheck(cell);
             for (EditText input : inputs) {
@@ -122,16 +147,16 @@ public class NekoXConfig {
 
         inputs[0] = builder.addEditText("App ID");
         inputs[0].setInputType(InputType.TYPE_CLASS_NUMBER);
-        if (NekoXConfig.customAppId != 0) {
+        if (NekoXConfig.customAppId != 0 && (NekoXConfig.customApi == API_TYPE_CUSTOM || NekoXConfig.customApi == 3)) {
             inputs[0].setText(String.valueOf(NekoXConfig.customAppId));
         }
 
         inputs[1] = builder.addEditText("App Hash");
-        if (!TextUtils.isEmpty(NekoXConfig.customAppHash)) {
+        if (!TextUtils.isEmpty(NekoXConfig.customAppHash) && (NekoXConfig.customApi == API_TYPE_CUSTOM || NekoXConfig.customApi == 3)) {
             inputs[1].setText(NekoXConfig.customAppHash);
         }
 
-        if (NekoXConfig.customApi != API_TYPE_CUSTOM) {
+        if (useApiType.get() != API_TYPE_CUSTOM) {
             for (EditText input : inputs) {
                 input.setVisibility(View.GONE);
             }
@@ -140,9 +165,6 @@ public class NekoXConfig {
         builder.addCancelButton();
         builder.addButton(getString(R.string.Set), true, (it) -> {
             int targetType = useApiType.get();
-            if (targetType == -1) {
-                targetType = NekoXConfig.customApi == API_TYPE_CUSTOM ? API_TYPE_CUSTOM : API_TYPE_DEFAULT;
-            }
 
             if (targetType == API_TYPE_CUSTOM) {
                 String appIdStr = inputs[0].getText().toString().trim();
@@ -184,6 +206,11 @@ public class NekoXConfig {
                 NekoXConfig.customAppHash = appHashStr;
 
                 AndroidUtil.setPushService(false);
+            } else if (targetType == API_TYPE_OFFICIAL) {
+                NekoXConfig.customApi = API_TYPE_OFFICIAL;
+                NekoXConfig.customAppId = OFFICIAL_APP_ID;
+                NekoXConfig.customAppHash = OFFICIAL_APP_HASH;
+                AndroidUtil.setPushService(true);
             } else {
                 AndroidUtil.setPushService(true);
                 resetCustomApi();

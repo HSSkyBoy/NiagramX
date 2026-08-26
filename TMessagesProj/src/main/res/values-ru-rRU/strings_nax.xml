@@ -250,6 +250,9 @@
     <string name="CustomDoH">Пользовательский DoH</string>
     <string name="CustomDoHHint">https://1.0.0.1/dns-query, ... (Зажмите для выбора пресета)</string>
     <string name="PresetDoHServers">Предустановленные серверы DoH</string>
+    <string name="CustomApiDefault">API по умолчанию</string>
+    <string name="CustomApiOfficial">API по Telegram</string>
+    <string name="CustomApiCustom">Пользовательский API</string>
     <string name="WebProxy">Веб / HTTP-прокси</string>
     <string name="WebProxyMode">Веб / HTTP-прокси</string>
     <string name="WebProxyAbout">Направлять внешние HTTP/HTTPS-запросы (такие как перевод LLM, проверка обновлений и расшифровка голоса) через прокси.</string>
