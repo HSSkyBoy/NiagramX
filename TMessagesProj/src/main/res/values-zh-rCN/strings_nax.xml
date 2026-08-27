@@ -352,6 +352,7 @@
     <string name="StickerSavedHint">贴纸已保存到相册。</string>
     <string name="StickerCopied">贴纸已复制到剪贴板。</string>
     <string name="StrokeOnViews">眩光效果</string>
+    <string name="FolderTabsStroke">文件夹高亮描边</string>
     <string name="HideBottomNavigationBar">隐藏底部导航栏</string>
     <string name="TranslatorMode">追加原文</string>
     <string name="TranslatorWithOriginalTextOff">关闭</string>

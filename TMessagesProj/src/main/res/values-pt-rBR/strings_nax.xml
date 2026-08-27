@@ -321,6 +321,7 @@
     <string name="StickerSavedHint">Sticker salvo na galeria.</string>
     <string name="StickerCopied">Sticker copiado para a área de transferência.</string>
     <string name="StrokeOnViews">Efeitos de brilho</string>
+    <string name="FolderTabsStroke">Borda de destaque nas abas de pastas</string>
     <string name="HideBottomNavigationBar">Ocultar barra de navegação inferior</string>
     <string name="TranslatorMode">Com texto original</string>
     <string name="TranslatorWithOriginalTextOff">Desativado</string>

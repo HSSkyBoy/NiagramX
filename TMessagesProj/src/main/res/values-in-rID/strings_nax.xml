@@ -322,6 +322,7 @@
     <string name="StickerSavedHint">Stiker disimpan ke galeri.</string>
     <string name="StickerCopied">Stiker disalin ke papan klip.</string>
     <string name="StrokeOnViews">Efek silau</string>
+    <string name="FolderTabsStroke">Garis tepi sorotan tab folder</string>
     <string name="HideBottomNavigationBar">Sembunyikan Bilah Navigasi Bawah</string>
     <string name="TranslatorMode">Dengan Teks Asli</string>
     <string name="TranslatorWithOriginalTextOff">Mati</string>

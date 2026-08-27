@@ -322,6 +322,7 @@
     <string name="StickerSavedHint">Naklejka zapisana w galerii.</string>
     <string name="StickerCopied">Naklejka skopiowana do schowka.</string>
     <string name="StrokeOnViews">Efekty blasku</string>
+    <string name="FolderTabsStroke">Obramowanie podświetlenia zakładek folderów</string>
     <string name="HideBottomNavigationBar">Ukryj dolny pasek nawigacyjny</string>
     <string name="TranslatorMode">Z oryginalnym tekstem</string>
     <string name="TranslatorWithOriginalTextOff">Wył</string>

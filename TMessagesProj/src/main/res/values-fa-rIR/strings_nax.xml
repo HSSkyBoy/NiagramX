@@ -322,6 +322,7 @@
     <string name="StickerSavedHint">استیکر در گالری ذخیره شد.</string>
     <string name="StickerCopied">استیکر در کلیپ‌بورد کپی شد.</string>
     <string name="StrokeOnViews">جلوه‌های درخشش</string>
+    <string name="FolderTabsStroke">خط برجسته زبانه‌های پوشه</string>
     <string name="HideBottomNavigationBar">پنهان کردن نوار پایین صفحه</string>
     <string name="TranslatorMode">با متن اصلی</string>
     <string name="TranslatorWithOriginalTextOff">خاموش</string>

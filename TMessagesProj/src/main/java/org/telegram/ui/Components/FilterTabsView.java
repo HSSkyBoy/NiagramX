@@ -75,9 +75,12 @@ import java.util.ArrayList;
 import tw.nekomimi.nekogram.NekoConfig;
 import tw.nekomimi.nekogram.NekoXConfig;
 import tw.nekomimi.nekogram.folder.FolderIconHelper;
+import xyz.nextalone.nagram.NaConfig;
 
 @SuppressLint("ViewConstructor")
 public class FilterTabsView extends FrameLayout {
+
+    private static final float TAB_INTERNAL_PADDING = 12.5f;
 
     private final Theme.ResourcesProvider resourcesProvider;
 
@@ -931,6 +934,8 @@ public class FilterTabsView extends FrameLayout {
 
     private int scrollingToChild = -1;
     private final GradientDrawable selectorDrawable;
+    private final Paint tabStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final RectF tabStrokeRect = new RectF();
 
     private int tabLineColorKey = Theme.key_actionBarTabLine;
     private int activeTextColorKey = Theme.key_actionBarTabActiveText;
@@ -1028,6 +1033,8 @@ public class FilterTabsView extends FrameLayout {
         float rad = AndroidUtilities.dpf2(14);
         selectorDrawable.setCornerRadii(new float[]{rad, rad, rad, rad, rad, rad, rad, rad});
         selectorDrawable.setColor(Theme.getColor(tabLineColorKey, resourcesProvider));
+
+        tabStrokePaint.setStyle(Paint.Style.STROKE);
 
         setHorizontalScrollBarEnabled(false);
         listView = new RecyclerListView(context) {
@@ -1638,10 +1645,26 @@ public class FilterTabsView extends FrameLayout {
             final float add = additionalTabWidth / 2f;
 
             final int y = height / 2 - dp(14);
-            float internalPadding = FolderIconHelper.getTabInternalPadding();
-            selectorDrawable.setBounds((int) (indicatorX - dp(internalPadding) - add), y, (int) (indicatorX + indicatorWidth + dp(internalPadding) + add), y + dp(28));
+            int left = (int) (indicatorX - dp(TAB_INTERNAL_PADDING) - add);
+            int top = y;
+            int right = (int) (indicatorX + indicatorWidth + dp(TAB_INTERNAL_PADDING) + add);
+            int bottom = y + dp(28);
+            selectorDrawable.setBounds(left, top, right, bottom);
             selectorDrawable.setAlpha(31);
             selectorDrawable.draw(canvas);
+
+            if (NaConfig.INSTANCE.getFolderTabsStroke().Bool()) {
+                float strokeWidth = dpf2(1f);
+                tabStrokePaint.setStrokeWidth(strokeWidth);
+                int baseColor = Theme.getColor(tabLineColorKey, resourcesProvider);
+                int strokeColor = Theme.multAlpha(baseColor, 0.45f * listView.getAlpha());
+                tabStrokePaint.setColor(strokeColor);
+                float halfStroke = strokeWidth / 2f;
+                tabStrokeRect.set(left + halfStroke, top + halfStroke, right - halfStroke, bottom - halfStroke);
+                float radius = Math.max(0, (bottom - top - strokeWidth) / 2f);
+                canvas.drawRoundRect(tabStrokeRect, radius, radius, tabStrokePaint);
+            }
+
             canvas.restore();
         }
     }

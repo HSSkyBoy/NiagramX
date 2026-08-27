@@ -341,6 +341,7 @@
     <string name="StickerSavedHint">Стікер збережено в галереї.</string>
     <string name="StickerCopied">Стікер скопійовано в буфер обміну.</string>
     <string name="StrokeOnViews">Ефекти відблисків</string>
+    <string name="FolderTabsStroke">Обведення активної папки</string>
     <string name="HideBottomNavigationBar">Приховати нижню панель навігації</string>
     <string name="TranslatorMode">З оригінальним текстом</string>
     <string name="TranslatorWithOriginalTextOff">Вимкнено</string>

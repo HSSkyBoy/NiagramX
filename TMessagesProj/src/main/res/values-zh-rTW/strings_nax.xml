@@ -352,6 +352,7 @@
     <string name="StickerSavedHint">貼圖已儲存至相冊</string>
     <string name="StickerCopied">貼圖已複製到剪貼簿</string>
     <string name="StrokeOnViews">眩光效果</string>
+    <string name="FolderTabsStroke">資料夾高亮描邊</string>
     <string name="HideBottomNavigationBar">隱藏底部導覽列</string>
     <string name="TranslatorMode">追加</string>
     <string name="TranslatorWithOriginalTextOff">關閉</string>

@@ -326,6 +326,7 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="StickerSavedHint">Sticker salvato nella galleria.</string>
     <string name="StickerCopied">Sticker copiato negli appunti.</string>
     <string name="StrokeOnViews">Effetti di riflesso</string>
+    <string name="FolderTabsStroke">Bordo evidenziato schede cartelle</string>
     <string name="HideBottomNavigationBar">Nascondi barra di navigazione inferiore</string>
     <string name="TranslatorMode">Con il testo originale</string>
     <string name="TranslatorWithOriginalTextOff">Disattivato</string>

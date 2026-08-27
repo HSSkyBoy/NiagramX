@@ -366,6 +366,7 @@
     <string name="StickerSavedHint">Sticker saved to gallery.</string>
     <string name="StickerCopied">Sticker copied to clipboard.</string>
     <string name="StrokeOnViews">Glare effects</string>
+    <string name="FolderTabsStroke">Folder tabs highlight stroke</string>
     <string name="HideBottomNavigationBar">Hide Bottom Navigation Bar</string>
     <string name="TranslatorMode">With Original Text</string>
     <string name="TranslatorWithOriginalTextOff">Off</string>

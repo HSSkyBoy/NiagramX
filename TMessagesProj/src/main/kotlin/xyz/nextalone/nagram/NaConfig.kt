@@ -1543,6 +1543,12 @@ object NaConfig {
             ConfigItem.configTypeBool,
             true
         )
+    val folderTabsStroke =
+        addConfig(
+            "FolderTabsStroke",
+            ConfigItem.configTypeBool,
+            true
+        )
     val liquidGlassAngle =
         addConfig(
             "LiquidGlassAngle",

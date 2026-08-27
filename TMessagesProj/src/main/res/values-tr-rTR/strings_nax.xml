@@ -321,6 +321,7 @@
     <string name="StickerSavedHint">Çıkartma galeriye kaydedildi.</string>
     <string name="StickerCopied">Çıkartma panoya kopyalandı.</string>
     <string name="StrokeOnViews">Parlama efektleri</string>
+    <string name="FolderTabsStroke">Klasör sekmeleri vurgu kenarlığı</string>
     <string name="HideBottomNavigationBar">Alt Gezinme Çubuğunu Gizle</string>
     <string name="TranslatorMode">Orijinal Metin ile</string>
     <string name="TranslatorWithOriginalTextOff">Kapalı</string>

@@ -344,6 +344,7 @@
     <string name="StickerSavedHint">Стикер сохранён в галерею.</string>
     <string name="StickerCopied">Стикер скопирован в буфер обмена.</string>
     <string name="StrokeOnViews">Эффекты бликов</string>
+    <string name="FolderTabsStroke">Обводка активной папки</string>
     <string name="HideBottomNavigationBar">Скрыть нижнюю панель навигации</string>
     <string name="TranslatorMode">С исходным текстом</string>
     <string name="TranslatorWithOriginalTextOff">Выкл.</string>

@@ -322,6 +322,7 @@
     <string name="StickerSavedHint">Sticker guardado en la galería.</string>
     <string name="StickerCopied">Sticker copiado al portapapeles.</string>
     <string name="StrokeOnViews">Efectos de destello</string>
+    <string name="FolderTabsStroke">Borde resaltado de pestañas de carpetas</string>
     <string name="HideBottomNavigationBar">Ocultar barra de navegación inferior</string>
     <string name="TranslatorMode">Con texto original</string>
     <string name="TranslatorWithOriginalTextOff">Desactivado</string>
