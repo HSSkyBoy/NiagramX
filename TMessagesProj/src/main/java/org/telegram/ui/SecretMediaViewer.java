@@ -1527,7 +1527,7 @@ public class SecretMediaViewer implements NotificationCenter.NotificationCenterD
                     File encryptedFile = file != null ? new File(file.getAbsolutePath() + ".enc") : null;
                     if (encryptedFile != null && encryptedFile.exists()) {
                         // save deleted: try to decrypt and save to attachments path for persistence
-                        File decryptedFile = AyuMessageUtils.decryptAndSaveMedia(file.getName(), encryptedFile, messageObject);
+                        File decryptedFile = AyuMessageUtils.decryptAndSaveMedia(file.getName(), encryptedFile, messageObject, true);
                         if (decryptedFile != null && decryptedFile.exists() && decryptedFile.length() > 0) {
                             file = decryptedFile;
                         } else {
@@ -1551,9 +1551,9 @@ public class SecretMediaViewer implements NotificationCenter.NotificationCenterD
             centerImage.setImage(ImageLocation.getForObject(sizeFull, messageObject.photoThumbsObject), null, currentThumb != null ? new BitmapDrawable(currentThumb.bitmap) : null, -1, null, messageObject, 2);
             // save deleted: try to decrypt and save photo to attachments path for persistence
             File photoFile = FileLoader.getInstance(currentAccount).getPathToAttach(sizeFull, true);
-            File encryptedPhotoFile = new File(photoFile.getAbsolutePath() + ".enc");
-            if (encryptedPhotoFile.exists()) {
-                File decryptedFile = AyuMessageUtils.decryptAndSaveMedia(photoFile.getName(), encryptedPhotoFile, messageObject);
+            File encryptedPhotoFile = photoFile != null ? new File(photoFile.getAbsolutePath() + ".enc") : null;
+            if (encryptedPhotoFile != null && encryptedPhotoFile.exists()) {
+                File decryptedFile = AyuMessageUtils.decryptAndSaveMedia(photoFile.getName(), encryptedPhotoFile, messageObject, true);
                 if (decryptedFile != null && decryptedFile.exists() && decryptedFile.length() > 0) {
                     centerImage.setImage(decryptedFile.getAbsolutePath(), null, currentThumb != null ? new BitmapDrawable(currentThumb.bitmap) : null, "jpg", 0);
                 }

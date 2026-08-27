@@ -34986,24 +34986,35 @@ public class ChatActivity extends BaseFragment implements
                         if (document != null) {
                             fileToSave = FileLoader.getInstance(currentAccount).getPathToAttach(document);
                             if (fileToSave != null && !fileToSave.exists()) {
-                                fileToSave = new File(fileToSave.getPath() + ".enc");
+                                File enc = new File(fileToSave.getPath() + ".enc");
+                                if (enc.exists()) {
+                                    fileToSave = enc;
+                                }
                             }
                             if (fileToSave == null || !fileToSave.exists()) {
-                                fileToSave = FileLoader.getInstance(currentAccount).getPathToMessage(ttlMessage.messageOwner);
-                                if (fileToSave != null && !fileToSave.exists()) {
-                                    fileToSave = new File(fileToSave.getPath() + ".enc");
+                                File msgPath = FileLoader.getInstance(currentAccount).getPathToMessage(ttlMessage.messageOwner);
+                                if (msgPath != null && msgPath.exists()) {
+                                    fileToSave = msgPath;
+                                } else if (msgPath != null) {
+                                    File enc = new File(msgPath.getPath() + ".enc");
+                                    if (enc.exists()) {
+                                        fileToSave = enc;
+                                    }
                                 }
                             }
                             if ((fileToSave == null || !fileToSave.exists()) && ttlMessage.messageOwner.attachPath != null) {
-                                fileToSave = new File(ttlMessage.messageOwner.attachPath);
+                                File attach = new File(ttlMessage.messageOwner.attachPath);
+                                if (attach.exists()) {
+                                    fileToSave = attach;
+                                }
                             }
                             if (fileToSave != null && fileToSave.exists() && fileToSave.getName().endsWith(".enc")) {
-                                File decryptedFile = AyuMessageUtils.decryptAndSaveMedia(fileToSave.getName().replace(".enc", ""), fileToSave, ttlMessage);
+                                File decryptedFile = AyuMessageUtils.decryptAndSaveMedia(fileToSave.getName().replace(".enc", ""), fileToSave, ttlMessage, true);
                                 if (decryptedFile != null && decryptedFile.exists() && decryptedFile.length() > 0) {
                                     fileToSave = decryptedFile;
                                 }
                             }
-                            if (fileToSave != null && fileToSave.exists()) {
+                            if (fileToSave != null && fileToSave.exists() && !fileToSave.getName().endsWith(".enc")) {
                                 MediaController.saveFile(fileToSave.getAbsolutePath(), getParentActivity(), 2, null, null);
                                 AndroidUtilities.runOnUIThread(() -> {
                                     if (getParentActivity() != null) {
@@ -35023,42 +35034,101 @@ public class ChatActivity extends BaseFragment implements
                     }
                     // TTL media with encryption, see SecretMediaViewer.openMedia
                     if (document != null) {
-                        if (ttlMessage.messageOwner.attachPath != null) {
-                            fileToSave = new File(ttlMessage.messageOwner.attachPath);
-                            if (!fileToSave.exists()) {
-                                fileToSave = null;
+                        if (!TextUtils.isEmpty(ttlMessage.messageOwner.attachPath)) {
+                            File attach = new File(ttlMessage.messageOwner.attachPath);
+                            if (attach.exists()) {
+                                fileToSave = attach;
                             }
                         }
-                        if (fileToSave == null) {
-                            fileToSave = FileLoader.getInstance(currentAccount).getPathToMessage(ttlMessage.messageOwner);
-                            File encryptedFile = new File(fileToSave.getAbsolutePath() + ".enc");
-                            if (encryptedFile.exists()) {
-                                File decryptedFile = AyuMessageUtils.decryptAndSaveMedia(fileToSave.getName(), encryptedFile, ttlMessage);
-                                if (decryptedFile != null && decryptedFile.exists() && decryptedFile.length() > 0) {
-                                    fileToSave = decryptedFile;
+                        if (fileToSave == null || !fileToSave.exists()) {
+                            File attachPath = FileLoader.getInstance(currentAccount).getPathToAttach(document);
+                            if (attachPath != null && attachPath.exists()) {
+                                fileToSave = attachPath;
+                            } else if (attachPath != null) {
+                                File enc = new File(attachPath.getAbsolutePath() + ".enc");
+                                if (enc.exists()) {
+                                    fileToSave = enc;
                                 }
+                            }
+                        }
+                        if (fileToSave == null || !fileToSave.exists()) {
+                            File msgPath = FileLoader.getInstance(currentAccount).getPathToMessage(ttlMessage.messageOwner);
+                            if (msgPath != null && msgPath.exists()) {
+                                fileToSave = msgPath;
+                            } else if (msgPath != null) {
+                                File enc = new File(msgPath.getAbsolutePath() + ".enc");
+                                if (enc.exists()) {
+                                    fileToSave = enc;
+                                }
+                            }
+                        }
+                        if (fileToSave == null || !fileToSave.exists()) {
+                            String msgHelperPath = MessageHelper.getPathToMessage(ttlMessage);
+                            if (!TextUtils.isEmpty(msgHelperPath)) {
+                                File helperFile = new File(msgHelperPath);
+                                if (helperFile.exists()) {
+                                    fileToSave = helperFile;
+                                }
+                            }
+                        }
+                        if (fileToSave != null && fileToSave.exists() && fileToSave.getName().endsWith(".enc")) {
+                            File decryptedFile = AyuMessageUtils.decryptAndSaveMedia(fileToSave.getName().replace(".enc", ""), fileToSave, ttlMessage, true);
+                            if (decryptedFile != null && decryptedFile.exists() && decryptedFile.length() > 0) {
+                                fileToSave = decryptedFile;
                             }
                         }
                     } else {
                         TLRPC.PhotoSize sizeFull = FileLoader.getClosestPhotoSizeWithSize(ttlMessage.photoThumbs, AndroidUtilities.getPhotoSize());
                         if (sizeFull != null) {
-                            fileToSave = FileLoader.getInstance(currentAccount).getPathToAttach(sizeFull, true);
+                            File attachPath = FileLoader.getInstance(currentAccount).getPathToAttach(sizeFull, true);
+                            if (attachPath != null && attachPath.exists()) {
+                                fileToSave = attachPath;
+                            } else if (attachPath != null) {
+                                File enc = new File(attachPath.getAbsolutePath() + ".enc");
+                                if (enc.exists()) {
+                                    fileToSave = enc;
+                                }
+                            }
                             if (fileToSave == null || !fileToSave.exists()) {
-                                File encryptedPhotoFile = new File(fileToSave.getAbsolutePath() + ".enc");
-                                if (encryptedPhotoFile.exists()) {
-                                    File decryptedFile = AyuMessageUtils.decryptAndSaveMedia(fileToSave.getName(), encryptedPhotoFile, ttlMessage);
-                                    if (decryptedFile != null && decryptedFile.exists() && decryptedFile.length() > 0) {
-                                        fileToSave = decryptedFile;
-                                    } else {
-                                        fileToSave = null;
+                                attachPath = FileLoader.getInstance(currentAccount).getPathToAttach(sizeFull, false);
+                                if (attachPath != null && attachPath.exists()) {
+                                    fileToSave = attachPath;
+                                } else if (attachPath != null) {
+                                    File enc = new File(attachPath.getAbsolutePath() + ".enc");
+                                    if (enc.exists()) {
+                                        fileToSave = enc;
                                     }
-                                } else {
-                                    fileToSave = null;
                                 }
                             }
                         }
+                        if (fileToSave == null || !fileToSave.exists()) {
+                            File msgPath = FileLoader.getInstance(currentAccount).getPathToMessage(ttlMessage.messageOwner);
+                            if (msgPath != null && msgPath.exists()) {
+                                fileToSave = msgPath;
+                            } else if (msgPath != null) {
+                                File enc = new File(msgPath.getAbsolutePath() + ".enc");
+                                if (enc.exists()) {
+                                    fileToSave = enc;
+                                }
+                            }
+                        }
+                        if (fileToSave == null || !fileToSave.exists()) {
+                            String msgHelperPath = MessageHelper.getPathToMessage(ttlMessage);
+                            if (!TextUtils.isEmpty(msgHelperPath)) {
+                                File helperFile = new File(msgHelperPath);
+                                if (helperFile.exists()) {
+                                    fileToSave = helperFile;
+                                }
+                            }
+                        }
+                        if (fileToSave != null && fileToSave.exists() && fileToSave.getName().endsWith(".enc")) {
+                            File decryptedFile = AyuMessageUtils.decryptAndSaveMedia(fileToSave.getName().replace(".enc", ""), fileToSave, ttlMessage, true);
+                            if (decryptedFile != null && decryptedFile.exists() && decryptedFile.length() > 0) {
+                                fileToSave = decryptedFile;
+                            }
+                        }
                     }
-                    if (fileToSave != null && fileToSave.exists()) {
+                    if (fileToSave != null && fileToSave.exists() && !fileToSave.getName().endsWith(".enc")) {
                         MediaController.saveFile(fileToSave.getAbsolutePath(), getParentActivity(), ttlMessage.isVideo() ? 2 : 0, null, null);
                         AndroidUtilities.runOnUIThread(() -> {
                             if (getParentActivity() != null) {

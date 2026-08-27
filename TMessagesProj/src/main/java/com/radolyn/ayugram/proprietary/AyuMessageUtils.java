@@ -711,12 +711,37 @@ public abstract class AyuMessageUtils {
         return false;
     }
 
-    public static File decryptAndSaveMedia(String fileName, File encryptedFile, MessageObject messageObject) {
-        if (!NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+    public static File findKeyFile(File encryptedFile) {
+        if (encryptedFile == null) {
             return null;
         }
-        File AttachmentsDir = AyuMessagesController.attachmentsPath;
-        if (!AttachmentsDir.exists() && !AttachmentsDir.mkdirs()) {
+        File internalCacheDir = FileLoader.getInternalCacheDir();
+        String name = encryptedFile.getName();
+        String baseName = name.endsWith(".enc") ? name.substring(0, name.length() - 4) : name;
+        File[] candidates = new File[] {
+            new File(internalCacheDir, name + ".key"),
+            new File(internalCacheDir, name + ".enc.key"),
+            new File(internalCacheDir, baseName + ".enc.key"),
+            new File(internalCacheDir, baseName + ".key")
+        };
+        for (File candidate : candidates) {
+            if (candidate != null && candidate.exists() && candidate.length() > 0) {
+                return candidate;
+            }
+        }
+        return null;
+    }
+
+    public static File decryptAndSaveMedia(String fileName, File encryptedFile, MessageObject messageObject) {
+        return decryptAndSaveMedia(fileName, encryptedFile, messageObject, false);
+    }
+
+    public static File decryptAndSaveMedia(String fileName, File encryptedFile, MessageObject messageObject, boolean force) {
+        if (!force && !NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+            return null;
+        }
+        File attachmentsDir = AyuMessagesController.attachmentsPath;
+        if (!attachmentsDir.exists() && !attachmentsDir.mkdirs()) {
             return null;
         }
         if (TextUtils.isEmpty(fileName)) {
@@ -748,10 +773,13 @@ public abstract class AyuMessageUtils {
                 }
             }
         }
+        if (encryptedFile == null || !encryptedFile.exists()) {
+            return null;
+        }
         // decrypt and save
-        File keyFile = new File(FileLoader.getInternalCacheDir(), encryptedFile.getName() + ".key");
-        if (!keyFile.exists()) {
-            FileLog.d("Key file not found: " + keyFile.getAbsolutePath());
+        File keyFile = findKeyFile(encryptedFile);
+        if (keyFile == null || !keyFile.exists()) {
+            FileLog.d("Key file not found for: " + encryptedFile.getAbsolutePath());
             return null;
         }
         try (EncryptedFileInputStream inputStream = new EncryptedFileInputStream(encryptedFile, keyFile); FileOutputStream outputStream = new FileOutputStream(outputFile)) {
