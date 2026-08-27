@@ -80,8 +80,6 @@ import xyz.nextalone.nagram.NaConfig;
 @SuppressLint("ViewConstructor")
 public class FilterTabsView extends FrameLayout {
 
-    private static final float TAB_INTERNAL_PADDING = 12.5f;
-
     private final Theme.ResourcesProvider resourcesProvider;
 
     public int getCurrentTabStableId() {
@@ -1645,9 +1643,10 @@ public class FilterTabsView extends FrameLayout {
             final float add = additionalTabWidth / 2f;
 
             final int y = height / 2 - dp(14);
-            int left = (int) (indicatorX - dp(TAB_INTERNAL_PADDING) - add);
+            float internalPadding = FolderIconHelper.getTabInternalPadding();
+            int left = (int) (indicatorX - dp(internalPadding) - add);
             int top = y;
-            int right = (int) (indicatorX + indicatorWidth + dp(TAB_INTERNAL_PADDING) + add);
+            int right = (int) (indicatorX + indicatorWidth + dp(internalPadding) + add);
             int bottom = y + dp(28);
             selectorDrawable.setBounds(left, top, right, bottom);
             selectorDrawable.setAlpha(31);
