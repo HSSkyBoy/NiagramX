@@ -2848,16 +2848,16 @@ public class AndroidUtilities {
     }
 
     public static String formapMapUrl(boolean isSecretChat, double lat, double lon, int width, int height, boolean marker, int zoom) {
+        return formapMapUrl(UserConfig.selectedAccount, lat, lon, width, height, marker, zoom, isSecretChat ? (SharedConfig.mapPreviewType == 1 ? 1 : 2) : -1);
+    }
+
+    public static String formapMapUrl(int account, double lat, double lon, int width, int height, boolean marker, int zoom, int provider) {
         int scale = Math.min(2, (int) Math.ceil(AndroidUtilities.density));
-        int provider = 2;
-        if (isSecretChat) {
-            if (SharedConfig.mapPreviewType == 1) {
-                provider = 1;
-            }
-        } else {
-            if (NekoConfig.mapPreviewProvider.Int() == 1) {
-                provider = 1;
-            }
+        if (provider == -1) {
+            provider = MessagesController.getInstance(account).mapProvider;
+        }
+        if (NekoConfig.mapPreviewProvider.Int() == 1) {
+            provider = 1;
         }
         if (provider == 1 || provider == 3) {
             String lang = null;
@@ -6710,6 +6710,10 @@ public class AndroidUtilities {
             FileLog.e(e);
         }
         return false;
+    }
+
+    public static String getHelloWorld() {
+        return "Hello World!";
     }
 
     public static String getBuildVersionInfo() {
