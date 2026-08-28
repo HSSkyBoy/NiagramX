@@ -135,7 +135,7 @@
     <string name="Other">Other</string>
     <string name="RestartApp">Restart App</string>
     <string name="ResetSettings">Reset Settings</string>
-    <string name="ResetSettingsAlert">Are you sure you want to reset all N-Settings?</string>
+    <string name="ResetSettingsAlert">Are you sure you want to reset all Neo-Settings?</string>
     <string name="DontAutoPlayNextVoice">Don\'t Auto Play Next Voice Message</string>
     <string name="SaveToChatSubfolder">Save Attachments by Chat Name</string>
     <string name="MessageColoredBackground">Colorful Message Backgrounds</string>

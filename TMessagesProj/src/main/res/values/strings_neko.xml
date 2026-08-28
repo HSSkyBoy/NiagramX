@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="NekoSettings">N-Settings</string>
+    <string name="NekoSettings">Neo-Settings</string>
     <string name="IPv6">Prefer IPv6</string>
     <string name="MessageMenu">Message Menu</string>
     <string name="HidePhone">Hide Phone Number</string>
@@ -113,10 +113,10 @@
     <string name="enhancedFileLoader">Download Speed Boost</string>
     <string name="mapDriftingFixForGoogleMaps">Fix Google Maps Drifting in China</string>
     <string name="useOSMDroidMap">Use OSMDroid Map</string>
-    <string name="UnknownNekoSettingsOption">There is no such N-Settings option.</string>
+    <string name="UnknownNekoSettingsOption">There is no such Neo-Settings option.</string>
     <string name="PasscodeNeeded">You have to enable passcode lock first</string>
     <string name="PasscodeNeko">Passcode</string>
-    <string name="PasscodeShowInSettings">Show in N-Settings</string>
+    <string name="PasscodeShowInSettings">Show in Neo-Settings</string>
     <string name="PasscodeShowInSettingsAbout">After hiding, you can **ONLY** open this page by link:</string>
     <string name="PasscodeSet">Set passcode</string>
     <string name="PasscodeEdit">Change passcode</string>
@@ -155,7 +155,7 @@
     <string name="ClearRecentChats">Clear recent chats</string>
     <string name="ClearRecentChatAlert">Do you want to clear your recent chats?</string>
     <string name="CloudConfig">Cloud Settings</string>
-    <string name="CloudConfigDesc">Save your N-Settings to Telegram cloud.</string>
+    <string name="CloudConfigDesc">Save your Neo-Settings to Telegram cloud.</string>
     <string name="CloudConfigSyncDate">Last synced: %1$s, cloud: %2$s</string>
     <string name="CloudConfigSyncDateNever">never</string>
     <string name="CloudConfigSync">Sync to cloud</string>
@@ -164,7 +164,7 @@
     <string name="CloudConfigRestoreShort">Restore</string>
     <string name="CloudConfigSyncing">Syncing...</string>
     <string name="CloudConfigAutoSync">Auto sync</string>
-    <string name="CloudConfigAutoSyncDesc">Sync to cloud automatically after making changes to N-Settings.</string>
+    <string name="CloudConfigAutoSyncDesc">Sync to cloud automatically after making changes to Neo-Settings.</string>
     <string name="CloudConfigSyncFailed">Failed to sync settings to cloud</string>
     <string name="CloudConfigRestoreFailed">Failed to restore settings from cloud</string>
     <string name="CopyCallback">Copy Callback Data</string>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="N_Config">N-設定</string>
+    <string name="N_Config">Neo 設定</string>
     <string name="CombineMessage">メッセージを結合</string>
     <string name="TextStyle">テキストスタイル</string>
     <string name="NoiseSuppressAndVoiceEnhance">ノイズ抑制と音声強調</string>
@@ -46,7 +46,7 @@
     <string name="CheckAllForum">すべてのトピックモードグループを追加</string>
     <string name="DecorationNone">なし</string>
     <string name="ChatDecoration">チャットデコレーション</string>
-    <string name="NeedChangeNekoSettings">この設定はN-設定によって上書きされているため、変更できません</string>
+    <string name="NeedChangeNekoSettings">この設定はNeo 設定によって上書きされているため、変更できません</string>
     <string name="DoNotUnarchiveBySwipe">スワイプによるアーカイブ解除を無効化</string>
     <string name="DefaultDeleteMenu">デフォルトの削除メニュー</string>
     <string name="DisableStories">ストーリー機能を無効化</string>

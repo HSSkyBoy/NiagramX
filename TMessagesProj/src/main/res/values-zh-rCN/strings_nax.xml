@@ -122,7 +122,7 @@
     <string name="Other">其他</string>
     <string name="RestartApp">重启应用</string>
     <string name="ResetSettings">重置设置</string>
-    <string name="ResetSettingsAlert">您确定要重置所有 N-设置 吗？</string>
+    <string name="ResetSettingsAlert">您确定要重置所有 Neo 设置 吗？</string>
     <string name="DontAutoPlayNextVoice">禁用自动播放下一条语音消息</string>
     <string name="SaveToChatSubfolder">按对话名称保存附件</string>
     <string name="MessageColoredBackground">多彩消息背景</string>

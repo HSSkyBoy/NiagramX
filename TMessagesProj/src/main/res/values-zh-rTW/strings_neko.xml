@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="NekoSettings">N-設定</string>
+    <string name="NekoSettings">Neo 設定</string>
     <string name="IPv6">偏好 IPv6</string>
     <string name="MessageMenu">訊息選單</string>
     <string name="HidePhone">隱藏手機號碼</string>
@@ -113,10 +113,10 @@
     <string name="enhancedFileLoader">下載加速</string>
     <string name="mapDriftingFixForGoogleMaps">修正在中國使用 Google 地圖時的定位飄移問題</string>
     <string name="useOSMDroidMap">使用 OSMDroid 地圖</string>
-    <string name="UnknownNekoSettingsOption">找不到這個 N-設定選項。</string>
+    <string name="UnknownNekoSettingsOption">找不到這個 Neo 設定選項。</string>
     <string name="PasscodeNeeded">您必須先啟用密碼鎖</string>
     <string name="PasscodeNeko">密碼鎖</string>
-    <string name="PasscodeShowInSettings">在 N-設定中顯示</string>
+    <string name="PasscodeShowInSettings">在 Neo 設定中顯示</string>
     <string name="PasscodeShowInSettingsAbout">隱藏後，您**只能**透過此連結開啟此頁面：</string>
     <string name="PasscodeSet">設定解鎖密碼</string>
     <string name="PasscodeEdit">設定解鎖碼</string>
@@ -154,7 +154,7 @@
     <string name="ClearRecentChats">清除最近聊天</string>
     <string name="ClearRecentChatAlert">您確定要清除您的最近聊天嗎？</string>
     <string name="CloudConfig">雲端設定</string>
-    <string name="CloudConfigDesc">儲存 N-設定至 Telegram 雲端。</string>
+    <string name="CloudConfigDesc">儲存 Neo 設定至 Telegram 雲端。</string>
     <string name="CloudConfigSyncDate">最後同步：%1$s，雲端：%2$s</string>
     <string name="CloudConfigSyncDateNever">從未</string>
     <string name="CloudConfigSync">同步到雲端</string>
@@ -163,7 +163,7 @@
     <string name="CloudConfigRestoreShort">恢復</string>
     <string name="CloudConfigSyncing">正在同步…</string>
     <string name="CloudConfigAutoSync">自動同步</string>
-    <string name="CloudConfigAutoSyncDesc">修改N-設定後自動同步到雲端。</string>
+    <string name="CloudConfigAutoSyncDesc">修改 Neo 設定後自動同步到雲端。</string>
     <string name="CloudConfigSyncFailed">無法將設定同步到雲端</string>
     <string name="CloudConfigRestoreFailed">無法從雲端恢復設定</string>
     <string name="CopyCallback">複製回調資料</string>

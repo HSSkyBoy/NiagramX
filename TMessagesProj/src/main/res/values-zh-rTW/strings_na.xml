@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="N_Config">N-設定</string>
+    <string name="N_Config">Neo 設定</string>
     <string name="CombineMessage">合併訊息</string>
     <string name="TextStyle">文字樣式</string>
     <string name="NoiseSuppressAndVoiceEnhance">噪音抑制與語音增強</string>
@@ -51,7 +51,7 @@
     <string name="CheckAllForum">新增所有話題模式的群組</string>
     <string name="DecorationNone">無</string>
     <string name="ChatDecoration">聊天框裝飾</string>
-    <string name="NeedChangeNekoSettings">此設定項已被 N-設定 覆寫</string>
+    <string name="NeedChangeNekoSettings">此設定項已被 Neo 設定 覆寫</string>
     <string name="DoNotUnarchiveBySwipe">禁用滑動取消封存</string>
     <string name="DefaultDeleteMenu">預設訊息刪除選單</string>
     <string name="DisableStories">禁用動態功能</string>

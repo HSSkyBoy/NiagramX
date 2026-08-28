@@ -109,7 +109,7 @@
     <string name="Other">その他</string>
     <string name="RestartApp">アプリを再起動</string>
     <string name="ResetSettings">設定をリセット</string>
-    <string name="ResetSettingsAlert">「N-設定」をリセットしますか？</string>
+    <string name="ResetSettingsAlert">「Neo 設定」をリセットしますか？</string>
     <string name="DontAutoPlayNextVoice">次のボイスメッセージを自動再生しない</string>
     <string name="SaveToChatSubfolder">チャット別にファイルを保存</string>
     <string name="MessageColoredBackground">カラフルなメッセージ</string>

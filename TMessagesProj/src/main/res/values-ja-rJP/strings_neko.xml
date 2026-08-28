@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="NekoSettings">N-設定</string>
+    <string name="NekoSettings">Neo 設定</string>
     <string name="IPv6">IPv6 を優先</string>
     <string name="MessageMenu">メッセージメニュー</string>
     <string name="HidePhone">電話番号を非表示</string>
@@ -110,10 +110,10 @@
     <string name="enhancedFileLoader">ダウンロード速度の高速化</string>
     <string name="mapDriftingFixForGoogleMaps">中国における Google マップのずれを修正</string>
     <string name="useOSMDroidMap">OSMDroid マップを使用</string>
-    <string name="UnknownNekoSettingsOption">そのようなN-設定オプションはありません。</string>
+    <string name="UnknownNekoSettingsOption">そのようなNeo 設定オプションはありません。</string>
     <string name="PasscodeNeeded">最初にパスコードを有効にする必要があります</string>
     <string name="PasscodeNeko">パスコード</string>
-    <string name="PasscodeShowInSettings">N-設定に表示</string>
+    <string name="PasscodeShowInSettings">Neo 設定に表示</string>
     <string name="PasscodeShowInSettingsAbout">非表示にすると、**以下のリンクからしか**このページを開くことができなくなります。</string>
     <string name="PasscodeSet">パスコードを設定</string>
     <string name="PasscodeEdit">パスコードを変更</string>
@@ -151,7 +151,7 @@
     <string name="ClearRecentChats">最近のチャットをクリア</string>
     <string name="ClearRecentChatAlert">本当に最近のチャットをクリアしますか？</string>
     <string name="CloudConfig">クラウド設定</string>
-    <string name="CloudConfigDesc">N-設定を Telegram クラウドに保存。</string>
+    <string name="CloudConfigDesc">Neo 設定を Telegram クラウドに保存。</string>
     <string name="CloudConfigSyncDate">最終同期：%1$s、クラウド：%2$s</string>
     <string name="CloudConfigSyncDateNever">なし</string>
     <string name="CloudConfigSync">クラウドに同期</string>
@@ -160,7 +160,7 @@
     <string name="CloudConfigRestoreShort">復元</string>
     <string name="CloudConfigSyncing">同期中...</string>
     <string name="CloudConfigAutoSync">自動同期</string>
-    <string name="CloudConfigAutoSyncDesc">N-設定を変更した後、自動的にクラウドに同期します。</string>
+    <string name="CloudConfigAutoSyncDesc">Neo 設定を変更した後、自動的にクラウドに同期します。</string>
     <string name="CloudConfigSyncFailed">設定をクラウドに同期できませんでした</string>
     <string name="CloudConfigRestoreFailed">クラウドから設定を復元できませんでした</string>
     <string name="CopyCallback">コールバックデータをコピー</string>

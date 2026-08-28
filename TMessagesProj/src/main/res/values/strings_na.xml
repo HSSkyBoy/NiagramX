@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="N_Config">N-Config</string>
+    <string name="N_Config">Neo-Settings</string>
     <string name="CombineMessage">Combine Messages</string>
     <string name="TextStyle">Text Style</string>
     <string name="NoiseSuppressAndVoiceEnhance">Voice Enhancements</string>
@@ -52,7 +52,7 @@
     <string name="CheckAllForum">Add forum</string>
     <string name="DecorationNone">None</string>
     <string name="ChatDecoration">Chat Decoration</string>
-    <string name="NeedChangeNekoSettings">You need to change N-Settings</string>
+    <string name="NeedChangeNekoSettings">You need to change Neo-Settings</string>
     <string name="DoNotUnarchiveBySwipe">Disable Swipe to Unarchive</string>
     <string name="DefaultDeleteMenu">Default Delete Menu</string>
     <string name="DisableStories">Disable Stories</string>
