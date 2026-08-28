@@ -98,7 +98,7 @@
     <string name="PanguInfo">使文字更具可读性。在 CJK（中文、日文、韩文）、半角英文、数字和符号字符之间的间隔中自动插入空格。</string>
     <string name="SendWithPangu">使用 Pangu 发送</string>
     <string name="SendWithoutPangu">不使用 Pangu 发送</string>
-    <string name="DefaultHlsVideoQuality">默认 HLS 视频质量</string>
+    <string name="DefaultHlsVideoQuality">默认视频画质</string>
     <string name="DisableBotOpenButton">禁用 Bot 的打开小程序按钮</string>
     <string name="CustomTitleUserName">使用用户昵称作为标题</string>
     <string name="EnhancedVideoBitrate">改善上传视频画质</string>

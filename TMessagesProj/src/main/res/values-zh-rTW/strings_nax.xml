@@ -403,4 +403,9 @@
     <string name="ForceForward">強制轉發</string>
     <string name="ForceForwardNotice">自動複製文字並下載媒體附件，突破頻道與群組限制以相同格式重新發送。</string>
     <string name="ForceForwardPremiumOnly">訂閱 **Telegram Premium** 即可使用強制轉發功能。</string>
+    <string name="DefaultHlsVideoQualityAuto">自動</string>
+    <string name="DefaultHlsVideoQualityOriginal">原畫</string>
+    <string name="DefaultHlsVideoQualityHigh">高畫質 (1080p+)</string>
+    <string name="DefaultHlsVideoQualityMedium">中畫質 (720p)</string>
+    <string name="DefaultHlsVideoQualityLow">低畫質 (480p)</string>
 </resources>

@@ -402,4 +402,9 @@
     <string name="ForceForward">强制转发</string>
     <string name="ForceForwardNotice">自动复制文本并下载媒体附件，突破频道与群组限制以相同格式重新发送。</string>
     <string name="ForceForwardPremiumOnly">订阅 **Telegram Premium** 即可使用强制转发功能。</string>
+    <string name="DefaultHlsVideoQualityAuto">自动</string>
+    <string name="DefaultHlsVideoQualityOriginal">原画</string>
+    <string name="DefaultHlsVideoQualityHigh">高画质 (1080p+)</string>
+    <string name="DefaultHlsVideoQualityMedium">中画质 (720p)</string>
+    <string name="DefaultHlsVideoQualityLow">低画质 (480p)</string>
 </resources>

@@ -417,4 +417,9 @@
     <string name="ForceForward">Force Forward</string>
     <string name="ForceForwardNotice">Automatically copy text and download media attachments to re-send messages from restricted channels without forward limits.</string>
     <string name="ForceForwardPremiumOnly">Subscribe to **Telegram Premium** to force forward messages.</string>
+    <string name="DefaultHlsVideoQualityAuto">Auto</string>
+    <string name="DefaultHlsVideoQualityOriginal">Original</string>
+    <string name="DefaultHlsVideoQualityHigh">High Quality (1080p+)</string>
+    <string name="DefaultHlsVideoQualityMedium">Medium Quality (720p)</string>
+    <string name="DefaultHlsVideoQualityLow">Low Quality (480p)</string>
 </resources>

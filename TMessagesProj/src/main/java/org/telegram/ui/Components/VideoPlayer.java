@@ -441,35 +441,55 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
         }
     }
 
-    public static Quality getDefaultSavedQualityInt(ArrayList<Quality> qualities, int pL, int p) {
-        for (Quality q : qualities) {
-            if (!q.original && q.p() <= pL && q.p() >= p) return q;
-        }
-        return null;
-    }
-
     public static Quality getDefaultSavedQuality(ArrayList<Quality> qualities) {
+        if (qualities == null || qualities.isEmpty()) return null;
         int v = NaConfig.INSTANCE.getDefaultHlsVideoQuality().Int();
-        Quality q1;
-        switch (v) {
-            case 0:
-                return null;
-            case 1:
-                for (Quality q : qualities) {
-                    if (q.original) return q;
+        if (v == 0) { // Auto
+            return null;
+        }
+        if (v == 1) { // Original (原画)
+            for (Quality q : qualities) {
+                if (q.original) return q;
+            }
+            return qualities.get(0);
+        }
+        if (v == 2) { // High Quality (高画质 / 1080p+)
+            Quality best = null;
+            for (Quality q : qualities) {
+                if (q.p() >= 1080) {
+                    if (best == null || q.p() > best.p()) {
+                        best = q;
+                    }
                 }
-            case 2:
-                q1 = getDefaultSavedQualityInt(qualities, Integer.MAX_VALUE, 1440);
-                if (q1 != null) return q1;
-            case 3:
-                q1 = getDefaultSavedQualityInt(qualities, 1440, 1000);
-                if (q1 != null) return q1;
-            case 4:
-                q1 = getDefaultSavedQualityInt(qualities, 1000, 700);
-                if (q1 != null) return q1;
-            case 5:
-                q1 = getDefaultSavedQualityInt(qualities, 700, 0);
-                if (q1 != null) return q1;
+            }
+            if (best != null) return best;
+            for (Quality q : qualities) {
+                if (best == null || q.p() > best.p()) {
+                    best = q;
+                }
+            }
+            return best;
+        }
+        if (v == 3) { // Medium Quality (中画质 / 720p)
+            Quality closest = null;
+            int minDiff = Integer.MAX_VALUE;
+            for (Quality q : qualities) {
+                int diff = Math.abs(q.p() - 720);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    closest = q;
+                }
+            }
+            return closest;
+        }
+        if (v == 4) { // Low Quality (低画质 / 480p)
+            Quality lowest = null;
+            for (Quality q : qualities) {
+                if (lowest == null || q.p() < lowest.p()) {
+                    lowest = q;
+                }
+            }
+            return lowest;
         }
         return null;
     }

@@ -199,6 +199,13 @@ public class NekoChatSettingsActivity extends BaseNekoXSettingsActivity implemen
 
     // Media
     private final AbstractConfigCell headerMedia = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.MediaSettings)));
+    private final AbstractConfigCell defaultHlsVideoQualityRow = cellGroup.appendCell(new ConfigCellSelectBox("DefaultHlsVideoQuality", NaConfig.INSTANCE.getDefaultHlsVideoQuality(), new String[]{
+            getString(R.string.DefaultHlsVideoQualityAuto),
+            getString(R.string.DefaultHlsVideoQualityOriginal),
+            getString(R.string.DefaultHlsVideoQualityHigh),
+            getString(R.string.DefaultHlsVideoQualityMedium),
+            getString(R.string.DefaultHlsVideoQualityLow),
+    }, null));
     private final AbstractConfigCell showSmallGifRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getShowSmallGIF()));
     private final AbstractConfigCell takeGIFasVideoRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.takeGIFasVideo));
     private final AbstractConfigCell autoPauseVideoRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.autoPauseVideo, getString(R.string.AutoPauseVideoAbout)));
