@@ -10,6 +10,8 @@
 package com.radolyn.ayugram.messages;
 
 
+import org.telegram.messenger.ChatObject;
+import org.telegram.messenger.DialogObject;
 import org.telegram.messenger.MessageObject;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.MessagesStorage;
@@ -77,6 +79,29 @@ public class AyuSavePreferences {
     public static boolean saveDeletedMessageFor(int accountId, long dialogId, long userId) {
         if (!NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
             return false;
+        }
+
+        if (DialogObject.isUserDialog(dialogId) || DialogObject.isEncryptedDialog(dialogId)) {
+            if (!NaConfig.INSTANCE.getSaveDeletedMessagesPrivate().Bool()) {
+                return false;
+            }
+        } else if (DialogObject.isChatDialog(dialogId)) {
+            var chat = MessagesController.getInstance(accountId).getChat(-dialogId);
+            if (chat != null) {
+                if (ChatObject.isChannel(chat) && !chat.megagroup) {
+                    if (!NaConfig.INSTANCE.getSaveDeletedMessagesChannel().Bool()) {
+                        return false;
+                    }
+                } else {
+                    if (!NaConfig.INSTANCE.getSaveDeletedMessagesGroup().Bool()) {
+                        return false;
+                    }
+                }
+            } else {
+                if (!NaConfig.INSTANCE.getSaveDeletedMessagesGroup().Bool()) {
+                    return false;
+                }
+            }
         }
 
         if (getSaveDeletedExclusion(dialogId)) {

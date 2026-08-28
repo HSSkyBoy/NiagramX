@@ -305,12 +305,14 @@ public class AyuData {
         return size;
     }
 
-    public static void loadSizes(NekoExperimentalSettingsActivity bf) {
+    public static void loadSizes(Runnable callback) {
         Utilities.globalQueue.postRunnable(() -> {
             dbSize = getDatabaseSize();
             attachmentsSize = getAttachmentsDirSize();
             totalSize = dbSize + attachmentsSize;
-            AndroidUtilities.runOnUIThread(bf::refreshAyuDataSize, 500);
+            if (callback != null) {
+                AndroidUtilities.runOnUIThread(callback, 500);
+            }
         });
     }
 }

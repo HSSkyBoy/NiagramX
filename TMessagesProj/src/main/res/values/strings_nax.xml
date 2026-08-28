@@ -3,6 +3,11 @@
     <string name="NiagramX" translatable="false">Niagram X</string>
     <string name="XChannel">Niagram X Channel</string>
     <string name="EnableSaveDeletedMessages">Save Deleted Messages</string>
+    <string name="SpyMode">Spy Mode</string>
+    <string name="SaveDeletedChatTypesHeader">Chat Types</string>
+    <string name="SaveDeletedMessagesInPrivate">Direct Chats</string>
+    <string name="SaveDeletedMessagesInGroups">Groups</string>
+    <string name="SaveDeletedMessagesInChannels">Channels</string>
     <string name="AllowScreenCapture">Allow Screen Capture</string>
     <string name="AllowScreenCaptureNotice">Disable FLAG_SECURE restrictions to allow screenshots and screen recording in all chats, TTL media, and protected views.</string>
     <string name="AllowCopyProtectedContent">Allow Copy Protected Content</string>

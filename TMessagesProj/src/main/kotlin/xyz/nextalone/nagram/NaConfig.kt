@@ -613,6 +613,24 @@ object NaConfig {
             ConfigItem.configTypeBool,
             false
         )
+    val saveDeletedMessagesPrivate =
+        addConfig(
+            "SaveDeletedMessagesInPrivate",
+            ConfigItem.configTypeBool,
+            true
+        )
+    val saveDeletedMessagesGroup =
+        addConfig(
+            "SaveDeletedMessagesInGroups",
+            ConfigItem.configTypeBool,
+            true
+        )
+    val saveDeletedMessagesChannel =
+        addConfig(
+            "SaveDeletedMessagesInChannels",
+            ConfigItem.configTypeBool,
+            false
+        )
     val enableSaveEditsHistory =
         addConfig(
             "EnableSaveEditsHistory",

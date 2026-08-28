@@ -2,6 +2,11 @@
 <resources>
     <string name="XChannel">Niagram X 頻道</string>
     <string name="EnableSaveDeletedMessages">儲存已刪除訊息</string>
+    <string name="SpyMode">幽匿模式</string>
+    <string name="SaveDeletedChatTypesHeader">聊天類型</string>
+    <string name="SaveDeletedMessagesInPrivate">私聊</string>
+    <string name="SaveDeletedMessagesInGroups">群聊</string>
+    <string name="SaveDeletedMessagesInChannels">頻道</string>
     <string name="AllowScreenCapture">允許螢幕截圖 / 錄影</string>
     <string name="AllowScreenCaptureNotice">解除全域 FLAG_SECURE 限制，允許在受保護頻道、秘密聊天、閱後即焚與密碼鎖介面中自由截圖與錄影。</string>
     <string name="AllowCopyProtectedContent">允許複製受保護內容</string>

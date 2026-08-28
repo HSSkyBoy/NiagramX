@@ -72,6 +72,8 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
     private int generalRow;
     private int translatorRow;
     private int chatRow;
+    private int ghostRow;
+    private int spyRow;
     private int passcodeRow;
     private int experimentRow;
     private int categoriesEndRow;
@@ -90,8 +92,10 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
         super.updateRows();
 
         generalRow = addRow();
-        translatorRow = addRow();
         chatRow = addRow();
+        ghostRow = addRow();
+        spyRow = addRow();
+        translatorRow = addRow();
         if (!PasscodeHelper.isSettingsHidden()) {
             passcodeRow = addRow();
         } else {
@@ -335,6 +339,10 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
             presentFragment(new NekoChatSettingsActivity());
         } else if (position == generalRow) {
             presentFragment(new NekoGeneralSettingsActivity());
+        } else if (position == ghostRow) {
+            presentFragment(new GhostModeActivity());
+        } else if (position == spyRow) {
+            presentFragment(new SpyModeActivity());
         } else if (position == passcodeRow) {
             presentFragment(new NekoPasscodeSettingsActivity());
         } else if (position == experimentRow) {
@@ -396,6 +404,10 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
                         textCell.setTextAndIcon(getString(R.string.Chat), R.drawable.msg_discussion, true);
                     } else if (position == generalRow) {
                         textCell.setTextAndIcon(getString(R.string.General), R.drawable.msg_theme, true);
+                    } else if (position == ghostRow) {
+                        textCell.setTextAndIcon(getString(R.string.GhostMode), R.drawable.ayu_ghost_solar, true);
+                    } else if (position == spyRow) {
+                        textCell.setTextAndIcon(getString(R.string.SpyMode), R.drawable.chats_saved_solar, true);
                     } else if (position == translatorRow) {
                         textCell.setTextAndIcon(getString(R.string.TranslatorSettings), R.drawable.ic_translate, true);
                     } else if (position == passcodeRow) {
@@ -423,7 +435,7 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
         public int getItemViewType(int position) {
             if (position == categoriesEndRow || position == nSettingsEndRow) {
                 return TYPE_SHADOW;
-            } else if (position == chatRow || position == generalRow || position == passcodeRow || position == experimentRow || position == translatorRow ||
+            } else if (position == chatRow || position == generalRow || position == ghostRow || position == spyRow || position == passcodeRow || position == experimentRow || position == translatorRow ||
                     position == importSettingsRow || position == exportSettingsRow || position == resetSettingsRow || position == appRestartRow ||
                     position == aboutRow) {
                 return TYPE_TEXT;

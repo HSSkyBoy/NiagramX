@@ -24,6 +24,7 @@ import tw.nekomimi.nekogram.settings.NekoGeneralSettingsActivity;
 import tw.nekomimi.nekogram.settings.NekoPasscodeSettingsActivity;
 import tw.nekomimi.nekogram.settings.NekoSettingsActivity;
 import tw.nekomimi.nekogram.settings.NekoTranslatorSettingsActivity;
+import tw.nekomimi.nekogram.settings.SpyModeActivity;
 
 public class SettingsHelper {
 
@@ -33,14 +34,14 @@ public class SettingsHelper {
             return;
         }
         var segments = uri.getPathSegments();
-        if (segments.isEmpty() || segments.size() > 2 || !"nasettings".equals(segments.get(0))) {
-            unknown.run();
+        if (segments == null || segments.size() < 2) {
+            callback.presentFragment(new NekoSettingsActivity());
             return;
         }
-        BaseFragment fragment;
         BaseNekoSettingsActivity neko_fragment = null;
         BaseNekoXSettingsActivity nekox_fragment = null;
-        if (segments.size() == 1) {
+        BaseFragment fragment;
+        if ("settings".equals(segments.get(1)) || "s".equals(segments.get(1))) {
             fragment = new NekoSettingsActivity();
         } else if (PasscodeHelper.getSettingsKey().equals(segments.get(1))) {
             fragment = neko_fragment = new NekoPasscodeSettingsActivity();
@@ -57,6 +58,10 @@ public class SettingsHelper {
                 case "experimental":
                 case "e":
                     fragment = nekox_fragment = new NekoExperimentalSettingsActivity();
+                    break;
+                case "spy":
+                case "spymode":
+                    fragment = nekox_fragment = new SpyModeActivity();
                     break;
                 case "emoji":
                     fragment = neko_fragment = new NekoEmojiSettingsActivity();
@@ -113,6 +118,7 @@ public class SettingsHelper {
         ArrayList<BaseNekoXSettingsActivity> fragments = new ArrayList<>();
         fragments.add(new NekoGeneralSettingsActivity());
         fragments.add(new NekoChatSettingsActivity());
+        fragments.add(new SpyModeActivity());
         fragments.add(new NekoExperimentalSettingsActivity());
         fragments.add(new NekoTranslatorSettingsActivity());
 
