@@ -121,12 +121,21 @@ android {
 
         externalNativeBuild {
             cmake {
+                if (nativeTarget == 'universal') {
+                    abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86_64'
+                } else if (!nativeTarget.isBlank()) {
+                    abiFilters nativeTarget
+                } else {
+                    abiFilters 'arm64-v8a', 'x86_64'
+                }
                 arguments '-DANDROID_STL=c++_static', '-DANDROID_PLATFORM=android-27', '-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON'
                 System.getenv('PATH').split(File.pathSeparator).any { path ->
                     var file = Paths.get("${path}${File.separator}ccache${if (OperatingSystem.current().windows) ".exe" else ""}").toFile()
                     if (file.exists()) {
                         println("Using ccache ${file.getAbsolutePath()}")
                         arguments += "-DANDROID_CCACHE=${file.getAbsolutePath()}"
+                        arguments += "-DCMAKE_C_COMPILER_LAUNCHER=${file.getAbsolutePath()}"
+                        arguments += "-DCMAKE_CXX_COMPILER_LAUNCHER=${file.getAbsolutePath()}"
                         return true
                     }
                 }
