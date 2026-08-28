@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.AndroidUtilities.dp
 import org.telegram.messenger.LocaleController.getString
+import org.telegram.messenger.ApplicationLoader
+import org.telegram.messenger.NotificationCenter
 import org.telegram.messenger.R
 import org.telegram.ui.ActionBar.ActionBar
 import org.telegram.ui.ActionBar.AlertDialog
@@ -109,12 +111,20 @@ class NekoFontSettingsActivity : BaseFragment() {
                 useDefaultTypefaceRow -> {
                     NekoConfig.typeface.value = !NekoConfig.typeface.Bool()
                     AndroidUtilities.clearTypefaceCache()
+                    if (ApplicationLoader.applicationContext != null) {
+                        Theme.reloadAllResources(ApplicationLoader.applicationContext)
+                    }
+                    NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.didSetNewTheme, false, true, true)
                     (view as? TextCheckCell)?.setChecked(NekoConfig.typeface.Bool())
                     listAdapter?.notifyDataSetChanged()
                 }
                 forceFontWeightFallbackRow -> {
                     NekoConfig.forceFontWeightFallback.value = !NekoConfig.forceFontWeightFallback.Bool()
                     AndroidUtilities.clearTypefaceCache()
+                    if (ApplicationLoader.applicationContext != null) {
+                        Theme.reloadAllResources(ApplicationLoader.applicationContext)
+                    }
+                    NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.didSetNewTheme, false, true, true)
                     (view as? TextCheckCell)?.setChecked(NekoConfig.forceFontWeightFallback.Bool())
                 }
                 regularFontRow -> showFontOptionsDialog(FontHelper.CATEGORY_REGULAR)
@@ -144,6 +154,7 @@ class NekoFontSettingsActivity : BaseFragment() {
                     startActivityForResult(Intent.createChooser(intent, getString(R.string.FontSelectFile)), 1001)
                 } else {
                     FontHelper.applyFont(category, "")
+                    NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.didSetNewTheme, false, true, true)
                     listAdapter?.notifyDataSetChanged()
                     BulletinFactory.of(this).createSuccessBulletin(getString(R.string.FontAppliedSuccess)).show()
                 }
@@ -166,6 +177,7 @@ class NekoFontSettingsActivity : BaseFragment() {
                 if (tempFile.exists()) {
                     val imported = FontHelper.importFontFile(tempFile) ?: tempFile
                     FontHelper.applyFont(category, imported.absolutePath)
+                    NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.didSetNewTheme, false, true, true)
                     listAdapter?.notifyDataSetChanged()
                     BulletinFactory.of(this).createSuccessBulletin(getString(R.string.FontAppliedSuccess)).show()
                 }

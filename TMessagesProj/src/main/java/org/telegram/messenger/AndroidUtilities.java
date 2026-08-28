@@ -246,6 +246,7 @@ import java.util.zip.GZIPOutputStream;
 import me.vkryl.core.BitwiseUtils;
 
 import tw.nekomimi.nekogram.NekoConfig;
+import tw.nekomimi.nekogram.helpers.FontHelper;
 import tw.nekomimi.nekogram.helpers.TypefaceHelper;
 import xyz.nextalone.nagram.NaConfig;
 
@@ -270,11 +271,7 @@ public class AndroidUtilities {
 
     public static Typeface bold() {
         if (mediumTypeface == null) {
-            if (SharedConfig.useSystemBoldFont && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                mediumTypeface = Typeface.create(null, 500, false);
-            } else {
-                mediumTypeface = getTypeface(TYPEFACE_ROBOTO_MEDIUM);
-            }
+            mediumTypeface = getTypeface(TYPEFACE_ROBOTO_MEDIUM);
         }
         return mediumTypeface;
     }
@@ -2406,7 +2403,7 @@ public class AndroidUtilities {
     public static Typeface getTypeface(String assetPath) {
         return typefaceCache.computeIfAbsent(assetPath, path -> {
             try {
-                if (NekoConfig.typeface.Bool()) {
+                if (NekoConfig.typeface.Bool() || FontHelper.hasAnyCustomFont()) {
                     return TypefaceHelper.createTypeface(path);
                 }
                 return TypefaceHelper.createTypefaceFromAsset(path);

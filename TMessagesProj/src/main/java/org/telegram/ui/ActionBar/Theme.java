@@ -130,6 +130,7 @@ import org.telegram.ui.LaunchActivity;
 import org.telegram.ui.RoundVideoProgressShadow;
 import org.telegram.ui.ThemeActivity;
 import org.telegram.ui.ThemePreviewActivity;
+import tw.nekomimi.nekogram.helpers.TypefaceHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -7910,13 +7911,20 @@ public class Theme {
             dialogs_nameEncryptedPaint = new TextPaint[2];
             dialogs_messagePaint = new TextPaint[2];
             dialogs_messagePrintingPaint = new TextPaint[2];
+            Typeface regularTf = TypefaceHelper.getRegularTypeface();
             for (int a = 0; a < 2; a++) {
                 dialogs_namePaint[a] = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
                 dialogs_namePaint[a].setTypeface(AndroidUtilities.bold());
                 dialogs_nameEncryptedPaint[a] = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
                 dialogs_nameEncryptedPaint[a].setTypeface(AndroidUtilities.bold());
                 dialogs_messagePaint[a] = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
+                if (regularTf != null) {
+                    dialogs_messagePaint[a].setTypeface(regularTf);
+                }
                 dialogs_messagePrintingPaint[a] = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
+                if (regularTf != null) {
+                    dialogs_messagePrintingPaint[a].setTypeface(regularTf);
+                }
             }
             dialogs_searchNamePaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
             dialogs_searchNamePaint.setTypeface(AndroidUtilities.bold());
@@ -7925,6 +7933,9 @@ public class Theme {
             dialogs_messageNamePaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
             dialogs_messageNamePaint.setTypeface(AndroidUtilities.bold());
             dialogs_timePaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
+            if (regularTf != null) {
+                dialogs_timePaint.setTypeface(regularTf);
+            }
             dialogs_timePaintBold = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
             dialogs_timePaintBoldAccent = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
             dialogs_archiveTextPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
@@ -7932,7 +7943,13 @@ public class Theme {
             dialogs_archiveTextPaintSmall = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
             dialogs_archiveTextPaintSmall.setTypeface(AndroidUtilities.bold());
             dialogs_onlinePaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
+            if (regularTf != null) {
+                dialogs_onlinePaint.setTypeface(regularTf);
+            }
             dialogs_offlinePaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
+            if (regularTf != null) {
+                dialogs_offlinePaint.setTypeface(regularTf);
+            }
             dialogs_tagTextPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
             dialogs_tagTextPaint.setTypeface(AndroidUtilities.bold());
 
@@ -8078,6 +8095,7 @@ public class Theme {
 
     public static void reloadAllResources(Context context) {
         destroyResources();
+        chat_msgTextPaint = null;
         if (chat_msgInDrawable != null) {
             chat_msgInDrawable = null;
             currentColor = 0;
@@ -8118,13 +8136,27 @@ public class Theme {
                 chat_adminPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
                 chat_timePaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
                 chat_msgTextCodePaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-                chat_msgTextCodePaint.setTypeface(Typeface.MONOSPACE);
+                chat_msgTextCodePaint.setTypeface(AndroidUtilities.getTypeface(AndroidUtilities.TYPEFACE_ROBOTO_MONO));
                 chat_msgTextCode2Paint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-                chat_msgTextCode2Paint.setTypeface(Typeface.MONOSPACE);
+                chat_msgTextCode2Paint.setTypeface(AndroidUtilities.getTypeface(AndroidUtilities.TYPEFACE_ROBOTO_MONO));
                 chat_msgTextCode3Paint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-                chat_msgTextCode3Paint.setTypeface(Typeface.MONOSPACE);
+                chat_msgTextCode3Paint.setTypeface(AndroidUtilities.getTypeface(AndroidUtilities.TYPEFACE_ROBOTO_MONO));
                 chat_msgCodeBgPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
                 chat_ephemeralPaint = new TextPaint(TextPaint.ANTI_ALIAS_FLAG);
+
+                Typeface regularTf = TypefaceHelper.getRegularTypeface();
+                if (regularTf != null) {
+                    chat_msgTextPaint.setTypeface(regularTf);
+                    chat_msgGameTextPaint.setTypeface(regularTf);
+                    chat_replyTextPaint.setTypeface(regularTf);
+                    chat_quoteTextPaint.setTypeface(regularTf);
+                    chat_explanationTextPaint.setTypeface(regularTf);
+                    chat_titleLabelTextPaint.setTypeface(regularTf);
+                    chat_forwardNamePaint.setTypeface(regularTf);
+                    chat_adminPaint.setTypeface(regularTf);
+                    chat_timePaint.setTypeface(regularTf);
+                    chat_ephemeralPaint.setTypeface(regularTf);
+                }
             }
 
             final float[] emojiSizePercents = new float[] {.68f, .46f, .34f, .28f, .22f, .19f};

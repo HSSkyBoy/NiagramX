@@ -49,7 +49,14 @@ object FontHelper {
         var name = file.name
         val dot = name.lastIndexOf('.')
         if (dot != -1) name = name.substring(0, dot)
-        if (name.startsWith("font_") && name.length > 37) name = name.substring(37)
+        if (name.startsWith("font_")) {
+            val parts = name.split("_", limit = 3)
+            if (parts.size >= 3) {
+                name = parts[2]
+            } else if (parts.size == 2) {
+                name = parts[1]
+            }
+        }
         return name.ifEmpty { file.name }
     }
 
@@ -65,9 +72,9 @@ object FontHelper {
                 }
             }
             val hash = md.digest().joinToString("") { "%02x".format(it) }
-            val ext = if (sourceFile.name.lowercase().endsWith(".otf")) ".otf" else ".ttf"
-            val targetFile = File(fontsDirectory, "font_")
-            if (!targetFile.exists()) {
+            val cleanName = sourceFile.name.replace("[^a-zA-Z0-9._-]".toRegex(), "_")
+            val targetFile = File(fontsDirectory, "font_${hash.substring(0, 8)}_$cleanName")
+            if (!targetFile.exists() || targetFile.length() != sourceFile.length()) {
                 FileInputStream(sourceFile).use { fis ->
                     AndroidUtilities.copyFile(fis, targetFile)
                 }
@@ -80,6 +87,26 @@ object FontHelper {
     }
 
     @JvmStatic
+    fun hasCustomFont(category: Int): Boolean {
+        val path = when (category) {
+            CATEGORY_REGULAR -> NaConfig.customFontRegular.String()
+            CATEGORY_BOLD -> NaConfig.customFontBold.String()
+            CATEGORY_ITALIC -> NaConfig.customFontItalic.String()
+            CATEGORY_MONO -> NaConfig.customFontMono.String()
+            else -> null
+        }
+        return !path.isNullOrEmpty() && File(path).exists()
+    }
+
+    @JvmStatic
+    fun hasAnyCustomFont(): Boolean {
+        return hasCustomFont(CATEGORY_REGULAR) ||
+                hasCustomFont(CATEGORY_BOLD) ||
+                hasCustomFont(CATEGORY_ITALIC) ||
+                hasCustomFont(CATEGORY_MONO)
+    }
+
+    @JvmStatic
     fun applyFont(category: Int, fontPath: String) {
         when (category) {
             CATEGORY_REGULAR -> NaConfig.customFontRegular.value = fontPath
@@ -89,6 +116,9 @@ object FontHelper {
         }
         cachedTypefaces.clear()
         AndroidUtilities.clearTypefaceCache()
+        if (ApplicationLoader.applicationContext != null) {
+            Theme.reloadAllResources(ApplicationLoader.applicationContext)
+        }
     }
 
     @JvmStatic
@@ -101,15 +131,16 @@ object FontHelper {
             else -> null
         }
         if (path.isNullOrEmpty()) return null
+        val file = File(path)
+        if (!file.exists()) return null
         return cachedTypefaces.getOrPut(path) {
             try {
-                val f = File(path)
-                if (f.exists()) Typeface.createFromFile(f) else Typeface.DEFAULT
+                Typeface.createFromFile(file)
             } catch (e: Exception) {
-                FileLog.e("Failed to load custom typeface ", e)
-                Typeface.DEFAULT
+                FileLog.e("Failed to load custom typeface from $path", e)
+                null
             }
-        }.let { if (it === Typeface.DEFAULT && !File(path).exists()) null else it }
+        }
     }
 
     @JvmStatic

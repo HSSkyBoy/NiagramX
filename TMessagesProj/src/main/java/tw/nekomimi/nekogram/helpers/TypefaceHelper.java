@@ -63,16 +63,25 @@ public class TypefaceHelper {
         if (custom != null) {
             return custom;
         }
+        if (!NekoConfig.typeface.Bool()) {
+            return createTypefaceFromAsset(assetPath);
+        }
         return switch (assetPath) {
             case AndroidUtilities.TYPEFACE_ROBOTO_MEDIUM -> {
                 if (NekoConfig.forceFontWeightFallback.Bool()) {
                     yield createTypeface(700, false);
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    yield Typeface.create(Typeface.DEFAULT, 700, false);
                 }
                 yield isMediumWeightSupported() ? Typeface.create("sans-serif-medium", Typeface.NORMAL) : Typeface.create("sans-serif", Typeface.BOLD);
             }
             case AndroidUtilities.TYPEFACE_ROBOTO_MEDIUM_ITALIC -> {
                 if (NekoConfig.forceFontWeightFallback.Bool()) {
                     yield createTypeface(700, true);
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                    yield Typeface.create(Typeface.DEFAULT, 700, true);
                 }
                 yield isMediumWeightSupported() ? Typeface.create("sans-serif-medium", Typeface.ITALIC) : Typeface.create("sans-serif", Typeface.BOLD_ITALIC);
             }
@@ -84,24 +93,46 @@ public class TypefaceHelper {
                     Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? Typeface.create(Typeface.SANS_SERIF, 400, true) : Typeface.create("sans-serif", Typeface.ITALIC);
             case AndroidUtilities.TYPEFACE_ROBOTO_MONO ->
                     Typeface.MONOSPACE;
-            default -> createTypefaceFromAsset(assetPath);
+            default -> {
+                if (assetPath != null && (assetPath.contains("medium") || assetPath.contains("bold"))) {
+                    yield Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? Typeface.create(Typeface.DEFAULT, 700, false) : Typeface.create("sans-serif", Typeface.BOLD);
+                } else if (assetPath != null && assetPath.contains("italic")) {
+                    yield Build.VERSION.SDK_INT >= Build.VERSION_CODES.P ? Typeface.create(Typeface.DEFAULT, 400, true) : Typeface.create("sans-serif", Typeface.ITALIC);
+                }
+                yield Typeface.DEFAULT;
+            }
         };
     }
 
     private static Typeface getCustomTypefaceByPath(String assetPath) {
-        if (assetPath == null) return null;
+        if (assetPath == null) return FontHelper.getCustomTypeface(FontHelper.CATEGORY_REGULAR);
         if (assetPath.equals(AndroidUtilities.TYPEFACE_ROBOTO_MONO)) {
             Typeface tf = FontHelper.getCustomTypeface(FontHelper.CATEGORY_MONO);
             if (tf != null) return tf;
         } else if (assetPath.contains("italic")) {
             Typeface tf = FontHelper.getCustomTypeface(FontHelper.CATEGORY_ITALIC);
             if (tf != null) return tf;
-        } else if (assetPath.contains("medium") || assetPath.contains("bold")) {
+            Typeface reg = FontHelper.getCustomTypeface(FontHelper.CATEGORY_REGULAR);
+            if (reg != null) return Typeface.create(reg, Typeface.ITALIC);
+        } else if (assetPath.contains("medium") || assetPath.contains("bold") || assetPath.contains("num")) {
             Typeface tf = FontHelper.getCustomTypeface(FontHelper.CATEGORY_BOLD);
             if (tf != null) return tf;
+            Typeface reg = FontHelper.getCustomTypeface(FontHelper.CATEGORY_REGULAR);
+            if (reg != null) return Typeface.create(reg, Typeface.BOLD);
         } else {
             Typeface tf = FontHelper.getCustomTypeface(FontHelper.CATEGORY_REGULAR);
             if (tf != null) return tf;
+        }
+        return null;
+    }
+
+    public static Typeface getRegularTypeface() {
+        Typeface custom = FontHelper.getCustomTypeface(FontHelper.CATEGORY_REGULAR);
+        if (custom != null) {
+            return custom;
+        }
+        if (NekoConfig.typeface.Bool()) {
+            return Typeface.DEFAULT;
         }
         return null;
     }
