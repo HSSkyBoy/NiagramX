@@ -105,11 +105,11 @@ public class SpyModeActivity extends BaseNekoXSettingsActivity {
     private final AbstractConfigCell useDeletedIconRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getUseDeletedIcon()));
     private final AbstractConfigCell customDeletedMarkRow = cellGroup.appendCell(new ConfigCellTextInput(null, NaConfig.INSTANCE.getCustomDeletedMark(), "", null));
     private final AbstractConfigCell saveLastSeenRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getSaveLocalLastSeen()));
-    private final AbstractConfigCell clearMessageDatabaseRow = cellGroup.appendCell(new ConfigCellTextCheckIcon(null, "ClearMessageDatabase", null, AyuData.totalSize > 0 ? AndroidUtilities.formatFileSize(AyuData.totalSize) : "...", R.drawable.msg_clear, false, () -> new AlertDialog.Builder(getContext(), getResourceProvider())
+    private final AbstractConfigCell clearMessageDatabaseRow = cellGroup.appendCell(new ConfigCellTextCheckIcon(null, "ClearMessageDatabase", null, AyuData.totalSize > 0 ? AndroidUtilities.formatFileSize(AyuData.totalSize) : "...", R.drawable.msg_clear, false, () -> showDialog(new AlertDialog.Builder(getContext(), getResourceProvider())
             .setTitle(getString(R.string.ClearMessageDatabase))
             .setMessage(getString(R.string.AreYouSure))
             .setPositiveButton(getString(R.string.Clear), (dialog, which) -> {
-                AlertDialog progressDialog = new AlertDialog(getParentActivity(), AlertDialog.ALERT_TYPE_SPINNER);
+                AlertDialog progressDialog = new AlertDialog(getParentActivity(), AlertDialog.ALERT_TYPE_SPINNER, getResourceProvider());
                 progressDialog.setCanCancel(false);
                 progressDialog.show();
                 Utilities.globalQueue.postRunnable(() -> {
@@ -122,7 +122,7 @@ public class SpyModeActivity extends BaseNekoXSettingsActivity {
                 });
             })
             .setNegativeButton(getString(R.string.Cancel), null)
-            .create()));
+            .create())));
     private final AbstractConfigCell dividerSaveDeleted = cellGroup.appendCell(new ConfigCellDivider());
 
     private final AbstractConfigCell headerFilter = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.RegexFiltersHeader)));
