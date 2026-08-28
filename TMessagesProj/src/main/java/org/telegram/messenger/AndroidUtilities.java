@@ -2968,9 +2968,6 @@ public class AndroidUtilities {
         if (mode == NekoConfig.TABLET_LANDSCAPE) {
             return config.orientation == Configuration.ORIENTATION_LANDSCAPE;
         }
-        if (config.screenWidthDp >= 700 || config.smallestScreenWidthDp >= 600) {
-            return true;
-        }
         return res.getBoolean(R.bool.isTablet);
     }
 
