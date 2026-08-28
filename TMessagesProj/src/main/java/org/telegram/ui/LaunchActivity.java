@@ -55,6 +55,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.util.Base64;
+import android.util.DisplayMetrics;
 import android.util.SparseIntArray;
 import android.view.ActionMode;
 import android.view.Gravity;
@@ -416,9 +417,21 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
 
     @Override
     public Resources getResources() {
-        if (iconsAsset != super.getResources().getAssets()) {
-            customResources = new IconsResources(super.getResources());
-            iconsAsset = super.getResources().getAssets();
+        if (NaConfig.INSTANCE.getIconReplacements().Int() != IconsResources.ICON_REPLACE_SOLAR) {
+            customResources = null;
+            iconsAsset = null;
+            return super.getResources();
+        }
+        Resources superRes = super.getResources();
+        if (customResources == null || iconsAsset != superRes.getAssets()) {
+            customResources = new IconsResources(superRes);
+            iconsAsset = superRes.getAssets();
+        } else {
+            Configuration superConfig = superRes.getConfiguration();
+            DisplayMetrics superMetrics = superRes.getDisplayMetrics();
+            if (!customResources.getConfiguration().equals(superConfig)) {
+                customResources.updateConfiguration(superConfig, superMetrics);
+            }
         }
         return customResources;
     }
@@ -7245,6 +7258,9 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
+        if (customResources != null) {
+            customResources.updateConfiguration(newConfig, super.getResources().getDisplayMetrics());
+        }
         AndroidUtilities.checkDisplaySize(this, newConfig);
         AndroidUtilities.setPreferredMaxRefreshRate(getWindow());
         super.onConfigurationChanged(newConfig);

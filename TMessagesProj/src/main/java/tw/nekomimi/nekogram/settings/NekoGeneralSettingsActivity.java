@@ -261,7 +261,8 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     private final AbstractConfigCell tabletModeRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NekoConfig.tabletMode, new String[]{
             getString(R.string.TabletModeDefault),
             getString(R.string.TabletModeOn),
-            getString(R.string.TabletModeOff)
+            getString(R.string.TabletModeOff),
+            getString(R.string.TabletModeLandscape)
     }, null));
     private final AbstractConfigCell centerActionBarTitleRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NaConfig.INSTANCE.getCenterActionBarTitleType(), new String[]{
             getString(R.string.CenterActionBarTitleOff),

@@ -381,6 +381,7 @@
     <string name="CenterActionBarTitleOff">Off</string>
     <string name="TabletModeOn">On</string>
     <string name="TabletModeOff">Off</string>
+    <string name="TabletModeLandscape">Landscape Only</string>
     <string name="HideDialogsSearchField">Hide Search Box</string>
     <string name="DeepLTranslateKey">DeepL API Key</string>
     <string name="DeepLTranslateKeyNotice">Configure DeepL API Key, leave blank to use built-in credentials.</string>

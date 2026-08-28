@@ -1,8 +1,10 @@
 package tw.nekomimi.nekogram.ui.icons;
 
 import android.annotation.SuppressLint;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.util.DisplayMetrics;
 
 import android.os.Build;
 
@@ -41,6 +43,12 @@ public class IconsResources extends Resources {
 
     public IconsResources(Resources resources) {
         super(resources.getAssets(), resources.getDisplayMetrics(), resources.getConfiguration());
+    }
+
+    @Override
+    public void updateConfiguration(Configuration config, DisplayMetrics metrics) {
+        super.updateConfiguration(config, metrics);
+        constantStateCache.clear();
     }
 
     @Override

@@ -34,6 +34,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -2950,10 +2951,30 @@ public class AndroidUtilities {
     }
 
     public static boolean isTabletForce() {
-        if (NekoConfig.tabletMode.Int() != NekoConfig.TABLET_AUTO) {
-            return NekoConfig.tabletMode.Int() == NekoConfig.TABLET_ENABLE;
+        int mode = NekoConfig.tabletMode.Int();
+        if (mode == NekoConfig.TABLET_ENABLE) {
+            return true;
         }
-        return ApplicationLoader.applicationContext != null && ApplicationLoader.applicationContext.getResources().getBoolean(R.bool.isTablet);
+        if (mode == NekoConfig.TABLET_DISABLE) {
+            return false;
+        }
+        Resources res = null;
+        if (LaunchActivity.instance != null) {
+            res = LaunchActivity.instance.getResources();
+        } else if (ApplicationLoader.applicationContext != null) {
+            res = ApplicationLoader.applicationContext.getResources();
+        }
+        if (res == null) {
+            return false;
+        }
+        Configuration config = res.getConfiguration();
+        if (mode == NekoConfig.TABLET_LANDSCAPE) {
+            return config.orientation == Configuration.ORIENTATION_LANDSCAPE;
+        }
+        if (config.screenWidthDp >= 700 || config.smallestScreenWidthDp >= 600) {
+            return true;
+        }
+        return res.getBoolean(R.bool.isTablet);
     }
 
     public static boolean isTabletInternal() {

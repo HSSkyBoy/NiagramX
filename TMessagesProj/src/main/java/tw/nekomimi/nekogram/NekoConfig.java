@@ -38,6 +38,8 @@ public class NekoConfig {
 
     public static final int TABLET_AUTO = 0;
     public static final int TABLET_ENABLE = 1;
+    public static final int TABLET_DISABLE = 2;
+    public static final int TABLET_LANDSCAPE = 3;
 
     public static final int DIALOG_FILTER_EXCLUDE_NONE = 0;
     public static final int DIALOG_FILTER_EXCLUDE_MUTED = 1;
