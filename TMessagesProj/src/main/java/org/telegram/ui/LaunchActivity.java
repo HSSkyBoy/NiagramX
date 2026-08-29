@@ -1594,6 +1594,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
         }
         boolean pushOpened = false;
         long push_user_id = 0;
+        boolean push_open_profile = false;
         long push_chat_id = 0;
         long[] push_story_dids = null;
         int push_story_id = -1;
@@ -2722,6 +2723,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                                             long userId = Utilities.parseLong(data.getQueryParameter("id"));
                                             if (userId != 0) {
                                                 push_user_id = userId;
+                                                push_open_profile = true;
                                             }
                                         } catch (Exception e) {
                                             FileLog.e(e);
@@ -3112,6 +3114,74 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
                         }
                     } else {
                         VoIPPendingCall.startOrSchedule(this, push_user_id, videoCallUser, AccountInstance.getInstance(intentAccount[0]));
+                    }
+                } else if (push_open_profile && push_msg_id == 0) {
+                    // tg://user?id= deep link — open Profile, not Chat
+                    final long finalPushUserId = push_user_id;
+                    final int finalAccount = intentAccount[0];
+                    final MessagesController mc = MessagesController.getInstance(finalAccount);
+                    TLRPC.User cachedUser = mc.getUser(finalPushUserId);
+                    if (cachedUser != null) {
+                        // User is in local cache — open Profile directly
+                        Bundle args = new Bundle();
+                        args.putLong("user_id", finalPushUserId);
+                        if (finalPushUserId == UserConfig.getInstance(finalAccount).getClientUserId()) {
+                            args.putBoolean("my_profile", true);
+                        }
+                        if (getActionBarLayout().presentFragment(new INavigationLayout.NavigationParams(new ProfileActivity(args)).setNoAnimation(true))) {
+                            pushOpened = true;
+                            LaunchActivity.dismissAllWeb();
+                        }
+                    } else {
+                        // User not in local cache — try to resolve via API
+                        TLRPC.InputUser inputUser = mc.getInputUser(finalPushUserId);
+                        final boolean hasInputUser = !(inputUser instanceof TLRPC.TL_inputUserEmpty);
+                        if (hasInputUser) {
+                            TLRPC.TL_users_getUsers req = new TLRPC.TL_users_getUsers();
+                            req.id.add(inputUser);
+                            ConnectionsManager.getInstance(finalAccount).sendRequest(req, (response, error) -> AndroidUtilities.runOnUIThread(() -> {
+                                if (isFinishing()) return;
+                                TLRPC.User resolvedUser = null;
+                                if (response instanceof Vector) {
+                                    ArrayList<Object> objects = ((Vector) response).objects;
+                                    for (int i = 0; i < objects.size(); i++) {
+                                        Object obj = objects.get(i);
+                                        if (obj instanceof TLRPC.User u && u.id == finalPushUserId) {
+                                            ArrayList<TLRPC.User> users = new ArrayList<>();
+                                            users.add(u);
+                                            mc.putUsers(users, false);
+                                            resolvedUser = u;
+                                            break;
+                                        }
+                                    }
+                                }
+                                Bundle args = new Bundle();
+                                args.putLong("user_id", finalPushUserId);
+                                if (finalPushUserId == UserConfig.getInstance(finalAccount).getClientUserId()) {
+                                    args.putBoolean("my_profile", true);
+                                }
+                                if (resolvedUser != null) {
+                                    getActionBarLayout().presentFragment(new ProfileActivity(args));
+                                } else {
+                                    // Fallback: open chat if profile resolve failed
+                                    if (mainFragmentsStack.isEmpty() || mc.checkCanOpenChat(args, mainFragmentsStack.get(mainFragmentsStack.size() - 1))) {
+                                        getActionBarLayout().presentFragment(new ChatActivity(args));
+                                    }
+                                }
+                                LaunchActivity.dismissAllWeb();
+                            }));
+                        } else {
+                            // No access_hash available — open chat as fallback
+                            Bundle args = new Bundle();
+                            args.putLong("user_id", finalPushUserId);
+                            if (mainFragmentsStack.isEmpty() || mc.checkCanOpenChat(args, mainFragmentsStack.get(mainFragmentsStack.size() - 1))) {
+                                ChatActivity fragment = new ChatActivity(args);
+                                if (getActionBarLayout().presentFragment(new INavigationLayout.NavigationParams(fragment).setNoAnimation(true))) {
+                                    pushOpened = true;
+                                    LaunchActivity.dismissAllWeb();
+                                }
+                            }
+                        }
                     }
                 } else {
                     Bundle args = new Bundle();
