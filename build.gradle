@@ -15,7 +15,7 @@ subprojects {
 
             android {
                 compileSdk = 37
-                buildToolsVersion = "36.0.0"
+                buildToolsVersion = "36.1.0"
                 ndkVersion = "27.2.12479018"
 
                 lint {
@@ -37,8 +37,8 @@ subprojects {
                 }
 
                 defaultConfig {
-                    minSdk = 27
-                    targetSdk = 36
+                    minSdk = 24
+                    targetSdk = 37
                 }
 
                 buildFeatures.buildConfig = true

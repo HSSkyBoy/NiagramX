@@ -72,14 +72,28 @@ android {
 
     androidResources {
         localeFilters += [
-                'en', 'ar', 'de', 'es', 'es-rES', 'fa-rIR', 'in-rID', 'it', 'it-rIT', 'ja-rJP',
-                'ko', 'nl', 'pl-rPL', 'pt-rBR', 'ru-rRU', 'tr-rTR', 'uk-rUA', 'vi-rVN', 'zh-rCN', 'zh-rTW'
+                'en', 'ar', 'de', 'es', 'es-rES', 'fa-rIR', 'in-rID', 'it', 'it-rIT', 'ja-rJP', 'ko', 'nl', 'pl-rPL', 'pt-rBR', 'ru-rRU', 'tr-rTR', 'uk-rUA', 'vi-rVN', 'zh-rCN', 'zh-rTW'
         ]
     }
 
     packaging {
         jniLibs {
             useLegacyPackaging = true
+        }
+        resources {
+            excludes += [
+                'META-INF/*.version',
+                'META-INF/*.properties',
+                'META-INF/DEPENDENCIES',
+                'META-INF/LICENSE*',
+                'META-INF/NOTICE*',
+                'META-INF/*.txt',
+                'META-INF/*.txtproptp',
+                'META-INF/*.kotlin_module',
+                'META-INF/proguard/*',
+                'proto/**',
+                'play-services-*.properties'
+            ]
         }
     }
 
@@ -128,7 +142,7 @@ android {
                 } else {
                     abiFilters 'arm64-v8a', 'x86_64'
                 }
-                arguments '-DANDROID_STL=c++_static', '-DANDROID_PLATFORM=android-27', '-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON'
+                arguments '-DANDROID_STL=c++_static', '-DANDROID_PLATFORM=android-24', '-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON'
                 System.getenv('PATH').split(File.pathSeparator).any { path ->
                     var file = Paths.get("${path}${File.separator}ccache${if (OperatingSystem.current().windows) ".exe" else ""}").toFile()
                     if (file.exists()) {
@@ -168,6 +182,9 @@ android {
             storePassword keystorePwd
             keyAlias alias
             keyPassword pwd
+            enableV1Signing = false
+            enableV2Signing = true
+            enableV3Signing = true
         }
     }
 
@@ -176,7 +193,6 @@ android {
             isDefault = true
             debuggable = true
             jniDebuggable = true
-            multiDexEnabled = true
             signingConfig = signingConfigs.release
         }
 
@@ -185,7 +201,6 @@ android {
             jniDebuggable = false
             minifyEnabled = true
             shrinkResources = true
-            multiDexEnabled = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             matchingFallbacks = ['release', 'staging', 'debug']
             signingConfig = signingConfigs.release
@@ -196,7 +211,6 @@ android {
             jniDebuggable = false
             minifyEnabled = true
             shrinkResources = true
-            multiDexEnabled = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             matchingFallbacks = ['release', 'staging', 'debug']
             signingConfig = signingConfigs.release

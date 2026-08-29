@@ -1,4 +1,3 @@
--keep public class com.google.android.gms.* { public *; }
 -keepnames @com.google.android.gms.common.annotation.KeepName class *
 -keepclassmembernames class * {
     @com.google.android.gms.common.annotation.KeepName *;
@@ -244,6 +243,7 @@
 -dontwarn android.support.v4.app.NotificationCompat$Builder
 
 -allowaccessmodification
+-optimizationpasses 6
 -keepattributes Signature,InnerClasses,EnclosingMethod
 -keepattributes SourceFile,LineNumberTable
 -keepattributes *Annotation*
