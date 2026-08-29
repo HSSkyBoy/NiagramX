@@ -65,7 +65,8 @@ public class TimeStringHelper {
         String editedStrFin = editedStr.isEmpty() ? getString(R.string.EditedMessage) : editedStr;
         String deletedStr = NaConfig.INSTANCE.getCustomDeletedMark().String();
         String deletedStrFin = deletedStr.isEmpty() ? getString(R.string.DeletedMessage) : deletedStr;
-        boolean primaryEditedDate = isEdited && AppGlobalConfig.getInstance(messageObject.currentAccount).messagePrimaryEditedDate.get();
+        boolean useEditedIcon = NaConfig.INSTANCE.getUseEditedIcon().Bool();
+        boolean primaryEditedDate = isEdited && AppGlobalConfig.getInstance(messageObject.currentAccount).messagePrimaryEditedDate.get() && !useEditedIcon && editedStr.isEmpty();
 
         createSpan();
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
@@ -76,7 +77,7 @@ public class TimeStringHelper {
         if (isEdited) {
             spannableStringBuilder
                     .append("  ")
-                    .append(primaryEditedDate ? LocaleController.formatPmEditedDate(editDate) : (NaConfig.INSTANCE.getUseEditedIcon().Bool() ? editedSpan : editedStrFin));
+                    .append(useEditedIcon ? editedSpan : (primaryEditedDate ? LocaleController.formatPmEditedDate(editDate) : editedStrFin));
         }
         if (isTranslated) {
             spannableStringBuilder
@@ -106,14 +107,15 @@ public class TimeStringHelper {
     public static CharSequence createEditedString(MessageObject messageObject, boolean isTranslated, boolean isBookmarked, int senderNameColor, int editDate) {
         String editedStr = NaConfig.INSTANCE.getCustomEditedMessage().String();
         String editedStrFin = editedStr.isEmpty() ? getString(R.string.EditedMessage) : editedStr;
-        boolean primaryEditedDate = AppGlobalConfig.getInstance(messageObject.currentAccount).messagePrimaryEditedDate.get();
+        boolean useEditedIcon = NaConfig.INSTANCE.getUseEditedIcon().Bool();
+        boolean primaryEditedDate = AppGlobalConfig.getInstance(messageObject.currentAccount).messagePrimaryEditedDate.get() && !useEditedIcon && editedStr.isEmpty();
 
         createSpan();
         SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
 
         spannableStringBuilder
                 .append(messageObject.messageOwner.post_author != null ? " " : "")
-                .append(primaryEditedDate ? LocaleController.formatPmEditedDate(editDate) : (NaConfig.INSTANCE.getUseEditedIcon().Bool() ? editedSpan : editedStrFin));
+                .append(useEditedIcon ? editedSpan : (primaryEditedDate ? LocaleController.formatPmEditedDate(editDate) : editedStrFin));
         if (isTranslated) {
             spannableStringBuilder
                     .append("  ")
