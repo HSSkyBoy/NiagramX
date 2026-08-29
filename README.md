@@ -1,87 +1,90 @@
 # NiagramX
-[![Crowdin](https://badges.crowdin.net/NagramX/localized.svg)](https://crowdin.com/project/NagramX)  
-A customized variant based on [Nagram](https://github.com/NextAlone/Nagram), [Nekogram](https://github.com/Nekogram/Nekogram), and [NagramX](https://github.com/risin42/NagramX) with additional enhancements.
 
-Special thanks to upstream developers and contributors for their outstanding work.
+[![Crowdin](https://badges.crowdin.net/NagramX/localized.svg)](https://crowdin.com/project/NagramX)
+[![GitHub Release](https://img.shields.io/github/v/release/HSSkyBoy/NiagramX?include_prereleases&style=flat-square)](https://github.com/HSSkyBoy/NiagramX/releases)
+[![Telegram Channel](https://img.shields.io/badge/Telegram-Channel-blue?logo=telegram&style=flat-square)](https://t.me/NiagramX)
+[![MinSDK](https://img.shields.io/badge/Android-7.0%2B%20(API%2024%2B)-green?logo=android&style=flat-square)](https://developer.android.com/about/versions/nougat)
 
-## Download
+An enhanced, high-performance Telegram client variant based on [Nagram](https://github.com/NextAlone/Nagram), [Nekogram](https://github.com/Nekogram/Nekogram), and [NagramX](https://github.com/risin42/NagramX), refined with modern UI enhancements, expanded customization, and aggressive performance optimizations.
 
-Latest versions are available through:
-* [Telegram Channel](https://t.me/NiagramX) (Latest Beta)
-* [GitHub Releases](https://github.com/HSSkyBoy/NiagramX/releases) (Latest Stable)
+---
 
-## Verify APK
+## ✨ Features & Highlights
 
-Official APKs use the following Android signing certificate:
+- **Neo-Settings & Deep Customization**: Refined settings suite with comprehensive UI, chat behavior, and visual controls.
+- **Custom Font Engine**: Dynamic system font matching, custom TTF/OTF font importing, and seamless font application across the entire interface.
+- **Enhanced Media Controls**: Global default video playback quality settings, custom streaming parameters, and optimized media rendering.
+- **Privacy & Spy Mode**: Granular message database management, read-status controls, and enhanced privacy options.
+- **Adaptive Layout**: Polished tablet and foldable screen adaptability with dual-pane and landscape-aware scaling.
+- **Modern Android Architecture**: 16KB memory page size support (Android 15+ ready), APK Signature Scheme v2 + v3, and native ABI optimization.
 
-* Package name: `top.nkbe.niagram`
-* SHA-256: `D6:A6:0D:55:15:ED:1F:5A:3B:29:A7:9C:47:ED:94:26:07:2F:F2:11:EA:40:97:0B:98:51:81:58:01:5A:1C:C6`
+---
 
-## Compilation Guide
+## 📱 Compatibility
 
-1. Clone the repository with its submodules:
+- **Minimum Version**: Android 7.0 (API Level 24)
+- **Target Version**: Android 17 (API Level 37)
+- **Supported Architectures**: `arm64-v8a`, `armeabi-v7a`, `x86_64`
+- **Signing Scheme**: APK Signature Scheme v2 + v3
 
-    ```bash
-    git clone --recursive --shallow-submodules https://github.com/HSSkyBoy/NiagramX.git NigramX
-    ```
+---
 
-    If you already cloned the repository without submodules, run:
+## 📥 Download
 
-    ```bash
-    git submodule update --init --recursive --depth=1
-    ```
+Official releases and beta builds can be obtained from:
 
-2. Obtain API credentials (`TELEGRAM_APP_ID` and `TELEGRAM_APP_HASH`) from [Telegram Developer Portal](https://my.telegram.org/auth). Create `local.properties` in the project root with:
+- **Beta Builds**: [Telegram Channel (@NiagramX)](https://t.me/NiagramX)
+- **Stable Releases**: [GitHub Releases](https://github.com/HSSkyBoy/NiagramX/releases)
 
-   ```properties
-   TELEGRAM_APP_ID=<your_telegram_app_id>
-   TELEGRAM_APP_HASH=<your_telegram_app_hash>
-   ```
+### Verify APK Signature
 
-3. For APK signing: Replace `release.keystore` with your keystore and add signing configuration to `local.properties`:
+Official release packages are signed with the official certificate:
 
-   ```properties
-   KEYSTORE_PASS=<your_keystore_password>
-   ALIAS_NAME=<your_alias_name>
-   ALIAS_PASS=<your_alias_password>
-   ```
+- **Package Name**: `top.nkbe.niagram`
+- **SHA-256 Fingerprint**:  
+  `D6:A6:0D:55:15:ED:1F:5A:3B:29:A7:9C:47:ED:94:26:07:2F:F2:11:EA:40:97:0B:98:51:81:58:01:5A:1C:C6`
 
-4. For FCM support: Replace `TMessagesProj/google-services.json` with your own configuration file.
+---
 
-5. Replace project-specific metadata:
+## 🛠️ Building from Source
 
-    - Set your Google Maps API key in the `com.google.android.maps.v2.API_KEY` meta-data entry in `TMessagesProj/src/main/AndroidManifest.xml`.
-    - Set `BaseRemoteHelper.CHANNEL_METADATA_ID` in `TMessagesProj/src/main/java/tw/nekomimi/nekogram/helpers/remote/BaseRemoteHelper.java` to your metadata channel's numeric ID, without the `-100` prefix.
+### Prerequisites
 
-6. Open the project in Android Studio to start building.
+- Android Studio Ladybug / Meerkat or newer
+- JDK 21
+- Android SDK (API 36, Build-Tools 36.0.0+)
+- NDK (27.2.12479018)
+- CMake 3.31+
 
-## GitHub Actions Build
+### Clone & Compile
 
-1. Replace `TMessagesProj/release.keystore` with your keystore file.
+```bash
+# Clone repository with all submodules
+git clone --recursive --shallow-submodules https://github.com/HSSkyBoy/NiagramX.git NiagramX
+cd NiagramX
 
-2. Configure `local.properties` with the following:
+# If submodules were not initialized during clone
+git submodule update --init --recursive --depth=1
+```
 
-   ```properties
-   KEYSTORE_PASS=<your_keystore_password>
-   ALIAS_NAME=<your_alias_name>
-   ALIAS_PASS=<your_alias_password>
-   TELEGRAM_APP_ID=<your_telegram_app_id>
-   TELEGRAM_APP_HASH=<your_telegram_app_hash>
-   ```
+Create `local.properties` in the project root:
 
-   Base64 encode the contents of this file.
+```properties
+TELEGRAM_APP_ID=<your_telegram_app_id>
+TELEGRAM_APP_HASH=<your_telegram_app_hash>
+```
 
-3. Configure GitHub Action secrets:
-   - `LOCAL_PROPERTIES`: Base64-encoded content from step 2
-   - `HELPER_BOT_TOKEN`: Telegram bot token from [@Botfather](https://t.me/Botfather) (e.g., `1111:abcd`)
-   - `HELPER_BOT_TARGET`: Primary Telegram chat ID (e.g., `777000`)
-   - `HELPER_BOT_CANARY_TARGET`: Chat ID for test builds and metadata (can match `HELPER_BOT_TARGET`)
+---
 
-## Privacy & Diagnostics
+## 🔒 Privacy & Diagnostics
 
-NiagramX may collect anonymous diagnostic and usage statistics (via Firebase Crashlytics & Analytics) to help identify issues and improve stability. You can opt out at any time in app settings.
+Official builds may collect anonymous diagnostic and usage statistics (via Firebase Crashlytics & Analytics) to help identify stability issues and optimize application performance. You can disable diagnostic reporting at any time in app settings.
 
-## Acknowledgments
+---
+
+## 💖 Acknowledgments & Credits
+
+Special thanks to upstream projects, contributors, and the Telegram open-source community:
 
 - [AyuGram](https://github.com/AyuGram/AyuGram4A)
 - [Cherrygram](https://github.com/arsLan4k1390/Cherrygram)
