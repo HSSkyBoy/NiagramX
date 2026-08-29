@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [arm64-v8a, x86_64, universal]
+        target: [arm64-v8a, x86_64]
     env:
       CCACHE_COMPILERCHECK: "%compiler% -dumpmachine; %compiler% -dumpversion"
       CCACHE_HARDLINK: "true"
@@ -40,21 +40,24 @@ jobs:
           fetch-depth: 1
           submodules: recursive
       - name: Set up JDK
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@v6
         with:
           distribution: 'microsoft'
           java-version: '21'
       - name: Set up Ccache
         uses: hendrikmuhs/ccache-action@v1.2.23
         with:
-          key: ${{ matrix.target }}
+          key: ${{ github.workflow }}-${{ matrix.target }}-${{ github.ref_name }}
+          restore-keys: |
+            ${{ github.workflow }}-${{ matrix.target }}-
+            ${{ matrix.target }}-
           append-timestamp: false
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6
       - name: Set up Android SDK Tools
         uses: android-actions/setup-android@v4
         with:
-          packages: "build-tools;36.0.0 ndk;27.2.12479018 platforms;android-37.0"
+          packages: "build-tools;36.1.0 ndk;27.2.12479018 platforms;android-37.0"
       - name: Install Native Build Dependencies
         run: |
           sudo apt-get update
@@ -86,11 +89,11 @@ jobs:
           ALIAS_PASS: ${{ secrets.ALIAS_PASS }}
         run: |
           if [ -n "$LOCAL_PROPERTIES" ]; then
-            echo "$LOCAL_PROPERTIES" | base64 -d >> local.properties || true
+            echo "$LOCAL_PROPERTIES" | base64 -d >> local.properties
           fi
           ./gradlew TMessagesProj:assembleStaging --build-cache --parallel
       - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Staging-${{ matrix.target }}
           path: TMessagesProj/build/outputs/apk/staging/*-${{ matrix.target }}.apk
@@ -122,4 +125,4 @@ jobs:
         run: |
           export BUILD_TIMESTAMP=$(date +%s)
           python -m pip install -r Tools/scripts/requirements.txt
-          python Tools/scripts/upload.py ${{ secrets.HELPER_BOT_TOKEN }} ${{ secrets.HELPER_BOT_TARGET }} test ${{ secrets.HELPER_BOT_CANARY_TARGET }}
+          python Tools/scripts/upload.py "${{ secrets.HELPER_BOT_TOKEN }}" "${{ secrets.HELPER_BOT_TARGET }}" test "${{ secrets.HELPER_BOT_CANARY_TARGET }}"

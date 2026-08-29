@@ -25,8 +25,9 @@ def get_commit_info():
 
 def get_caption() -> str:
     commit_id, commit_url, commit_message = get_commit_info()
+    tag = "#updateBeta" if test_version else "#updateRelease"
     pre = "Test version." if test_version else "Release version."
-    caption = f"{pre}\n\n"
+    caption = f"{tag}\n{pre}\n\n"
     caption += f"Commit Message:\n<blockquote expandable>{html.escape(commit_message)}</blockquote>\n\n"
     caption += f"See commit details [{commit_id}]({commit_url})"
     return caption
@@ -53,7 +54,8 @@ def get_metadata():
     commit_id = "<code>" + (os.environ.get("COMMIT_ID") or "unknown")[:7] + "</code>"
     commit_message = "<code>" + html.escape(os.environ.get("COMMIT_MESSAGE") or "unknown") + "</code>"
     build_timestamp = "<code>" + (os.environ.get("BUILD_TIMESTAMP") or "-1") + "</code>"
-    return build_timestamp + " " + commit_id + "\n" + commit_message
+    tag = "#updateBeta" if test_version else "#updateRelease"
+    return f"{tag}\n{build_timestamp} {commit_id}\n{commit_message}"
 
 def retry(func):
     async def wrapper(*args, **kwargs):
