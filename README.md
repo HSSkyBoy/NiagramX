@@ -77,7 +77,9 @@ Official APKs use the following Android signing certificate:
    - `HELPER_BOT_TARGET`: Primary Telegram chat ID (e.g., `777000`)
    - `HELPER_BOT_CANARY_TARGET`: Chat ID for test builds and metadata (can match `HELPER_BOT_TARGET`)
 
-4. Trigger the Release Build workflow.
+## Privacy & Diagnostics
+
+NiagramX may collect anonymous diagnostic and usage statistics (via Firebase Crashlytics & Analytics) to help identify issues and improve stability. You can opt out at any time in app settings.
 
 ## Acknowledgments
 

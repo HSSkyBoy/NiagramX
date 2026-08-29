@@ -62,6 +62,7 @@ import java.util.concurrent.CountDownLatch;
 import tw.nekomimi.nekogram.NekoConfig;
 import tw.nekomimi.nekogram.utils.AndroidUtil;
 import xyz.nextalone.nagram.NaConfig;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import static android.os.Build.VERSION.SDK_INT;
@@ -277,7 +278,13 @@ public class ApplicationLoader extends Application {
         NekoConfig.init();
         NaConfig.init();
         SharedPrefsHelper.init(applicationContext);
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(AndroidUtil.shouldEnableCrashlytics());
+        boolean enableDiagnostics = AndroidUtil.shouldEnableCrashlytics();
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(enableDiagnostics);
+        try {
+            FirebaseAnalytics.getInstance(applicationContext).setAnalyticsCollectionEnabled(enableDiagnostics);
+        } catch (Exception e) {
+            FileLog.e(e);
+        }
         for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) { //TODO improve account
             UserConfig.getInstance(a).loadConfig();
             MessagesController.getInstance(a);
