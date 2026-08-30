@@ -795,7 +795,11 @@ public class SuggestEmojiView extends FrameLayout implements NotificationCenter.
         if (listView.getPaddingLeft() != listViewPaddingLeft) {
             int dx = listView.getPaddingLeft() - listViewPaddingLeft;
             listView.setPadding(listViewPaddingLeft, 0, 0, 0);
-            listView.scrollBy(dx, 0);
+            try {
+                listView.scrollBy(dx, 0);
+            } catch (Exception e) {
+                FileLog.e(e);
+            }
         }
         int listViewPaddingLeftI = (int) Math.max(arrowX - Math.max(width / 4f, Math.min(width / 2f, AndroidUtilities.dp(66))) - listView.getLeft(), 0);
         listView.setTranslationX(listViewPaddingLeftI - listViewPaddingLeft);
