@@ -12,8 +12,9 @@ import org.telegram.messenger.R
 import org.telegram.tgnet.TLRPC
 import org.telegram.ui.Components.TranslateAlert2
 import tw.nekomimi.nekogram.llm.LlmConfig
+import tw.nekomimi.nekogram.llm.net.GeminiNativeClient
 import tw.nekomimi.nekogram.llm.net.OpenAICompatClient
-import tw.nekomimi.nekogram.llm.net.VertexGeminiClient
+import tw.nekomimi.nekogram.llm.net.TranslationCache
 import tw.nekomimi.nekogram.llm.preset.PresetRegistry
 import tw.nekomimi.nekogram.translate.HTMLKeeper
 import tw.nekomimi.nekogram.translate.Translator
@@ -171,13 +172,21 @@ object LLMTranslator : Translator {
 
     @Throws(IOException::class, RateLimitException::class, UnsupportedOperationException::class)
     private fun doLLMTranslate(to: String, query: String): String {
+        val llmProviderPreset = NaConfig.llmProviderPreset.Int()
+        val model = LlmConfig.getEffectiveModelName(llmProviderPreset)
+        val rawContext = currentTranslationContext()
+            ?.takeIf { NaConfig.llmUseContext.Bool() }
+            ?.takeIf { it.isNotBlank() }
+
+        TranslationCache.get(query, to, model, rawContext)?.let { cached ->
+            return cached
+        }
+
         val apiKey = getNextApiKey() ?: throw UnsupportedOperationException(getString(R.string.ApiKeyNotSet))
         val apiKeyForLog = apiKey.takeLast(2)
         FileLog.d("createPost: Bearer $apiKeyForLog")
 
-        val llmProviderPreset = NaConfig.llmProviderPreset.Int()
         val apiUrl = LlmConfig.getEffectiveBaseUrl(llmProviderPreset)
-        val model = LlmConfig.getEffectiveModelName(llmProviderPreset)
 
         val configuredSystemPrompt = NaConfig.llmSystemPrompt.String()
         val hasCustomSystemPrompt = !configuredSystemPrompt.isNullOrEmpty()
@@ -191,10 +200,7 @@ object LLMTranslator : Translator {
             ?.replace("@toLang", to)
             ?: generatePrompt(query, to)
 
-        val contextPrompt = currentTranslationContext()
-            ?.takeIf { NaConfig.llmUseContext.Bool() }
-            ?.takeIf { it.isNotBlank() }
-            ?.let { buildContextPrompt(it) }
+        val contextPrompt = rawContext?.let { buildContextPrompt(it) }
 
         val messages = JSONArray().apply {
             put(JSONObject().apply {
@@ -214,10 +220,10 @@ object LLMTranslator : Translator {
         }
         FileLog.d("Requesting LLM API with model: $model, messages: $messages")
 
-        val response = if (llmProviderPreset == PresetRegistry.GOOGLE_AGENT_PLATFORM) {
-            VertexGeminiClient.generateContent(apiUrl, apiKey, model, messages)
+        val response = if (LlmConfig.isGeminiNative(llmProviderPreset)) {
+            GeminiNativeClient.generateContent(llmProviderPreset, apiUrl, apiKey, model, messages)
         } else {
-            OpenAICompatClient.chatCompletions(apiUrl, apiKey, model, messages)
+            OpenAICompatClient.chatCompletions(llmProviderPreset, apiUrl, apiKey, model, messages)
         }
 
         if (!response.isSuccess) {
@@ -234,7 +240,9 @@ object LLMTranslator : Translator {
         val rawResult = response.data()
             ?.takeIf { it.isNotEmpty() }
             ?: throw IOException("LLM API returned empty content")
-        return cleanTranslationResult(rawResult)
+        val cleanedResult = cleanTranslationResult(rawResult)
+        TranslationCache.put(query, to, model, rawContext, cleanedResult)
+        return cleanedResult
     }
 
     private fun cleanTranslationResult(raw: String): String {

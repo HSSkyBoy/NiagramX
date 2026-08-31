@@ -83,7 +83,7 @@ import tw.nekomimi.nekogram.config.cell.ConfigCellTextInput;
 import tw.nekomimi.nekogram.llm.LlmConfig;
 import tw.nekomimi.nekogram.llm.net.LlmResponse;
 import tw.nekomimi.nekogram.llm.net.OpenAICompatClient;
-import tw.nekomimi.nekogram.llm.net.VertexGeminiClient;
+import tw.nekomimi.nekogram.llm.net.GeminiNativeClient;
 import tw.nekomimi.nekogram.llm.preset.PresetRegistry;
 import tw.nekomimi.nekogram.llm.ui.EditTextFactory;
 import tw.nekomimi.nekogram.llm.utils.ModelUtil;
@@ -681,7 +681,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
     private void checkTemperatureRows() {
         int preset = NaConfig.INSTANCE.getLlmProviderPreset().Int();
         String modelName = LlmConfig.getEffectiveModelName(preset);
-        boolean showTemperature = preset != PresetRegistry.GOOGLE_AGENT_PLATFORM && ModelUtil.supportsTemperature(modelName);
+        boolean showTemperature = !LlmConfig.isGeminiNative(preset) && ModelUtil.supportsTemperature(modelName);
         if (listAdapter == null) {
             if (!showTemperature) {
                 cellGroup.rows.remove(headerTemperature);
@@ -1157,8 +1157,8 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
             rebuildItems.run();
 
             Utilities.globalQueue.postRunnable(() -> {
-                LlmResponse<List<String>> res = preset == PresetRegistry.GOOGLE_AGENT_PLATFORM
-                        ? VertexGeminiClient.getModels()
+                LlmResponse<List<String>> res = LlmConfig.isGeminiNative(preset)
+                        ? GeminiNativeClient.fetchModels(preset, baseUrl, apiKey)
                         : OpenAICompatClient.fetchModels(baseUrl, apiKey);
                 AndroidUtilities.runOnUIThread(() -> {
                     AlertDialog activeDialog = dialogRef[0];
@@ -1374,9 +1374,9 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
                 testButton.setText(getString(R.string.Loading));
 
                 Utilities.globalQueue.postRunnable(() -> {
-                    LlmResponse<String> res = preset == PresetRegistry.GOOGLE_AGENT_PLATFORM
-                            ? VertexGeminiClient.testGenerateContent(baseUrl, apiKey, modelToTest)
-                            : OpenAICompatClient.testChatCompletions(baseUrl, apiKey, modelToTest);
+                    LlmResponse<String> res = LlmConfig.isGeminiNative(preset)
+                            ? GeminiNativeClient.testGenerateContent(preset, baseUrl, apiKey, modelToTest)
+                            : OpenAICompatClient.testChatCompletions(preset, baseUrl, apiKey, modelToTest);
                     AndroidUtilities.runOnUIThread(() -> {
                         testButton.setEnabled(true);
                         testButton.setText(originalText);

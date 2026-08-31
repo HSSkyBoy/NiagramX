@@ -144,29 +144,22 @@ object ModelUtil {
     }
 
     @JvmStatic
-    fun applyReasoningParameters(requestJson: JSONObject, url: String?, model: String?) {
+    fun applyReasoningParameters(requestJson: JSONObject, preset: Int, model: String?) {
         if (isNonReasoningModel(model)) {
             return
         }
-        val providerPreset = when (url) {
-            PresetRegistry.getPresetBaseUrl(PresetRegistry.GOOGLE_AI_STUDIO) -> PresetRegistry.GOOGLE_AI_STUDIO
-            PresetRegistry.getPresetBaseUrl(PresetRegistry.GOOGLE_AGENT_PLATFORM) -> PresetRegistry.GOOGLE_AGENT_PLATFORM
-            PresetRegistry.getPresetBaseUrl(PresetRegistry.OPENROUTER) -> PresetRegistry.OPENROUTER
-            PresetRegistry.getPresetBaseUrl(PresetRegistry.VERCEL_AI_GATEWAY) -> PresetRegistry.VERCEL_AI_GATEWAY
-            else -> null
-        }
-        if (providerPreset == PresetRegistry.GOOGLE_AGENT_PLATFORM) {
+        if (preset == PresetRegistry.GOOGLE_AGENT_PLATFORM || preset == PresetRegistry.GOOGLE_AI_STUDIO) {
             val generationConfig = requestJson.optJSONObject("generationConfig") ?: JSONObject().also {
                 requestJson.put("generationConfig", it)
             }
             generationConfig.put("thinkingConfig", getGeminiThinkingConfig(model))
             return
         }
-        applyReasoningParametersInternal(requestJson, providerPreset, model)
+        applyReasoningParametersInternal(requestJson, preset, model)
     }
 
-    private fun applyReasoningParametersInternal(requestJson: JSONObject, providerPreset: Int?, model: String?) {
-        if (providerPreset != null && applyReasoningParametersRouter(requestJson, providerPreset, model)) {
+    private fun applyReasoningParametersInternal(requestJson: JSONObject, providerPreset: Int, model: String?) {
+        if (applyReasoningParametersRouter(requestJson, providerPreset, model)) {
             return
         }
         applyReasoningParametersOriginal(requestJson, model)

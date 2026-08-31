@@ -18,7 +18,7 @@ object PresetRegistry {
 
     private val presetBaseUrls = mapOf(
         OPENAI to "https://api.openai.com/v1",
-        GOOGLE_AI_STUDIO to "https://generativelanguage.googleapis.com/v1beta/openai",
+        GOOGLE_AI_STUDIO to "https://generativelanguage.googleapis.com/v1beta",
         GROQ to "https://api.groq.com/openai/v1",
         DEEPSEEK to "https://api.deepseek.com/v1",
         XAI to "https://api.x.ai/v1",

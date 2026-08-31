@@ -245,7 +245,7 @@ public class NativeInstance {
         try {
             String[] versions = getAllVersionsNative();
             return versions != null ? versions : new String[0];
-        } catch (UnsatisfiedLinkError | Throwable e) {
+        } catch (Throwable e) {
             org.telegram.messenger.FileLog.e("getAllVersions native failed", e);
             return new String[0];
         }

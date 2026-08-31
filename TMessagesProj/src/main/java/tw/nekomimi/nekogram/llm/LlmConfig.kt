@@ -4,7 +4,7 @@ import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.R
 import tw.nekomimi.nekogram.NekoConfig
 import tw.nekomimi.nekogram.config.ConfigItem
-import tw.nekomimi.nekogram.llm.net.VertexGeminiClient
+import tw.nekomimi.nekogram.llm.net.GeminiNativeClient
 import tw.nekomimi.nekogram.llm.preset.PresetRegistry
 import tw.nekomimi.nekogram.llm.utils.UrlNormalizer
 import tw.nekomimi.nekogram.translate.Translator
@@ -13,9 +13,14 @@ import xyz.nextalone.nagram.NaConfig
 object LlmConfig {
 
     @JvmStatic
+    fun isGeminiNative(preset: Int): Boolean {
+        return preset == PresetRegistry.GOOGLE_AGENT_PLATFORM || preset == PresetRegistry.GOOGLE_AI_STUDIO
+    }
+
+    @JvmStatic
     fun getDefaultModelName(preset: Int): String {
-        if (preset == PresetRegistry.GOOGLE_AGENT_PLATFORM) {
-            return VertexGeminiClient.MODELS[0]
+        if (isGeminiNative(preset)) {
+            return GeminiNativeClient.MODELS[0]
         }
         return getString(PresetRegistry.getDefaultModelResId(preset))
     }

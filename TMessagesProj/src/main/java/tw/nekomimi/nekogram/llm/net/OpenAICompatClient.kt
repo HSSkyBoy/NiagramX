@@ -1,4 +1,4 @@
-﻿package tw.nekomimi.nekogram.llm.net
+package tw.nekomimi.nekogram.llm.net
 
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -41,18 +41,19 @@ object OpenAICompatClient {
     }
 
     @JvmStatic
-    fun testChatCompletions(baseUrl: String?, apiKey: String?, model: String?): LlmResponse<String> {
+    fun testChatCompletions(preset: Int, baseUrl: String?, apiKey: String?, model: String?): LlmResponse<String> {
         return LlmTransport.test(model) { modelName, messages ->
-            chatCompletions(baseUrl, apiKey, modelName, messages, NaConfig.llmTemperature.Float(), LlmTransport.TEST_HTTP_CLIENT)
+            chatCompletions(preset, baseUrl, apiKey, modelName, messages, NaConfig.llmTemperature.Float(), LlmTransport.TEST_HTTP_CLIENT)
         }
     }
 
     @JvmStatic
-    fun chatCompletions(baseUrl: String?, apiKey: String?, model: String?, messages: JSONArray): LlmResponse<String> {
-        return chatCompletions(baseUrl, apiKey, model, messages, NaConfig.llmTemperature.Float(), LlmTransport.HTTP_CLIENT)
+    fun chatCompletions(preset: Int, baseUrl: String?, apiKey: String?, model: String?, messages: JSONArray): LlmResponse<String> {
+        return chatCompletions(preset, baseUrl, apiKey, model, messages, NaConfig.llmTemperature.Float(), LlmTransport.HTTP_CLIENT)
     }
 
     private fun chatCompletions(
+        preset: Int,
         baseUrl: String?,
         apiKey: String?,
         model: String?,
@@ -67,7 +68,7 @@ object OpenAICompatClient {
         return LlmTransport.executeWithOptionalParameters(credentials.baseUrl, model) { withOptionalParameters ->
             chatCompletions(
                 credentials,
-                buildRequest(credentials.baseUrl, model, messages, temperature, withOptionalParameters),
+                buildRequest(preset, model, messages, temperature, withOptionalParameters),
                 client
             )
         }
@@ -95,7 +96,7 @@ object OpenAICompatClient {
 
     @Throws(Exception::class)
     private fun buildRequest(
-        baseUrl: String,
+        preset: Int,
         model: String?,
         messages: JSONArray,
         temperature: Float?,
@@ -108,7 +109,7 @@ object OpenAICompatClient {
             if (temperature != null && ModelUtil.supportsTemperature(model)) {
                 requestJson.put("temperature", temperature)
             }
-            ModelUtil.applyReasoningParameters(requestJson, baseUrl, model)
+            ModelUtil.applyReasoningParameters(requestJson, preset, model)
         }
         return requestJson.toString()
     }
