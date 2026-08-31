@@ -239,5 +239,15 @@ public class NativeInstance {
     public native boolean hasVideoCapturer();
     public native void onRequestTimeComplete(long taskPtr, long time);
     public native void setConferenceCallId(long call_id);
-    public static native String[] getAllVersions();
+    private static native String[] getAllVersionsNative();
+
+    public static String[] getAllVersions() {
+        try {
+            String[] versions = getAllVersionsNative();
+            return versions != null ? versions : new String[0];
+        } catch (UnsatisfiedLinkError | Throwable e) {
+            org.telegram.messenger.FileLog.e("getAllVersions native failed", e);
+            return new String[0];
+        }
+    }
 }

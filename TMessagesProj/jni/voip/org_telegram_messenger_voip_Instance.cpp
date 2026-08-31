@@ -1276,7 +1276,7 @@ Java_org_telegram_messenger_voip_NativeInstance_setConferenceCallId(JNIEnv *env,
 
 extern "C"
 JNIEXPORT jobjectArray JNICALL
-Java_org_telegram_messenger_voip_NativeInstance_getAllVersions(JNIEnv* env) {
+Java_org_telegram_messenger_voip_NativeInstance_getAllVersionsNative(JNIEnv* env, jclass clazz) {
     std::vector<std::string> v = tgcalls::Meta::Versions();
     jclass stringClass = env->FindClass("java/lang/String");
     if (!stringClass) {
