@@ -4627,7 +4627,7 @@ public class ChatActivity extends BaseFragment implements
             }
 
             @Override
-            protected boolean isCentered() {
+            public boolean isCentered() {
                 return isTitleCentered();
             }
 

@@ -565,7 +565,7 @@ public class ChatAvatarContainer extends FrameLayout implements FactorAnimator.T
         return super.dispatchTouchEvent(ev);
     }
 
-    protected boolean isCentered() {
+    public boolean isCentered() {
         return false;
     }
 

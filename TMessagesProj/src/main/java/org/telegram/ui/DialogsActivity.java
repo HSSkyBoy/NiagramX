@@ -5525,8 +5525,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         undoView[0] = null;
         undoView[1] = null;
 
+        if (actionBar.getTitlesContainer() != null) {
+            actionBar.getTitlesContainer().setTranslationX(NaConfig.INSTANCE.getCenterActionBarTitle().Bool() && NaConfig.INSTANCE.getCenterActionBarTitleType().Int() != 3 ? -dp(6) : (hasMainTabs ? dp(4) : 0));
+        }
         if (hasMainTabs) {
-            actionBar.getTitlesContainer().setTranslationX(NaConfig.INSTANCE.getCenterActionBarTitle().Bool() && NaConfig.INSTANCE.getCenterActionBarTitleType().Int() != 3 ? 0 : dp(4));
             actionBar.setTitleColor(getThemedColor(Theme.key_telegram_color_dialogsLogo));
         }
 

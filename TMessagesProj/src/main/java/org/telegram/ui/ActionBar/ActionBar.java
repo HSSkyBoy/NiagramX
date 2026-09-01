@@ -2336,10 +2336,10 @@ public class ActionBar extends FrameLayout implements FactorAnimator.Target, The
                 left = (rightDefault + leftDefault - width) / 2;
                 right = left + width;
 
-                final float translationX = left
+                final float translationX = chatAvatarContainer.isCentered() ? 0 : (left
                     - ((MarginLayoutParams)(chatAvatarContainer.getLayoutParams())).leftMargin
                     - chatAvatarContainer.getLeftPadding()
-                    + p + dp(3);
+                    + p + dp(3));
                 chatAvatarContainer.setTranslationX(translationX);
                 chatAvatarContainer.setPivotX((chatAvatarContainer.getMeasuredWidth()) / 2f - translationX );
             } else {
