@@ -17,6 +17,8 @@
     <string name="ToTheBeginning">回到顶部</string>
     <string name="DateOfForwardedMsg">显示转发消息日期</string>
     <string name="ShowMessageID">显示消息 ID</string>
+    <string name="HideReadReceiptsLocally">本地隐藏已读标记</string>
+    <string name="HideReadReceiptsLocallyNotice">自己发送的消息即使对方已读，本地也始终显示为单勾。</string>
     <string name="ShowRPCError">显示 RPC 错误</string>
     <string name="AppIconNeko">经典猫猫</string>
     <string name="AppIconNekoDark">暗夜猫猫</string>

@@ -198,6 +198,12 @@ object NaConfig {
             ConfigItem.configTypeBool,
             false
         )
+    val hideReadReceiptsLocally =
+        addConfig(
+            "HideReadReceiptsLocally",
+            ConfigItem.configTypeBool,
+            false
+        )
     val showRPCError =
         addConfig(
             "ShowRPCError",

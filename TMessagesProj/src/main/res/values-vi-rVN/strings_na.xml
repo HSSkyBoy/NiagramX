@@ -17,6 +17,8 @@
     <string name="ToTheBeginning">Về đầu cuộc trò chuyện</string>
     <string name="DateOfForwardedMsg">Hiển thị ngày trên tin nhắn được chuyển tiếp</string>
     <string name="ShowMessageID">Hiển thị ID tin nhắn</string>
+    <string name="HideReadReceiptsLocally">Ẩn thông báo đã đọc cục bộ</string>
+    <string name="HideReadReceiptsLocallyNotice">Luôn hiển thị tin nhắn đã gửi với một dấu tích cục bộ ngay cả khi người nhận đã đọc.</string>
     <string name="ShowRPCError">Lỗi RPC Toast</string>
     <string name="ShowPremiumStickersAnimation">Hiển thị hoạt ảnh của nhãn dán cao cấp</string>
     <string name="AppIconNeko">Neko</string>

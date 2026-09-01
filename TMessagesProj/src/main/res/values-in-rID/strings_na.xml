@@ -17,6 +17,8 @@
     <string name="ToTheBeginning">Ke Awal</string>
     <string name="DateOfForwardedMsg">Tampilkan Tanggal pada Pesan yang Diteruskan</string>
     <string name="ShowMessageID">Tampilkan ID Pesan</string>
+    <string name="HideReadReceiptsLocally">Sembunyikan tanda dibaca secara lokal</string>
+    <string name="HideReadReceiptsLocallyNotice">Selalu tampilkan pesan terkirim dengan satu centang secara lokal meskipun telah dibaca oleh penerima.</string>
     <string name="ShowRPCError">Beritahu Kesalahan RPC</string>
     <string name="ShowPremiumStickersAnimation">Tampilkan Animasi Stiker Premium</string>
     <string name="AppIconNeko">Neko</string>

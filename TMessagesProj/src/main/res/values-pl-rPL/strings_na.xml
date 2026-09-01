@@ -17,6 +17,8 @@
     <string name="ToTheBeginning">Do początku</string>
     <string name="DateOfForwardedMsg">Pokaż datę w przekazanych wiadomościach</string>
     <string name="ShowMessageID">Pokaż identyfikator wiadomości</string>
+    <string name="HideReadReceiptsLocally">Ukryj potwierdzenia przeczytania lokalnie</string>
+    <string name="HideReadReceiptsLocallyNotice">Zawsze wyświetlaj wysłane wiadomości z jednym haczykiem lokalnie, nawet po przeczytaniu przez odbiorcę.</string>
     <string name="ShowRPCError">Pokaż błędy RPC</string>
     <string name="ShowPremiumStickersAnimation">Pokaż animację naklejek premium</string>
     <string name="AppIconNeko">Neko</string>

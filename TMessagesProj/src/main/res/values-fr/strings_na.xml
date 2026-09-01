@@ -15,4 +15,6 @@
     <string name="ForwardTextPlaceholder">Texte du message</string>
     <string name="ForwardTextCopyNotice">Sera envoyé comme une copie de votre part, sans étiquette de transfert</string>
     <string name="ForwardTextEmptyNotice">Le texte du message ne peut pas être vide</string>
+    <string name="HideReadReceiptsLocally">Masquer les accusés de lecture localement</string>
+    <string name="HideReadReceiptsLocallyNotice">Toujours afficher vos messages envoyés avec une seule coche localement, même après lecture par le destinataire.</string>
 </resources>

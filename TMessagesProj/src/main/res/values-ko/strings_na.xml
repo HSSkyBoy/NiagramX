@@ -17,6 +17,8 @@
     <string name="ToTheBeginning">처음으로</string>
     <string name="DateOfForwardedMsg">전달된 메시지에 날짜 표시</string>
     <string name="ShowMessageID">메시지 ID 표시</string>
+    <string name="HideReadReceiptsLocally">읽음 확인 로컬에서 숨기기</string>
+    <string name="HideReadReceiptsLocallyNotice">상대방이 메시지를 읽더라도 로컬에서는 항상 체크 표시 1개(전송됨)로 표시합니다.</string>
     <string name="ShowRPCError">RPC 오류 토스트 표시</string>
     <string name="ShowPremiumStickersAnimation">Premium 스티커 애니메이션 표시</string>
     <string name="AppIconNeko">Neko</string>

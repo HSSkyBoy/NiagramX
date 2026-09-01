@@ -17,6 +17,8 @@
     <string name="ToTheBeginning">Saltar al inicio</string>
     <string name="DateOfForwardedMsg">Mostrar fecha en los mensajes reenviados</string>
     <string name="ShowMessageID">Mostrar ID del mensaje</string>
+    <string name="HideReadReceiptsLocally">Ocultar confirmaciones de lectura localmente</string>
+    <string name="HideReadReceiptsLocallyNotice">Muestra siempre los mensajes enviados con una sola marca localmente, incluso después de que el destinatario los haya leído.</string>
     <string name="ShowRPCError">Errores RPC Toast</string>
     <string name="ShowPremiumStickersAnimation">Mostrar Animación de Stickers Premium</string>
     <string name="AppIconNeko">Neko</string>

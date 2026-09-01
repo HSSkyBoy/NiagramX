@@ -17,6 +17,8 @@
     <string name="ToTheBeginning">先頭に戻る</string>
     <string name="DateOfForwardedMsg">転送メッセージの日付を表示</string>
     <string name="ShowMessageID">メッセージ ID を表示</string>
+    <string name="HideReadReceiptsLocally">既読マークをローカルで非表示</string>
+    <string name="HideReadReceiptsLocallyNotice">相手がメッセージを既読にしても、ローカル上では常に未読（チェック1つ）で表示します。</string>
     <string name="ShowRPCError">RPC エラーを表示</string>
     <string name="ShowPremiumStickersAnimation">プレミアムステッカーアニメーションを表示</string>
     <string name="AppIconNeko">Neko</string>

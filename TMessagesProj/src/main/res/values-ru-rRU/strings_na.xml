@@ -17,6 +17,8 @@
     <string name="ToTheBeginning">К началу</string>
     <string name="DateOfForwardedMsg">Показывать дату пересылки сообщений</string>
     <string name="ShowMessageID">Показывать ID сообщения</string>
+    <string name="HideReadReceiptsLocally">Скрывать отметку о прочтении локально</string>
+    <string name="HideReadReceiptsLocallyNotice">Всегда отображать отправленные сообщения с одной галочкой локально, даже если они прочитаны собеседником.</string>
     <string name="ShowRPCError">Показывать ошибки RPC</string>
     <string name="ShowPremiumStickersAnimation">Показывать анимацию Premium-стикеров</string>
     <string name="AppIconNeko">Neko</string>

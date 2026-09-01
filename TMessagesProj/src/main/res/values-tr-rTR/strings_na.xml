@@ -17,6 +17,8 @@
     <string name="ToTheBeginning">Başa Dön</string>
     <string name="DateOfForwardedMsg">İletilen Mesajlarda Tarihi Göster</string>
     <string name="ShowMessageID">Mesaj Kimliğini (ID) Göster</string>
+    <string name="HideReadReceiptsLocally">Okundu bilgisini yerel olarak gizle</string>
+    <string name="HideReadReceiptsLocallyNotice">Gönderilen mesajları, alıcı tarafından okunmuş olsa bile yerel olarak her zaman tek onay işaretiyle göster.</string>
     <string name="ShowRPCError">RPC Hatalarını Ekranda Bildir (Toast)</string>
     <string name="ShowPremiumStickersAnimation">Premium Çıkartma Animasyonlarını Göster</string>
     <string name="AppIconNeko">Neko</string>

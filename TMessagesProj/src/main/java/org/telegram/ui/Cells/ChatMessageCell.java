@@ -29496,7 +29496,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                     drawClock = false;
                     drawError = true;
                 } else if (currentMessageObject.isSent()) {
-                    if (!currentMessageObject.scheduled && !currentMessageObject.isUnread()) {
+                    if (!currentMessageObject.scheduled && !currentMessageObject.isUnread() && !NaConfig.INSTANCE.getHideReadReceiptsLocally().Bool()) {
                         drawCheck1 = true;
                     } else {
                         drawCheck1 = false;

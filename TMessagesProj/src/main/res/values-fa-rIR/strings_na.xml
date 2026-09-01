@@ -17,6 +17,8 @@
     <string name="ToTheBeginning">شروع کردن</string>
     <string name="DateOfForwardedMsg">نمایش تاریخ در پیام‌های فوروارد شده</string>
     <string name="ShowMessageID">نمایش شناسه پیام</string>
+    <string name="HideReadReceiptsLocally">پنهان کردن وضعیت خوانده شدن به صورت محلی</string>
+    <string name="HideReadReceiptsLocallyNotice">پیام‌های ارسال‌شده حتی پس از خوانده شدن توسط مخاطب، به صورت محلی همیشه با یک تیک نمایش داده شوند.</string>
     <string name="ShowRPCError">گزارش خطاهای PRC</string>
     <string name="ShowPremiumStickersAnimation">نمایش انیمیشن استیکرهای پریمیوم</string>
     <string name="AppIconNeko">Neko</string>
