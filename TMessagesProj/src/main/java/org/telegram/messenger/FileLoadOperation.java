@@ -288,10 +288,18 @@ public class FileLoadOperation {
     }
 
     private void updateParams() {
-        if ((preloadPrefixSize > 0 || MessagesController.getInstance(currentAccount).getfileExperimentalParams || NekoConfig.enhancedFileLoader.Bool()) && !forceSmallChunk) {
-            downloadChunkSizeBig = 1024 * 512;
-            maxDownloadRequests = 8;
-            maxDownloadRequestsBig = 8;
+        int boostMode = NekoConfig.enhancedFileLoader.Int();
+        boolean isExperimental = MessagesController.getInstance(currentAccount).getfileExperimentalParams;
+        if ((preloadPrefixSize > 0 || isExperimental || boostMode > NekoConfig.ENHANCED_LOADER_OFF) && !forceSmallChunk) {
+            if (boostMode == NekoConfig.ENHANCED_LOADER_EXTREME || (boostMode == NekoConfig.ENHANCED_LOADER_OFF && isExperimental)) {
+                downloadChunkSizeBig = 1024 * 512;
+                maxDownloadRequests = 8;
+                maxDownloadRequestsBig = 8;
+            } else {
+                downloadChunkSizeBig = 1024 * 256;
+                maxDownloadRequests = 6;
+                maxDownloadRequestsBig = 6;
+            }
         } else {
             downloadChunkSizeBig = 1024 * 128;
             maxDownloadRequests = 4;

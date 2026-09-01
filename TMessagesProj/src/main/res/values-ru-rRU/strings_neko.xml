@@ -108,6 +108,11 @@
     <string name="DatacenterStatusAbout">Проверьте состояние **дата-центров** Telegram.</string>
     <string name="DatacenterStatus">Состояние дата-центров</string>
     <string name="enhancedFileLoader">Увеличить скорость загрузки</string>
+    <string name="enhancedFileLoaderOff">Выкл (4×128 КБ)</string>
+    <string name="enhancedFileLoaderBalanced">Сбалансированный (6×256 КБ)</string>
+    <string name="enhancedFileLoaderExtreme">Максимальный (8×512 КБ)</string>
+    <string name="enhancedFileLoaderBalancedNotice">Сбалансированный режим (6×256 КБ) значительно увеличивает скорость загрузки и предотвращает ограничение скорости сервером Telegram для обычных аккаунтов.</string>
+    <string name="enhancedFileLoaderExtremeNotice">Максимальный режим (8×512 КБ) загружает файлы с максимальным числом параллельных запросов.\n\n⚠️ Внимание: Для аккаунтов без Telegram Premium при загрузке больших файлов (около 65–75 МБ) возможна пауза на 7–10 секунд из-за серверных ограничений пропускной способности. В таком случае рекомендуется использовать «Сбалансированный» режим.</string>
     <string name="mapDriftingFixForGoogleMaps">Исправить дрейф Google Карт в Китае</string>
     <string name="useOSMDroidMap">Использовать карту OSMDroid</string>
     <string name="UnknownNekoSettingsOption">В «Настройках N» нет такой опции.</string>

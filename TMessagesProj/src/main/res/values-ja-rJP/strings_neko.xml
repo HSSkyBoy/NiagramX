@@ -108,6 +108,11 @@
     <string name="DatacenterStatusAbout">Telegram の**データセンター**の状態を確認します。</string>
     <string name="DatacenterStatus">データセンターの状態</string>
     <string name="enhancedFileLoader">ダウンロード速度の高速化</string>
+    <string name="enhancedFileLoaderOff">無効（4×128KB）</string>
+    <string name="enhancedFileLoaderBalanced">バランス（6×256KB）</string>
+    <string name="enhancedFileLoaderExtreme">最大（8×512KB）</string>
+    <string name="enhancedFileLoaderBalancedNotice">バランスモード（6×256KB）はダウンロード速度を大幅に向上させつつ、一般アカウントでのサーバー側レート制限を回避します。通常利用に推奨されます。</string>
+    <string name="enhancedFileLoaderExtremeNotice">最大モード（8×512KB）は最大並列リクエストでダウンロードします。\n\n⚠️ 注意: Telegram Premium 未加入アカウントの場合、大容量ファイル（約65〜75MB付近）のダウンロード時にサーバー側の帯域制限により7〜10秒程度一時停止することがあります。停止が発生する場合は「バランス」モードへの切り替えを推奨します。</string>
     <string name="mapDriftingFixForGoogleMaps">中国における Google マップのずれを修正</string>
     <string name="useOSMDroidMap">OSMDroid マップを使用</string>
     <string name="UnknownNekoSettingsOption">そのようなNeo 設定オプションはありません。</string>

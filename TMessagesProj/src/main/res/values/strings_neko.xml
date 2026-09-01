@@ -111,6 +111,11 @@
     <string name="DatacenterStatusAbout">Check the status of Telegram\'s **datacenters**.</string>
     <string name="DatacenterStatus">Datacenter Status</string>
     <string name="enhancedFileLoader">Download Speed Boost</string>
+    <string name="enhancedFileLoaderOff">Off (4×128KB)</string>
+    <string name="enhancedFileLoaderBalanced">Balanced (6×256KB)</string>
+    <string name="enhancedFileLoaderExtreme">Extreme (8×512KB)</string>
+    <string name="enhancedFileLoaderBalancedNotice">Balanced (6×256KB) significantly boosts download speed while avoiding server-side rate limits on non-Premium accounts. Recommended for general use.</string>
+    <string name="enhancedFileLoaderExtremeNotice">Extreme (8×512KB) downloads with maximum parallel requests.\n\n⚠️ Notice: For non-Telegram Premium accounts, downloading large files may temporarily stall for 7-10 seconds around 65-75MB due to Telegram server-side bandwidth throttling. If you experience stalls, please switch to Balanced mode.</string>
     <string name="mapDriftingFixForGoogleMaps">Fix Google Maps Drifting in China</string>
     <string name="useOSMDroidMap">Use OSMDroid Map</string>
     <string name="UnknownNekoSettingsOption">There is no such Neo-Settings option.</string>

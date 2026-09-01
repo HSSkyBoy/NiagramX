@@ -98,7 +98,15 @@ public class NekoExperimentalSettingsActivity extends BaseNekoXSettingsActivity 
     // Connections
     private final AbstractConfigCell headerConnection = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.Connection)));
     private final AbstractConfigCell boostUploadRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.uploadBoost));
-    private final AbstractConfigCell enhancedFileLoaderRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.enhancedFileLoader));
+    private final AbstractConfigCell enhancedFileLoaderRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NekoConfig.enhancedFileLoader, new String[]{
+            getString(R.string.enhancedFileLoaderOff),
+            getString(R.string.enhancedFileLoaderBalanced),
+            getString(R.string.enhancedFileLoaderExtreme)
+    }, new int[]{
+            NekoConfig.ENHANCED_LOADER_OFF,
+            NekoConfig.ENHANCED_LOADER_BALANCED,
+            NekoConfig.ENHANCED_LOADER_EXTREME
+    }, null));
     private final AbstractConfigCell dividerConnection = cellGroup.appendCell(new ConfigCellDivider());
 
     // Media
@@ -197,6 +205,21 @@ public class NekoExperimentalSettingsActivity extends BaseNekoXSettingsActivity 
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
             } else if (key.equals(NaConfig.INSTANCE.getHideStoriesFromHeader().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
+            } else if (key.equals(NekoConfig.enhancedFileLoader.getKey())) {
+                final int mode = (int) newValue;
+                if (mode == NekoConfig.ENHANCED_LOADER_BALANCED) {
+                    showDialog(new AlertDialog.Builder(getParentActivity(), getResourceProvider())
+                            .setTitle(getString(R.string.enhancedFileLoader))
+                            .setMessage(getString(R.string.enhancedFileLoaderBalancedNotice))
+                            .setPositiveButton(getString(R.string.OK), null)
+                            .create());
+                } else if (mode == NekoConfig.ENHANCED_LOADER_EXTREME) {
+                    showDialog(new AlertDialog.Builder(getParentActivity(), getResourceProvider())
+                            .setTitle(getString(R.string.enhancedFileLoader))
+                            .setMessage(getString(R.string.enhancedFileLoaderExtremeNotice))
+                            .setPositiveButton(getString(R.string.OK), null)
+                            .create());
+                }
             }
         };
 

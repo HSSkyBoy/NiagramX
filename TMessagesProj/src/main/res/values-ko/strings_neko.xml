@@ -108,6 +108,11 @@
     <string name="DatacenterStatusAbout">Telegram **데이터센터** 상태를 확인합니다.</string>
     <string name="DatacenterStatus">데이터센터 상태</string>
     <string name="enhancedFileLoader">다운로드 속도 향상</string>
+    <string name="enhancedFileLoaderOff">사용 안 함 (4×128KB)</string>
+    <string name="enhancedFileLoaderBalanced">균형 가속 (6×256KB)</string>
+    <string name="enhancedFileLoaderExtreme">최대 가속 (8×512KB)</string>
+    <string name="enhancedFileLoaderBalancedNotice">균형 가속(6×256KB) 모드는 다운로드 속도를 크게 향상시키면서 일반 계정의 서버 측 속도 제한을 방지합니다. 일반 사용 시 권장됩니다.</string>
+    <string name="enhancedFileLoaderExtremeNotice">최대 가속(8×512KB) 모드는 최대 병렬 요청 수로 다운로드합니다.\n\n⚠️ 주의: Telegram Premium 미가입 계정의 경우 대용량 파일(약 65~75MB 구간) 다운로드 시 서버 측 대역폭 제한으로 인해 7~10초간 일시 중단될 수 있습니다. 중단 현상이 발생하면 \'균형 가속\' 모드로 변경하는 것을 권장합니다.</string>
     <string name="mapDriftingFixForGoogleMaps">중국에서 Google Maps 위치 밀림 수정</string>
     <string name="useOSMDroidMap">OSMDroid 지도 사용</string>
     <string name="UnknownNekoSettingsOption">해당 N-Settings 옵션이 없습니다.</string>

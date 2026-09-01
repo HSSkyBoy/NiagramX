@@ -111,6 +111,11 @@
     <string name="DatacenterStatusAbout">檢查 Telegram **資料中心**的狀態。</string>
     <string name="DatacenterStatus">資料中心狀態</string>
     <string name="enhancedFileLoader">下載加速</string>
+    <string name="enhancedFileLoaderOff">關閉（4×128KB）</string>
+    <string name="enhancedFileLoaderBalanced">平衡加速（6×256KB）</string>
+    <string name="enhancedFileLoaderExtreme">極限加速（8×512KB）</string>
+    <string name="enhancedFileLoaderBalancedNotice">平衡加速（6×256KB）在大幅提升下載速度的同時，能有效避免非 Telegram Premium 帳號觸發伺服器頻寬風控，推薦一般用戶使用。</string>
+    <string name="enhancedFileLoaderExtremeNotice">極限加速（8×512KB）將以最大並發請求下載。\n\n⚠️ 注意：非 Telegram Premium 帳號在下載大檔案（約 65MB~75MB 處）可能會因觸發 Telegram 伺服器頻寬風控而暫停 7~10 秒，此屬伺服器正常限制；如遇到此情況，建議切換為「平衡加速」。</string>
     <string name="mapDriftingFixForGoogleMaps">修正在中國使用 Google 地圖時的定位飄移問題</string>
     <string name="useOSMDroidMap">使用 OSMDroid 地圖</string>
     <string name="UnknownNekoSettingsOption">找不到這個 Neo 設定選項。</string>

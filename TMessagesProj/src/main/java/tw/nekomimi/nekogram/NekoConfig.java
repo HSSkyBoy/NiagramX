@@ -187,8 +187,12 @@ public class NekoConfig {
     public static ConfigItem disableAutoDownloadingWin32Executable = addConfig("Win32ExecutableFiles", configTypeBool, true);
     public static ConfigItem disableAutoDownloadingArchive = addConfig("ArchiveFiles", configTypeBool, true);
 
+    public static final int ENHANCED_LOADER_OFF = 0;
+    public static final int ENHANCED_LOADER_BALANCED = 1;
+    public static final int ENHANCED_LOADER_EXTREME = 2;
+
     public static ConfigItem customAudioBitrate = addConfig("customAudioBitrate", configTypeInt, 32);
-    public static ConfigItem enhancedFileLoader = addConfig("enhancedFileLoader", configTypeBool, false);
+    public static ConfigItem enhancedFileLoader = addConfig("enhancedFileLoader", configTypeInt, ENHANCED_LOADER_OFF);
     public static ConfigItem uploadBoost = addConfig("uploadBoost", configTypeBool, false);
     public static ConfigItem useOSMDroidMap = addConfig("useOSMDroidMap", configTypeBool, false);
     public static ConfigItem mapDriftingFixForGoogleMaps = addConfig("mapDriftingFixForGoogleMaps", configTypeBool, true);
@@ -248,7 +252,17 @@ public class NekoConfig {
                         o.value = getPreferences().getBoolean(o.key, (boolean) o.defaultValue);
                     }
                     if (o.type == configTypeInt) {
-                        o.value = getPreferences().getInt(o.key, (int) o.defaultValue);
+                        try {
+                            o.value = getPreferences().getInt(o.key, (int) o.defaultValue);
+                        } catch (ClassCastException e) {
+                            try {
+                                boolean oldBool = getPreferences().getBoolean(o.key, false);
+                                o.value = oldBool ? ENHANCED_LOADER_BALANCED : ENHANCED_LOADER_OFF;
+                                getPreferences().edit().putInt(o.key, (int) o.value).apply();
+                            } catch (Exception ignored) {
+                                o.value = o.defaultValue;
+                            }
+                        }
                     }
                     if (o.type == configTypeLong) {
                         o.value = getPreferences().getLong(o.key, (Long) o.defaultValue);
