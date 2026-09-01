@@ -4096,6 +4096,8 @@ public class TLRPC {
         public boolean has_unread_votes;
         public boolean can_view_stats;
 
+        public String translatedSolution; // custom
+
         private static PollResults fromConstructor(int constructor) {
             switch (constructor) {
                 case TL_pollResults_layer108.constructor:

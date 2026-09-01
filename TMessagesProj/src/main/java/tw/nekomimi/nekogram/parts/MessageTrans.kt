@@ -431,6 +431,20 @@ private suspend fun ChatActivity.translatePoll(
         answer.translatedText = translatedAnswer
     }
 
+    // Translate solution / explanation (if present)
+    val media = msg.messageOwner.media as TLRPC.TL_messageMediaPoll
+    if (media.results != null && !media.results.solution.isNullOrEmpty()) {
+        val translatedSolution = runCatching {
+            Translator.translate(target, media.results.solution, provider)
+        }.getOrElse { e ->
+            handleTranslationError(parentActivity, e, msg, translateController) {
+                translateMessages(target, provider, listOf(msg))
+            }
+            return false
+        }
+        media.results.translatedSolution = translatedSolution
+    }
+
     return true
 }
 
@@ -673,8 +687,12 @@ private fun MessageObject.matchesCachedLanguage(targetLanguage: String): Boolean
 }
 
 private fun MessageObject.isTranslatedPoll() =
-    isPoll && (messageOwner.media as? TLRPC.TL_messageMediaPoll)?.poll?.let { poll ->
-        poll.translatedQuestion?.isNotEmpty() == true && poll.answers.all { it.translatedText?.isNotEmpty() == true }
+    isPoll && (messageOwner.media as? TLRPC.TL_messageMediaPoll)?.let { media ->
+        val poll = media.poll
+        val questionOk = poll.translatedQuestion?.isNotEmpty() == true
+        val answersOk = poll.answers.all { it.translatedText?.isNotEmpty() == true }
+        val solutionOk = media.results?.solution.isNullOrEmpty() || media.results?.translatedSolution?.isNotEmpty() == true
+        questionOk && answersOk && solutionOk
     } ?: false
 
 private suspend fun translateText(

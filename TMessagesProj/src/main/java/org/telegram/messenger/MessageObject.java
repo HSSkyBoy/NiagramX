@@ -3755,6 +3755,12 @@ public class MessageObject {
             summarized = false;
             if (type == TYPE_ARTICLE) {
                 generateLayout(null);
+            } else if (type == TYPE_POLL) {
+                generateExplanation();
+                if (translatedText != null) {
+                    applyNewText(translatedDisplayText);
+                    generateCaption();
+                }
             } else if (translatedText != null) {
                 applyNewText(translatedDisplayText);
                 generateCaption();
@@ -3765,6 +3771,13 @@ public class MessageObject {
             summarized = false;
             if (type == TYPE_ARTICLE) {
                 generateLayout(null);
+            } else if (type == TYPE_POLL) {
+                generateExplanation();
+                if (translatedText != null) {
+                    messageOwner.translated = translated;
+                    applyNewText(messageOwner.message);
+                    generateCaption();
+                }
             } else {
                 messageOwner.translated = translated;
                 applyNewText(messageOwner.message);
@@ -7631,8 +7644,15 @@ public class MessageObject {
         if (m instanceof TLRPC.TL_messageMediaPoll) {
             TLRPC.TL_messageMediaPoll media = (TLRPC.TL_messageMediaPoll) m;
             if (media.results != null) {
-                text = media.results.solution;
-                entities = media.results.solution_entities;
+                if (translated && !TextUtils.isEmpty(media.results.translatedSolution)) {
+                    text = media.results.translatedSolution;
+                } else if (translated && messageOwner != null && messageOwner.translatedPoll != null && messageOwner.translatedPoll.solution != null) {
+                    text = messageOwner.translatedPoll.solution.text;
+                    entities = messageOwner.translatedPoll.solution.entities;
+                } else {
+                    text = media.results.solution;
+                    entities = media.results.solution_entities;
+                }
             }
         }
 

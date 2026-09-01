@@ -11446,10 +11446,11 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             lastPollResults = media.results.results;
             lastPollResultsObj = media.results;
             lastPollResultsVoters = media.results.total_voters;
-            currentExplanation = messageObject.quizExplanation;
-            if (currentExplanation == null && !TextUtils.isEmpty(media.results.solution)) {
+            if (media.results != null && !TextUtils.isEmpty(media.results.solution)) {
                 messageObject.generateExplanation();
                 currentExplanation = messageObject.quizExplanation;
+            } else {
+                currentExplanation = null;
             }
             if (currentExplanation != null) {
                 if (closeExplanationDrawable == null) {
