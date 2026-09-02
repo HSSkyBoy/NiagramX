@@ -41,9 +41,11 @@ public class UpdateHelper extends BaseRemoteHelper {
     public static final String GITHUB_RELEASE_API_URL = "https://api.github.com/repos/HSSkyBoy/NiagramX/releases/latest";
     public static final String GITHUB_RELEASE_API_FALLBACK = "https://api.github.com/repos/HSSkyBoy/Nigram/releases/latest";
 
-    private static final Pattern APK_FILENAME_PATTERN = Pattern.compile(".*v?([0-9.]+)-([a-f0-9]+)\\(([0-9]+)\\)-([a-zA-Z0-9_]+)\\.apk", Pattern.CASE_INSENSITIVE);
+    private static final Pattern APK_FILENAME_PATTERN = Pattern.compile(
+            ".*?v?([0-9.]+)(?:-([a-f0-9]+))?(?:[.(]([0-9]+)[.)])?-([a-zA-Z0-9_.-]+)\\.apk",
+            Pattern.CASE_INSENSITIVE
+    );
 
-    private static final String[] ABI_FALLBACK_ORDER = {"arm64-v8a", "x86_64", "universal"};
 
     public static UpdateHelper getInstance() {
         return InstanceHolder.instance;
@@ -166,6 +168,15 @@ public class UpdateHelper extends BaseRemoteHelper {
         }
     }
 
+    public static String extractAbi(String fileName) {
+        if (TextUtils.isEmpty(fileName)) return null;
+        String lower = fileName.toLowerCase();
+        if (lower.contains("arm64-v8a")) return "arm64-v8a";
+        if (lower.contains("x86_64")) return "x86_64";
+        if (lower.contains("universal")) return "universal";
+        return null;
+    }
+
     private Map<String, String> collectApkUrlsByAbi(JSONArray assets) throws JSONException {
         Map<String, String> urls = new HashMap<>();
         for (int i = 0; i < assets.length(); i++) {
@@ -174,12 +185,9 @@ public class UpdateHelper extends BaseRemoteHelper {
             String downloadUrl = asset.optString("browser_download_url", "");
             if (!name.endsWith(".apk")) continue;
 
-            if (name.contains("arm64-v8a")) {
-                urls.put("arm64-v8a", downloadUrl);
-            } else if (name.contains("x86_64")) {
-                urls.put("x86_64", downloadUrl);
-            } else if (name.contains("universal")) {
-                urls.put("universal", downloadUrl);
+            String abi = extractAbi(name);
+            if (abi != null) {
+                urls.put(abi, downloadUrl);
             }
         }
         return urls;
@@ -332,16 +340,20 @@ public class UpdateHelper extends BaseRemoteHelper {
                 if (!matcher.matches()) continue;
 
                 String version = matcher.group(1);
-                String commit = matcher.group(2);
+                String commit = matcher.group(2) != null ? matcher.group(2) : "";
                 int versionCode = tryParseIntOrZero(matcher.group(3));
-                String abi = matcher.group(4);
+                String abi = extractAbi(fileName);
+                if (abi == null && matcher.group(4) != null) {
+                    abi = matcher.group(4).toLowerCase();
+                }
 
                 if (group == null) {
                     group = new ApkReleaseGroup(version, commit, versionCode, message.grouped_id);
                 }
 
                 boolean isSameRelease = (group.groupedId != 0 && message.grouped_id == group.groupedId)
-                        || group.commit.equalsIgnoreCase(commit);
+                        || (!TextUtils.isEmpty(group.commit) && group.commit.equalsIgnoreCase(commit))
+                        || (group.versionCode != 0 && group.versionCode == versionCode);
                 if (!isSameRelease) continue;
 
                 if (abi != null) {
@@ -398,15 +410,25 @@ public class UpdateHelper extends BaseRemoteHelper {
     private <T> T pickByAbiPreference(Map<String, T> map) {
         if (map == null || map.isEmpty()) return null;
 
-        for (String abi : Build.SUPPORTED_ABIS) {
-            T value = map.get(abi.toLowerCase());
-            if (value != null) return value;
+        if (Build.SUPPORTED_ABIS != null) {
+            for (String abi : Build.SUPPORTED_ABIS) {
+                if (abi == null) continue;
+                String lower = abi.toLowerCase();
+                if ("arm64-v8a".equals(lower) && map.containsKey("arm64-v8a")) {
+                    return map.get("arm64-v8a");
+                }
+                if ("x86_64".equals(lower) && map.containsKey("x86_64")) {
+                    return map.get("x86_64");
+                }
+            }
         }
-        for (String abi : ABI_FALLBACK_ORDER) {
-            T value = map.get(abi);
-            if (value != null) return value;
+
+        // v7a or any other architecture downloads universal
+        if (map.containsKey("universal")) {
+            return map.get("universal");
         }
-        return map.values().iterator().next();
+
+        return null;
     }
 
     private void notifyDelegate(Delegate delegate, TLRPC.TL_help_appUpdate update, String error) {
