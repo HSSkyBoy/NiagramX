@@ -560,7 +560,7 @@
             android:excludeFromRecents="true"
             android:theme="@style/Theme.TMessages.TransparentWithAlerts"/>
         <activity
-            android:name="tw.nekomimi.nekogram.helpers.AppRestartHelper"
+            android:name="top.nkbe.niagram.helpers.AppRestartHelper"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:process=":niagramx"
             android:exported="false"
@@ -850,7 +850,7 @@
 
         <provider
             android:authorities="${applicationId}.streaming"
-            android:name="tw.nekomimi.nekogram.streaming.MediaStreamingProvider"
+            android:name="top.nkbe.niagram.streaming.MediaStreamingProvider"
             android:exported="false"
             android:grantUriPermissions="true"/>
 
@@ -862,7 +862,7 @@
             android:name="google_analytics_adid_collection_enabled"
             android:value="false" />
 
-        <receiver android:name="tw.nekomimi.nekogram.SaveToDownloadReceiver" android:exported="false">
+        <receiver android:name="top.nkbe.niagram.SaveToDownloadReceiver" android:exported="false">
             <intent-filter>
                 <action android:name="${applicationId}.CANCEL_SAVE_TO_DOWNLOAD" />
             </intent-filter>

@@ -140,8 +140,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.helpers.MessageHelper;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.helpers.MessageHelper;
 import xyz.nextalone.nagram.NaConfig;
 import xyz.nextalone.nagram.helper.ForwardTextEdit;
 

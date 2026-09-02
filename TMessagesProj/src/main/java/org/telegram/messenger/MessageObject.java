@@ -127,11 +127,11 @@ import java.util.regex.Pattern;
 
 import me.vkryl.core.BitwiseUtils;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.filters.ReactionFilter;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.filters.ReactionFilter;
 import xyz.nextalone.nagram.NaConfig;
-import tw.nekomimi.nekogram.helpers.MessageHelper;
-import tw.nekomimi.nekogram.syntaxhighlight.SyntaxHighlight;
+import top.nkbe.niagram.helpers.MessageHelper;
+import top.nkbe.niagram.syntaxhighlight.SyntaxHighlight;
 
 public class MessageObject {
     private static final int MESSAGE_ID_RESERVED_BITS_MASK = 0x70000000;

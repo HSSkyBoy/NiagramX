@@ -89,15 +89,15 @@ import java.util.Collections;
 
 import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
-import tw.nekomimi.nekogram.BackButtonMenuRecent;
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.helpers.AppRestartHelper;
-import tw.nekomimi.nekogram.helpers.MainTabsHelper;
-import tw.nekomimi.nekogram.helpers.PasscodeHelper;
-import tw.nekomimi.nekogram.settings.GhostModeActivity;
-import tw.nekomimi.nekogram.settings.NekoSettingsActivity;
-import tw.nekomimi.nekogram.ui.BookmarkManagerActivity;
-import tw.nekomimi.nekogram.utils.BrowserUtils;
+import top.nkbe.niagram.BackButtonMenuRecent;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.helpers.AppRestartHelper;
+import top.nkbe.niagram.helpers.MainTabsHelper;
+import top.nkbe.niagram.helpers.PasscodeHelper;
+import top.nkbe.niagram.settings.GhostModeActivity;
+import top.nkbe.niagram.settings.NekoSettingsActivity;
+import top.nkbe.niagram.ui.BookmarkManagerActivity;
+import top.nkbe.niagram.utils.BrowserUtils;
 import xyz.nextalone.nagram.NaConfig;
 
 public class MainTabsActivity extends ViewPagerActivity implements NotificationCenter.NotificationCenterDelegate, FactorAnimator.Target {

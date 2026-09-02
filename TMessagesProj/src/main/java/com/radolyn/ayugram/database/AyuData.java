@@ -40,9 +40,9 @@ import org.telegram.ui.LaunchActivity;
 import java.io.File;
 import java.io.IOException;
 
-import tw.nekomimi.nekogram.helpers.AppRestartHelper;
-import tw.nekomimi.nekogram.settings.NekoExperimentalSettingsActivity;
-import tw.nekomimi.nekogram.utils.AndroidUtil;
+import top.nkbe.niagram.helpers.AppRestartHelper;
+import top.nkbe.niagram.settings.NekoExperimentalSettingsActivity;
+import top.nkbe.niagram.utils.AndroidUtil;
 
 public class AyuData {
     private static final String IMPORT_DATABASE = AyuConstants.AYU_DATABASE + "-import";

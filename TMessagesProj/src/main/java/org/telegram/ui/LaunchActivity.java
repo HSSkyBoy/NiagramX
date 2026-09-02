@@ -264,18 +264,18 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import kotlin.text.StringsKt;
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.helpers.MonetHelper;
-import tw.nekomimi.nekogram.helpers.SettingsHelper;
-import tw.nekomimi.nekogram.helpers.remote.EmojiHelper;
-import tw.nekomimi.nekogram.helpers.remote.PagePreviewRulesHelper;
-import tw.nekomimi.nekogram.helpers.remote.UpdateHelper;
-import tw.nekomimi.nekogram.settings.NekoSettingsActivity;
-import tw.nekomimi.nekogram.utils.AlertUtil;
-import tw.nekomimi.nekogram.utils.AndroidUtil;
-import tw.nekomimi.nekogram.utils.ProxyUtil;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.helpers.MonetHelper;
+import top.nkbe.niagram.helpers.SettingsHelper;
+import top.nkbe.niagram.helpers.remote.EmojiHelper;
+import top.nkbe.niagram.helpers.remote.PagePreviewRulesHelper;
+import top.nkbe.niagram.helpers.remote.UpdateHelper;
+import top.nkbe.niagram.settings.NekoSettingsActivity;
+import top.nkbe.niagram.utils.AlertUtil;
+import top.nkbe.niagram.utils.AndroidUtil;
+import top.nkbe.niagram.utils.ProxyUtil;
 import xyz.nextalone.nagram.NaConfig;
-import tw.nekomimi.nekogram.ui.icons.IconsResources;
+import top.nkbe.niagram.ui.icons.IconsResources;
 
 public class LaunchActivity extends BasePermissionsActivity implements INavigationLayout.INavigationLayoutDelegate, NotificationCenter.NotificationCenterDelegate, DialogsActivity.DialogsActivityDelegate, IPipActivity {
     public final static String EXTRA_FORCE_NOT_INTERNAL_APPS = "force_not_internal_apps";

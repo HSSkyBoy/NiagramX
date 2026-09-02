@@ -90,7 +90,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class UserSelectorBottomSheet extends BottomSheetWithRecyclerListView implements NotificationCenter.NotificationCenterDelegate {
 

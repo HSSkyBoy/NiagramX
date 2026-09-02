@@ -38,7 +38,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import tw.nekomimi.nekogram.helpers.MainTabsHelper;
+import top.nkbe.niagram.helpers.MainTabsHelper;
 
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ChatObject;

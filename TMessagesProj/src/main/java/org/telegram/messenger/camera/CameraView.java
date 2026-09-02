@@ -97,7 +97,7 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 @SuppressLint("NewApi")
 public class CameraView extends FrameLayout implements TextureView.SurfaceTextureListener, CameraController.ICameraView, CameraController.ErrorCallback  {

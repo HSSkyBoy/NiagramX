@@ -23,7 +23,7 @@ import org.telegram.ui.Components.CombinedDrawable;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Stories.RoundRectOutlineProvider;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 @SuppressLint("ViewConstructor")
 public class BackSpaceButtonView extends FrameLayout {

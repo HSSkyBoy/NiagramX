@@ -38,7 +38,7 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Objects;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class DualCameraView extends CameraView {
 

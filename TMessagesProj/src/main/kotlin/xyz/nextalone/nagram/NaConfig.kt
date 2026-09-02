@@ -9,10 +9,10 @@ import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.BuildVars
 import org.telegram.messenger.FileLog
 import org.telegram.messenger.SharedConfig
-import tw.nekomimi.nekogram.NekoConfig
-import tw.nekomimi.nekogram.config.ConfigItem
-import tw.nekomimi.nekogram.config.ConfigItemKeyLinked
-import tw.nekomimi.nekogram.llm.utils.UrlNormalizer
+import top.nkbe.niagram.NekoConfig
+import top.nkbe.niagram.config.ConfigItem
+import top.nkbe.niagram.config.ConfigItemKeyLinked
+import top.nkbe.niagram.llm.utils.UrlNormalizer
 import java.io.ByteArrayInputStream
 import java.io.ObjectInputStream
 

@@ -56,7 +56,7 @@ import org.telegram.ui.Components.LayoutHelper;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class CollageLayoutView2 extends FrameLayout implements ItemOptions.ScrimView {
 

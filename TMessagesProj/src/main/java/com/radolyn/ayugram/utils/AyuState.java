@@ -13,7 +13,7 @@ import android.util.LongSparseArray;
 
 import java.util.ArrayList;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class AyuState {
     private static final AyuStateVariable allowReadPacket = new AyuStateVariable();

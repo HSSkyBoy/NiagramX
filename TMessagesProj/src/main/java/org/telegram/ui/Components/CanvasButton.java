@@ -24,7 +24,7 @@ import org.telegram.ui.Cells.BaseCell;
 
 import java.util.ArrayList;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class CanvasButton {
 

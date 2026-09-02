@@ -26,7 +26,7 @@ import android.view.ViewConfiguration;
 
 import me.vkryl.android.ViewUtils;
 import me.vkryl.core.BitwiseUtils;
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class ClickHelper {
   private static final int FLAG_CAUGHT = 0x01;

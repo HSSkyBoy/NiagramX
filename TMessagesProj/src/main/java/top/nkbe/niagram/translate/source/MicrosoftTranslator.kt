@@ -1,0 +1,83 @@
+package top.nkbe.niagram.translate.source
+
+import org.telegram.messenger.LocaleController.getString
+import org.telegram.messenger.R
+import org.telegram.tgnet.TLRPC
+import org.telegram.ui.Components.TranslateAlert2
+import top.nkbe.niagram.translate.HTMLKeeper
+import top.nkbe.niagram.translate.Translator
+import top.nkbe.niagram.translate.source.raw.BingTranslatorRaw
+import java.io.IOException
+
+object MicrosoftTranslator : Translator {
+
+    private val rawTranslator = BingTranslatorRaw()
+
+    override suspend fun doTranslate(
+        from: String,
+        to: String,
+        query: String,
+        entities: ArrayList<TLRPC.MessageEntity>
+    ): TLRPC.TL_textWithEntities {
+
+        val fromLang = if (from == "auto") "auto-detect" else from
+        val toLang = when {
+            to.equals("zh", ignoreCase = true) ||
+                to.equals("zh-CN", ignoreCase = true) ||
+                to.equals("zh-Hans", ignoreCase = true) -> "zh-Hans"
+            to.equals("zh-TW", ignoreCase = true) ||
+                to.equals("zh-HK", ignoreCase = true) ||
+                to.equals("zh-Hant", ignoreCase = true) -> "zh-Hant"
+            else -> to
+        }
+
+        if (toLang.lowercase() !in targetLanguages.map { it.lowercase() }) {
+            throw UnsupportedOperationException(getString(R.string.TranslateApiUnsupported) + " " + to)
+        }
+
+        val originalText = TLRPC.TL_textWithEntities()
+        originalText.text = query
+        originalText.entities = entities
+
+        val finalString = StringBuilder()
+
+        val textToTranslate = if (entities.isNotEmpty()) HTMLKeeper.entitiesToHtml(
+            query,
+            entities,
+            false
+        ) else query
+
+        if (textToTranslate.length > 3000) {
+            error("Text length exceeds the limit of 3000 characters. text length: " + query.length)
+        }
+
+        try {
+            val translatedText = rawTranslator.translate(textToTranslate, fromLang, toLang)
+            finalString.append(translatedText)
+
+            var finalText = TLRPC.TL_textWithEntities()
+            if (entities.isNotEmpty()) {
+                val resultPair = HTMLKeeper.htmlToEntities(finalString.toString(), entities, false)
+                finalText.text = resultPair.first
+                finalText.entities = resultPair.second
+                finalText = TranslateAlert2.preprocess(originalText, finalText)
+            } else {
+                finalText.text = finalString.toString()
+            }
+
+            return finalText
+        } catch (e: IOException) {
+            error(e.message ?: "Failed to translate")
+        }
+    }
+
+    private val targetLanguages = listOf(
+        "af", "sq", "am", "ar", "hy", "az", "bn", "bs", "bg", "ca", "zh-Hans", "zh-Hant",
+        "hr", "cs", "da", "prs", "nl", "en", "et", "fil", "fi", "fr", "de", "el", "gu",
+        "ht", "he", "hi", "hu", "is", "id", "iu", "ga", "it", "ja", "kn", "kk", "km",
+        "ko", "ku", "lo", "lv", "lt", "mg", "ms", "ml", "mt", "mr", "my", "mi", "ne",
+        "nb", "or", "ps", "fa", "pl", "pt", "pt-PT", "pa", "ro", "ru", "sm", "sr-Cyrl",
+        "sr-Latn", "sk", "sl", "es", "sw", "sv", "ta", "te", "th", "to", "tr", "uk",
+        "ur", "vi", "cy"
+    )
+}

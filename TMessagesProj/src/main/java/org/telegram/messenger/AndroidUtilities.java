@@ -245,9 +245,9 @@ import java.util.zip.GZIPOutputStream;
 
 import me.vkryl.core.BitwiseUtils;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.helpers.FontHelper;
-import tw.nekomimi.nekogram.helpers.TypefaceHelper;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.helpers.FontHelper;
+import top.nkbe.niagram.helpers.TypefaceHelper;
 import xyz.nextalone.nagram.NaConfig;
 
 public class AndroidUtilities {

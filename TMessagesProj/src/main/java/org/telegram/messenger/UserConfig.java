@@ -21,7 +21,7 @@ import org.telegram.tgnet.tl.TL_account;
 
 import java.util.Arrays;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class UserConfig extends BaseController {
 

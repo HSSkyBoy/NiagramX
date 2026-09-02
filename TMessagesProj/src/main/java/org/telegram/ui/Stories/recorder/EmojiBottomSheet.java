@@ -129,7 +129,7 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class EmojiBottomSheet extends BottomSheet implements NotificationCenter.NotificationCenterDelegate {
 

@@ -134,8 +134,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-import tw.nekomimi.nekogram.utils.StringUtils;
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.utils.StringUtils;
+import top.nkbe.niagram.NekoConfig;
 import xyz.nextalone.nagram.NaConfig;
 
 public class SendMessagesHelper extends BaseController implements NotificationCenter.NotificationCenterDelegate {

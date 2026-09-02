@@ -68,8 +68,8 @@ import org.telegram.ui.Components.URLSpanNoUnderline;
 import java.util.concurrent.atomic.AtomicReference;
 
 import kotlin.Unit;
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.ui.BottomBuilder;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.ui.BottomBuilder;
 import xyz.nextalone.nagram.NaConfig;
 
 public class AboutLinkCell extends FrameLayout {

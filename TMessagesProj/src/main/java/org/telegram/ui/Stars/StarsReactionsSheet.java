@@ -108,7 +108,7 @@ import java.util.Collections;
 
 import me.vkryl.android.animator.BoolAnimator;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class StarsReactionsSheet extends BottomSheet implements NotificationCenter.NotificationCenterDelegate {
 

@@ -57,7 +57,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import tw.nekomimi.nekogram.helpers.MainTabsHelper;
+import top.nkbe.niagram.helpers.MainTabsHelper;
 
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;

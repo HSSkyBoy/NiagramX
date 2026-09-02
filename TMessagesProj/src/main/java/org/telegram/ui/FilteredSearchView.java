@@ -95,9 +95,9 @@ import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
 
 import kotlin.Unit;
-import tw.nekomimi.nekogram.ui.BottomBuilder;
-import tw.nekomimi.nekogram.utils.AlertUtil;
-import tw.nekomimi.nekogram.utils.ProxyUtil;
+import top.nkbe.niagram.ui.BottomBuilder;
+import top.nkbe.niagram.utils.AlertUtil;
+import top.nkbe.niagram.utils.ProxyUtil;
 
 @SuppressLint("ViewConstructor")
 public class FilteredSearchView extends FrameLayout implements NotificationCenter.NotificationCenterDelegate, FactorAnimator.Target {

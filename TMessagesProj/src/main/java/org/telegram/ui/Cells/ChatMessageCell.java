@@ -264,16 +264,16 @@ import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
 import me.vkryl.core.BitwiseUtils;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.filters.ReactionFilter;
-import tw.nekomimi.nekogram.helpers.MessageHelper;
-import tw.nekomimi.nekogram.helpers.TimeStringHelper;
-import tw.nekomimi.nekogram.helpers.TranscribeHelper;
-import tw.nekomimi.nekogram.utils.AndroidUtil;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.filters.ReactionFilter;
+import top.nkbe.niagram.helpers.MessageHelper;
+import top.nkbe.niagram.helpers.TimeStringHelper;
+import top.nkbe.niagram.helpers.TranscribeHelper;
+import top.nkbe.niagram.utils.AndroidUtil;
 import xyz.nextalone.nagram.NaConfig;
 import xyz.nextalone.nagram.helper.BookmarksHelper;
 
-import static tw.nekomimi.nekogram.helpers.MessageHelper.showForwardDate;
+import static top.nkbe.niagram.helpers.MessageHelper.showForwardDate;
 
 public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate, ImageReceiver.ImageReceiverDelegate,
         DownloadController.FileDownloadProgressListener, TextSelectionHelper.SelectableView,

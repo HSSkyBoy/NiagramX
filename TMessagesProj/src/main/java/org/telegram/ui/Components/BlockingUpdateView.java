@@ -40,9 +40,9 @@ import org.telegram.ui.Components.voip.CellFlickerDrawable;
 import java.io.File;
 import java.util.Locale;
 
-import tw.nekomimi.nekogram.TextViewEffects;
-import tw.nekomimi.nekogram.helpers.remote.ApkDownloader;
-import tw.nekomimi.nekogram.helpers.remote.UpdateHelper;
+import top.nkbe.niagram.TextViewEffects;
+import top.nkbe.niagram.helpers.remote.ApkDownloader;
+import top.nkbe.niagram.helpers.remote.UpdateHelper;
 
 public class BlockingUpdateView extends FrameLayout implements NotificationCenter.NotificationCenterDelegate {
 

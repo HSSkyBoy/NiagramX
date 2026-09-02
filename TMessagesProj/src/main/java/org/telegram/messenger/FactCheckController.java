@@ -54,7 +54,7 @@ import org.telegram.ui.LaunchActivity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class FactCheckController {
 

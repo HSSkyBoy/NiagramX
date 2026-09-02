@@ -60,7 +60,7 @@ import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.stream.Collectors;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 import xyz.nextalone.nagram.NaConfig;
 
 import java.util.List;

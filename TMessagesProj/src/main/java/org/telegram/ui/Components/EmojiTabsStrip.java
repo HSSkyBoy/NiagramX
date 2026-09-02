@@ -48,7 +48,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class EmojiTabsStrip extends ScrollableHorizontalScrollView {
 

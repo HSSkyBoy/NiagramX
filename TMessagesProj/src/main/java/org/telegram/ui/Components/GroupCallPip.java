@@ -40,7 +40,7 @@ import org.telegram.ui.GroupCallActivity;
 
 import static android.view.WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class GroupCallPip implements NotificationCenter.NotificationCenterDelegate {
 

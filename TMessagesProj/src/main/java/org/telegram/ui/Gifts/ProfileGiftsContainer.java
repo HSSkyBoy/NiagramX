@@ -125,7 +125,7 @@ import java.util.Objects;
 
 import me.vkryl.android.animator.BoolAnimator;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class ProfileGiftsContainer extends FrameLayout implements NotificationCenter.NotificationCenterDelegate {
 

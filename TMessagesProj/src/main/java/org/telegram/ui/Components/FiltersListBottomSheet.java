@@ -40,7 +40,7 @@ import org.telegram.ui.ActionBar.Theme;
 
 import java.util.ArrayList;
 
-import tw.nekomimi.nekogram.folder.FolderIconHelper;
+import top.nkbe.niagram.folder.FolderIconHelper;
 
 public class FiltersListBottomSheet extends BottomSheet implements NotificationCenter.NotificationCenterDelegate {
 

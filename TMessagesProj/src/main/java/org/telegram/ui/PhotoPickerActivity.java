@@ -111,12 +111,12 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import kotlin.Unit;
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.helpers.ChatsHelper;
-import tw.nekomimi.nekogram.llm.LlmConfig;
-import tw.nekomimi.nekogram.translate.Translator;
-import tw.nekomimi.nekogram.translate.TranslatorKt;
-import tw.nekomimi.nekogram.utils.AlertUtil;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.helpers.ChatsHelper;
+import top.nkbe.niagram.llm.LlmConfig;
+import top.nkbe.niagram.translate.Translator;
+import top.nkbe.niagram.translate.TranslatorKt;
+import top.nkbe.niagram.utils.AlertUtil;
 import xyz.nextalone.nagram.NaConfig;
 
 public class PhotoPickerActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {

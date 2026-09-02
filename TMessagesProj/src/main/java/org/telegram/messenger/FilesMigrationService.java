@@ -36,8 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.utils.FileUtil;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.utils.FileUtil;
 
 @RequiresApi(api = Build.VERSION_CODES.R)
 public class FilesMigrationService extends Service {

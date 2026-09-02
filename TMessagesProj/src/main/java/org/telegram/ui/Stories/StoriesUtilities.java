@@ -69,7 +69,7 @@ import org.telegram.ui.LaunchActivity;
 import java.io.File;
 import java.util.Collections;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 import xyz.nextalone.nagram.NaConfig;
 
 public class StoriesUtilities {

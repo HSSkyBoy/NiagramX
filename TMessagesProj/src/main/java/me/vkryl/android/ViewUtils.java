@@ -27,7 +27,7 @@ import android.view.ViewTreeObserver;
 
 import java.lang.reflect.Method;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public final class ViewUtils {
   public static void onClick (View v) {

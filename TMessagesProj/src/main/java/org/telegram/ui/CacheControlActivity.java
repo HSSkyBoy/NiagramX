@@ -135,8 +135,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 
-import tw.nekomimi.nekogram.helpers.LocalNameHelper;
-import tw.nekomimi.nekogram.helpers.remote.EmojiHelper;
+import top.nkbe.niagram.helpers.LocalNameHelper;
+import top.nkbe.niagram.helpers.remote.EmojiHelper;
 import xyz.nextalone.nagram.helper.BookmarksHelper;
 
 public class CacheControlActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {

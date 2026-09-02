@@ -147,7 +147,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class PremiumPreviewFragment extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
     public final static String TRANSACTION_PATTERN = "^(.*?)(?:\\.\\.\\d*|)$";

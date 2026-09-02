@@ -79,12 +79,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.net.ssl.SSLException;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.ErrorDatabase;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.ErrorDatabase;
 
-import tw.nekomimi.nekogram.NekoXConfig;
-import tw.nekomimi.nekogram.utils.DnsFactory;
-import tw.nekomimi.nekogram.utils.ProxyUtil;
+import top.nkbe.niagram.NekoXConfig;
+import top.nkbe.niagram.utils.DnsFactory;
+import top.nkbe.niagram.utils.ProxyUtil;
 import xyz.nextalone.nagram.NaConfig;
 
 public class ConnectionsManager extends BaseController {

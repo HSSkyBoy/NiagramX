@@ -69,7 +69,7 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class CalendarActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 

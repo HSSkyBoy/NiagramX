@@ -79,10 +79,10 @@ import java.util.function.Consumer;
 
 import me.vkryl.core.BitwiseUtils;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.filters.AyuFilter;
-import tw.nekomimi.nekogram.helpers.AppRestartHelper;
-import tw.nekomimi.nekogram.helpers.MessageHelper;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.filters.AyuFilter;
+import top.nkbe.niagram.helpers.AppRestartHelper;
+import top.nkbe.niagram.helpers.MessageHelper;
 import xyz.nextalone.nagram.NaConfig;
 import com.radolyn.ayugram.AyuConstants;
 import com.radolyn.ayugram.messages.AyuMessagesController;

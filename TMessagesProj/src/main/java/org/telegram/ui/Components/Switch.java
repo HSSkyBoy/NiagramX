@@ -44,8 +44,8 @@ import org.telegram.ui.Cells.BaseCell;
 
 import me.vkryl.android.animator.BoolAnimator;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.helpers.MonetHelper;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.helpers.MonetHelper;
 import xyz.nextalone.nagram.NaConfig;
 
 public class Switch extends View {

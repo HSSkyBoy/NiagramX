@@ -148,11 +148,11 @@ import java.util.Stack;
 
 import me.vkryl.android.animator.BoolAnimator;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.filters.AyuFilter;
-import tw.nekomimi.nekogram.filters.ReactionFilter;
-import tw.nekomimi.nekogram.helpers.MessageHelper;
-import tw.nekomimi.nekogram.utils.AndroidUtil;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.filters.AyuFilter;
+import top.nkbe.niagram.filters.ReactionFilter;
+import top.nkbe.niagram.helpers.MessageHelper;
+import top.nkbe.niagram.utils.AndroidUtil;
 import xyz.nextalone.nagram.NaConfig;
 
 public class DialogCell extends BaseCell implements StoriesListPlaceProvider.AvatarOverlaysView, Theme.Colorable {

@@ -61,7 +61,7 @@ import org.telegram.ui.Components.voip.VoIPHelper;
 import java.io.File;
 import java.util.ArrayList;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class DataSettingsActivity extends BaseFragment {
 

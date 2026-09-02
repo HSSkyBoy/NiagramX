@@ -37,8 +37,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 
-import tw.nekomimi.nekogram.filters.AyuFilter;
-import tw.nekomimi.nekogram.utils.AndroidUtil;
+import top.nkbe.niagram.filters.AyuFilter;
+import top.nkbe.niagram.utils.AndroidUtil;
 
 public class DownloadController extends BaseController implements NotificationCenter.NotificationCenterDelegate {
 

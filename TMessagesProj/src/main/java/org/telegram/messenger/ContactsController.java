@@ -51,8 +51,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.helpers.MessageHelper;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.helpers.MessageHelper;
 
 public class ContactsController extends BaseController {
 

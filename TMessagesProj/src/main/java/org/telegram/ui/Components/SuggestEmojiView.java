@@ -50,7 +50,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class SuggestEmojiView extends FrameLayout implements NotificationCenter.NotificationCenterDelegate {
 

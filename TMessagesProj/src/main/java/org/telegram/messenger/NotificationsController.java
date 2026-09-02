@@ -99,9 +99,9 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Consumer;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.NekoXConfig;
-import tw.nekomimi.nekogram.filters.AyuFilter;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.NekoXConfig;
+import top.nkbe.niagram.filters.AyuFilter;
 import xyz.nextalone.nagram.NaConfig;
 
 public class NotificationsController extends BaseController implements NotificationCenter.NotificationCenterDelegate {

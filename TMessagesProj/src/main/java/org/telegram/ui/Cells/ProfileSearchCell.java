@@ -73,7 +73,7 @@ import org.telegram.ui.community.CommunityUtils;
 import java.util.Locale;
 
 import xyz.nextalone.nagram.NaConfig;
-import tw.nekomimi.nekogram.helpers.MessageHelper;
+import top.nkbe.niagram.helpers.MessageHelper;
 
 public class ProfileSearchCell extends BaseCell implements NotificationCenter.NotificationCenterDelegate, Theme.Colorable {
 

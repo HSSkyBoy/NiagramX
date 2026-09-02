@@ -9,7 +9,7 @@
 
 package com.radolyn.ayugram;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class AyuConstants {
 

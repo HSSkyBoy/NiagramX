@@ -179,10 +179,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static tw.nekomimi.nekogram.settings.NekoChatSettingsActivity.getDeleteMenuChecks;
-import tw.nekomimi.nekogram.helpers.PasscodeHelper;
-import tw.nekomimi.nekogram.helpers.ScheduleTimeHelper;
-import tw.nekomimi.nekogram.NekoConfig;
+import static top.nkbe.niagram.settings.NekoChatSettingsActivity.getDeleteMenuChecks;
+import top.nkbe.niagram.helpers.PasscodeHelper;
+import top.nkbe.niagram.helpers.ScheduleTimeHelper;
+import top.nkbe.niagram.NekoConfig;
 import xyz.nextalone.nagram.NaConfig;
 
 import com.radolyn.ayugram.AyuConstants;

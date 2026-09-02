@@ -125,12 +125,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import kotlin.Unit;
-import tw.nekomimi.nekogram.ui.BottomBuilder;
-import tw.nekomimi.nekogram.ui.PinnedReactionsActivity;
-import tw.nekomimi.nekogram.utils.AlertUtil;
-import tw.nekomimi.nekogram.utils.FileUtil;
-import tw.nekomimi.nekogram.utils.ShareUtil;
-import tw.nekomimi.nekogram.utils.StickersUtil;
+import top.nkbe.niagram.ui.BottomBuilder;
+import top.nkbe.niagram.ui.PinnedReactionsActivity;
+import top.nkbe.niagram.utils.AlertUtil;
+import top.nkbe.niagram.utils.FileUtil;
+import top.nkbe.niagram.utils.ShareUtil;
+import top.nkbe.niagram.utils.StickersUtil;
 
 public class StickersActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 

@@ -41,7 +41,7 @@ import java.util.List;
 
 import me.vkryl.core.BitwiseUtils;
 
-import tw.nekomimi.nekogram.DialogConfig;
+import top.nkbe.niagram.DialogConfig;
 import xyz.nextalone.nagram.NaConfig;
 
 public class ChatObject {

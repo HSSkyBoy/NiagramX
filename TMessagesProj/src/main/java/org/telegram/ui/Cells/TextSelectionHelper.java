@@ -74,13 +74,13 @@ import org.telegram.ui.RestrictedLanguagesSelectActivity;
 
 import java.util.ArrayList;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.helpers.EntitiesHelper;
-import tw.nekomimi.nekogram.llm.LlmConfig;
-import tw.nekomimi.nekogram.translate.Translator;
-import tw.nekomimi.nekogram.translate.TranslatorKt;
-import tw.nekomimi.nekogram.utils.AlertUtil;
-import tw.nekomimi.nekogram.utils.ProxyUtil;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.helpers.EntitiesHelper;
+import top.nkbe.niagram.llm.LlmConfig;
+import top.nkbe.niagram.translate.Translator;
+import top.nkbe.niagram.translate.TranslatorKt;
+import top.nkbe.niagram.utils.AlertUtil;
+import top.nkbe.niagram.utils.ProxyUtil;
 
 public abstract class TextSelectionHelper<Cell extends TextSelectionHelper.SelectableView> {
 

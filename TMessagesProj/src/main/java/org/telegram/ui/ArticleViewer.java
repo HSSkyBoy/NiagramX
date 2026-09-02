@@ -238,8 +238,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.telegram.ui.iv.Latex;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.parts.ArticleTransKt;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.parts.ArticleTransKt;
 import xyz.nextalone.nagram.NaConfig;
 
 public class ArticleViewer extends IArticleViewer implements NotificationCenter.NotificationCenterDelegate {

@@ -2,7 +2,7 @@ package com.radolyn.ayugram.utils;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class AyuGhostPreferences {
     public static final String ghostReadExclusionPrefix = "ghostModeReadExclusion_";

@@ -85,8 +85,8 @@ import org.telegram.ui.Components.spoilers.SpoilersTextView;
 
 import java.util.ArrayList;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.ui.EditTextAutoFill;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.ui.EditTextAutoFill;
 
 public class TwoStepVerificationSetupActivity extends BaseFragment {
 

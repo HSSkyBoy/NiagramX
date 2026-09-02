@@ -49,7 +49,7 @@ import org.telegram.ui.Stories.recorder.HintView2;
 
 import java.util.Locale;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class ChatGreetingsView extends LinearLayout {
 

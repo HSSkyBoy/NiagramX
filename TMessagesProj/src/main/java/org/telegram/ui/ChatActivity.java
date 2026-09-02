@@ -387,35 +387,35 @@ import me.vkryl.android.animator.FactorAnimator;
 import me.vkryl.core.BitwiseUtils;
 import me.vkryl.core.reference.ReferenceList;
 
-import tw.nekomimi.nekogram.BackButtonMenuRecent;
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.filters.AyuFilter;
-import tw.nekomimi.nekogram.filters.ReactionFilter;
-import tw.nekomimi.nekogram.filters.RegexFilterEditActivity;
-import tw.nekomimi.nekogram.helpers.ChatsHelper;
-import tw.nekomimi.nekogram.helpers.MessageHelper;
-import tw.nekomimi.nekogram.helpers.TranscribeHelper;
-import tw.nekomimi.nekogram.helpers.remote.EmojiHelper;
-import tw.nekomimi.nekogram.helpers.remote.PagePreviewRulesHelper;
-import tw.nekomimi.nekogram.llm.LlmConfig;
-import tw.nekomimi.nekogram.menu.copy.CopyPopupWrapper;
-import tw.nekomimi.nekogram.menu.forward.ForwardPopupWrapper;
-import tw.nekomimi.nekogram.menu.reply.ReplyPopupWrapper;
-import tw.nekomimi.nekogram.menu.translate.TranslatePopupWrapper;
-import tw.nekomimi.nekogram.parts.DialogTransKt;
-import tw.nekomimi.nekogram.parts.MessageTransKt;
-import tw.nekomimi.nekogram.parts.PollTransUpdatesKt;
-import tw.nekomimi.nekogram.parts.RichMessageTransHelper;
-import tw.nekomimi.nekogram.helpers.SettingsBackupHelper;
-import tw.nekomimi.nekogram.translate.Translator;
-import tw.nekomimi.nekogram.translate.TranslatorKt;
-import tw.nekomimi.nekogram.ui.BookmarksActivity;
-import tw.nekomimi.nekogram.ui.BottomBuilder;
-import tw.nekomimi.nekogram.ui.MessageDetailsActivity;
-import tw.nekomimi.nekogram.ui.components.GroupedIconsView;
-import tw.nekomimi.nekogram.utils.AlertUtil;
-import tw.nekomimi.nekogram.utils.AndroidUtil;
-import tw.nekomimi.nekogram.utils.ProxyUtil;
+import top.nkbe.niagram.BackButtonMenuRecent;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.filters.AyuFilter;
+import top.nkbe.niagram.filters.ReactionFilter;
+import top.nkbe.niagram.filters.RegexFilterEditActivity;
+import top.nkbe.niagram.helpers.ChatsHelper;
+import top.nkbe.niagram.helpers.MessageHelper;
+import top.nkbe.niagram.helpers.TranscribeHelper;
+import top.nkbe.niagram.helpers.remote.EmojiHelper;
+import top.nkbe.niagram.helpers.remote.PagePreviewRulesHelper;
+import top.nkbe.niagram.llm.LlmConfig;
+import top.nkbe.niagram.menu.copy.CopyPopupWrapper;
+import top.nkbe.niagram.menu.forward.ForwardPopupWrapper;
+import top.nkbe.niagram.menu.reply.ReplyPopupWrapper;
+import top.nkbe.niagram.menu.translate.TranslatePopupWrapper;
+import top.nkbe.niagram.parts.DialogTransKt;
+import top.nkbe.niagram.parts.MessageTransKt;
+import top.nkbe.niagram.parts.PollTransUpdatesKt;
+import top.nkbe.niagram.parts.RichMessageTransHelper;
+import top.nkbe.niagram.helpers.SettingsBackupHelper;
+import top.nkbe.niagram.translate.Translator;
+import top.nkbe.niagram.translate.TranslatorKt;
+import top.nkbe.niagram.ui.BookmarksActivity;
+import top.nkbe.niagram.ui.BottomBuilder;
+import top.nkbe.niagram.ui.MessageDetailsActivity;
+import top.nkbe.niagram.ui.components.GroupedIconsView;
+import top.nkbe.niagram.utils.AlertUtil;
+import top.nkbe.niagram.utils.AndroidUtil;
+import top.nkbe.niagram.utils.ProxyUtil;
 import xyz.nextalone.nagram.NaConfig;
 import xyz.nextalone.nagram.ToggleResult;
 import xyz.nextalone.nagram.helper.BookmarksHelper;
@@ -35406,7 +35406,7 @@ public class ChatActivity extends BaseFragment implements
                     } else if (getMessageType(selectedObject) == MESSAGE_TYPE_FONT) {
                         File finalLocFile = locFile;
                         if (!EmojiHelper.isValidEmojiPack(finalLocFile)) {
-                            tw.nekomimi.nekogram.helpers.FontHelper.showCategorySelectDialog(getParentActivity(), finalLocFile);
+                            top.nkbe.niagram.helpers.FontHelper.showCategorySelectDialog(getParentActivity(), finalLocFile);
                         } else {
                             AlertDialog progressDialog = new AlertDialog(getParentActivity(), 3);
                             Utilities.globalQueue.postRunnable(() -> {
@@ -35438,7 +35438,7 @@ public class ChatActivity extends BaseFragment implements
                                             EmojiHelper.reloadEmoji();
                                         }
                                     } else {
-                                        tw.nekomimi.nekogram.helpers.FontHelper.showCategorySelectDialog(getParentActivity(), finalLocFile);
+                                        top.nkbe.niagram.helpers.FontHelper.showCategorySelectDialog(getParentActivity(), finalLocFile);
                                     }
                                 });
                             });
@@ -43857,8 +43857,8 @@ public class ChatActivity extends BaseFragment implements
                 } else if (message.getDocumentName().toLowerCase().endsWith(".nekox-settings.json")) {
                     File finalLocFile = locFile;
                     SettingsBackupHelper.importSettings(getParentActivity(), finalLocFile);
-                } else if (tw.nekomimi.nekogram.helpers.FontHelper.isFontFile(locFile) || (message.getDocumentName() != null && (message.getDocumentName().toLowerCase().endsWith(".ttf") || message.getDocumentName().toLowerCase().endsWith(".otf")))) {
-                    tw.nekomimi.nekogram.helpers.FontHelper.showFontPreviewDialog(getParentActivity(), locFile);
+                } else if (top.nkbe.niagram.helpers.FontHelper.isFontFile(locFile) || (message.getDocumentName() != null && (message.getDocumentName().toLowerCase().endsWith(".ttf") || message.getDocumentName().toLowerCase().endsWith(".otf")))) {
+                    top.nkbe.niagram.helpers.FontHelper.showFontPreviewDialog(getParentActivity(), locFile);
                 } else {
                     boolean handled = false;
                     if (message.canPreviewDocument()) {

@@ -49,7 +49,7 @@ import org.telegram.ui.Components.SizeNotifierFrameLayout;
 import org.telegram.ui.Components.Text;
 import org.telegram.ui.Components.WaveDrawable;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class CaptionStory extends CaptionContainerView {
 

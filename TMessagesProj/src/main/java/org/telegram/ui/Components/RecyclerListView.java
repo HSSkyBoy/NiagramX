@@ -95,7 +95,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 @SuppressWarnings("JavaReflectionMemberAccess")
 public class RecyclerListView extends RecyclerView implements IBlur3Capture {

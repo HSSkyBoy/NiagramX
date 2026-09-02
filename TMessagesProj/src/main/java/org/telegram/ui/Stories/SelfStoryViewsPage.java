@@ -89,7 +89,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Objects;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class SelfStoryViewsPage extends FrameLayout implements NotificationCenter.NotificationCenterDelegate {
 

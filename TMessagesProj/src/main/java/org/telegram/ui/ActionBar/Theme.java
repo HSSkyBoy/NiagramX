@@ -130,7 +130,7 @@ import org.telegram.ui.LaunchActivity;
 import org.telegram.ui.RoundVideoProgressShadow;
 import org.telegram.ui.ThemeActivity;
 import org.telegram.ui.ThemePreviewActivity;
-import tw.nekomimi.nekogram.helpers.TypefaceHelper;
+import top.nkbe.niagram.helpers.TypefaceHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -149,8 +149,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
 
-import tw.nekomimi.nekogram.helpers.MonetHelper;
-import tw.nekomimi.nekogram.utils.AndroidUtil;
+import top.nkbe.niagram.helpers.MonetHelper;
+import top.nkbe.niagram.utils.AndroidUtil;
 import xyz.nextalone.nagram.NaConfig;
 
 public class Theme {

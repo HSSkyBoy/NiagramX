@@ -43,7 +43,7 @@ import org.telegram.ui.SelectAnimatedEmojiDialog;
 import java.util.ArrayList;
 import java.util.Random;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class ReactionsEffectOverlay {
 

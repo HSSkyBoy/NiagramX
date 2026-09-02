@@ -163,7 +163,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import me.vkryl.core.BitwiseUtils;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class ChatActionCell extends BaseCell implements DownloadController.FileDownloadProgressListener, NotificationCenter.NotificationCenterDelegate, IMessageCell {
     private final static boolean USE_PREMIUM_GIFT_LOCAL_STICKER = false;

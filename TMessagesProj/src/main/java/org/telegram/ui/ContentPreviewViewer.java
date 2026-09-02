@@ -116,8 +116,8 @@ import java.util.List;
 
 import me.vkryl.core.reference.ReferenceList;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.helpers.MessageHelper;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.helpers.MessageHelper;
 import xyz.nextalone.nagram.NaConfig;
 
 public class ContentPreviewViewer {

@@ -31,13 +31,13 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import tw.nekomimi.nekogram.location.NekoLocationSource;
+import top.nkbe.niagram.location.NekoLocationSource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class GoogleMapsProvider implements IMapsProvider {
 

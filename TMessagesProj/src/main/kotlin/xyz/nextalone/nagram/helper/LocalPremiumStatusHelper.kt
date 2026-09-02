@@ -4,7 +4,7 @@ import androidx.core.content.edit
 import com.google.gson.Gson
 import org.telegram.messenger.UserConfig
 import org.telegram.tgnet.TLRPC
-import tw.nekomimi.nekogram.NekoConfig
+import top.nkbe.niagram.NekoConfig
 import xyz.nextalone.nagram.NaConfig
 
 data class LocalEmojiStatusData(

@@ -61,8 +61,8 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.shamsicalendar.PersianDate;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.shamsicalendar.PersianDate;
 import com.radolyn.ayugram.utils.LastSeenHelper;
 
 public class LocaleController {

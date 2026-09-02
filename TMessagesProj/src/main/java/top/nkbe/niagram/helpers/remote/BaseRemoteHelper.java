@@ -1,0 +1,141 @@
+package top.nkbe.niagram.helpers.remote;
+
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.text.TextUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.telegram.messenger.ApplicationLoader;
+import org.telegram.messenger.FileLoader;
+import org.telegram.messenger.FileLog;
+import org.telegram.messenger.MessagesController;
+import org.telegram.messenger.MessagesStorage;
+import org.telegram.messenger.UserConfig;
+import org.telegram.tgnet.ConnectionsManager;
+import org.telegram.tgnet.TLObject;
+import org.telegram.tgnet.TLRPC;
+
+import java.util.ArrayList;
+
+public abstract class BaseRemoteHelper {
+    public static final long CHANNEL_METADATA_ID = 2477822904L;
+    public static final String CHANNEL_METADATA_NAME = "NiagramX";
+
+    protected static final SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoremoteconfig", Activity.MODE_PRIVATE);
+
+    protected MessagesController getMessagesController() {
+        return MessagesController.getInstance(UserConfig.selectedAccount);
+    }
+
+    protected ConnectionsManager getConnectionsManager() {
+        return ConnectionsManager.getInstance(UserConfig.selectedAccount);
+    }
+
+    protected MessagesStorage getMessagesStorage() {
+        return MessagesStorage.getInstance(UserConfig.selectedAccount);
+    }
+
+    protected FileLoader getFileLoader() {
+        return FileLoader.getInstance(UserConfig.selectedAccount);
+    }
+
+    abstract protected void onError(String text, Delegate delegate);
+
+    abstract protected String getTag();
+
+    protected void onLoadSuccess(ArrayList<JSONObject> responses, Delegate delegate) {
+        var tag = getTag();
+        var json = responses.size() > 0 ? responses.get(0) : null;
+        if (json == null) {
+            preferences.edit()
+                    .remove(tag + "_update_time")
+                    .remove(tag)
+                    .apply();
+        } else {
+            preferences.edit()
+                    .putLong(tag + "_update_time", System.currentTimeMillis())
+                    .putString(tag, json.toString())
+                    .apply();
+        }
+    }
+
+    private void onGetMessageSuccess(TLObject response, Delegate delegate) {
+        var tag = "#" + getTag();
+        final var res = (TLRPC.messages_Messages) response;
+        getMessagesController().removeDeletedMessagesFromArray(CHANNEL_METADATA_ID, res.messages);
+        ArrayList<JSONObject> responses = new ArrayList<>();
+        for (var message : res.messages) {
+            if (TextUtils.isEmpty(message.message) || !message.message.startsWith(tag)) {
+                continue;
+            }
+            try {
+                responses.add(new JSONObject(message.message.substring(tag.length()).trim()));
+            } catch (JSONException e) {
+                FileLog.e(e);
+            }
+        }
+        onLoadSuccess(responses, delegate);
+    }
+
+    public void load() {
+        load(false, null);
+    }
+
+    public void load(Delegate delegate) {
+        load(false, delegate);
+    }
+
+    private void load(boolean forceRefreshAccessHash, Delegate delegate) {
+        var tag = "#" + getTag();
+        TLRPC.TL_messages_search req = new TLRPC.TL_messages_search();
+        req.limit = 10;
+        req.offset_id = 0;
+        req.filter = new TLRPC.TL_inputMessagesFilterEmpty();
+        req.q = tag;
+        req.peer = getMessagesController().getInputPeer(-CHANNEL_METADATA_ID);
+        if (req.peer == null || req.peer.access_hash == 0 || forceRefreshAccessHash) {
+            TLRPC.TL_contacts_resolveUsername req1 = new TLRPC.TL_contacts_resolveUsername();
+            req1.username = CHANNEL_METADATA_NAME;
+            getConnectionsManager().sendRequest(req1, (response1, error1) -> {
+                if (error1 != null) {
+                    onError(error1.text, delegate);
+                    return;
+                }
+                if (!(response1 instanceof TLRPC.TL_contacts_resolvedPeer resolvedPeer)) {
+                    onError("RESOLVE_FAILED", delegate);
+                    return;
+                }
+                getMessagesController().putUsers(resolvedPeer.users, false);
+                getMessagesController().putChats(resolvedPeer.chats, false);
+                getMessagesStorage().putUsersAndChats(resolvedPeer.users, resolvedPeer.chats, false, true);
+                if ((resolvedPeer.chats == null || resolvedPeer.chats.size() == 0)) {
+                    onError("CHANNEL_NOT_FOUND", delegate);
+                    return;
+                }
+                req.peer = new TLRPC.TL_inputPeerChannel();
+                req.peer.channel_id = resolvedPeer.chats.get(0).id;
+                req.peer.access_hash = resolvedPeer.chats.get(0).access_hash;
+                getConnectionsManager().sendRequest(req, (response, error) -> {
+                    if (error == null) {
+                        onGetMessageSuccess(response, delegate);
+                    } else {
+                        onError(error.text, delegate);
+                    }
+                });
+            });
+        } else {
+            getConnectionsManager().sendRequest(req, (response, error) -> {
+                if (error == null) {
+                    onGetMessageSuccess(response, delegate);
+                } else {
+                    load(true, delegate);
+                }
+            });
+        }
+    }
+
+    public interface Delegate {
+        void onTLResponse(TLRPC.TL_help_appUpdate res, String error);
+    }
+}

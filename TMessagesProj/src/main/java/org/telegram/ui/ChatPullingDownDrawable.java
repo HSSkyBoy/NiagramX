@@ -44,7 +44,7 @@ import org.telegram.ui.Components.StaticLayoutEx;
 
 import java.util.ArrayList;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class ChatPullingDownDrawable implements NotificationCenter.NotificationCenterDelegate {
 

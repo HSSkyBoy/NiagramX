@@ -53,7 +53,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class SenderSelectPopup extends ActionBarPopupWindow {
     public final static float SPRING_STIFFNESS = 750f;

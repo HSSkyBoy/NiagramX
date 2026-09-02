@@ -44,7 +44,7 @@ import org.telegram.messenger.AndroidUtilities;
 import java.util.ArrayList;
 import java.util.List;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 /**
  * This is a utility class to add swipe to dismiss and drag & drop support to RecyclerView.

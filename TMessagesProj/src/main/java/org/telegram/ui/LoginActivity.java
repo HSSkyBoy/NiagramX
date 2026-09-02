@@ -223,14 +223,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 import kotlin.Unit;
-import tw.nekomimi.nekogram.BackButtonMenuRecent;
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.NekoXConfig;
-import tw.nekomimi.nekogram.helpers.AppRestartHelper;
-import tw.nekomimi.nekogram.helpers.PasscodeHelper;
-import tw.nekomimi.nekogram.ui.BottomBuilder;
-import tw.nekomimi.nekogram.ui.EditTextAutoFill;
-import tw.nekomimi.nekogram.ui.QrView;
+import top.nkbe.niagram.BackButtonMenuRecent;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.NekoXConfig;
+import top.nkbe.niagram.helpers.AppRestartHelper;
+import top.nkbe.niagram.helpers.PasscodeHelper;
+import top.nkbe.niagram.ui.BottomBuilder;
+import top.nkbe.niagram.ui.EditTextAutoFill;
+import top.nkbe.niagram.ui.QrView;
 
 @SuppressLint("HardwareIds")
 public class LoginActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {

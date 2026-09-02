@@ -64,7 +64,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class FloatingDebugView extends FrameLayout implements NotificationCenter.NotificationCenterDelegate {
     private FrameLayout floatingButtonContainer;

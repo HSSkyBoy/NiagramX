@@ -96,9 +96,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import kotlin.Unit;
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.location.NekoLocation;
-import tw.nekomimi.nekogram.ui.BottomBuilder;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.location.NekoLocation;
+import top.nkbe.niagram.ui.BottomBuilder;
 
 public class ChatAttachAlertLocationLayout extends ChatAttachAlert.AttachAlertLayout implements NotificationCenter.NotificationCenterDelegate {
 

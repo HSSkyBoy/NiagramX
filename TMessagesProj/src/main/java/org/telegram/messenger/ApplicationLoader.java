@@ -59,8 +59,8 @@ import java.io.File;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.utils.AndroidUtil;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.utils.AndroidUtil;
 import xyz.nextalone.nagram.NaConfig;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;

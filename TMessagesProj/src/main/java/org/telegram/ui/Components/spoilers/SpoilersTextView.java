@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class SpoilersTextView extends TextView implements TextSelectionHelper.SimpleSelectabeleView {
     private SpoilersClickDetector clickDetector;

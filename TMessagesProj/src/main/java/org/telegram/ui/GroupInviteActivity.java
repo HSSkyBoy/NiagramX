@@ -42,7 +42,7 @@ import org.telegram.ui.Components.RecyclerListView;
 
 import java.util.ArrayList;
 
-import tw.nekomimi.nekogram.utils.ProxyUtil;
+import top.nkbe.niagram.utils.ProxyUtil;
 
 public class GroupInviteActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 

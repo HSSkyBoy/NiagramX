@@ -67,10 +67,10 @@ import org.telegram.ui.LaunchActivity;
 import java.util.List;
 import java.util.Locale;
 
-import tw.nekomimi.nekogram.helpers.ChatsHelper;
-import tw.nekomimi.nekogram.llm.LlmConfig;
-import tw.nekomimi.nekogram.translate.Translator;
-import tw.nekomimi.nekogram.utils.AlertUtil;
+import top.nkbe.niagram.helpers.ChatsHelper;
+import top.nkbe.niagram.llm.LlmConfig;
+import top.nkbe.niagram.translate.Translator;
+import top.nkbe.niagram.utils.AlertUtil;
 
 public class EditTextCaption extends EditTextBoldCursor implements FloatingToolbar.StyleDelegate {
 

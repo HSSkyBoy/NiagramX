@@ -120,9 +120,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.helpers.LocalNameHelper;
-import tw.nekomimi.nekogram.utils.AndroidUtil;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.helpers.LocalNameHelper;
+import top.nkbe.niagram.utils.AndroidUtil;
 
 public class ChatEditActivity extends BaseFragment implements ImageUpdater.ImageUpdaterDelegate, NotificationCenter.NotificationCenterDelegate {
 

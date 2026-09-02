@@ -114,8 +114,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.helpers.MessageHelper;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.helpers.MessageHelper;
 
 import com.radolyn.ayugram.proprietary.AyuMessageUtils;
 

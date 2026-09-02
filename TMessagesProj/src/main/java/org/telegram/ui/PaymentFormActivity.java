@@ -158,7 +158,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Scanner;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class PaymentFormActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
     private final static List<String> WEBVIEW_PROTOCOLS = Arrays.asList(

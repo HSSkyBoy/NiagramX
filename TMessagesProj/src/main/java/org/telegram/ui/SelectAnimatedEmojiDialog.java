@@ -142,7 +142,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class SelectAnimatedEmojiDialog extends FrameLayout implements NotificationCenter.NotificationCenterDelegate {
 

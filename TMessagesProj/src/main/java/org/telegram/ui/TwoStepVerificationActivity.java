@@ -77,8 +77,8 @@ import org.telegram.ui.Components.VerticalPositionAutoAnimator;
 import java.util.ArrayList;
 import java.util.Locale;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.ui.EditTextAutoFill;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.ui.EditTextAutoFill;
 
 public class TwoStepVerificationActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 

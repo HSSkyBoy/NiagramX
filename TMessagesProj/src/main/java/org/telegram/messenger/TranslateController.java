@@ -53,11 +53,11 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.helpers.MessageHelper;
-import tw.nekomimi.nekogram.translate.Translator;
-import tw.nekomimi.nekogram.translate.TranslatorKt;
-import tw.nekomimi.nekogram.translate.source.LLMTranslator;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.helpers.MessageHelper;
+import top.nkbe.niagram.translate.Translator;
+import top.nkbe.niagram.translate.TranslatorKt;
+import top.nkbe.niagram.translate.source.LLMTranslator;
 import xyz.nextalone.nagram.NaConfig;
 
 public class TranslateController extends BaseController {

@@ -95,7 +95,7 @@ import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 import javax.microedition.khronos.opengles.GL10;
 
-import tw.nekomimi.nekogram.helpers.LocaleHelper;
+import top.nkbe.niagram.helpers.LocaleHelper;
 
 public class IntroActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
     private final static int ICON_WIDTH_DP = 200, ICON_HEIGHT_DP = 150;

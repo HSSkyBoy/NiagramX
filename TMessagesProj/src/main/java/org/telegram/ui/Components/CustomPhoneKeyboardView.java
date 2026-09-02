@@ -28,7 +28,7 @@ import androidx.core.view.GestureDetectorCompat;
 import org.telegram.messenger.R;
 import org.telegram.ui.ActionBar.Theme;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class CustomPhoneKeyboardView extends ViewGroup {
     public final static int KEYBOARD_HEIGHT_DP = 230;

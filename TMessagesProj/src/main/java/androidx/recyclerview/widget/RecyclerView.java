@@ -97,8 +97,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.utils.AndroidUtil;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.utils.AndroidUtil;
 
 /**
  * A flexible view for providing a limited window into a large data set.

@@ -116,7 +116,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class LimitReachedBottomSheet extends BottomSheetWithRecyclerListView implements NotificationCenter.NotificationCenterDelegate {
     public static final int TYPE_PIN_DIALOGS = 0;

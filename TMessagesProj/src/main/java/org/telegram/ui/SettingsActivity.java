@@ -154,14 +154,14 @@ import java.util.Set;
 
 import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.helpers.MainTabsHelper;
-import tw.nekomimi.nekogram.helpers.MonetHelper;
-import tw.nekomimi.nekogram.helpers.PasscodeHelper;
-import tw.nekomimi.nekogram.helpers.remote.UpdateHelper;
-import tw.nekomimi.nekogram.settings.NekoSettingsActivity;
-import tw.nekomimi.nekogram.ui.BottomBuilder;
-import tw.nekomimi.nekogram.utils.AndroidUtil;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.helpers.MainTabsHelper;
+import top.nkbe.niagram.helpers.MonetHelper;
+import top.nkbe.niagram.helpers.PasscodeHelper;
+import top.nkbe.niagram.helpers.remote.UpdateHelper;
+import top.nkbe.niagram.settings.NekoSettingsActivity;
+import top.nkbe.niagram.ui.BottomBuilder;
+import top.nkbe.niagram.utils.AndroidUtil;
 import xyz.nextalone.nagram.NaConfig;
 
 import kotlin.Unit;

@@ -22,7 +22,7 @@ import java.security.interfaces.ECPublicKey;
 import java.security.spec.ECGenParameterSpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 
-import tw.nekomimi.nekogram.utils.WebPushDecryptor;
+import top.nkbe.niagram.utils.WebPushDecryptor;
 import xyz.nextalone.nagram.NaConfig;
 
 @SuppressWarnings("NullableProblems")

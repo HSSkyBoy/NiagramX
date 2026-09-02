@@ -8,8 +8,8 @@
 
 package org.telegram.ui.Components;
 
-import static tw.nekomimi.nekogram.helpers.MessageHelper.canSendAsDice;
-import static tw.nekomimi.nekogram.helpers.MessageHelper.containsMarkdown;
+import static top.nkbe.niagram.helpers.MessageHelper.canSendAsDice;
+import static top.nkbe.niagram.helpers.MessageHelper.containsMarkdown;
 import static org.telegram.messenger.AndroidUtilities.dp;
 import static org.telegram.messenger.AndroidUtilities.dpf2;
 import static org.telegram.messenger.AndroidUtilities.lerp;
@@ -237,15 +237,15 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import kotlin.Unit;
-import tw.nekomimi.nekogram.helpers.ChatsHelper;
-import tw.nekomimi.nekogram.llm.LlmConfig;
-import tw.nekomimi.nekogram.utils.AndroidUtil;
-import tw.nekomimi.nekogram.utils.StringUtils;
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.translate.Translator;
-import tw.nekomimi.nekogram.translate.TranslatorKt;
-import tw.nekomimi.nekogram.ui.BottomBuilder;
-import tw.nekomimi.nekogram.utils.AlertUtil;
+import top.nkbe.niagram.helpers.ChatsHelper;
+import top.nkbe.niagram.llm.LlmConfig;
+import top.nkbe.niagram.utils.AndroidUtil;
+import top.nkbe.niagram.utils.StringUtils;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.translate.Translator;
+import top.nkbe.niagram.translate.TranslatorKt;
+import top.nkbe.niagram.ui.BottomBuilder;
+import top.nkbe.niagram.utils.AlertUtil;
 import xyz.nextalone.nagram.NaConfig;
 
 import me.vkryl.android.animator.BoolAnimator;
@@ -6629,7 +6629,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                 }
             }
         };
-        Typeface customRegular = tw.nekomimi.nekogram.helpers.FontHelper.INSTANCE.getCustomTypeface(tw.nekomimi.nekogram.helpers.FontHelper.CATEGORY_REGULAR);
+        Typeface customRegular = top.nkbe.niagram.helpers.FontHelper.INSTANCE.getCustomTypeface(top.nkbe.niagram.helpers.FontHelper.CATEGORY_REGULAR);
         if (customRegular != null) {
             messageEditText.setTypeface(customRegular);
         }

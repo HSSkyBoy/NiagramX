@@ -179,7 +179,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class StoryRecorder implements NotificationCenter.NotificationCenterDelegate {
 

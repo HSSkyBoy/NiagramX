@@ -53,7 +53,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 @SuppressLint("ViewConstructor")
 public class ProfileActionsView extends View {

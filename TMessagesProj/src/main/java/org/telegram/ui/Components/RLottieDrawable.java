@@ -56,7 +56,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class RLottieDrawable extends BitmapDrawable implements Animatable, BitmapsCache.Cacheable {
 

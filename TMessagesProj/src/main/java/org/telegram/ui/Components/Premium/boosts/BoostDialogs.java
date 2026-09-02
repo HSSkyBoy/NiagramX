@@ -60,7 +60,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class BoostDialogs {
     private final static long ONE_DAY = 1000 * 60 * 60 * 24;

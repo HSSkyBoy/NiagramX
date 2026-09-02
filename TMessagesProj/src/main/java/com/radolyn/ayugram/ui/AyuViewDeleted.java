@@ -76,12 +76,12 @@ import java.util.Collections;
 import java.util.List;
 
 import kotlin.Unit;
-import tw.nekomimi.nekogram.helpers.MessageHelper;
-import tw.nekomimi.nekogram.llm.LlmConfig;
-import tw.nekomimi.nekogram.translate.Translator;
-import tw.nekomimi.nekogram.ui.MessageDetailsActivity;
-import tw.nekomimi.nekogram.ui.NekoDelegateFragment;
-import tw.nekomimi.nekogram.ui.cells.NekoMessageCell;
+import top.nkbe.niagram.helpers.MessageHelper;
+import top.nkbe.niagram.llm.LlmConfig;
+import top.nkbe.niagram.translate.Translator;
+import top.nkbe.niagram.ui.MessageDetailsActivity;
+import top.nkbe.niagram.ui.NekoDelegateFragment;
+import top.nkbe.niagram.ui.cells.NekoMessageCell;
 
 public class AyuViewDeleted extends NekoDelegateFragment {
     private static final int OPTION_SHOW_IN_CHAT = 1;

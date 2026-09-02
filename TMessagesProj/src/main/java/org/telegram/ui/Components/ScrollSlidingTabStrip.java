@@ -55,7 +55,7 @@ import org.telegram.ui.ActionBar.Theme;
 
 import java.util.HashMap;
 
-import tw.nekomimi.nekogram.NekoConfig;
+import top.nkbe.niagram.NekoConfig;
 
 public class ScrollSlidingTabStrip extends HorizontalScrollView {
 

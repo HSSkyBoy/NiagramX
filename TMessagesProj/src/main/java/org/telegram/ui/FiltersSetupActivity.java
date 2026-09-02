@@ -72,8 +72,8 @@ import org.telegram.ui.Components.UndoView;
 
 import java.util.ArrayList;
 
-import tw.nekomimi.nekogram.NekoConfig;
-import tw.nekomimi.nekogram.folder.FolderIconHelper;
+import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.folder.FolderIconHelper;
 
 public class FiltersSetupActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
