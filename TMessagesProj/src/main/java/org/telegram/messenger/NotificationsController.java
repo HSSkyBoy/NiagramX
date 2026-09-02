@@ -161,6 +161,7 @@ public class NotificationsController extends BaseController implements Notificat
     private boolean soundInLoaded;
     private boolean soundOutLoaded;
     private boolean soundRecordLoaded;
+    private boolean lastUseIosSounds;
     protected static AudioManager audioManager;
     private AlarmManager alarmManager;
 
@@ -3374,9 +3375,17 @@ public class NotificationsController extends BaseController implements Notificat
                             }
                         });
                     }
+                    boolean iosSounds = top.nkbe.niagram.NekoConfig.useIosSounds.Bool();
+                    if (lastUseIosSounds != iosSounds) {
+                        lastUseIosSounds = iosSounds;
+                        soundIn = 0;
+                        soundInLoaded = false;
+                        soundOut = 0;
+                        soundOutLoaded = false;
+                    }
                     if (soundIn == 0 && !soundInLoaded) {
                         soundInLoaded = true;
-                        soundIn = soundPool.load(ApplicationLoader.applicationContext, R.raw.sound_in, 1);
+                        soundIn = soundPool.load(ApplicationLoader.applicationContext, iosSounds ? R.raw.ios_sound_in : R.raw.sound_in, 1);
                     }
                     if (soundIn != 0) {
                         try {
@@ -5979,9 +5988,17 @@ public class NotificationsController extends BaseController implements Notificat
                         }
                     });
                 }
+                boolean iosSounds = top.nkbe.niagram.NekoConfig.useIosSounds.Bool();
+                if (lastUseIosSounds != iosSounds) {
+                    lastUseIosSounds = iosSounds;
+                    soundIn = 0;
+                    soundInLoaded = false;
+                    soundOut = 0;
+                    soundOutLoaded = false;
+                }
                 if (soundOut == 0 && !soundOutLoaded) {
                     soundOutLoaded = true;
-                    soundOut = soundPool.load(ApplicationLoader.applicationContext, R.raw.sound_out, 1);
+                    soundOut = soundPool.load(ApplicationLoader.applicationContext, iosSounds ? R.raw.ios_sound_out : R.raw.sound_out, 1);
                 }
                 if (soundOut != 0) {
                     try {

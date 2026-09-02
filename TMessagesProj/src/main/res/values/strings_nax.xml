@@ -16,6 +16,8 @@
     <string name="SaveTTLMediaNotice">Always allow saving, sharing, and viewing disappearing photos and videos without restrictions.</string>
     <string name="CompactChatInput">Compact mode</string>
     <string name="CompactChatInputNotice">Compress input bar height to 40dp and tighten margins.</string>
+    <string name="useIosSounds">iOS Message Sounds</string>
+    <string name="UseIosSoundsNotice">Use Telegram-iOS in-app message sounds.</string>
     <string name="DeletedMessage">deleted</string>
     <string name="EnableSaveEditsHistory">Save Edits History</string>
     <string name="EditsHistoryMenuText">Edits History</string>

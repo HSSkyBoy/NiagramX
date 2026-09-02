@@ -107,6 +107,6 @@
     <string name="LanguageUnsupportedError">该语言包暂不支持当前客户端版本喵。</string>
     <string name="ErrorOccurred">出错了喵：</string>
     <string name="Nya">喵！</string>
-    <string name="NekoSettings">N-设置喵</string>
+    <string name="NekoSettings">Neo 设置喵</string>
     <string name="XChannel">Niagram X 频道喵</string>
 </resources>

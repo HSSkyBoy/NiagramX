@@ -15,6 +15,8 @@
     <string name="SaveTTLMediaNotice">无限制保存、转发与查看阅后即焚照片与视频，防止媒体自动销毁与删除。</string>
     <string name="CompactChatInput">紧凑模式</string>
     <string name="CompactChatInputNotice">将输入框高度压缩至 40dp，边距更紧凑。</string>
+    <string name="useIosSounds">iOS 消息收发音效</string>
+    <string name="UseIosSoundsNotice">在聊天窗口内使用 Telegram-iOS 原生收发消息提示音。</string>
     <string name="DeletedMessage">已删除</string>
     <string name="EnableSaveEditsHistory">保存编辑历史</string>
     <string name="EditsHistoryMenuText">编辑历史</string>
