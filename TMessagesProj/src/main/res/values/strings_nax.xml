@@ -424,4 +424,21 @@
     <string name="DefaultHlsVideoQualityHigh">High Quality (1080p+)</string>
     <string name="DefaultHlsVideoQualityMedium">Medium Quality (720p)</string>
     <string name="DefaultHlsVideoQualityLow">Low Quality (480p)</string>
+
+    <!-- Ban by ID in ChatUsersActivity -->
+    <string name="NiaBanById">Ban by User ID</string>
+    <string name="NiaBanByIdDialogTitle">Ban User by ID</string>
+    <string name="NiaBanByIdDialogMessage">Enter the target user\'s 64-bit integer ID. The ban request will be sent directly to Telegram server.</string>
+    <string name="NiaBanByIdHint">e.g. 123456789</string>
+    <string name="NiaBanByIdConfirm">Ban User</string>
+    <string name="NiaBanByIdConfirmTitle">Confirm Ban</string>
+    <string name="NiaBanByIdConfirmMessage">Are you sure you want to ban user with ID: %1$s?</string>
+    <string name="NiaBanByIdSuccess">User ID %1$s has been banned successfully.</string>
+    <string name="NiaBanByIdCannotBanSelf">You cannot ban yourself.</string>
+    <string name="NiaBanByIdCannotBanCreator">Cannot ban the creator or owner of this group.</string>
+    <string name="NiaBanByIdInvalid">Please enter a valid positive numeric ID.</string>
+    <string name="NiaBanByIdErrorNotParticipant">The user is not in this group. Telegram server does not allow banning users who are not participants.</string>
+    <string name="NiaBanByIdErrorInvalidUser">Invalid user ID or user not found on Telegram.</string>
+    <string name="NiaBanByIdErrorAdminRequired">You do not have sufficient administrator rights to ban this user.</string>
+    <string name="NiaBanByIdServerError">Failed to ban user: %1$s</string>
 </resources>

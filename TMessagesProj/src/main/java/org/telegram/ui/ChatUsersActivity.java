@@ -19,17 +19,21 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
 import android.util.SparseIntArray;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.collection.LongSparseArray;
 import androidx.core.content.ContextCompat;
@@ -237,6 +241,7 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
 
     private final static int search_button = 0;
     private final static int done_button = 1;
+    private final static int ban_by_id_button = 2;
 
     public final static int TYPE_BANNED = 0;
     public final static int TYPE_ADMIN = 1;
@@ -678,6 +683,8 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
                     }
                 } else if (id == done_button) {
                     processDone();
+                } else if (id == ban_by_id_button) {
+                    showBanByIdDialog();
                 }
             }
         });
@@ -740,6 +747,8 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
 
             if (type == TYPE_KICKED) {
                 doneItem = menu.addItemWithWidth(done_button, R.drawable.ic_ab_done, dp(56), getString("Done", R.string.Done));
+            } else if (type == TYPE_BANNED && ChatObject.canBlockUsers(currentChat)) {
+                menu.addItemWithWidth(ban_by_id_button, R.drawable.msg_block, dp(56), getString(R.string.NiaBanById));
             }
         } else if (type == TYPE_ADMIN && ChatObject.isChannelAndNotMegaGroup(currentChat) && ChatObject.hasAdminRights(currentChat)) {
             ActionBarMenu menu = actionBar.createMenu();
@@ -4234,5 +4243,126 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
         listView.setPadding(0, 0, 0, bottom);
         listView.setClipToPadding(false);
         undoView.setTranslationY(-bottom);
+    }
+
+    private void showBanByIdDialog() {
+        if (getParentActivity() == null) return;
+        org.telegram.ui.ActionBar.AlertDialog.Builder builder = new org.telegram.ui.ActionBar.AlertDialog.Builder(getParentActivity());
+        builder.setTitle(getString(R.string.NiaBanByIdDialogTitle));
+
+        LinearLayout layout = new LinearLayout(getParentActivity());
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(AndroidUtilities.dp(24), AndroidUtilities.dp(16), AndroidUtilities.dp(24), AndroidUtilities.dp(8));
+
+        TextView messageView = new TextView(getParentActivity());
+        messageView.setText(getString(R.string.NiaBanByIdDialogMessage));
+        messageView.setTextColor(getThemedColor(Theme.key_dialogTextBlack));
+        messageView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+        layout.addView(messageView);
+
+        org.telegram.ui.Components.EditTextBoldCursor editText = new org.telegram.ui.Components.EditTextBoldCursor(getParentActivity());
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editText.setHint(getString(R.string.NiaBanByIdHint));
+        editText.setHintTextColor(getThemedColor(Theme.key_dialogTextHint));
+        editText.setTextColor(getThemedColor(Theme.key_dialogTextBlack));
+        editText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
+        layout.addView(editText, org.telegram.ui.Components.LayoutHelper.createLinear(org.telegram.ui.Components.LayoutHelper.MATCH_PARENT, org.telegram.ui.Components.LayoutHelper.WRAP_CONTENT, 0, 16, 0, 0));
+
+        builder.setView(layout);
+        builder.setPositiveButton(getString(R.string.NiaBanByIdConfirm), (dialog, which) -> {
+            String text = editText.getText().toString().trim();
+            if (TextUtils.isEmpty(text)) return;
+            try {
+                long targetId = Long.parseLong(text);
+                if (targetId <= 0) {
+                    org.telegram.ui.Components.BulletinFactory.of(this).createErrorBulletin(getString(R.string.NiaBanByIdInvalid)).show();
+                    return;
+                }
+                if (targetId == getUserConfig().getClientUserId()) {
+                    org.telegram.ui.Components.BulletinFactory.of(this).createErrorBulletin(getString(R.string.NiaBanByIdCannotBanSelf)).show();
+                    return;
+                }
+                if (currentChat != null && currentChat.creator && targetId == currentChat.id) {
+                    org.telegram.ui.Components.BulletinFactory.of(this).createErrorBulletin(getString(R.string.NiaBanByIdCannotBanCreator)).show();
+                    return;
+                }
+                showConfirmBanDialog(targetId);
+            } catch (Exception e) {
+                org.telegram.ui.Components.BulletinFactory.of(this).createErrorBulletin(getString(R.string.NiaBanByIdInvalid)).show();
+            }
+        });
+        builder.setNegativeButton(getString(R.string.Cancel), null);
+        showDialog(builder.create());
+    }
+
+    private void showConfirmBanDialog(long targetId) {
+        if (getParentActivity() == null) return;
+        new org.telegram.ui.ActionBar.AlertDialog.Builder(getParentActivity())
+                .setTitle(getString(R.string.NiaBanByIdConfirmTitle))
+                .setMessage(LocaleController.formatString(R.string.NiaBanByIdConfirmMessage, String.valueOf(targetId)))
+                .setPositiveButton(getString(R.string.NiaBanByIdConfirm), (dialog, which) -> executeBanUser(targetId))
+                .setNegativeButton(getString(R.string.Cancel), null)
+                .show();
+    }
+
+    private void executeBanUser(long targetId) {
+        TLRPC.InputPeer inputPeer = getMessagesController().getInputPeer(targetId);
+        if (inputPeer == null || inputPeer instanceof TLRPC.TL_inputPeerEmpty) {
+            TLRPC.User user = getMessagesController().getUser(targetId);
+            TLRPC.TL_inputPeerUser inputPeerUser = new TLRPC.TL_inputPeerUser();
+            inputPeerUser.user_id = targetId;
+            inputPeerUser.access_hash = user != null ? user.access_hash : 0;
+            inputPeer = inputPeerUser;
+        }
+
+        TLRPC.TL_channels_editBanned req = new TLRPC.TL_channels_editBanned();
+        req.channel = getMessagesController().getInputChannel(chatId);
+        req.participant = inputPeer;
+        req.banned_rights = new TLRPC.TL_chatBannedRights();
+        req.banned_rights.view_messages = true;
+        req.banned_rights.send_messages = true;
+        req.banned_rights.send_media = true;
+        req.banned_rights.send_stickers = true;
+        req.banned_rights.send_gifs = true;
+        req.banned_rights.send_games = true;
+        req.banned_rights.send_inline = true;
+        req.banned_rights.embed_links = true;
+        req.banned_rights.send_polls = true;
+        req.banned_rights.change_info = true;
+        req.banned_rights.invite_users = true;
+        req.banned_rights.pin_messages = true;
+        req.banned_rights.manage_topics = true;
+        req.banned_rights.send_photos = true;
+        req.banned_rights.send_videos = true;
+        req.banned_rights.send_roundvideos = true;
+        req.banned_rights.send_audios = true;
+        req.banned_rights.send_voices = true;
+        req.banned_rights.send_docs = true;
+        req.banned_rights.send_plain = true;
+        req.banned_rights.until_date = 0;
+
+        getConnectionsManager().sendRequest(req, (response, error) -> {
+            AndroidUtilities.runOnUIThread(() -> {
+                if (isFinishing() || getParentActivity() == null) return;
+                if (error == null) {
+                    org.telegram.ui.Components.BulletinFactory.of(ChatUsersActivity.this).createSuccessBulletin(
+                            LocaleController.formatString(R.string.NiaBanByIdSuccess, String.valueOf(targetId))
+                    ).show();
+                    getMessagesController().loadFullChat(chatId, 0, true);
+                } else {
+                    String errorText;
+                    if ("USER_NOT_PARTICIPANT".equals(error.text)) {
+                        errorText = getString(R.string.NiaBanByIdErrorNotParticipant);
+                    } else if ("USER_ID_INVALID".equals(error.text) || "PEER_ID_INVALID".equals(error.text)) {
+                        errorText = getString(R.string.NiaBanByIdErrorInvalidUser);
+                    } else if ("CHAT_ADMIN_REQUIRED".equals(error.text)) {
+                        errorText = getString(R.string.NiaBanByIdErrorAdminRequired);
+                    } else {
+                        errorText = LocaleController.formatString(R.string.NiaBanByIdServerError, error.text);
+                    }
+                    org.telegram.ui.Components.BulletinFactory.of(ChatUsersActivity.this).createErrorBulletin(errorText).show();
+                }
+            });
+        });
     }
 }

@@ -410,4 +410,21 @@
     <string name="DefaultHlsVideoQualityHigh">高畫質 (1080p+)</string>
     <string name="DefaultHlsVideoQualityMedium">中畫質 (720p)</string>
     <string name="DefaultHlsVideoQualityLow">低畫質 (480p)</string>
+
+    <!-- Ban by ID in ChatUsersActivity -->
+    <string name="NiaBanById">依使用者 ID 封禁</string>
+    <string name="NiaBanByIdDialogTitle">依 ID 封禁使用者</string>
+    <string name="NiaBanByIdDialogMessage">輸入目標使用者的 64 位元整數 ID，用戶端將直接向 Telegram 伺服端發送封禁請求。</string>
+    <string name="NiaBanByIdHint">例如：123456789</string>
+    <string name="NiaBanByIdConfirm">封禁使用者</string>
+    <string name="NiaBanByIdConfirmTitle">確認封禁</string>
+    <string name="NiaBanByIdConfirmMessage">您確定要對使用者 ID: %1$s 執行封禁嗎？</string>
+    <string name="NiaBanByIdSuccess">已成功封禁使用者 ID：%1$s</string>
+    <string name="NiaBanByIdCannotBanSelf">不能封禁自己。</string>
+    <string name="NiaBanByIdCannotBanCreator">無法封禁此群組的擁有者 / 建立者。</string>
+    <string name="NiaBanByIdInvalid">請輸入大於 0 的有效正整數 ID。</string>
+    <string name="NiaBanByIdErrorNotParticipant">該使用者未在此群組內。Telegram 伺服端不允許直接封禁未入群的使用者。</string>
+    <string name="NiaBanByIdErrorInvalidUser">無效的使用者 ID 或在 Telegram 伺服端查無此人。</string>
+    <string name="NiaBanByIdErrorAdminRequired">您的管理員權限不足，無法封禁該使用者。</string>
+    <string name="NiaBanByIdServerError">封禁失敗，伺服端回應：%1$s</string>
 </resources>
