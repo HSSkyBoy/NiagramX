@@ -109,23 +109,24 @@ class NekoFontSettingsActivity : BaseFragment() {
         listView?.setOnItemClickListener { view, position ->
             when (position) {
                 useDefaultTypefaceRow -> {
-                    NekoConfig.typeface.value = !NekoConfig.typeface.Bool()
+                    val newState = !NekoConfig.typeface.Bool()
+                    NekoConfig.typeface.setConfigBool(newState)
                     AndroidUtilities.clearTypefaceCache()
                     if (ApplicationLoader.applicationContext != null) {
                         Theme.reloadAllResources(ApplicationLoader.applicationContext)
                     }
                     NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.didSetNewTheme, false, true, true)
-                    (view as? TextCheckCell)?.setChecked(NekoConfig.typeface.Bool())
-                    listAdapter?.notifyDataSetChanged()
+                    (view as? TextCheckCell)?.setChecked(newState)
                 }
                 forceFontWeightFallbackRow -> {
-                    NekoConfig.forceFontWeightFallback.value = !NekoConfig.forceFontWeightFallback.Bool()
+                    val newState = !NekoConfig.forceFontWeightFallback.Bool()
+                    NekoConfig.forceFontWeightFallback.setConfigBool(newState)
                     AndroidUtilities.clearTypefaceCache()
                     if (ApplicationLoader.applicationContext != null) {
                         Theme.reloadAllResources(ApplicationLoader.applicationContext)
                     }
                     NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.didSetNewTheme, false, true, true)
-                    (view as? TextCheckCell)?.setChecked(NekoConfig.forceFontWeightFallback.Bool())
+                    (view as? TextCheckCell)?.setChecked(newState)
                 }
                 regularFontRow -> showFontOptionsDialog(FontHelper.CATEGORY_REGULAR)
                 boldFontRow -> showFontOptionsDialog(FontHelper.CATEGORY_BOLD)
@@ -302,7 +303,7 @@ class NekoFontSettingsActivity : BaseFragment() {
                     seekBarView.setProgress(progress.coerceIn(0f, 1f))
                     seekBarView.delegate = SeekBarView.SeekBarViewDelegate { _, p ->
                         val size = if (p <= 0.05f) 0 else (12 + (p * 16).toInt())
-                        NaConfig.inputFieldTextSize.value = size
+                        NaConfig.inputFieldTextSize.setConfigInt(size)
                     }
                 }
             }

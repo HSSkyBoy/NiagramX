@@ -16,6 +16,7 @@ import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.Components.BulletinFactory
 import org.telegram.ui.Components.LayoutHelper
 import xyz.nextalone.nagram.NaConfig
+import top.nkbe.niagram.NekoConfig
 import java.io.File
 import java.io.FileInputStream
 import java.security.MessageDigest
@@ -109,11 +110,16 @@ object FontHelper {
     @JvmStatic
     fun applyFont(category: Int, fontPath: String) {
         when (category) {
-            CATEGORY_REGULAR -> NaConfig.customFontRegular.value = fontPath
-            CATEGORY_BOLD -> NaConfig.customFontBold.value = fontPath
-            CATEGORY_ITALIC -> NaConfig.customFontItalic.value = fontPath
-            CATEGORY_MONO -> NaConfig.customFontMono.value = fontPath
+            CATEGORY_REGULAR -> NaConfig.customFontRegular.setConfigString(fontPath)
+            CATEGORY_BOLD -> NaConfig.customFontBold.setConfigString(fontPath)
+            CATEGORY_ITALIC -> NaConfig.customFontItalic.setConfigString(fontPath)
+            CATEGORY_MONO -> NaConfig.customFontMono.setConfigString(fontPath)
         }
+
+        if (fontPath.isNotEmpty() && NekoConfig.typeface.Bool()) {
+            NekoConfig.typeface.setConfigBool(false)
+        }
+
         cachedTypefaces.clear()
         AndroidUtilities.clearTypefaceCache()
         if (ApplicationLoader.applicationContext != null) {
