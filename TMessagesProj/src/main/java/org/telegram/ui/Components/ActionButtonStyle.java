@@ -5,7 +5,7 @@ import android.graphics.Color;
 import org.telegram.ui.ActionBar.Theme;
 import org.telegram.ui.Components.blur3.drawable.color.BlurredBackgroundColorProviderThemed;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public final class ActionButtonStyle {
 
@@ -17,7 +17,7 @@ public final class ActionButtonStyle {
     }
 
     public static int getCurrentStyle() {
-        return NaConfig.INSTANCE.getActionButtonStyle().Int();
+        return NyaConfig.INSTANCE.getActionButtonStyle().Int();
     }
 
     public static int resolveBackgroundColor(Theme.ResourcesProvider resourcesProvider) {

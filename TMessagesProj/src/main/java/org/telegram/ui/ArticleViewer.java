@@ -240,7 +240,7 @@ import org.telegram.ui.iv.Latex;
 
 import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.parts.ArticleTransKt;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ArticleViewer extends IArticleViewer implements NotificationCenter.NotificationCenterDelegate {
 
@@ -1188,7 +1188,7 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
 
         private boolean lastWebviewAllowedScroll;
         public boolean handleTouchEvent(MotionEvent event) {
-            if (NaConfig.INSTANCE.getDisableInAppBrowserGestures().Bool()) {
+            if (NyaConfig.INSTANCE.getDisableInAppBrowserGestures().Bool()) {
                 return false;
             }
             if (pageSwitchAnimation == null && !closeAnimationInProgress && fullscreenVideoContainer.getVisibility() != VISIBLE && !textSelectionHelper.isInSelectionMode()) {

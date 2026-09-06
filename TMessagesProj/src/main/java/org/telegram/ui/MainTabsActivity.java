@@ -98,7 +98,7 @@ import top.nkbe.niagram.settings.GhostModeActivity;
 import top.nkbe.niagram.settings.NekoSettingsActivity;
 import top.nkbe.niagram.ui.BookmarkManagerActivity;
 import top.nkbe.niagram.utils.BrowserUtils;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class MainTabsActivity extends ViewPagerActivity implements NotificationCenter.NotificationCenterDelegate, FactorAnimator.Target {
 
@@ -140,7 +140,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
     private MainTabsLayout tabsView;
     private BlurredBackgroundDrawable tabsViewBackground;
     private View fadeView;
-    private boolean lastHideContacts = NaConfig.INSTANCE.getMainTabsHideContacts().Bool();
+    private boolean lastHideContacts = NyaConfig.INSTANCE.getMainTabsHideContacts().Bool();
 
     public MainTabsActivity() {
         super();
@@ -219,7 +219,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
         Bulletin.Delegate delegate = new Bulletin.Delegate() {
             @Override
             public int getBottomOffset(int tag) {
-                return navigationBarHeight + (NaConfig.INSTANCE.getHideBottomNavigationBar().Bool() ? 0 : dp(MainTabsHelper.getMainTabsHeight() + MainTabsHelper.getMainTabsMargin()));
+                return navigationBarHeight + (NyaConfig.INSTANCE.getHideBottomNavigationBar().Bool() ? 0 : dp(MainTabsHelper.getMainTabsHeight() + MainTabsHelper.getMainTabsMargin()));
             }
         };
 
@@ -955,7 +955,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
     }
 
     private boolean canScrollInternal(MotionEvent ev, boolean forward) {
-        if (NaConfig.INSTANCE.getHideBottomNavigationBar().Bool()) {
+        if (NyaConfig.INSTANCE.getHideBottomNavigationBar().Bool()) {
             return false;
         }
         final BaseFragment fragment = getCurrentVisibleFragment();
@@ -990,7 +990,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
 
         ViewGroup.MarginLayoutParams lp;
         {
-            final int height = navigationBarHeight + updateLayoutHeight + (NaConfig.INSTANCE.getHideBottomNavigationBar().Bool() ? 0 : dp(MainTabsHelper.getMainTabsHeightWithMargins()));
+            final int height = navigationBarHeight + updateLayoutHeight + (NyaConfig.INSTANCE.getHideBottomNavigationBar().Bool() ? 0 : dp(MainTabsHelper.getMainTabsHeightWithMargins()));
             lp = (ViewGroup.MarginLayoutParams) fadeView.getLayoutParams();
             if (lp.height != height) {
                 lp.height = height;
@@ -1125,7 +1125,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
     }
 
     private void checkUi_fadeView() {
-        if (viewPager == null || fadeView == null || NaConfig.INSTANCE.getHideBottomNavigationBar().Bool()) {
+        if (viewPager == null || fadeView == null || NyaConfig.INSTANCE.getHideBottomNavigationBar().Bool()) {
             return;
         }
 
@@ -1144,7 +1144,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
 
     private void checkUi_tabsPosition() {
         if (tabsView == null) return;
-        if (NaConfig.INSTANCE.getHideBottomNavigationBar().Bool()) {
+        if (NyaConfig.INSTANCE.getHideBottomNavigationBar().Bool()) {
             tabsView.setVisibility(View.GONE);
             return;
         }
@@ -1235,7 +1235,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
     private boolean accountSwitchHintShown;
 
     private void showAccountChangeHint() {
-        if (accountSwitchHintShown || NaConfig.INSTANCE.getHideBottomNavigationBar().Bool()) return;
+        if (accountSwitchHintShown || NyaConfig.INSTANCE.getHideBottomNavigationBar().Bool()) return;
 
         if (accountSwitchHint == null && HintsController.Hint.AccountSwitchHint.show()) {
             AndroidUtilities.runOnUIThread(() -> {
@@ -1383,7 +1383,7 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
             args.putLong("user_id", UserConfig.getInstance(currentAccount).getClientUserId());
             presentFragment(new ChatActivity(args));
         });
-        if (NaConfig.INSTANCE.getShowAddToBookmark().Bool()) {
+        if (NyaConfig.INSTANCE.getShowAddToBookmark().Bool()) {
             o.add(R.drawable.msg_fave, getString(R.string.BookmarksManager), () -> presentFragment(new BookmarkManagerActivity()));
         }
     }

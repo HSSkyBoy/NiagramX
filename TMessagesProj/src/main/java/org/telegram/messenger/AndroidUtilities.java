@@ -248,7 +248,7 @@ import me.vkryl.core.BitwiseUtils;
 import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.FontHelper;
 import top.nkbe.niagram.helpers.TypefaceHelper;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class AndroidUtilities {
     public final static int REPLACING_TAG_TYPE_LINK = 0;
@@ -2442,7 +2442,7 @@ public class AndroidUtilities {
     }
 
     public static int getShadowHeight() {
-        if (NaConfig.INSTANCE.getHideDividers().Bool()) {
+        if (NyaConfig.INSTANCE.getHideDividers().Bool()) {
             return 0;
         }
         if (density >= 4.0f) {

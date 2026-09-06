@@ -13,7 +13,7 @@ import top.nkbe.niagram.translate.HTMLKeeper
 import top.nkbe.niagram.translate.TransUtils
 import top.nkbe.niagram.translate.Translator
 import top.nkbe.niagram.utils.HttpClient
-import xyz.nextalone.nagram.NaConfig
+import top.nkbe.niagram.config.NyaConfig
 import java.io.IOException
 
 object GoogleAppTranslator : Translator {
@@ -24,7 +24,7 @@ object GoogleAppTranslator : Translator {
         from: String, to: String, query: String, entities: ArrayList<TLRPC.MessageEntity>
     ): TLRPC.TL_textWithEntities {
 
-        if (NaConfig.googleTranslateExp.Bool()) {
+        if (NyaConfig.googleTranslateExp.Bool()) {
             return GoogleTranslator.doTranslate(
                 from, to, query, entities
             )

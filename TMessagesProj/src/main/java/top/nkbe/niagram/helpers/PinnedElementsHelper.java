@@ -9,19 +9,19 @@ import org.telegram.ui.Components.Reactions.ReactionsLayoutInBubble;
 import java.util.ArrayList;
 
 import top.nkbe.niagram.ui.PinnedReactionsActivity;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class PinnedElementsHelper {
 
     public static ArrayList<ReactionsLayoutInBubble.VisibleReaction> getFavoriteReactions(boolean isChannel) {
         ArrayList<ReactionsLayoutInBubble.VisibleReaction> reactions = new ArrayList<>();
 
-        if ((isChannel && !NaConfig.INSTANCE.getUsePinnedReactionsChannels().Bool() || (!isChannel && !NaConfig.INSTANCE.getUsePinnedReactionsChats().Bool()))) {
+        if ((isChannel && !NyaConfig.INSTANCE.getUsePinnedReactionsChannels().Bool() || (!isChannel && !NyaConfig.INSTANCE.getUsePinnedReactionsChats().Bool()))) {
             return reactions;
         }
 
         try {
-            String value = isChannel ? NaConfig.INSTANCE.getPinnedReactionsChannels().String() : NaConfig.INSTANCE.getPinnedReactionsChats().String();
+            String value = isChannel ? NyaConfig.INSTANCE.getPinnedReactionsChannels().String() : NyaConfig.INSTANCE.getPinnedReactionsChats().String();
             JSONArray list = new JSONArray(new JSONTokener(value));
 
             int successHandled = 0;

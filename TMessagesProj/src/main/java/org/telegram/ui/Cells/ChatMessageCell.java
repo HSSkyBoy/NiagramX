@@ -270,7 +270,7 @@ import top.nkbe.niagram.helpers.MessageHelper;
 import top.nkbe.niagram.helpers.TimeStringHelper;
 import top.nkbe.niagram.helpers.TranscribeHelper;
 import top.nkbe.niagram.utils.AndroidUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import xyz.nextalone.nagram.helper.BookmarksHelper;
 
 import static top.nkbe.niagram.helpers.MessageHelper.showForwardDate;
@@ -4237,7 +4237,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
     }
 
     private boolean checkDateMotionEvent(MotionEvent event) {
-        if (!currentMessageObject.isImportedForward() && !NaConfig.INSTANCE.getShowTimeHint().Bool()) {
+        if (!currentMessageObject.isImportedForward() && !NyaConfig.INSTANCE.getShowTimeHint().Bool()) {
             return false;
         }
         int x = (int) getEventX(event);
@@ -10027,7 +10027,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                         w = h = dp(150);
                     }
 
-                    if (NaConfig.INSTANCE.getShowSmallGIF().Bool() && messageObject.type == MessageObject.TYPE_GIF) {
+                    if (NyaConfig.INSTANCE.getShowSmallGIF().Bool() && messageObject.type == MessageObject.TYPE_GIF) {
                         w = h = AndroidUtilities.dp(120);
                     }
 
@@ -15643,7 +15643,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             float rad = (float) Math.floor(SharedConfig.bubbleRadius / (currentMessageObject.isSponsored() ? 2f : 3f));
             linkLine
                 .offsetEmoji(0, drawPhotoImageBefore ? (1f - isSmallImage()) * (dp(18) + photoImage.getImageHeight() + (siteNameLayout != null ? siteNameLayout.getLineBottom(siteNameLayout.getLineCount() - 1) : 0)) : 0)
-                .drawBackground(canvas, AndroidUtilities.rectTmp, rad, rad, rad, alpha, false, !NaConfig.INSTANCE.getMessageColoredBackground().Bool());
+                .drawBackground(canvas, AndroidUtilities.rectTmp, rad, rad, rad, alpha, false, !NyaConfig.INSTANCE.getMessageColoredBackground().Bool());
 
             int rippleColor = linkLine.getBackgroundColor();
             if (linkPreviewSelector == null) {
@@ -18604,7 +18604,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         // bookmark start
         boolean showBookmarkInTime = false;
         int senderNameColor = 0;
-        if (NaConfig.INSTANCE.getShowAddToBookmark().Bool()) {
+        if (NyaConfig.INSTANCE.getShowAddToBookmark().Bool()) {
             boolean groupHasBookmark = false;
             if (currentMessagesGroup != null && currentMessagesGroup.messages != null && currentMessagesGroup.messages.size() > 1) {
                 final long dialogId = messageObject.getDialogId();
@@ -18657,7 +18657,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         if (currentMessageObject.messageOwner.video_processing_pending) {
             timeString = formatString(R.string.ScheduledTimeApprox, timeString);
         }
-        if (NaConfig.INSTANCE.getShowMessageID().Bool() && messageObject.messageOwner != null/* && (isChat || isMegagroup || ChatObject.isChannel(currentChat))*/) {
+        if (NyaConfig.INSTANCE.getShowMessageID().Bool() && messageObject.messageOwner != null/* && (isChat || isMegagroup || ChatObject.isChannel(currentChat))*/) {
             if (!(timeString instanceof SpannableStringBuilder)) {
                 timeString = new SpannableStringBuilder(timeString);
             }
@@ -18670,7 +18670,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             } else if (messageObject.messageOwner.fwd_from != null && messageObject.messageOwner.fwd_from.imported) {
                 currentTimeString.insert(0, " ");
             } else {
-                String toInsert = edited && !NaConfig.INSTANCE.getUseEditedIcon().Bool() ? ", " : " ";
+                String toInsert = edited && !NyaConfig.INSTANCE.getUseEditedIcon().Bool() ? ", " : " ";
                 currentTimeString.insert(0, toInsert);
             }
         }
@@ -18711,10 +18711,10 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         }
         timeTextWidth = timeWidth = (int) Math.ceil(Theme.chat_timePaint.measureText(currentTimeString, 0, currentTimeString == null ? 0 : currentTimeString.length()));
         if (timeString instanceof SpannableStringBuilder) {
-            if (edited && NaConfig.INSTANCE.getUseEditedIcon().Bool() && TimeStringHelper.editedDrawable != null) {
+            if (edited && NyaConfig.INSTANCE.getUseEditedIcon().Bool() && TimeStringHelper.editedDrawable != null) {
                 timeTextWidth = timeWidth += TimeStringHelper.editedDrawable.getIntrinsicWidth();
             }
-            if (ayuDeleted && NaConfig.INSTANCE.getUseDeletedIcon().Bool() && TimeStringHelper.deletedDrawable != null) {
+            if (ayuDeleted && NyaConfig.INSTANCE.getUseDeletedIcon().Bool() && TimeStringHelper.deletedDrawable != null) {
                 timeTextWidth = timeWidth += TimeStringHelper.deletedDrawable.getIntrinsicWidth();
             }
             if (translated && TimeStringHelper.translatedDrawable != null) {
@@ -18864,7 +18864,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
     }
 
     protected boolean checkNeedDrawShareButton(MessageObject messageObject) {
-        if (!messageObject.isSaved && NaConfig.INSTANCE.getHideShareButtonInChannel().Bool()) return false;
+        if (!messageObject.isSaved && NyaConfig.INSTANCE.getHideShareButtonInChannel().Bool()) return false;
         if (currentMessageObject.isAyuDeleted()) return false;
         if (isReportChat) return false;
         if (currentMessageObject.deleted && !currentMessageObject.deletedByThanos) return false;
@@ -19102,7 +19102,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             }
 
             int boosts = currentMessageObject.messageOwner.from_boosts_applied;
-            if (NaConfig.INSTANCE.getPremiumItemBoosts().Bool() && boosts > 0) {
+            if (NyaConfig.INSTANCE.getPremiumItemBoosts().Bool() && boosts > 0) {
                 if (adminString == null) {
                     adminString = new SpannableStringBuilder();
                 }
@@ -20030,7 +20030,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
     }
 
     private Object getAuthorStatus() {
-        if (!NaConfig.INSTANCE.getPremiumItemEmojiStatus().Bool()) {
+        if (!NyaConfig.INSTANCE.getPremiumItemEmojiStatus().Bool()) {
             return null;
         }
         if (currentUser != null) {
@@ -21046,7 +21046,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                     } else {
                         currentSelectedBackgroundAlpha = 0;
                         currentBackgroundDrawable.setAlpha((int) (255 * alphaInternal));
-                        if (NaConfig.INSTANCE.getTranslucentDeletedMessages().Bool() && ayuDeleted && currentMessageObject.isOutOwner()) {
+                        if (NyaConfig.INSTANCE.getTranslucentDeletedMessages().Bool() && ayuDeleted && currentMessageObject.isOutOwner()) {
                             currentBackgroundDrawable.setAlpha((int) (255 * 0.75f));
                         }
                         currentBackgroundDrawable.drawCached(canvas, backgroundCacheParams);
@@ -23116,7 +23116,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 // draw reply background
                 leftRad = bottomRad; // line redesign
                 replyLine.setLoading(loading);
-                replyLine.drawBackground(canvas, replySelectorRect, leftRad, rightRad, bottomRad, alpha, isReplyQuote, currentMessageObject.shouldDrawWithoutBackground() || !NaConfig.INSTANCE.getMessageColoredBackground().Bool());
+                replyLine.drawBackground(canvas, replySelectorRect, leftRad, rightRad, bottomRad, alpha, isReplyQuote, currentMessageObject.shouldDrawWithoutBackground() || !NyaConfig.INSTANCE.getMessageColoredBackground().Bool());
 
                 if (replySelector == null) {
                     replySelector = Theme.createRadSelectorDrawable(replySelectorColor = rippleColor, 0, 0);
@@ -28993,9 +28993,9 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 }
             }
             if ((((edited || ayuDeleted) && !lastDrawingEdited) || (currentMessageObject.translated && !lastTranslated)) && timeLayout != null) {
-                String customStr = NaConfig.INSTANCE.getCustomEditedMessage().String();
+                String customStr = NyaConfig.INSTANCE.getCustomEditedMessage().String();
                 String customStrFin = customStr.equals("") ? getString(R.string.EditedMessage) : customStr;
-                String deletedStr = NaConfig.INSTANCE.getCustomDeletedMark().String();
+                String deletedStr = NyaConfig.INSTANCE.getCustomDeletedMark().String();
                 String deletedStrFin = deletedStr.equals("") ? getString(R.string.DeletedMessage) : deletedStr;
                 String editedStr;
                 if (edited && !ayuDeleted){
@@ -29497,7 +29497,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                     drawClock = false;
                     drawError = true;
                 } else if (currentMessageObject.isSent()) {
-                    if (!currentMessageObject.scheduled && !currentMessageObject.isUnread() && !NaConfig.INSTANCE.getHideReadReceiptsLocally().Bool()) {
+                    if (!currentMessageObject.scheduled && !currentMessageObject.isUnread() && !NyaConfig.INSTANCE.getHideReadReceiptsLocally().Bool()) {
                         drawCheck1 = true;
                     } else {
                         drawCheck1 = false;
@@ -29963,7 +29963,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
     }
 
     protected boolean shouldTranslucentDeleted() {
-        return NaConfig.INSTANCE.getTranslucentDeletedMessages().Bool();
+        return NyaConfig.INSTANCE.getTranslucentDeletedMessages().Bool();
     }
 
     // bookmark start

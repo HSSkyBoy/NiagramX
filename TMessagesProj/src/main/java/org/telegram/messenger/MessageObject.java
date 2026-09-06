@@ -129,7 +129,7 @@ import me.vkryl.core.BitwiseUtils;
 
 import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.filters.ReactionFilter;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
 import top.nkbe.niagram.syntaxhighlight.SyntaxHighlight;
 
@@ -714,7 +714,7 @@ public class MessageObject {
     }
 
     public boolean shouldDrawReactions() {
-        if (NaConfig.INSTANCE.getHideReactions().Bool()) {
+        if (NyaConfig.INSTANCE.getHideReactions().Bool()) {
             return false;
         }
         return !isRepostPreview;
@@ -3690,7 +3690,7 @@ public class MessageObject {
         final boolean voiceTranscriptionOpen = messageOwner != null && messageOwner.voiceTranscriptionOpen;
         final boolean manualTranslated = translateController.isManualTranslated(this);
         final boolean autoTranslated = TranslateController.isTranslatable(this) && translateController.isTranslatingDialog(getDialogId());
-        final int translatorMode = NaConfig.INSTANCE.getTranslatorMode().Int();
+        final int translatorMode = NyaConfig.INSTANCE.getTranslatorMode().Int();
         final boolean keepOriginal = MessageHelper.shouldKeepOriginalForDisplay(translatorMode, manualTranslated, autoTranslated);
         final TLRPC.TL_textWithEntities translatedText = messageOwner != null ? (voiceTranscriptionOpen ? messageOwner.translatedVoiceTranscription : messageOwner.translatedText) : null;
         final TLRPC.TL_textWithEntities summarizedText = messageOwner != null && messageOwner.summarizedOpen ? messageOwner.summaryText : null;

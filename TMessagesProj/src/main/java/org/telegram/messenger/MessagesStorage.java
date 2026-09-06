@@ -83,7 +83,7 @@ import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.filters.AyuFilter;
 import top.nkbe.niagram.helpers.AppRestartHelper;
 import top.nkbe.niagram.helpers.MessageHelper;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import com.radolyn.ayugram.AyuConstants;
 import com.radolyn.ayugram.messages.AyuMessagesController;
 import com.radolyn.ayugram.messages.AyuSavePreferences;
@@ -2970,7 +2970,7 @@ public class MessagesStorage extends BaseController {
                         continue;
                     }
                     flags = filter.flags;
-                    ignoreMutedUnreadCount = NaConfig.INSTANCE.getIgnoreUnreadCount().Int() == NekoConfig.DIALOG_FILTER_EXCLUDE_MUTED;
+                    ignoreMutedUnreadCount = NyaConfig.INSTANCE.getIgnoreUnreadCount().Int() == NekoConfig.DIALOG_FILTER_EXCLUDE_MUTED;
                     if (ignoreMutedUnreadCount && (flags & MessagesController.DIALOG_FILTER_FLAG_EXCLUDE_MUTED) == 0) {
                         flags |= MessagesController.DIALOG_FILTER_FLAG_EXCLUDE_MUTED;
                     }
@@ -4806,7 +4806,7 @@ public class MessagesStorage extends BaseController {
                                 continue;
                             } else {
                                 // --- AyuGram hook
-                                if (NaConfig.INSTANCE.getEnableSaveEditsHistory().Bool()) {
+                                if (NyaConfig.INSTANCE.getEnableSaveEditsHistory().Bool()) {
                                     var prefs = new AyuSavePreferences(message, currentAccount);
                                     prefs.setDialogId(dialogId);
                                     AyuMessagesController.getInstance().onMessageEditedForce(prefs);
@@ -6323,7 +6323,7 @@ public class MessagesStorage extends BaseController {
                 }
                 unreadCount = filter.pendingUnreadCount;
                 flags = filter.flags;
-                ignoreMutedUnreadCount = NaConfig.INSTANCE.getIgnoreUnreadCount().Int() == NekoConfig.DIALOG_FILTER_EXCLUDE_MUTED;
+                ignoreMutedUnreadCount = NyaConfig.INSTANCE.getIgnoreUnreadCount().Int() == NekoConfig.DIALOG_FILTER_EXCLUDE_MUTED;
                 if (ignoreMutedUnreadCount && (flags & MessagesController.DIALOG_FILTER_FLAG_EXCLUDE_MUTED) == 0) {
                     flags |= MessagesController.DIALOG_FILTER_FLAG_EXCLUDE_MUTED;
                 }
@@ -14534,7 +14534,7 @@ public class MessagesStorage extends BaseController {
                 cursor = null;
                 if (!dialogs.isEmpty()) {
                     // save deleted messages from encrypted chats
-                    if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+                    if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
                         var ayuMessagesController = AyuMessagesController.getInstance();
                         for (int a = 0, N = dialogs.size(); a < N; a++) {
                             long dialogId = dialogs.keyAt(a);
@@ -14554,7 +14554,7 @@ public class MessagesStorage extends BaseController {
                         long dialogId = dialogs.keyAt(a);
                         ArrayList<Integer> mids = dialogs.valueAt(a);
                         // notify about deleted messages
-                        if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+                        if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
                             final long dialogIdFinal = dialogId;
                             final ArrayList<Integer> midsFinal = new ArrayList<>(mids);
                             AndroidUtilities.runOnUIThread(() -> getNotificationCenter().postNotificationName(AyuConstants.MESSAGES_DELETED_NOTIFICATION, dialogIdFinal, midsFinal));
@@ -16405,13 +16405,13 @@ public class MessagesStorage extends BaseController {
                                         // --- AyuGram hook
                                         if (message.from_id != null) {
                                             if (!oldMessage.message.equals(message.message) || !sameMedia) {
-                                                if (NaConfig.INSTANCE.getEnableSaveEditsHistory().Bool()) {
+                                                if (NyaConfig.INSTANCE.getEnableSaveEditsHistory().Bool()) {
                                                     var prefs = new AyuSavePreferences(oldMessage, currentAccount);
                                                     prefs.setDialogId(dialogId);
                                                     AyuMessagesController.getInstance().onMessageEdited(prefs, message);
                                                 }
                                             }
-                                            if (NaConfig.INSTANCE.getRegexFiltersEnabled().Bool()) {
+                                            if (NyaConfig.INSTANCE.getRegexFiltersEnabled().Bool()) {
                                                 AyuFilter.onMessageEdited(message.id, dialogId);
                                             }
                                         }

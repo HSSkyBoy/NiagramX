@@ -75,7 +75,7 @@ import java.util.ArrayList;
 import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.NekoXConfig;
 import top.nkbe.niagram.folder.FolderIconHelper;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressLint("ViewConstructor")
 public class FilterTabsView extends FrameLayout {
@@ -1652,7 +1652,7 @@ public class FilterTabsView extends FrameLayout {
             selectorDrawable.setAlpha(31);
             selectorDrawable.draw(canvas);
 
-            if (NaConfig.INSTANCE.getFolderTabsStroke().Bool()) {
+            if (NyaConfig.INSTANCE.getFolderTabsStroke().Bool()) {
                 float strokeWidth = dpf2(1f);
                 tabStrokePaint.setStrokeWidth(strokeWidth);
                 int baseColor = Theme.getColor(tabLineColorKey, resourcesProvider);

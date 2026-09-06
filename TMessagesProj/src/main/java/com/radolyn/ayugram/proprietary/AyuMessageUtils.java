@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.function.Function;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public abstract class AyuMessageUtils {
     public static <T extends TLObject> ArrayList<T> deserializeMultiple(byte[] serializedData, Function<NativeByteBuffer, T> deserializer) {
@@ -663,9 +663,9 @@ public abstract class AyuMessageUtils {
     }
 
     private static boolean shouldSaveMedia(AyuSavePreferences prefs) {
-        if (NaConfig.INSTANCE.getMessageSavingSaveMedia().Bool() && prefs.getMessage().media != null) {
+        if (NyaConfig.INSTANCE.getMessageSavingSaveMedia().Bool() && prefs.getMessage().media != null) {
             if (DialogObject.isUserDialog(prefs.getDialogId())) {
-                return NaConfig.INSTANCE.getSaveMediaInPrivateChats().Bool();
+                return NyaConfig.INSTANCE.getSaveMediaInPrivateChats().Bool();
             }
             TLRPC.Chat chat = MessagesController.getInstance(prefs.getAccountId()).getChat(Math.abs(prefs.getDialogId()));
             if (chat == null) {
@@ -674,23 +674,23 @@ public abstract class AyuMessageUtils {
             }
             boolean isPublic = ChatObject.isPublic(chat);
             if (ChatObject.isChannelAndNotMegaGroup(chat)) {
-                if (isPublic && NaConfig.INSTANCE.getSaveMediaInPublicChannels().Bool()) {
+                if (isPublic && NyaConfig.INSTANCE.getSaveMediaInPublicChannels().Bool()) {
                     return true;
                 }
-                return !isPublic && NaConfig.INSTANCE.getSaveMediaInPrivateChannels().Bool();
-            } else if (isPublic && NaConfig.INSTANCE.getSaveMediaInPublicGroups().Bool()) {
+                return !isPublic && NyaConfig.INSTANCE.getSaveMediaInPrivateChannels().Bool();
+            } else if (isPublic && NyaConfig.INSTANCE.getSaveMediaInPublicGroups().Bool()) {
                 return true;
             } else {
-                return !isPublic && NaConfig.INSTANCE.getSaveMediaInPrivateGroups().Bool();
+                return !isPublic && NyaConfig.INSTANCE.getSaveMediaInPrivateGroups().Bool();
             }
         }
         return false;
     }
 
     public static boolean shouldSaveMedia(int accountId, long dialogId) {
-        if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() && NaConfig.INSTANCE.getMessageSavingSaveMedia().Bool()) {
+        if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() && NyaConfig.INSTANCE.getMessageSavingSaveMedia().Bool()) {
             if (DialogObject.isUserDialog(dialogId)) {
-                return NaConfig.INSTANCE.getSaveMediaInPrivateChats().Bool();
+                return NyaConfig.INSTANCE.getSaveMediaInPrivateChats().Bool();
             }
             TLRPC.Chat chat = MessagesController.getInstance(accountId).getChat(Math.abs(dialogId));
             if (chat == null) {
@@ -698,14 +698,14 @@ public abstract class AyuMessageUtils {
             }
             boolean isPublic = ChatObject.isPublic(chat);
             if (ChatObject.isChannelAndNotMegaGroup(chat)) {
-                if (isPublic && NaConfig.INSTANCE.getSaveMediaInPublicChannels().Bool()) {
+                if (isPublic && NyaConfig.INSTANCE.getSaveMediaInPublicChannels().Bool()) {
                     return true;
                 }
-                return !isPublic && NaConfig.INSTANCE.getSaveMediaInPrivateChannels().Bool();
-            } else if (isPublic && NaConfig.INSTANCE.getSaveMediaInPublicGroups().Bool()) {
+                return !isPublic && NyaConfig.INSTANCE.getSaveMediaInPrivateChannels().Bool();
+            } else if (isPublic && NyaConfig.INSTANCE.getSaveMediaInPublicGroups().Bool()) {
                 return true;
             } else {
-                return !isPublic && NaConfig.INSTANCE.getSaveMediaInPrivateGroups().Bool();
+                return !isPublic && NyaConfig.INSTANCE.getSaveMediaInPrivateGroups().Bool();
             }
         }
         return false;
@@ -737,7 +737,7 @@ public abstract class AyuMessageUtils {
     }
 
     public static File decryptAndSaveMedia(String fileName, File encryptedFile, MessageObject messageObject, boolean force) {
-        if (!force && !NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+        if (!force && !NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
             return null;
         }
         File attachmentsDir = AyuMessagesController.attachmentsPath;
@@ -828,7 +828,7 @@ public abstract class AyuMessageUtils {
     }
 
     public static File saveDownloadedMedia(File downloadedFile) {
-        if (!NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+        if (!NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
             return null;
         }
         if (downloadedFile == null) {

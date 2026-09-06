@@ -23,7 +23,7 @@ import org.telegram.ui.Components.TypefaceSpan;
 import java.util.List;
 
 import top.nkbe.niagram.NekoConfig;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class TypefaceHelper {
 
@@ -201,8 +201,8 @@ public class TypefaceHelper {
     }
 
     public static SpannableStringBuilder getTitleText(int currentAccount) {
-        String title = NaConfig.INSTANCE.getCustomTitle().String();
-        if (NaConfig.INSTANCE.getCustomTitleUserName().Bool()) {
+        String title = NyaConfig.INSTANCE.getCustomTitle().String();
+        if (NyaConfig.INSTANCE.getCustomTitleUserName().Bool()) {
             TLRPC.User self = UserConfig.getInstance(currentAccount).getCurrentUser();
             if (self != null && self.first_name != null) {
                 title = self.first_name;

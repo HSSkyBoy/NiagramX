@@ -179,7 +179,7 @@ import kotlin.Unit;
 import top.nkbe.niagram.ui.BottomBuilder;
 import top.nkbe.niagram.utils.AlertUtil;
 import top.nkbe.niagram.utils.ProxyUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressWarnings("unchecked")
 public class SharedMediaLayout extends FrameLayout implements NotificationCenter.NotificationCenterDelegate, DialogCell.DialogCellDelegate {
@@ -1365,9 +1365,9 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
                     return object;
                 }
             }
-            if (mediaPages[0].selectedType == 0 && (closing ? (xyz.nextalone.nagram.NaConfig.INSTANCE.getScrollToSeenPhotoOnClose().Bool() || (firstVisiblePosition >= 0 && lastVisiblePosition >= 0)) : (firstVisiblePosition >= 0 && lastVisiblePosition >= 0))) {
+            if (mediaPages[0].selectedType == 0 && (closing ? (top.nkbe.niagram.config.NyaConfig.INSTANCE.getScrollToSeenPhotoOnClose().Bool() || (firstVisiblePosition >= 0 && lastVisiblePosition >= 0)) : (firstVisiblePosition >= 0 && lastVisiblePosition >= 0))) {
                 int position = photoVideoAdapter.getPositionForIndex(index);
-                if (closing && xyz.nextalone.nagram.NaConfig.INSTANCE.getScrollToSeenPhotoOnClose().Bool() && position >= 0) {
+                if (closing && top.nkbe.niagram.config.NyaConfig.INSTANCE.getScrollToSeenPhotoOnClose().Bool() && position >= 0) {
                     mediaPages[0].layoutManager.scrollToPositionWithOffset(position, 0);
                     delegate.scrollToSharedMedia();
                 } else if (position <= firstVisiblePosition) {
@@ -1622,14 +1622,14 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
             main_tab = null;
         }
         if (initialTab == TAB_GIFTS || initialTab == TAB_RECOMMENDED_CHANNELS || initialTab == TAB_SAVED_DIALOGS || initialTab == TAB_COMMON_GROUPS) {
-            this.initialTab = NaConfig.INSTANCE.getPreferCommonGroupsTab().Bool() && initialTab == TAB_GIFTS && userInfo != null && userInfo.common_chats_count > 0 ? TAB_COMMON_GROUPS : initialTab;
+            this.initialTab = NyaConfig.INSTANCE.getPreferCommonGroupsTab().Bool() && initialTab == TAB_GIFTS && userInfo != null && userInfo.common_chats_count > 0 ? TAB_COMMON_GROUPS : initialTab;
         } else if (user != null && user.bot && user.bot_has_main_app && user.bot_can_edit) {
             this.initialTab = TAB_BOT_PREVIEWS;
         } else if (userInfo != null && userInfo.bot_info != null && userInfo.bot_info.has_preview_medias) {
             this.initialTab = TAB_STORIES;
         } else if (main_tab instanceof TLRPC.TL_profileTabPosts && (userInfo != null && userInfo.stories_pinned_available || chatInfo != null && chatInfo.stories_pinned_available || isStoriesView())) {
             this.initialTab = TAB_STORIES;
-        } else if (main_tab instanceof TLRPC.TL_profileTabGifts && (userInfo != null && userInfo.stargifts_count > 0 || chatInfo != null && chatInfo.stargifts_count > 0 && !NaConfig.INSTANCE.getPreferCommonGroupsTab().Bool())) {
+        } else if (main_tab instanceof TLRPC.TL_profileTabGifts && (userInfo != null && userInfo.stargifts_count > 0 || chatInfo != null && chatInfo.stargifts_count > 0 && !NyaConfig.INSTANCE.getPreferCommonGroupsTab().Bool())) {
             this.initialTab = TAB_GIFTS;
         } else if (main_tab instanceof TLRPC.TL_profileTabFiles && (hasMedia[1] == -1 || hasMedia[1] > 0)) {
             this.initialTab = TAB_FILES;
@@ -1641,9 +1641,9 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
             this.initialTab = TAB_AUDIO;
         } else if (main_tab instanceof TLRPC.TL_profileTabVoice && (hasMedia[2] == -1 || hasMedia[2] > 0)) {
             this.initialTab = TAB_VOICE;
-        } else if (!NaConfig.INSTANCE.getDisableStories().Bool() && (userInfo != null && userInfo.stories_pinned_available || chatInfo != null && chatInfo.stories_pinned_available || isStoriesView())) {
+        } else if (!NyaConfig.INSTANCE.getDisableStories().Bool() && (userInfo != null && userInfo.stories_pinned_available || chatInfo != null && chatInfo.stories_pinned_available || isStoriesView())) {
             this.initialTab = getInitialTab();
-        } else if (userInfo != null && userInfo.stargifts_count > 0 || chatInfo != null && chatInfo.stargifts_count > 0 && !NaConfig.INSTANCE.getPreferCommonGroupsTab().Bool()) {
+        } else if (userInfo != null && userInfo.stargifts_count > 0 || chatInfo != null && chatInfo.stargifts_count > 0 && !NyaConfig.INSTANCE.getPreferCommonGroupsTab().Bool()) {
             this.initialTab = TAB_GIFTS;
         } else if (initialTab != -1 && topicId == 0) {
             this.initialTab = initialTab;
@@ -3857,7 +3857,7 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
     }
 
     protected boolean includeStories() {
-        return !NaConfig.INSTANCE.getDisableStories().Bool();
+        return !NyaConfig.INSTANCE.getDisableStories().Bool();
 //        return true;
     }
 
@@ -6897,7 +6897,7 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
         boolean hasEditBotPreviews = user != null && user.bot && user.bot_has_main_app && user.bot_can_edit;
         boolean hasBotPreviews = user != null && user.bot && !user.bot_can_edit && (userInfo != null && userInfo.bot_info != null && userInfo.bot_info.has_preview_medias) && !hasEditBotPreviews;
         boolean hasStories = (DialogObject.isUserDialog(dialog_id) || DialogObject.isChatDialog(dialog_id)) && !DialogObject.isEncryptedDialog(dialog_id) && (userInfo != null && userInfo.stories_pinned_available || info != null && info.stories_pinned_available || isStoriesView()) && includeStories();
-        hasStories = !NaConfig.INSTANCE.getDisableStories().Bool() && hasStories;
+        hasStories = !NyaConfig.INSTANCE.getDisableStories().Bool() && hasStories;
         boolean hasGifts = giftsContainer != null && (userInfo != null && userInfo.stargifts_count > 0 || info != null && info.stargifts_count > 0);
         final TLRPC.ProfileTab main_tab = info != null ? info.main_tab : userInfo != null ? userInfo.main_tab : null;
         int changed = 0;
@@ -7011,7 +7011,7 @@ public class SharedMediaLayout extends FrameLayout implements NotificationCenter
             }
             if (hasBotPreviews) {
                 tabs.add(new Pair(TAB_STORIES, getString(R.string.ProfileBotPreviewTab)));
-            } else if (!NaConfig.INSTANCE.getDisableStories().Bool() && ((DialogObject.isUserDialog(dialog_id) || DialogObject.isChatDialog(dialog_id)) && !DialogObject.isEncryptedDialog(dialog_id) && (userInfo != null && userInfo.stories_pinned_available || info != null && info.stories_pinned_available || isStoriesView()) && includeStories())) {
+            } else if (!NyaConfig.INSTANCE.getDisableStories().Bool() && ((DialogObject.isUserDialog(dialog_id) || DialogObject.isChatDialog(dialog_id)) && !DialogObject.isEncryptedDialog(dialog_id) && (userInfo != null && userInfo.stories_pinned_available || info != null && info.stories_pinned_available || isStoriesView()) && includeStories())) {
                 if (isArchivedOnlyStoriesView()) {
                     tabs.add(new Pair(TAB_ARCHIVED_STORIES, getString(R.string.ProfileArchivedStories)));
                     scrollSlidingTextTabStrip.animationDuration = 420;

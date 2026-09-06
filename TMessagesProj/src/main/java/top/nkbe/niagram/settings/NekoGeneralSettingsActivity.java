@@ -63,7 +63,7 @@ import top.nkbe.niagram.config.cell.ConfigCellTextDetail;
 import top.nkbe.niagram.config.cell.ConfigCellTextInput;
 import top.nkbe.niagram.config.cell.ConfigCellTextInput2;
 import top.nkbe.niagram.utils.AndroidUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressLint("RtlHardcoded")
 @SuppressWarnings({"unused", "FieldCanBeLocal"})
@@ -97,11 +97,11 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
 
     // General
     private final AbstractConfigCell headerGeneral = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.General)));
-    private final AbstractConfigCell customTitleRow = cellGroup.appendCell(new ConfigCellTextInput(null, NaConfig.INSTANCE.getCustomTitle(),
+    private final AbstractConfigCell customTitleRow = cellGroup.appendCell(new ConfigCellTextInput(null, NyaConfig.INSTANCE.getCustomTitle(),
         getString(R.string.CustomTitleHint), null,
-        (input) -> input.isEmpty() ? (String) NaConfig.INSTANCE.getCustomTitle().defaultValue : input));
-    private final AbstractConfigCell enableQuickScheduleRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getEnableQuickSchedule(), getString(R.string.EnableQuickScheduleNotice)));
-    private final AbstractConfigCell defaultScheduledTimeRow = cellGroup.appendCell(new ConfigCellTextInput(getString(R.string.DefaultScheduleDelay), NaConfig.INSTANCE.getDefaultScheduledTime(),
+        (input) -> input.isEmpty() ? (String) NyaConfig.INSTANCE.getCustomTitle().defaultValue : input));
+    private final AbstractConfigCell enableQuickScheduleRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getEnableQuickSchedule(), getString(R.string.EnableQuickScheduleNotice)));
+    private final AbstractConfigCell defaultScheduledTimeRow = cellGroup.appendCell(new ConfigCellTextInput(getString(R.string.DefaultScheduleDelay), NyaConfig.INSTANCE.getDefaultScheduledTime(),
         getString(R.string.DefaultScheduleDelay) + " (s)", null,
         (input) -> {
             try {
@@ -111,13 +111,13 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
                 return "10";
             }
         }));
-    private final AbstractConfigCell folderNameAsTitleRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getFolderNameAsTitle()));
-    private final AbstractConfigCell customTitleUserNameRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getCustomTitleUserName()));
+    private final AbstractConfigCell folderNameAsTitleRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getFolderNameAsTitle()));
+    private final AbstractConfigCell customTitleUserNameRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getCustomTitleUserName()));
     private final AbstractConfigCell disableNumberRoundingRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.disableNumberRounding, "4.8K -> 4777"));
-    private final AbstractConfigCell preferCommonGroupsTabRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getPreferCommonGroupsTab(), getString(R.string.PreferCommonGroupsTabNotice)));
+    private final AbstractConfigCell preferCommonGroupsTabRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getPreferCommonGroupsTab(), getString(R.string.PreferCommonGroupsTabNotice)));
     private final AbstractConfigCell usePersianCalendarRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.usePersianCalendar, getString(R.string.UsePersianCalendarInfo)));
     private final AbstractConfigCell displayPersianCalendarByLatinRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.displayPersianCalendarByLatin));
-    private final AbstractConfigCell showIdAndDcRow = cellGroup.appendCell(new ConfigCellSelectBox("ShowIdAndDc", NaConfig.INSTANCE.getIdDcType(), new String[]{
+    private final AbstractConfigCell showIdAndDcRow = cellGroup.appendCell(new ConfigCellSelectBox("ShowIdAndDc", NyaConfig.INSTANCE.getIdDcType(), new String[]{
             getString(R.string.Disable),
             "Telegram API",
             "Bot API"
@@ -126,13 +126,13 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
             getString(R.string.LastFirst),
             getString(R.string.FirstLast)
     }, null));
-    private final AbstractConfigCell disableGooeyAvatarAnimationRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getDisableGooeyAvatarAnimation()));
-    private final AbstractConfigCell showSquareAvatarRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getShowSquareAvatar()));
+    private final AbstractConfigCell disableGooeyAvatarAnimationRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getDisableGooeyAvatarAnimation()));
+    private final AbstractConfigCell showSquareAvatarRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getShowSquareAvatar()));
     private final AbstractConfigCell dividerGeneral = cellGroup.appendCell(new ConfigCellDivider());
 
     // Storage
     private final AbstractConfigCell headerStorage = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.StorageSettings)));
-    private final AbstractConfigCell saveToChatSubfolderRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getSaveToChatSubfolder()));
+    private final AbstractConfigCell saveToChatSubfolderRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getSaveToChatSubfolder()));
     private final AbstractConfigCell customSavePathRow = cellGroup.appendCell(new ConfigCellTextDetail(
             NekoConfig.customSavePath,
             getString(R.string.customSavePath),
@@ -146,7 +146,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     // Connections
     private final AbstractConfigCell headerConnection = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.Connection)));
     private final AbstractConfigCell useIPv6Row = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.useIPv6));
-    private final AbstractConfigCell disableProxyWhenVpnEnabledRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getDisableProxyWhenVpnEnabled()));
+    private final AbstractConfigCell disableProxyWhenVpnEnabledRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getDisableProxyWhenVpnEnabled()));
     private final AbstractConfigCell dnsTypeRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NekoConfig.dnsType, new String[]{
             getString(R.string.MapPreviewProviderTelegram),
             getString(R.string.DnsTypeCloudflare),
@@ -186,10 +186,10 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     // Folder
     private final AbstractConfigCell headerFolder = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.Folder)));
     private final AbstractConfigCell hideAllTabRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.hideAllTab, getString(R.string.HideAllTabAbout)));
-    private final AbstractConfigCell doNotUnarchiveBySwipeRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getDoNotUnarchiveBySwipe()));
+    private final AbstractConfigCell doNotUnarchiveBySwipeRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getDoNotUnarchiveBySwipe()));
     private final AbstractConfigCell openArchiveOnPullRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.openArchiveOnPull));
-    private final AbstractConfigCell hideArchiveRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getHideArchive()));
-    private final AbstractConfigCell ignoreUnreadCountRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NaConfig.INSTANCE.getIgnoreUnreadCount(), new String[]{
+    private final AbstractConfigCell hideArchiveRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getHideArchive()));
+    private final AbstractConfigCell ignoreUnreadCountRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NyaConfig.INSTANCE.getIgnoreUnreadCount(), new String[]{
             getString(R.string.Disable),
             getString(R.string.FilterMuted),
             getString(R.string.FilterAllChatsShort)
@@ -199,36 +199,36 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
             getString(R.string.TabTitleTypeIcon),
             getString(R.string.TabTitleTypeMix)
     }, null));
-    private final AbstractConfigCell folderTabsStrokeRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getFolderTabsStroke()));
+    private final AbstractConfigCell folderTabsStrokeRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getFolderTabsStroke()));
     private final AbstractConfigCell dividerFolder = cellGroup.appendCell(new ConfigCellDivider());
 
     // Dialogs
     private final AbstractConfigCell headerDialogs = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.DialogsSettings)));
-    private final AbstractConfigCell sortByUnreadRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getSortByUnread()));
-    private final AbstractConfigCell hideDialogsSearchFieldRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getHideDialogsSearchField()));
-    private final AbstractConfigCell disableDialogsFloatingButtonRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getDisableDialogsFloatingButton()));
-    private final AbstractConfigCell disableBotOpenButtonRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getDisableBotOpenButton()));
+    private final AbstractConfigCell sortByUnreadRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getSortByUnread()));
+    private final AbstractConfigCell hideDialogsSearchFieldRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getHideDialogsSearchField()));
+    private final AbstractConfigCell disableDialogsFloatingButtonRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getDisableDialogsFloatingButton()));
+    private final AbstractConfigCell disableBotOpenButtonRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getDisableBotOpenButton()));
     private final AbstractConfigCell mediaPreviewRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.mediaPreview));
     private final AbstractConfigCell dividerDialogs = cellGroup.appendCell(new ConfigCellDivider());
 
     // Appearance
     private final AbstractConfigCell headerAppearance = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.Appearance)));
     private final AbstractConfigCell typefaceRow = cellGroup.appendCell(new ConfigCellText("FontSettings", () -> presentFragment(new NekoFontSettingsActivity())));
-    private final AbstractConfigCell hideDividers = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getHideDividers()));
-    private final AbstractConfigCell alwaysShowDownloadIconRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getAlwaysShowDownloadIcon()));
-    private final AbstractConfigCell showStickersInTopLevelRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getShowStickersRowToplevel()));
-    private final AbstractConfigCell hidePremiumSectionRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getHidePremiumSection()));
-    private final AbstractConfigCell hideHelpSectionRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getHideHelpSection()));
-    private final AbstractConfigCell iconReplacements = cellGroup.appendCell(new ConfigCellSelectBox("IconReplacements", NaConfig.INSTANCE.getIconReplacements(), new String[]{
+    private final AbstractConfigCell hideDividers = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getHideDividers()));
+    private final AbstractConfigCell alwaysShowDownloadIconRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getAlwaysShowDownloadIcon()));
+    private final AbstractConfigCell showStickersInTopLevelRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getShowStickersRowToplevel()));
+    private final AbstractConfigCell hidePremiumSectionRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getHidePremiumSection()));
+    private final AbstractConfigCell hideHelpSectionRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getHideHelpSection()));
+    private final AbstractConfigCell iconReplacements = cellGroup.appendCell(new ConfigCellSelectBox("IconReplacements", NyaConfig.INSTANCE.getIconReplacements(), new String[]{
             getString(R.string.Default),
             getString(R.string.IconReplacementSolar),
     }, null));
-    private final AbstractConfigCell switchStyleRow = cellGroup.appendCell(new ConfigCellSelectBox("SwitchStyle", NaConfig.INSTANCE.getSwitchStyle(), new String[]{
+    private final AbstractConfigCell switchStyleRow = cellGroup.appendCell(new ConfigCellSelectBox("SwitchStyle", NyaConfig.INSTANCE.getSwitchStyle(), new String[]{
             getString(R.string.Default),
             getString(R.string.StyleModern),
             getString(R.string.StyleMaterialDesign3)
     }, null));
-    private final AbstractConfigCell sliderStyleRow = cellGroup.appendCell(new ConfigCellSelectBox("SliderStyle", NaConfig.INSTANCE.getSliderStyle(), new String[]{
+    private final AbstractConfigCell sliderStyleRow = cellGroup.appendCell(new ConfigCellSelectBox("SliderStyle", NyaConfig.INSTANCE.getSliderStyle(), new String[]{
             getString(R.string.Default),
             getString(R.string.StyleModern),
             getString(R.string.StyleMaterialDesign3)
@@ -239,12 +239,12 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
             getString(R.string.Fireworks),
             getString(R.string.DecorationNone),
     }, null));
-    private final AbstractConfigCell chatDecorationRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NaConfig.INSTANCE.getChatDecoration(), new String[]{
+    private final AbstractConfigCell chatDecorationRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NyaConfig.INSTANCE.getChatDecoration(), new String[]{
             getString(R.string.DependsOnDate),
             getString(R.string.Snowflakes),
             getString(R.string.DecorationNone),
     }, null));
-    private final AbstractConfigCell notificationIconRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NaConfig.INSTANCE.getNotificationIcon(), new String[]{
+    private final AbstractConfigCell notificationIconRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NyaConfig.INSTANCE.getNotificationIcon(), new String[]{
             getString(R.string.MapPreviewProviderTelegram),
             getString(R.string.NiagramX),
             getString(R.string.Nagram),
@@ -256,7 +256,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
             getString(R.string.TabletModeOff),
             getString(R.string.TabletModeLandscape)
     }, null));
-    private final AbstractConfigCell centerActionBarTitleRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NaConfig.INSTANCE.getCenterActionBarTitleType(), new String[]{
+    private final AbstractConfigCell centerActionBarTitleRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NyaConfig.INSTANCE.getCenterActionBarTitleType(), new String[]{
             getString(R.string.CenterActionBarTitleOff),
             getString(R.string.CenterActionBarTitleOn),
             getString(R.string.SettingsOnly),
@@ -266,38 +266,38 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
 
     // Blur
     private final AbstractConfigCell headerBlur = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.LiteOptionsBlur2)));
-    private final AbstractConfigCell strokeOnViews = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getStrokeOnViews()));
-    private final AbstractConfigCell disableAvatarBlurRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getDisableAvatarBlur()));
+    private final AbstractConfigCell strokeOnViews = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getStrokeOnViews()));
+    private final AbstractConfigCell disableAvatarBlurRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getDisableAvatarBlur()));
     private final AbstractConfigCell liquidGlassAngleRow = cellGroup.appendCell(new ConfigCellCustom("LiquidGlassAngle", ConfigCellCustom.CUSTOM_ITEM_LiquidGlassAngle, true));
     private final AbstractConfigCell liquidGlassIntensityRow = cellGroup.appendCell(new ConfigCellCustom("LiquidGlassIntensity", ConfigCellCustom.CUSTOM_ITEM_LiquidGlassIntensity, true));
     private final AbstractConfigCell dividerBlur = cellGroup.appendCell(new ConfigCellDivider());
 
     // Main Tabs
     private final AbstractConfigCell headerMainTabs = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.MainTabsSettingsHeader)));
-    private final AbstractConfigCell hideTitlesRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getMainTabsHideTitles()));
-    private final AbstractConfigCell hideContactsRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getMainTabsHideContacts()));
-    private final AbstractConfigCell hideBottomNavigationBarRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getHideBottomNavigationBar()));
+    private final AbstractConfigCell hideTitlesRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getMainTabsHideTitles()));
+    private final AbstractConfigCell hideContactsRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getMainTabsHideContacts()));
+    private final AbstractConfigCell hideBottomNavigationBarRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getHideBottomNavigationBar()));
     private final AbstractConfigCell dividerMainTabs = cellGroup.appendCell(new ConfigCellDivider());
 
     // Privacy
     private final AbstractConfigCell headerPrivacy = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.PrivacyTitle)));
     private final AbstractConfigCell hidePhoneRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.hidePhone));
-    private final AbstractConfigCell hideStarsRatingRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getHideStarsRating()));
-    private final AbstractConfigCell hideGiftButtonRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getHideGiftButton()));
+    private final AbstractConfigCell hideStarsRatingRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getHideStarsRating()));
+    private final AbstractConfigCell hideGiftButtonRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getHideGiftButton()));
     private final AbstractConfigCell disableSystemAccountRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.disableSystemAccount));
-    private final AbstractConfigCell disableCrashlyticsCollectionRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getDisableCrashlyticsCollection()));
+    private final AbstractConfigCell disableCrashlyticsCollectionRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getDisableCrashlyticsCollection()));
     private final AbstractConfigCell dividerPrivacy = cellGroup.appendCell(new ConfigCellDivider());
 
     // Notifications
     private final AbstractConfigCell headerNotifications = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.Notifications)));
-    private final AbstractConfigCell pushServiceTypeRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NaConfig.INSTANCE.getPushServiceType(), new String[]{
+    private final AbstractConfigCell pushServiceTypeRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NyaConfig.INSTANCE.getPushServiceType(), new String[]{
             getString(R.string.PushServiceTypeInApp),
             getString(R.string.PushServiceTypeFCM),
             getString(R.string.PushServiceTypeUnified),
             getString(R.string.PushServiceTypeMicroG),
     }, null));
-    private final AbstractConfigCell pushServiceTypeUnifiedGatewayRow = cellGroup.appendCell(new ConfigCellTextInput(null, NaConfig.INSTANCE.getPushServiceTypeUnifiedGateway(), UnifiedPushService.UP_GATEWAY_DEFAULT, null, (input) -> input.isEmpty() ? (String) NaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().defaultValue : input));
-    private final AbstractConfigCell pushServiceTypeInAppDialogRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getPushServiceTypeInAppDialog()));
+    private final AbstractConfigCell pushServiceTypeUnifiedGatewayRow = cellGroup.appendCell(new ConfigCellTextInput(null, NyaConfig.INSTANCE.getPushServiceTypeUnifiedGateway(), UnifiedPushService.UP_GATEWAY_DEFAULT, null, (input) -> input.isEmpty() ? (String) NyaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().defaultValue : input));
+    private final AbstractConfigCell pushServiceTypeInAppDialogRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getPushServiceTypeInAppDialog()));
     private final AbstractConfigCell disableNotificationBubblesRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.disableNotificationBubbles));
     private final AbstractConfigCell dividerNotifications = cellGroup.appendCell(new ConfigCellDivider());
 
@@ -309,8 +309,8 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     private final AbstractConfigCell dividerAutoDownload = cellGroup.appendCell(new ConfigCellDivider());
 
     public NekoGeneralSettingsActivity() {
-        if (!NaConfig.INSTANCE.getCenterActionBarTitle().Bool()) {
-            NaConfig.INSTANCE.getCenterActionBarTitleType().setConfigInt(0);
+        if (!NyaConfig.INSTANCE.getCenterActionBarTitle().Bool()) {
+            NyaConfig.INSTANCE.getCenterActionBarTitleType().setConfigInt(0);
         }
         if (!shouldShowPersian()) {
             cellGroup.rows.remove(usePersianCalendarRow);
@@ -345,7 +345,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
         cellGroup.callBackSettingsChanged = (key, newValue) -> {
             if (key.equals(NekoConfig.actionBarDecoration.getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getNotificationIcon().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getNotificationIcon().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
             } else if (key.equals(NekoConfig.tabletMode.getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
@@ -359,46 +359,46 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
                 }
             } else if (key.equals(NekoConfig.useOSMDroidMap.getKey())) {
                 checkMapDriftingFixRows();
-            } else if (key.equals(NaConfig.INSTANCE.getPushServiceType().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getPushServiceType().getKey())) {
                 PushListenerController.reconcilePushRegistration();
                 if ((int) newValue == 0) {
                     AndroidUtil.setPushService(false);
                 } else {
                     AndroidUtil.disablePushService();
-                    NaConfig.INSTANCE.getPushServiceTypeInAppDialog().setConfigBool(false);
+                    NyaConfig.INSTANCE.getPushServiceTypeInAppDialog().setConfigBool(false);
                 }
                 checkPushServiceTypeRows();
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getPushServiceTypeInAppDialog().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getPushServiceTypeInAppDialog().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getDisableCrashlyticsCollection().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getDisableCrashlyticsCollection().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getCustomTitleUserName().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getCustomTitleUserName().getKey())) {
                 checkCustomTitleRows();
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getSortByUnread().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getSortByUnread().getKey())) {
                 getMessagesController().sortDialogs(null);
                 getNotificationCenter().postNotificationName(NotificationCenter.dialogsNeedReload, true);
-            } else if (key.equals(NaConfig.INSTANCE.getIgnoreUnreadCount().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getIgnoreUnreadCount().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
             } else if (key.equals(NekoConfig.hideAllTab.getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getCenterActionBarTitleType().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getCenterActionBarTitleType().getKey())) {
                 int value = (int) newValue;
-                NaConfig.INSTANCE.getCenterActionBarTitle().setConfigBool(value != 0);
+                NyaConfig.INSTANCE.getCenterActionBarTitle().setConfigBool(value != 0);
                 animateActionBarUpdate(this);
-            } else if (key.equals(NaConfig.INSTANCE.getHideArchive().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getHideArchive().getKey())) {
                 checkOpenArchiveOnPullRows();
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getDisableBotOpenButton().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getDisableBotOpenButton().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getHideDividers().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getHideDividers().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getIconReplacements().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getIconReplacements().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getSwitchStyle().getKey()) || key.equals(NaConfig.INSTANCE.getSliderStyle().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getSwitchStyle().getKey()) || key.equals(NyaConfig.INSTANCE.getSliderStyle().getKey())) {
                 if (listView.getLayoutManager() != null) {
                     recyclerViewState = listView.getLayoutManager().onSaveInstanceState();
                     parentLayout.rebuildFragments(INavigationLayout.REBUILD_FLAG_REBUILD_LAST);
@@ -413,28 +413,28 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
                 checkWebProxyRows();
             } else if (key.equals(NekoConfig.typeface.getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getDisableDialogsFloatingButton().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getDisableDialogsFloatingButton().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getHidePremiumSection().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getHidePremiumSection().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getHideHelpSection().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getHideHelpSection().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getAlwaysShowDownloadIcon().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getAlwaysShowDownloadIcon().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getShowStickersRowToplevel().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getShowStickersRowToplevel().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getSaveToChatSubfolder().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getSaveToChatSubfolder().getKey())) {
                 listAdapter.notifyItemChanged(cellGroup.rows.indexOf(customSavePathRow));
-            } else if (key.equals(NaConfig.INSTANCE.getMainTabsHideTitles().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getMainTabsHideTitles().getKey())) {
                 parentLayout.rebuildFragments(0);
-            } else if (key.equals(NaConfig.INSTANCE.getMainTabsHideContacts().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getMainTabsHideContacts().getKey())) {
                 parentLayout.rebuildFragments(0);
-            } else if (key.equals(NaConfig.INSTANCE.getHideBottomNavigationBar().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getHideBottomNavigationBar().getKey())) {
                 checkMainTabsRows();
                 parentLayout.rebuildFragments(0);
-            } else if (key.equals(NaConfig.INSTANCE.getHideDialogsSearchField().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getHideDialogsSearchField().getKey())) {
                 parentLayout.rebuildFragments(0);
-            } else if (key.equals(NaConfig.INSTANCE.getEnableQuickSchedule().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getEnableQuickSchedule().getKey())) {
                 checkQuickScheduleRows();
             }
         };
@@ -474,23 +474,23 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
             ItemOptions options = makeLongClickOptions(view);
             options.add(R.drawable.msg_stats, getString(R.string.Statistics), this::showUnifiedPushStatistics);
             options.add(R.drawable.msg_retry, "p2p.belloworld.it (Default)", () -> {
-                NaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().setConfigString(UnifiedPushService.UP_GATEWAY_DEFAULT);
+                NyaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().setConfigString(UnifiedPushService.UP_GATEWAY_DEFAULT);
                 listAdapter.notifyItemChanged(cellGroup.rows.indexOf(pushServiceTypeUnifiedGatewayRow));
             });
             options.add(R.drawable.msg_retry, "up.vern.cc", () -> {
-                NaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().setConfigString(UnifiedPushService.UP_GATEWAY_VERN);
+                NyaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().setConfigString(UnifiedPushService.UP_GATEWAY_VERN);
                 listAdapter.notifyItemChanged(cellGroup.rows.indexOf(pushServiceTypeUnifiedGatewayRow));
             });
             options.add(R.drawable.msg_retry, "up.graupel.net", () -> {
-                NaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().setConfigString(UnifiedPushService.UP_GATEWAY_GRAUPEL);
+                NyaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().setConfigString(UnifiedPushService.UP_GATEWAY_GRAUPEL);
                 listAdapter.notifyItemChanged(cellGroup.rows.indexOf(pushServiceTypeUnifiedGatewayRow));
             });
             options.add(R.drawable.msg_retry, "up.00100111.de", () -> {
-                NaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().setConfigString(UnifiedPushService.UP_GATEWAY_00100111);
+                NyaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().setConfigString(UnifiedPushService.UP_GATEWAY_00100111);
                 listAdapter.notifyItemChanged(cellGroup.rows.indexOf(pushServiceTypeUnifiedGatewayRow));
             });
             options.add(R.drawable.msg_retry, "gateway.unifiedpush.org", () -> {
-                NaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().setConfigString(UnifiedPushService.UP_GATEWAY_OFFICIAL);
+                NyaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().setConfigString(UnifiedPushService.UP_GATEWAY_OFFICIAL);
                 listAdapter.notifyItemChanged(cellGroup.rows.indexOf(pushServiceTypeUnifiedGatewayRow));
             });
             addDefaultLongClickOptions(options, "general", position);
@@ -552,9 +552,9 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
                 @Override
                 public void onSeekBarDrag(boolean stop, float progress) {
                     if (angle) {
-                        NaConfig.INSTANCE.getLiquidGlassAngle().setConfigInt(Math.round(progress * 360f));
+                        NyaConfig.INSTANCE.getLiquidGlassAngle().setConfigInt(Math.round(progress * 360f));
                     } else {
-                        NaConfig.INSTANCE.getLiquidGlassIntensity().setConfigInt(Math.round(progress * 150f));
+                        NyaConfig.INSTANCE.getLiquidGlassIntensity().setConfigInt(Math.round(progress * 150f));
                     }
                     invalidate();
                 }
@@ -570,14 +570,14 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
             textPaint.setColor(Theme.getColor(Theme.key_windowBackgroundWhiteBlackText));
             canvas.drawText(LocaleController.getString(angle ? R.string.LiquidGlassAngle : R.string.LiquidGlassIntensity), AndroidUtilities.dp(21), AndroidUtilities.dp(20), textPaint);
             textPaint.setColor(Theme.getColor(Theme.key_windowBackgroundWhiteValueText));
-            String value = angle ? NaConfig.INSTANCE.getLiquidGlassAngle().Int() + "°" : NaConfig.INSTANCE.getLiquidGlassIntensity().Int() + "%";
+            String value = angle ? NyaConfig.INSTANCE.getLiquidGlassAngle().Int() + "°" : NyaConfig.INSTANCE.getLiquidGlassIntensity().Int() + "%";
             canvas.drawText(value, getMeasuredWidth() - AndroidUtilities.dp(47), AndroidUtilities.dp(47), textPaint);
         }
 
         @Override
         protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
             super.onMeasure(widthMeasureSpec, MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(66), MeasureSpec.EXACTLY));
-            float value = angle ? NaConfig.INSTANCE.getLiquidGlassAngle().Int() / 360f : NaConfig.INSTANCE.getLiquidGlassIntensity().Int() / 150f;
+            float value = angle ? NyaConfig.INSTANCE.getLiquidGlassAngle().Int() / 360f : NyaConfig.INSTANCE.getLiquidGlassIntensity().Int() / 150f;
             bar.setProgress(value);
         }
     }
@@ -707,7 +707,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     }
 
     private void checkCustomTitleRows() {
-        boolean useUserName = NaConfig.INSTANCE.getCustomTitleUserName().Bool();
+        boolean useUserName = NyaConfig.INSTANCE.getCustomTitleUserName().Bool();
         if (listAdapter == null) {
             if (useUserName) {
                 cellGroup.rows.remove(customTitleRow);
@@ -731,8 +731,8 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     }
 
     private void checkPushServiceTypeRows() {
-        boolean useInApp = NaConfig.INSTANCE.getPushServiceType().Int() == 0;
-        boolean useUnified = NaConfig.INSTANCE.getPushServiceType().Int() == 2;
+        boolean useInApp = NyaConfig.INSTANCE.getPushServiceType().Int() == 0;
+        boolean useUnified = NyaConfig.INSTANCE.getPushServiceType().Int() == 2;
         if (listAdapter == null) {
             if (!useInApp) {
                 cellGroup.rows.remove(pushServiceTypeInAppDialogRow);
@@ -772,7 +772,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     }
 
     private void checkOpenArchiveOnPullRows() {
-        boolean hideArchive = NaConfig.INSTANCE.getHideArchive().Bool();
+        boolean hideArchive = NyaConfig.INSTANCE.getHideArchive().Bool();
         if (listAdapter == null) {
             if (hideArchive) {
                 cellGroup.rows.remove(openArchiveOnPullRow);
@@ -796,7 +796,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     }
 
     private void checkMainTabsRows() {
-        boolean hideBottomNavigationBar = NaConfig.INSTANCE.getHideBottomNavigationBar().Bool();
+        boolean hideBottomNavigationBar = NyaConfig.INSTANCE.getHideBottomNavigationBar().Bool();
         if (listAdapter == null) {
             if (hideBottomNavigationBar) {
                 cellGroup.rows.remove(hideTitlesRow);
@@ -838,7 +838,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     }
 
     private void checkQuickScheduleRows() {
-        boolean enable = NaConfig.INSTANCE.getEnableQuickSchedule().Bool();
+        boolean enable = NyaConfig.INSTANCE.getEnableQuickSchedule().Bool();
         if (listAdapter == null) {
             if (!enable) {
                 cellGroup.rows.remove(defaultScheduledTimeRow);
@@ -867,7 +867,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     }
 
     private boolean isCentered() {
-        return NaConfig.INSTANCE.getCenterActionBarTitle().Bool() && NaConfig.INSTANCE.getCenterActionBarTitleType().Int() != 3;
+        return NyaConfig.INSTANCE.getCenterActionBarTitle().Bool() && NyaConfig.INSTANCE.getCenterActionBarTitleType().Int() != 3;
     }
 
     private void animateActionBarUpdate(BaseNekoXSettingsActivity fragment) {
@@ -906,7 +906,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
 
     private String formatCustomSavePathDetail(String rawValue) {
         String folderName = rawValue == null ? "" : rawValue.trim();
-        if (NaConfig.INSTANCE.getSaveToChatSubfolder().Bool()) {
+        if (NyaConfig.INSTANCE.getSaveToChatSubfolder().Bool()) {
             folderName = TextUtils.isEmpty(folderName) ? "<chat_name>" : folderName + File.separator + "<chat_name>";
         }
         return buildCustomSaveAbsolutePath(Environment.DIRECTORY_DOWNLOADS, folderName);

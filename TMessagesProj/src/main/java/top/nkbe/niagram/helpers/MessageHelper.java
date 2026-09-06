@@ -95,7 +95,7 @@ import java.util.regex.Pattern;
 import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.filters.AyuFilter;
 import top.nkbe.niagram.parts.MessageTransKt;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class MessageHelper extends BaseController {
 
@@ -137,7 +137,7 @@ public class MessageHelper extends BaseController {
             if (!f.exists() || f.getAbsolutePath().endsWith("/cache")) {
                 path = null;
             }
-            if (TextUtils.isEmpty(path) && (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() || NaConfig.INSTANCE.getEnableSaveEditsHistory().Bool())) {
+            if (TextUtils.isEmpty(path) && (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() || NyaConfig.INSTANCE.getEnableSaveEditsHistory().Bool())) {
                 String fileName = f.getName();
                 if (!TextUtils.isEmpty(fileName)) {
                     File found = AyuMessageUtils.findExistingFileByBaseNameFast(fileName);
@@ -958,7 +958,7 @@ public class MessageHelper extends BaseController {
         long date = obj.messageOwner != null && obj.messageOwner.fwd_from != null ? obj.messageOwner.fwd_from.date : 0;
         String day = LocaleController.formatDate(date);
         String time = LocaleController.getInstance().getFormatterDay().format(new Date(date * 1000L));
-        boolean enabled = NaConfig.INSTANCE.getDateOfForwardedMsg().Bool();
+        boolean enabled = NyaConfig.INSTANCE.getDateOfForwardedMsg().Bool();
         if (!enabled || date == 0) {
             return orig;
         } else {
@@ -977,7 +977,7 @@ public class MessageHelper extends BaseController {
 
     public static CharSequence zalgoFilter(CharSequence text) {
         if (TextUtils.isEmpty(text)) return "";
-        if (!NaConfig.INSTANCE.getZalgoFilter().Bool()) return text;
+        if (!NyaConfig.INSTANCE.getZalgoFilter().Bool()) return text;
         if (text.length() < 4 || text.length() > 2048) return text;
         if (!ZALGO_PATTERN.matcher(text).find()) return text;
 
@@ -1163,7 +1163,7 @@ public class MessageHelper extends BaseController {
         if (translatedEntities == null) {
             return null;
         }
-        if (!NaConfig.INSTANCE.getTranslatorKeepMarkdown().Bool()) {
+        if (!NyaConfig.INSTANCE.getTranslatorKeepMarkdown().Bool()) {
             ArrayList<TLRPC.MessageEntity> entities = new ArrayList<>();
             for (TLRPC.MessageEntity entity : translatedEntities) {
                 boolean isMarkdownEntity = entity instanceof TLRPC.TL_messageEntitySpoiler;

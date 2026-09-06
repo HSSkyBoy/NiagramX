@@ -146,7 +146,7 @@ import top.nkbe.niagram.helpers.ChatsHelper;
 import top.nkbe.niagram.helpers.LocalNameHelper;
 import top.nkbe.niagram.helpers.MessageHelper;
 import top.nkbe.niagram.utils.AlertUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import xyz.nextalone.nagram.helper.LocalPremiumStatusHelper;
 
 import com.radolyn.ayugram.AyuConstants;
@@ -1446,7 +1446,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 return 0;
             }
         }
-        if (NaConfig.INSTANCE.getSortByUnread().Bool()) {
+        if (NyaConfig.INSTANCE.getSortByUnread().Bool()) {
             boolean priority1 = ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog1);
             boolean priority2 = ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog2);
             if (priority1 != priority2) {
@@ -1489,7 +1489,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 return 0;
             }
         }
-        if (NaConfig.INSTANCE.getSortByUnread().Bool()) {
+        if (NyaConfig.INSTANCE.getSortByUnread().Bool()) {
             boolean priority1 = ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog1);
             boolean priority2 = ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog2);
             if (priority1 != priority2) {
@@ -6906,7 +6906,7 @@ public class MessagesController extends BaseController implements NotificationCe
         }
         fromCache = fromCache && user.id / 1000 != 333 && user.id != 777000;
         TLRPC.User oldUser = users.get(user.id);
-        if (NaConfig.INSTANCE.getSaveLocalLastSeen().Bool() && user.id != getUserConfig().getClientUserId() && user.status instanceof TLRPC.TL_userStatusOffline) {
+        if (NyaConfig.INSTANCE.getSaveLocalLastSeen().Bool() && user.id != getUserConfig().getClientUserId() && user.status instanceof TLRPC.TL_userStatusOffline) {
             int lastSeen = user.status.expires;
             if (lastSeen > 0) {
                 LastSeenHelper.saveLastSeen(user.id, lastSeen);
@@ -9454,7 +9454,7 @@ public class MessagesController extends BaseController implements NotificationCe
 
         // --- AyuGram hook
         int ayuDeletedMessagesCount = 0;
-        if (!scheduled && NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+        if (!scheduled && NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
             var ayuMessagesController = AyuMessagesController.getInstance();
             if (DialogObject.isEncryptedDialog(dialogId) && messages != null && !messages.isEmpty()) { // process TTL messages from secrets
                 final ArrayList<Integer> messagesCopy = new ArrayList<>(messages);
@@ -10054,7 +10054,7 @@ public class MessagesController extends BaseController implements NotificationCe
         if (dialogs == null) {
             return new ArrayList<>();
         }
-        if (NaConfig.INSTANCE.getHideArchive().Bool() && folderId != 1) {
+        if (NyaConfig.INSTANCE.getHideArchive().Bool() && folderId != 1) {
             removeFolder(1);
         }
         return dialogs;
@@ -10262,7 +10262,7 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     protected void deleteDialog(long did, int first, int onlyHistory, int max_id, boolean revoke, TLRPC.InputPeer peer, long taskId) {
-        if (onlyHistory == 3 && NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+        if (onlyHistory == 3 && NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
             return;
         }
         if (onlyHistory == 2) {
@@ -16427,7 +16427,7 @@ public class MessagesController extends BaseController implements NotificationCe
         }
         boolean registeredForCurrentPush = getUserConfig().registeredForPush && pushType == SharedConfig.pushType && regid.equals(SharedConfig.pushString);
         if (pushType == PushListenerController.PUSH_TYPE_WEB) {
-            String simplePushToken = NaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().String();
+            String simplePushToken = NyaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().String();
             if (!registeredForCurrentPush || !simplePushToken.equals(registeredSimplePushToken)) {
                 registerSimplePush(simplePushToken);
             }
@@ -19817,7 +19817,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 long dialogId = MessageObject.getPeerId(update.peer);
 
                 getMessagesStorage().updateMessageReactions(dialogId, update.msg_id, update.reactions);
-                if (NaConfig.INSTANCE.getSaveLocalLastSeen().Bool()) {
+                if (NyaConfig.INSTANCE.getSaveLocalLastSeen().Bool()) {
                     LastSeenHelper.saveLastSeenFromMessageReactions(update.reactions, getUserConfig().getClientUserId());
                 }
 
@@ -19982,7 +19982,7 @@ public class MessagesController extends BaseController implements NotificationCe
         }
 
         // --- AyuGram request hook
-        if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() && deletedMessages != null) {
+        if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() && deletedMessages != null) {
             var ayuMessagesController = AyuMessagesController.getInstance();
             var deletedMessagesFinal = deletedMessages.clone();
             getMessagesStorage().getStorageQueue().postRunnable(() -> {
@@ -20222,7 +20222,7 @@ public class MessagesController extends BaseController implements NotificationCe
                         } else if (update.status instanceof TLRPC.TL_userStatusLastMonth) {
                             update.status.expires = -102;
                         }
-                        if (NaConfig.INSTANCE.getSaveLocalLastSeen().Bool() && update.status instanceof TLRPC.TL_userStatusOffline) {
+                        if (NyaConfig.INSTANCE.getSaveLocalLastSeen().Bool() && update.status instanceof TLRPC.TL_userStatusOffline) {
                             int lastSeen = update.status.expires;
                             if (lastSeen > 0) {
                                 LastSeenHelper.saveLastSeen(update.user_id, lastSeen);
@@ -24008,7 +24008,7 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public boolean storiesEnabled() {
-        if (NaConfig.INSTANCE.getDisableStories().Bool()) return false;
+        if (NyaConfig.INSTANCE.getDisableStories().Bool()) return false;
         switch (storiesPosting) {
             case "premium":
                 return getUserConfig().isPremium();
@@ -25917,7 +25917,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 if (registrationId != simplePushRegistrationId) {
                     return;
                 }
-                String currentToken = NaConfig.getPreferences().getString(NaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().getKey(), "");
+                String currentToken = NyaConfig.getPreferences().getString(NyaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().getKey(), "");
                 boolean currentRegistration = token.equals(currentToken);
                 if (response instanceof TLRPC.TL_boolTrue && currentRegistration) {
                     FileLog.d("account " + currentAccount + " registered simple push");

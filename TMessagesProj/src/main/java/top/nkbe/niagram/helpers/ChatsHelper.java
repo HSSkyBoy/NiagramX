@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import top.nkbe.niagram.NekoConfig;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ChatsHelper extends BaseController {
     public static final int LEFT_BUTTON_NOQUOTE = 0;
@@ -79,7 +79,7 @@ public class ChatsHelper extends BaseController {
     }
 
     public static int getLeftButtonAction(ChatActivity chatActivity, boolean noForwards) {
-        int action = NaConfig.INSTANCE.getLeftBottomButton().Int();
+        int action = NyaConfig.INSTANCE.getLeftBottomButton().Int();
         boolean canSelectBetweenMessages = action == LEFT_BUTTON_SELECT_BETWEEN && chatActivity.canSelectBetweenMessages();
         return getLeftButtonAction(action, noForwards, canSelectBetweenMessages);
     }
@@ -189,8 +189,8 @@ public class ChatsHelper extends BaseController {
         configStringKeys.add(getString(R.string.NoQuoteForward));
         configValues.add(LEFT_BUTTON_NOQUOTE);
 
-        PopupHelper.show(configStringKeys, getString(R.string.LeftBottomButtonAction), configValues.indexOf(NaConfig.INSTANCE.getLeftBottomButton().Int()), chatActivity.getContext(), i -> {
-            NaConfig.INSTANCE.getLeftBottomButton().setConfigInt(configValues.get(i));
+        PopupHelper.show(configStringKeys, getString(R.string.LeftBottomButtonAction), configValues.indexOf(NyaConfig.INSTANCE.getLeftBottomButton().Int()), chatActivity.getContext(), i -> {
+            NyaConfig.INSTANCE.getLeftBottomButton().setConfigInt(configValues.get(i));
             chatActivity.updateLeftBottomButton(noForwards);
             chatActivity.showLeftBottomButtonRipple();
         }, resourcesProvider);

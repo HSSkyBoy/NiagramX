@@ -136,7 +136,7 @@ import java.util.zip.ZipInputStream;
 
 import top.nkbe.niagram.utils.StringUtils;
 import top.nkbe.niagram.NekoConfig;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class SendMessagesHelper extends BaseController implements NotificationCenter.NotificationCenterDelegate {
 
@@ -2358,7 +2358,7 @@ public class SendMessagesHelper extends BaseController implements NotificationCe
                     newMsg.message = "";
                 }
 
-                if (!((newMsg.params.containsKey("fwd_id") || newMsg.params.containsKey("fwd_peer")) || msgObj.isForwarded() || MessageObject.isForwardedMessage(newMsg)) && NaConfig.INSTANCE.getEnablePanguOnSending().Bool()) {
+                if (!((newMsg.params.containsKey("fwd_id") || newMsg.params.containsKey("fwd_peer")) || msgObj.isForwarded() || MessageObject.isForwardedMessage(newMsg)) && NyaConfig.INSTANCE.getEnablePanguOnSending().Bool()) {
                     var pair = StringUtils.spacingText(newMsg.message, msgObj.messageOwner.entities);
                     newMsg.message = pair.getFirst();
                     newMsg.entities = pair.getSecond();
@@ -4341,7 +4341,7 @@ public class SendMessagesHelper extends BaseController implements NotificationCe
         TL_iv.RichMessage richMessage = sendMessageParams.richMessage;
 
         boolean canSendGames = sendMessageParams.canSendGames;
-        boolean canUsePangu = sendMessageParams.canUsePangu == null ? NaConfig.INSTANCE.getEnablePanguOnSending().Bool() : sendMessageParams.canUsePangu;
+        boolean canUsePangu = sendMessageParams.canUsePangu == null ? NyaConfig.INSTANCE.getEnablePanguOnSending().Bool() : sendMessageParams.canUsePangu;
 
         if (sendMessageChatArguments.welcomeMessageChatId != 0) {
             peer = -sendMessageChatArguments.welcomeMessageChatId;
@@ -11116,7 +11116,7 @@ public class SendMessagesHelper extends BaseController implements NotificationCe
                             videoEditedInfo = info.videoEditedInfo != null ? info.videoEditedInfo : createCompressionSettings(info.path, info.livePhotoVideoOffset);
                         }
 
-                        if (NaConfig.INSTANCE.getSendMp4DocumentAsVideo().Bool() || (!forceDocument && (videoEditedInfo != null || info.path.endsWith("mp4")) || info.isLivePhoto)) {
+                        if (NyaConfig.INSTANCE.getSendMp4DocumentAsVideo().Bool() || (!forceDocument && (videoEditedInfo != null || info.path.endsWith("mp4")) || info.isLivePhoto)) {
                             if (info.path == null && info.searchImage != null) {
                                 if (info.searchImage.photo instanceof TLRPC.TL_photo) {
                                     info.path = FileLoader.getInstance(accountInstance.getCurrentAccount()).getPathToAttach(info.searchImage.photo, true).getAbsolutePath();

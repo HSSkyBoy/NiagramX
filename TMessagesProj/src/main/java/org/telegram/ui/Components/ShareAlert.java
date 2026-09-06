@@ -142,7 +142,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import xyz.nextalone.nagram.helper.ForwardTextEdit;
 
 public class ShareAlert extends BottomSheet implements NotificationCenter.NotificationCenterDelegate {
@@ -1777,7 +1777,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
         writeButton.setOnClickListener(v -> sendInternal(true));
         writeButton.setOnLongClickListener(v -> onSendLongClick(writeButton));
 
-        if (NaConfig.INSTANCE.getShowForwardTextEdit().Bool()) {
+        if (NyaConfig.INSTANCE.getShowForwardTextEdit().Bool()) {
             forwardTextEditableMessage = ForwardTextEdit.getEditableMessage(sendingMessageObjects);
             if (forwardTextEditableMessage != null) {
                 forwardTextEditButton = new ImageView(context);
@@ -2409,7 +2409,7 @@ public class ShareAlert extends BottomSheet implements NotificationCenter.Notifi
             sendWithoutSound.setTextColor(getThemedColor(Theme.key_voipgroup_nameText));
             sendWithoutSound.setIconColor(getThemedColor(Theme.key_windowBackgroundWhiteHintText));
         }
-        boolean sendWithoutSoundNax = NaConfig.INSTANCE.getSilentMessageByDefault().Bool();
+        boolean sendWithoutSoundNax = NyaConfig.INSTANCE.getSilentMessageByDefault().Bool();
         sendWithoutSound.setTextAndIcon(sendWithoutSoundNax ? getString(R.string.SendWithSound) : getString(R.string.SendWithoutSound), sendWithoutSoundNax ? R.drawable.input_notify_on : R.drawable.input_notify_off);
         sendWithoutSound.setMinimumWidth(dp(196));
         sendPopupLayout2.addView(sendWithoutSound, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 48));

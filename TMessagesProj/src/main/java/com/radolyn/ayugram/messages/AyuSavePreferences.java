@@ -25,7 +25,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class AyuSavePreferences {
     public static final String saveExclusionPrefix = "saveDeletedExclusion_";
@@ -77,28 +77,28 @@ public class AyuSavePreferences {
     }
 
     public static boolean saveDeletedMessageFor(int accountId, long dialogId, long userId) {
-        if (!NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+        if (!NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
             return false;
         }
 
         if (DialogObject.isUserDialog(dialogId) || DialogObject.isEncryptedDialog(dialogId)) {
-            if (!NaConfig.INSTANCE.getSaveDeletedMessagesPrivate().Bool()) {
+            if (!NyaConfig.INSTANCE.getSaveDeletedMessagesPrivate().Bool()) {
                 return false;
             }
         } else if (DialogObject.isChatDialog(dialogId)) {
             var chat = MessagesController.getInstance(accountId).getChat(-dialogId);
             if (chat != null) {
                 if (ChatObject.isChannel(chat) && !chat.megagroup) {
-                    if (!NaConfig.INSTANCE.getSaveDeletedMessagesChannel().Bool()) {
+                    if (!NyaConfig.INSTANCE.getSaveDeletedMessagesChannel().Bool()) {
                         return false;
                     }
                 } else {
-                    if (!NaConfig.INSTANCE.getSaveDeletedMessagesGroup().Bool()) {
+                    if (!NyaConfig.INSTANCE.getSaveDeletedMessagesGroup().Bool()) {
                         return false;
                     }
                 }
             } else {
-                if (!NaConfig.INSTANCE.getSaveDeletedMessagesGroup().Bool()) {
+                if (!NyaConfig.INSTANCE.getSaveDeletedMessagesGroup().Bool()) {
                     return false;
                 }
             }
@@ -114,7 +114,7 @@ public class AyuSavePreferences {
             }
             var fromUser = MessagesController.getInstance(accountId).getUser(userId);
             if (fromUser != null) {
-                return !fromUser.bot || NaConfig.INSTANCE.getSaveDeletedMessageForBotUser().Bool();
+                return !fromUser.bot || NyaConfig.INSTANCE.getSaveDeletedMessageForBotUser().Bool();
             } else {
                 final MessagesStorage messagesStorage = MessagesStorage.getInstance(accountId);
                 final CountDownLatch countDownLatch = new CountDownLatch(1);
@@ -128,7 +128,7 @@ public class AyuSavePreferences {
                 } catch (Exception ignored) {
                 }
                 if (user[0] != null) {
-                    return !user[0].bot || NaConfig.INSTANCE.getSaveDeletedMessageForBotUser().Bool();
+                    return !user[0].bot || NyaConfig.INSTANCE.getSaveDeletedMessageForBotUser().Bool();
                 }
             }
         }
@@ -138,7 +138,7 @@ public class AyuSavePreferences {
             return true;
         }
 
-        return !user.bot || NaConfig.INSTANCE.getSaveDeletedMessageForBot().Bool();
+        return !user.bot || NyaConfig.INSTANCE.getSaveDeletedMessageForBot().Bool();
     }
 
     public static void setSaveDeletedExclusion(long chatId, boolean value) {

@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import org.telegram.messenger.UserConfig
 import org.telegram.tgnet.TLRPC
 import top.nkbe.niagram.NekoConfig
-import xyz.nextalone.nagram.NaConfig
+import top.nkbe.niagram.config.NyaConfig
 
 data class LocalEmojiStatusData(
     var documentId: Long?, var until: Int?
@@ -60,13 +60,13 @@ object LocalPremiumStatusHelper {
             val gson = Gson()
             val userKey = KEY_PREFIX + userId
 
-            var jsonStr = NaConfig.getPreferences().getString(userKey, null)
+            var jsonStr = NyaConfig.getPreferences().getString(userKey, null)
 
             if (jsonStr.isNullOrEmpty()) {
-                val legacyJson = NaConfig.useLocalEmojiStatusData.String()
+                val legacyJson = NyaConfig.useLocalEmojiStatusData.String()
                 if (legacyJson.isNotEmpty()) {
                     jsonStr = legacyJson
-                    NaConfig.getPreferences().edit { putString(userKey, jsonStr) }
+                    NyaConfig.getPreferences().edit { putString(userKey, jsonStr) }
                 }
             }
 
@@ -91,7 +91,7 @@ object LocalPremiumStatusHelper {
 
         if (status == null || status is TLRPC.TL_emojiStatusEmpty) {
             dataMap[userId] = null
-            NaConfig.getPreferences().edit { putString(userKey, "") }
+            NyaConfig.getPreferences().edit { putString(userKey, "") }
             return
         }
 
@@ -111,6 +111,6 @@ object LocalPremiumStatusHelper {
 
         val localData = LocalEmojiStatusData(documentId, until)
         dataMap[userId] = localData
-        NaConfig.getPreferences().edit { putString(userKey, Gson().toJson(localData)) }
+        NyaConfig.getPreferences().edit { putString(userKey, Gson().toJson(localData)) }
     }
 }

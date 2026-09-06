@@ -50,7 +50,7 @@ import org.telegram.ui.DialogsActivity;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class SeekBarView extends FrameLayout {
 
@@ -459,7 +459,7 @@ public class SeekBarView extends FrameLayout {
         if (previewingState != -1) {
             return previewingState;
         }
-        int configStyle = NaConfig.INSTANCE.getSliderStyle().Int();
+        int configStyle = NyaConfig.INSTANCE.getSliderStyle().Int();
         if (sliderStyleOverride != -1 && configStyle == SLIDER_STYLE_MD3) {
             return sliderStyleOverride;
         }

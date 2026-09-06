@@ -61,7 +61,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.stream.Collectors;
 
 import top.nkbe.niagram.NekoConfig;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 import java.util.List;
 import java.util.Locale;
@@ -1754,7 +1754,7 @@ public class SharedConfig {
             return overrideDevicePerformanceClass;
         }
         if (devicePerformanceClass == -1) {
-            switch (NaConfig.INSTANCE.getPerformanceClass().Int()) {
+            switch (NyaConfig.INSTANCE.getPerformanceClass().Int()) {
                 case 1:
                     devicePerformanceClass = PERFORMANCE_CLASS_HIGH;
                     break;

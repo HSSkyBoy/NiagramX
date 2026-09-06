@@ -117,7 +117,7 @@ import top.nkbe.niagram.llm.LlmConfig;
 import top.nkbe.niagram.translate.Translator;
 import top.nkbe.niagram.translate.TranslatorKt;
 import top.nkbe.niagram.utils.AlertUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class PhotoPickerActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
@@ -404,7 +404,7 @@ public class PhotoPickerActivity extends BaseFragment implements NotificationCen
 
         @Override
         public boolean cancelButtonPressed() {
-            delegate.actionButtonPressed(true, !NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
+            delegate.actionButtonPressed(true, !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
             finishFragment();
             return true;
         }
@@ -1088,7 +1088,7 @@ public class PhotoPickerActivity extends BaseFragment implements NotificationCen
                 if (chatActivity != null && chatActivity.isInScheduleMode()) {
                     AlertsCreator.createScheduleDatePickerDialog(getParentActivity(), chatActivity.getDialogId(), (notify, scheduleDate, scheduleRepeatPeriod) -> sendSelectedPhotos(notify, scheduleDate, 0));
                 } else {
-                    sendSelectedPhotos(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
+                    sendSelectedPhotos(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
                 }
             });
             writeButton.setOnLongClickListener(view -> {
@@ -1139,7 +1139,7 @@ public class PhotoPickerActivity extends BaseFragment implements NotificationCen
                                 itemCells[a].setTextAndIcon(LocaleController.getString(R.string.ScheduleMessage), R.drawable.msg_calendar2);
                             }
                         } else if (num == 1) {
-                            boolean sendWithoutSoundNax = NaConfig.INSTANCE.getSilentMessageByDefault().Bool();
+                            boolean sendWithoutSoundNax = NyaConfig.INSTANCE.getSilentMessageByDefault().Bool();
                             itemCells[a].setTextAndIcon(sendWithoutSoundNax ? getString(R.string.SendWithSound) : getString(R.string.SendWithoutSound), sendWithoutSoundNax ? R.drawable.input_notify_on : R.drawable.input_notify_off);
                         } else if (num == 2) {
                             String languageText = Translator.getInputTranslateLangForChat(ChatsHelper.getChatId()).toUpperCase();
@@ -1162,7 +1162,7 @@ public class PhotoPickerActivity extends BaseFragment implements NotificationCen
                             if (num == 0) {
                                 AlertsCreator.createScheduleDatePickerDialog(getParentActivity(), chatActivity.getDialogId(), (notify, scheduleDate, scheduleRepeatPeriod) -> sendSelectedPhotos(notify, scheduleDate, 0));
                             } else if (num == 1) {
-                                sendSelectedPhotos(NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0); // sendSelectedPhotos(true, 0, 0); ← Telegram bug
+                                sendSelectedPhotos(NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0); // sendSelectedPhotos(true, 0, 0); ← Telegram bug
                             } else if (num == 2 || num == 3) {
                                 translateComment(Translator.getInputTranslateLangLocaleForChat(ChatsHelper.getChatId()), num == 3 ? 0 : Translator.providerLLMTranslator);
                             }

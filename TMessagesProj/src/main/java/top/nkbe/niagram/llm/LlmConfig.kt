@@ -8,7 +8,7 @@ import top.nkbe.niagram.llm.net.GeminiNativeClient
 import top.nkbe.niagram.llm.preset.PresetRegistry
 import top.nkbe.niagram.llm.utils.UrlNormalizer
 import top.nkbe.niagram.translate.Translator
-import xyz.nextalone.nagram.NaConfig
+import top.nkbe.niagram.config.NyaConfig
 
 object LlmConfig {
 
@@ -28,17 +28,17 @@ object LlmConfig {
     @JvmStatic
     fun getSavedModelName(preset: Int): String {
         val value = when (preset) {
-            PresetRegistry.OPENAI -> NaConfig.llmProviderOpenAIModel.String()
-            PresetRegistry.GOOGLE_AI_STUDIO -> NaConfig.llmProviderGeminiModel.String()
-            PresetRegistry.GROQ -> NaConfig.llmProviderGroqModel.String()
-            PresetRegistry.DEEPSEEK -> NaConfig.llmProviderDeepSeekModel.String()
-            PresetRegistry.XAI -> NaConfig.llmProviderXAIModel.String()
-            PresetRegistry.CEREBRAS -> NaConfig.llmProviderCerebrasModel.String()
-            PresetRegistry.OLLAMA_CLOUD -> NaConfig.llmProviderOllamaCloudModel.String()
-            PresetRegistry.OPENROUTER -> NaConfig.llmProviderOpenRouterModel.String()
-            PresetRegistry.VERCEL_AI_GATEWAY -> NaConfig.llmProviderVercelAIGatewayModel.String()
-            PresetRegistry.GOOGLE_AGENT_PLATFORM -> NaConfig.llmProviderVertexModel.String()
-            else -> NaConfig.llmModelName.String()
+            PresetRegistry.OPENAI -> NyaConfig.llmProviderOpenAIModel.String()
+            PresetRegistry.GOOGLE_AI_STUDIO -> NyaConfig.llmProviderGeminiModel.String()
+            PresetRegistry.GROQ -> NyaConfig.llmProviderGroqModel.String()
+            PresetRegistry.DEEPSEEK -> NyaConfig.llmProviderDeepSeekModel.String()
+            PresetRegistry.XAI -> NyaConfig.llmProviderXAIModel.String()
+            PresetRegistry.CEREBRAS -> NyaConfig.llmProviderCerebrasModel.String()
+            PresetRegistry.OLLAMA_CLOUD -> NyaConfig.llmProviderOllamaCloudModel.String()
+            PresetRegistry.OPENROUTER -> NyaConfig.llmProviderOpenRouterModel.String()
+            PresetRegistry.VERCEL_AI_GATEWAY -> NyaConfig.llmProviderVercelAIGatewayModel.String()
+            PresetRegistry.GOOGLE_AGENT_PLATFORM -> NyaConfig.llmProviderVertexModel.String()
+            else -> NyaConfig.llmModelName.String()
         }
         return value?.trim() ?: ""
     }
@@ -47,17 +47,17 @@ object LlmConfig {
     fun setSavedModelName(preset: Int, model: String?) {
         val value = model?.trim() ?: ""
         when (preset) {
-            PresetRegistry.OPENAI -> NaConfig.llmProviderOpenAIModel.setConfigString(value)
-            PresetRegistry.GOOGLE_AI_STUDIO -> NaConfig.llmProviderGeminiModel.setConfigString(value)
-            PresetRegistry.GROQ -> NaConfig.llmProviderGroqModel.setConfigString(value)
-            PresetRegistry.DEEPSEEK -> NaConfig.llmProviderDeepSeekModel.setConfigString(value)
-            PresetRegistry.XAI -> NaConfig.llmProviderXAIModel.setConfigString(value)
-            PresetRegistry.CEREBRAS -> NaConfig.llmProviderCerebrasModel.setConfigString(value)
-            PresetRegistry.OLLAMA_CLOUD -> NaConfig.llmProviderOllamaCloudModel.setConfigString(value)
-            PresetRegistry.OPENROUTER -> NaConfig.llmProviderOpenRouterModel.setConfigString(value)
-            PresetRegistry.VERCEL_AI_GATEWAY -> NaConfig.llmProviderVercelAIGatewayModel.setConfigString(value)
-            PresetRegistry.GOOGLE_AGENT_PLATFORM -> NaConfig.llmProviderVertexModel.setConfigString(value)
-            else -> NaConfig.llmModelName.setConfigString(value)
+            PresetRegistry.OPENAI -> NyaConfig.llmProviderOpenAIModel.setConfigString(value)
+            PresetRegistry.GOOGLE_AI_STUDIO -> NyaConfig.llmProviderGeminiModel.setConfigString(value)
+            PresetRegistry.GROQ -> NyaConfig.llmProviderGroqModel.setConfigString(value)
+            PresetRegistry.DEEPSEEK -> NyaConfig.llmProviderDeepSeekModel.setConfigString(value)
+            PresetRegistry.XAI -> NyaConfig.llmProviderXAIModel.setConfigString(value)
+            PresetRegistry.CEREBRAS -> NyaConfig.llmProviderCerebrasModel.setConfigString(value)
+            PresetRegistry.OLLAMA_CLOUD -> NyaConfig.llmProviderOllamaCloudModel.setConfigString(value)
+            PresetRegistry.OPENROUTER -> NyaConfig.llmProviderOpenRouterModel.setConfigString(value)
+            PresetRegistry.VERCEL_AI_GATEWAY -> NyaConfig.llmProviderVercelAIGatewayModel.setConfigString(value)
+            PresetRegistry.GOOGLE_AGENT_PLATFORM -> NyaConfig.llmProviderVertexModel.setConfigString(value)
+            else -> NyaConfig.llmModelName.setConfigString(value)
         }
     }
 
@@ -72,7 +72,7 @@ object LlmConfig {
     @JvmStatic
     fun getEffectiveBaseUrl(preset: Int): String {
         return if (preset == PresetRegistry.CUSTOM) {
-            val userUrl = NaConfig.llmApiUrl.String().trim()
+            val userUrl = NyaConfig.llmApiUrl.String().trim()
             userUrl.ifEmpty {
                 getString(R.string.LlmApiUrlDefault)
             }
@@ -84,23 +84,23 @@ object LlmConfig {
     @JvmStatic
     fun setSavedCustomBaseUrl(baseUrl: String?) {
         val value = UrlNormalizer.normalizeBaseUrl(baseUrl)
-        NaConfig.llmApiUrl.setConfigString(value)
+        NyaConfig.llmApiUrl.setConfigString(value)
     }
 
     @JvmStatic
     fun getApiKeyConfigItem(preset: Int): ConfigItem {
         return when (preset) {
-            PresetRegistry.OPENAI -> NaConfig.llmProviderOpenAIKey
-            PresetRegistry.GOOGLE_AI_STUDIO -> NaConfig.llmProviderGeminiKey
-            PresetRegistry.GROQ -> NaConfig.llmProviderGroqKey
-            PresetRegistry.DEEPSEEK -> NaConfig.llmProviderDeepSeekKey
-            PresetRegistry.XAI -> NaConfig.llmProviderXAIKey
-            PresetRegistry.CEREBRAS -> NaConfig.llmProviderCerebrasKey
-            PresetRegistry.OLLAMA_CLOUD -> NaConfig.llmProviderOllamaCloudKey
-            PresetRegistry.OPENROUTER -> NaConfig.llmProviderOpenRouterKey
-            PresetRegistry.VERCEL_AI_GATEWAY -> NaConfig.llmProviderVercelAIGatewayKey
-            PresetRegistry.GOOGLE_AGENT_PLATFORM -> NaConfig.llmProviderVertexKey
-            else -> NaConfig.llmApiKey
+            PresetRegistry.OPENAI -> NyaConfig.llmProviderOpenAIKey
+            PresetRegistry.GOOGLE_AI_STUDIO -> NyaConfig.llmProviderGeminiKey
+            PresetRegistry.GROQ -> NyaConfig.llmProviderGroqKey
+            PresetRegistry.DEEPSEEK -> NyaConfig.llmProviderDeepSeekKey
+            PresetRegistry.XAI -> NyaConfig.llmProviderXAIKey
+            PresetRegistry.CEREBRAS -> NyaConfig.llmProviderCerebrasKey
+            PresetRegistry.OLLAMA_CLOUD -> NyaConfig.llmProviderOllamaCloudKey
+            PresetRegistry.OPENROUTER -> NyaConfig.llmProviderOpenRouterKey
+            PresetRegistry.VERCEL_AI_GATEWAY -> NyaConfig.llmProviderVercelAIGatewayKey
+            PresetRegistry.GOOGLE_AGENT_PLATFORM -> NyaConfig.llmProviderVertexKey
+            else -> NyaConfig.llmApiKey
         }
     }
 
@@ -117,19 +117,19 @@ object LlmConfig {
 
     @JvmStatic
     fun isLLMTranslatorAvailable(): Boolean {
-        val llmProvider = NaConfig.llmProviderPreset.Int()
+        val llmProvider = NyaConfig.llmProviderPreset.Int()
         val keyConfig = when (llmProvider) {
-            PresetRegistry.OPENAI -> NaConfig.llmProviderOpenAIKey
-            PresetRegistry.GOOGLE_AI_STUDIO -> NaConfig.llmProviderGeminiKey
-            PresetRegistry.GROQ -> NaConfig.llmProviderGroqKey
-            PresetRegistry.DEEPSEEK -> NaConfig.llmProviderDeepSeekKey
-            PresetRegistry.XAI -> NaConfig.llmProviderXAIKey
-            PresetRegistry.CEREBRAS -> NaConfig.llmProviderCerebrasKey
-            PresetRegistry.OLLAMA_CLOUD -> NaConfig.llmProviderOllamaCloudKey
-            PresetRegistry.OPENROUTER -> NaConfig.llmProviderOpenRouterKey
-            PresetRegistry.VERCEL_AI_GATEWAY -> NaConfig.llmProviderVercelAIGatewayKey
-            PresetRegistry.GOOGLE_AGENT_PLATFORM -> NaConfig.llmProviderVertexKey
-            else -> NaConfig.llmApiKey
+            PresetRegistry.OPENAI -> NyaConfig.llmProviderOpenAIKey
+            PresetRegistry.GOOGLE_AI_STUDIO -> NyaConfig.llmProviderGeminiKey
+            PresetRegistry.GROQ -> NyaConfig.llmProviderGroqKey
+            PresetRegistry.DEEPSEEK -> NyaConfig.llmProviderDeepSeekKey
+            PresetRegistry.XAI -> NyaConfig.llmProviderXAIKey
+            PresetRegistry.CEREBRAS -> NyaConfig.llmProviderCerebrasKey
+            PresetRegistry.OLLAMA_CLOUD -> NyaConfig.llmProviderOllamaCloudKey
+            PresetRegistry.OPENROUTER -> NyaConfig.llmProviderOpenRouterKey
+            PresetRegistry.VERCEL_AI_GATEWAY -> NyaConfig.llmProviderVercelAIGatewayKey
+            PresetRegistry.GOOGLE_AGENT_PLATFORM -> NyaConfig.llmProviderVertexKey
+            else -> NyaConfig.llmApiKey
         }
         return keyConfig.String().isNotEmpty()
     }

@@ -51,7 +51,7 @@ import top.nkbe.niagram.config.cell.ConfigCellTextInput;
 import top.nkbe.niagram.filters.RegexFiltersSettingActivity;
 import top.nkbe.niagram.ui.cells.HeaderCell;
 import top.nkbe.niagram.utils.ShareUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressLint("RtlHardcoded")
 @SuppressWarnings("unused")
@@ -93,18 +93,18 @@ public class SpyModeActivity extends BaseNekoXSettingsActivity {
 
     // Spy Mode
     private final AbstractConfigCell headerSaveDeleted = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.SpyMode)));
-    private final AbstractConfigCell enableSaveDeletedMessagesRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getEnableSaveDeletedMessages()));
-    private final AbstractConfigCell saveDeletedMessagesPrivateRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getSaveDeletedMessagesPrivate()));
-    private final AbstractConfigCell saveDeletedMessagesGroupRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getSaveDeletedMessagesGroup()));
-    private final AbstractConfigCell saveDeletedMessagesChannelRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getSaveDeletedMessagesChannel()));
-    private final AbstractConfigCell enableSaveEditsHistoryRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getEnableSaveEditsHistory()));
-    private final AbstractConfigCell messageSavingSaveMediaRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getMessageSavingSaveMedia(), getString(R.string.MessageSavingSaveMediaHint)));
-    private final AbstractConfigCell saveDeletedMessageForBotsUserRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getSaveDeletedMessageForBotUser()));
-    private final AbstractConfigCell saveDeletedMessageInBotChatRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getSaveDeletedMessageForBot()));
-    private final AbstractConfigCell translucentDeletedMessagesRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getTranslucentDeletedMessages()));
-    private final AbstractConfigCell useDeletedIconRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getUseDeletedIcon()));
-    private final AbstractConfigCell customDeletedMarkRow = cellGroup.appendCell(new ConfigCellTextInput(null, NaConfig.INSTANCE.getCustomDeletedMark(), "", null));
-    private final AbstractConfigCell saveLastSeenRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getSaveLocalLastSeen()));
+    private final AbstractConfigCell enableSaveDeletedMessagesRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getEnableSaveDeletedMessages()));
+    private final AbstractConfigCell saveDeletedMessagesPrivateRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getSaveDeletedMessagesPrivate()));
+    private final AbstractConfigCell saveDeletedMessagesGroupRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getSaveDeletedMessagesGroup()));
+    private final AbstractConfigCell saveDeletedMessagesChannelRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getSaveDeletedMessagesChannel()));
+    private final AbstractConfigCell enableSaveEditsHistoryRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getEnableSaveEditsHistory()));
+    private final AbstractConfigCell messageSavingSaveMediaRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getMessageSavingSaveMedia(), getString(R.string.MessageSavingSaveMediaHint)));
+    private final AbstractConfigCell saveDeletedMessageForBotsUserRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getSaveDeletedMessageForBotUser()));
+    private final AbstractConfigCell saveDeletedMessageInBotChatRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getSaveDeletedMessageForBot()));
+    private final AbstractConfigCell translucentDeletedMessagesRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getTranslucentDeletedMessages()));
+    private final AbstractConfigCell useDeletedIconRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getUseDeletedIcon()));
+    private final AbstractConfigCell customDeletedMarkRow = cellGroup.appendCell(new ConfigCellTextInput(null, NyaConfig.INSTANCE.getCustomDeletedMark(), "", null));
+    private final AbstractConfigCell saveLastSeenRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getSaveLocalLastSeen()));
     private final AbstractConfigCell clearMessageDatabaseRow = cellGroup.appendCell(new ConfigCellTextCheckIcon(null, "ClearMessageDatabase", null, AyuData.totalSize > 0 ? AndroidUtilities.formatFileSize(AyuData.totalSize) : "...", R.drawable.msg_clear, false, () -> showDialog(new AlertDialog.Builder(getContext(), getResourceProvider())
             .setTitle(getString(R.string.ClearMessageDatabase))
             .setMessage(getString(R.string.AreYouSure))
@@ -126,14 +126,14 @@ public class SpyModeActivity extends BaseNekoXSettingsActivity {
     private final AbstractConfigCell dividerSaveDeleted = cellGroup.appendCell(new ConfigCellDivider());
 
     private final AbstractConfigCell headerFilter = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.RegexFiltersHeader)));
-    private final AbstractConfigCell regexFiltersEnabledRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getRegexFiltersEnabled(), getString(R.string.RegexFiltersNotice)));
+    private final AbstractConfigCell regexFiltersEnabledRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getRegexFiltersEnabled(), getString(R.string.RegexFiltersNotice)));
     private final AbstractConfigCell dividerFilter = cellGroup.appendCell(new ConfigCellDivider());
 
     public SpyModeActivity() {
-        if (NaConfig.INSTANCE.getUseDeletedIcon().Bool()) {
+        if (NyaConfig.INSTANCE.getUseDeletedIcon().Bool()) {
             cellGroup.rows.remove(customDeletedMarkRow);
         }
-        if (!NaConfig.INSTANCE.getSaveDeletedMessageForBotUser().Bool()) {
+        if (!NyaConfig.INSTANCE.getSaveDeletedMessageForBotUser().Bool()) {
             cellGroup.rows.remove(saveDeletedMessageInBotChatRow);
         }
         checkUseDeletedIconRows();
@@ -173,11 +173,11 @@ public class SpyModeActivity extends BaseNekoXSettingsActivity {
         setupDefaultListeners();
 
         cellGroup.callBackSettingsChanged = (key, newValue) -> {
-            if (key.equals(NaConfig.INSTANCE.getEnableSaveDeletedMessages().getKey())) {
+            if (key.equals(NyaConfig.INSTANCE.getEnableSaveDeletedMessages().getKey())) {
                 checkSaveDeletedRows();
-            } else if (key.equals(NaConfig.INSTANCE.getUseDeletedIcon().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getUseDeletedIcon().getKey())) {
                 checkUseDeletedIconRows();
-            } else if (key.equals(NaConfig.INSTANCE.getSaveDeletedMessageForBotUser().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getSaveDeletedMessageForBotUser().getKey())) {
                 checkSaveBotMsgRows();
             }
         };
@@ -236,15 +236,15 @@ public class SpyModeActivity extends BaseNekoXSettingsActivity {
         for (int a = 0; a < cells.length; a++) {
             TextCheckBoxCell checkBoxCell = cells[a] = new TextCheckBoxCell(getParentActivity(), true, false);
             if (a == 0) {
-                cells[a].setTextAndCheck(getString(R.string.MessageSavingSaveMediaInPrivateChats), NaConfig.INSTANCE.getSaveMediaInPrivateChats().Bool(), true);
+                cells[a].setTextAndCheck(getString(R.string.MessageSavingSaveMediaInPrivateChats), NyaConfig.INSTANCE.getSaveMediaInPrivateChats().Bool(), true);
             } else if (a == 1) {
-                cells[a].setTextAndCheck(getString(R.string.MessageSavingSaveMediaInPublicChannels), NaConfig.INSTANCE.getSaveMediaInPublicChannels().Bool(), true);
+                cells[a].setTextAndCheck(getString(R.string.MessageSavingSaveMediaInPublicChannels), NyaConfig.INSTANCE.getSaveMediaInPublicChannels().Bool(), true);
             } else if (a == 2) {
-                cells[a].setTextAndCheck(getString(R.string.MessageSavingSaveMediaInPrivateChannels), NaConfig.INSTANCE.getSaveMediaInPrivateChannels().Bool(), true);
+                cells[a].setTextAndCheck(getString(R.string.MessageSavingSaveMediaInPrivateChannels), NyaConfig.INSTANCE.getSaveMediaInPrivateChannels().Bool(), true);
             } else if (a == 3) {
-                cells[a].setTextAndCheck(getString(R.string.MessageSavingSaveMediaInPublicGroups), NaConfig.INSTANCE.getSaveMediaInPublicGroups().Bool(), true);
+                cells[a].setTextAndCheck(getString(R.string.MessageSavingSaveMediaInPublicGroups), NyaConfig.INSTANCE.getSaveMediaInPublicGroups().Bool(), true);
             } else { // a == 4
-                cells[a].setTextAndCheck(getString(R.string.MessageSavingSaveMediaInPrivateGroups), NaConfig.INSTANCE.getSaveMediaInPrivateGroups().Bool(), true);
+                cells[a].setTextAndCheck(getString(R.string.MessageSavingSaveMediaInPrivateGroups), NyaConfig.INSTANCE.getSaveMediaInPrivateGroups().Bool(), true);
             }
             cells[a].setBackground(Theme.getSelectorDrawable(false));
             cells[a].setOnClickListener(v -> {
@@ -279,11 +279,11 @@ public class SpyModeActivity extends BaseNekoXSettingsActivity {
         textView.setPadding(AndroidUtilities.dp(10), 0, AndroidUtilities.dp(10), 0);
         buttonsLayout.addView(textView, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, 36, Gravity.TOP | Gravity.RIGHT));
         textView.setOnClickListener(v1 -> {
-            NaConfig.INSTANCE.getSaveMediaInPrivateChats().setConfigBool(cells[0].isChecked());
-            NaConfig.INSTANCE.getSaveMediaInPublicChannels().setConfigBool(cells[1].isChecked());
-            NaConfig.INSTANCE.getSaveMediaInPrivateChannels().setConfigBool(cells[2].isChecked());
-            NaConfig.INSTANCE.getSaveMediaInPublicGroups().setConfigBool(cells[3].isChecked());
-            NaConfig.INSTANCE.getSaveMediaInPrivateGroups().setConfigBool(cells[4].isChecked());
+            NyaConfig.INSTANCE.getSaveMediaInPrivateChats().setConfigBool(cells[0].isChecked());
+            NyaConfig.INSTANCE.getSaveMediaInPublicChannels().setConfigBool(cells[1].isChecked());
+            NyaConfig.INSTANCE.getSaveMediaInPrivateChannels().setConfigBool(cells[2].isChecked());
+            NyaConfig.INSTANCE.getSaveMediaInPublicGroups().setConfigBool(cells[3].isChecked());
+            NyaConfig.INSTANCE.getSaveMediaInPrivateGroups().setConfigBool(cells[4].isChecked());
 
             builder.getDismissRunnable().run();
         });
@@ -331,7 +331,7 @@ public class SpyModeActivity extends BaseNekoXSettingsActivity {
     }
 
     private void checkSaveDeletedRows() {
-        final boolean isSaveEnabled = NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool();
+        final boolean isSaveEnabled = NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool();
         final List<AbstractConfigCell> allManagedRows = Arrays.asList(
                 saveDeletedMessagesPrivateRow,
                 saveDeletedMessagesGroupRow,
@@ -372,12 +372,12 @@ public class SpyModeActivity extends BaseNekoXSettingsActivity {
             rowsToAdd.add(saveDeletedMessagesChannelRow);
             rowsToAdd.add(messageSavingSaveMediaRow);
             rowsToAdd.add(saveDeletedMessageForBotsUserRow);
-            if (NaConfig.INSTANCE.getSaveDeletedMessageForBotUser().Bool()) {
+            if (NyaConfig.INSTANCE.getSaveDeletedMessageForBotUser().Bool()) {
                 rowsToAdd.add(saveDeletedMessageInBotChatRow);
             }
             rowsToAdd.add(translucentDeletedMessagesRow);
             rowsToAdd.add(useDeletedIconRow);
-            if (!NaConfig.INSTANCE.getUseDeletedIcon().Bool()) {
+            if (!NyaConfig.INSTANCE.getUseDeletedIcon().Bool()) {
                 rowsToAdd.add(customDeletedMarkRow);
             }
             cellGroup.rows.addAll(anchorIndex + 1, rowsToAdd);
@@ -387,7 +387,7 @@ public class SpyModeActivity extends BaseNekoXSettingsActivity {
     }
 
     private void checkSaveBotMsgRows() {
-        boolean enabled = NaConfig.INSTANCE.getSaveDeletedMessageForBotUser().Bool();
+        boolean enabled = NyaConfig.INSTANCE.getSaveDeletedMessageForBotUser().Bool();
         if (listAdapter == null) {
             if (!enabled) {
                 cellGroup.rows.remove(saveDeletedMessageInBotChatRow);
@@ -411,7 +411,7 @@ public class SpyModeActivity extends BaseNekoXSettingsActivity {
     }
 
     private void checkUseDeletedIconRows() {
-        boolean enabled = NaConfig.INSTANCE.getUseDeletedIcon().Bool();
+        boolean enabled = NyaConfig.INSTANCE.getUseDeletedIcon().Bool();
         if (listAdapter == null) {
             if (enabled) {
                 cellGroup.rows.remove(customDeletedMarkRow);

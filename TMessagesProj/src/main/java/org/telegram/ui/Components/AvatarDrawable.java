@@ -40,7 +40,7 @@ import org.telegram.tgnet.TLObject;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.ActionBar.Theme;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 import java.util.ArrayList;
 
@@ -591,7 +591,7 @@ public class AvatarDrawable extends Drawable {
                 canvas.rotate(-45, size / 2.0f, size / 2.0f);
             }
             int r = roundRadius;
-            if (r <= 0 && NaConfig.INSTANCE.getShowSquareAvatar().Bool()) {
+            if (r <= 0 && NyaConfig.INSTANCE.getShowSquareAvatar().Bool()) {
                 r = (int) (size * 0.25f);
             }
             if (r > 0) {
@@ -779,7 +779,7 @@ public class AvatarDrawable extends Drawable {
     }
 
     public void setRoundRadius(int roundRadius) {
-        if (roundRadius > 0 && NaConfig.INSTANCE.getShowSquareAvatar().Bool()) {
+        if (roundRadius > 0 && NyaConfig.INSTANCE.getShowSquareAvatar().Bool()) {
             this.roundRadius = Math.max(AndroidUtilities.dp(4), Math.round(roundRadius * 0.45f));
         } else {
             this.roundRadius = roundRadius;

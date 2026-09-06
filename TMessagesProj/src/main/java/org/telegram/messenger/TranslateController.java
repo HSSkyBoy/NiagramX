@@ -58,7 +58,7 @@ import top.nkbe.niagram.helpers.MessageHelper;
 import top.nkbe.niagram.translate.Translator;
 import top.nkbe.niagram.translate.TranslatorKt;
 import top.nkbe.niagram.translate.source.LLMTranslator;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class TranslateController extends BaseController {
 
@@ -102,7 +102,7 @@ public class TranslateController extends BaseController {
 
     public boolean isFeatureAvailable() {
         boolean isRealPremium = UserConfig.getInstance(currentAccount).isPremium();
-        return NaConfig.INSTANCE.getTelegramUIAutoTranslate().Bool() && (isRealPremium || NekoConfig.translationProvider.Int() != Translator.providerTelegram);
+        return NyaConfig.INSTANCE.getTelegramUIAutoTranslate().Bool() && (isRealPremium || NekoConfig.translationProvider.Int() != Translator.providerTelegram);
     }
 
     public boolean isFeatureAvailable(long dialogId) {
@@ -2699,10 +2699,10 @@ public class TranslateController extends BaseController {
 
     @Nullable
     private String buildLlmAutoTranslateContext(@NonNull MessageObject message) {
-        if (!NaConfig.INSTANCE.getLlmUseContext().Bool()) {
+        if (!NyaConfig.INSTANCE.getLlmUseContext().Bool()) {
             return null;
         }
-        if (!NaConfig.INSTANCE.getLlmUseContextInAutoTranslate().Bool()) {
+        if (!NyaConfig.INSTANCE.getLlmUseContextInAutoTranslate().Bool()) {
             return null;
         }
         if (NekoConfig.translationProvider.Int() != Translator.providerLLMTranslator) {

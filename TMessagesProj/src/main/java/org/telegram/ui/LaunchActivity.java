@@ -274,7 +274,7 @@ import top.nkbe.niagram.settings.NekoSettingsActivity;
 import top.nkbe.niagram.utils.AlertUtil;
 import top.nkbe.niagram.utils.AndroidUtil;
 import top.nkbe.niagram.utils.ProxyUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.ui.icons.IconsResources;
 
 public class LaunchActivity extends BasePermissionsActivity implements INavigationLayout.INavigationLayoutDelegate, NotificationCenter.NotificationCenterDelegate, DialogsActivity.DialogsActivityDelegate, IPipActivity {
@@ -417,7 +417,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
 
     @Override
     public Resources getResources() {
-        if (NaConfig.INSTANCE.getIconReplacements().Int() != IconsResources.ICON_REPLACE_SOLAR) {
+        if (NyaConfig.INSTANCE.getIconReplacements().Int() != IconsResources.ICON_REPLACE_SOLAR) {
             customResources = null;
             iconsAsset = null;
             return super.getResources();
@@ -779,7 +779,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
         BackupAgent.requestBackup();
 
         RestrictedLanguagesSelectActivity.checkRestrictedLanguages(false);
-        if (Build.VERSION.SDK_INT >= 34 && NaConfig.INSTANCE.getBackAnimationStyle().Int() == ActionBarLayout.BACK_ANIMATION_PREDICTIVE) {
+        if (Build.VERSION.SDK_INT >= 34 && NyaConfig.INSTANCE.getBackAnimationStyle().Int() == ActionBarLayout.BACK_ANIMATION_PREDICTIVE) {
             if (onBackAnimationCallback == null) {
                 onBackAnimationCallback =  new OnBackAnimationCallback() {
                     private AnimationNotificationsLocker locker = new AnimationNotificationsLocker();
@@ -7221,7 +7221,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
             }
         }
 
-        if (NaConfig.INSTANCE.getDisableProxyWhenVpnEnabled().Bool()) {
+        if (NyaConfig.INSTANCE.getDisableProxyWhenVpnEnabled().Bool()) {
             ProxyUtil.registerNetworkCallback();
         }
 

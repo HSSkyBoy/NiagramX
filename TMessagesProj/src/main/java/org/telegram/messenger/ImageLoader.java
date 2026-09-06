@@ -92,7 +92,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 import java.util.zip.GZIPInputStream;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 /**
  * image filter types
@@ -1695,7 +1695,7 @@ public class ImageLoader {
         private void onPostExecute(final Drawable drawable) {
             AndroidUtilities.runOnUIThread(() -> {
                 // save deleted media from cache
-                if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() && cacheImage.finalFilePath != null && cacheImage.parentObject instanceof MessageObject messageObject) {
+                if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() && cacheImage.finalFilePath != null && cacheImage.parentObject instanceof MessageObject messageObject) {
                     if (messageObject.isAyuDeleted()) {
                         String fileName = cacheImage.finalFilePath.getName();
                         if (fileName.endsWith(".jpg") || fileName.endsWith(".mp4")) {
@@ -2233,7 +2233,7 @@ public class ImageLoader {
                             }
                         }
                         NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.fileLoaded, location, finalFile);
-                        if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() && ayuDeleted) {
+                        if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() && ayuDeleted) {
                             NotificationCenter.getInstance(currentAccount).postNotificationName(AyuConstants.DELETED_MEDIA_LOADED_NOTIFICATION, location, finalFile);
                         }
                         ImageLoader.this.fileDidLoaded(location, finalFile, type);

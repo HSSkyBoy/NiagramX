@@ -27,7 +27,7 @@ import java.util.Locale;
 import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.config.ConfigItem;
 import top.nkbe.niagram.ui.cells.HeaderCell;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class GhostModeActivity extends BaseNekoSettingsActivity {
 
@@ -145,8 +145,8 @@ public class GhostModeActivity extends BaseNekoSettingsActivity {
             ((TextCheckCell) view).setChecked(NekoConfig.markReadAfterSend.Bool());
             AyuState.setAllowReadPacket(false, -1);
         } else if (position == sendWithoutSoundRow) {
-            NaConfig.INSTANCE.getSilentMessageByDefault().toggleConfigBool();
-            ((TextCheckCell) view).setChecked(NaConfig.INSTANCE.getSilentMessageByDefault().Bool());
+            NyaConfig.INSTANCE.getSilentMessageByDefault().toggleConfigBool();
+            ((TextCheckCell) view).setChecked(NyaConfig.INSTANCE.getSilentMessageByDefault().Bool());
         } else if (position == showGhostInDrawerRow) {
             NekoConfig.showGhostInDrawer.toggleConfigBool();
             ((TextCheckCell) view).setChecked(NekoConfig.showGhostInDrawer.Bool());
@@ -251,7 +251,7 @@ public class GhostModeActivity extends BaseNekoSettingsActivity {
                     if (position == markReadAfterSendRow) {
                         textCheckCell.setTextAndCheck(getString(R.string.MarkReadAfterSend), NekoConfig.markReadAfterSend.Bool(), true);
                     } else if (position == sendWithoutSoundRow) {
-                        textCheckCell.setTextAndCheck(getString(R.string.SilentMessageByDefault), NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), true);
+                        textCheckCell.setTextAndCheck(getString(R.string.SilentMessageByDefault), NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), true);
                     } else if (position == showGhostInDrawerRow) {
                         textCheckCell.setTextAndCheck(getString(R.string.GhostModeInDrawer), NekoConfig.showGhostInDrawer.Bool(), true);
                     } else if (position == showGhostModeStatusRow) {

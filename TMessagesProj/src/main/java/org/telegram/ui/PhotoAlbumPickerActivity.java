@@ -88,7 +88,7 @@ import top.nkbe.niagram.helpers.ChatsHelper;
 import top.nkbe.niagram.translate.Translator;
 import top.nkbe.niagram.translate.TranslatorKt;
 import top.nkbe.niagram.utils.AlertUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class PhotoAlbumPickerActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
@@ -445,7 +445,7 @@ public class PhotoAlbumPickerActivity extends BaseFragment implements Notificati
                     finishFragment();
                 });
             } else {
-                sendSelectedPhotos(selectedPhotos, selectedPhotosOrder, !NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
+                sendSelectedPhotos(selectedPhotos, selectedPhotosOrder, !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
                 finishFragment();
             }
         });
@@ -499,7 +499,7 @@ public class PhotoAlbumPickerActivity extends BaseFragment implements Notificati
                             itemCells[a].setTextAndIcon(LocaleController.getString(R.string.ScheduleMessage), R.drawable.msg_calendar2);
                         }
                     } else {
-                        boolean sendWithoutSoundNax = NaConfig.INSTANCE.getSilentMessageByDefault().Bool();
+                        boolean sendWithoutSoundNax = NyaConfig.INSTANCE.getSilentMessageByDefault().Bool();
                         itemCells[a].setTextAndIcon(sendWithoutSoundNax ? getString(R.string.SendWithSound) : getString(R.string.SendWithoutSound), sendWithoutSoundNax ? R.drawable.input_notify_on : R.drawable.input_notify_off);
                     }
                     itemCells[a].setMinimumWidth(AndroidUtilities.dp(196));
@@ -518,7 +518,7 @@ public class PhotoAlbumPickerActivity extends BaseFragment implements Notificati
                                 finishFragment();
                             });
                         } else if (num == 2) {
-                            sendSelectedPhotos(selectedPhotos, selectedPhotosOrder, NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
+                            sendSelectedPhotos(selectedPhotos, selectedPhotosOrder, NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
                             finishFragment();
                         }
                     });

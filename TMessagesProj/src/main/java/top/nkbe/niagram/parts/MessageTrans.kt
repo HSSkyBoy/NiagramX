@@ -28,7 +28,7 @@ import top.nkbe.niagram.translate.locale2code
 import top.nkbe.niagram.translate.source.LLMTranslator
 import top.nkbe.niagram.utils.AlertUtil
 import top.nkbe.niagram.utils.AppScope
-import xyz.nextalone.nagram.NaConfig
+import top.nkbe.niagram.config.NyaConfig
 import java.util.Locale
 import java.util.WeakHashMap
 
@@ -238,7 +238,7 @@ fun ChatActivity.translateMessages(
     if (messages.any { translateController.isTranslating(it) }) return
 
     val targetLanguage = targetLocale.toLanguageTag()
-    val translatorMode = NaConfig.translatorMode.Int()
+    val translatorMode = NyaConfig.translatorMode.Int()
     val canReuseCache = provider == 0
 
     // Check if all messages are already translated, hide translation if so
@@ -746,7 +746,7 @@ private fun clearTranslated(
 
 private fun shouldUseLlmContext(provider: Int): Boolean {
     val effectiveProvider = provider.takeIf { it != 0 } ?: NekoConfig.translationProvider.Int()
-    return effectiveProvider == Translator.providerLLMTranslator && NaConfig.llmUseContext.Bool()
+    return effectiveProvider == Translator.providerLLMTranslator && NyaConfig.llmUseContext.Bool()
 }
 
 private fun extractLlmContextText(message: MessageObject): String? {

@@ -4,7 +4,7 @@ import android.media.AudioRecord
 import android.media.audiofx.AcousticEchoCanceler
 import android.media.audiofx.AutomaticGainControl
 import android.media.audiofx.NoiseSuppressor
-import xyz.nextalone.nagram.NaConfig
+import top.nkbe.niagram.config.NyaConfig
 
 object AudioEnhance {
     var automaticGainControl: AutomaticGainControl? =
@@ -17,7 +17,7 @@ object AudioEnhance {
     fun initVoiceEnhance(
         audioRecord: AudioRecord
     ) {
-        if (!NaConfig.noiseSuppressAndVoiceEnhance.Bool()) return
+        if (!NyaConfig.noiseSuppressAndVoiceEnhance.Bool()) return
         if (AutomaticGainControl.isAvailable()) {
             automaticGainControl =
                 AutomaticGainControl.create(

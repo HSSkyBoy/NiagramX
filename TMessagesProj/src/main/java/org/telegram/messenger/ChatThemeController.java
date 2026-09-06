@@ -39,7 +39,7 @@ import java.util.Map;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ChatThemeController extends BaseController {
 
@@ -373,7 +373,7 @@ public class ChatThemeController extends BaseController {
     }
 
     public TLRPC.WallPaper getDialogWallpaper(long dialogId) {
-        if (!NaConfig.INSTANCE.getPremiumItemCustomWallpaper().Bool()) {
+        if (!NyaConfig.INSTANCE.getPremiumItemCustomWallpaper().Bool()) {
             return null;
         }
         if (dialogId >= 0) {

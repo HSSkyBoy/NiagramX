@@ -183,7 +183,7 @@ import static top.nkbe.niagram.settings.NekoChatSettingsActivity.getDeleteMenuCh
 import top.nkbe.niagram.helpers.PasscodeHelper;
 import top.nkbe.niagram.helpers.ScheduleTimeHelper;
 import top.nkbe.niagram.NekoConfig;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 import com.radolyn.ayugram.AyuConstants;
 import com.radolyn.ayugram.messages.AyuMessagesController;
@@ -1765,7 +1765,7 @@ public class AlertsCreator {
     public static void showOpenUrlAlert(Context context, String url, boolean punycode, boolean tryTelegraph, boolean ask, boolean forceNotInternalForApps, long inlineReturn, Browser.Progress progress, @Nullable TLRPC.WebPage webPage, Theme.ResourcesProvider resourcesProvider) {
         if (!AndroidUtilities.isContextSafe(context)) return;
         final String scheme = url == null ? null : Uri.parse(url).getScheme();
-        if ((Browser.isInternalUrl(url, null) || !ask || "mailto".equalsIgnoreCase(scheme) || NekoConfig.skipOpenLinkConfirm.Bool()) && !NaConfig.INSTANCE.getConfirmAllLinks().Bool()) {
+        if ((Browser.isInternalUrl(url, null) || !ask || "mailto".equalsIgnoreCase(scheme) || NekoConfig.skipOpenLinkConfirm.Bool()) && !NyaConfig.INSTANCE.getConfirmAllLinks().Bool()) {
             Browser.openUrl(context, Uri.parse(url), inlineReturn == 0, tryTelegraph, forceNotInternalForApps && checkInternalBotApp(url), progress, null, false, true, false);
             return;
         }
@@ -2753,7 +2753,7 @@ public class AlertsCreator {
             } else if (clear) {
                 cell[0].setText(LocaleController.formatString(R.string.ClearHistoryOptionAlso, UserObject.getFirstName(user)), "", false, false);
             } else {
-                deleteForAll[0] = NaConfig.INSTANCE.getDeleteChatForBothSides().Bool();
+                deleteForAll[0] = NyaConfig.INSTANCE.getDeleteChatForBothSides().Bool();
                 cell[0].setText(LocaleController.formatString(R.string.DeleteMessagesOptionAlso, UserObject.getFirstName(user)), "", deleteForAll[0], false);
             }
             cell[0].setMultiline(true);
@@ -3066,7 +3066,7 @@ public class AlertsCreator {
         textView.setSingleLine(true);
         textView.setGravity((LocaleController.isRTL ? Gravity.RIGHT : Gravity.LEFT) | Gravity.CENTER_VERTICAL);
         textView.setEllipsize(TextUtils.TruncateAt.END);
-        deleteForAll[0] = NaConfig.INSTANCE.getDeleteChatForBothSides().Bool();
+        deleteForAll[0] = NyaConfig.INSTANCE.getDeleteChatForBothSides().Bool();
         if (canDeleteHistory) {
             if (hasDialogsToRevoke) {
                 cell[0] = new CheckBoxCell(context, 1, resourcesProvider);
@@ -4488,7 +4488,7 @@ public class AlertsCreator {
         titleLayout.addView(titleView, LayoutHelper.createFrame(LayoutHelper.WRAP_CONTENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.TOP, 0, 12, 0, 0));
         titleView.setOnTouchListener((v, event) -> true);
 
-        final boolean[] notify = new boolean[] { !xyz.nextalone.nagram.NaConfig.INSTANCE.getSilentMessageByDefault().Bool() };
+        final boolean[] notify = new boolean[] { !top.nkbe.niagram.config.NyaConfig.INSTANCE.getSilentMessageByDefault().Bool() };
         ActionBarMenuItem optionsButton = null;
         if (DialogObject.isUserDialog(dialogId) && dialogId != selfUserId) {
             TLRPC.User user = MessagesController.getInstance(UserConfig.selectedAccount).getUser(dialogId);
@@ -8157,7 +8157,7 @@ public class AlertsCreator {
                 ayuFrameLayout = frameLayout;
                 CheckBoxCell cell = new CheckBoxCell(activity, 1, resourcesProvider);
                 cell.setBackgroundDrawable(Theme.getSelectorDrawable(false));
-                deleteForAll[0] = NaConfig.INSTANCE.getDeleteChatForBothSides().Bool();
+                deleteForAll[0] = NyaConfig.INSTANCE.getDeleteChatForBothSides().Bool();
                 if (canDeleteInbox) {
                     cell.setVisibility(hasAyuDeletedMessages ? View.GONE : View.VISIBLE);
                     cell.setText(LocaleController.formatString("DeleteMessagesOptionAlso", R.string.DeleteMessagesOptionAlso, UserObject.getFirstName(user)), "", deleteForAll[0], false);
@@ -8180,7 +8180,7 @@ public class AlertsCreator {
 
         // --- AyuGram hook
         final boolean[] keepLocally = {false};
-        if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() && (selectedMessage == null || !selectedMessage.isEphemeral())) {
+        if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() && (selectedMessage == null || !selectedMessage.isEphemeral())) {
             if (ayuFrameLayout == null) {
                 ayuFrameLayout = new FrameLayout(activity);
                 builder.setView(ayuFrameLayout);
@@ -8266,7 +8266,7 @@ public class AlertsCreator {
                     thisDialogId = mergeDialogId;
                 }
                 // --- AyuGram hook
-                if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+                if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
                     ArrayList<Integer> finalIds = ids;
                     AndroidUtilities.runOnUIThread(() -> {
                         // invalidating views
@@ -8306,7 +8306,7 @@ public class AlertsCreator {
                         }
                     }
                     // --- AyuGram hook
-                    if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+                    if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
                         ArrayList<Integer> finalIds = ids;
                         AndroidUtilities.runOnUIThread(() -> {
                             // invalidating views

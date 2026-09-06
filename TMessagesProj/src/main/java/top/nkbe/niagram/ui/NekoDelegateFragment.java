@@ -87,7 +87,7 @@ import top.nkbe.niagram.translate.TranslatorKt;
 import top.nkbe.niagram.ui.cells.NekoMessageCell;
 import top.nkbe.niagram.utils.AlertUtil;
 import top.nkbe.niagram.utils.AndroidUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public abstract class NekoDelegateFragment extends BaseFragment implements NotificationCenter.NotificationCenterDelegate, NekoMessageCell.NekoMessageCellDelegate {
 
@@ -655,7 +655,7 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
             return;
         }
 
-        int mode = NaConfig.INSTANCE.getTranslatorMode().Int();
+        int mode = NyaConfig.INSTANCE.getTranslatorMode().Int();
         ArrayList<TLRPC.MessageEntity> entities = messageObject.messageOwner.entities;
         if (entities == null) {
             entities = new ArrayList<>();

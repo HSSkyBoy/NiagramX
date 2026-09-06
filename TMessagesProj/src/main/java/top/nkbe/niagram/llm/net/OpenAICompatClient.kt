@@ -5,7 +5,7 @@ import okhttp3.Request
 import org.json.JSONArray
 import org.json.JSONObject
 import top.nkbe.niagram.llm.utils.ModelUtil
-import xyz.nextalone.nagram.NaConfig
+import top.nkbe.niagram.config.NyaConfig
 import java.util.LinkedHashSet
 import java.util.Locale
 
@@ -43,13 +43,13 @@ object OpenAICompatClient {
     @JvmStatic
     fun testChatCompletions(preset: Int, baseUrl: String?, apiKey: String?, model: String?): LlmResponse<String> {
         return LlmTransport.test(model) { modelName, messages ->
-            chatCompletions(preset, baseUrl, apiKey, modelName, messages, NaConfig.llmTemperature.Float(), LlmTransport.TEST_HTTP_CLIENT)
+            chatCompletions(preset, baseUrl, apiKey, modelName, messages, NyaConfig.llmTemperature.Float(), LlmTransport.TEST_HTTP_CLIENT)
         }
     }
 
     @JvmStatic
     fun chatCompletions(preset: Int, baseUrl: String?, apiKey: String?, model: String?, messages: JSONArray): LlmResponse<String> {
-        return chatCompletions(preset, baseUrl, apiKey, model, messages, NaConfig.llmTemperature.Float(), LlmTransport.HTTP_CLIENT)
+        return chatCompletions(preset, baseUrl, apiKey, model, messages, NyaConfig.llmTemperature.Float(), LlmTransport.HTTP_CLIENT)
     }
 
     private fun chatCompletions(

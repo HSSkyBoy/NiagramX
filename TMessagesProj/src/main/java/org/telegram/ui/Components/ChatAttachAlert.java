@@ -193,7 +193,7 @@ import top.nkbe.niagram.translate.Translator;
 import top.nkbe.niagram.translate.TranslatorKt;
 import top.nkbe.niagram.utils.AlertUtil;
 import top.nkbe.niagram.utils.AndroidUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 import java.util.Objects;
 
@@ -3662,9 +3662,9 @@ public class ChatAttachAlert extends BottomSheet implements NotificationCenter.N
                 } else {
                     boolean shownDialog = false;
                     if (currentAttachLayout == photoLayout || currentAttachLayout == photoPreviewLayout) {
-                        shownDialog = sendPressed(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, effectId, isCaptionAbove());
+                        shownDialog = sendPressed(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, effectId, isCaptionAbove());
                     } else {
-                        if (!currentAttachLayout.sendSelectedItems(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, effectId, isCaptionAbove())) {
+                        if (!currentAttachLayout.sendSelectedItems(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, effectId, isCaptionAbove())) {
                             allowPassConfirmationAlert = true;
                             dismiss();
                         }
@@ -3998,7 +3998,7 @@ public class ChatAttachAlert extends BottomSheet implements NotificationCenter.N
                 });
             }
             if (editingMessageObject == null && !self) {
-                boolean sendWithoutSoundNax = NaConfig.INSTANCE.getSilentMessageByDefault().Bool();
+                boolean sendWithoutSoundNax = NyaConfig.INSTANCE.getSilentMessageByDefault().Bool();
                 options.add(sendWithoutSoundNax ? R.drawable.input_notify_on : R.drawable.input_notify_off, sendWithoutSoundNax ? getString(R.string.SendWithSound) : getString(R.string.SendWithoutSound), () -> {
                     final long effectId = messageSendPreview != null ? messageSendPreview.getSelectedEffect() : 0;
                     writeButton.setEffect(ChatAttachAlert.this.effectId = effectId);
@@ -4347,9 +4347,9 @@ public class ChatAttachAlert extends BottomSheet implements NotificationCenter.N
             }, resourcesProvider);
         } else {
             if (currentAttachLayout == photoLayout || currentAttachLayout == photoPreviewLayout) {
-                sendPressed(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, effectId, isCaptionAbove());
+                sendPressed(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, effectId, isCaptionAbove());
             } else {
-                if (!currentAttachLayout.sendSelectedItems(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, effectId, isCaptionAbove())) {
+                if (!currentAttachLayout.sendSelectedItems(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, effectId, isCaptionAbove())) {
                     allowPassConfirmationAlert = true;
                     dismiss();
                 }
@@ -6559,7 +6559,7 @@ public class ChatAttachAlert extends BottomSheet implements NotificationCenter.N
 
     private boolean shownAiButton;
     private void showAiButton(boolean show_) {
-        final boolean show = show_ && (baseFragment instanceof ChatActivity && !((ChatActivity) baseFragment).isSecretChat()) && !NaConfig.INSTANCE.getDisableAiEditor().Bool();
+        final boolean show = show_ && (baseFragment instanceof ChatActivity && !((ChatActivity) baseFragment).isSecretChat()) && !NyaConfig.INSTANCE.getDisableAiEditor().Bool();
 
         if (shownAiButton == show) return;
         if (show) {

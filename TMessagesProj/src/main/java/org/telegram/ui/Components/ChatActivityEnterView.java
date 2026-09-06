@@ -246,7 +246,7 @@ import top.nkbe.niagram.translate.Translator;
 import top.nkbe.niagram.translate.TranslatorKt;
 import top.nkbe.niagram.ui.BottomBuilder;
 import top.nkbe.niagram.utils.AlertUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
@@ -989,7 +989,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                     }
                 }
                 // 0 = front, 1 = rear, 2 = ask
-                int cameraMode = NaConfig.INSTANCE.getCameraInVideoMessages().Int();
+                int cameraMode = NyaConfig.INSTANCE.getCameraInVideoMessages().Int();
                 if (cameraMode == 2 && pendingCameraFront == null) {
                     recordAudioVideoRunnableStarted = false;
                     calledRecordRunnable = false;
@@ -3122,7 +3122,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                                     }
                                     delegate.toggleVideoRecordingPause();
                                     AlertsCreator.ensurePaidMessageConfirmation(currentAccount, dialog_id, 1, payStars -> {
-                                        sendMessageInternal(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, payStars, false);
+                                        sendMessageInternal(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, payStars, false);
                                     });
                                     return true;
                                 }
@@ -3151,7 +3151,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                                         }
                                     }
                                     AlertsCreator.ensurePaidMessageConfirmation(currentAccount, dialog_id, 1, payStars -> {
-                                        sendMessageInternal(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, payStars, false);
+                                        sendMessageInternal(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, payStars, false);
                                     });
                                     return true;
                                 }
@@ -3250,7 +3250,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                                     }
                                     delegate.toggleVideoRecordingPause();
                                     AlertsCreator.ensurePaidMessageConfirmation(currentAccount, dialog_id, 1, payStars -> {
-                                        sendMessageInternal(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, payStars, false);
+                                        sendMessageInternal(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, payStars, false);
                                     });
                                     return true;
                                 }
@@ -3271,7 +3271,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                                         slideText.setEnabled(false);
                                     }
                                     AlertsCreator.ensurePaidMessageConfirmation(currentAccount, dialog_id, 1, payStars -> {
-                                        sendMessageInternal(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, payStars, false);
+                                        sendMessageInternal(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, payStars, false);
                                     });
                                     return true;
                                 }
@@ -4957,15 +4957,15 @@ public class ChatActivityEnterView extends FrameLayout implements
     public boolean isStories;
 
     public boolean isIosButtonPlacement() {
-        return NaConfig.INSTANCE.getIosButtonPlacement().Bool();
+        return NyaConfig.INSTANCE.getIosButtonPlacement().Bool();
     }
 
     public boolean isIosInputAppearance() {
-        return NaConfig.INSTANCE.getIosInputAppearance().Bool();
+        return NyaConfig.INSTANCE.getIosInputAppearance().Bool();
     }
 
     public boolean isCompactInputSize() {
-        return NaConfig.INSTANCE.getCompactInputSize().Bool() && isIosInputAppearance();
+        return NyaConfig.INSTANCE.getCompactInputSize().Bool() && isIosInputAppearance();
     }
 
     private BlurredBackgroundDrawableViewFactory glassBackgroundDrawableFactory;
@@ -5266,7 +5266,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                     }
 
                     if (checkMenuPermissions(true)) {
-                        int cameraMode = NaConfig.INSTANCE.getCameraInVideoMessages().Int();
+                        int cameraMode = NyaConfig.INSTANCE.getCameraInVideoMessages().Int();
                         if (cameraMode == 2) {
                             showCameraSelectionPopup(audioVideoButtonContainer, () -> {
                                 pendingCameraFront = true;
@@ -5437,7 +5437,7 @@ public class ChatActivityEnterView extends FrameLayout implements
         if (isInScheduleMode() || parentFragment != null && parentFragment.getChatMode() == ChatActivity.MODE_QUICK_REPLIES || animatorEphemeralMessageVisibility.getValue()) {
             return false;
         }
-        boolean sendWithoutSoundNax = NaConfig.INSTANCE.getSilentMessageByDefault().Bool();
+        boolean sendWithoutSoundNax = NyaConfig.INSTANCE.getSilentMessageByDefault().Bool();
         if (isStories || (messageEditText == null || TextUtils.isEmpty(messageEditText.getText())) && parentFragment != null && parentFragment.messagePreviewParams != null && parentFragment.messagePreviewParams.forwardMessages != null && parentFragment.messagePreviewParams.forwardMessages.messages != null && !parentFragment.messagePreviewParams.forwardMessages.messages.isEmpty()) {
 
             boolean self = parentFragment != null && UserObject.isUserSelf(parentFragment.getCurrentUser());
@@ -5859,12 +5859,12 @@ public class ChatActivityEnterView extends FrameLayout implements
         }
         if (messageEditText != null && messageEditText.getText().length() > 0) {
             if (containsMarkdown(messageEditText.getText())) {
-                boolean withoutMarkdown = NaConfig.INSTANCE.getDisableMarkdown().Bool();
+                boolean withoutMarkdown = NyaConfig.INSTANCE.getDisableMarkdown().Bool();
                 int markdownButtonDrawable = withoutMarkdown ? R.drawable.round_code_white : R.drawable.round_code_off_white;
                 String markdownButtonStr = withoutMarkdown ? getString(R.string.SendWithMarkdown) : getString(R.string.SendWithoutMarkdown);
                 options.add(markdownButtonDrawable, markdownButtonStr, () -> {
                     sentFromPreview = System.currentTimeMillis();
-                    sendMessageInternal(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, 0, true, SendMessageInternalParams.markdown(withoutMarkdown));
+                    sendMessageInternal(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, 0, true, SendMessageInternalParams.markdown(withoutMarkdown));
                     if (!containsSendMessage && messageSendPreview != null) {
                         messageSendPreview.dismiss(true);
                         messageSendPreview = null;
@@ -5876,7 +5876,7 @@ public class ChatActivityEnterView extends FrameLayout implements
             } else if (canSendAsDice(messageEditText.getText().toString(), parentFragment, dialog_id)) {
                 options.add(R.drawable.casino_icon, getString(R.string.SendAsEmoji), () -> {
                     sentFromPreview = System.currentTimeMillis();
-                    sendMessageInternal(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, 0, true, SendMessageInternalParams.game(false));
+                    sendMessageInternal(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, 0, true, SendMessageInternalParams.game(false));
                     if (!containsSendMessage && messageSendPreview != null) {
                         messageSendPreview.dismiss(true);
                         messageSendPreview = null;
@@ -5886,12 +5886,12 @@ public class ChatActivityEnterView extends FrameLayout implements
                     }
                 });
             } else if (StringUtils.canUsePangu(messageEditText.getText().toString())) {
-                boolean shouldUsePangu = !NaConfig.INSTANCE.getEnablePanguOnSending().Bool();
+                boolean shouldUsePangu = !NyaConfig.INSTANCE.getEnablePanguOnSending().Bool();
                 int markdownButtonDrawable = shouldUsePangu ? R.drawable.round_code_white : R.drawable.round_code_off_white;
                 String markdownButtonStr = shouldUsePangu ? getString(R.string.SendWithPangu) : getString(R.string.SendWithoutPangu);
                 options.add(markdownButtonDrawable, markdownButtonStr, () -> {
                     sentFromPreview = System.currentTimeMillis();
-                    sendMessageInternal(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, 0, true, SendMessageInternalParams.pangu(shouldUsePangu));
+                    sendMessageInternal(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, 0, true, SendMessageInternalParams.pangu(shouldUsePangu));
                     if (!containsSendMessage && messageSendPreview != null) {
                         messageSendPreview.dismiss(true);
                         messageSendPreview = null;
@@ -7085,7 +7085,7 @@ public class ChatActivityEnterView extends FrameLayout implements
 
     @Nullable
     private String buildInputTranslationContext(int provider) {
-        if (!NaConfig.INSTANCE.getLlmUseContext().Bool()) {
+        if (!NyaConfig.INSTANCE.getLlmUseContext().Bool()) {
             return null;
         }
         int effectiveProvider = provider != 0 ? provider : NekoConfig.translationProvider.Int();
@@ -7932,7 +7932,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                     }
                 } else {
                     SpannableStringBuilder messageEditTextText = SpannableStringBuilder.valueOf(getString(R.string.TypeMessage));
-                    if (NaConfig.INSTANCE.getTypeMessageHintUseGroupName().Bool()) {
+                    if (NyaConfig.INSTANCE.getTypeMessageHintUseGroupName().Bool()) {
                         TLRPC.Chat c = accountInstance.getMessagesController().getChat(-dialog_id);
                         TLRPC.User u = accountInstance.getMessagesController().getUser(dialog_id);
                         if (c != null) {
@@ -7959,7 +7959,7 @@ public class ChatActivityEnterView extends FrameLayout implements
     }
 
     private SpannableString getSendAsUnderMessageHintText() {
-        if (!NaConfig.INSTANCE.getShowSendAsUnderMessageHint().Bool() || delegate == null) {
+        if (!NyaConfig.INSTANCE.getShowSendAsUnderMessageHint().Bool() || delegate == null) {
             return null;
         }
 
@@ -8475,7 +8475,7 @@ public class ChatActivityEnterView extends FrameLayout implements
             }, resourcesProvider);
             return true;
         } else {
-            return sendMessageInternal(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, 0, true);
+            return sendMessageInternal(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, 0, true);
         }
     }
 
@@ -9016,7 +9016,7 @@ public class ChatActivityEnterView extends FrameLayout implements
     }
 
     public boolean processSendingText(CharSequence text, boolean notify, int scheduleDate, int scheduleRepeatPeriod, long payStars, SendMessageInternalParams internalParams) {
-        boolean withMarkdown = internalParams.withMarkdown == null ? !NaConfig.INSTANCE.getDisableMarkdown().Bool() : internalParams.withMarkdown;
+        boolean withMarkdown = internalParams.withMarkdown == null ? !NyaConfig.INSTANCE.getDisableMarkdown().Bool() : internalParams.withMarkdown;
         boolean withGame = internalParams.withGame;
         Boolean canUsePangu = internalParams.canUsePangu;
         if (replyingQuote != null && parentFragment != null && replyingQuote.outdated) {
@@ -11292,7 +11292,7 @@ public class ChatActivityEnterView extends FrameLayout implements
             }
         } else {
             // NagramX: Ask before sending bot command
-            if (NaConfig.INSTANCE.getDisableClickCommandToSend().Bool()) {
+            if (NyaConfig.INSTANCE.getDisableClickCommandToSend().Bool()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(parentActivity);
                 builder.setTitle(LocaleController.getString(R.string.botCommandConfirmTitle));
                 String message = String.format(LocaleController.getString(R.string.botCommandConfirmText), command);
@@ -12893,7 +12893,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                     botButton.setContentDescription(getString("AccDescrBotKeyboard", R.string.AccDescrBotKeyboard));
                 }
             } else {
-                if (!canShowBotsMenu && !NaConfig.INSTANCE.getHideBotButtonInInputField().Bool()) {
+                if (!canShowBotsMenu && !NyaConfig.INSTANCE.getHideBotButtonInInputField().Bool()) {
                     createBotButton();
                     botButtonDrawable.setIcon(R.drawable.input_bot1, true);
                     botButton.setContentDescription(getString("AccDescrBotCommands", R.string.AccDescrBotCommands));
@@ -12968,7 +12968,7 @@ public class ChatActivityEnterView extends FrameLayout implements
                     return true;
                 }
             } else {
-                if (!canShowBotsMenu && !NaConfig.INSTANCE.getHideBotButtonInInputField().Bool()) {
+                if (!canShowBotsMenu && !NyaConfig.INSTANCE.getHideBotButtonInInputField().Bool()) {
                     botButtonDrawable.setIcon(R.drawable.input_bot1, true);
                     botButton.setContentDescription(LocaleController.getString("AccDescrBotCommands", R.string.AccDescrBotCommands));
                     return true;
@@ -13124,7 +13124,7 @@ public class ChatActivityEnterView extends FrameLayout implements
             sendButton.setEffect(effectId = 0);
             SendMessagesHelper.getInstance(currentAccount).sendMessage(params);
         } else if (buttonTypeUrl != null) {
-            if (Browser.urlMustNotHaveConfirmation(buttonTypeUrl.url) && !NaConfig.INSTANCE.getConfirmAllLinks().Bool()) {
+            if (Browser.urlMustNotHaveConfirmation(buttonTypeUrl.url) && !NyaConfig.INSTANCE.getConfirmAllLinks().Bool()) {
                 Browser.openUrl(parentActivity, Uri.parse(buttonTypeUrl.url), true, true, progress);
             } else {
                 AlertsCreator.showOpenUrlAlert(parentFragment, buttonTypeUrl.url, false, true, true, progress, resourcesProvider);

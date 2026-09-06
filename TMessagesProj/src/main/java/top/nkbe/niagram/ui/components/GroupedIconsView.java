@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressLint("ViewConstructor")
 public class GroupedIconsView extends FrameLayout {
@@ -117,7 +117,7 @@ public class GroupedIconsView extends FrameLayout {
     }
 
     public static boolean useGroupedIcons() {
-        return NaConfig.INSTANCE.getGroupedMessageMenu().Bool();
+        return NyaConfig.INSTANCE.getGroupedMessageMenu().Bool();
     }
 
     private void addOption(OptionConfig config) {

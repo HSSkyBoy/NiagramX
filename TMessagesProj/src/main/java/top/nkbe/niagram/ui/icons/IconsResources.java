@@ -18,7 +18,7 @@ import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressLint("UseCompatLoadingForDrawables")
 public class IconsResources extends Resources {
@@ -149,7 +149,7 @@ public class IconsResources extends Resources {
 
     private int getConversion(int icon, int forcedIconsType) {
         if (_iconsType == -1) {
-            _iconsType = NaConfig.INSTANCE.getIconReplacements().Int();
+            _iconsType = NyaConfig.INSTANCE.getIconReplacements().Int();
         }
 
         int consideredIconsType = forcedIconsType == -1 ? _iconsType : forcedIconsType;

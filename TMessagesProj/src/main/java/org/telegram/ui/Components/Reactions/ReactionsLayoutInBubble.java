@@ -68,7 +68,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import top.nkbe.niagram.filters.ReactionFilter;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ReactionsLayoutInBubble {
 
@@ -242,7 +242,7 @@ public class ReactionsLayoutInBubble {
                         reactionCount = visibleReactionCounts.get(i);
                     }
                     ReactionButton old = null;
-                    if (!NaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && reactionCount.reaction instanceof TLRPC.TL_reactionPaid) {
+                    if (!NyaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && reactionCount.reaction instanceof TLRPC.TL_reactionPaid) {
                         continue;
                     }
                     for (int j = 0; j < oldButtons.size(); ++j) {

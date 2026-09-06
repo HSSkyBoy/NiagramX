@@ -97,7 +97,7 @@ import java.util.List;
 
 import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.utils.AndroidUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ActionBarLayout extends FrameLayout implements INavigationLayout, FloatingDebugProvider {
 
@@ -3849,8 +3849,8 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
     // public static final int BACK_ANIMATION_CLASSIC = 0;
     public static final int BACK_ANIMATION_SPRING = 1;
     public static final int BACK_ANIMATION_PREDICTIVE = 2;
-    private static final boolean USE_SPRING_ANIMATION = NaConfig.INSTANCE.getBackAnimationStyle().Int() == BACK_ANIMATION_SPRING;
-    private static final boolean USE_ACTIONBAR_CROSSFADE = USE_SPRING_ANIMATION && NaConfig.INSTANCE.getSpringAnimationCrossfade().Bool();
+    private static final boolean USE_SPRING_ANIMATION = NyaConfig.INSTANCE.getBackAnimationStyle().Int() == BACK_ANIMATION_SPRING;
+    private static final boolean USE_ACTIONBAR_CROSSFADE = USE_SPRING_ANIMATION && NyaConfig.INSTANCE.getSpringAnimationCrossfade().Bool();
     private static final float SPRING_STIFFNESS = 700f;
     private static final float SPRING_STIFFNESS_PREVIEW = 650f;
     private static final float SPRING_STIFFNESS_PREVIEW_OUT = 800f;

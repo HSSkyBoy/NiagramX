@@ -95,7 +95,7 @@ import java.util.List;
 
 import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.PinnedElementsHelper;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ReactionsContainerLayout extends FrameLayout implements NotificationCenter.NotificationCenterDelegate {
 
@@ -1149,18 +1149,18 @@ public class ReactionsContainerLayout extends FrameLayout implements Notificatio
             fillRecentReactionsList(visibleReactions);
         } else if (hitLimit) {
             allReactionsAvailable = false;
-            if (NaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && reactionsChat != null && reactionsChat.paid_reactions_available) {
+            if (NyaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && reactionsChat != null && reactionsChat.paid_reactions_available) {
                 hasStar = true;
                 visibleReactions.add(ReactionsLayoutInBubble.VisibleReaction.asStar());
             }
             for (TLRPC.ReactionCount result : messageObject.messageOwner.reactions.results) {
-                if (!NaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && result.reaction instanceof TLRPC.TL_reactionPaid) {
+                if (!NyaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && result.reaction instanceof TLRPC.TL_reactionPaid) {
                     continue;
                 }
                 visibleReactions.add(ReactionsLayoutInBubble.VisibleReaction.fromTL(result.reaction));
             }
         } else if (reactionsChat != null) {
-            if (NaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && reactionsChat.paid_reactions_available) {
+            if (NyaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && reactionsChat.paid_reactions_available) {
                 hasStar = true;
                 visibleReactions.add(ReactionsLayoutInBubble.VisibleReaction.asStar());
             }
@@ -1223,7 +1223,7 @@ public class ReactionsContainerLayout extends FrameLayout implements Notificatio
             allReactionsAvailable = true;
             fillRecentReactionsList(visibleReactions);
         }
-        if (!NaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && visibleReactions.isEmpty() && reactionsChat != null && reactionsChat.paid_reactions_available) {
+        if (!NyaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && visibleReactions.isEmpty() && reactionsChat != null && reactionsChat.paid_reactions_available) {
             visibleReactions.add(ReactionsLayoutInBubble.VisibleReaction.asStar());
         }
         filterReactions(visibleReactions);

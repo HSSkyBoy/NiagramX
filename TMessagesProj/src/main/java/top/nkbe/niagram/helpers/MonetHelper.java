@@ -18,7 +18,7 @@ import org.telegram.ui.ActionBar.Theme;
 
 import java.util.HashMap;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @RequiresApi(api = Build.VERSION_CODES.S)
 public class MonetHelper {
@@ -205,7 +205,7 @@ public class MonetHelper {
     }
 
     public static boolean useMonetMd3Colors() {
-        return NaConfig.INSTANCE.getSwitchStyle().Int() == SWITCH_STYLE_MD3
+        return NyaConfig.INSTANCE.getSwitchStyle().Int() == SWITCH_STYLE_MD3
             && Theme.getActiveTheme() != null
             && Theme.getActiveTheme().isMonet();
     }

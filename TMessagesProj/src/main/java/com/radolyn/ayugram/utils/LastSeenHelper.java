@@ -14,7 +14,7 @@ import org.telegram.ui.ChatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class LastSeenHelper {
     private static final int FLUSH_DELAY_MS = 5000;
@@ -25,7 +25,7 @@ public class LastSeenHelper {
     private static volatile boolean flushScheduled;
 
     public static void preload() {
-        if (!NaConfig.INSTANCE.getSaveLocalLastSeen().Bool()) {
+        if (!NyaConfig.INSTANCE.getSaveLocalLastSeen().Bool()) {
             return;
         }
         AyuQueues.lastSeenQueue.postRunnable(() -> {
@@ -53,7 +53,7 @@ public class LastSeenHelper {
     }
 
     public static void saveLastSeen(long userId, int timestamp) {
-        if (!NaConfig.INSTANCE.getSaveLocalLastSeen().Bool() || timestamp <= 0) {
+        if (!NyaConfig.INSTANCE.getSaveLocalLastSeen().Bool() || timestamp <= 0) {
             return;
         }
         synchronized (cache) {
@@ -78,7 +78,7 @@ public class LastSeenHelper {
     }
 
     private static void flushPending() {
-        if (!NaConfig.INSTANCE.getSaveLocalLastSeen().Bool()) {
+        if (!NyaConfig.INSTANCE.getSaveLocalLastSeen().Bool()) {
             synchronized (pending) {
                 pending.clear();
                 flushScheduled = false;
@@ -138,7 +138,7 @@ public class LastSeenHelper {
     }
 
     public static int getLastSeen(long userId) {
-        if (!NaConfig.INSTANCE.getSaveLocalLastSeen().Bool()) {
+        if (!NyaConfig.INSTANCE.getSaveLocalLastSeen().Bool()) {
             return 0;
         }
         synchronized (cache) {
@@ -215,7 +215,7 @@ public class LastSeenHelper {
     }
 
     public static void saveLastSeenFromLoadedMessages(long userId, long selfUserId, ArrayList<MessageObject> messages, ChatActivity.ChatActivityAdapter chatAdapter) {
-        if (!NaConfig.INSTANCE.getSaveLocalLastSeen().Bool()) {
+        if (!NyaConfig.INSTANCE.getSaveLocalLastSeen().Bool()) {
             return;
         }
         if (userId <= 0 || userId == selfUserId) {
@@ -243,7 +243,7 @@ public class LastSeenHelper {
     }
 
     public static void saveLastSeenFromPeerReactions(List<TLRPC.MessagePeerReaction> reactions, long selfUserId) {
-        if (!NaConfig.INSTANCE.getSaveLocalLastSeen().Bool()) {
+        if (!NyaConfig.INSTANCE.getSaveLocalLastSeen().Bool()) {
             return;
         }
         if (reactions == null || reactions.isEmpty()) {

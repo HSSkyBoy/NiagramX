@@ -102,7 +102,7 @@ import java.util.function.Consumer;
 import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.NekoXConfig;
 import top.nkbe.niagram.filters.AyuFilter;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class NotificationsController extends BaseController implements NotificationCenter.NotificationCenterDelegate {
 
@@ -1815,7 +1815,7 @@ public class NotificationsController extends BaseController implements Notificat
 
     private boolean shouldHideNotificationContentForPasscode() {
         return (AndroidUtilities.needShowPasscode() || SharedConfig.isWaitingForPasscodeEnter) &&
-                !NaConfig.INSTANCE.getShowNotificationPreviewWhenLocked().Bool();
+                !NyaConfig.INSTANCE.getShowNotificationPreviewWhenLocked().Bool();
     }
 
     public String getShortStringForMessage(MessageObject messageObject, String[] userName, boolean[] preview) {
@@ -4206,7 +4206,7 @@ public class NotificationsController extends BaseController implements Notificat
             }
             SharedPreferences preferences = getAccountInstance().getNotificationsSettings();
             int dismissDate = preferences.getInt("dismissDate", 0);
-            if (!lastMessageObject.isStoryPush && (lastMessageObject.messageOwner.date <= dismissDate && NaConfig.INSTANCE.getPushServiceType().Int() != 3)) {
+            if (!lastMessageObject.isStoryPush && (lastMessageObject.messageOwner.date <= dismissDate && NyaConfig.INSTANCE.getPushServiceType().Int() != 3)) {
                 dismissNotification();
                 return;
             }
@@ -4352,7 +4352,7 @@ public class NotificationsController extends BaseController implements Notificat
                 for (int i = 0; i < count; i++) {
                     MessageObject messageObject = pushMessages.get(i);
                     String message = getStringForMessage(messageObject, false, text, null);
-                    if (message == null || !messageObject.isStoryPush && (messageObject.messageOwner.date <= dismissDate && NaConfig.INSTANCE.getPushServiceType().Int() != 3)) {
+                    if (message == null || !messageObject.isStoryPush && (messageObject.messageOwner.date <= dismissDate && NyaConfig.INSTANCE.getPushServiceType().Int() != 3)) {
                         continue;
                     }
                     if (silent == 2) {
@@ -4877,7 +4877,7 @@ public class NotificationsController extends BaseController implements Notificat
             long dialog_id = messageObject.getDialogId();
             long topicId = MessageObject.getTopicId(currentAccount, messageObject.messageOwner, getMessagesController().isForum(messageObject));
             int dismissDate = preferences.getInt("dismissDate" + dialog_id, 0);
-            if (!messageObject.isStoryPush && (messageObject.messageOwner.date <= dismissDate && NaConfig.INSTANCE.getPushServiceType().Int() != 3)) {
+            if (!messageObject.isStoryPush && (messageObject.messageOwner.date <= dismissDate && NyaConfig.INSTANCE.getPushServiceType().Int() != 3)) {
                 FileLog.d("showExtraNotifications: dialog " + dialog_id + " is skipped, message date (" + messageObject.messageOwner.date + " <= " + dismissDate + ")");
                 continue;
             }
@@ -4941,7 +4941,7 @@ public class NotificationsController extends BaseController implements Notificat
 
         long selfUserId = getUserConfig().getClientUserId();
         boolean waitingForPasscode = AndroidUtilities.needShowPasscode() || SharedConfig.isWaitingForPasscodeEnter;
-        boolean hideNotificationContent = waitingForPasscode && !NaConfig.INSTANCE.getShowNotificationPreviewWhenLocked().Bool();
+        boolean hideNotificationContent = waitingForPasscode && !NyaConfig.INSTANCE.getShowNotificationPreviewWhenLocked().Bool();
         boolean passcode = SharedConfig.passcodeHash.length() > 0;
         FileLog.d("showExtraNotifications: passcode="+passcode+" waitingForPasscode=" + waitingForPasscode + " hideNotificationContent=" + hideNotificationContent + " selfUserId=" + selfUserId + " useSummaryNotification=" + useSummaryNotification);
 
@@ -6345,7 +6345,7 @@ public class NotificationsController extends BaseController implements Notificat
     }
 
     private int getNotificationIconResId() {
-        int notificationIconConfigValue = NaConfig.INSTANCE.getNotificationIcon().Int();
+        int notificationIconConfigValue = NyaConfig.INSTANCE.getNotificationIcon().Int();
         switch (notificationIconConfigValue) {
             case 0:
                 return R.drawable.notification;

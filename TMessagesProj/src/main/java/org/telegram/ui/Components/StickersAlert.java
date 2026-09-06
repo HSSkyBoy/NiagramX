@@ -111,7 +111,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import top.nkbe.niagram.NekoConfig;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import xyz.nextalone.nagram.helper.StickerSetHelper;
 
 public class StickersAlert extends BottomSheet implements NotificationCenter.NotificationCenterDelegate {
@@ -1201,7 +1201,7 @@ public class StickersAlert extends BottomSheet implements NotificationCenter.Not
                 hidePreview();
                 selectedStickerPath = null;
             } else {
-                delegate.onStickerSelected(selectedSticker, null, stickerSet, null, clearsInputField, !NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
+                delegate.onStickerSelected(selectedSticker, null, stickerSet, null, clearsInputField, !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
                 dismiss();
             }
         });

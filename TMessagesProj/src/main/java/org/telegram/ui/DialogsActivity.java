@@ -294,7 +294,7 @@ import top.nkbe.niagram.helpers.TypefaceHelper;
 import top.nkbe.niagram.helpers.remote.EmojiHelper;
 import top.nkbe.niagram.settings.GhostModeActivity;
 import top.nkbe.niagram.ui.BookmarkManagerActivity;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class DialogsActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate, FloatingDebugProvider, FactorAnimator.Target, MainTabsActivity.TabFragmentDelegate {
     private final int ADDITIONAL_LIST_HEIGHT_DP = Build.VERSION.SDK_INT >= 31 ? 48 : 0;
@@ -2477,7 +2477,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                         currentDialogsType = parentPage.dialogsAdapter.getDialogsType();
                     } catch (Exception ignore) {
                     }
-                    if (folderId != 0 && NaConfig.INSTANCE.getDoNotUnarchiveBySwipe().Bool() && !DialogObject.isFolderDialogId(dialogId)) {
+                    if (folderId != 0 && NyaConfig.INSTANCE.getDoNotUnarchiveBySwipe().Bool() && !DialogObject.isFolderDialogId(dialogId)) {
                         dialogCell.setSliding(false);
                         return 0;
                     }
@@ -3022,8 +3022,8 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         }
 
         BirthdayController.getInstance(currentAccount).check();
-        additionNavigationBarHeight = hasMainTabs && !NaConfig.INSTANCE.getHideBottomNavigationBar().Bool() ? dp(MainTabsHelper.getMainTabsHeightWithMargins()) : 0;
-        additionFloatingButtonOffset = hasMainTabs && !NaConfig.INSTANCE.getHideBottomNavigationBar().Bool() ? dp(MainTabsHelper.getMainTabsHeight() + MainTabsHelper.getMainTabsMargin()) : 0;
+        additionNavigationBarHeight = hasMainTabs && !NyaConfig.INSTANCE.getHideBottomNavigationBar().Bool() ? dp(MainTabsHelper.getMainTabsHeightWithMargins()) : 0;
+        additionFloatingButtonOffset = hasMainTabs && !NyaConfig.INSTANCE.getHideBottomNavigationBar().Bool() ? dp(MainTabsHelper.getMainTabsHeight() + MainTabsHelper.getMainTabsMargin()) : 0;
 
         LastSeenHelper.preload();
 
@@ -3078,7 +3078,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             statusDrawableGiftId = null;
             actionBar.setRightDrawableOnClick(null);
             boolean isOnDefaultTab = filterTabsView == null || filterTabsView.getCurrentTabId() == filterTabsView.getDefaultTabId();
-            if (!NaConfig.INSTANCE.getFolderNameAsTitle().Bool() || isOnDefaultTab) {
+            if (!NyaConfig.INSTANCE.getFolderNameAsTitle().Bool() || isOnDefaultTab) {
                 SimpleTextView titleTextView = actionBar.getTitleTextView();
                 if (titleTextView != null && titleTextView.getRightDrawable() != statusDrawable) {
                     titleTextView.setRightDrawable(statusDrawable);
@@ -3292,8 +3292,8 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         filterTabsView = null;
         selectedDialogs.clear();
 
-        additionNavigationBarHeight = hasMainTabs && !NaConfig.INSTANCE.getHideBottomNavigationBar().Bool() ? dp(MainTabsHelper.getMainTabsHeightWithMargins()) : 0;
-        additionFloatingButtonOffset = hasMainTabs && !NaConfig.INSTANCE.getHideBottomNavigationBar().Bool() ? dp(MainTabsHelper.getMainTabsHeight() + MainTabsHelper.getMainTabsMargin()) : 0;
+        additionNavigationBarHeight = hasMainTabs && !NyaConfig.INSTANCE.getHideBottomNavigationBar().Bool() ? dp(MainTabsHelper.getMainTabsHeightWithMargins()) : 0;
+        additionFloatingButtonOffset = hasMainTabs && !NyaConfig.INSTANCE.getHideBottomNavigationBar().Bool() ? dp(MainTabsHelper.getMainTabsHeight() + MainTabsHelper.getMainTabsMargin()) : 0;
 
         maximumVelocity = ViewConfiguration.get(context).getScaledMaximumFlingVelocity();
 
@@ -3624,7 +3624,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 communityAvatarImage.setForUserOrChat(community, communityAvatarDrawable);
                 actionBar.addView(communityAvatarImage, LayoutHelper.createFrame(32, 32, Gravity.BOTTOM | Gravity.LEFT, 58, 0, 0, 12f));
             } else {
-                if (NaConfig.INSTANCE.getCustomTitleUserName().Bool() && actionBar != null) {
+                if (NyaConfig.INSTANCE.getCustomTitleUserName().Bool() && actionBar != null) {
                     actionBar.setTitleScrollNonFitText(true);
                 }
                 statusDrawable = new AnimatedEmojiDrawable.SwapAnimatedEmojiDrawable(null, dp(26));
@@ -3786,7 +3786,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
 
                 @Override
                 public int getTabCounter(int tabId) {
-                    if (NaConfig.INSTANCE.getIgnoreUnreadCount().Int() == NekoConfig.DIALOG_FILTER_EXCLUDE_ALL) {
+                    if (NyaConfig.INSTANCE.getIgnoreUnreadCount().Int() == NekoConfig.DIALOG_FILTER_EXCLUDE_ALL) {
                         return 0;
                     }
 
@@ -3974,7 +3974,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 @Override
                 public void onTabSelected(FilterTabsView.Tab tab, boolean forward, boolean animated) {
                     if (actionBar == null) return;
-                    if (NaConfig.INSTANCE.getFolderNameAsTitle().Bool()) {
+                    if (NyaConfig.INSTANCE.getFolderNameAsTitle().Bool()) {
                         CharSequence title = tab.isDefault ? actionBarTitleNax : EmojiHelper.removeEmojiSpans(tab.realTitle);
                         actionBar.setTitleAnimatedX(title, tab.isDefault ? statusDrawable : null, forward, 250);
                         if (dialogStoriesCell != null) {
@@ -5487,7 +5487,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             }
         };
         dialogStoriesCell.setActionBar(actionBar);
-        if (NaConfig.INSTANCE.getFolderNameAsTitle().Bool() && filterTabsView != null) {
+        if (NyaConfig.INSTANCE.getFolderNameAsTitle().Bool() && filterTabsView != null) {
             for (int i = 0; i < filterTabsView.getTabsCount(); i++) {
                 FilterTabsView.Tab tab = filterTabsView.getTab(i);
                 if (tab != null && tab.id == filterTabsView.getCurrentTabId() && !tab.isDefault) {
@@ -5526,7 +5526,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         undoView[1] = null;
 
         if (actionBar.getTitlesContainer() != null) {
-            actionBar.getTitlesContainer().setTranslationX(NaConfig.INSTANCE.getCenterActionBarTitle().Bool() && NaConfig.INSTANCE.getCenterActionBarTitleType().Int() != 3 ? -dp(6) : (hasMainTabs ? dp(4) : 0));
+            actionBar.getTitlesContainer().setTranslationX(NyaConfig.INSTANCE.getCenterActionBarTitle().Bool() && NyaConfig.INSTANCE.getCenterActionBarTitleType().Int() != 3 ? -dp(6) : (hasMainTabs ? dp(4) : 0));
         }
         if (hasMainTabs) {
             actionBar.setTitleColor(getThemedColor(Theme.key_telegram_color_dialogsLogo));
@@ -7145,10 +7145,10 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
 
                 // NagramX: use folder name as title
                 if (dialogStoriesCell != null) {
-                    dialogStoriesCell.setLogoTitle(actionBarTitleNax, true, animated && NaConfig.INSTANCE.getFolderNameAsTitle().Bool(), false);
+                    dialogStoriesCell.setLogoTitle(actionBarTitleNax, true, animated && NyaConfig.INSTANCE.getFolderNameAsTitle().Bool(), false);
                 }
                 if (!actionBarTitleNax.equals(actionBar.getTitle())) {
-                    if (NaConfig.INSTANCE.getFolderNameAsTitle().Bool()) {
+                    if (NyaConfig.INSTANCE.getFolderNameAsTitle().Bool()) {
                         actionBar.setTitleAnimatedX(actionBarTitleNax, statusDrawable, false, 250);
                     } else {
                         actionBar.setTitle(actionBarTitleNax, statusDrawable);
@@ -7406,7 +7406,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         updateVisibleRows(0, false);
         updateProxyButton(false, true);
         updateStoriesVisibility(false);
-        if (NaConfig.INSTANCE.getDisableDialogsFloatingButton().Bool()) {
+        if (NyaConfig.INSTANCE.getDisableDialogsFloatingButton().Bool()) {
             hideFloatingButton(true);
         }
         checkSuggestClearDatabase();
@@ -9078,7 +9078,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             floatingButton3.setButtonVisible(isVisible, animated);
         }
         if (floatingButtonStories != null) {
-            floatingButtonStories.setButtonVisible(isVisible && !NaConfig.INSTANCE.getDisableStories().Bool(), animated);
+            floatingButtonStories.setButtonVisible(isVisible && !NyaConfig.INSTANCE.getDisableStories().Bool(), animated);
         }
     }
 
@@ -9098,7 +9098,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         }
     }
 
-    public boolean storiesEnabled = !NaConfig.INSTANCE.getDisableStories().Bool();
+    public boolean storiesEnabled = !NyaConfig.INSTANCE.getDisableStories().Bool();
     private void updateStoriesPosting() {
         final boolean storiesEnabled = getMessagesController().storiesEnabled();
         if (this.storiesEnabled != storiesEnabled) {
@@ -10456,7 +10456,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 break;
             }
         }
-        if (NaConfig.INSTANCE.getAlwaysShowDownloadIcon().Bool()) {
+        if (NyaConfig.INSTANCE.getAlwaysShowDownloadIcon().Bool()) {
             showDownloads = true;
         }
         if ((getDownloadController().hasUnviewedDownloads() || showDownloads || (downloadsItem.getVisibility() == View.VISIBLE && downloadsItem.getAlpha() == 1 && !force))) {
@@ -11398,7 +11398,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
     boolean floatingButtonHidden;
 
     private void hideFloatingButton(boolean hide) {
-        if (NaConfig.INSTANCE.getDisableDialogsFloatingButton().Bool()) {
+        if (NyaConfig.INSTANCE.getDisableDialogsFloatingButton().Bool()) {
             floatingForceVisible = false;
             hide = true;
         }
@@ -12185,7 +12185,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             }
         }
         final boolean onlyMyselfFinal = onlyMyself;
-        boolean sendWithoutSoundNax = NaConfig.INSTANCE.getSilentMessageByDefault().Bool();
+        boolean sendWithoutSoundNax = NyaConfig.INSTANCE.getSilentMessageByDefault().Bool();
         final ItemOptions options = ItemOptions.makeOptions(this, view);
         final ActionBarMenuSubItem[] showSendersNameItem = new ActionBarMenuSubItem[1];
         final ActionBarMenuSubItem[] hideSendersNameItem = new ActionBarMenuSubItem[1];
@@ -13016,7 +13016,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
     }
 
     public void updateStoriesVisibility(boolean animated) {
-        if (NaConfig.INSTANCE.getHideStoriesFromHeader().Bool()) {
+        if (NyaConfig.INSTANCE.getHideStoriesFromHeader().Bool()) {
             return;
         }
         if (dialogStoriesCell == null || storiesVisibilityAnimator != null || rightSlidingDialogContainer != null && rightSlidingDialogContainer.hasFragment() || searchIsShowed || actionBar == null || actionBar.isActionModeShowed() || onlySelect) {
@@ -13039,7 +13039,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         hasOnlySlefStories = onlySelfStories;
 
         boolean oldStoriesCellVisibility = dialogStoriesCellVisible;
-        dialogStoriesCellVisible = !NaConfig.INSTANCE.getHideStoriesFromHeader().Bool() && (onlySelfStories || newVisibility);
+        dialogStoriesCellVisible = !NyaConfig.INSTANCE.getHideStoriesFromHeader().Bool() && (onlySelfStories || newVisibility);
 
         if (newVisibility || dialogStoriesCellVisible) {
             dialogStoriesCell.updateItems(animated, dialogStoriesCellVisible != oldStoriesCellVisibility);
@@ -13957,7 +13957,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         }
 
         final boolean isCurrentThemeDark;
-        final boolean hideBottomNavigationBar = NaConfig.INSTANCE.getHideBottomNavigationBar().Bool();
+        final boolean hideBottomNavigationBar = NyaConfig.INSTANCE.getHideBottomNavigationBar().Bool();
             if (resourceProvider != null) {
                 isCurrentThemeDark = resourceProvider.isDark();
             } else {
@@ -14038,7 +14038,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                     BackButtonMenuRecent.show(currentAccount, this, optionsItem);
                 });
             }
-            if (hideBottomNavigationBar && NaConfig.INSTANCE.getHideArchive().Bool()) {
+            if (hideBottomNavigationBar && NyaConfig.INSTANCE.getHideArchive().Bool()) {
                 io.add(R.drawable.msg_archive, getString(R.string.ArchivedChats), () -> {
                     Bundle args = new Bundle();
                     args.putInt("folderId", 1);
@@ -14050,7 +14050,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 args.putLong("user_id", UserConfig.getInstance(currentAccount).getClientUserId());
                 presentFragment(new ChatActivity(args));
             });
-            if (hideBottomNavigationBar && NaConfig.INSTANCE.getShowAddToBookmark().Bool()) {
+            if (hideBottomNavigationBar && NyaConfig.INSTANCE.getShowAddToBookmark().Bool()) {
                 io.add(R.drawable.msg_fave, getString(R.string.BookmarksManager), () -> presentFragment(new BookmarkManagerActivity()));
             }
             if (NekoConfig.showGhostInDrawer.Bool()) {
@@ -14522,7 +14522,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         iBlur3PositionActionBar.set(0, -additionalList, fragmentView.getMeasuredWidth(), lerp(actionBarHeight, actionBarHeightSearch, animatorSearchVisible.getFloatValue()) + additionalList );
 
         boolean hasBottomBlur = false;
-        if (hasMainTabs && !NaConfig.INSTANCE.getHideBottomNavigationBar().Bool()) {
+        if (hasMainTabs && !NyaConfig.INSTANCE.getHideBottomNavigationBar().Bool()) {
             iBlur3PositionMainTabs.set(0, mainTabTop, fragmentView.getMeasuredWidth(), mainTabBottom);
             iBlur3PositionMainTabs.inset(0, LiteMode.isEnabled(LiteMode.FLAG_LIQUID_GLASS) ? 0 : -dp(48));
 
@@ -14788,7 +14788,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
     }
 
     private boolean shouldShowIdleSearchField() {
-        return !NaConfig.INSTANCE.getHideDialogsSearchField().Bool();
+        return !NyaConfig.INSTANCE.getHideDialogsSearchField().Bool();
     }
 
     private int getIdleSearchFieldHeight() {

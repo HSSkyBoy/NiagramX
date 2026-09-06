@@ -74,7 +74,7 @@ import top.nkbe.niagram.helpers.CloudStorageHelper;
 import top.nkbe.niagram.helpers.UserHelper;
 import top.nkbe.niagram.helpers.MessageHelper;
 import top.nkbe.niagram.utils.AndroidUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public abstract class BaseFragment {
 
@@ -314,7 +314,7 @@ public abstract class BaseFragment {
     }
 
     public boolean isActionBarCrossfadeEnabled() {
-        if (NaConfig.INSTANCE.getBackAnimationStyle().Int() == ActionBarLayout.BACK_ANIMATION_SPRING) {
+        if (NyaConfig.INSTANCE.getBackAnimationStyle().Int() == ActionBarLayout.BACK_ANIMATION_SPRING) {
             if (getLastStoryViewer() != null && getLastStoryViewer().attachedToParent()) {
                 return false;
             }

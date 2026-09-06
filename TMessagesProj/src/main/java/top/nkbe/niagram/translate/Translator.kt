@@ -20,7 +20,7 @@ import top.nkbe.niagram.translate.source.*
 import top.nkbe.niagram.ui.PopupBuilder
 import top.nkbe.niagram.utils.AppScope
 import top.nkbe.niagram.utils.receiveLazy
-import xyz.nextalone.nagram.NaConfig
+import top.nkbe.niagram.config.NyaConfig
 import java.io.IOException
 import java.util.Arrays
 import java.util.Locale
@@ -249,8 +249,8 @@ interface Translator {
 
         @Throws(Exception::class)
         suspend fun translateArticle(to: Locale, query: String): String {
-            val provider = if (NaConfig.enableSeparateArticleTranslator.Bool()) {
-                NaConfig.articleTranslationProvider.Int()
+            val provider = if (NyaConfig.enableSeparateArticleTranslator.Bool()) {
+                NyaConfig.articleTranslationProvider.Int()
             } else {
                 NekoConfig.translationProvider.Int()
             }
@@ -391,7 +391,7 @@ interface Translator {
             locales.add(0, firstLocale)
 
             // Get preferred languages and insert after first position
-            val preferredLocales = NaConfig.preferredTranslateTargetLangList.mapNotNull { lang ->
+            val preferredLocales = NyaConfig.preferredTranslateTargetLangList.mapNotNull { lang ->
                 try {
                     lang.code2Locale
                 } catch (e: Exception) {

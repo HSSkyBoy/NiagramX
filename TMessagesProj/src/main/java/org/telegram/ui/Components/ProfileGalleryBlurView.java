@@ -31,7 +31,7 @@ import org.telegram.messenger.SharedConfig;
 import org.telegram.messenger.Utilities;
 import org.telegram.ui.ProfileActivity;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ProfileGalleryBlurView extends View {
 
@@ -152,7 +152,7 @@ public class ProfileGalleryBlurView extends View {
     }
 
     private void swap(int from, int to, int clear) {
-        if (NaConfig.INSTANCE.getDisableAvatarBlur().Bool()) {
+        if (NyaConfig.INSTANCE.getDisableAvatarBlur().Bool()) {
             return;
         }
         synchronized (lock) {
@@ -430,7 +430,7 @@ public class ProfileGalleryBlurView extends View {
     }
 
     public void draw(Canvas canvas, ProfileActivity.AvatarImageView avatarImageView, float width, float height, boolean translate, float fraction, float alpha) {
-        if (view == null || !view.isAttachedToWindow() || view.getVisibility() == GONE || NaConfig.INSTANCE.getDisableAvatarBlur().Bool()) {
+        if (view == null || !view.isAttachedToWindow() || view.getVisibility() == GONE || NyaConfig.INSTANCE.getDisableAvatarBlur().Bool()) {
             return;
         }
         if (usingRenderNode && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

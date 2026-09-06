@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import org.telegram.messenger.UserConfig
 import org.telegram.tgnet.TLRPC
 import top.nkbe.niagram.NekoConfig
-import xyz.nextalone.nagram.NaConfig
+import top.nkbe.niagram.config.NyaConfig
 
 data class LocalQuoteColorData(
     var colorId: Int?, var emojiId: Long?, var profileColorId: Int?, var profileEmojiId: Long?
@@ -79,13 +79,13 @@ object LocalPeerColorHelper {
             val gson = Gson()
             val userKey = KEY_PREFIX + userId
 
-            var jsonStr = NaConfig.getPreferences().getString(userKey, null)
+            var jsonStr = NyaConfig.getPreferences().getString(userKey, null)
 
             if (jsonStr.isNullOrEmpty()) {
-                val legacyJson = NaConfig.useLocalQuoteColorData.String()
+                val legacyJson = NyaConfig.useLocalQuoteColorData.String()
                 if (legacyJson.isNotEmpty()) {
                     jsonStr = legacyJson
-                    NaConfig.getPreferences().edit { putString(userKey, jsonStr) }
+                    NyaConfig.getPreferences().edit { putString(userKey, jsonStr) }
                 }
             }
 
@@ -110,6 +110,6 @@ object LocalPeerColorHelper {
         dataMap[userId] = localData
 
         val userKey = KEY_PREFIX + userId
-        NaConfig.getPreferences().edit { putString(userKey, Gson().toJson(localData)) }
+        NyaConfig.getPreferences().edit { putString(userKey, Gson().toJson(localData)) }
     }
 }

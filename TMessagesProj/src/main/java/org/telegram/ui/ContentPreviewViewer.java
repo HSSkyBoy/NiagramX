@@ -118,7 +118,7 @@ import me.vkryl.core.reference.ReferenceList;
 
 import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ContentPreviewViewer {
 
@@ -745,7 +745,7 @@ public class ContentPreviewViewer {
                         actions.add(0);
                     }
                     if (delegate.needSend(currentContentType) && !delegate.isInScheduleMode()) {
-                        boolean sendWithoutSoundNax = NaConfig.INSTANCE.getSilentMessageByDefault().Bool();
+                        boolean sendWithoutSoundNax = NyaConfig.INSTANCE.getSilentMessageByDefault().Bool();
                         items.add(sendWithoutSoundNax ? getString(R.string.SendWithSound) : getString(R.string.SendWithoutSound));
                         icons.add(sendWithoutSoundNax ? R.drawable.input_notify_on : R.drawable.input_notify_off);
                         actions.add(6);
@@ -822,11 +822,11 @@ public class ContentPreviewViewer {
                         int which = (int) v.getTag();
                         if (actions.get(which) == 0) {
                             if (delegate != null) {
-                                delegate.sendSticker(currentDocument, currentQuery, parentObject, !NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
+                                delegate.sendSticker(currentDocument, currentQuery, parentObject, !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
                             }
                         } else if (actions.get(which) == 6) {
                             if (delegate != null) {
-                                delegate.sendSticker(currentDocument, currentQuery, parentObject, NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
+                                delegate.sendSticker(currentDocument, currentQuery, parentObject, NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
                             }
                         } else if (actions.get(which) == 1) {
                             if (delegate != null) {
@@ -1078,7 +1078,7 @@ public class ContentPreviewViewer {
                     actions.add(0);
                 }
                 if (delegate.needSend(currentContentType) && !delegate.isInScheduleMode()) {
-                    boolean sendWithoutSoundNax = NaConfig.INSTANCE.getSilentMessageByDefault().Bool();
+                    boolean sendWithoutSoundNax = NyaConfig.INSTANCE.getSilentMessageByDefault().Bool();
                     items.add(sendWithoutSoundNax ? getString(R.string.SendWithSound) : getString(R.string.SendWithoutSound));
                     icons.add(sendWithoutSoundNax ? R.drawable.input_notify_on : R.drawable.input_notify_off);
                     actions.add(4);
@@ -1130,9 +1130,9 @@ public class ContentPreviewViewer {
                     }
                     int which = (int) v.getTag();
                     if (actions.get(which) == 0) {
-                        delegate.sendGif(currentDocument != null ? currentDocument : inlineResult, parentObject, !NaConfig.INSTANCE.getSilentMessageByDefault().Bool() && actions.get(which) == 0, 0, 0);
+                        delegate.sendGif(currentDocument != null ? currentDocument : inlineResult, parentObject, !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool() && actions.get(which) == 0, 0, 0);
                     } else if (actions.get(which) == 4) {
-                        delegate.sendGif(currentDocument != null ? currentDocument : inlineResult, parentObject, NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
+                        delegate.sendGif(currentDocument != null ? currentDocument : inlineResult, parentObject, NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
                     } else if (actions.get(which) == 1) {
                         MediaDataController.getInstance(currentAccount).removeRecentGif(currentDocument);
                         delegate.gifAddedOrDeleted();

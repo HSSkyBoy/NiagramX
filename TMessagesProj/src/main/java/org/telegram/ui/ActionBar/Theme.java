@@ -151,7 +151,7 @@ import java.util.concurrent.CountDownLatch;
 
 import top.nkbe.niagram.helpers.MonetHelper;
 import top.nkbe.niagram.utils.AndroidUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class Theme {
 
@@ -9213,7 +9213,7 @@ public class Theme {
                 return animatingColors.valueAt(index);
             }
         }
-        if (NaConfig.INSTANCE.getHideDividers().Bool() && key_divider == key) {
+        if (NyaConfig.INSTANCE.getHideDividers().Bool() && key_divider == key) {
             return 0x00ffffff;
         }
         if (serviceBitmapShader != null && (key_chat_serviceText == key || key_chat_serviceLink == key || key_chat_serviceIcon == key

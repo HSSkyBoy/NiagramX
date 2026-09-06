@@ -105,7 +105,7 @@ import top.nkbe.niagram.helpers.ChatsHelper;
 import top.nkbe.niagram.translate.Translator;
 import top.nkbe.niagram.translate.TranslatorKt;
 import top.nkbe.niagram.utils.AlertUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class DocumentSelectActivity extends BaseFragment {
 
@@ -673,7 +673,7 @@ public class DocumentSelectActivity extends BaseFragment {
             if (chatActivity != null && chatActivity.isInScheduleMode()) {
                 AlertsCreator.createScheduleDatePickerDialog(getParentActivity(), chatActivity.getDialogId(), (notify, scheduleDate, scheduleRepeatPeriod) -> sendSelectedFiles(notify, scheduleDate));
             } else {
-                sendSelectedFiles(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
+                sendSelectedFiles(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
             }
         });
         writeButton.setOnLongClickListener(view -> {
@@ -743,7 +743,7 @@ public class DocumentSelectActivity extends BaseFragment {
                         } else if (num == 1) {
                             AlertsCreator.createScheduleDatePickerDialog(getParentActivity(), chatActivity.getDialogId(), (notify, scheduleDate, scheduleRepeatPeriod) -> sendSelectedFiles(notify, scheduleDate));
                         } else if (num == 2) {
-                            sendSelectedFiles(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
+                            sendSelectedFiles(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
                         }
                     });
                     itemCells[a].setOnLongClickListener(v -> {

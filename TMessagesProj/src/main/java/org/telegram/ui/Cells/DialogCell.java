@@ -153,7 +153,7 @@ import top.nkbe.niagram.filters.AyuFilter;
 import top.nkbe.niagram.filters.ReactionFilter;
 import top.nkbe.niagram.helpers.MessageHelper;
 import top.nkbe.niagram.utils.AndroidUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class DialogCell extends BaseCell implements StoriesListPlaceProvider.AvatarOverlaysView, Theme.Colorable {
 
@@ -482,7 +482,7 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
     private boolean allowBotOpenButton;
     private Utilities.Callback<TLRPC.User> onOpenButtonClick;
     public DialogCell allowBotOpenButton(boolean allow, Utilities.Callback<TLRPC.User> onOpenClick) {
-        allowBotOpenButton = allow && !NaConfig.INSTANCE.getDisableBotOpenButton().Bool();
+        allowBotOpenButton = allow && !NyaConfig.INSTANCE.getDisableBotOpenButton().Bool();
         onOpenButtonClick = onOpenClick;
         return this;
     }
@@ -3781,7 +3781,7 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
                 avatarRadius = 1;
             } else if (drawCommunityAvatar) {
                 avatarRadius = dp(12);
-            } else if (chat != null && chat.forum && currentDialogFolderId == 0 && !useFromUserAsAvatar || !isSavedDialog && user != null && user.self && MessagesController.getInstance(currentAccount).savedViewAsChats || NaConfig.INSTANCE.getShowSquareAvatar().Bool()) {
+            } else if (chat != null && chat.forum && currentDialogFolderId == 0 && !useFromUserAsAvatar || !isSavedDialog && user != null && user.self && MessagesController.getInstance(currentAccount).savedViewAsChats || NyaConfig.INSTANCE.getShowSquareAvatar().Bool()) {
                 avatarRadius = dp(16);
             } else {
                 avatarRadius = dp(28);

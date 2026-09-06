@@ -70,7 +70,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import kotlin.Unit;
 import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.ui.BottomBuilder;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class AboutLinkCell extends FrameLayout {
 
@@ -719,7 +719,7 @@ public class AboutLinkCell extends FrameLayout {
             textLayout = makeTextLayout(stringBuilder, maxWidth);
             shouldExpand = textLayout.getLineCount() >= 4; // && valueTextView.getVisibility() != View.VISIBLE;
 
-            if (NaConfig.INSTANCE.getShowFullAbout().Bool() && shouldExpand) {
+            if (NyaConfig.INSTANCE.getShowFullAbout().Bool() && shouldExpand) {
                 shouldExpand = false;
             }
 

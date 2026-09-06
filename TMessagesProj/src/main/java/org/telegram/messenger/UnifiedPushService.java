@@ -23,7 +23,7 @@ import java.security.spec.ECGenParameterSpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 
 import top.nkbe.niagram.utils.WebPushDecryptor;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressWarnings("NullableProblems")
 public class UnifiedPushService extends PushService {
@@ -65,7 +65,7 @@ public class UnifiedPushService extends PushService {
                 SharedConfig.pushStringGetTimeEnd = SystemClock.elapsedRealtime();
                 ensureWebPushKeys();
 
-                String gateway = NaConfig.getPreferences().getString(NaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().getKey(), "");
+                String gateway = NyaConfig.getPreferences().getString(NyaConfig.INSTANCE.getPushServiceTypeUnifiedGateway().getKey(), "");
                 if (gateway.isEmpty()) {
                     gateway = UP_GATEWAY_DEFAULT;
                 }
@@ -179,16 +179,16 @@ public class UnifiedPushService extends PushService {
     }
 
     private static boolean isUnifiedPushDisabled() {
-        return NaConfig.getPreferences().getInt(NaConfig.INSTANCE.getPushServiceType().getKey(), 2) != 2;
+        return NyaConfig.getPreferences().getInt(NyaConfig.INSTANCE.getPushServiceType().getKey(), 2) != 2;
     }
 
     private static synchronized void loadWebPushKeys() {
         if (webPushPrivateKey != null && webPushPublicKey != null && webPushAuthSecret != null) {
             return;
         }
-        String priv = NaConfig.getPreferences().getString(NaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPrivateKey().getKey(), "");
-        String pub = NaConfig.getPreferences().getString(NaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPublicKey().getKey(), "");
-        String auth = NaConfig.getPreferences().getString(NaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushAuthSecret().getKey(), "");
+        String priv = NyaConfig.getPreferences().getString(NyaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPrivateKey().getKey(), "");
+        String pub = NyaConfig.getPreferences().getString(NyaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPublicKey().getKey(), "");
+        String auth = NyaConfig.getPreferences().getString(NyaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushAuthSecret().getKey(), "");
         if (TextUtils.isEmpty(priv) && TextUtils.isEmpty(pub) && TextUtils.isEmpty(auth)) {
             return;
         }
@@ -210,9 +210,9 @@ public class UnifiedPushService extends PushService {
             webPushPrivateKey = null;
             webPushPublicKey = null;
             webPushAuthSecret = null;
-            NaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPrivateKey().setConfigString("");
-            NaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPublicKey().setConfigString("");
-            NaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushAuthSecret().setConfigString("");
+            NyaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPrivateKey().setConfigString("");
+            NyaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPublicKey().setConfigString("");
+            NyaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushAuthSecret().setConfigString("");
             FileLog.e(e);
         }
     }
@@ -235,9 +235,9 @@ public class UnifiedPushService extends PushService {
             Utilities.random.nextBytes(secret);
             webPushAuthSecret = secret;
 
-            NaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPrivateKey().setConfigString(Base64.encodeToString(webPushPrivateKey, Base64.DEFAULT));
-            NaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPublicKey().setConfigString(Base64.encodeToString(webPushPublicKey, Base64.DEFAULT));
-            NaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushAuthSecret().setConfigString(Base64.encodeToString(webPushAuthSecret, Base64.DEFAULT));
+            NyaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPrivateKey().setConfigString(Base64.encodeToString(webPushPrivateKey, Base64.DEFAULT));
+            NyaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPublicKey().setConfigString(Base64.encodeToString(webPushPublicKey, Base64.DEFAULT));
+            NyaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushAuthSecret().setConfigString(Base64.encodeToString(webPushAuthSecret, Base64.DEFAULT));
         } catch (Exception e) {
             FileLog.e(e);
         }

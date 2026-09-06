@@ -85,7 +85,7 @@ import top.nkbe.niagram.ErrorDatabase;
 import top.nkbe.niagram.NekoXConfig;
 import top.nkbe.niagram.utils.DnsFactory;
 import top.nkbe.niagram.utils.ProxyUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ConnectionsManager extends BaseController {
 
@@ -455,7 +455,7 @@ public class ConnectionsManager extends BaseController {
                         if (BuildVars.LOGS_ENABLED && error.code != -2000) {
                             FileLog.e(object + " got error " + error.code + " " + error.text);
                         }
-                        if (NaConfig.INSTANCE.getShowRPCError().Bool()) {
+                        if (NyaConfig.INSTANCE.getShowRPCError().Bool()) {
                             ErrorDatabase.showErrorToast(object, errorText);
                         }
                     }

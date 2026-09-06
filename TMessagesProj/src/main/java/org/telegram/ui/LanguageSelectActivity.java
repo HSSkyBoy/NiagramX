@@ -68,7 +68,7 @@ import java.util.Iterator;
 import java.util.Timer;
 
 import top.nkbe.niagram.settings.NekoTranslatorSettingsActivity;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class LanguageSelectActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
@@ -343,7 +343,7 @@ public class LanguageSelectActivity extends BaseFragment implements Notification
                         });
                     }
 
-                    if (!NaConfig.INSTANCE.getKeepTranslatorPreferences().Bool()) {
+                    if (!NyaConfig.INSTANCE.getKeepTranslatorPreferences().Bool()) {
                         String langCode = localeInfo.pluralLangCode,
                                 prevLangCode = prevLocale.pluralLangCode;
                         HashSet<String> selectedLanguages = RestrictedLanguagesSelectActivity.getRestrictedLanguages();

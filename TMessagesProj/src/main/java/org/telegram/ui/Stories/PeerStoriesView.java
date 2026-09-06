@@ -223,7 +223,7 @@ import java.util.concurrent.CountDownLatch;
 import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
 import top.nkbe.niagram.ui.MessageDetailsActivity;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class PeerStoriesView extends SizeNotifierFrameLayout implements NotificationCenter.NotificationCenterDelegate {
 
@@ -2123,7 +2123,7 @@ public class PeerStoriesView extends SizeNotifierFrameLayout implements Notifica
                                 }
                             });
                         }
-                        if (NaConfig.INSTANCE.getMediaViewerMenuItemCopyPhoto().Bool() && !currentStory.isLive && !currentStory.isVideo()) {
+                        if (NyaConfig.INSTANCE.getMediaViewerMenuItemCopyPhoto().Bool() && !currentStory.isLive && !currentStory.isVideo()) {
                             ActionBarMenuItem.addItem(popupLayout, R.drawable.msg_copy_photo, getString(R.string.CopyPhoto), false, resourcesProvider).setOnClickListener(v -> {
                                 copyPhotoToClipboard();
                                 if (popupMenu != null) {
@@ -2131,7 +2131,7 @@ public class PeerStoriesView extends SizeNotifierFrameLayout implements Notifica
                                 }
                             });
                         }
-                        if (NaConfig.INSTANCE.getMediaViewerMenuItemCopyFrame().Bool() && !currentStory.isLive && currentStory.isVideo()) {
+                        if (NyaConfig.INSTANCE.getMediaViewerMenuItemCopyFrame().Bool() && !currentStory.isLive && currentStory.isVideo()) {
                             ActionBarMenuItem.addItem(popupLayout, R.drawable.msg_copy_photo, getString(R.string.CopyVideoFrame), false, resourcesProvider).setOnClickListener(v -> {
                                 copyVideoFrameToClipboard();
                                 if (popupMenu != null) {
@@ -3729,7 +3729,7 @@ public class PeerStoriesView extends SizeNotifierFrameLayout implements Notifica
             @Override
             public void onStickerSelected(TLRPC.TL_document document, String query, Object parent) {
                 AlertsCreator.ensurePaidMessageConfirmation(currentAccount, dialogId, 1, payStars -> {
-                    SendMessagesHelper.getInstance(currentAccount).sendSticker(document, query, dialogId, null, null, currentStory.storyItem, null, null, !NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, false, parent, null, payStars, chatActivityEnterView.getSendMonoForumPeerId(), chatActivityEnterView.getSendMessageSuggestionParams());
+                    SendMessagesHelper.getInstance(currentAccount).sendSticker(document, query, dialogId, null, null, currentStory.storyItem, null, null, !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, false, parent, null, payStars, chatActivityEnterView.getSendMonoForumPeerId(), chatActivityEnterView.getSendMessageSuggestionParams());
                     chatActivityEnterView.addStickerToRecent(document);
                     chatActivityEnterView.setFieldText("");
                     afterMessageSend(payStars <= 0);

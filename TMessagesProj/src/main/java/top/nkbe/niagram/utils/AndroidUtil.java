@@ -53,7 +53,7 @@ import java.util.regex.Pattern;
 
 import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class AndroidUtil {
 
@@ -80,7 +80,7 @@ public class AndroidUtil {
     }
 
     public static int getOnlineColor(TLRPC.User user, Theme.ResourcesProvider resourcesProvider) {
-        if (!NaConfig.INSTANCE.getShowOnlineStatus().Bool()) {
+        if (!NyaConfig.INSTANCE.getShowOnlineStatus().Bool()) {
             return 0;
         }
         if (user == null || user.status == null || user.bot || user.self) {
@@ -129,14 +129,14 @@ public class AndroidUtil {
     public static void setPushService(boolean fcm) {
         if (fcm) {
             disablePushService();
-            NaConfig.INSTANCE.getPushServiceType().setConfigInt(1);
-            NaConfig.INSTANCE.getPushServiceTypeInAppDialog().setConfigBool(false);
+            NyaConfig.INSTANCE.getPushServiceType().setConfigInt(1);
+            NyaConfig.INSTANCE.getPushServiceTypeInAppDialog().setConfigBool(false);
         } else {
             SharedPreferences.Editor editor = MessagesController.getGlobalNotificationsSettings().edit();
             editor.putBoolean("pushService", true).apply();
             editor.putBoolean("pushConnection", true).apply();
-            NaConfig.INSTANCE.getPushServiceType().setConfigInt(0);
-            NaConfig.INSTANCE.getPushServiceTypeInAppDialog().setConfigBool(true);
+            NyaConfig.INSTANCE.getPushServiceType().setConfigInt(0);
+            NyaConfig.INSTANCE.getPushServiceTypeInAppDialog().setConfigBool(true);
         }
     }
 
@@ -367,6 +367,6 @@ public class AndroidUtil {
     public static boolean shouldEnableCrashlytics() {
         return !BuildConfig.DEBUG
                 && "top.nkbe.niagram".equals(BuildConfig.APPLICATION_ID)
-                && !NaConfig.INSTANCE.getDisableCrashlyticsCollection().Bool();
+                && !NyaConfig.INSTANCE.getDisableCrashlyticsCollection().Bool();
     }
 }

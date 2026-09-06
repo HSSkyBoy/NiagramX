@@ -10,7 +10,7 @@ import androidx.annotation.RequiresApi;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.R;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @RequiresApi(api = 33)
 public class LiquidGlassEffect {
@@ -67,8 +67,8 @@ public class LiquidGlassEffect {
             radiusRightBottom = height * (1.0f - a);
         }
 
-        float configuredIntensity = intensity * NaConfig.INSTANCE.getLiquidGlassIntensity().Int() / 75f;
-        float configuredAngle = (float) Math.toRadians(NaConfig.INSTANCE.getLiquidGlassAngle().Int());
+        float configuredIntensity = intensity * NyaConfig.INSTANCE.getLiquidGlassIntensity().Int() / 75f;
+        float configuredAngle = (float) Math.toRadians(NyaConfig.INSTANCE.getLiquidGlassAngle().Int());
 
         if (
             Math.abs(this.resolutionX - resolutionX) > 0.1f ||

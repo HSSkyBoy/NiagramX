@@ -36,7 +36,7 @@ import org.telegram.ui.Cells.ChatMessageCell;
 
 import java.util.ArrayList;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ReplyMessageLine {
 
@@ -361,7 +361,7 @@ public class ReplyMessageLine {
             } else {
                 colorId = 0;
             }
-            if (!NaConfig.INSTANCE.getPremiumItemCustomColorInReplies().Bool()) {
+            if (!NyaConfig.INSTANCE.getPremiumItemCustomColorInReplies().Bool()) {
                 colorId = 0;
             }
             resolveColor(messageObject, colorId, resourcesProvider);
@@ -414,7 +414,7 @@ public class ReplyMessageLine {
             } else {
                 colorId = 0;
             }
-            if (!NaConfig.INSTANCE.getPremiumItemCustomColorInReplies().Bool()) {
+            if (!NyaConfig.INSTANCE.getPremiumItemCustomColorInReplies().Bool()) {
                 colorId = 0;
             }
             resolveColor(messageObject.replyMessageObject, colorId, resourcesProvider);
@@ -453,7 +453,7 @@ public class ReplyMessageLine {
         if ((type == TYPE_REPLY || type == TYPE_LINK || type == TYPE_CONTACT) && messageObject != null && messageObject.overrideLinkEmoji != -1) {
             emojiDocumentId = messageObject.overrideLinkEmoji;
         }
-        if (!NaConfig.INSTANCE.getPremiumItemEmojiInReplies().Bool()) {
+        if (!NyaConfig.INSTANCE.getPremiumItemEmojiInReplies().Bool()) {
             emojiDocumentId = 0;
         }
         if (emojiDocumentId != 0 && emoji == null && parentView != null) {

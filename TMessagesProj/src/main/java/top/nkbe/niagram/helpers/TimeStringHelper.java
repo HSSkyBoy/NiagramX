@@ -23,7 +23,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import top.nkbe.niagram.ui.icons.IconsResources;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class TimeStringHelper {
     public static SpannableStringBuilder deletedSpan;
@@ -61,11 +61,11 @@ public class TimeStringHelper {
     }
 
     public static CharSequence createDeletedString(MessageObject messageObject, boolean isEdited, boolean isTranslated, boolean isBookmarked, int senderNameColor, int editDate) {
-        String editedStr = NaConfig.INSTANCE.getCustomEditedMessage().String();
+        String editedStr = NyaConfig.INSTANCE.getCustomEditedMessage().String();
         String editedStrFin = editedStr.isEmpty() ? getString(R.string.EditedMessage) : editedStr;
-        String deletedStr = NaConfig.INSTANCE.getCustomDeletedMark().String();
+        String deletedStr = NyaConfig.INSTANCE.getCustomDeletedMark().String();
         String deletedStrFin = deletedStr.isEmpty() ? getString(R.string.DeletedMessage) : deletedStr;
-        boolean useEditedIcon = NaConfig.INSTANCE.getUseEditedIcon().Bool();
+        boolean useEditedIcon = NyaConfig.INSTANCE.getUseEditedIcon().Bool();
         boolean primaryEditedDate = isEdited && AppGlobalConfig.getInstance(messageObject.currentAccount).messagePrimaryEditedDate.get() && !useEditedIcon && editedStr.isEmpty();
 
         createSpan();
@@ -73,7 +73,7 @@ public class TimeStringHelper {
 
         spannableStringBuilder
                 .append(messageObject.messageOwner.post_author != null ? " " : "")
-                .append(NaConfig.INSTANCE.getUseDeletedIcon().Bool() ? deletedSpan : deletedStrFin);
+                .append(NyaConfig.INSTANCE.getUseDeletedIcon().Bool() ? deletedSpan : deletedStrFin);
         if (isEdited) {
             spannableStringBuilder
                     .append("  ")
@@ -105,9 +105,9 @@ public class TimeStringHelper {
     }
 
     public static CharSequence createEditedString(MessageObject messageObject, boolean isTranslated, boolean isBookmarked, int senderNameColor, int editDate) {
-        String editedStr = NaConfig.INSTANCE.getCustomEditedMessage().String();
+        String editedStr = NyaConfig.INSTANCE.getCustomEditedMessage().String();
         String editedStrFin = editedStr.isEmpty() ? getString(R.string.EditedMessage) : editedStr;
-        boolean useEditedIcon = NaConfig.INSTANCE.getUseEditedIcon().Bool();
+        boolean useEditedIcon = NyaConfig.INSTANCE.getUseEditedIcon().Bool();
         boolean primaryEditedDate = AppGlobalConfig.getInstance(messageObject.currentAccount).messagePrimaryEditedDate.get() && !useEditedIcon && editedStr.isEmpty();
 
         createSpan();
@@ -205,7 +205,7 @@ public class TimeStringHelper {
         }
 
         if (translatedDrawable == null) {
-            if (NaConfig.INSTANCE.getIconReplacements().Int() == IconsResources.ICON_REPLACE_SOLAR) {
+            if (NyaConfig.INSTANCE.getIconReplacements().Int() == IconsResources.ICON_REPLACE_SOLAR) {
                 translatedDrawable = Objects.requireNonNull(ContextCompat.getDrawable(ApplicationLoader.applicationContext, R.drawable.msg_translate_solar_12)).mutate();
             } else {
                 translatedDrawable = Objects.requireNonNull(ContextCompat.getDrawable(ApplicationLoader.applicationContext, R.drawable.msg_translate_12)).mutate();
