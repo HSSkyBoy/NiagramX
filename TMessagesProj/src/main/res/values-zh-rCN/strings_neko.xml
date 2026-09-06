@@ -279,4 +279,5 @@
     <string name="Chat">聊天</string>
     <string name="Appearance">外观</string>
     <string name="ThemeAmoledDark">纯黑 (AMOLED)</string>
+    <string name="NoPreloadTrackIfRepeatOne">单曲循环时不预加载下一首</string>
 </resources>

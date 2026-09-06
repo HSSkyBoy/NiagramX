@@ -5,6 +5,7 @@ import static org.telegram.messenger.LocaleController.getString;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -22,6 +23,7 @@ import androidx.annotation.RequiresApi;
 
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ApplicationLoader;
+import org.telegram.messenger.NotificationsService;
 import org.telegram.messenger.BotWebViewVibrationEffect;
 import org.telegram.messenger.BuildConfig;
 import org.telegram.messenger.BuildVars;
@@ -114,8 +116,19 @@ public class AndroidUtil {
         BotWebViewVibrationEffect.APP_ERROR.vibrate();
     }
 
+    public static void disablePushService() {
+        SharedPreferences.Editor editor = MessagesController.getGlobalNotificationsSettings().edit();
+        editor.putBoolean("pushService", false);
+        editor.putBoolean("pushConnection", false);
+        editor.commit();
+        try {
+            ApplicationLoader.applicationContext.stopService(new Intent(ApplicationLoader.applicationContext, NotificationsService.class));
+        } catch (Exception ignore) {}
+    }
+
     public static void setPushService(boolean fcm) {
         if (fcm) {
+            disablePushService();
             NaConfig.INSTANCE.getPushServiceType().setConfigInt(1);
             NaConfig.INSTANCE.getPushServiceTypeInAppDialog().setConfigBool(false);
         } else {

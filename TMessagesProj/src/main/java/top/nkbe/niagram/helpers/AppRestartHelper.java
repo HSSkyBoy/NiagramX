@@ -14,11 +14,21 @@ import androidx.core.content.IntentCompat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.telegram.messenger.MessagesController;
+import org.telegram.messenger.NotificationsService;
+import top.nkbe.niagram.NekoConfig;
+
 public final class AppRestartHelper extends Activity {
     private static final String KEY_RESTART_INTENTS = "niagramx_restart_intents";
     private static final String KEY_MAIN_PROCESS_PID = "niagramx_main_process_pid";
 
     public static void triggerRebirth(Context context, Intent... nextIntents) {
+        try {
+            NekoConfig.getPreferences().edit().commit();
+            MessagesController.getGlobalNotificationsSettings().edit().commit();
+            context.stopService(new Intent(context, NotificationsService.class));
+        } catch (Throwable ignore) {
+        }
         nextIntents[0].addFlags(FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TASK);
         Intent intent = new Intent(context, AppRestartHelper.class);
         intent.addFlags(FLAG_ACTIVITY_NEW_TASK);

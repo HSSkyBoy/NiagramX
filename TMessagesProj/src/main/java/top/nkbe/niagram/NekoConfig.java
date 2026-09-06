@@ -187,6 +187,7 @@ public class NekoConfig {
 
     public static ConfigItem disableAutoDownloadingWin32Executable = addConfig("Win32ExecutableFiles", configTypeBool, true);
     public static ConfigItem disableAutoDownloadingArchive = addConfig("ArchiveFiles", configTypeBool, true);
+    public static ConfigItem noPreloadTrackIfRepeatOne = addConfig("NoPreloadTrackIfRepeatOne", configTypeBool, false);
 
     public static final int ENHANCED_LOADER_OFF = 0;
     public static final int ENHANCED_LOADER_BALANCED = 1;

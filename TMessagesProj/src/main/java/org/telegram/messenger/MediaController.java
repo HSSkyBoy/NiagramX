@@ -3153,6 +3153,9 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
         if (currentPlayList == null || currentPlayList.size() < 2) {
             return;
         }
+        if (NekoConfig.noPreloadTrackIfRepeatOne.Bool() && SharedConfig.repeatMode == 2) {
+            return;
+        }
         int nextIndex;
         if (SharedConfig.playOrderReversed) {
             nextIndex = currentPlaylistNum + 1;

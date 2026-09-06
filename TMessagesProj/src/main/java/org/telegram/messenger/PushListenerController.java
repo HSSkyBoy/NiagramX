@@ -1739,7 +1739,12 @@ public class PushListenerController {
         });
     }
 
+    public static void reset() {
+        instance = null;
+    }
+
     public static void reconcilePushRegistration() {
+        reset();
         Utilities.stageQueue.postRunnable(() -> {
             int serviceType = NaConfig.INSTANCE.getPushServiceType().Int();
             boolean googlePush = serviceType == 1 || serviceType == 3;

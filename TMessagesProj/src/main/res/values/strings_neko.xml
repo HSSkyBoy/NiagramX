@@ -280,4 +280,5 @@
     <string name="Chat">Chats</string>
     <string name="Appearance">Appearance</string>
     <string name="ThemeAmoledDark">AMOLED Dark</string>
+    <string name="NoPreloadTrackIfRepeatOne">Don\'t preload next track if repeating single</string>
 </resources>

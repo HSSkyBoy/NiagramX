@@ -403,6 +403,11 @@ public class ApplicationLoader extends Application {
 
     private static void startPushServiceInternal() {
         if (PushListenerController.getProvider().hasServices()) {
+            AndroidUtilities.runOnUIThread(() -> {
+                try {
+                    applicationContext.stopService(new Intent(applicationContext, NotificationsService.class));
+                } catch (Throwable ignore) {}
+            });
             return;
         }
         SharedPreferences preferences = MessagesController.getNotificationsSettings(UserConfig.selectedAccount);
