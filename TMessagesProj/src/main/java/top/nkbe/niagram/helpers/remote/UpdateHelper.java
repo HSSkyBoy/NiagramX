@@ -152,9 +152,27 @@ public class UpdateHelper extends BaseRemoteHelper {
                 Map<String, String> urlsByAbi = collectApkUrlsByAbi(assets);
                 String chosenUrl = pickByAbiPreference(urlsByAbi);
                 if (!TextUtils.isEmpty(chosenUrl)) {
+                    String chosenFileName = "";
+                    for (int i = 0; i < assets.length(); i++) {
+                        JSONObject asset = assets.getJSONObject(i);
+                        if (chosenUrl.equals(asset.optString("browser_download_url", ""))) {
+                            chosenFileName = asset.optString("name", "");
+                            break;
+                        }
+                    }
+
+                    String changelog = body;
+                    if (!TextUtils.isEmpty(chosenFileName)) {
+                        if (!TextUtils.isEmpty(changelog)) {
+                            changelog += "\n\nAPK: " + chosenFileName;
+                        } else {
+                            changelog = "APK: " + chosenFileName;
+                        }
+                    }
+
                     TLRPC.TL_help_appUpdate update = new TLRPC.TL_help_appUpdate();
                     update.version = tagName;
-                    update.text = body;
+                    update.text = changelog;
                     update.url = chosenUrl;
                     update.flags |= 4;
                     notifyDelegate(delegate, update, null);
@@ -196,36 +214,23 @@ public class UpdateHelper extends BaseRemoteHelper {
     private boolean isNewerReleaseVersion(String remoteTag) {
         if (TextUtils.isEmpty(remoteTag)) return false;
 
-        String currentVersionString = BuildConfig.BUILD_VERSION_STRING;
-        if (TextUtils.isEmpty(currentVersionString)) return true;
-
-        String cleanRemote = stripLeadingV(remoteTag);
-        String cleanCurrent = stripLeadingV(currentVersionString);
-
-        if (cleanCurrent.equals(cleanRemote) || cleanCurrent.contains(cleanRemote)) {
-            return false;
+        String cleanRemote = stripLeadingV(remoteTag).trim();
+        Integer remoteCode = tryParseInt(cleanRemote);
+        if (remoteCode != null) {
+            // Pure integer tag: compare directly against versionCode
+            return remoteCode > BuildConfig.VERSION_CODE;
         }
 
-        String[] remoteParts = cleanRemote.split("[.-]");
-        String[] currentParts = cleanCurrent.split("[.-]");
-
-        int length = Math.min(remoteParts.length, currentParts.length);
-        for (int i = 0; i < length; i++) {
-            String r = remoteParts[i];
-            String c = currentParts[i];
-            if (r.isEmpty() || c.isEmpty()) continue;
-
-            Integer remoteNum = tryParseInt(r);
-            Integer currentNum = tryParseInt(c);
-            int cmp;
-            if (remoteNum != null && currentNum != null) {
-                cmp = Integer.compare(remoteNum, currentNum);
-            } else {
-                cmp = r.compareTo(c);
+        // If tag contains dots or hyphens, try to extract trailing/leading number
+        String[] parts = cleanRemote.split("[.-]");
+        for (int i = parts.length - 1; i >= 0; i--) {
+            Integer code = tryParseInt(parts[i]);
+            if (code != null && code >= 1000) {
+                return code > BuildConfig.VERSION_CODE;
             }
-            if (cmp != 0) return cmp > 0;
         }
-        return remoteParts.length > currentParts.length;
+
+        return false;
     }
 
     private static String stripLeadingV(String s) {
@@ -319,9 +324,21 @@ public class UpdateHelper extends BaseRemoteHelper {
             return;
         }
 
+        String docFileName = FileLoader.getDocumentFileName(chosenDocument);
+        String changelog = latestRelease.changelog;
+        if (!TextUtils.isEmpty(docFileName)) {
+            if (!TextUtils.isEmpty(changelog)) {
+                changelog += "\n\nAPK: " + docFileName;
+            } else {
+                changelog = "APK: " + docFileName;
+            }
+        }
+
         TLRPC.TL_help_appUpdate update = new TLRPC.TL_help_appUpdate();
-        update.version = "v" + latestRelease.version + "-" + latestRelease.commit;
-        update.text = latestRelease.changelog;
+        update.version = (!TextUtils.isEmpty(latestRelease.version) ? "v" + latestRelease.version : "")
+                + (!TextUtils.isEmpty(latestRelease.commit) ? "-" + latestRelease.commit : "")
+                + (latestRelease.versionCode > 0 ? " (" + latestRelease.versionCode + ")" : "");
+        update.text = changelog;
         update.entities = latestRelease.changelogEntities;
         update.document = chosenDocument;
         update.flags |= 2;
@@ -329,7 +346,9 @@ public class UpdateHelper extends BaseRemoteHelper {
     }
 
     private ApkReleaseGroup findLatestApkReleaseGroup(ArrayList<TLRPC.Message> messages) {
-        ApkReleaseGroup group = null;
+        // Group all APKs by their versionCode
+        Map<Integer, ApkReleaseGroup> groupsByVersionCode = new HashMap<>();
+        int maxVersionCode = -1;
 
         for (TLRPC.Message message : messages) {
             if (message.media != null && message.media.document != null) {
@@ -347,14 +366,15 @@ public class UpdateHelper extends BaseRemoteHelper {
                     abi = matcher.group(4).toLowerCase();
                 }
 
-                if (group == null) {
-                    group = new ApkReleaseGroup(version, commit, versionCode, message.grouped_id);
+                if (versionCode > maxVersionCode) {
+                    maxVersionCode = versionCode;
                 }
 
-                boolean isSameRelease = (group.groupedId != 0 && message.grouped_id == group.groupedId)
-                        || (!TextUtils.isEmpty(group.commit) && group.commit.equalsIgnoreCase(commit))
-                        || (group.versionCode != 0 && group.versionCode == versionCode);
-                if (!isSameRelease) continue;
+                ApkReleaseGroup group = groupsByVersionCode.get(versionCode);
+                if (group == null) {
+                    group = new ApkReleaseGroup(version, commit, versionCode, message.grouped_id);
+                    groupsByVersionCode.put(versionCode, group);
+                }
 
                 if (abi != null) {
                     group.abiDocuments.put(abi.toLowerCase(), message.media.document);
@@ -363,13 +383,9 @@ public class UpdateHelper extends BaseRemoteHelper {
                     group.changelog = message.message;
                     group.changelogEntities = message.entities;
                 }
-            } else if (group != null && group.groupedId != 0 && message.grouped_id == group.groupedId
-                    && !TextUtils.isEmpty(message.message) && TextUtils.isEmpty(group.changelog)) {
-                group.changelog = message.message;
-                group.changelogEntities = message.entities;
             }
         }
-        return group;
+        return maxVersionCode >= 0 ? groupsByVersionCode.get(maxVersionCode) : null;
     }
 
     private static int tryParseIntOrZero(String s) {
@@ -423,7 +439,7 @@ public class UpdateHelper extends BaseRemoteHelper {
             }
         }
 
-        // v7a or any other architecture downloads universal
+        // Fallback to universal APK
         if (map.containsKey("universal")) {
             return map.get("universal");
         }
