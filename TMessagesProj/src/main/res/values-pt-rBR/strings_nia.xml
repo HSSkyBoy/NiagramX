@@ -9,7 +9,7 @@
     <string name="SendReactions">Enviar reações</string>
     <string name="ShowReactions">Mostrar reações</string>
     <string name="CustomTitle">Título personalizado</string>
-    <string name="CustomTitleHint">Deixe em branco para usar o Niagram X</string>
+    <string name="CustomTitleHint">Deixe em branco para usar o Niagram</string>
     <string name="CreateMono">Criar monoespaço</string>
     <string name="CreateMonoLanguage">Linguagem de código</string>
     <string name="CopyPhoto">Copiar foto</string>
@@ -111,7 +111,7 @@
     <string name="ForwardTextCopyNotice">Será enviada como uma cópia sua, sem indicador de encaminhamento</string>
     <string name="ForwardTextEmptyNotice">O texto da mensagem não pode ficar vazio</string>
 
-    <string name="XChannel">Canal Niagram X</string>
+    <string name="XChannel">Canal Niagram</string>
     <string name="EnableSaveDeletedMessages">Salvar mensagens apagadas</string>
     <string name="DeletedMessage">apagada</string>
     <string name="EnableSaveEditsHistory">Salvar histórico de edições</string>
@@ -419,8 +419,8 @@
     <string name="BackAnimationSpring">Mola</string>
     <string name="BackAnimationPredictive">Preditiva</string>
     <string name="AddToFilter">Adicionar ao filtro</string>
-    <string name="UnifiedPushNeverReceivedNotifications">Você não recebeu notificações via UnifiedPush desde que o Niagram X foi iniciado.</string>
-    <string name="UnifiedPushLastReceivedNotification">A última notificação recebida via UnifiedPush foi há %1$d segundos.\n\nVocê recebeu %2$d notificações desde que o Niagram X foi iniciado.</string>
+    <string name="UnifiedPushNeverReceivedNotifications">Você não recebeu notificações via UnifiedPush desde que o Niagram foi iniciado.</string>
+    <string name="UnifiedPushLastReceivedNotification">A última notificação recebida via UnifiedPush foi há %1$d segundos.\n\nVocê recebeu %2$d notificações desde que o Niagram foi iniciado.</string>
     <string name="UnifiedPushCurrentEndpoint">O endpoint atual do UnifiedPush é: %1$s</string>
     <string name="PlayOnce">Reproduzir uma vez</string>
     <string name="StorageSettings">Armazenamento</string>

@@ -9,7 +9,7 @@
     <string name="SendReactions">Надсилати реакції</string>
     <string name="ShowReactions">Показати реакції</string>
     <string name="CustomTitle">Свій заголовок</string>
-    <string name="CustomTitleHint">Залиште порожнім, щоб використовувати Niagram X</string>
+    <string name="CustomTitleHint">Залиште порожнім, щоб використовувати Niagram</string>
     <string name="CreateMono">Створити монопростір</string>
     <string name="CreateMonoLanguage">Мова коду</string>
     <string name="CopyPhoto">Копіювати фото</string>
@@ -111,7 +111,7 @@
     <string name="ForwardTextCopyNotice">Буде надіслано як копію від вас, без мітки пересилання</string>
     <string name="ForwardTextEmptyNotice">Текст повідомлення не може бути порожнім</string>
 
-    <string name="XChannel">Канал Niagram X</string>
+    <string name="XChannel">Канал Niagram</string>
     <string name="EnableSaveDeletedMessages">Зберігати видаленні повідомлення</string>
     <string name="DeletedMessage">видалено</string>
     <string name="EnableSaveEditsHistory">Зберегти історію змін</string>
@@ -439,8 +439,8 @@
     <string name="BackAnimationSpring">Пружна</string>
     <string name="BackAnimationPredictive">Прогнозована</string>
     <string name="AddToFilter">Додати до фільтра</string>
-    <string name="UnifiedPushNeverReceivedNotifications">З моменту запуску Niagram X сповіщень через UnifiedPush не надходило.</string>
-    <string name="UnifiedPushLastReceivedNotification">Останнє сповіщення через UnifiedPush надійшло %1$d сек. тому.\n\nВи отримали %2$d сповіщень з моменту запуску Niagram X.</string>
+    <string name="UnifiedPushNeverReceivedNotifications">З моменту запуску Niagram сповіщень через UnifiedPush не надходило.</string>
+    <string name="UnifiedPushLastReceivedNotification">Останнє сповіщення через UnifiedPush надійшло %1$d сек. тому.\n\nВи отримали %2$d сповіщень з моменту запуску Niagram.</string>
     <string name="UnifiedPushCurrentEndpoint">Поточна кінцева точка UnifiedPush: %1$s</string>
     <string name="PlayOnce">Відтворити один раз</string>
     <string name="StorageSettings">Сховище</string>

@@ -9,7 +9,7 @@
     <string name="SendReactions">Kirim Reaksi</string>
     <string name="ShowReactions">Tampilkan Reaksi</string>
     <string name="CustomTitle">Judul Khusus</string>
-    <string name="CustomTitleHint">Biarkan kosong untuk menggunakan Niagram X</string>
+    <string name="CustomTitleHint">Biarkan kosong untuk menggunakan Niagram</string>
     <string name="CreateMono">Buat Monospace</string>
     <string name="CreateMonoLanguage">Bahasa Kode</string>
     <string name="CopyPhoto">Salin Foto</string>
@@ -112,7 +112,7 @@
     <string name="ForwardTextCopyNotice">Akan dikirim sebagai salinan dari Anda, tanpa label diteruskan</string>
     <string name="ForwardTextEmptyNotice">Teks pesan tidak boleh kosong</string>
 
-    <string name="XChannel">Saluran Niagram X</string>
+    <string name="XChannel">Saluran Niagram</string>
     <string name="EnableSaveDeletedMessages">Simpan Pesan yang Dihapus</string>
     <string name="DeletedMessage">dihapus</string>
     <string name="EnableSaveEditsHistory">Simpan Riwayat Suntingan</string>
@@ -421,8 +421,8 @@
     <string name="BackAnimationSpring">Musim Semi</string>
     <string name="BackAnimationPredictive">Perkiraan</string>
     <string name="AddToFilter">Tambah ke Penyaring</string>
-    <string name="UnifiedPushNeverReceivedNotifications">Anda tidak pernah menerima pemberitahuan dengan UnifiedPush sejak Niagram X dimulai.</string>
-    <string name="UnifiedPushLastReceivedNotification">Pemberitahuan terakhir yang diterima dengan UnifiedPush adalah %1$d detik yang lalu.\n\nAnda menerima %2$d pemberitahuan sejak Niagram X dimulai.</string>
+    <string name="UnifiedPushNeverReceivedNotifications">Anda tidak pernah menerima pemberitahuan dengan UnifiedPush sejak Niagram dimulai.</string>
+    <string name="UnifiedPushLastReceivedNotification">Pemberitahuan terakhir yang diterima dengan UnifiedPush adalah %1$d detik yang lalu.\n\nAnda menerima %2$d pemberitahuan sejak Niagram dimulai.</string>
     <string name="UnifiedPushCurrentEndpoint">Titik akhir UnifiedPush saat ini adalah: %1$s</string>
     <string name="PlayOnce">Putar sekali</string>
     <string name="StorageSettings">Penyimpanan</string>

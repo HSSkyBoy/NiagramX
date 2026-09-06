@@ -9,7 +9,7 @@
     <string name="SendReactions">Send Reactions</string>
     <string name="ShowReactions">Show Reactions</string>
     <string name="CustomTitle">Custom Title</string>
-    <string name="CustomTitleHint">Leave blank to use Niagram X</string>
+    <string name="CustomTitleHint">Leave blank to use Niagram</string>
     <string name="CreateMono">Create Monospace</string>
     <string name="CreateMonoLanguage">Code Language</string>
     <string name="CopyPhoto">Copy Photo</string>
@@ -131,8 +131,8 @@
     <string name="ForwardTextPlaceholder">Message text</string>
     <string name="ForwardTextCopyNotice">Will be sent as a copy from you, without a forward label</string>
     <string name="ForwardTextEmptyNotice">Message text can\'t be empty</string>
-    <string name="NiagramX" translatable="false">Niagram X</string>
-    <string name="XChannel">Niagram X Channel</string>
+    <string name="NiagramX" translatable="false">Niagram</string>
+    <string name="XChannel">Niagram Channel</string>
     <string name="EnableSaveDeletedMessages">Save Deleted Messages</string>
     <string name="SpyMode">Spy Mode</string>
     <string name="SaveDeletedChatTypesHeader">Chat Types</string>
@@ -491,8 +491,8 @@
     <string name="BackAnimationSpring">Spring</string>
     <string name="BackAnimationPredictive">Predictive</string>
     <string name="AddToFilter">Add to Filter</string>
-    <string name="UnifiedPushNeverReceivedNotifications">You never received notifications with UnifiedPush since Niagram X was started.</string>
-    <string name="UnifiedPushLastReceivedNotification">The last received notification with UnifiedPush was %1$d seconds ago.\n\nYou received %2$d notifications since Niagram X was started.</string>
+    <string name="UnifiedPushNeverReceivedNotifications">You never received notifications with UnifiedPush since Niagram was started.</string>
+    <string name="UnifiedPushLastReceivedNotification">The last received notification with UnifiedPush was %1$d seconds ago.\n\nYou received %2$d notifications since Niagram was started.</string>
     <string name="UnifiedPushCurrentEndpoint">The current UnifiedPush endpoint is: %1$s</string>
     <string name="PlayOnce">Play once</string>
     <string name="StorageSettings">Storage</string>

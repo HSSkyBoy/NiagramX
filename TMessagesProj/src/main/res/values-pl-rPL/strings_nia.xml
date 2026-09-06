@@ -9,7 +9,7 @@
     <string name="SendReactions">Reakcje</string>
     <string name="ShowReactions">Pokaż reakcje</string>
     <string name="CustomTitle">Tytuł niestandardowy</string>
-    <string name="CustomTitleHint">Pozostaw puste, aby użyć Niagram X</string>
+    <string name="CustomTitleHint">Pozostaw puste, aby użyć Niagram</string>
     <string name="CreateMono">Utwórz przestrzeń mono</string>
     <string name="CreateMonoLanguage">Kod języka</string>
     <string name="CopyPhoto">Kopiuj zdjęcie</string>
@@ -111,7 +111,7 @@
     <string name="ForwardTextCopyNotice">Zostanie wysłana jako kopia od Ciebie, bez etykiety przekazania</string>
     <string name="ForwardTextEmptyNotice">Tekst wiadomości nie może być pusty</string>
 
-    <string name="XChannel">Kanał Niagram X</string>
+    <string name="XChannel">Kanał Niagram</string>
     <string name="EnableSaveDeletedMessages">Zapisz usunięte wiadomości</string>
     <string name="DeletedMessage">usunięto</string>
     <string name="EnableSaveEditsHistory">Zapisz historię edycji</string>
@@ -420,8 +420,8 @@
     <string name="BackAnimationSpring">Efekt sprężyny</string>
     <string name="BackAnimationPredictive">Predictive</string>
     <string name="AddToFilter">Dodaj do filtra</string>
-    <string name="UnifiedPushNeverReceivedNotifications">Od uruchomienia Niagram X nie otrzymano powiadomień przez UnifiedPush.</string>
-    <string name="UnifiedPushLastReceivedNotification">Ostatnie powiadomienie przez UnifiedPush otrzymano %1$d s temu.\n\nOd uruchomienia Niagram X otrzymano %2$d powiadomień.</string>
+    <string name="UnifiedPushNeverReceivedNotifications">Od uruchomienia Niagram nie otrzymano powiadomień przez UnifiedPush.</string>
+    <string name="UnifiedPushLastReceivedNotification">Ostatnie powiadomienie przez UnifiedPush otrzymano %1$d s temu.\n\nOd uruchomienia Niagram otrzymano %2$d powiadomień.</string>
     <string name="UnifiedPushCurrentEndpoint">Aktualny punkt końcowy UnifiedPush to: %1$s</string>
     <string name="PlayOnce">Odtwórz raz</string>
     <string name="StorageSettings">Pamięć</string>

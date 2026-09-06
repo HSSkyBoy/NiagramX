@@ -9,7 +9,7 @@
     <string name="SendReactions">ارسال واکنش‌ها</string>
     <string name="ShowReactions">نمایش واکنش‌ها</string>
     <string name="CustomTitle">عنوان سفارشی</string>
-    <string name="CustomTitleHint">خالی بگذارید تا از Niagram X استفاده شود</string>
+    <string name="CustomTitleHint">خالی بگذارید تا از Niagram استفاده شود</string>
     <string name="CreateMono">ایجاد Monospace</string>
     <string name="CreateMonoLanguage">زبان کد</string>
     <string name="CopyPhoto">کپی‌ کردن عکس</string>
@@ -111,7 +111,7 @@
     <string name="ForwardTextCopyNotice">به صورت یک کپی از طرف شما و بدون برچسب فوروارد ارسال خواهد شد</string>
     <string name="ForwardTextEmptyNotice">متن پیام نمی‌تواند خالی باشد</string>
 
-    <string name="XChannel">کانال Niagram X</string>
+    <string name="XChannel">کانال Niagram</string>
     <string name="EnableSaveDeletedMessages">نمایش پیام‌های حذف شده</string>
     <string name="DeletedMessage">حذف شده</string>
     <string name="EnableSaveEditsHistory">ذخیره تاریخچه ویرایش پیام‌ها</string>

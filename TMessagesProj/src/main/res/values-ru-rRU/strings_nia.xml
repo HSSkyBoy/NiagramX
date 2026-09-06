@@ -9,7 +9,7 @@
     <string name="SendReactions">Отправить реакцию</string>
     <string name="ShowReactions">Показать реакции</string>
     <string name="CustomTitle">Пользовательский заголовок</string>
-    <string name="CustomTitleHint">Оставьте поле пустым, чтобы использовать «Niagram X»</string>
+    <string name="CustomTitleHint">Оставьте поле пустым, чтобы использовать «Niagram»</string>
     <string name="CreateMono">Создать монопространство</string>
     <string name="CreateMonoLanguage">Язык кода</string>
     <string name="CopyPhoto">Копировать фото</string>
@@ -120,7 +120,7 @@
     <string name="ForwardTextCopyNotice">Отправится копией — от вашего имени, без пометки «Переслано от»</string>
     <string name="ForwardTextEmptyNotice">Текст сообщения не может быть пустым</string>
 
-    <string name="XChannel">Канал Niagram X</string>
+    <string name="XChannel">Канал Niagram</string>
     <string name="EnableSaveDeletedMessages">Сохранять удалённые сообщения</string>
     <string name="DeletedMessage">удалено</string>
     <string name="EnableSaveEditsHistory">Сохранять историю изменений</string>
@@ -451,8 +451,8 @@
     <string name="BackAnimationSpring">Spring</string>
     <string name="BackAnimationPredictive">Предиктивная</string>
     <string name="AddToFilter">Добавить в фильтр</string>
-    <string name="UnifiedPushNeverReceivedNotifications">С момента запуска Niagram X вы не получали уведомлений с помощью UnifiedPush.</string>
-    <string name="UnifiedPushLastReceivedNotification">Последнее уведомление, полученное с помощью UnifiedPush, было %1$d секунд назад.\n\nС момента запуска Niagram X вы получили %2$d уведомлений.</string>
+    <string name="UnifiedPushNeverReceivedNotifications">С момента запуска Niagram вы не получали уведомлений с помощью UnifiedPush.</string>
+    <string name="UnifiedPushLastReceivedNotification">Последнее уведомление, полученное с помощью UnifiedPush, было %1$d секунд назад.\n\nС момента запуска Niagram вы получили %2$d уведомлений.</string>
     <string name="UnifiedPushCurrentEndpoint">Текущая конечная точка UnifiedPush: %1$s</string>
     <string name="PlayOnce">Играть один раз</string>
     <string name="StorageSettings">Хранилище</string>

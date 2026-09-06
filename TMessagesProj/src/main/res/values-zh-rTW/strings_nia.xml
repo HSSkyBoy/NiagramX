@@ -9,7 +9,7 @@
     <string name="SendReactions">表情符號反應</string>
     <string name="ShowReactions">顯示表情符號反應選單</string>
     <string name="CustomTitle">自訂標題</string>
-    <string name="CustomTitleHint">留空則使用 Niagram X</string>
+    <string name="CustomTitleHint">留空則使用 Niagram</string>
     <string name="CreateMono">建立等寬</string>
     <string name="CreateMonoLanguage">等寬語言</string>
     <string name="CopyPhoto">複製圖片</string>
@@ -68,7 +68,7 @@
     <string name="CenterActionBarTitleType">標題置中</string>
     <string name="ShowQuickReplyInBotCommands">在與機器人聊天時顯示快速回覆按鈕</string>
     <string name="PushServiceType">推播服務類型</string>
-    <string name="PushServiceTypeInApp">Niagram X</string>
+    <string name="PushServiceTypeInApp">Niagram</string>
     <string name="PushServiceTypeInAppDialog">使用常駐通知</string>
     <string name="SendMp4DocumentAsVideo">MP4 影片作為檔案傳送時可預覽</string>
     <string name="StickersChooseShortNameForStickerPack">為您的貼圖包選擇一個簡短的名稱</string>
@@ -125,7 +125,7 @@
     <string name="ForwardTextPlaceholder">訊息文字</string>
     <string name="ForwardTextCopyNotice">將以副本形式發送 — 由您發送，不帶轉發來源標籤</string>
     <string name="ForwardTextEmptyNotice">訊息文字不可為空</string>
-    <string name="XChannel">Niagram X 頻道</string>
+    <string name="XChannel">Niagram 頻道</string>
     <string name="EnableSaveDeletedMessages">儲存已刪除訊息</string>
     <string name="SpyMode">幽匿模式</string>
     <string name="SaveDeletedChatTypesHeader">聊天類型</string>
@@ -471,8 +471,8 @@
     <string name="BackAnimationSpring">Spring</string>
     <string name="BackAnimationPredictive">預測</string>
     <string name="AddToFilter">新增過濾器</string>
-    <string name="UnifiedPushNeverReceivedNotifications">自 Niagram X 啟動後，您從未收到 UnifiedPush 的通知。</string>
-    <string name="UnifiedPushLastReceivedNotification">最後一次透過 UnifiedPush 接收到的通知是 %1$d 秒前。\n\n自 Niagram X 啟動以來，您已收到 %2$d 條通知。</string>
+    <string name="UnifiedPushNeverReceivedNotifications">自 Niagram 啟動後，您從未收到 UnifiedPush 的通知。</string>
+    <string name="UnifiedPushLastReceivedNotification">最後一次透過 UnifiedPush 接收到的通知是 %1$d 秒前。\n\n自 Niagram 啟動以來，您已收到 %2$d 條通知。</string>
     <string name="UnifiedPushCurrentEndpoint">目前的 UnifiedPush 端點是：%1$s</string>
     <string name="PlayOnce">播放一次</string>
     <string name="StorageSettings">儲存</string>

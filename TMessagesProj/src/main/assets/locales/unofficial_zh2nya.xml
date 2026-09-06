@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="AppName">Niagram X</string>
+    <string name="AppName">NiagramX</string>
     <string name="LanguageName">喵喵中文</string>
     <string name="English">Chinese (Nya)</string>
     <string name="LanguageNameInEnglish">Chinese (Nya)</string>
     <string name="LanguageCode">zh2nya</string>
     <string name="ContinueOnThisLanguage">以 喵喵中文 继续喵</string>
     <string name="StartMessaging">开始聊天喵~</string>
-    <string name="Page1Title">Niagram X</string>
+    <string name="Page1Title">Niagram</string>
     <string name="Page1Message">世界上最速且安全的即时通讯应用喵。</string>
     <string name="Page2Title">极致神速喵</string>
     <string name="Page2Message">比任何其他应用都更快地投递消息喵！</string>
@@ -108,5 +108,5 @@
     <string name="ErrorOccurred">出错了喵：</string>
     <string name="Nya">喵！</string>
     <string name="NekoSettings">Neo 设置喵</string>
-    <string name="XChannel">Niagram X 频道喵</string>
+    <string name="XChannel">Niagram 频道喵</string>
 </resources>

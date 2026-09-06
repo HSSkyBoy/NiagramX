@@ -177,7 +177,7 @@ object FontHelper {
         linearLayout.addView(titleView, LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, 0f, 0f, 0f, 16f))
 
         val smallView = TextView(activity)
-        smallView.text = "NiagramX is a Telegram client mod."
+        smallView.text = "Niagram is a Telegram client mod."
         smallView.textSize = 14f
         smallView.typeface = typeface
         smallView.setTextColor(Theme.getColor(Theme.key_dialogTextGray))

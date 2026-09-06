@@ -9,7 +9,7 @@
     <string name="SendReactions">表情回应</string>
     <string name="ShowReactions">显示表情回应菜单</string>
     <string name="CustomTitle">自定义标题</string>
-    <string name="CustomTitleHint">留空则使用 Niagram X</string>
+    <string name="CustomTitleHint">留空则使用 Niagram</string>
     <string name="CreateMono">创建等宽</string>
     <string name="CreateMonoLanguage">等宽语言</string>
     <string name="CopyPhoto">复制图片</string>
@@ -126,7 +126,7 @@
     <string name="ForwardTextPlaceholder">消息文本</string>
     <string name="ForwardTextCopyNotice">将以副本形式发送 — 由您发送，不带转发来源标签</string>
     <string name="ForwardTextEmptyNotice">消息文本不能为空</string>
-    <string name="XChannel">Niagram X 频道</string>
+    <string name="XChannel">Niagram 频道</string>
     <string name="EnableSaveDeletedMessages">保存已删除消息</string>
     <string name="SpyMode">幽匿模式</string>
     <string name="SaveDeletedChatTypesHeader">聊天类型</string>
@@ -472,8 +472,8 @@
     <string name="BackAnimationSpring">Spring</string>
     <string name="BackAnimationPredictive">预测</string>
     <string name="AddToFilter">添加过滤器</string>
-    <string name="UnifiedPushNeverReceivedNotifications">自 Niagram X 启动后，您从未收到 UnifiedPush 的通知。</string>
-    <string name="UnifiedPushLastReceivedNotification">最后一次通过 UnifiedPush 接收到的通知是 %1$d 秒前。\n\n自 Niagram X 启动以来，您已收到 %2$d 条通知。</string>
+    <string name="UnifiedPushNeverReceivedNotifications">自 Niagram 启动后，您从未收到 UnifiedPush 的通知。</string>
+    <string name="UnifiedPushLastReceivedNotification">最后一次通过 UnifiedPush 接收到的通知是 %1$d 秒前。\n\n自 Niagram 启动以来，您已收到 %2$d 条通知。</string>
     <string name="UnifiedPushCurrentEndpoint">当前的 UnifiedPush 端点是：%1$s</string>
     <string name="PlayOnce">播放一次</string>
     <string name="StorageSettings">存储</string>

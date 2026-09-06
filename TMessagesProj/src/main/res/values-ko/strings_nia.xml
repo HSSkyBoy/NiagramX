@@ -9,7 +9,7 @@
     <string name="SendReactions">반응 보내기</string>
     <string name="ShowReactions">반응 표시</string>
     <string name="CustomTitle">사용자 지정 제목</string>
-    <string name="CustomTitleHint">비워 두면 Niagram X를 사용합니다</string>
+    <string name="CustomTitleHint">비워 두면 Niagram 을 사용합니다</string>
     <string name="CreateMono">고정폭 만들기</string>
     <string name="CreateMonoLanguage">코드 언어</string>
     <string name="CopyPhoto">사진 복사</string>
@@ -111,7 +111,7 @@
     <string name="ForwardTextCopyNotice">전달 라벨 없이 본인 명의의 복사본으로 전송됩니다</string>
     <string name="ForwardTextEmptyNotice">메시지 텍스트는 비워둘 수 없습니다</string>
 
-    <string name="XChannel">Niagram X 채널</string>
+    <string name="XChannel">Niagram 채널</string>
     <string name="EnableSaveDeletedMessages">삭제된 메시지 저장</string>
     <string name="DeletedMessage">삭제됨</string>
     <string name="EnableSaveEditsHistory">수정 기록 저장</string>
@@ -420,8 +420,8 @@
     <string name="BackAnimationSpring">스프링</string>
     <string name="BackAnimationPredictive">예측형</string>
     <string name="AddToFilter">필터에 추가</string>
-    <string name="UnifiedPushNeverReceivedNotifications">Niagram X가 시작된 이후 UnifiedPush로 알림을 받은 적이 없습니다.</string>
-    <string name="UnifiedPushLastReceivedNotification">마지막으로 UnifiedPush 알림을 받은 것은 %1$d초 전입니다.\n\nNiagram X가 시작된 이후 %2$d개의 알림을 받았습니다.</string>
+    <string name="UnifiedPushNeverReceivedNotifications">Niagram이 시작된 이후 UnifiedPush로 알림을 받은 적이 없습니다.</string>
+    <string name="UnifiedPushLastReceivedNotification">마지막으로 UnifiedPush 알림을 받은 것은 %1$d초 전입니다.\n\nNiagram이 시작된 이후 %2$d개의 알림을 받았습니다.</string>
     <string name="UnifiedPushCurrentEndpoint">현재 UnifiedPush 엔드포인트: %1$s</string>
     <string name="PlayOnce">한 번 재생</string>
     <string name="StorageSettings">저장소</string>

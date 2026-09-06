@@ -9,7 +9,7 @@
     <string name="SendReactions">リアクションを送信</string>
     <string name="ShowReactions">リアクションメニューを表示</string>
     <string name="CustomTitle">カスタムタイトル</string>
-    <string name="CustomTitleHint">空白のままにすると、Niagram X が使用されます</string>
+    <string name="CustomTitleHint">空白のままにすると、Niagram が使用されます</string>
     <string name="CreateMono">等幅フォントを作成</string>
     <string name="CreateMonoLanguage">等幅フォントの言語</string>
     <string name="CopyPhoto">画像をコピー</string>
@@ -119,7 +119,7 @@
     <string name="ForwardTextCopyNotice">転送元ラベルなしで、あなたからのコピーとして送信されます</string>
     <string name="ForwardTextEmptyNotice">メッセージ本文を空にすることはできません</string>
 
-    <string name="XChannel">Niagram X チャンネル</string>
+    <string name="XChannel">Niagram チャンネル</string>
     <string name="EnableSaveDeletedMessages">削除済みメッセージを保存</string>
     <string name="DeletedMessage">削除済み</string>
     <string name="EnableSaveEditsHistory">編集履歴を保存</string>
@@ -428,8 +428,8 @@
     <string name="BackAnimationSpring">Spring</string>
     <string name="BackAnimationPredictive">予測型</string>
     <string name="AddToFilter">フィルターに追加</string>
-    <string name="UnifiedPushNeverReceivedNotifications">Niagram X の起動以降、UnifiedPush 経由で通知を受信したことはありません。</string>
-    <string name="UnifiedPushLastReceivedNotification">UnifiedPush で最後に受信した通知は %1$d 秒前です。\n\nNiagram X の起動以降、 %2$d 件の通知を受信しました。</string>
+    <string name="UnifiedPushNeverReceivedNotifications">Niagram の起動以降、UnifiedPush 経由で通知を受信したことはありません。</string>
+    <string name="UnifiedPushLastReceivedNotification">UnifiedPush で最後に受信した通知は %1$d 秒前です。\n\nNiagram の起動以降、 %2$d 件の通知を受信しました。</string>
     <string name="UnifiedPushCurrentEndpoint">現在の UnifiedPush エンドポイントは：%1$s</string>
     <string name="PlayOnce">ワンショット</string>
     <string name="StorageSettings">ストレージ</string>

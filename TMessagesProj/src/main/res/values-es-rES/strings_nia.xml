@@ -9,7 +9,7 @@
     <string name="SendReactions">Enviar reacción</string>
     <string name="ShowReactions">Mostrar reacciones</string>
     <string name="CustomTitle">Título personalizado</string>
-    <string name="CustomTitleHint">Dejar en blanco para usar Niagram X</string>
+    <string name="CustomTitleHint">Dejar en blanco para usar Niagram</string>
     <string name="CreateMono">Crear Monoespacio</string>
     <string name="CreateMonoLanguage">Idioma del código</string>
     <string name="CopyPhoto">Copiar Foto</string>
@@ -112,7 +112,7 @@ También puede utilizar texto sin formato, pero no olvide escapar los paréntesi
     <string name="ForwardTextCopyNotice">Se enviará como una copia tuya, sin etiqueta de reenvío</string>
     <string name="ForwardTextEmptyNotice">El texto del mensaje no puede estar vacío</string>
 
-    <string name="XChannel">Canal de Niagram X</string>
+    <string name="XChannel">Canal de Niagram</string>
     <string name="EnableSaveDeletedMessages">Guardar Mensajes Borrados</string>
     <string name="DeletedMessage">eliminado</string>
     <string name="EnableSaveEditsHistory">Guardar Historial de Edición</string>
@@ -421,8 +421,8 @@ También puede utilizar texto sin formato, pero no olvide escapar los paréntesi
     <string name="BackAnimationSpring">Primavera</string>
     <string name="BackAnimationPredictive">Predictivo</string>
     <string name="AddToFilter">Añadir al filtro</string>
-    <string name="UnifiedPushNeverReceivedNotifications">Nunca recibiste notificaciones con UnifiedPush desde que se inició Niagram X.</string>
-    <string name="UnifiedPushLastReceivedNotification">La última notificación recibida con UnifiedPush fue hace %1$d segundos.\n\nHas recibido %2$d notificaciones desde que Niagram X se inició.</string>
+    <string name="UnifiedPushNeverReceivedNotifications">Nunca recibiste notificaciones con UnifiedPush desde que se inició Niagram.</string>
+    <string name="UnifiedPushLastReceivedNotification">La última notificación recibida con UnifiedPush fue hace %1$d segundos.\n\nHas recibido %2$d notificaciones desde que Niagram se inició.</string>
     <string name="UnifiedPushCurrentEndpoint">El endpoint UnifiedPush actual es: %1$s</string>
     <string name="PlayOnce">Reproducir una vez</string>
     <string name="StorageSettings">Almacenamiento</string>
