@@ -279,4 +279,5 @@
     <string name="EmojiUseDefault">Use system emoji</string>
     <string name="Chat">Chats</string>
     <string name="Appearance">Appearance</string>
+    <string name="ThemeAmoledDark">AMOLED Dark</string>
 </resources>

@@ -1538,6 +1538,8 @@ public class Theme {
                 return getString(R.string.ThemeDay);
             } else if ("Night".equals(name)) {
                 return getString(R.string.ThemeNight);
+            } else if ("AMOLED Dark".equals(name)) {
+                return getString(R.string.ThemeAmoledDark);
             }
             return info != null ? info.title : name;
         }
@@ -1678,7 +1680,7 @@ public class Theme {
             if (isDark != UNKNOWN) {
                 return isDark == DARK;
             }
-            if ("Dark Blue".equals(name) || "Night".equals(name) || "AMOLED".equals(name) || "Monet Dark".equals(name) || "Monet AMOLED".equals(name)) {
+            if ("Dark Blue".equals(name) || "Night".equals(name) || "AMOLED".equals(name) || "AMOLED Dark".equals(name) || "Monet Dark".equals(name) || "Monet AMOLED".equals(name) || "CuteEvil HS".equals(name)) {
                 isDark = DARK;
             } else if ("Blue".equals(name) || "Arctic Blue".equals(name) || "Day".equals(name) || "Monet Light".equals(name)) {
                 isDark = LIGHT;
@@ -1805,12 +1807,12 @@ public class Theme {
                 }
 
                 //override default themes
-                if (isHome(themeAccent) && name.equals("Dark Blue") || name.equals("Night") || name.equals("AMOLED")) {
+                if (isHome(themeAccent) && name.equals("Dark Blue") || name.equals("Night") || name.equals("AMOLED") || name.equals("AMOLED Dark")) {
                     themeAccent.myMessagesAccentColor = 0xff258DE5;
                     themeAccent.myMessagesGradientAccentColor1 = 0xff4272DF;
                     themeAccent.myMessagesGradientAccentColor2 = 0xff8146D7;
                     themeAccent.myMessagesGradientAccentColor3 = 0xff9F3EAA;
-                    if (name.equals("Night") || name.equals("AMOLED")) {
+                    if (name.equals("Night") || name.equals("AMOLED") || name.equals("AMOLED Dark")) {
                         themeAccent.patternIntensity = -0.57f;
                         themeAccent.backgroundOverrideColor = 0xff6c7fa6;
                         themeAccent.backgroundGradientOverrideColor1 = 0xff2e344b;
@@ -2104,6 +2106,13 @@ public class Theme {
                         if (location.equals(name)) {
                             removeObservers();
                             if (id == NotificationCenter.fileLoaded) {
+                                if (args.length > 1 && args[1] instanceof File) {
+                                    File srcFile = (File) args[1];
+                                    File locFile = new File(pathToFile);
+                                    if (!srcFile.equals(locFile)) {
+                                        AndroidUtilities.copyFile(srcFile, locFile);
+                                    }
+                                }
                                 File locFile = new File(pathToFile);
                                 ThemeInfo themeInfo = fillThemeValues(locFile, info.title, info);
                                 if (themeInfo != null && themeInfo.pathToWallpaper != null) {
@@ -4074,6 +4083,30 @@ public class Theme {
         themes.add(themeInfo);
         themesDict.put("AMOLED", themeInfo);
 
+        themeInfo = new ThemeInfo();
+        themeInfo.name = "AMOLED Dark";
+        themeInfo.assetName = "amoled_dark.attheme";
+        themeInfo.previewBackgroundColor = 0xff000000;
+        themeInfo.previewInColor = 0xff000000;
+        themeInfo.previewOutColor = 0xff75A2E6;
+        themeInfo.sortIndex = 6;
+        themeInfo.setAccentColorOptions(
+                new int[]    {                    0xFF6ABE3F,                    0xFF8D78E3,                    0xFFDE5E7E,                    0xFF5977E8,                    0xFFDBC11A,                    0xff3e88f7,                    0xff4ab5d3,                    0xff4ab841,                    0xffd95576,                    0xffe27d2b,                    0xff936cda,                    0xffd04336,                    0xffe8ae1c,                    0xff7988a3 },
+                new int[]    {                    0xFF8A5294,                    0xFFB46C1B,                    0xFFAF4F6F,                    0xFF266E8D,                    0xFF744EB7,                    0x00000000,                    0x00000000,                    0x00000000,                    0x00000000,                    0x00000000,                    0x00000000,                    0x00000000,                    0x00000000,                    0x00000000 },
+                new int[]    {                    0xFF6855BB,                    0xFFA53B4A,                    0xFF62499C,                    0xFF2F919D,                    0xFF298B95,                    0x00000000,                    0x00000000,                    0x00000000,                    0x00000000,                    0x00000000,                    0x00000000,                    0x00000000,                    0x00000000,                    0x00000000 },
+                new int[]    {                    0xFF16131c,                    0xFF1e1118,                    0xFF0f0b10,                    0xFF090c0c,                    0xFF071519,                    0xff0d0e17,                    0xff111b1c,                    0xff0c110c,                    0xff0e0b0d,                    0xff1d160f,                    0xff09090a,                    0xff1c1210,                    0xff1d1b18,                    0xff0e1012 },
+                new int[]    {                    0xFF201827,                    0xFF100f13,                    0xFF1b151a,                    0xFF141f22,                    0xFF0c0c0f,                    0xff090a0c,                    0xff0a0e0e,                    0xff080908,                    0xff1a1618,                    0xff13100d,                    0xff1e1a21,                    0xff0f0d0c,                    0xff0c0b08,                    0xff070707 },
+                new int[]    {                    0xFF0e0b13,                    0xFF211623,                    0xFF130e12,                    0xFF0d0f11,                    0xFF10191f,                    0xff181c28,                    0xff142121,                    0xff121812,                    0xff130e11,                    0xff1a130f,                    0xff0b0a0b,                    0xff120d0b,                    0xff15140f,                    0xff101214 },
+                new int[]    {                    0xFF1e192a,                    0xFF111016,                    0xFF21141a,                    0xFF111a1b,                    0xFF0a0d13,                    0xff0e0f12,                    0xff070c0b,                    0xff0b0d0b,                    0xff22121e,                    0xff0f0c0c,                    0xff110f17,                    0xff070606,                    0xff0c0a0a,                    0xff09090b },
+                new int[]    {                             9,                            10,                            11,                            12,                            13,                             0,                             1,                             2,                             3,                             4,                             5,                             6,                             7,                             8 },
+                new String[] { "YIxYGEALQVADAAAAA3QbEH0AowY", "9LW_RcoOSVACAAAAFTk3DTyXN-M", "O-wmAfBPSFADAAAA4zINVfD_bro", "F5oWoCs7QFACAAAAgf2bD_mg8Bw", "-Xc-np9y2VMCAAAARKr0yNNPYW0", "fqv01SQemVIBAAAApND8LDRUhRU", "F5oWoCs7QFACAAAAgf2bD_mg8Bw", "ptuUd96JSFACAAAATobI23sPpz0", "p-pXcflrmFIBAAAAvXYQk-mCwZU", "Nl8Pg2rBQVACAAAA25Lxtb8SDp0", "dhf9pceaQVACAAAAbzdVo4SCiZA", "9GcNVISdSVADAAAAUcw5BYjELW4", "9LW_RcoOSVACAAAAFTk3DTyXN-M", "dk_wwlghOFACAAAAfz9xrxi6euw" },
+                new int[]    {                            45,                           135,                             0,                           180,                             0,                             0,                             0,                             0,                             0,                             0,                             0,                             0,                             0,                             0 },
+                new int[]    {                            34,                            47,                            52,                            48,                            54,                            50,                            37,                            56,                            48,                            49,                            40,                            64,                            38,                            48 }
+        );
+        sortAccents(themeInfo);
+        themes.add(themeInfo);
+        themesDict.put("AMOLED Dark", themeInfo);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             themeInfo = new ThemeInfo();
             themeInfo.name = "Monet Light";
@@ -4081,7 +4114,7 @@ public class Theme {
             themeInfo.previewBackgroundColor = MonetHelper.getColor("n1_50");
             themeInfo.previewInColor = MonetHelper.getColor("a2_50");
             themeInfo.previewOutColor = MonetHelper.getColor("a1_600");
-            themeInfo.sortIndex = 6;
+            themeInfo.sortIndex = 7;
             themes.add(themeInfo);
             themesDict.put("Monet Light", themeInfo);
 
@@ -4091,7 +4124,7 @@ public class Theme {
             themeInfo.previewBackgroundColor = MonetHelper.getColor("n1_900");
             themeInfo.previewInColor = MonetHelper.getColor("n2_800");
             themeInfo.previewOutColor = MonetHelper.getColor("a1_100");
-            themeInfo.sortIndex = 7;
+            themeInfo.sortIndex = 8;
             themes.add(themeInfo);
             themesDict.put("Monet Dark", themeInfo);
 
@@ -4101,7 +4134,7 @@ public class Theme {
             themeInfo.previewBackgroundColor = MonetHelper.getColor("n1_1000");
             themeInfo.previewInColor = MonetHelper.getColor("n2_800");
             themeInfo.previewOutColor = MonetHelper.getColor("a1_100");
-            themeInfo.sortIndex = 8;
+            themeInfo.sortIndex = 9;
             themes.add(themeInfo);
             themesDict.put("Monet AMOLED", themeInfo);
         }
@@ -7044,10 +7077,50 @@ public class Theme {
         }
     }
 
+    public static void loadRemoteThemeBySlug(final int currentAccount, String slug) {
+        if (TextUtils.isEmpty(slug) || !UserConfig.getInstance(currentAccount).isClientActivated()) {
+            return;
+        }
+        TL_account.getTheme req = new TL_account.getTheme();
+        req.format = "android";
+        TLRPC.TL_inputThemeSlug inputThemeSlug = new TLRPC.TL_inputThemeSlug();
+        inputThemeSlug.slug = slug;
+        req.theme = inputThemeSlug;
+        ConnectionsManager.getInstance(currentAccount).sendRequest(req, (response, error) -> AndroidUtilities.runOnUIThread(() -> {
+            if (response instanceof TLRPC.TL_theme) {
+                TLRPC.TL_theme theme = (TLRPC.TL_theme) response;
+                String key = "remote" + theme.id;
+                ThemeInfo info = themesDict.get(key);
+                boolean isNew = false;
+                if (info == null) {
+                    info = new ThemeInfo();
+                    info.account = currentAccount;
+                    info.pathToFile = new File(ApplicationLoader.getFilesDirFixed(), key + ".attheme").getAbsolutePath();
+                    themes.add(info);
+                    otherThemes.add(info);
+                    isNew = true;
+                }
+                info.name = theme.title;
+                info.info = theme;
+                themesDict.put(info.getKey(), info);
+                File file = new File(info.pathToFile);
+                if (isNew || !file.exists()) {
+                    info.loadThemeDocument();
+                } else if (theme.document != null && (info.info == null || info.info.document == null || info.info.document.id != theme.document.id)) {
+                    info.loadThemeDocument();
+                }
+                saveOtherThemes(true);
+                sortThemes();
+                NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.themeListUpdated);
+            }
+        }));
+    }
+
     public static void loadRemoteThemes(final int currentAccount, boolean force) {
         if (loadingRemoteThemes[currentAccount] || !force && Math.abs(System.currentTimeMillis() / 1000 - lastLoadingThemesTime[currentAccount]) < 60 * 60 || !UserConfig.getInstance(currentAccount).isClientActivated()) {
             return;
         }
+        loadRemoteThemeBySlug(currentAccount, "CuteEvil_HS");
         loadingRemoteThemes[currentAccount] = true;
         TL_account.getThemes req = new TL_account.getThemes();
         req.format = "android";
@@ -7067,6 +7140,9 @@ public class Theme {
                 ArrayList<Object> oldServerThemes = new ArrayList<>();
                 for (int a = 0, N = themes.size(); a < N; a++) {
                     ThemeInfo info = themes.get(a);
+                    if (info.info != null && "CuteEvil_HS".equals(info.info.slug)) {
+                        continue;
+                    }
                     if (info.info != null && info.account == currentAccount) {
                         oldServerThemes.add(info);
                     } else if (info.themeAccents != null) {
