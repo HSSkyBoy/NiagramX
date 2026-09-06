@@ -2110,7 +2110,7 @@ public class Theme {
                                     File srcFile = (File) args[1];
                                     File locFile = new File(pathToFile);
                                     if (!srcFile.equals(locFile)) {
-                                        AndroidUtilities.copyFile(srcFile, locFile);
+                                        AndroidUtilities.copyFileSafe(srcFile, locFile);
                                     }
                                 }
                                 File locFile = new File(pathToFile);
