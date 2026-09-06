@@ -15,8 +15,7 @@ import org.telegram.ui.ActionBar.AlertDialog
 import org.telegram.ui.ActionBar.Theme
 import org.telegram.ui.Components.BulletinFactory
 import org.telegram.ui.Components.LayoutHelper
-import xyz.nextalone.nagram.NaConfig
-import top.nkbe.niagram.NekoConfig
+import top.nkbe.niagram.config.FontConfig
 import java.io.File
 import java.io.FileInputStream
 import java.security.MessageDigest
@@ -90,10 +89,10 @@ object FontHelper {
     @JvmStatic
     fun hasCustomFont(category: Int): Boolean {
         val path = when (category) {
-            CATEGORY_REGULAR -> NaConfig.customFontRegular.String()
-            CATEGORY_BOLD -> NaConfig.customFontBold.String()
-            CATEGORY_ITALIC -> NaConfig.customFontItalic.String()
-            CATEGORY_MONO -> NaConfig.customFontMono.String()
+            CATEGORY_REGULAR -> FontConfig.customFontRegular.String()
+            CATEGORY_BOLD -> FontConfig.customFontBold.String()
+            CATEGORY_ITALIC -> FontConfig.customFontItalic.String()
+            CATEGORY_MONO -> FontConfig.customFontMono.String()
             else -> null
         }
         return !path.isNullOrEmpty() && File(path).exists()
@@ -110,14 +109,14 @@ object FontHelper {
     @JvmStatic
     fun applyFont(category: Int, fontPath: String) {
         when (category) {
-            CATEGORY_REGULAR -> NaConfig.customFontRegular.setConfigString(fontPath)
-            CATEGORY_BOLD -> NaConfig.customFontBold.setConfigString(fontPath)
-            CATEGORY_ITALIC -> NaConfig.customFontItalic.setConfigString(fontPath)
-            CATEGORY_MONO -> NaConfig.customFontMono.setConfigString(fontPath)
+            CATEGORY_REGULAR -> FontConfig.customFontRegular.setConfigString(fontPath)
+            CATEGORY_BOLD -> FontConfig.customFontBold.setConfigString(fontPath)
+            CATEGORY_ITALIC -> FontConfig.customFontItalic.setConfigString(fontPath)
+            CATEGORY_MONO -> FontConfig.customFontMono.setConfigString(fontPath)
         }
 
-        if (fontPath.isNotEmpty() && NekoConfig.typeface.Bool()) {
-            NekoConfig.typeface.setConfigBool(false)
+        if (fontPath.isNotEmpty() && FontConfig.typeface.Bool()) {
+            FontConfig.typeface.setConfigBool(false)
         }
 
         cachedTypefaces.clear()
@@ -130,10 +129,10 @@ object FontHelper {
     @JvmStatic
     fun getCustomTypeface(category: Int): Typeface? {
         val path = when (category) {
-            CATEGORY_REGULAR -> NaConfig.customFontRegular.String()
-            CATEGORY_BOLD -> NaConfig.customFontBold.String()
-            CATEGORY_ITALIC -> NaConfig.customFontItalic.String()
-            CATEGORY_MONO -> NaConfig.customFontMono.String()
+            CATEGORY_REGULAR -> FontConfig.customFontRegular.String()
+            CATEGORY_BOLD -> FontConfig.customFontBold.String()
+            CATEGORY_ITALIC -> FontConfig.customFontItalic.String()
+            CATEGORY_MONO -> FontConfig.customFontMono.String()
             else -> null
         }
         if (path.isNullOrEmpty()) return null
