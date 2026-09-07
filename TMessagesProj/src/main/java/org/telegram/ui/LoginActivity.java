@@ -1815,6 +1815,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
 
     private boolean isRequestingFirebaseSms;
     private void fillNextCodeParams(Bundle params, TLRPC.auth_SentCode res, boolean animate) {
+        FileLog.d("LoginAuth: received sentCode type=" + (res.type != null ? res.type.getClass().getSimpleName() : "null") + ", next_type=" + (res.next_type != null ? res.next_type.getClass().getSimpleName() : "null") + ", timeout=" + res.timeout);
         if (res instanceof TLRPC.TL_auth_sentCodePaymentRequired) {
             final TLRPC.TL_auth_sentCodePaymentRequired auth = (TLRPC.TL_auth_sentCodePaymentRequired) res;
             params.putString("product", auth.store_product);
@@ -3286,11 +3287,13 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
             if (currentCountry != null) {
                 params.putString("country", currentCountry.code);
             }
+            params.putBoolean("prioritizeEmailCode", prioritizeEmailCode);
             nextPressed = true;
             PhoneInputData phoneInputData = new PhoneInputData();
             phoneInputData.phoneNumber = "+" + codeField.getText() + " " + phoneField.getText();
             phoneInputData.country = currentCountry;
             phoneInputData.patterns = phoneFormatMap.get(codeField.getText().toString());
+            FileLog.d("LoginAuth: sending auth_sendCode for phone=" + phone + ", request_email_code=" + settings.request_email_code);
             int reqId = ConnectionsManager.getInstance(currentAccount).sendRequest(req, (response, error) -> AndroidUtilities.runOnUIThread(() -> {
                 nextPressed = false;
                 if (error == null) {
@@ -3731,6 +3734,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
         @AuthType
         private int prevType;
 
+        private boolean prioritizeEmailCode;
         private boolean isResendingCode = false;
 
         private String pattern = "*";
@@ -4090,7 +4094,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                         return;
                     }
                     boolean email = nextType == 0;
-                    if (!email) {
+                    if (!email || prioritizeEmailCode) {
                         if (radialProgressView.getTag() != null) {
                             return;
                         }
@@ -4319,15 +4323,18 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
             params.putString("ephone", emailPhone);
             params.putString("phoneFormated", requestPhone);
             params.putInt("prevType", currentType);
+            params.putBoolean("prioritizeEmailCode", prioritizeEmailCode);
 
             nextPressed = true;
 
             TLRPC.TL_auth_resendCode req = new TLRPC.TL_auth_resendCode();
             req.phone_number = requestPhone;
             req.phone_code_hash = phoneHash;
+            FileLog.d("LoginAuth: calling auth_resendCode for phone=" + requestPhone + ", prioritizeEmailCode=" + prioritizeEmailCode);
             int reqId = ConnectionsManager.getInstance(currentAccount).sendRequest(req, (response, error) -> AndroidUtilities.runOnUIThread(() -> {
                 nextPressed = false;
                 if (error == null) {
+                    FileLog.d("LoginAuth: auth_resendCode success, response type=" + (response instanceof TLRPC.TL_auth_sentCode && ((TLRPC.TL_auth_sentCode) response).type != null ? ((TLRPC.TL_auth_sentCode) response).type.getClass().getSimpleName() : "null"));
                     nextCodeParams = params;
                     nextCodeAuth = (TLRPC.TL_auth_sentCode) response;
                     if (nextCodeAuth.type instanceof TLRPC.TL_auth_sentCodeTypeSmsPhrase) {
@@ -4337,6 +4344,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                     }
                     fillNextCodeParams(nextCodeParams, nextCodeAuth);
                 } else {
+                    FileLog.d("LoginAuth: auth_resendCode error=" + error.text + " code=" + error.code);
                     if (error.text != null) {
                         if (error.text.contains("PHONE_NUMBER_INVALID")) {
                             needShowAlert(getString(R.string.RestorePasswordNoEmailTitle), getString(R.string.InvalidPhoneNumber));
@@ -4492,6 +4500,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
             prefix = params.getString("prefix");
             length = params.getInt("length");
             prevType = params.getInt("prevType", 0);
+            prioritizeEmailCode = params.getBoolean("prioritizeEmailCode", false);
             if (length == 0) {
                 length = 5;
             }
@@ -4576,7 +4585,9 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
 
             if (currentType != AUTH_TYPE_FRAGMENT_SMS) {
                 if (currentType == AUTH_TYPE_MESSAGE) {
-                    if (nextType == AUTH_TYPE_FLASH_CALL || nextType == AUTH_TYPE_CALL || nextType == AUTH_TYPE_MISSED_CALL) {
+                    if (prioritizeEmailCode) {
+                        problemText.setText(getString(R.string.SendCodeViaEmail));
+                    } else if (nextType == AUTH_TYPE_FLASH_CALL || nextType == AUTH_TYPE_CALL || nextType == AUTH_TYPE_MISSED_CALL) {
                         problemText.setText(getString(R.string.DidNotGetTheCodePhone));
                     } else if (nextType == AUTH_TYPE_FRAGMENT_SMS) {
                         problemText.setText(getString(R.string.DidNotGetTheCodeFragment));

@@ -560,6 +560,7 @@
     <string name="AlreadyFastestProxy">当前已在使用最快代理</string>
 
     <string name="PrioritizeEmailCode">优先使用邮箱接收验证码</string>
+    <string name="SendCodeViaEmail">通过邮箱发送验证码</string>
     <string name="FastResendDialogTitle">重新发送验证码</string>
     <string name="FastResendDialogMessage">尚未收到验证码？是否跳过等待倒计时并立即重新发送？</string>
     <string name="FastResendNow">立即重发</string>

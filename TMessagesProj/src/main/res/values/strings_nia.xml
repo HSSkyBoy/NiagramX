@@ -582,6 +582,7 @@
 
     <!-- Login Optimization -->
     <string name="PrioritizeEmailCode">Prioritize email code</string>
+    <string name="SendCodeViaEmail">Send code via email</string>
     <string name="FastResendDialogTitle">Resend Code</string>
     <string name="FastResendDialogMessage">Haven\'t received the code yet? Skip the countdown and request a new code immediately?</string>
     <string name="FastResendNow">Resend Now</string>
