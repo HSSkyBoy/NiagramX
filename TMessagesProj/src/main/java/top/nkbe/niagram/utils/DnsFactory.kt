@@ -24,7 +24,7 @@ import org.xbill.DNS.Record
 import org.xbill.DNS.SetResponse
 import org.xbill.DNS.TXTRecord
 import org.xbill.DNS.Type
-import top.nkbe.niagram.NekoConfig
+import top.nkbe.niagram.config.NyaConfig
 import java.net.Inet4Address
 import java.net.Inet6Address
 import java.net.InetAddress
@@ -98,13 +98,13 @@ object DnsFactory {
     )
 
     private fun providers(): Array<String> {
-        return when (NekoConfig.dnsType.Int()) {
-            NekoConfig.DNS_TYPE_CLOUDFLARE -> CLOUDFLARE_PROVIDERS
-            NekoConfig.DNS_TYPE_GOOGLE -> GOOGLE_PROVIDERS
-            NekoConfig.DNS_TYPE_TENCENT -> TENCENT_PROVIDERS
-            NekoConfig.DNS_TYPE_ALIDNS -> ALIDNS_PROVIDERS
-            NekoConfig.DNS_TYPE_CUSTOM_DOH -> {
-                val validCustomProviders = NekoConfig.customDoH.String()
+        return when (NyaConfig.dnsType.Int()) {
+            NyaConfig.DNS_TYPE_CLOUDFLARE -> CLOUDFLARE_PROVIDERS
+            NyaConfig.DNS_TYPE_GOOGLE -> GOOGLE_PROVIDERS
+            NyaConfig.DNS_TYPE_TENCENT -> TENCENT_PROVIDERS
+            NyaConfig.DNS_TYPE_ALIDNS -> ALIDNS_PROVIDERS
+            NyaConfig.DNS_TYPE_CUSTOM_DOH -> {
+                val validCustomProviders = NyaConfig.customDoH.String()
                     .split(",")
                     .map { it.trim() }
                     .filter { url ->
@@ -125,7 +125,7 @@ object DnsFactory {
     @JvmStatic
     @JvmOverloads
     fun lookup(domain: String, fallback: Boolean = false): List<InetAddress> {
-        if (NekoConfig.dnsType.Int() != NekoConfig.DNS_TYPE_SYSTEM) {
+        if (NyaConfig.dnsType.Int() != NyaConfig.DNS_TYPE_SYSTEM) {
             FileLog.d("Lookup for '$domain' requested (fallback=$fallback)")
 
             val type = getDnsQueryType(fallback)
@@ -417,7 +417,7 @@ object DnsFactory {
                 hasIPv6 -> when {
                     !hasIPv4 -> USE_IPV6_ONLY
                     forceIPv6 -> USE_IPV6_ONLY
-                    NekoConfig.useIPv6.Bool() -> USE_IPV6_ONLY
+                    NyaConfig.useIPv6.Bool() -> USE_IPV6_ONLY
                     hasStrangeIPv4 -> USE_IPV4_IPV6_RANDOM
                     else -> USE_IPV4_ONLY
                 }
@@ -451,7 +451,7 @@ object DnsFactory {
             when (strategy) {
                 USE_IPV6_ONLY -> Type.AAAA
                 USE_IPV4_ONLY -> Type.A
-                USE_IPV4_IPV6_RANDOM -> if (NekoConfig.useIPv6.Bool() xor !fallback) Type.A else Type.AAAA
+                USE_IPV4_IPV6_RANDOM -> if (NyaConfig.useIPv6.Bool() xor !fallback) Type.A else Type.AAAA
                 else -> Type.A
             }
         }

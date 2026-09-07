@@ -60,7 +60,6 @@ import java.util.LinkedList;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.stream.Collectors;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.config.NyaConfig;
 
 import java.util.List;

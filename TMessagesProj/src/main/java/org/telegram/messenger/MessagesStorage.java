@@ -79,7 +79,6 @@ import java.util.function.Consumer;
 
 import me.vkryl.core.BitwiseUtils;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.filters.AyuFilter;
 import top.nkbe.niagram.helpers.AppRestartHelper;
 import top.nkbe.niagram.helpers.MessageHelper;
@@ -2970,7 +2969,7 @@ public class MessagesStorage extends BaseController {
                         continue;
                     }
                     flags = filter.flags;
-                    ignoreMutedUnreadCount = NyaConfig.INSTANCE.getIgnoreUnreadCount().Int() == NekoConfig.DIALOG_FILTER_EXCLUDE_MUTED;
+                    ignoreMutedUnreadCount = NyaConfig.INSTANCE.getIgnoreUnreadCount().Int() == NyaConfig.DIALOG_FILTER_EXCLUDE_MUTED;
                     if (ignoreMutedUnreadCount && (flags & MessagesController.DIALOG_FILTER_FLAG_EXCLUDE_MUTED) == 0) {
                         flags |= MessagesController.DIALOG_FILTER_FLAG_EXCLUDE_MUTED;
                     }
@@ -6323,7 +6322,7 @@ public class MessagesStorage extends BaseController {
                 }
                 unreadCount = filter.pendingUnreadCount;
                 flags = filter.flags;
-                ignoreMutedUnreadCount = NyaConfig.INSTANCE.getIgnoreUnreadCount().Int() == NekoConfig.DIALOG_FILTER_EXCLUDE_MUTED;
+                ignoreMutedUnreadCount = NyaConfig.INSTANCE.getIgnoreUnreadCount().Int() == NyaConfig.DIALOG_FILTER_EXCLUDE_MUTED;
                 if (ignoreMutedUnreadCount && (flags & MessagesController.DIALOG_FILTER_FLAG_EXCLUDE_MUTED) == 0) {
                     flags |= MessagesController.DIALOG_FILTER_FLAG_EXCLUDE_MUTED;
                 }

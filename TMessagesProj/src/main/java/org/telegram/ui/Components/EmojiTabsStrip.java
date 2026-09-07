@@ -48,7 +48,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class EmojiTabsStrip extends ScrollableHorizontalScrollView {
 
@@ -524,7 +524,7 @@ public class EmojiTabsStrip extends ScrollableHorizontalScrollView {
             return;
         }
         final boolean isPremium = UserConfig.getInstance(UserConfig.selectedAccount).isPremium() || allowEmojisForNonPremium();
-        if (NekoConfig.disableTrending.Bool() && !isPremium) {
+        if (NyaConfig.disableTrending.Bool() && !isPremium) {
             showSettingsTab();
             return;
         }

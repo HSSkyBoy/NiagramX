@@ -182,7 +182,6 @@ import java.util.stream.Collectors;
 import static top.nkbe.niagram.settings.NekoChatSettingsActivity.getDeleteMenuChecks;
 import top.nkbe.niagram.helpers.PasscodeHelper;
 import top.nkbe.niagram.helpers.ScheduleTimeHelper;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.config.NyaConfig;
 
 import com.radolyn.ayugram.AyuConstants;
@@ -933,7 +932,7 @@ public class AlertsCreator {
                     s.delete(maxLength, s.length());
                     AndroidUtilities.shakeView(editText);
                     try {
-                        if (!NekoConfig.disableVibration.Bool()) editText.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                        if (!NyaConfig.disableVibration.Bool()) editText.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                     } catch (Exception ignore) {}
                     ignoreTextChange = false;
                 }
@@ -1765,7 +1764,7 @@ public class AlertsCreator {
     public static void showOpenUrlAlert(Context context, String url, boolean punycode, boolean tryTelegraph, boolean ask, boolean forceNotInternalForApps, long inlineReturn, Browser.Progress progress, @Nullable TLRPC.WebPage webPage, Theme.ResourcesProvider resourcesProvider) {
         if (!AndroidUtilities.isContextSafe(context)) return;
         final String scheme = url == null ? null : Uri.parse(url).getScheme();
-        if ((Browser.isInternalUrl(url, null) || !ask || "mailto".equalsIgnoreCase(scheme) || NekoConfig.skipOpenLinkConfirm.Bool()) && !NyaConfig.INSTANCE.getConfirmAllLinks().Bool()) {
+        if ((Browser.isInternalUrl(url, null) || !ask || "mailto".equalsIgnoreCase(scheme) || NyaConfig.skipOpenLinkConfirm.Bool()) && !NyaConfig.INSTANCE.getConfirmAllLinks().Bool()) {
             Browser.openUrl(context, Uri.parse(url), inlineReturn == 0, tryTelegraph, forceNotInternalForApps && checkInternalBotApp(url), progress, null, false, true, false);
             return;
         }

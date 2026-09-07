@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressWarnings({"unchecked", "unused"})
 public class ConfigItem {
@@ -127,9 +127,9 @@ public class ConfigItem {
 
     // save one item
     public void saveConfig() {
-        synchronized (NekoConfig.sync) {
+        synchronized (NyaConfig.sync) {
             try {
-                SharedPreferences.Editor editor = NekoConfig.getPreferences().edit();
+                SharedPreferences.Editor editor = NyaConfig.getPreferences().edit();
 
                 if (this.type == configTypeBool) {
                     editor.putBoolean(this.key, (boolean) this.value);

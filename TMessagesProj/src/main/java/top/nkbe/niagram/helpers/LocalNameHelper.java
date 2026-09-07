@@ -4,14 +4,14 @@ import android.content.SharedPreferences;
 
 import org.telegram.messenger.MessagesController;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class LocalNameHelper {
     public static final String chatNameOverridePrefix = "chatNameOverride_";
     public static final String userNameOverridePrefix = "userNameOverride_";
 
     private static SharedPreferences getPreferences() {
-        return NekoConfig.getPreferences();
+        return NyaConfig.getPreferences();
     }
 
     public static String getChatNameOverride(long chatId) {

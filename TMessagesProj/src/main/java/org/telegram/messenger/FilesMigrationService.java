@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.utils.FileUtil;
 
 @RequiresApi(api = Build.VERSION_CODES.R)
@@ -87,7 +87,7 @@ public class FilesMigrationService extends Service {
     }
 
     public void migrateOldFolder() {
-        File path = new File(NekoConfig.cachePath.String());
+        File path = new File(NyaConfig.cachePath.String());
         if (!path.exists() || !path.isDirectory()) {
             return;
         }
@@ -215,7 +215,7 @@ public class FilesMigrationService extends Service {
             return;
         }
 
-        File path = new File(NekoConfig.cachePath.String());
+        File path = new File(NyaConfig.cachePath.String());
         if (!path.exists() || !path.isDirectory()) {
             return;
         }

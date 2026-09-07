@@ -27,7 +27,7 @@ import android.view.ViewTreeObserver;
 
 import java.lang.reflect.Method;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public final class ViewUtils {
   public static void onClick (View v) {
@@ -81,7 +81,7 @@ public final class ViewUtils {
       }
       int feedbackConstant = isForce ? HapticFeedbackConstants.LONG_PRESS : HapticFeedbackConstants.KEYBOARD_TAP;
       int flags = ignoreSetting ? HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING : 0;
-      if (!NekoConfig.disableVibration.Bool()) view.performHapticFeedback(feedbackConstant, flags);
+      if (!NyaConfig.disableVibration.Bool()) view.performHapticFeedback(feedbackConstant, flags);
     }
   }
 

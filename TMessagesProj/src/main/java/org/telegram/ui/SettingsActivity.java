@@ -154,7 +154,6 @@ import java.util.Set;
 
 import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MainTabsHelper;
 import top.nkbe.niagram.helpers.MonetHelper;
 import top.nkbe.niagram.helpers.PasscodeHelper;
@@ -576,12 +575,12 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
         avatarView.setForUserOrChat(user, avatarDrawable);
         titleView.setText(UserObject.getUserName(user));
         final StringBuilder sb = new StringBuilder();
-        if (!NekoConfig.hidePhone.Bool() && user != null) {
+        if (!NyaConfig.hidePhone.Bool() && user != null) {
             sb.append(PhoneFormat.getInstance().format("+" + user.phone));
         }
         final String username = UserObject.getPublicUsername(user);
         if (username != null) {
-            sb.append(NekoConfig.hidePhone.Bool() ? "@" : " • @").append(username);
+            sb.append(NyaConfig.hidePhone.Bool() ? "@" : " • @").append(username);
         }
         subtitleView.setText(sb);
 

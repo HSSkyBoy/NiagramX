@@ -51,7 +51,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
 import top.nkbe.niagram.config.NyaConfig;
 
@@ -168,10 +167,10 @@ public class AndroidUtil {
         }
         String extension = documentName.substring(dotIndex + 1).toLowerCase();
 
-        boolean isExecutable = NekoConfig.disableAutoDownloadingWin32Executable.Bool() &&
+        boolean isExecutable = NyaConfig.disableAutoDownloadingWin32Executable.Bool() &&
                 WIN32_EXECUTABLE_EXTENSIONS.contains(extension);
 
-        boolean isArchive = NekoConfig.disableAutoDownloadingArchive.Bool() &&
+        boolean isArchive = NyaConfig.disableAutoDownloadingArchive.Bool() &&
                 ARCHIVE_EXTENSIONS.contains(extension);
 
         return isExecutable || isArchive;
@@ -254,7 +253,7 @@ public class AndroidUtil {
     }
 
     public static void performHapticFeedback() {
-        if (!NekoConfig.disableVibration.Bool()) {
+        if (!NyaConfig.disableVibration.Bool()) {
             try {
                 Optional.ofNullable(LaunchActivity.getSafeLastFragment())
                         .ifPresent(fragment ->

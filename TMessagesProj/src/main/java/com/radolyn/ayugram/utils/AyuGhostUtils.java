@@ -14,7 +14,7 @@ import org.telegram.tgnet.TLRPC;
 import org.telegram.tgnet.tl.TL_account;
 import org.telegram.tgnet.tl.TL_stories;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class AyuGhostUtils {
 
@@ -78,7 +78,7 @@ public class AyuGhostUtils {
                 }
                 if (internal) FileLog.d("GhostMode: Read-after-send request completed.");
                 // Go offline after sending
-                if (NekoConfig.sendOfflinePacketAfterOnline.Bool() && !internal) {
+                if (NyaConfig.sendOfflinePacketAfterOnline.Bool() && !internal) {
                     Utilities.globalQueue.postRunnable(() -> performStatusRequest(true), OFFLINE_DELAY_MS);
                 }
             }
@@ -130,7 +130,7 @@ public class AyuGhostUtils {
                 }
                 if (internal) FileLog.d("GhostMode: Read-after-send request completed.");
                 // Go offline after sending
-                if (NekoConfig.sendOfflinePacketAfterOnline.Bool() && !internal) {
+                if (NyaConfig.sendOfflinePacketAfterOnline.Bool() && !internal) {
                     Utilities.globalQueue.postRunnable(() -> performStatusRequest(true), OFFLINE_DELAY_MS);
                 }
             }
@@ -150,7 +150,7 @@ public class AyuGhostUtils {
         boolean typingExcluded = dialogId != null && AyuGhostPreferences.getGhostModeTypingExclusion(dialogId);
 
         // Block typing if disabled
-        if (!NekoConfig.sendUploadProgress.Bool() && (object instanceof TLRPC.TL_messages_setTyping || object instanceof TLRPC.TL_messages_setEncryptedTyping)) {
+        if (!NyaConfig.sendUploadProgress.Bool() && (object instanceof TLRPC.TL_messages_setTyping || object instanceof TLRPC.TL_messages_setEncryptedTyping)) {
             if (!typingExcluded) {
                 FileLog.d("GhostMode: Blocking typing status request.");
                 return InterceptResult.Blocked(onCompleteOrig);
@@ -158,14 +158,14 @@ public class AyuGhostUtils {
         }
 
         // Block read receipts if disabled
-        if (!NekoConfig.sendReadMessagePackets.Bool() && (isReadMessageRequest(object))) {
+        if (!NyaConfig.sendReadMessagePackets.Bool() && (isReadMessageRequest(object))) {
             if (!AyuState.getAllowReadPacket() && !readExcluded) {
                 FileLog.d("GhostMode: Blocking read status request and sending fake response.");
                 sendFakeReadResponse(onCompleteOrig);
                 return InterceptResult.Blocked(onCompleteOrig);
             }
         }
-        if (!NekoConfig.sendReadStoriesPackets.Bool() && isReadStoriesRequest(object)) {
+        if (!NyaConfig.sendReadStoriesPackets.Bool() && isReadStoriesRequest(object)) {
             if (!readExcluded) {
                 FileLog.d("GhostMode: Blocking story read request.");
                 return InterceptResult.Blocked(onCompleteOrig);
@@ -173,7 +173,7 @@ public class AyuGhostUtils {
         }
 
         // Force offline if online status sending disabled
-        if (!NekoConfig.sendOnlinePackets.Bool() && object instanceof TL_account.updateStatus updateStatus) {
+        if (!NyaConfig.sendOnlinePackets.Bool() && object instanceof TL_account.updateStatus updateStatus) {
             FileLog.d("GhostMode: Forcing offline status in updateStatus request.");
             updateStatus.offline = true;
         }
@@ -188,7 +188,7 @@ public class AyuGhostUtils {
     }
 
     private static void handleReadAfterSend(TLObject object) {
-        if (NekoConfig.markReadAfterSend.Bool() && !NekoConfig.sendReadMessagePackets.Bool()) {
+        if (NyaConfig.markReadAfterSend.Bool() && !NyaConfig.sendReadMessagePackets.Bool()) {
             TLRPC.InputPeer peer = extractPeerFromSendObject(object);
 
             if (peer != null) {
@@ -206,7 +206,7 @@ public class AyuGhostUtils {
     }
 
     private static RequestDelegate handleOfflineAfterSend(TLObject object, RequestDelegate onCompleteOrig) {
-        if (NekoConfig.sendOfflinePacketAfterOnline.Bool() && isMessageSendRequest(object)) {
+        if (NyaConfig.sendOfflinePacketAfterOnline.Bool() && isMessageSendRequest(object)) {
             TLRPC.InputPeer peer = extractPeerFromSendObject(object);
             if (peer != null && AyuGhostPreferences.getGhostModeTypingExclusion(getDialogId(peer))) {
                 return onCompleteOrig;

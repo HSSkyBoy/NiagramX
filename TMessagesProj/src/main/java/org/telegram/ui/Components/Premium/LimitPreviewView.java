@@ -54,7 +54,7 @@ import org.telegram.ui.Stories.recorder.HintView2;
 
 import java.util.ArrayList;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class LimitPreviewView extends LinearLayout {
 
@@ -474,7 +474,7 @@ public class LimitPreviewView extends LinearLayout {
                     if (!wasHaptic) {
                         wasHaptic = true;
                         try {
-                            if (!NekoConfig.disableVibration.Bool()) limitIcon.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                            if (!NyaConfig.disableVibration.Bool()) limitIcon.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                         } catch (Exception ignored) {}
                     }
                     limitIcon.setRotation(limitIconRotation + (v - 1f) * 60);

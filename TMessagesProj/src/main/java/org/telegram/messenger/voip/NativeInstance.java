@@ -11,7 +11,7 @@ import org.webrtc.VideoSink;
 import java.nio.ByteBuffer;
 import java.util.concurrent.CountDownLatch;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class NativeInstance {
 
@@ -80,7 +80,7 @@ public class NativeInstance {
         instance.cancelRequestBroadcastPartCallback = cancelRequestBroadcastPartCallback;
         instance.requestCurrentTimeCallback = requestCurrentTimeCallback;
         instance.isGroup = true;
-        instance.nativePtr = makeGroupNativeInstance(instance, logPath, SharedConfig.disableVoiceAudioEffects, videoCapturer, screencast, noiseSupression, isConference, (short) NekoConfig.customAudioBitrate.Int());
+        instance.nativePtr = makeGroupNativeInstance(instance, logPath, SharedConfig.disableVoiceAudioEffects, videoCapturer, screencast, noiseSupression, isConference, (short) NyaConfig.customAudioBitrate.Int());
         return instance;
     }
 

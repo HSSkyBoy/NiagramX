@@ -125,7 +125,7 @@ import java.util.Objects;
 
 import me.vkryl.android.animator.BoolAnimator;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ProfileGiftsContainer extends FrameLayout implements NotificationCenter.NotificationCenterDelegate {
 
@@ -1253,7 +1253,7 @@ public class ProfileGiftsContainer extends FrameLayout implements NotificationCe
                                     bulletinFactory.createSimpleBulletin(R.raw.forward, AndroidUtilities.replaceTags(LocaleController.formatPluralString("GiftCollectionSharedToManyChats", dids.size(), dids.size()))).hideAfterBottomSheet(false).show();
                                 }
                                 try {
-                                    if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                                    if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                                 } catch (Exception ignored) {}
                             }
                         }
@@ -2040,7 +2040,7 @@ public class ProfileGiftsContainer extends FrameLayout implements NotificationCe
                     s.delete(MAX_LENGTH, s.length());
                     AndroidUtilities.shakeView(editText);
                     try {
-                        if (!NekoConfig.disableVibration.Bool()) editText.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                        if (!NyaConfig.disableVibration.Bool()) editText.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                     } catch (Exception ignore) {}
                     ignoreTextChange = false;
                 }

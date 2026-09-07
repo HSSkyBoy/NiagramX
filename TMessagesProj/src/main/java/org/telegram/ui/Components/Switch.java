@@ -44,7 +44,6 @@ import org.telegram.ui.Cells.BaseCell;
 
 import me.vkryl.android.animator.BoolAnimator;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MonetHelper;
 import top.nkbe.niagram.config.NyaConfig;
 
@@ -130,7 +129,7 @@ public class Switch extends View {
         checkDrawable = ContextCompat.getDrawable(context, R.drawable.floating_check).mutate();
         checkDrawable.setColorFilter(new PorterDuffColorFilter(Theme.getColor(trackCheckedColorKey, resourcesProvider), PorterDuff.Mode.MULTIPLY));
 
-        setHapticFeedbackEnabled(!NekoConfig.disableVibration.Bool());
+        setHapticFeedbackEnabled(!NyaConfig.disableVibration.Bool());
     }
 
     @Keep

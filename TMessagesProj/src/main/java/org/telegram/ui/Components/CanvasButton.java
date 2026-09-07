@@ -24,7 +24,7 @@ import org.telegram.ui.Cells.BaseCell;
 
 import java.util.ArrayList;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class CanvasButton {
 
@@ -44,7 +44,7 @@ public class CanvasButton {
         @Override
         public void run() {
             checkTouchEvent(MotionEvent.obtain(0, 0, MotionEvent.ACTION_CANCEL, 0, 0, 0));
-            if (!NekoConfig.disableVibration.Bool()) parent.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+            if (!NyaConfig.disableVibration.Bool()) parent.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             if (longPressRunnable != null) {
                 longPressRunnable.run();
             }

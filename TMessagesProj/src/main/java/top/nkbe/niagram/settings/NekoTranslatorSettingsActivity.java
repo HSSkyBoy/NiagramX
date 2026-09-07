@@ -68,7 +68,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import kotlin.Unit;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.NekoXConfig;
 import top.nkbe.niagram.config.CellGroup;
 import top.nkbe.niagram.config.ConfigItem;
@@ -115,14 +114,14 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
     private final int initialTranslationProvider;
     private final CellGroup cellGroup = new CellGroup(this);
     private final AbstractConfigCell headerOptions = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.TranslatorOptions)));
-    private final AbstractConfigCell showTranslateRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.showTranslate, null, getString(R.string.ShowTranslateButton)));
+    private final AbstractConfigCell showTranslateRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.showTranslate, null, getString(R.string.ShowTranslateButton)));
     private final AbstractConfigCell useTelegramUIAutoTranslateRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getTelegramUIAutoTranslate()));
     private final AbstractConfigCell keepMarkdownRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getTranslatorKeepMarkdown()));
     private final AbstractConfigCell dividerOptions = cellGroup.appendCell(new ConfigCellDivider());
 
     // Translation
     private final AbstractConfigCell headerTranslation = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.Translate)));
-    private final AbstractConfigCell translationProviderRow = cellGroup.appendCell(new ConfigCellCustom(NekoConfig.translationProvider.getKey(), CellGroup.ITEM_TYPE_TEXT_SETTINGS_CELL, true));
+    private final AbstractConfigCell translationProviderRow = cellGroup.appendCell(new ConfigCellCustom(NyaConfig.translationProvider.getKey(), CellGroup.ITEM_TYPE_TEXT_SETTINGS_CELL, true));
     private final AbstractConfigCell translatorModeRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NyaConfig.INSTANCE.getTranslatorMode(), new String[]{
             getString(R.string.TranslatorWithOriginalTextOff),
             getString(R.string.TranslatorWithOriginalTextManualOnly),
@@ -143,7 +142,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
                     }
             )
     );
-    private final AbstractConfigCell googleCloudTranslateKeyRow = cellGroup.appendCell(new ConfigCellTextDetail(NekoConfig.googleCloudTranslateKey, (view, position) -> showConfigDialog(position, NekoConfig.googleCloudTranslateKey, getString(R.string.GoogleCloudTransKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true));
+    private final AbstractConfigCell googleCloudTranslateKeyRow = cellGroup.appendCell(new ConfigCellTextDetail(NyaConfig.googleCloudTranslateKey, (view, position) -> showConfigDialog(position, NyaConfig.googleCloudTranslateKey, getString(R.string.GoogleCloudTransKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true));
     private final AbstractConfigCell deepLTranslateKeyRow = cellGroup.appendCell(new ConfigCellTextDetail(NyaConfig.INSTANCE.getDeepLTranslateKey(), (view, position) -> showConfigDialog(position, NyaConfig.INSTANCE.getDeepLTranslateKey(), getString(R.string.DeepLTranslateKeyNotice), getString(R.string.LlmApiKey)), getString(R.string.None), true));
 
     private final AbstractConfigCell dividerTranslation = cellGroup.appendCell(new ConfigCellDivider());
@@ -236,7 +235,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
     private final boolean isAutoTranslateEnabled;
 
     public NekoTranslatorSettingsActivity() {
-        initialTranslationProvider = NekoConfig.translationProvider.Int();
+        initialTranslationProvider = NyaConfig.translationProvider.Int();
         isAutoTranslateEnabled = NyaConfig.INSTANCE.getTelegramUIAutoTranslate().Bool();
         oldLlmProvider = NyaConfig.INSTANCE.getLlmProviderPreset().Int();
         rebuildRowsForLlmProvider(oldLlmProvider);
@@ -280,7 +279,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
             return "https://openrouter.ai/keys";
         } else if (bind == NyaConfig.INSTANCE.getLlmProviderVercelAIGatewayKey()) {
             return "https://vercel.com/ai-gateway";
-        } else if (bind == NekoConfig.googleCloudTranslateKey) {
+        } else if (bind == NyaConfig.googleCloudTranslateKey) {
             return "https://console.cloud.google.com/apis/credentials";
         } else if (bind == NyaConfig.INSTANCE.getDeepLTranslateKey()) {
             return "https://www.deepl.com/your-account/keys";
@@ -396,7 +395,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
     @Override
     protected void handleCellClick(View view, int position, float x, float y) {
         if (position == cellGroup.rows.indexOf(useTelegramUIAutoTranslateRow)) {
-            int provider = NekoConfig.translationProvider.Int();
+            int provider = NyaConfig.translationProvider.Int();
             boolean telegramUIAutoTranslateEnabled = NyaConfig.INSTANCE.getTelegramUIAutoTranslate().Bool();
             boolean isRealPremium = UserConfig.getInstance(currentAccount).isPremium();
             if (provider == Translator.providerTelegram && !telegramUIAutoTranslateEnabled && !isRealPremium) {
@@ -412,8 +411,8 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
     @Override
     protected void onCustomCellClick(View view, int position, float x, float y) {
         if (position == cellGroup.rows.indexOf(translationProviderRow)) {
-            showProviderSelectionPopup(view, NekoConfig.translationProvider, () -> {
-                int provider = NekoConfig.translationProvider.Int();
+            showProviderSelectionPopup(view, NyaConfig.translationProvider, () -> {
+                int provider = NyaConfig.translationProvider.Int();
                 if (provider == Translator.providerTelegram) {
                     boolean isRealPremium = UserConfig.getInstance(currentAccount).isPremium();
                     if (isAutoTranslateEnabled && !isRealPremium) {
@@ -431,7 +430,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
             });
         } else if (position == cellGroup.rows.indexOf(translateToLangRow)) {
             Translator.showTargetLangSelect(view, false, (locale) -> {
-                NekoConfig.translateToLang.setConfigString(TranslatorKt.getLocale2code(locale));
+                NyaConfig.translateToLang.setConfigString(TranslatorKt.getLocale2code(locale));
                 listAdapter.notifyItemChanged(position);
                 return Unit.INSTANCE;
             });
@@ -454,17 +453,17 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
         protected void onBindCustomViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             if (holder.itemView instanceof TextSettingsCell textCell) {
                 if (position == cellGroup.rows.indexOf(translationProviderRow)) {
-                    if (NekoConfig.translationProvider.Int() == Translator.providerTelegram) {
+                    if (NyaConfig.translationProvider.Int() == Translator.providerTelegram) {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                            textCell.setTextAndValue(getString(R.string.TranslationProvider), addPremiumStar(getProviderName(NekoConfig.translationProvider.Int())), true);
+                            textCell.setTextAndValue(getString(R.string.TranslationProvider), addPremiumStar(getProviderName(NyaConfig.translationProvider.Int())), true);
                         } else {
-                            textCell.setTextAndValue(getString(R.string.TranslationProvider), getProviderName(NekoConfig.translationProvider.Int()), true);
+                            textCell.setTextAndValue(getString(R.string.TranslationProvider), getProviderName(NyaConfig.translationProvider.Int()), true);
                         }
                     } else {
-                        textCell.setTextAndValue(getString(R.string.TranslationProvider), getProviderName(NekoConfig.translationProvider.Int()), true);
+                        textCell.setTextAndValue(getString(R.string.TranslationProvider), getProviderName(NyaConfig.translationProvider.Int()), true);
                     }
                 } else if (position == cellGroup.rows.indexOf(translateToLangRow)) {
-                    String value = TextUtils.isEmpty(NekoConfig.translateToLang.String()) ? getString(R.string.TranslationTargetApp) : NekoXConfig.formatLang(NekoConfig.translateToLang.String());
+                    String value = TextUtils.isEmpty(NyaConfig.translateToLang.String()) ? getString(R.string.TranslationTargetApp) : NekoXConfig.formatLang(NyaConfig.translateToLang.String());
                     textCell.setTextAndValue(getString(R.string.TransToLang), value, true);
                 } else if (position == cellGroup.rows.indexOf(doNotTranslateRow)) {
                     textCell.setTextAndValue(getString(R.string.DoNotTranslate), getRestrictedLanguages(), true, true);
@@ -541,7 +540,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
     }
 
     private void maybeRestoreTranslationProvider() {
-        if (NekoConfig.translationProvider.Int() != Translator.providerLLMTranslator) {
+        if (NyaConfig.translationProvider.Int() != Translator.providerLLMTranslator) {
             return;
         }
         if (!isCurrentLlmProviderApiKeyEmpty()) {
@@ -551,7 +550,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
         if (providerToRestore == Translator.providerLLMTranslator) {
             providerToRestore = Translator.providerGoogle;
         }
-        NekoConfig.translationProvider.setConfigInt(providerToRestore);
+        NyaConfig.translationProvider.setConfigInt(providerToRestore);
     }
 
     private boolean isCurrentLlmProviderApiKeyEmpty() {
@@ -1439,11 +1438,11 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
     }
 
     private boolean shouldShowGoogleCloudTranslateKeyRow() {
-        return NekoConfig.translationProvider.Int() == Translator.providerGoogle && !NyaConfig.INSTANCE.getGoogleTranslateExp().Bool();
+        return NyaConfig.translationProvider.Int() == Translator.providerGoogle && !NyaConfig.INSTANCE.getGoogleTranslateExp().Bool();
     }
 
     private boolean shouldShowDeepLTranslateKeyRow() {
-        return NekoConfig.translationProvider.Int() == Translator.providerDeepL;
+        return NyaConfig.translationProvider.Int() == Translator.providerDeepL;
     }
 
     private void checkTranslationKeyRows() {

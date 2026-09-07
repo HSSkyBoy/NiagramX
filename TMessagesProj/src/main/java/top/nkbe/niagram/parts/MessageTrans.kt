@@ -20,7 +20,6 @@ import org.telegram.messenger.TranslateController
 import org.telegram.tgnet.TLRPC
 import org.telegram.tgnet.tl.TL_iv
 import org.telegram.ui.ChatActivity
-import top.nkbe.niagram.NekoConfig
 import top.nkbe.niagram.helpers.MessageHelper
 import top.nkbe.niagram.translate.Translator
 import top.nkbe.niagram.translate.code2Locale
@@ -229,7 +228,7 @@ fun ChatActivity.translateMessagesWithMessages(messages: List<MessageObject>) =
 
 @JvmOverloads
 fun ChatActivity.translateMessages(
-    targetLocale: Locale = NekoConfig.translateToLang.String().code2Locale,
+    targetLocale: Locale = NyaConfig.translateToLang.String().code2Locale,
     provider: Int = 0,
     messages: List<MessageObject> = messageForTranslate?.let { listOf(it) }
         ?: selectedObjectGroup?.messages
@@ -745,7 +744,7 @@ private fun clearTranslated(
 }
 
 private fun shouldUseLlmContext(provider: Int): Boolean {
-    val effectiveProvider = provider.takeIf { it != 0 } ?: NekoConfig.translationProvider.Int()
+    val effectiveProvider = provider.takeIf { it != 0 } ?: NyaConfig.translationProvider.Int()
     return effectiveProvider == Translator.providerLLMTranslator && NyaConfig.llmUseContext.Bool()
 }
 

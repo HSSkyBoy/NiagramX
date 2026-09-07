@@ -177,7 +177,7 @@ import me.vkryl.core.reference.ReferenceList;
 
 import kotlin.Unit;
 import top.nkbe.niagram.ui.BottomBuilder;
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.utils.AlertUtil;
 import top.nkbe.niagram.utils.ProxyUtil;
 
@@ -2826,7 +2826,7 @@ public class ChannelAdminLogActivity extends BaseFragment implements Notificatio
     }
 
     public void showOpenUrlAlert(final String url, boolean ask) {
-        if (Browser.isInternalUrl(url, null) || !ask || NekoConfig.skipOpenLinkConfirm.Bool()) {
+        if (Browser.isInternalUrl(url, null) || !ask || NyaConfig.skipOpenLinkConfirm.Bool()) {
             Browser.openUrl(getParentActivity(), url, true);
         } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity());

@@ -83,7 +83,6 @@ import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
 import me.vkryl.android.animator.ReplaceAnimator;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.config.NyaConfig;
 
 public class ActionBar extends FrameLayout implements FactorAnimator.Target, Theme.Colorable {
@@ -428,18 +427,18 @@ public class ActionBar extends FrameLayout implements FactorAnimator.Target, The
                     }
                 }
             }
-            if (NekoConfig.actionBarDecoration.Int() == 3) {
+            if (NyaConfig.actionBarDecoration.Int() == 3) {
                 if (snowflakesEffect != null) {
                     snowflakesEffect = null;
                 }
                 if (fireworksEffect != null) {
                     fireworksEffect = null;
                 }
-            } else if (NekoConfig.actionBarDecoration.Int() == 2) {
+            } else if (NyaConfig.actionBarDecoration.Int() == 2) {
                 if (fireworksEffect == null) {
                     fireworksEffect = new FireworksEffect();
                 }
-            } else if (NekoConfig.actionBarDecoration.Int() == 1 || Theme.canStartHolidayAnimation()) {
+            } else if (NyaConfig.actionBarDecoration.Int() == 1 || Theme.canStartHolidayAnimation()) {
                 if (snowflakesEffect == null) {
                     snowflakesEffect = new SnowflakesEffect(0);
                 }
@@ -594,7 +593,7 @@ public class ActionBar extends FrameLayout implements FactorAnimator.Target, The
         if (titleTextView[0] != null) {
             titleTextView[0].setVisibility(value != null && !isSearchFieldVisible ? VISIBLE : INVISIBLE);
             titleTextView[0].setText(lastTitle = value);
-            if (UserConfig.getInstance(UserConfig.selectedAccount).isPremiumOrLocal() || (NekoConfig.isGhostModeActive() && NekoConfig.showGhostModeStatus.Bool())) {
+            if (UserConfig.getInstance(UserConfig.selectedAccount).isPremiumOrLocal() || (NyaConfig.isGhostModeActive() && NyaConfig.showGhostModeStatus.Bool())) {
                 if (attached && lastRightDrawable instanceof AnimatedEmojiDrawable.SwapAnimatedEmojiDrawable) {
                     ((AnimatedEmojiDrawable.SwapAnimatedEmojiDrawable) lastRightDrawable).setParentView(null);
                 }
@@ -2434,7 +2433,7 @@ public class ActionBar extends FrameLayout implements FactorAnimator.Target, The
     }
 
     public void unreadBadgeSetCount(int count) {
-        if (backButtonImageView != null && NekoConfig.unreadBadgeOnBackButton.Bool()) {
+        if (backButtonImageView != null && NyaConfig.unreadBadgeOnBackButton.Bool()) {
             backButtonImageView.setUnread(count);
         }
     }

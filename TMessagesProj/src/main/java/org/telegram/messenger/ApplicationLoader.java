@@ -59,7 +59,6 @@ import java.io.File;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.utils.AndroidUtil;
 import top.nkbe.niagram.config.NyaConfig;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -123,7 +122,7 @@ public class ApplicationLoader extends Application {
 
     public static IMapsProvider getMapsProvider() {
         if (mapsProvider == null) {
-            if (NekoConfig.useOSMDroidMap.Bool())
+            if (NyaConfig.useOSMDroidMap.Bool())
                 mapsProvider = new OSMDroidMapsProvider();
             else {
                 mapsProvider = new GoogleMapsProvider();
@@ -275,7 +274,6 @@ public class ApplicationLoader extends Application {
         }
 
         SharedConfig.loadConfig();
-        NekoConfig.init();
         NyaConfig.init();
         SharedPrefsHelper.init(applicationContext);
         boolean enableDiagnostics = AndroidUtil.shouldEnableCrashlytics();

@@ -97,7 +97,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.utils.AndroidUtil;
 
 /**
@@ -7086,7 +7086,7 @@ public class RecyclerView extends ViewGroup implements ScrollingView,
             try {
                 TraceCompat.beginSection(TRACE_CREATE_VIEW_TAG);
                 final VH holder = onCreateViewHolder(parent, viewType);
-                if (NekoConfig.disableVibration.Bool()) {
+                if (NyaConfig.disableVibration.Bool()) {
                     AndroidUtil.disableHapticFeedback(holder.itemView);
                 }
                 if (holder.itemView.getParent() != null) {

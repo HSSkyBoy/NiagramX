@@ -264,7 +264,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import kotlin.text.StringsKt;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MonetHelper;
 import top.nkbe.niagram.helpers.SettingsHelper;
 import top.nkbe.niagram.helpers.remote.EmojiHelper;
@@ -3550,7 +3549,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
             if (fragment != null) {
                 Bulletin.make(fragment, layout, duration).show();
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) fragment.fragmentView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) fragment.fragmentView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                 } catch (Exception ignored) {}
             }
         });

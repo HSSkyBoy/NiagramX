@@ -8,7 +8,6 @@ import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.R
 import org.telegram.tgnet.TLRPC
 import org.telegram.ui.Components.TranslateAlert2
-import top.nkbe.niagram.NekoConfig
 import top.nkbe.niagram.translate.HTMLKeeper
 import top.nkbe.niagram.translate.TransUtils
 import top.nkbe.niagram.translate.Translator
@@ -30,7 +29,7 @@ object GoogleAppTranslator : Translator {
             )
         }
 
-        if (!TextUtils.isEmpty(NekoConfig.googleCloudTranslateKey.String())) {
+        if (!TextUtils.isEmpty(NyaConfig.googleCloudTranslateKey.String())) {
             return GoogleCloudTranslator.doTranslate(
                 from, to, query, entities
             )

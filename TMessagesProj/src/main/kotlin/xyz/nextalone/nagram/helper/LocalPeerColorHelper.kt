@@ -4,7 +4,6 @@ import androidx.core.content.edit
 import com.google.gson.Gson
 import org.telegram.messenger.UserConfig
 import org.telegram.tgnet.TLRPC
-import top.nkbe.niagram.NekoConfig
 import top.nkbe.niagram.config.NyaConfig
 
 data class LocalQuoteColorData(
@@ -19,7 +18,7 @@ object LocalPeerColorHelper {
 
     @JvmStatic
     fun getColorId(user: TLRPC.User): Int? {
-        if (!NekoConfig.localPremium.Bool()) return null
+        if (!NyaConfig.localPremium.Bool()) return null
         if (!isLocalUser(user.id)) return null
         val data = getDataForUser(user.id) ?: return null
         return data.colorId
@@ -27,7 +26,7 @@ object LocalPeerColorHelper {
 
     @JvmStatic
     fun getEmojiId(user: TLRPC.User?): Long? {
-        if (!NekoConfig.localPremium.Bool()) return null
+        if (!NyaConfig.localPremium.Bool()) return null
         if (user == null || !isLocalUser(user.id)) return null
         val data = getDataForUser(user.id) ?: return null
         return data.emojiId
@@ -35,7 +34,7 @@ object LocalPeerColorHelper {
 
     @JvmStatic
     fun getProfileColorId(user: TLRPC.User): Int? {
-        if (!NekoConfig.localPremium.Bool()) return null
+        if (!NyaConfig.localPremium.Bool()) return null
         if (!isLocalUser(user.id)) return null
         val data = getDataForUser(user.id) ?: return null
         return data.profileColorId
@@ -43,7 +42,7 @@ object LocalPeerColorHelper {
 
     @JvmStatic
     fun getProfileEmojiId(user: TLRPC.User?): Long? {
-        if (!NekoConfig.localPremium.Bool()) return null
+        if (!NyaConfig.localPremium.Bool()) return null
         if (user == null || !isLocalUser(user.id)) return null
         val data = getDataForUser(user.id) ?: return null
         return data.profileEmojiId
@@ -101,7 +100,7 @@ object LocalPeerColorHelper {
 
     @JvmStatic
     fun apply(colorId: Int, emojiId: Long, profileColorId: Int, profileEmojiId: Long) {
-        if (!NekoConfig.localPremium.Bool()) return
+        if (!NyaConfig.localPremium.Bool()) return
 
         val userId = getCurrentUserId()
         if (userId == 0L) return

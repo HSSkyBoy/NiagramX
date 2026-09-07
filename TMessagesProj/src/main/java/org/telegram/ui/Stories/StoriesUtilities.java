@@ -69,7 +69,6 @@ import org.telegram.ui.LaunchActivity;
 import java.io.File;
 import java.util.Collections;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.config.NyaConfig;
 
 public class StoriesUtilities {
@@ -1346,7 +1345,7 @@ public class StoriesUtilities {
                         }
                         AndroidUtilities.runOnUIThread(longPressRunnable = () -> {
                             try {
-                                if (!NekoConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                                if (!NyaConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                             } catch (Exception ignored) {}
                             if (buttonBounce != null) {
                                 buttonBounce.setPressed(false);

@@ -21,7 +21,7 @@ import org.telegram.tgnet.tl.TL_account;
 
 import java.util.Arrays;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class UserConfig extends BaseController {
 
@@ -586,7 +586,7 @@ public class UserConfig extends BaseController {
         if (user == null) {
             return false;
         }
-        return user.premium || NekoConfig.localPremium.Bool();
+        return user.premium || NyaConfig.localPremium.Bool();
     }
 
     public Long getEmojiStatus() {

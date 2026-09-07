@@ -38,7 +38,7 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Objects;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class DualCameraView extends CameraView {
 
@@ -243,7 +243,7 @@ public class DualCameraView extends CameraView {
                     if (tapTime > 0) {
                         this.dualToggleShape();
                         try {
-                            if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                            if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                         } catch (Exception ignored) {}
                     }
                 }, ViewConfiguration.getLongPressTimeout());

@@ -110,7 +110,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.config.NyaConfig;
 import xyz.nextalone.nagram.helper.StickerSetHelper;
 
@@ -1827,7 +1826,7 @@ public class StickersAlert extends BottomSheet implements NotificationCenter.Not
                 if (!lastNameAvailable) {
                     AndroidUtilities.shakeView(editText);
                     try {
-                        if (!NekoConfig.disableVibration.Bool()) editText.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                        if (!NyaConfig.disableVibration.Bool()) editText.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                     } catch (Exception ignored) {}
                 }
                 AndroidUtilities.hideKeyboard(editText);

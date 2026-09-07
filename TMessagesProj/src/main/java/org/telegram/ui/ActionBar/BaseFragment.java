@@ -69,7 +69,6 @@ import org.telegram.ui.bots.BotWebViewAttachedSheet;
 
 import java.util.ArrayList;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.CloudStorageHelper;
 import top.nkbe.niagram.helpers.UserHelper;
 import top.nkbe.niagram.helpers.MessageHelper;
@@ -382,7 +381,7 @@ public abstract class BaseFragment {
     public void setParentFragment(BaseFragment fragment) {
         setParentLayout(fragment.parentLayout);
         fragmentView = createView(parentLayout.getView().getContext());
-        if (NekoConfig.disableVibration.Bool()) {
+        if (NyaConfig.disableVibration.Bool()) {
             AndroidUtil.disableHapticFeedback(fragmentView);
         }
     }

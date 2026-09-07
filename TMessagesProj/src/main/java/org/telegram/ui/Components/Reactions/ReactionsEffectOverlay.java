@@ -43,7 +43,7 @@ import org.telegram.ui.SelectAnimatedEmojiDialog;
 import java.util.ArrayList;
 import java.util.Random;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ReactionsEffectOverlay {
 
@@ -476,7 +476,7 @@ public class ReactionsEffectOverlay {
                                 if (!isFinished) {
                                     isFinished = true;
                                     try {
-                                        if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                                        if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                                     } catch (Exception ignored) {}
 
                                     ViewGroup viewGroup = (ViewGroup) getParent();
@@ -807,7 +807,7 @@ public class ReactionsEffectOverlay {
             currentOverlay.startTime = System.currentTimeMillis();
             if (currentOverlay.animationType == LONG_ANIMATION && System.currentTimeMillis() - lastHapticTime > 200) {
                 lastHapticTime = System.currentTimeMillis();
-                if (!NekoConfig.disableVibration.Bool()) currentOverlay.cell.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                if (!NyaConfig.disableVibration.Bool()) currentOverlay.cell.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
             }
         } else {
             startShortAnimation();
@@ -828,7 +828,7 @@ public class ReactionsEffectOverlay {
             if (currentShortOverlay.animationType == SHORT_ANIMATION && System.currentTimeMillis() - lastHapticTime > 200) {
                 lastHapticTime = System.currentTimeMillis();
                 if (currentShortOverlay.cell != null) {
-                    if (!NekoConfig.disableVibration.Bool()) currentShortOverlay.cell.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                    if (!NyaConfig.disableVibration.Bool()) currentShortOverlay.cell.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                 }
             }
         }

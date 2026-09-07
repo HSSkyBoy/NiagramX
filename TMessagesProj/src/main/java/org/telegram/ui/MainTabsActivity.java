@@ -90,7 +90,6 @@ import java.util.Collections;
 import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
 import top.nkbe.niagram.BackButtonMenuRecent;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.AppRestartHelper;
 import top.nkbe.niagram.helpers.MainTabsHelper;
 import top.nkbe.niagram.helpers.PasscodeHelper;
@@ -1326,15 +1325,15 @@ public class MainTabsActivity extends ViewPagerActivity implements NotificationC
         }
         if (index == INDEX_SETTINGS) {
             ItemOptions o = ItemOptions.makeOptions(this, button);
-            if (NekoConfig.showGhostInDrawer.Bool()) {
-                final String msg = NekoConfig.isGhostModeActive()
+            if (NyaConfig.showGhostInDrawer.Bool()) {
+                final String msg = NyaConfig.isGhostModeActive()
                     ? getString(R.string.DisableGhostMode)
                     : getString(R.string.EnableGhostMode);
                 o.add(R.drawable.ayu_ghost, msg, () -> presentFragment(new GhostModeActivity()), () -> {
-                    final String toggleMsg = NekoConfig.isGhostModeActive()
+                    final String toggleMsg = NyaConfig.isGhostModeActive()
                         ? getString(R.string.GhostModeDisabled)
                         : getString(R.string.GhostModeEnabled);
-                    NekoConfig.toggleGhostMode();
+                    NyaConfig.toggleGhostMode();
                     BulletinFactory.of(contentView, resourceProvider).createSuccessBulletin(toggleMsg).show();
                     NotificationCenter.getInstance(UserConfig.selectedAccount).postNotificationName(NotificationCenter.mainUserInfoChanged);
                 });

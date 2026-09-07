@@ -53,7 +53,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class TimelineView extends View {
 
@@ -363,7 +363,7 @@ public class TimelineView extends View {
                 itemOptions.setBlurBackground(blurManager, -previewContainer.getX(), -previewContainer.getY());
 
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                 } catch (Exception e) {}
             } else if (pressType == 1 && hasRound) {
                 SliderView slider =
@@ -393,7 +393,7 @@ public class TimelineView extends View {
                 itemOptions.setBlurBackground(blurManager, -previewContainer.getX(), -previewContainer.getY());
 
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                 } catch (Exception e) {}
             } else if (pressType == 0 && videoTrack != null) {
                 SliderView slider =
@@ -414,7 +414,7 @@ public class TimelineView extends View {
                     .show();
                 itemOptions.setBlurBackground(blurManager, -previewContainer.getX(), -previewContainer.getY());
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                 } catch (Exception e) {}
             } else if (pressType == 3 && pressCollageIndex >= 0 && pressCollageIndex < collageTracks.size()) {
                 final Track track = collageTracks.get(pressCollageIndex);
@@ -436,7 +436,7 @@ public class TimelineView extends View {
                         .show();
                 itemOptions.setBlurBackground(blurManager, -previewContainer.getX(), -previewContainer.getY());
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                 } catch (Exception e) {}
             }
         };

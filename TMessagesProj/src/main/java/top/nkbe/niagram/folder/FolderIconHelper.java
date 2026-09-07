@@ -11,7 +11,7 @@ import org.telegram.ui.Components.FilterTabsView;
 
 import java.util.LinkedHashMap;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.NekoXConfig;
 
 public class FolderIconHelper {
@@ -115,7 +115,7 @@ public class FolderIconHelper {
     }
 
     public static int getPadding() {
-        if (NekoConfig.tabsTitleType.Int() == NekoXConfig.TITLE_TYPE_MIX) {
+        if (NyaConfig.tabsTitleType.Int() == NekoXConfig.TITLE_TYPE_MIX) {
             return dp(3);
         }
         return 0;
@@ -123,7 +123,7 @@ public class FolderIconHelper {
 
     public static float getTabInternalPadding() {
         float padding = FilterTabsView.TAB_INTERNAL_PADDING;
-        if (NekoConfig.tabsTitleType.Int() != NekoXConfig.TITLE_TYPE_ICON) {
+        if (NyaConfig.tabsTitleType.Int() != NekoXConfig.TITLE_TYPE_ICON) {
             return padding;
         }
         return padding/2;
@@ -131,14 +131,14 @@ public class FolderIconHelper {
 
     public static int getTotalIconWidth() {
         int result = 0;
-        if (NekoConfig.tabsTitleType.Int() != NekoXConfig.TITLE_TYPE_TEXT) {
+        if (NyaConfig.tabsTitleType.Int() != NekoXConfig.TITLE_TYPE_TEXT) {
             result = getIconWidth() + getPadding();
         }
         return result;
     }
 
     public static float getTabPadding() {
-        if (NekoConfig.tabsTitleType.Int() != NekoXConfig.TITLE_TYPE_ICON) {
+        if (NyaConfig.tabsTitleType.Int() != NekoXConfig.TITLE_TYPE_ICON) {
             return FilterTabsView.TAB_PADDING_WIDTH;
         }
         return 16;

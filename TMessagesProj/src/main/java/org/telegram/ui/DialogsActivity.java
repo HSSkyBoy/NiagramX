@@ -287,7 +287,6 @@ import me.vkryl.android.animator.FactorAnimator;
 import me.vkryl.android.util.ClickHelper;
 
 import top.nkbe.niagram.BackButtonMenuRecent;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MainTabsHelper;
 import top.nkbe.niagram.helpers.PasscodeHelper;
 import top.nkbe.niagram.helpers.TypefaceHelper;
@@ -2286,7 +2285,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                                 if (!canShowHiddenArchive) {
                                     canShowHiddenArchive = true;
                                     try {
-                                        if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                                        if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                                     } catch (Exception ignored) {}
                                     if (parentPage.pullForegroundDrawable != null) {
                                         parentPage.pullForegroundDrawable.colorize(true);
@@ -2298,7 +2297,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                                     AndroidUtilities.makeAccessibilityAnnouncement(LocaleController.getString(R.string.AccDescrArchivedChatsShown));
                                 }
 
-                                if (NekoConfig.openArchiveOnPull.Bool()) {
+                                if (NyaConfig.openArchiveOnPull.Bool()) {
                                     AndroidUtilities.runOnUIThread(() -> {
                                         // Open the folder.
                                         // Delay was taken from PullForegroundDrawable::startOutAnimation().
@@ -3059,7 +3058,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         if (statusDrawable == null || actionBar == null) {
             return;
         }
-        if (NekoConfig.isGhostModeActive() && NekoConfig.showGhostModeStatus.Bool()) {
+        if (NyaConfig.isGhostModeActive() && NyaConfig.showGhostModeStatus.Bool()) {
             if (ghostDrawable == null) {
                 ghostDrawable = getContext().getResources().getDrawable(R.drawable.ayu_ghost).mutate();
                 ghostDrawable = new AnimatedEmojiDrawable.WrapSizeDrawable(ghostDrawable, dp(20), dp(20)) {
@@ -3603,7 +3602,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             }
             actionBar.setBackgroundColor(getThemedColor(Theme.key_windowBackgroundWhite));
             actionBar.setOnLongClickListener(v -> {
-                if (NekoConfig.hideAllTab.Bool() && filterTabsView != null && filterTabsView.getDefaultTabId() != filterTabsView.getCurrentTabId()) {
+                if (NyaConfig.hideAllTab.Bool() && filterTabsView != null && filterTabsView.getDefaultTabId() != filterTabsView.getCurrentTabId()) {
                     filterTabsView.toggleAllTabs(true);
                     filterTabsView.selectDefaultTab();
                 }
@@ -3631,7 +3630,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 statusDrawable.center = true;
                 actionBar.setTitle(actionBarTitleNax = TypefaceHelper.getTitleText(currentAccount), statusDrawable);
                 actionBar.setOnLongClickListener(v -> {
-                    if (NekoConfig.hideAllTab.Bool() && filterTabsView != null && filterTabsView.getCurrentTabId() != Integer.MAX_VALUE) {
+                    if (NyaConfig.hideAllTab.Bool() && filterTabsView != null && filterTabsView.getCurrentTabId() != Integer.MAX_VALUE) {
                         filterTabsView.toggleAllTabs(true);
                         filterTabsView.selectDefaultTab();
                     }
@@ -3675,7 +3674,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 protected void onDefaultTabMoved() {
                     if (!getMessagesController().premiumFeaturesBlocked()) {
                         try {
-                            if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                            if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                         } catch (Exception ignore) {}
                         topBulletin = BulletinFactory.of(DialogsActivity.this).createSimpleBulletin(R.raw.filter_reorder, AndroidUtilities.replaceTags(LocaleController.formatString(R.string.LimitReachedReorderFolder, LocaleController.getString(R.string.FilterAllChats))), LocaleController.getString(R.string.PremiumMore), Bulletin.DURATION_PROLONG, () -> {
                             showDialog(new PremiumFeatureBottomSheet(DialogsActivity.this, PremiumPreviewFragment.PREMIUM_FEATURE_ADVANCED_CHAT_MANAGEMENT, true));
@@ -3786,7 +3785,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
 
                 @Override
                 public int getTabCounter(int tabId) {
-                    if (NyaConfig.INSTANCE.getIgnoreUnreadCount().Int() == NekoConfig.DIALOG_FILTER_EXCLUDE_ALL) {
+                    if (NyaConfig.INSTANCE.getIgnoreUnreadCount().Int() == NyaConfig.DIALOG_FILTER_EXCLUDE_ALL) {
                         return 0;
                     }
 
@@ -4464,7 +4463,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                                 canShowHiddenArchive = canShowInternal;
                                 if (viewPage.archivePullViewState == ARCHIVE_ITEM_STATE_HIDDEN) {
                                     try {
-                                        if (!NekoConfig.disableVibration.Bool()) viewPage.listView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                                        if (!NyaConfig.disableVibration.Bool()) viewPage.listView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                                     } catch (Exception ignored) {}
                                     if (viewPage.pullForegroundDrawable != null) {
                                         viewPage.pullForegroundDrawable.colorize(canShowInternal);
@@ -5348,7 +5347,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                     return;
                 }
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                    if (!NyaConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 } catch (Exception ignored) {}
                 if (dialogId == UserConfig.getInstance(currentAccount).getClientUserId()) {
                     if (!storiesEnabled) {
@@ -7069,7 +7068,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                         filterTabsView.addTab(a, filter.localId, filter.name, filter.emoticon, filter.entities, filter.title_noanimate, false, filters.get(a).locked);
                     }
                 }
-                if (NekoConfig.hideAllTab.Bool() && stableId <= 0) {
+                if (NyaConfig.hideAllTab.Bool() && stableId <= 0) {
                     id = filterTabsView.getFirstTabId();
                     updateCurrentTab = true;
                     viewPages[0].selectedType = id;
@@ -8639,7 +8638,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
 
     private void onArchiveLongPress(View view) {
         try {
-            if (!NekoConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+            if (!NyaConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
         } catch (Exception ignored) {}
         BottomSheet.Builder builder = new BottomSheet.Builder(getParentActivity());
         final boolean hasUnread = getMessagesStorage().getArchiveUnreadCount() != 0;
@@ -9212,7 +9211,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             }
             if (isOpen && afterSignup) {
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) fragmentView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) fragmentView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                 } catch (Exception ignored) {}
                 if (getParentActivity() instanceof LaunchActivity) {
                     ((LaunchActivity) getParentActivity()).getFireworksOverlay().start();
@@ -9455,7 +9454,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             int maxPinnedCount;
             if (containsFilter) {
                 maxPinnedCount = 100 - filter.alwaysShow.size();
-            } else if (NekoConfig.unlimitedPinnedDialogs.Bool() || folderId != 0 || filter != null) {
+            } else if (NyaConfig.unlimitedPinnedDialogs.Bool() || folderId != 0 || filter != null) {
                 if (UserConfig.getInstance(currentAccount).isPremium()) {
                     maxPinnedCount = getMessagesController().maxFolderPinnedDialogsCountPremium;
                 } else {
@@ -13863,7 +13862,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
 
                 Bulletin.make(DialogsActivity.this, layout, duration).show();
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) fragmentView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) fragmentView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                 } catch (Exception ignored) {}
 
             }, () -> getMessagesController().removeSuggestion(0, "SETUP_LOGIN_EMAIL"),
@@ -14053,15 +14052,15 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
             if (hideBottomNavigationBar && NyaConfig.INSTANCE.getShowAddToBookmark().Bool()) {
                 io.add(R.drawable.msg_fave, getString(R.string.BookmarksManager), () -> presentFragment(new BookmarkManagerActivity()));
             }
-            if (NekoConfig.showGhostInDrawer.Bool()) {
-                final String ghostModeText = NekoConfig.isGhostModeActive()
+            if (NyaConfig.showGhostInDrawer.Bool()) {
+                final String ghostModeText = NyaConfig.isGhostModeActive()
                         ? getString(R.string.DisableGhostMode)
                         : getString(R.string.EnableGhostMode);
                 io.add(R.drawable.ayu_ghost, ghostModeText, () -> presentFragment(new GhostModeActivity()), () -> {
-                    final String toggleMsg = NekoConfig.isGhostModeActive()
+                    final String toggleMsg = NyaConfig.isGhostModeActive()
                             ? getString(R.string.GhostModeDisabled)
                             : getString(R.string.GhostModeEnabled);
-                    NekoConfig.toggleGhostMode();
+                    NyaConfig.toggleGhostMode();
                     BulletinFactory.of(this).createSuccessBulletin(toggleMsg).show();
                     NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.mainUserInfoChanged);
                 });

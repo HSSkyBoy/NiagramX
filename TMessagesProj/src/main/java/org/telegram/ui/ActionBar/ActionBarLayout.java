@@ -95,7 +95,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.utils.AndroidUtil;
 import top.nkbe.niagram.config.NyaConfig;
 
@@ -1387,7 +1386,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
                 ViewCompat.setOnApplyWindowInsetsListener(fragmentView, lastFragment::onInsetsInternal);
                 containerViewBack.invalidate();
             }
-            if (NekoConfig.disableVibration.Bool()) {
+            if (NyaConfig.disableVibration.Bool()) {
                 AndroidUtil.disableHapticFeedback(fragmentView);
             }
         }
@@ -2185,7 +2184,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
                 ViewCompat.setOnApplyWindowInsetsListener(fragmentView, fragment::onInsetsInternal);
                 containerViewBack.invalidate();
             }
-            if (NekoConfig.disableVibration.Bool()) {
+            if (NyaConfig.disableVibration.Bool()) {
                 AndroidUtil.disableHapticFeedback(fragmentView);
             }
         } else {
@@ -2730,7 +2729,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
                 fragment.onPreviewOpenAnimationEnd();
             });
             currentSpringAnimation.start();
-            if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
 
             fragment.setInPreviewMode(false);
             fragment.setInMenuMode(false);
@@ -2754,7 +2753,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
         });
         animatorSet.start();
         try {
-            if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
         } catch (Exception ignore) {}
 
         containerView.setShouldHandleBottomInsets(fragment.getEdgeToEdgeSupportMode());
@@ -2816,7 +2815,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
                     ViewCompat.setOnApplyWindowInsetsListener(fragmentView, previousFragment::onInsetsInternal);
                     containerView.invalidate();
                 }
-                if (NekoConfig.disableVibration.Bool()) {
+                if (NyaConfig.disableVibration.Bool()) {
                     AndroidUtil.disableHapticFeedback(fragmentView);
                 }
             }
@@ -3009,7 +3008,7 @@ public class ActionBarLayout extends FrameLayout implements INavigationLayout, F
                 ViewCompat.setOnApplyWindowInsetsListener(fragmentView, previousFragment::onInsetsInternal);
                 containerView.invalidate();
             }
-            if (NekoConfig.disableVibration.Bool()) {
+            if (NyaConfig.disableVibration.Bool()) {
                 AndroidUtil.disableHapticFeedback(fragmentView);
             }
         } else {

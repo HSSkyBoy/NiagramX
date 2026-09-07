@@ -136,7 +136,6 @@ import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.SaveToDownloadReceiver;
 import top.nkbe.niagram.helpers.ChatsHelper;
 import top.nkbe.niagram.config.NyaConfig;
@@ -1429,7 +1428,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
 
     public void recreateProximityWakeLock() {
 
-        if (NekoConfig.disableProximityEvents.Bool()) {
+        if (NyaConfig.disableProximityEvents.Bool()) {
             proximityWakeLock = null;
             return;
         }
@@ -2039,7 +2038,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
     }
 
     private boolean isNearToSensor(float value) {
-        return !NekoConfig.disableProximityEvents.Bool() && value < 5.0f && value != proximitySensor.getMaximumRange();
+        return !NyaConfig.disableProximityEvents.Bool() && value < 5.0f && value != proximitySensor.getMaximumRange();
     }
 
     public boolean isRecordingOrListeningByProximity() {
@@ -3153,7 +3152,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
         if (currentPlayList == null || currentPlayList.size() < 2) {
             return;
         }
-        if (NekoConfig.noPreloadTrackIfRepeatOne.Bool() && SharedConfig.repeatMode == 2) {
+        if (NyaConfig.noPreloadTrackIfRepeatOne.Bool() && SharedConfig.repeatMode == 2) {
             return;
         }
         int nextIndex;
@@ -4782,7 +4781,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
         requestRecordAudioFocus(true);
 
         try {
-            if (!NekoConfig.disableVibration.Bool()) feedbackView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+            if (!NyaConfig.disableVibration.Bool()) feedbackView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
         } catch (Exception ignore) {}
 
         recordQueue.postRunnable(recordStartRunnable = () -> {
@@ -5074,7 +5073,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
                 stopRecordingInternal(0, false, 0, false, 0);
             }
             try {
-                if (!NekoConfig.disableVibration.Bool()) feedbackView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                if (!NyaConfig.disableVibration.Bool()) feedbackView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
             } catch (Exception ignore) {}
             AndroidUtilities.runOnUIThread(() -> NotificationCenter.getInstance(recordingCurrentAccount).postNotificationName(NotificationCenter.recordStopped, recordingGuid, send == 2 ? 1 : 0));
         });
@@ -5180,7 +5179,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
                         }
                     } else {
                         File dir;
-                        String folderName = NekoConfig.customSavePath.String();
+                        String folderName = NyaConfig.customSavePath.String();
                         if (messageObjects.get(0) != null && NyaConfig.INSTANCE.getSaveToChatSubfolder().Bool()) {
                             String chatFolderName = ChatsHelper.getChatFolderName(messageObjects.get(0));
                             folderName = folderName + File.separator + chatFolderName;
@@ -5563,7 +5562,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
                 try {
                     Uri uri;
                     boolean result = true;
-                    String folderName = NekoConfig.customSavePath.String();
+                    String folderName = NyaConfig.customSavePath.String();
                     if (selectedObject != null && NyaConfig.INSTANCE.getSaveToChatSubfolder().Bool()) {
                         String chatFolderName = ChatsHelper.getChatFolderName(selectedObject);
                         folderName = folderName + File.separator + chatFolderName;
@@ -5866,7 +5865,7 @@ public class MediaController implements AudioManager.OnAudioFocusChangeListener,
                     selectedType = 1;
                 }
             }
-            String folderName = NekoConfig.customSavePath.String();
+            String folderName = NyaConfig.customSavePath.String();
             if (messageObject != null && NyaConfig.INSTANCE.getSaveToChatSubfolder().Bool()) {
                 String chatFolderName = ChatsHelper.getChatFolderName(messageObject);
                 folderName = folderName + File.separator + chatFolderName;

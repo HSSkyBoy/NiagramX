@@ -39,7 +39,7 @@ import org.telegram.ui.Components.CubicBezierInterpolator;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.RadialProgressView;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.helpers.remote.EmojiHelper;
 
 @SuppressLint("ViewConstructor")
@@ -156,7 +156,7 @@ public class EmojiSetCell extends FrameLayout {
             if (!animated) checkDownloaded(false);
         } else {
             textView.setText(getString(R.string.EmojiSets));
-            if (NekoConfig.useSystemEmoji.Bool()) {
+            if (NyaConfig.useSystemEmoji.Bool()) {
                 valueTextView.setText(EmojiHelper.getInstance().getSelectedPackName(), animated);
                 imageView.setImageBitmap(EmojiHelper.getInstance().getSystemEmojiPreview());
             } else if (emojiPackInfo == null) {

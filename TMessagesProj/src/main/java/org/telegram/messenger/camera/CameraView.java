@@ -97,7 +97,7 @@ import javax.microedition.khronos.egl.EGLContext;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.egl.EGLSurface;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressLint("NewApi")
 public class CameraView extends FrameLayout implements TextureView.SurfaceTextureListener, CameraController.ICameraView, CameraController.ErrorCallback  {
@@ -1082,7 +1082,7 @@ public class CameraView extends FrameLayout implements TextureView.SurfaceTextur
     }
 
     public void runHaptic() {
-        if (NekoConfig.disableVibration.Bool()) return;
+        if (NyaConfig.disableVibration.Bool()) return;
         long[] vibrationWaveFormDurationPattern = {0, 1};
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             final Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);

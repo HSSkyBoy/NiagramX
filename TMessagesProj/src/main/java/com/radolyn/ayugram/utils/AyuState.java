@@ -13,7 +13,7 @@ import android.util.LongSparseArray;
 
 import java.util.ArrayList;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class AyuState {
     private static final AyuStateVariable allowReadPacket = new AyuStateVariable();
@@ -26,7 +26,7 @@ public class AyuState {
     }
 
     public static boolean getAllowReadPacket() {
-        return NekoConfig.sendReadMessagePackets.Bool() || allowReadPacket.process();
+        return NyaConfig.sendReadMessagePackets.Bool() || allowReadPacket.process();
     }
 
     public static void setHideSelection(boolean val, int resetAfter) {

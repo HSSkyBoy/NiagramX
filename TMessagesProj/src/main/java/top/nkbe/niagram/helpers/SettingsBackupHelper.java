@@ -38,7 +38,6 @@ import java.util.function.Function;
 
 import kotlin.text.StringsKt;
 import top.nkbe.niagram.DialogConfig;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.config.ConfigItem;
 import top.nkbe.niagram.utils.AlertUtil;
 import top.nkbe.niagram.utils.FileUtil;
@@ -161,7 +160,6 @@ public final class SettingsBackupHelper {
     public static void importSettings(JsonObject configJson) throws JSONException {
         Map<String, Integer> configTypes = new HashMap<>();
         try {
-            configTypes.putAll(NekoConfig.getConfigTypes());
             configTypes.putAll(NyaConfig.INSTANCE.getConfigTypes());
         } catch (Throwable ignore) {
         }

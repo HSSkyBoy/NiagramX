@@ -69,7 +69,7 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class CalendarActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
@@ -910,7 +910,7 @@ public class CalendarActivity extends BaseFragment implements NotificationCenter
 
                     if (periodDay != null) {
                         try {
-                            if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                            if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                         } catch (Exception ignored) {}
 
                         Bundle bundle = new Bundle();

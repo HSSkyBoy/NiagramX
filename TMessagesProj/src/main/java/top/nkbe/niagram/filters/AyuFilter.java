@@ -25,7 +25,6 @@ import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
 import top.nkbe.niagram.config.NyaConfig;
 
@@ -463,11 +462,11 @@ public class AyuFilter {
     }
 
     public static boolean isBlockedChannel(long dialogId) {
-        return NekoConfig.ignoreBlocked.Bool() && getBlockedChannels().contains(dialogId);
+        return NyaConfig.ignoreBlocked.Bool() && getBlockedChannels().contains(dialogId);
     }
 
     public static boolean isCustomFilteredPeer(long peerId) {
-        return NekoConfig.ignoreBlocked.Bool() && peerId > 0L && getCustomFilteredUsers().contains(peerId);
+        return NyaConfig.ignoreBlocked.Bool() && peerId > 0L && getCustomFilteredUsers().contains(peerId);
     }
 
     public static void blockPeer(long dialogId) {

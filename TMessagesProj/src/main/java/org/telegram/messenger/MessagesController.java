@@ -139,7 +139,6 @@ import java.util.stream.Collectors;
 
 import me.vkryl.core.BitwiseUtils;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.filters.AyuFilter;
 import top.nkbe.niagram.filters.ReactionFilter;
 import top.nkbe.niagram.helpers.ChatsHelper;
@@ -878,7 +877,7 @@ public class MessagesController extends BaseController implements NotificationCe
         if (dialogFilters.isEmpty()) {
             return;
         }
-        if (!premium && !NekoConfig.localPremium.Bool()) {
+        if (!premium && !NyaConfig.localPremium.Bool()) {
             if (!dialogFilters.get(0).isDefault()) {
                 for (int i = 1; i < dialogFilters.size(); i++) {
                     if (dialogFilters.get(i).isDefault()) {
@@ -911,7 +910,7 @@ public class MessagesController extends BaseController implements NotificationCe
                     if (!filtersSortedById.get(i).locked) {
                         changed = true;
                     }
-                    filtersSortedById.get(i).locked = !NekoConfig.localPremium.Bool();
+                    filtersSortedById.get(i).locked = !NyaConfig.localPremium.Bool();
                 } else {
                     if (filtersSortedById.get(i).locked) {
                         changed = true;
@@ -950,7 +949,7 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public boolean isPremiumUser(TLRPC.User currentUser) {
-        return currentUser != null && (currentUser.premium || currentUser.id == getUserConfig().getClientUserId() && NekoConfig.localPremium.Bool()) && !isSupportUser(currentUser);
+        return currentUser != null && (currentUser.premium || currentUser.id == getUserConfig().getClientUserId() && NyaConfig.localPremium.Bool()) && !isSupportUser(currentUser);
     }
 
     public boolean didPressTranscribeButtonEnough() {
@@ -2499,7 +2498,7 @@ public class MessagesController extends BaseController implements NotificationCe
             } else if (response instanceof TLRPC.TL_messages_dialogFilters) {
                 TLRPC.TL_messages_dialogFilters res = (TLRPC.TL_messages_dialogFilters) response;
                 if (folderTags != res.tags_enabled) {
-                    setFolderTags(res.tags_enabled || !getUserConfig().isPremium() && NekoConfig.localPremium.Bool());
+                    setFolderTags(res.tags_enabled || !getUserConfig().isPremium() && NyaConfig.localPremium.Bool());
                     AndroidUtilities.runOnUIThread(() -> {
                         getNotificationCenter().postNotificationName(NotificationCenter.dialogFiltersUpdated);
                     });
@@ -9031,7 +9030,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 }
                 loadingBlockedPeers = false;
                 getNotificationCenter().postNotificationName(NotificationCenter.blockedUsersDidLoad);
-                if (!reset && !blockedEndReached && NekoConfig.ignoreBlocked.Bool()) {
+                if (!reset && !blockedEndReached && NyaConfig.ignoreBlocked.Bool()) {
                     getBlockedPeers(false);
                 }
             }
@@ -11405,7 +11404,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 Integer threadId = threadEntry.getKey();
                 ArrayList<PrintingUser> arr = threadEntry.getValue();
                 // ignoreBlocked start
-                if (NekoConfig.ignoreBlocked.Bool()) {
+                if (NyaConfig.ignoreBlocked.Bool()) {
                     LongSparseIntArray blockePeersCopy = blockePeers.clone();
                     ArrayList<PrintingUser> filteredArr = new ArrayList<>();
                     for (PrintingUser pu : arr) {
@@ -11684,7 +11683,7 @@ public class MessagesController extends BaseController implements NotificationCe
             } else if (action == 9) {
                 req.action = new TLRPC.TL_sendMessageUploadAudioAction();
             } else if (action == 10) {
-                if (NekoConfig.disableChoosingSticker.Bool())
+                if (NyaConfig.disableChoosingSticker.Bool())
                     req.action = new TLRPC.TL_sendMessageTypingAction();
                 else
                     req.action = new TLRPC.TL_sendMessageChooseStickerAction();
@@ -17590,7 +17589,7 @@ public class MessagesController extends BaseController implements NotificationCe
                     newTaskId = taskId;
                 }
 
-                if (!NekoConfig.unlimitedPinnedDialogs.Bool()) getConnectionsManager().sendRequest(req, (response, error) -> {
+                if (!NyaConfig.unlimitedPinnedDialogs.Bool()) getConnectionsManager().sendRequest(req, (response, error) -> {
                     if (newTaskId != 0) {
                         getMessagesStorage().removePendingTask(newTaskId);
                     }
@@ -17602,7 +17601,7 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public void loadPinnedDialogs(final int folderId, long newDialogId, ArrayList<Long> order) {
-        if (NekoConfig.unlimitedPinnedDialogs.Bool()) {
+        if (NyaConfig.unlimitedPinnedDialogs.Bool()) {
             return;
         }
         if (loadingPinnedDialogs.indexOfKey(folderId) >= 0 || getUserConfig().isPinnedDialogsLoaded(folderId)) {
@@ -22899,7 +22898,7 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public String getRestrictionReason(ArrayList<TLRPC.RestrictionReason> reasons) {
-        if (reasons.isEmpty() || NekoConfig.ignoreContentRestrictions.Bool()) {
+        if (reasons.isEmpty() || NyaConfig.ignoreContentRestrictions.Bool()) {
             return null;
         }
         for (int a = 0, N = reasons.size(); a < N; a++) {

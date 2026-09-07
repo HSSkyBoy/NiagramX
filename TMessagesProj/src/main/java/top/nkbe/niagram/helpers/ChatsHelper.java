@@ -35,7 +35,6 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.config.NyaConfig;
 
 public class ChatsHelper extends BaseController {
@@ -503,6 +502,6 @@ public class ChatsHelper extends BaseController {
     }
 
     public boolean allowSwipeToNext(boolean isTopic) {
-        return !(isTopic ? NekoConfig.disableSwipeToNextTopic : NekoConfig.disableSwipeToNext).Bool();
+        return !(isTopic ? NyaConfig.disableSwipeToNextTopic : NyaConfig.disableSwipeToNext).Bool();
     }
 }

@@ -50,7 +50,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.helpers.remote.EmojiHelper;
 import top.nkbe.niagram.ui.cells.EmojiSetCell;
 import top.nkbe.niagram.ui.cells.HeaderCell;
@@ -144,9 +144,9 @@ public class NekoEmojiSettingsActivity extends BaseNekoSettingsActivity implemen
             }
             listAdapter.notifyEmojiSetsChanged();
         } else if (position == useSystemEmojiRow) {
-            NekoConfig.useSystemEmoji.toggleConfigBool();
+            NyaConfig.useSystemEmoji.toggleConfigBool();
             if (view instanceof TextCheckCell) {
-                ((TextCheckCell) view).setChecked(NekoConfig.useSystemEmoji.Bool());
+                ((TextCheckCell) view).setChecked(NyaConfig.useSystemEmoji.Bool());
             }
             EmojiHelper.reloadEmoji();
             listAdapter.notifyEmojiSetsChanged();
@@ -424,9 +424,9 @@ public class NekoEmojiSettingsActivity extends BaseNekoSettingsActivity implemen
                     TextCheckCell textCheckCell = (TextCheckCell) holder.itemView;
                     if (position == useSystemEmojiRow) {
                         if (partial) {
-                            textCheckCell.setChecked(NekoConfig.useSystemEmoji.Bool());
+                            textCheckCell.setChecked(NyaConfig.useSystemEmoji.Bool());
                         } else {
-                            textCheckCell.setTextAndCheck(getString(R.string.EmojiUseDefault), NekoConfig.useSystemEmoji.Bool(), false);
+                            textCheckCell.setTextAndCheck(getString(R.string.EmojiUseDefault), NyaConfig.useSystemEmoji.Bool(), false);
                         }
                     }
                     break;
@@ -463,7 +463,7 @@ public class NekoEmojiSettingsActivity extends BaseNekoSettingsActivity implemen
                     }
                     emojiPackSetCell.setSelected(selectedItems.get(position, false), partial);
                     if (emojiPackInfo != null) {
-                        emojiPackSetCell.setChecked(!hasSelected() && emojiPackInfo.getPackId().equals(EmojiHelper.getInstance().getSelectedEmojiPackId()) && !NekoConfig.useSystemEmoji.Bool(), partial);
+                        emojiPackSetCell.setChecked(!hasSelected() && emojiPackInfo.getPackId().equals(EmojiHelper.getInstance().getSelectedEmojiPackId()) && !NyaConfig.useSystemEmoji.Bool(), partial);
                         emojiPackSetCell.setData(emojiPackInfo, partial, position != emojiPacksEndRow - 1);
                     }
                     break;

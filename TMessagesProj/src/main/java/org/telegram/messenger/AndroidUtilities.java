@@ -245,7 +245,6 @@ import java.util.zip.GZIPOutputStream;
 
 import me.vkryl.core.BitwiseUtils;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.FontHelper;
 import top.nkbe.niagram.helpers.TypefaceHelper;
 import top.nkbe.niagram.config.NyaConfig;
@@ -2403,7 +2402,7 @@ public class AndroidUtilities {
     public static Typeface getTypeface(String assetPath) {
         return typefaceCache.computeIfAbsent(assetPath, path -> {
             try {
-                if (NekoConfig.typeface.Bool() || FontHelper.hasAnyCustomFont()) {
+                if (NyaConfig.typeface.Bool() || FontHelper.hasAnyCustomFont()) {
                     return TypefaceHelper.createTypeface(path);
                 }
                 return TypefaceHelper.createTypefaceFromAsset(path);
@@ -2854,7 +2853,7 @@ public class AndroidUtilities {
         if (provider == -1) {
             provider = MessagesController.getInstance(account).mapProvider;
         }
-        if (NekoConfig.mapPreviewProvider.Int() == 1) {
+        if (NyaConfig.mapPreviewProvider.Int() == 1) {
             provider = 1;
         }
         if (provider == 1 || provider == 3) {
@@ -2948,11 +2947,11 @@ public class AndroidUtilities {
     }
 
     public static boolean isTabletForce() {
-        int mode = NekoConfig.tabletMode.Int();
-        if (mode == NekoConfig.TABLET_ENABLE) {
+        int mode = NyaConfig.tabletMode.Int();
+        if (mode == NyaConfig.TABLET_ENABLE) {
             return true;
         }
-        if (mode == NekoConfig.TABLET_DISABLE) {
+        if (mode == NyaConfig.TABLET_DISABLE) {
             return false;
         }
         Resources res = null;
@@ -2965,7 +2964,7 @@ public class AndroidUtilities {
             return false;
         }
         Configuration config = res.getConfiguration();
-        if (mode == NekoConfig.TABLET_LANDSCAPE) {
+        if (mode == NyaConfig.TABLET_LANDSCAPE) {
             return config.orientation == Configuration.ORIENTATION_LANDSCAPE;
         }
         return res.getBoolean(R.bool.isTablet);
@@ -5593,7 +5592,7 @@ public class AndroidUtilities {
     }
 
     public static boolean shouldShowUrlInAlert(String url) {
-        if (NekoConfig.skipOpenLinkConfirm.Bool()) {
+        if (NyaConfig.skipOpenLinkConfirm.Bool()) {
             return false;
         }
         try {
@@ -6574,22 +6573,22 @@ public class AndroidUtilities {
     }
 
     public static void vibrateCursor(View view) {
-        if (NekoConfig.disableVibration.Bool()) return;
+        if (NyaConfig.disableVibration.Bool()) return;
         try {
             if (view == null || view.getContext() == null) return;
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return;
             if (!((Vibrator) view.getContext().getSystemService(Context.VIBRATOR_SERVICE)).hasAmplitudeControl()) return;
-            if (!NekoConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.TEXT_HANDLE_MOVE, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+            if (!NyaConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.TEXT_HANDLE_MOVE, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
         } catch (Exception ignore) {}
     }
 
     public static void vibrate(View view) {
-        if (NekoConfig.disableVibration.Bool()) return;
+        if (NyaConfig.disableVibration.Bool()) return;
         try {
             if (view == null || view.getContext() == null) return;
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return;
             if (!((Vibrator) view.getContext().getSystemService(Context.VIBRATOR_SERVICE)).hasAmplitudeControl()) return;
-            if (!NekoConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+            if (!NyaConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
         } catch (Exception ignore) {}
     }
 

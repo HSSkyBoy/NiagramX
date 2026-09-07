@@ -93,7 +93,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.PinnedElementsHelper;
 import top.nkbe.niagram.config.NyaConfig;
 
@@ -301,7 +300,7 @@ public class ReactionsContainerLayout extends FrameLayout implements Notificatio
                     boolean b2 = newProgress > 1f;
                     if (b1 != b2) {
                         try {
-                            if (!NekoConfig.disableVibration.Bool()) recyclerListView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                            if (!NyaConfig.disableVibration.Bool()) recyclerListView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                         } catch (Exception ignore) {}
                     }
                     if (pullingLeftOffset < 0) {
@@ -334,7 +333,7 @@ public class ReactionsContainerLayout extends FrameLayout implements Notificatio
                     boolean b2 = newProgress > 1f;
                     if (b1 != b2) {
                         try {
-                            if (!NekoConfig.disableVibration.Bool()) recyclerListView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                            if (!NyaConfig.disableVibration.Bool()) recyclerListView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                         } catch (Exception ignore) {}
                     }
                     if (customReactionsContainer != null) {
@@ -1647,7 +1646,7 @@ public class ReactionsContainerLayout extends FrameLayout implements Notificatio
         }
         if (type == TYPE_MESSAGE_EFFECTS) {
             try {
-                if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
             } catch (Exception ignore) {}
         }
     }
@@ -2332,7 +2331,7 @@ public class ReactionsContainerLayout extends FrameLayout implements Notificatio
             @Override
             public void run() {
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                    if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 } catch (Exception ignored) {}
                 pressedReactionPosition = visibleReactionsList.indexOf(currentReaction);
                 pressedReaction = currentReaction;

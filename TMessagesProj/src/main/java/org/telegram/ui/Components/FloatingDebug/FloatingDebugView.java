@@ -64,7 +64,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class FloatingDebugView extends FrameLayout implements NotificationCenter.NotificationCenterDelegate {
     private FrameLayout floatingButtonContainer;
@@ -81,7 +81,7 @@ public class FloatingDebugView extends FrameLayout implements NotificationCenter
     private Runnable onLongPress = () -> {
         inLongPress = true;
         try {
-            if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+            if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
         } catch (Exception ignored) {}
     };
 

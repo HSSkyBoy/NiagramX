@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class SpoilersTextView extends TextView implements TextSelectionHelper.SimpleSelectabeleView {
     private SpoilersClickDetector clickDetector;
@@ -188,7 +188,7 @@ public class SpoilersTextView extends TextView implements TextSelectionHelper.Si
 
     @Override
     public void setText(CharSequence text, BufferType type) {
-        isSpoilersRevealed = NekoConfig.showSpoilersDirectly.Bool();
+        isSpoilersRevealed = NyaConfig.showSpoilersDirectly.Bool();
         super.setText(text, type);
     }
 

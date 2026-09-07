@@ -7,7 +7,7 @@ import okhttp3.Response
 import okhttp3.Route
 import org.telegram.messenger.FileLog
 import org.telegram.messenger.SharedConfig
-import top.nkbe.niagram.NekoConfig
+import top.nkbe.niagram.config.NyaConfig
 import java.io.IOException
 import java.net.Authenticator as JavaAuthenticator
 import java.net.InetSocketAddress
@@ -47,8 +47,8 @@ object WebProxyManager {
 
     @JvmStatic
     fun getEffectiveProxy(): Proxy {
-        return when (NekoConfig.webProxyMode.Int()) {
-            NekoConfig.WEB_PROXY_MODE_FOLLOW_TELEGRAM -> {
+        return when (NyaConfig.webProxyMode.Int()) {
+            NyaConfig.WEB_PROXY_MODE_FOLLOW_TELEGRAM -> {
                 if (SharedConfig.isProxyEnabled() && SharedConfig.currentProxy != null) {
                     val info = SharedConfig.currentProxy
                     // SOCKS5 proxies have empty secret; MTProto proxies have non-empty secret.
@@ -67,12 +67,12 @@ object WebProxyManager {
                     Proxy.NO_PROXY
                 }
             }
-            NekoConfig.WEB_PROXY_MODE_CUSTOM -> {
-                val host = NekoConfig.webProxyHost.String()?.trim()
-                val port = NekoConfig.webProxyPort.String()?.trim()?.toIntOrNull() ?: 0
+            NyaConfig.WEB_PROXY_MODE_CUSTOM -> {
+                val host = NyaConfig.webProxyHost.String()?.trim()
+                val port = NyaConfig.webProxyPort.String()?.trim()?.toIntOrNull() ?: 0
                 if (!host.isNullOrEmpty() && port in 1..65535) {
                     try {
-                        val proxyType = if (NekoConfig.webProxyType.Int() == NekoConfig.WEB_PROXY_TYPE_SOCKS5) {
+                        val proxyType = if (NyaConfig.webProxyType.Int() == NyaConfig.WEB_PROXY_TYPE_SOCKS5) {
                             Proxy.Type.SOCKS
                         } else {
                             Proxy.Type.HTTP
@@ -92,8 +92,8 @@ object WebProxyManager {
 
     @JvmStatic
     fun getEffectiveProxyCredentials(): Pair<String, String>? {
-        return when (NekoConfig.webProxyMode.Int()) {
-            NekoConfig.WEB_PROXY_MODE_FOLLOW_TELEGRAM -> {
+        return when (NyaConfig.webProxyMode.Int()) {
+            NyaConfig.WEB_PROXY_MODE_FOLLOW_TELEGRAM -> {
                 if (SharedConfig.isProxyEnabled() && SharedConfig.currentProxy != null) {
                     val info = SharedConfig.currentProxy
                     if (info.secret.isNullOrEmpty() && !info.username.isNullOrEmpty()) {
@@ -105,9 +105,9 @@ object WebProxyManager {
                     null
                 }
             }
-            NekoConfig.WEB_PROXY_MODE_CUSTOM -> {
-                val user = NekoConfig.webProxyUsername.String()?.trim() ?: ""
-                val pass = NekoConfig.webProxyPassword.String()?.trim() ?: ""
+            NyaConfig.WEB_PROXY_MODE_CUSTOM -> {
+                val user = NyaConfig.webProxyUsername.String()?.trim() ?: ""
+                val pass = NyaConfig.webProxyPassword.String()?.trim() ?: ""
                 if (user.isNotEmpty()) {
                     Pair(user, pass)
                 } else {

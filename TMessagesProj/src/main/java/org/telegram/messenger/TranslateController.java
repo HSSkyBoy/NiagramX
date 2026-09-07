@@ -53,7 +53,6 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
 import top.nkbe.niagram.translate.Translator;
 import top.nkbe.niagram.translate.TranslatorKt;
@@ -102,7 +101,7 @@ public class TranslateController extends BaseController {
 
     public boolean isFeatureAvailable() {
         boolean isRealPremium = UserConfig.getInstance(currentAccount).isPremium();
-        return NyaConfig.INSTANCE.getTelegramUIAutoTranslate().Bool() && (isRealPremium || NekoConfig.translationProvider.Int() != Translator.providerTelegram);
+        return NyaConfig.INSTANCE.getTelegramUIAutoTranslate().Bool() && (isRealPremium || NyaConfig.translationProvider.Int() != Translator.providerTelegram);
     }
 
     public boolean isFeatureAvailable(long dialogId) {
@@ -293,7 +292,7 @@ public class TranslateController extends BaseController {
     public String getDialogTranslateTo(long dialogId) {
         String lang = translateDialogLanguage.get(dialogId);
         if (TextUtils.isEmpty(lang)) {
-            String nekoTranslateToLang = NekoConfig.translateToLang.String();
+            String nekoTranslateToLang = NyaConfig.translateToLang.String();
             if (!TextUtils.isEmpty(nekoTranslateToLang)) {
                 lang = nekoTranslateToLang;
             } else {
@@ -1094,7 +1093,7 @@ public class TranslateController extends BaseController {
             return;
         }
 
-        if (NekoConfig.translationProvider.Int() != Translator.providerTelegram) {
+        if (NyaConfig.translationProvider.Int() != Translator.providerTelegram) {
             synchronized (this) {
                 loadingTranslations.add(message.getId());
             }
@@ -1419,7 +1418,7 @@ public class TranslateController extends BaseController {
         long dialogId = message.getDialogId();
 
         // --- NagramX Start ---
-        if (NekoConfig.translationProvider.Int() != Translator.providerTelegram) {
+        if (NyaConfig.translationProvider.Int() != Translator.providerTelegram) {
             final TLRPC.MessageMedia media = MessageObject.getMedia(message);
             if (!(media instanceof TLRPC.TL_messageMediaPoll)) {
                 return;
@@ -2047,7 +2046,7 @@ public class TranslateController extends BaseController {
 
     public boolean canTranslateStory(TL_stories.StoryItem storyItem) {
         return storyItem != null && !TextUtils.isEmpty(storyItem.caption) && !Emoji.fullyConsistsOfEmojis(storyItem.caption) && (
-            storyItem.detectedLng == null && storyItem.translatedText != null && TextUtils.equals(storyItem.translatedLng, NekoConfig.translateToLang.String()) ||
+            storyItem.detectedLng == null && storyItem.translatedText != null && TextUtils.equals(storyItem.translatedLng, NyaConfig.translateToLang.String()) ||
             storyItem.detectedLng != null && !isLanguageRestricted(storyItem.detectedLng)
         );
     }
@@ -2059,7 +2058,7 @@ public class TranslateController extends BaseController {
 
         final StoryKey key = new StoryKey(storyItem);
 
-        String toLang = NekoConfig.translateToLang.String();
+        String toLang = NyaConfig.translateToLang.String();
 
         if (storyItem.translatedText != null && TextUtils.equals(storyItem.translatedLng, toLang)) {
             if (done != null) {
@@ -2077,11 +2076,11 @@ public class TranslateController extends BaseController {
         translatingStories.add(key);
 
         // --- NagramX Start ---
-        if (NekoConfig.translationProvider.Int() != Translator.providerTelegram) {
+        if (NyaConfig.translationProvider.Int() != Translator.providerTelegram) {
             Translator.translate(storyItem.caption, storyItem.entities, new Translator.Companion.TranslateCallBack2() {
                 @Override
                 public void onSuccess(@NonNull TLRPC.TL_textWithEntities finalText) {
-                    storyItem.translatedLng = NekoConfig.translateToLang.String();
+                    storyItem.translatedLng = NyaConfig.translateToLang.String();
                     storyItem.translatedText = finalText;
                     getMessagesController().getStoriesController().getStoriesStorage().putStoryInternal(storyItem.dialogId, storyItem);
                     translatingStories.remove(key);
@@ -2096,7 +2095,7 @@ public class TranslateController extends BaseController {
                         if (unsupported) {
                             NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.showBulletin, Bulletin.TYPE_ERROR, LocaleController.getString(R.string.TranslationFailedAlert2) + " " + error);
                         }
-                        storyItem.translatedLng = NekoConfig.translateToLang.String();
+                        storyItem.translatedLng = NyaConfig.translateToLang.String();
                         storyItem.translatedText = null;
                         getMessagesController().getStoriesController().getStoriesStorage().putStoryInternal(storyItem.dialogId, storyItem);
                         translatingStories.remove(key);
@@ -2215,7 +2214,7 @@ public class TranslateController extends BaseController {
             detectedLanguage = messageObject.messageOwner.originalLanguage;
         }
         return messageObject != null && messageObject.messageOwner != null && !TextUtils.isEmpty(messageObject.messageOwner.message) && (
-            detectedLanguage == null && messageObject.messageOwner.translatedText != null && TextUtils.equals(messageObject.messageOwner.translatedToLanguage, NekoConfig.translateToLang.String()) ||
+            detectedLanguage == null && messageObject.messageOwner.translatedText != null && TextUtils.equals(messageObject.messageOwner.translatedToLanguage, NyaConfig.translateToLang.String()) ||
             detectedLanguage != null && !isLanguageRestricted(messageObject.messageOwner.originalLanguage)
         ) && !messageObject.translated;
     }
@@ -2227,7 +2226,7 @@ public class TranslateController extends BaseController {
 
         final MessageKey key = new MessageKey(messageObject);
 
-        String toLang = NekoConfig.translateToLang.String();
+        String toLang = NyaConfig.translateToLang.String();
 
         if (messageObject.messageOwner.translatedText != null && TextUtils.equals(messageObject.messageOwner.translatedToLanguage, toLang)) {
             if (done != null) {
@@ -2245,12 +2244,12 @@ public class TranslateController extends BaseController {
         translatingPhotos.add(key);
 
         // --- NagramX Start ---
-        if (NekoConfig.translationProvider.Int() != Translator.providerTelegram) {
+        if (NyaConfig.translationProvider.Int() != Translator.providerTelegram) {
             final long start = System.currentTimeMillis();
             Translator.translate(messageObject.messageOwner.message, messageObject.messageOwner.entities, new Translator.Companion.TranslateCallBack2() {
                 @Override
                 public void onSuccess(@NonNull TLRPC.TL_textWithEntities finalText) {
-                    messageObject.messageOwner.translatedToLanguage = NekoConfig.translateToLang.String().toLowerCase();
+                    messageObject.messageOwner.translatedToLanguage = NyaConfig.translateToLang.String().toLowerCase();
                     messageObject.messageOwner.translatedText = finalText;
                     getMessagesStorage().updateMessageCustomParams(key.dialogId, messageObject.messageOwner);
                     AndroidUtilities.runOnUIThread (() -> NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.messageTranslated, messageObject));
@@ -2266,7 +2265,7 @@ public class TranslateController extends BaseController {
                         if (unsupported) {
                             NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.showBulletin, Bulletin.TYPE_ERROR, LocaleController.getString(R.string.TranslationFailedAlert2) + " " + error);
                         }
-                        messageObject.messageOwner.translatedToLanguage = NekoConfig.translateToLang.String().toLowerCase();
+                        messageObject.messageOwner.translatedToLanguage = NyaConfig.translateToLang.String().toLowerCase();
                         messageObject.messageOwner.translatedText = null;
                         getMessagesStorage().updateMessageCustomParams(key.dialogId, messageObject.messageOwner);
                         translatingPhotos.remove(key);
@@ -2705,7 +2704,7 @@ public class TranslateController extends BaseController {
         if (!NyaConfig.INSTANCE.getLlmUseContextInAutoTranslate().Bool()) {
             return null;
         }
-        if (NekoConfig.translationProvider.Int() != Translator.providerLLMTranslator) {
+        if (NyaConfig.translationProvider.Int() != Translator.providerLLMTranslator) {
             return null;
         }
 

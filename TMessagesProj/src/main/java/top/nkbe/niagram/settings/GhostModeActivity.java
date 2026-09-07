@@ -24,7 +24,6 @@ import org.telegram.ui.Components.BulletinFactory;
 
 import java.util.Locale;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.config.ConfigItem;
 import top.nkbe.niagram.ui.cells.HeaderCell;
 import top.nkbe.niagram.config.NyaConfig;
@@ -90,7 +89,7 @@ public class GhostModeActivity extends BaseNekoSettingsActivity {
     }
 
     private void updateGhostViews() {
-        var isActive = NekoConfig.isGhostModeActive();
+        var isActive = NyaConfig.isGhostModeActive();
 
         listAdapter.notifyItemChanged(ghostModeToggleRow, PARTIAL);
         listAdapter.notifyItemChanged(sendReadMessagePacketsRow, !isActive);
@@ -116,44 +115,44 @@ public class GhostModeActivity extends BaseNekoSettingsActivity {
             }
         } else if (position == sendReadMessagePacketsRow) {
             if (!view.isEnabled()) return;
-            NekoConfig.sendReadMessagePackets.toggleConfigBool();
-            ((CheckBoxCell) view).setChecked(NekoConfig.sendReadMessagePackets.Bool(), true);
+            NyaConfig.sendReadMessagePackets.toggleConfigBool();
+            ((CheckBoxCell) view).setChecked(NyaConfig.sendReadMessagePackets.Bool(), true);
             AyuState.setAllowReadPacket(false, -1);
             updateGhostViews();
         } else if (position == sendReadStoriesPacketsRow) {
             if (!view.isEnabled()) return;
-            NekoConfig.sendReadStoriesPackets.toggleConfigBool();
-            ((CheckBoxCell) view).setChecked(NekoConfig.sendReadStoriesPackets.Bool(), true);
+            NyaConfig.sendReadStoriesPackets.toggleConfigBool();
+            ((CheckBoxCell) view).setChecked(NyaConfig.sendReadStoriesPackets.Bool(), true);
             updateGhostViews();
         } else if (position == sendOnlinePacketsRow) {
             if (!view.isEnabled()) return;
-            NekoConfig.sendOnlinePackets.toggleConfigBool();
-            ((CheckBoxCell) view).setChecked(NekoConfig.sendOnlinePackets.Bool(), true);
+            NyaConfig.sendOnlinePackets.toggleConfigBool();
+            ((CheckBoxCell) view).setChecked(NyaConfig.sendOnlinePackets.Bool(), true);
             updateGhostViews();
         } else if (position == sendUploadProgressRow) {
             if (!view.isEnabled()) return;
-            NekoConfig.sendUploadProgress.toggleConfigBool();
-            ((CheckBoxCell) view).setChecked(NekoConfig.sendUploadProgress.Bool(), true);
+            NyaConfig.sendUploadProgress.toggleConfigBool();
+            ((CheckBoxCell) view).setChecked(NyaConfig.sendUploadProgress.Bool(), true);
             updateGhostViews();
         } else if (position == sendOfflinePacketAfterOnlineRow) {
             if (!view.isEnabled()) return;
-            NekoConfig.sendOfflinePacketAfterOnline.toggleConfigBool();
-            ((CheckBoxCell) view).setChecked(NekoConfig.sendOfflinePacketAfterOnline.Bool(), true);
+            NyaConfig.sendOfflinePacketAfterOnline.toggleConfigBool();
+            ((CheckBoxCell) view).setChecked(NyaConfig.sendOfflinePacketAfterOnline.Bool(), true);
             updateGhostViews();
         } else if (position == markReadAfterSendRow) {
-            NekoConfig.markReadAfterSend.toggleConfigBool();
-            ((TextCheckCell) view).setChecked(NekoConfig.markReadAfterSend.Bool());
+            NyaConfig.markReadAfterSend.toggleConfigBool();
+            ((TextCheckCell) view).setChecked(NyaConfig.markReadAfterSend.Bool());
             AyuState.setAllowReadPacket(false, -1);
         } else if (position == sendWithoutSoundRow) {
             NyaConfig.INSTANCE.getSilentMessageByDefault().toggleConfigBool();
             ((TextCheckCell) view).setChecked(NyaConfig.INSTANCE.getSilentMessageByDefault().Bool());
         } else if (position == showGhostInDrawerRow) {
-            NekoConfig.showGhostInDrawer.toggleConfigBool();
-            ((TextCheckCell) view).setChecked(NekoConfig.showGhostInDrawer.Bool());
+            NyaConfig.showGhostInDrawer.toggleConfigBool();
+            ((TextCheckCell) view).setChecked(NyaConfig.showGhostInDrawer.Bool());
             NotificationCenter.getInstance(UserConfig.selectedAccount).postNotificationName(NotificationCenter.mainUserInfoChanged);
         } else if (position == showGhostModeStatusRow) {
-            NekoConfig.showGhostModeStatus.toggleConfigBool();
-            ((TextCheckCell) view).setChecked(NekoConfig.showGhostModeStatus.Bool());
+            NyaConfig.showGhostModeStatus.toggleConfigBool();
+            ((TextCheckCell) view).setChecked(NyaConfig.showGhostModeStatus.Bool());
             NotificationCenter.getInstance(UserConfig.selectedAccount).postNotificationName(NotificationCenter.mainUserInfoChanged);
         }
     }
@@ -164,20 +163,20 @@ public class GhostModeActivity extends BaseNekoSettingsActivity {
         ConfigItem lockedItem = null;
 
         if (position == sendReadMessagePacketsRow) {
-            targetItem = NekoConfig.sendReadMessagePackets;
-            lockedItem = NekoConfig.sendReadMessagePacketsLocked;
+            targetItem = NyaConfig.sendReadMessagePackets;
+            lockedItem = NyaConfig.sendReadMessagePacketsLocked;
         } else if (position == sendReadStoriesPacketsRow) {
-            targetItem = NekoConfig.sendReadStoriesPackets;
-            lockedItem = NekoConfig.sendReadStoriesPacketsLocked;
+            targetItem = NyaConfig.sendReadStoriesPackets;
+            lockedItem = NyaConfig.sendReadStoriesPacketsLocked;
         } else if (position == sendOnlinePacketsRow) {
-            targetItem = NekoConfig.sendOnlinePackets;
-            lockedItem = NekoConfig.sendOnlinePacketsLocked;
+            targetItem = NyaConfig.sendOnlinePackets;
+            lockedItem = NyaConfig.sendOnlinePacketsLocked;
         } else if (position == sendUploadProgressRow) {
-            targetItem = NekoConfig.sendUploadProgress;
-            lockedItem = NekoConfig.sendUploadProgressLocked;
+            targetItem = NyaConfig.sendUploadProgress;
+            lockedItem = NyaConfig.sendUploadProgressLocked;
         } else if (position == sendOfflinePacketAfterOnlineRow) {
-            targetItem = NekoConfig.sendOfflinePacketAfterOnline;
-            lockedItem = NekoConfig.sendOfflinePacketAfterOnlineLocked;
+            targetItem = NyaConfig.sendOfflinePacketAfterOnline;
+            lockedItem = NyaConfig.sendOfflinePacketAfterOnlineLocked;
         }
 
         if (lockedItem != null && targetItem != null) {
@@ -206,21 +205,21 @@ public class GhostModeActivity extends BaseNekoSettingsActivity {
 
     private int getGhostModeSelectedCount() {
         int count = 0;
-        if (!NekoConfig.sendReadMessagePackets.Bool()) count++;
-        if (!NekoConfig.sendReadStoriesPackets.Bool()) count++;
-        if (!NekoConfig.sendOnlinePackets.Bool()) count++;
-        if (!NekoConfig.sendUploadProgress.Bool()) count++;
-        if (NekoConfig.sendOfflinePacketAfterOnline.Bool()) count++;
+        if (!NyaConfig.sendReadMessagePackets.Bool()) count++;
+        if (!NyaConfig.sendReadStoriesPackets.Bool()) count++;
+        if (!NyaConfig.sendOnlinePackets.Bool()) count++;
+        if (!NyaConfig.sendUploadProgress.Bool()) count++;
+        if (NyaConfig.sendOfflinePacketAfterOnline.Bool()) count++;
         return count;
     }
 
     private int getGhostModeLockedCount() {
         int count = 0;
-        if (NekoConfig.sendReadMessagePacketsLocked.Bool()) count++;
-        if (NekoConfig.sendReadStoriesPacketsLocked.Bool()) count++;
-        if (NekoConfig.sendOnlinePacketsLocked.Bool()) count++;
-        if (NekoConfig.sendUploadProgressLocked.Bool()) count++;
-        if (NekoConfig.sendOfflinePacketAfterOnlineLocked.Bool()) count++;
+        if (NyaConfig.sendReadMessagePacketsLocked.Bool()) count++;
+        if (NyaConfig.sendReadStoriesPacketsLocked.Bool()) count++;
+        if (NyaConfig.sendOnlinePacketsLocked.Bool()) count++;
+        if (NyaConfig.sendUploadProgressLocked.Bool()) count++;
+        if (NyaConfig.sendOfflinePacketAfterOnlineLocked.Bool()) count++;
         return count;
     }
 
@@ -249,13 +248,13 @@ public class GhostModeActivity extends BaseNekoSettingsActivity {
                     TextCheckCell textCheckCell = (TextCheckCell) holder.itemView;
                     textCheckCell.setEnabled(true, null);
                     if (position == markReadAfterSendRow) {
-                        textCheckCell.setTextAndCheck(getString(R.string.MarkReadAfterSend), NekoConfig.markReadAfterSend.Bool(), true);
+                        textCheckCell.setTextAndCheck(getString(R.string.MarkReadAfterSend), NyaConfig.markReadAfterSend.Bool(), true);
                     } else if (position == sendWithoutSoundRow) {
                         textCheckCell.setTextAndCheck(getString(R.string.SilentMessageByDefault), NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), true);
                     } else if (position == showGhostInDrawerRow) {
-                        textCheckCell.setTextAndCheck(getString(R.string.GhostModeInDrawer), NekoConfig.showGhostInDrawer.Bool(), true);
+                        textCheckCell.setTextAndCheck(getString(R.string.GhostModeInDrawer), NyaConfig.showGhostInDrawer.Bool(), true);
                     } else if (position == showGhostModeStatusRow) {
-                        textCheckCell.setTextAndCheck(getString(R.string.GhostModeStatusIndicator), NekoConfig.showGhostModeStatus.Bool(), false);
+                        textCheckCell.setTextAndCheck(getString(R.string.GhostModeStatusIndicator), NyaConfig.showGhostModeStatus.Bool(), false);
                     }
                     break;
                 case TYPE_HEADER:
@@ -279,10 +278,10 @@ public class GhostModeActivity extends BaseNekoSettingsActivity {
                     TextCheckCell2 checkCell = (TextCheckCell2) holder.itemView;
                     if (position == ghostModeToggleRow) {
                         int selectedCount = getGhostModeSelectedCount();
-                        boolean isActive = NekoConfig.isGhostModeActive();
+                        boolean isActive = NyaConfig.isGhostModeActive();
                         checkCell.setTextAndCheck(getString(R.string.GhostMode), isActive, true, true);
                         checkCell.setCollapseArrow(String.format(Locale.US, "%d/5", selectedCount), !ghostModeMenuExpanded, () -> {
-                            NekoConfig.toggleGhostMode();
+                            NyaConfig.toggleGhostMode();
                             String msg = isActive
                                     ? getString(R.string.GhostModeDisabled)
                                     : getString(R.string.GhostModeEnabled);
@@ -301,28 +300,28 @@ public class GhostModeActivity extends BaseNekoSettingsActivity {
                     String title = "";
 
                     if (position == sendReadMessagePacketsRow) {
-                        item = NekoConfig.sendReadMessagePackets;
-                        lockedItem = NekoConfig.sendReadMessagePacketsLocked;
+                        item = NyaConfig.sendReadMessagePackets;
+                        lockedItem = NyaConfig.sendReadMessagePacketsLocked;
                         checkValue = !item.Bool();
                         title = getString(R.string.DontSendReadMessagePackets);
                     } else if (position == sendReadStoriesPacketsRow) {
-                        item = NekoConfig.sendReadStoriesPackets;
-                        lockedItem = NekoConfig.sendReadStoriesPacketsLocked;
+                        item = NyaConfig.sendReadStoriesPackets;
+                        lockedItem = NyaConfig.sendReadStoriesPacketsLocked;
                         checkValue = !item.Bool();
                         title = getString(R.string.DontReadStoriesPackets);
                     } else if (position == sendOnlinePacketsRow) {
-                        item = NekoConfig.sendOnlinePackets;
-                        lockedItem = NekoConfig.sendOnlinePacketsLocked;
+                        item = NyaConfig.sendOnlinePackets;
+                        lockedItem = NyaConfig.sendOnlinePacketsLocked;
                         checkValue = !item.Bool();
                         title = getString(R.string.DontSendOnlinePackets);
                     } else if (position == sendUploadProgressRow) {
-                        item = NekoConfig.sendUploadProgress;
-                        lockedItem = NekoConfig.sendUploadProgressLocked;
+                        item = NyaConfig.sendUploadProgress;
+                        lockedItem = NyaConfig.sendUploadProgressLocked;
                         checkValue = !item.Bool();
                         title = getString(R.string.DontSendUploadProgress);
                     } else if (position == sendOfflinePacketAfterOnlineRow) {
-                        item = NekoConfig.sendOfflinePacketAfterOnline;
-                        lockedItem = NekoConfig.sendOfflinePacketAfterOnlineLocked;
+                        item = NyaConfig.sendOfflinePacketAfterOnline;
+                        lockedItem = NyaConfig.sendOfflinePacketAfterOnlineLocked;
                         checkValue = item.Bool();
                         title = getString(R.string.SendOfflinePacketAfterOnline);
                     }

@@ -99,7 +99,6 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.function.Consumer;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.NekoXConfig;
 import top.nkbe.niagram.filters.AyuFilter;
 import top.nkbe.niagram.config.NyaConfig;
@@ -1086,7 +1085,7 @@ public class NotificationsController extends BaseController implements Notificat
                     }
                     continue;
                 }
-                if (NekoConfig.ignoreBlocked.Bool() && (getMessagesController().blockePeers.indexOfKey(messageObject.getFromChatId()) >= 0 || AyuFilter.isCustomFilteredPeer(messageObject.getFromChatId()))) {
+                if (NyaConfig.ignoreBlocked.Bool() && (getMessagesController().blockePeers.indexOfKey(messageObject.getFromChatId()) >= 0 || AyuFilter.isCustomFilteredPeer(messageObject.getFromChatId()))) {
                     continue;
                 }
                 if (AyuFilter.isBlockedChannel(messageObject.getFromChatId())) {
@@ -2490,7 +2489,7 @@ public class NotificationsController extends BaseController implements Notificat
             return null;
         }
         StringBuilder stringBuilder = new StringBuilder(text);
-        if (NekoConfig.showSpoilersDirectly.Bool())
+        if (NyaConfig.showSpoilersDirectly.Bool())
             return stringBuilder.toString();
         if (messageObject != null && messageObject.didSpoilLoginCode()) {
             return stringBuilder.toString();
@@ -3375,7 +3374,7 @@ public class NotificationsController extends BaseController implements Notificat
                             }
                         });
                     }
-                    boolean iosSounds = top.nkbe.niagram.NekoConfig.useIosSounds.Bool();
+                    boolean iosSounds = top.nkbe.niagram.config.NyaConfig.useIosSounds.Bool();
                     if (lastUseIosSounds != iosSounds) {
                         lastUseIosSounds = iosSounds;
                         soundIn = 0;
@@ -3673,7 +3672,7 @@ public class NotificationsController extends BaseController implements Notificat
             } else {
                 icon = IconCompat.createWithResource(ApplicationLoader.applicationContext, R.drawable.book_group);
             }
-            if (supportsBubble && !NekoConfig.disableNotificationBubbles.Bool()) {
+            if (supportsBubble && !NyaConfig.disableNotificationBubbles.Bool()) {
                 NotificationCompat.BubbleMetadata.Builder bubbleBuilder =
                         new NotificationCompat.BubbleMetadata.Builder(
                                 PendingIntent.getActivity(ApplicationLoader.applicationContext, 0, intent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT),
@@ -5302,7 +5301,7 @@ public class NotificationsController extends BaseController implements Notificat
                         FileLog.d("showExtraNotifications: ["+dialogId+"] continue; topic id is not equal: topicId=" + topicId + " messageTopicId=" + messageTopicId + "; selfId=" + getUserConfig().getClientUserId());
                         continue;
                     }
-                    if (NekoConfig.ignoreBlocked.Bool() && (getMessagesController().blockePeers.indexOfKey(messageObject.getFromChatId()) >= 0 || AyuFilter.isCustomFilteredPeer(messageObject.getFromChatId()))) {
+                    if (NyaConfig.ignoreBlocked.Bool() && (getMessagesController().blockePeers.indexOfKey(messageObject.getFromChatId()) >= 0 || AyuFilter.isCustomFilteredPeer(messageObject.getFromChatId()))) {
                         continue;
                     }
                     if (AyuFilter.isBlockedChannel(messageObject.getFromChatId())) {
@@ -5988,7 +5987,7 @@ public class NotificationsController extends BaseController implements Notificat
                         }
                     });
                 }
-                boolean iosSounds = top.nkbe.niagram.NekoConfig.useIosSounds.Bool();
+                boolean iosSounds = top.nkbe.niagram.config.NyaConfig.useIosSounds.Bool();
                 if (lastUseIosSounds != iosSounds) {
                     lastUseIosSounds = iosSounds;
                     soundIn = 0;

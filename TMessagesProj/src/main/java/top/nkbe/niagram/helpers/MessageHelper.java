@@ -92,7 +92,6 @@ import java.util.concurrent.CountDownLatch;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.filters.AyuFilter;
 import top.nkbe.niagram.parts.MessageTransKt;
 import top.nkbe.niagram.config.NyaConfig;
@@ -218,7 +217,7 @@ public class MessageHelper extends BaseController {
         SQLiteCursor cursor = null;
         NativeByteBuffer data = null;
         try {
-            boolean ignoreBlocked = NekoConfig.ignoreBlocked.Bool();
+            boolean ignoreBlocked = NyaConfig.ignoreBlocked.Bool();
             long currentUserId = UserConfig.getInstance(currentAccount).clientUserId;
             HashMap<Long, HashMap<Long, TLRPC.Message>> replyMessageCache = ignoreBlocked ? new HashMap<>() : null;
             String query = ignoreBlocked
@@ -1059,7 +1058,7 @@ public class MessageHelper extends BaseController {
     }
 
     public boolean isBlockedUser(long senderId) {
-        if (!NekoConfig.ignoreBlocked.Bool()) {
+        if (!NyaConfig.ignoreBlocked.Bool()) {
             return false;
         }
         return getMessagesController().blockePeers.indexOfKey(senderId) >= 0 || AyuFilter.isCustomFilteredPeer(senderId);

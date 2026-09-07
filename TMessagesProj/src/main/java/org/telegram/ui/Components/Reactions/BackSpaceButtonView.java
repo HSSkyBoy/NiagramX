@@ -23,7 +23,7 @@ import org.telegram.ui.Components.CombinedDrawable;
 import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Stories.RoundRectOutlineProvider;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressLint("ViewConstructor")
 public class BackSpaceButtonView extends FrameLayout {
@@ -58,7 +58,7 @@ public class BackSpaceButtonView extends FrameLayout {
                         if (onBackspace != null) {
                             onBackspace.run(false);
                             try {
-                                if (!NekoConfig.disableVibration.Bool()) backspaceButton.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                                if (!NyaConfig.disableVibration.Bool()) backspaceButton.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                             } catch (Exception ignored) {}
                         }
                     }
@@ -67,7 +67,7 @@ public class BackSpaceButtonView extends FrameLayout {
                 return true;
             }
         };
-        backspaceButton.setHapticFeedbackEnabled(!NekoConfig.disableVibration.Bool());
+        backspaceButton.setHapticFeedbackEnabled(!NyaConfig.disableVibration.Bool());
         backspaceButton.setImageResource(R.drawable.smiles_tab_clear);
         backspaceButton.setColorFilter(new PorterDuffColorFilter(getThemedColor(Theme.key_chat_emojiPanelBackspace), PorterDuff.Mode.MULTIPLY));
         backspaceButton.setScaleType(ImageView.ScaleType.CENTER);
@@ -117,7 +117,7 @@ public class BackSpaceButtonView extends FrameLayout {
             if (onBackspace != null) {
                 onBackspace.run(time < 300);
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) backspaceButton.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                    if (!NyaConfig.disableVibration.Bool()) backspaceButton.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                 } catch (Exception ignored) {}
             }
             backspaceOnce = true;

@@ -31,7 +31,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipException;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class FileLoadOperation {
 
@@ -288,10 +288,10 @@ public class FileLoadOperation {
     }
 
     private void updateParams() {
-        int boostMode = NekoConfig.enhancedFileLoader.Int();
+        int boostMode = NyaConfig.enhancedFileLoader.Int();
         boolean isExperimental = MessagesController.getInstance(currentAccount).getfileExperimentalParams;
-        if ((preloadPrefixSize > 0 || isExperimental || boostMode > NekoConfig.ENHANCED_LOADER_OFF) && !forceSmallChunk) {
-            if (boostMode == NekoConfig.ENHANCED_LOADER_EXTREME || (boostMode == NekoConfig.ENHANCED_LOADER_OFF && isExperimental)) {
+        if ((preloadPrefixSize > 0 || isExperimental || boostMode > NyaConfig.ENHANCED_LOADER_OFF) && !forceSmallChunk) {
+            if (boostMode == NyaConfig.ENHANCED_LOADER_EXTREME || (boostMode == NyaConfig.ENHANCED_LOADER_OFF && isExperimental)) {
                 downloadChunkSizeBig = 1024 * 512;
                 maxDownloadRequests = 8;
                 maxDownloadRequestsBig = 8;

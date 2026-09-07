@@ -67,7 +67,7 @@ import java.util.Objects;
 
 import kotlin.Unit;
 import top.nkbe.niagram.ui.BottomBuilder;
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class AvatarPreviewer {
 

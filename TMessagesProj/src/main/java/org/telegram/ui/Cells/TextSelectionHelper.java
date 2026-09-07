@@ -74,7 +74,7 @@ import org.telegram.ui.RestrictedLanguagesSelectActivity;
 
 import java.util.ArrayList;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.helpers.EntitiesHelper;
 import top.nkbe.niagram.llm.LlmConfig;
 import top.nkbe.niagram.translate.Translator;
@@ -290,7 +290,7 @@ public abstract class TextSelectionHelper<Cell extends TextSelectionHelper.Selec
 
                 selectedView = newView;
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) textSelectionOverlay.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) textSelectionOverlay.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                 } catch (Exception ignored) {}
                 AndroidUtilities.cancelRunOnUIThread(showActionsRunnable);
                 AndroidUtilities.runOnUIThread(showActionsRunnable);
@@ -1674,7 +1674,7 @@ public abstract class TextSelectionHelper<Cell extends TextSelectionHelper.Selec
                     Activity activity = ProxyUtil.getOwnerActivity((((View) selectedView).getContext()));
                     AlertDialog pro = AlertUtil.showProgress(activity);
                     pro.show();
-                    Translator.translate(TranslatorKt.getCode2Locale(NekoConfig.translateToLang.String()), urlFinal, LlmConfig.isLLMTranslatorAvailable() ? Translator.providerLLMTranslator : 0, new Translator.Companion.TranslateCallBack() {
+                    Translator.translate(TranslatorKt.getCode2Locale(NyaConfig.translateToLang.String()), urlFinal, LlmConfig.isLLMTranslatorAvailable() ? Translator.providerLLMTranslator : 0, new Translator.Companion.TranslateCallBack() {
                         @Override
                         public void onSuccess(@NotNull String translation) {
                             pro.dismiss();

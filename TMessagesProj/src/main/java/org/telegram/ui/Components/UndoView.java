@@ -67,7 +67,7 @@ import org.telegram.ui.PaymentFormActivity;
 
 import java.util.ArrayList;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.helpers.AppRestartHelper;
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -1171,7 +1171,7 @@ public class UndoView extends FrameLayout {
             if (hapticDelay > 0) {
                 leftImageView.postDelayed(() -> {
                     try {
-                        if (!NekoConfig.disableVibration.Bool()) leftImageView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                        if (!NyaConfig.disableVibration.Bool()) leftImageView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                     } catch (Exception ignored) {}
                 }, hapticDelay);
             }

@@ -9,7 +9,7 @@
 
 package com.radolyn.ayugram;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class AyuConstants {
 
@@ -32,5 +32,5 @@ public class AyuConstants {
     public static final String AYU_DATABASE = "ayu-data";
     public static final String AYU_DATABASE_EXPORT = AYU_DATABASE + ".db";
 
-    public static String APP_NAME = NekoConfig.customSavePath.String();
+    public static String APP_NAME = NyaConfig.customSavePath.String();
 }

@@ -32,7 +32,7 @@ import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.MotionBackgroundDrawable;
 import org.telegram.ui.Stories.recorder.HintView2;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
 
 @SuppressLint("ViewConstructor")
@@ -100,7 +100,7 @@ public class StickerSizePreviewMessagesCell extends LinearLayout {
         messageObjects[0].replyMessageObject = new MessageObject(UserConfig.selectedAccount, message, true, false);
 
         message = new TLRPC.TL_message();
-        message.message = NekoConfig.stickerSize.Float() < 9 ? getString(R.string.StickerSizeDialogMessageSmallOne) : getString(R.string.StickerSizeDialogMessageBigOne);
+        message.message = NyaConfig.stickerSize.Float() < 9 ? getString(R.string.StickerSizeDialogMessageSmallOne) : getString(R.string.StickerSizeDialogMessageBigOne);
         message.date = date + 1270;
         message.dialog_id = -1;
         message.flags = 259;
@@ -146,7 +146,7 @@ public class StickerSizePreviewMessagesCell extends LinearLayout {
     private void showTimeHint(ChatMessageCell cell) {
         if (cell == null || cell.timeLayout == null || cell.getMessageObject() == null ||
                 cell.getMessageObject().messageOwner == null ||
-                (NekoConfig.hideTimeForSticker.Bool() && cell.getMessageObject().isAnyKindOfSticker())
+                (NyaConfig.hideTimeForSticker.Bool() && cell.getMessageObject().isAnyKindOfSticker())
         ) {
             return;
         }
@@ -178,7 +178,7 @@ public class StickerSizePreviewMessagesCell extends LinearLayout {
         super.invalidate();
         for (int a = 0; a < cells.length; a++) {
             if (a == 1) {
-                messageObjects[a].messageOwner.message = NekoConfig.stickerSize.Float() < 9 ? getString(R.string.StickerSizeDialogMessageSmallOne) : getString(R.string.StickerSizeDialogMessageBigOne);
+                messageObjects[a].messageOwner.message = NyaConfig.stickerSize.Float() < 9 ? getString(R.string.StickerSizeDialogMessageSmallOne) : getString(R.string.StickerSizeDialogMessageBigOne);
                 messageObjects[a].applyNewText();
                 messageObjects[a].resetLayout();
             }

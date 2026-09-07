@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressLint("SimpleDateFormat")
 public class PersianDate {
@@ -183,7 +183,7 @@ public class PersianDate {
     }
 
     public String getPersianNormalDate() {
-        if (NekoConfig.displayPersianCalendarByLatin.Bool()) {
+        if (NyaConfig.displayPersianCalendarByLatin.Bool()) {
             return this.getShDay() + " " + this.monthNamesLatin() + " " + this.getShYear();
         } else {
             return LanguageUtils.getPersianNumbers(String.valueOf(this.getShDay())) + " " + this.monthName() + " " + LanguageUtils.getPersianNumbers(String.valueOf(this.getShYear()));
@@ -192,7 +192,7 @@ public class PersianDate {
 
     // like 9 شهریور
     public String getPersianMonthDay() {
-        if (NekoConfig.displayPersianCalendarByLatin.Bool()) {
+        if (NyaConfig.displayPersianCalendarByLatin.Bool()) {
             return this.getShDay() + " " + this.monthNamesLatin();
         } else {
             return LanguageUtils.getPersianNumbers(String.valueOf(this.getShDay())) + " " + this.monthName();

@@ -54,7 +54,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
 import top.nkbe.niagram.helpers.TranscribeHelper;
 import top.nkbe.niagram.llm.LlmConfig;
@@ -908,7 +908,7 @@ public class TranscribeButton {
         transcribeOperationsByDialogPosition.put(reqInfoHash(messageObject), messageObject);
 
         String textToTranslate = MessageHelper.getMessagePlainText(messageObject, null);
-        locale = locale != null ? locale : TranslatorKt.getCode2Locale(NekoConfig.translateToLang.String());
+        locale = locale != null ? locale : TranslatorKt.getCode2Locale(NyaConfig.translateToLang.String());
         Translator.translate(locale, textToTranslate, LlmConfig.isLLMTranslatorAvailable() ? Translator.providerLLMTranslator : 0, new Translator.Companion.TranslateCallBack() {
             @Override
             public void onSuccess(@NonNull String translatedText) {

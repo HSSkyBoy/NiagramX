@@ -127,7 +127,6 @@ import java.util.regex.Pattern;
 
 import me.vkryl.core.BitwiseUtils;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.filters.ReactionFilter;
 import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
@@ -269,7 +268,7 @@ public class MessageObject {
     public boolean expandedExplanation;
     public boolean forceShowPollResults;
 
-    public boolean isSpoilersRevealed = NekoConfig.showSpoilersDirectly.Bool();
+    public boolean isSpoilersRevealed = NyaConfig.showSpoilersDirectly.Bool();
     public boolean isMediaSpoilersRevealed;
     public boolean isMediaSpoilersRevealedInSharedMedia;
     public boolean revealingMediaSpoilers;
@@ -654,7 +653,7 @@ public class MessageObject {
     }
 
     public boolean hasMediaSpoilers() {
-        if (NekoConfig.showSpoilersDirectly.Bool()) return false;
+        if (NyaConfig.showSpoilersDirectly.Bool()) return false;
         return !isRepostPreview && (messageOwner.media != null && messageOwner.media.spoiler || needDrawBluredPreview()) || isHiddenSensitive();
     }
 

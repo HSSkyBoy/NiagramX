@@ -12,7 +12,7 @@ import org.telegram.tgnet.TLRPC
 import org.telegram.ui.ActionBar.AlertDialog
 import org.telegram.ui.ActionBar.BaseFragment
 import org.telegram.ui.Components.BulletinFactory
-import top.nkbe.niagram.NekoConfig
+import top.nkbe.niagram.config.NyaConfig
 import top.nkbe.niagram.translate.Translator
 import top.nkbe.niagram.ui.BottomBuilder
 import top.nkbe.niagram.ui.PopupBuilder
@@ -163,7 +163,7 @@ object AlertUtil {
             val itemNames = providers.map { getString(it.nameResId) }
             popup.setItems(itemNames.toTypedArray()) { index, _ ->
                 reference.get().dismiss()
-                NekoConfig.translationProvider.setConfigInt(providers[index].providerConstant)
+                NyaConfig.translationProvider.setConfigInt(providers[index].providerConstant)
                 retryRunnable.run()
             }
             popup.show()

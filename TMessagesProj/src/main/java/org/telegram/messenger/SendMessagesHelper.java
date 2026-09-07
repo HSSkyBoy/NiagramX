@@ -135,7 +135,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import top.nkbe.niagram.utils.StringUtils;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.config.NyaConfig;
 
 public class SendMessagesHelper extends BaseController implements NotificationCenter.NotificationCenterDelegate {
@@ -3876,7 +3875,7 @@ public class SendMessagesHelper extends BaseController implements NotificationCe
             req.big = true;
         }
         // --- Ghost Mode ---
-        if (req.msg_id != 0 && NekoConfig.markReadAfterSend.Bool() && !NekoConfig.sendReadMessagePackets.Bool()) {
+        if (req.msg_id != 0 && NyaConfig.markReadAfterSend.Bool() && !NyaConfig.sendReadMessagePackets.Bool()) {
             if (!AyuGhostPreferences.getGhostModeReadExclusion(AyuGhostUtils.getDialogId(req.peer))) {
                 AyuGhostUtils.markReadOnServer(req.msg_id, req.peer, false);
             }
@@ -12204,7 +12203,7 @@ public class SendMessagesHelper extends BaseController implements NotificationCe
         public MessageObject replyToMsg;
         public MessageObject replyToTopMsg;
         public TLRPC.WebPage webPage;
-        public boolean searchLinks = !NekoConfig.disableLinkPreviewByDefault.Bool();
+        public boolean searchLinks = !NyaConfig.disableLinkPreviewByDefault.Bool();
         public MessageObject retryMessageObject;
         public ArrayList<TLRPC.MessageEntity> entities;
         public TLRPC.ReplyMarkup replyMarkup;

@@ -2,7 +2,6 @@ package top.nkbe.niagram.llm
 
 import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.R
-import top.nkbe.niagram.NekoConfig
 import top.nkbe.niagram.config.ConfigItem
 import top.nkbe.niagram.llm.net.GeminiNativeClient
 import top.nkbe.niagram.llm.preset.PresetRegistry
@@ -136,6 +135,6 @@ object LlmConfig {
 
     @JvmStatic
     fun llmIsDefaultProvider(): Boolean {
-        return NekoConfig.translationProvider.Int() == Translator.providerLLMTranslator
+        return NyaConfig.translationProvider.Int() == Translator.providerLLMTranslator
     }
 }

@@ -79,7 +79,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.net.ssl.SSLException;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.ErrorDatabase;
 
 import top.nkbe.niagram.NekoXConfig;
@@ -897,7 +896,7 @@ public class ConnectionsManager extends BaseController {
                 }
                 lastDnsRequestTime = System.currentTimeMillis();
 
-                if (NekoConfig.dnsType.Int() != NekoConfig.DNS_TYPE_DEFAULT && NekoConfig.dnsType.Int() != NekoConfig.DNS_TYPE_SYSTEM) {
+                if (NyaConfig.dnsType.Int() != NyaConfig.DNS_TYPE_DEFAULT && NyaConfig.dnsType.Int() != NyaConfig.DNS_TYPE_SYSTEM) {
                     FileLog.d("start custom dns txt task");
                     DnsTxtLoadTask task = new DnsTxtLoadTask(currentAccount);
                     task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, null, null, null);
@@ -1140,7 +1139,7 @@ public class ConnectionsManager extends BaseController {
                 }
             }
             if (hasIpv6) {
-                if (!hasIpv4 || forceTryIpV6 || NekoConfig.useIPv6.Bool()) {
+                if (!hasIpv4 || forceTryIpV6 || NyaConfig.useIPv6.Bool()) {
                     return USE_IPV6_ONLY;
                 } else if (hasStrangeIpv4) {
                     return USE_IPV4_IPV6_RANDOM;
@@ -1186,7 +1185,7 @@ public class ConnectionsManager extends BaseController {
         }
 
         protected ResolvedDomain doInBackground(Void... voids) {
-            if (NekoConfig.dnsType.Int() != NekoConfig.DNS_TYPE_DEFAULT) {
+            if (NyaConfig.dnsType.Int() != NyaConfig.DNS_TYPE_DEFAULT) {
                 return dnsFactoryLookup();
             }
             ByteArrayOutputStream outbuf = null;

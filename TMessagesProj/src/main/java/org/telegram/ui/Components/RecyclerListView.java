@@ -95,7 +95,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressWarnings("JavaReflectionMemberAccess")
 public class RecyclerListView extends RecyclerView implements IBlur3Capture {
@@ -1186,14 +1186,14 @@ public class RecyclerListView extends RecyclerView implements IBlur3Capture {
                     if (onItemLongClickListener != null) {
                         if (onItemLongClickListener.onItemClick(currentChildView, currentChildPosition)) {
                             try {
-                                if (!NekoConfig.disableVibration.Bool()) child.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                                if (!NyaConfig.disableVibration.Bool()) child.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                             } catch (Exception ignored) {}
                             child.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_LONG_CLICKED);
                         }
                     } else {
                         if (onItemLongClickListenerExtended.onItemClick(currentChildView, currentChildPosition, event.getX() - currentChildView.getX(), event.getY() - currentChildView.getY())) {
                             try {
-                                if (!NekoConfig.disableVibration.Bool()) child.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                                if (!NyaConfig.disableVibration.Bool()) child.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                             } catch (Exception ignored) {}
                             child.sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_LONG_CLICKED);
                             longPressCalled = true;
