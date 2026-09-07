@@ -78,6 +78,10 @@ object ProxyUtil {
                             NotificationCenter.getGlobalInstance()
                                 .postNotificationName(NotificationCenter.proxySettingsChanged)
                         }
+                    } else if (SharedConfig.isProxyEnabled() && SharedConfig.proxyAutoSpeedAcceleration) {
+                        AndroidUtilities.runOnUIThread {
+                            org.telegram.messenger.ProxyRotationController.checkAndAccelerate(false)
+                        }
                     }
                 }
             }

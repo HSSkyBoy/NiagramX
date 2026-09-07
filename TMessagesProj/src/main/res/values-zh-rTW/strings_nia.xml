@@ -552,4 +552,10 @@
     <string name="NiaBanByIdErrorInvalidUser">無效的使用者 ID 或在 Telegram 伺服端查無此人。</string>
     <string name="NiaBanByIdErrorAdminRequired">您的管理員權限不足，無法封禁該使用者。</string>
     <string name="NiaBanByIdServerError">封禁失敗，伺服端回應：%1$s</string>
+
+    <string name="ProxyAutoSpeedAcceleration">自動優選最低延遲代理</string>
+    <string name="ProxyAutoSpeedAccelerationInfo">自動測速並切換至延遲最低的可用代理，以獲得最佳連線速度。</string>
+    <string name="UseFastestProxy">切換至最快代理</string>
+    <string name="SwitchedToFastestProxy">已切換至最快代理</string>
+    <string name="AlreadyFastestProxy">目前已在使用最快代理</string>
 </resources>

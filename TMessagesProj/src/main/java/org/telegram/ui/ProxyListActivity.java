@@ -105,6 +105,8 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
     private int rotationRow;
     private int rotationTimeoutRow;
     private int rotationTimeoutInfoRow;
+    private int autoSpeedRow;
+    private int autoSpeedInfoRow;
     private int callsDetailRow;
     private int deleteAllRow;
 
@@ -371,6 +373,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
     private final static int na_menu_retest_ping = 1004;
     private final static int na_menu_delete_all = 1005;
     private final static int na_menu_delete_unavailable = 1006;
+    private final static int na_menu_use_fastest = 1007;
 
     @Override
     public View createView(Context context) {
@@ -404,6 +407,15 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                     TextDetailProxyCell cell = (TextDetailProxyCell) holder.itemView;
                     cell.updateStatus();
                 }
+            }
+        });
+        otherItem.addSubItem(na_menu_use_fastest, LocaleController.getString(R.string.UseFastestProxy)).setOnClickListener((v) -> {
+            boolean switched = ProxyRotationController.switchToFastestProxy();
+            updateRows(true);
+            if (switched) {
+                AlertUtil.showToast(LocaleController.getString(R.string.SwitchedToFastestProxy));
+            } else {
+                AlertUtil.showToast(LocaleController.getString(R.string.AlreadyFastestProxy));
             }
         });
         otherItem.addSubItem(na_menu_delete_all, LocaleController.getString("DeleteAllServer", R.string.DeleteAllServer)).setOnClickListener((v) -> AlertUtil.showConfirm(getParentActivity(),
@@ -520,6 +532,14 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                 SharedConfig.saveConfig();
 
                 updateRows(true);
+            } else if (position == autoSpeedRow) {
+                SharedConfig.proxyAutoSpeedAcceleration = !SharedConfig.proxyAutoSpeedAcceleration;
+                TextCheckCell textCheckCell = (TextCheckCell) view;
+                textCheckCell.setChecked(SharedConfig.proxyAutoSpeedAcceleration);
+                SharedConfig.saveConfig();
+                if (SharedConfig.proxyAutoSpeedAcceleration) {
+                    ProxyRotationController.checkAndAccelerate(true);
+                }
             } else if (position == callsRow) {
                 useProxyForCalls = !useProxyForCalls;
                 TextCheckCell textCheckCell = (TextCheckCell) view;
@@ -705,12 +725,16 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                 rotationTimeoutRow = -1;
                 rotationTimeoutInfoRow = -1;
             }
+            autoSpeedRow = rowCount++;
+            autoSpeedInfoRow = rowCount++;
         } else {
             rotationRow = -1;
             rotationTimeoutRow = -1;
             rotationTimeoutInfoRow = -1;
+            autoSpeedRow = -1;
+            autoSpeedInfoRow = -1;
         }
-        if (rotationTimeoutInfoRow == -1) {
+        if (rotationTimeoutInfoRow == -1 && autoSpeedInfoRow == -1) {
             useProxyShadowRow = rowCount++;
         } else {
             useProxyShadowRow = -1;
@@ -984,6 +1008,8 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                         checkCell.setTextAndCheck(getString(R.string.UseProxyForCalls), useProxyForCalls, false);
                     } else if (position == rotationRow) {
                         checkCell.setTextAndCheck(getString(R.string.UseProxyRotation), SharedConfig.proxyRotationEnabled, true);
+                    } else if (position == autoSpeedRow) {
+                        checkCell.setTextAndCheck(getString(R.string.ProxyAutoSpeedAcceleration), SharedConfig.proxyAutoSpeedAcceleration, false);
                     }
                     break;
                 }
@@ -993,6 +1019,8 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                         cell.setText(getString(R.string.UseProxyForCallsInfo));
                     } else if (position == rotationTimeoutInfoRow) {
                         cell.setText(getString(R.string.ProxyRotationTimeoutInfo));
+                    } else if (position == autoSpeedInfoRow) {
+                        cell.setText(getString(R.string.ProxyAutoSpeedAccelerationInfo));
                     }
                     break;
                 }
@@ -1043,6 +1071,8 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                     checkCell.setChecked(useProxyForCalls);
                 } else if (position == rotationRow) {
                     checkCell.setChecked(SharedConfig.proxyRotationEnabled);
+                } else if (position == autoSpeedRow) {
+                    checkCell.setChecked(SharedConfig.proxyAutoSpeedAcceleration);
                 }
             } else {
                 super.onBindViewHolder(holder, position, payloads);
@@ -1061,6 +1091,8 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                     checkCell.setChecked(useProxyForCalls);
                 } else if (position == rotationRow) {
                     checkCell.setChecked(SharedConfig.proxyRotationEnabled);
+                } else if (position == autoSpeedRow) {
+                    checkCell.setChecked(SharedConfig.proxyAutoSpeedAcceleration);
                 }
             }
         }
@@ -1068,7 +1100,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
         @Override
         public boolean isEnabled(RecyclerView.ViewHolder holder) {
             int position = holder.getAdapterPosition();
-            return position == useProxyRow || position == rotationRow || position == callsRow || position == proxyAddRow || position == deleteAllRow || position >= proxyStartRow && position < proxyEndRow;
+            return position == useProxyRow || position == rotationRow || position == autoSpeedRow || position == callsRow || position == proxyAddRow || position == deleteAllRow || position >= proxyStartRow && position < proxyEndRow;
         }
 
         @Override
@@ -1130,6 +1162,10 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                 return -10;
             } else if (position == rotationTimeoutInfoRow) {
                 return -11;
+            } else if (position == autoSpeedRow) {
+                return -12;
+            } else if (position == autoSpeedInfoRow) {
+                return -13;
             } else if (position >= proxyStartRow && position < proxyEndRow) {
                 return proxyList.get(position - proxyStartRow).hashCode();
             } else {
@@ -1143,7 +1179,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                 return VIEW_TYPE_SHADOW;
             } else if (position == proxyAddRow || position == deleteAllRow) {
                 return VIEW_TYPE_TEXT_SETTING;
-            } else if (position == useProxyRow || position == rotationRow || position == callsRow) {
+            } else if (position == useProxyRow || position == rotationRow || position == autoSpeedRow || position == callsRow) {
                 return VIEW_TYPE_TEXT_CHECK;
             } else if (position == connectionsHeaderRow) {
                 return VIEW_TYPE_HEADER;

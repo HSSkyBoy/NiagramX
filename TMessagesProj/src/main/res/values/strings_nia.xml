@@ -572,4 +572,11 @@
     <string name="NiaBanByIdErrorInvalidUser">Invalid user ID or user not found on Telegram.</string>
     <string name="NiaBanByIdErrorAdminRequired">You do not have sufficient administrator rights to ban this user.</string>
     <string name="NiaBanByIdServerError">Failed to ban user: %1$s</string>
+
+    <!-- Proxy Auto Acceleration -->
+    <string name="ProxyAutoSpeedAcceleration">Auto-Select Fastest Proxy</string>
+    <string name="ProxyAutoSpeedAccelerationInfo">Automatically test and switch to the proxy with the lowest ping for faster connection.</string>
+    <string name="UseFastestProxy">Switch to Fastest Proxy</string>
+    <string name="SwitchedToFastestProxy">Switched to fastest proxy</string>
+    <string name="AlreadyFastestProxy">Currently already using the fastest proxy</string>
 </resources>

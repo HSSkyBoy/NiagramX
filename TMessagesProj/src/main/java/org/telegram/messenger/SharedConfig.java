@@ -330,6 +330,7 @@ public class SharedConfig {
     public static int bubbleRadius = 17;
     public static int ivFontSize = 16;
     public static boolean proxyRotationEnabled;
+    public static boolean proxyAutoSpeedAcceleration;
     public static int proxyRotationTimeout;
     public static int messageSeenHintCount;
     public static int emojiInteractionsHintCount;
@@ -498,6 +499,7 @@ public class SharedConfig {
                 editor.putInt("lockRecordAudioVideoHint", lockRecordAudioVideoHint);
                 editor.putString("storageCacheDir", !TextUtils.isEmpty(storageCacheDir) ? storageCacheDir : "");
                 editor.putBoolean("proxyRotationEnabled", proxyRotationEnabled);
+                editor.putBoolean("proxyAutoSpeedAcceleration", proxyAutoSpeedAcceleration);
                 editor.putInt("proxyRotationTimeout", proxyRotationTimeout);
 
                 if (pendingAppUpdate != null) {
@@ -565,6 +567,7 @@ public class SharedConfig {
             passportConfigHash = preferences.getInt("passportConfigHash", 0);
             storageCacheDir = preferences.getString("storageCacheDir", null);
             proxyRotationEnabled = preferences.getBoolean("proxyRotationEnabled", false);
+            proxyAutoSpeedAcceleration = preferences.getBoolean("proxyAutoSpeedAcceleration", false);
             proxyRotationTimeout = preferences.getInt("proxyRotationTimeout", ProxyRotationController.DEFAULT_TIMEOUT_INDEX);
             String authKeyString = preferences.getString("pushAuthKey", null);
             if (!TextUtils.isEmpty(authKeyString)) {
