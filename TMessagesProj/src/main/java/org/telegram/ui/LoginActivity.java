@@ -2027,6 +2027,8 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
         private ImageView chevronRight;
         private CheckBoxCell syncContactsBox;
         private CheckBoxCell testBackendCheckBox;
+        private CheckBoxCell prioritizeEmailCheckBox;
+        private boolean prioritizeEmailCode = false;
 
         @CountryState
         private int countryState = COUNTRY_STATE_NOT_SET_OR_VALID;
@@ -2532,6 +2534,21 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                     } else {
                         BulletinFactory.of(slideViewsContainer, null).createSimpleBulletin(R.raw.contacts_sync_off, getString("SyncContactsOff", R.string.SyncContactsOff)).show();
                     }
+                });
+            }
+
+            if (activityMode == MODE_LOGIN) {
+                prioritizeEmailCheckBox = new CheckBoxCell(context, 2);
+                prioritizeEmailCheckBox.setText(getString(R.string.PrioritizeEmailCode), "", prioritizeEmailCode, false);
+                addView(prioritizeEmailCheckBox, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.LEFT | Gravity.TOP, 16, 0, 16 + (LocaleController.isRTL && AndroidUtilities.isSmallScreen() ? 56 : 0), 0));
+                bottomMargin -= 24;
+                prioritizeEmailCheckBox.setOnClickListener(v -> {
+                    if (getParentActivity() == null) {
+                        return;
+                    }
+                    CheckBoxCell cell = (CheckBoxCell) v;
+                    prioritizeEmailCode = !prioritizeEmailCode;
+                    cell.setChecked(prioritizeEmailCode, true);
                 });
             }
 
@@ -3168,6 +3185,10 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
             }
 
             TLRPC.TL_codeSettings settings = new TLRPC.TL_codeSettings();
+            if (prioritizeEmailCode) {
+                settings.request_email_code = true;
+                settings.flags |= 1;
+            }
             settings.allow_flashcall = simcardAvailable && allowCall && allowCancelCall && allowReadCallLog;
             settings.allow_missed_call = simcardAvailable && allowCall;
             settings.allow_app_hash = settings.allow_firebase = PushListenerController.getProvider().hasServices();
@@ -3896,7 +3917,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                 }
                 @Override
                 protected boolean isRippleEnabled() {
-                    return getVisibility() == View.VISIBLE && !(time > 0 && timeTimer != null);
+                    return getVisibility() == View.VISIBLE;
                 }
             };
             timeText.setLinkTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteValueText));
@@ -3905,10 +3926,25 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
             timeText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
             timeText.setGravity(Gravity.TOP | Gravity.LEFT);
             timeText.setOnClickListener(v -> {
-//                if (isRequestingFirebaseSms || isResendingCode) {
-//                    return;
-//                }
+                if (isRequestingFirebaseSms || isResendingCode) {
+                    return;
+                }
                 if (time > 0 && timeTimer != null) {
+                    if (getParentActivity() != null) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity());
+                        builder.setTitle(getString(R.string.FastResendDialogTitle));
+                        builder.setMessage(getString(R.string.FastResendDialogMessage));
+                        builder.setPositiveButton(getString(R.string.FastResendNow), (dialog, which) -> {
+                            destroyTimer();
+                            time = 0;
+                            isResendingCode = true;
+                            timeText.invalidate();
+                            timeText.setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteValueText));
+                            resendCode();
+                        });
+                        builder.setNegativeButton(getString(R.string.Cancel), null);
+                        showDialog(builder.create());
+                    }
                     return;
                 }
                 isResendingCode = true;

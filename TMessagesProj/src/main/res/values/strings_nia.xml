@@ -579,4 +579,10 @@
     <string name="UseFastestProxy">Switch to Fastest Proxy</string>
     <string name="SwitchedToFastestProxy">Switched to fastest proxy</string>
     <string name="AlreadyFastestProxy">Currently already using the fastest proxy</string>
+
+    <!-- Login Optimization -->
+    <string name="PrioritizeEmailCode">Prioritize email code</string>
+    <string name="FastResendDialogTitle">Resend Code</string>
+    <string name="FastResendDialogMessage">Haven\'t received the code yet? Skip the countdown and request a new code immediately?</string>
+    <string name="FastResendNow">Resend Now</string>
 </resources>

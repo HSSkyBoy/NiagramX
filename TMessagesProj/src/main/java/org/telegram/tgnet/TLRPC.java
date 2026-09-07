@@ -18322,6 +18322,7 @@ public class TLRPC {
 
         public int flags;
         public boolean allow_flashcall;
+        public boolean request_email_code;
         public boolean current_number;
         public boolean allow_app_hash;
         public boolean allow_missed_call;
@@ -18339,6 +18340,7 @@ public class TLRPC {
         public void readParams(InputSerializedData stream, boolean exception) {
             flags = stream.readInt32(exception);
             allow_flashcall = hasFlag(flags, FLAG_0);
+            request_email_code = hasFlag(flags, FLAG_0);
             current_number = hasFlag(flags, FLAG_1);
             allow_app_hash = hasFlag(flags, FLAG_4);
             allow_missed_call = hasFlag(flags, FLAG_5);
@@ -18355,7 +18357,7 @@ public class TLRPC {
 
         public void serializeToStream(OutputSerializedData stream) {
             stream.writeInt32(constructor);
-            flags = setFlag(flags, FLAG_0, allow_flashcall);
+            flags = setFlag(flags, FLAG_0, allow_flashcall || request_email_code || hasFlag(flags, FLAG_0));
             flags = setFlag(flags, FLAG_1, current_number);
             flags = setFlag(flags, FLAG_4, allow_app_hash);
             flags = setFlag(flags, FLAG_5, allow_missed_call);

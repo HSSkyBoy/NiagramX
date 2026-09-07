@@ -558,4 +558,9 @@
     <string name="UseFastestProxy">切換至最快代理</string>
     <string name="SwitchedToFastestProxy">已切換至最快代理</string>
     <string name="AlreadyFastestProxy">目前已在使用最快代理</string>
+
+    <string name="PrioritizeEmailCode">優先使用郵箱接收驗證碼</string>
+    <string name="FastResendDialogTitle">重新發送驗證碼</string>
+    <string name="FastResendDialogMessage">尚未收到驗證碼？是否跳過等待倒計時並立即重新發送？</string>
+    <string name="FastResendNow">立即重發</string>
 </resources>
