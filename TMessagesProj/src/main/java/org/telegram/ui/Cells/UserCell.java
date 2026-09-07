@@ -62,7 +62,7 @@ import org.telegram.ui.NotificationsSettingsActivity;
 import org.telegram.ui.Stories.StoriesListPlaceProvider;
 import org.telegram.ui.Stories.StoriesUtilities;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class UserCell extends FrameLayout implements NotificationCenter.NotificationCenterDelegate, Theme.Colorable {
 
@@ -735,7 +735,7 @@ public class UserCell extends FrameLayout implements NotificationCenter.Notifica
                 if (currentUser.id == UserConfig.getInstance(currentAccount).getClientUserId() || currentUser.status != null && currentUser.status.expires > ConnectionsManager.getInstance(currentAccount).getCurrentTime() || MessagesController.getInstance(currentAccount).onlinePrivacy.containsKey(currentUser.id)) {
                     statusTextView.setTextColor(statusOnlineColor);
                     statusTextView.setText(getString(R.string.Online));
-                    if (currentUser.id == UserConfig.getInstance(currentAccount).getClientUserId() && (!NekoConfig.sendOnlinePackets.Bool() || NekoConfig.sendOfflinePacketAfterOnline.Bool())) {
+                    if (currentUser.id == UserConfig.getInstance(currentAccount).getClientUserId() && (!NyaConfig.sendOnlinePackets.Bool() || NyaConfig.sendOfflinePacketAfterOnline.Bool())) {
                         statusTextView.setTextColor(statusColor);
                         statusTextView.setText(getString(R.string.VoipOfflineTitle));
                     }

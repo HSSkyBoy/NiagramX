@@ -15,7 +15,7 @@ import org.telegram.tgnet.TLRPC;
 
 import java.util.ArrayList;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ReactionFilter {
 
@@ -27,7 +27,7 @@ public class ReactionFilter {
     }
 
     public static boolean shouldFilter(int currentAccount, long dialogId) {
-        if (!NekoConfig.ignoreBlocked.Bool() || dialogId >= 0L) {
+        if (!NyaConfig.ignoreBlocked.Bool() || dialogId >= 0L) {
             return false;
         }
         int account = currentAccount >= 0 ? currentAccount : UserConfig.selectedAccount;

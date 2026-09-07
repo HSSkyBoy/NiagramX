@@ -4,8 +4,7 @@ import androidx.core.content.edit
 import com.google.gson.Gson
 import org.telegram.messenger.UserConfig
 import org.telegram.tgnet.TLRPC
-import top.nkbe.niagram.NekoConfig
-import xyz.nextalone.nagram.NaConfig
+import top.nkbe.niagram.config.NyaConfig
 
 data class LocalEmojiStatusData(
     var documentId: Long?, var until: Int?
@@ -19,7 +18,7 @@ object LocalPremiumStatusHelper {
 
     @JvmStatic
     fun getDocumentId(user: TLRPC.User?): Long? {
-        if (!NekoConfig.localPremium.Bool()) return null
+        if (!NyaConfig.localPremium.Bool()) return null
         if (user == null || !isLocalUser(user.id)) return null
 
         val data = getDataForUser(user.id) ?: return null
@@ -60,13 +59,13 @@ object LocalPremiumStatusHelper {
             val gson = Gson()
             val userKey = KEY_PREFIX + userId
 
-            var jsonStr = NaConfig.getPreferences().getString(userKey, null)
+            var jsonStr = NyaConfig.getPreferences().getString(userKey, null)
 
             if (jsonStr.isNullOrEmpty()) {
-                val legacyJson = NaConfig.useLocalEmojiStatusData.String()
+                val legacyJson = NyaConfig.useLocalEmojiStatusData.String()
                 if (legacyJson.isNotEmpty()) {
                     jsonStr = legacyJson
-                    NaConfig.getPreferences().edit { putString(userKey, jsonStr) }
+                    NyaConfig.getPreferences().edit { putString(userKey, jsonStr) }
                 }
             }
 
@@ -82,7 +81,7 @@ object LocalPremiumStatusHelper {
 
     @JvmStatic
     fun apply(status: TLRPC.EmojiStatus?) {
-        if (!NekoConfig.localPremium.Bool()) return
+        if (!NyaConfig.localPremium.Bool()) return
 
         val userId = getCurrentUserId()
         if (userId == 0L) return
@@ -91,7 +90,7 @@ object LocalPremiumStatusHelper {
 
         if (status == null || status is TLRPC.TL_emojiStatusEmpty) {
             dataMap[userId] = null
-            NaConfig.getPreferences().edit { putString(userKey, "") }
+            NyaConfig.getPreferences().edit { putString(userKey, "") }
             return
         }
 
@@ -111,6 +110,6 @@ object LocalPremiumStatusHelper {
 
         val localData = LocalEmojiStatusData(documentId, until)
         dataMap[userId] = localData
-        NaConfig.getPreferences().edit { putString(userKey, Gson().toJson(localData)) }
+        NyaConfig.getPreferences().edit { putString(userKey, Gson().toJson(localData)) }
     }
 }

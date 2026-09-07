@@ -9,7 +9,7 @@ import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.R
 import org.telegram.tgnet.TLRPC
 import org.telegram.ui.Components.TranslateAlert2
-import top.nkbe.niagram.NekoConfig
+import top.nkbe.niagram.config.NyaConfig
 import top.nkbe.niagram.translate.HTMLKeeper
 import top.nkbe.niagram.translate.Translator
 import top.nkbe.niagram.utils.HttpClient
@@ -27,7 +27,7 @@ object GoogleCloudTranslator : Translator {
             throw UnsupportedOperationException(getString(R.string.TranslateApiUnsupported) + " " + to)
         }
 
-        val apiKey = NekoConfig.googleCloudTranslateKey.String()
+        val apiKey = NyaConfig.googleCloudTranslateKey.String()
         if (TextUtils.isEmpty(apiKey)) error("Missing Cloud Translate Key")
 
         val originalText = TLRPC.TL_textWithEntities().apply {

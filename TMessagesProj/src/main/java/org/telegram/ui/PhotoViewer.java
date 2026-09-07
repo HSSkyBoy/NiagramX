@@ -345,7 +345,6 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import kotlin.Unit;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.NekoXConfig;
 import top.nkbe.niagram.helpers.ChatsHelper;
 import top.nkbe.niagram.llm.LlmConfig;
@@ -354,7 +353,7 @@ import top.nkbe.niagram.translate.TranslatorKt;
 import top.nkbe.niagram.utils.AlertUtil;
 import top.nkbe.niagram.utils.AndroidUtil;
 import top.nkbe.niagram.utils.ProxyUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
 import top.nkbe.niagram.streaming.MediaStreamingProvider;
 
@@ -365,7 +364,7 @@ import me.vkryl.core.reference.ReferenceList;
 @SuppressLint("WrongConstant")
 @SuppressWarnings("unchecked")
 public class PhotoViewer implements NotificationCenter.NotificationCenterDelegate, GestureDetector2.OnGestureListener, GestureDetector2.OnDoubleTapListener, IPipSourceDelegate, FactorAnimator.Target {
-    private static final boolean centerTitle = NaConfig.INSTANCE.getCenterActionBarTitle().Bool() && NaConfig.INSTANCE.getCenterActionBarTitleType().Int() != 2;
+    private static final boolean centerTitle = NyaConfig.INSTANCE.getCenterActionBarTitle().Bool() && NyaConfig.INSTANCE.getCenterActionBarTitleType().Int() != 2;
     private static final int ANIMATOR_ID_POLL_ATTACH_BUTTONS_VISIBLE = 0;
     private final BoolAnimator animatorPollAttachButtonsVisibility = new BoolAnimator(ANIMATOR_ID_POLL_ATTACH_BUTTONS_VISIBLE, this, CubicBezierInterpolator.EASE_OUT_QUINT, 380);
 
@@ -1459,7 +1458,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         bottomSheet.scrollNavBar = true;
         bottomSheet.show();
         try {
-            if (!NekoConfig.disableVibration.Bool()) containerView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+            if (!NyaConfig.disableVibration.Bool()) containerView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
         } catch (Exception ignore) {}
         bottomSheet.setItemColor(0,0xffffffff, 0xffffffff);
         bottomSheet.setItemColor(1,0xffffffff, 0xffffffff);
@@ -4581,7 +4580,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                 return;
             }
 
-            if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+            if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
                 return;
             }
 
@@ -5354,9 +5353,9 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                                 for (int a = 0; a < dids.size(); a++) {
                                     long did = dids.get(a).dialogId;
                                     if (message != null) {
-                                        SendMessagesHelper.getInstance(currentAccount).sendMessage(SendMessagesHelper.SendMessageParams.of(message.toString(), did, null, null, null, true, null, null, null, !NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, null, false));
+                                        SendMessagesHelper.getInstance(currentAccount).sendMessage(SendMessagesHelper.SendMessageParams.of(message.toString(), did, null, null, null, true, null, null, null, !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, null, false));
                                     }
-                                    SendMessagesHelper.getInstance(currentAccount).sendMessage(fmessages, did, id == gallery_menu_send_noquote, false, !NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
+                                    SendMessagesHelper.getInstance(currentAccount).sendMessage(fmessages, did, id == gallery_menu_send_noquote, false, !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
                                 }
                                 fragment1.finishFragment();
                                 if (parentChatActivityFinal != null) {
@@ -6078,17 +6077,17 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         menuItem.addSubItem(gallery_menu_showinchat, R.drawable.msg_message, getString(R.string.ShowInChat)).setColors(0xfffafafa, 0xfffafafa);
         menuItem.addSubItem(gallery_menu_create_sticker, R.drawable.msg_sticker, getString(R.string.CreateSticker)).setColors(0xfffafafa, 0xfffafafa);
         menuItem.addSubItem(gallery_menu_reply, R.drawable.menu_reply, getString(R.string.Reply)).setColors(0xfffafafa, 0xfffafafa);
-        if (NaConfig.INSTANCE.getMediaViewerMenuItemForward().Bool()) menuItem.addSubItem(gallery_menu_send_forward, R.drawable.msg_forward, getString(R.string.Forward)).setColors(0xfffafafa, 0xfffafafa);
-        if (NaConfig.INSTANCE.getMediaViewerMenuItemNoQuoteForward().Bool()) menuItem.addSubItem(gallery_menu_send_noquote, R.drawable.msg_forward_noquote, getString(R.string.NoQuoteForward)).setColors(0xfffafafa, 0xfffafafa);
+        if (NyaConfig.INSTANCE.getMediaViewerMenuItemForward().Bool()) menuItem.addSubItem(gallery_menu_send_forward, R.drawable.msg_forward, getString(R.string.Forward)).setColors(0xfffafafa, 0xfffafafa);
+        if (NyaConfig.INSTANCE.getMediaViewerMenuItemNoQuoteForward().Bool()) menuItem.addSubItem(gallery_menu_send_noquote, R.drawable.msg_forward_noquote, getString(R.string.NoQuoteForward)).setColors(0xfffafafa, 0xfffafafa);
         menuItem.addSubItem(gallery_menu_report, R.drawable.msg_report, getString(R.string.ReportProfilePhoto)).setColors(0xfffafafa, 0xfffafafa);
         menuItem.addSubItem(gallery_menu_share, R.drawable.msg_shareout, getString(R.string.ShareFile)).setColors(0xfffafafa, 0xfffafafa);
         menuItem.addSubItem(gallery_menu_masks2, R.drawable.msg_sticker, getString(R.string.ShowStickers)).setColors(0xfffafafa, 0xfffafafa);
         //menuItem.addSubItem(gallery_menu_edit_avatar, R.drawable.photo_paint, LocaleController.getString(R.string.EditPhoto)).setColors(0xfffafafa, 0xfffafafa);
 
-        if (NaConfig.INSTANCE.getMediaViewerMenuItemCopyPhoto().Bool()) menuItem.addSubItem(gallery_menu_copy, R.drawable.msg_copy_photo, getString(R.string.CopyPhoto)).setColors(0xfffafafa, 0xfffafafa);
-        if (NaConfig.INSTANCE.getMediaViewerMenuItemCopyFrame().Bool()) menuItem.addSubItem(gallery_menu_copy_frame, R.drawable.msg_copy_photo, getString(R.string.CopyVideoFrame)).setColors(0xfffafafa, 0xfffafafa);
-        if (NaConfig.INSTANCE.getMediaViewerMenuItemSetProfilePhoto().Bool()) menuItem.addSubItem(gallery_menu_set_photo, R.drawable.msg_openprofile, getString(R.string.SetProfilePhoto)).setColors(0xfffafafa, 0xfffafafa);
-        if (NaConfig.INSTANCE.getMediaViewerMenuItemScanQRCode().Bool()) menuItem.addSubItem(gallery_menu_scan, R.drawable.msg_qrcode, getString(R.string.ScanQRCode)).setColors(0xfffafafa, 0xfffafafa);
+        if (NyaConfig.INSTANCE.getMediaViewerMenuItemCopyPhoto().Bool()) menuItem.addSubItem(gallery_menu_copy, R.drawable.msg_copy_photo, getString(R.string.CopyPhoto)).setColors(0xfffafafa, 0xfffafafa);
+        if (NyaConfig.INSTANCE.getMediaViewerMenuItemCopyFrame().Bool()) menuItem.addSubItem(gallery_menu_copy_frame, R.drawable.msg_copy_photo, getString(R.string.CopyVideoFrame)).setColors(0xfffafafa, 0xfffafafa);
+        if (NyaConfig.INSTANCE.getMediaViewerMenuItemSetProfilePhoto().Bool()) menuItem.addSubItem(gallery_menu_set_photo, R.drawable.msg_openprofile, getString(R.string.SetProfilePhoto)).setColors(0xfffafafa, 0xfffafafa);
+        if (NyaConfig.INSTANCE.getMediaViewerMenuItemScanQRCode().Bool()) menuItem.addSubItem(gallery_menu_scan, R.drawable.msg_qrcode, getString(R.string.ScanQRCode)).setColors(0xfffafafa, 0xfffafafa);
 
         menuItem.addSubItem(gallery_menu_set_as_main, R.drawable.msg_openprofile, getString(R.string.SetAsMain)).setColors(0xfffafafa, 0xfffafafa);
         menuItem.addSubItem(gallery_menu_translate, R.drawable.msg_translate, getString(R.string.TranslateMessage)).setColors(0xfffafafa, 0xfffafafa);
@@ -7608,7 +7607,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             if (parentChatActivity != null && parentChatActivity.isInScheduleMode() && !parentChatActivity.isEditingMessageMedia()) {
                 showScheduleDatePickerDialog();
             } else {
-                sendPressed(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
+                sendPressed(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
             }
         });
         pickerViewSendButton.setOnLongClickListener(view -> {
@@ -7634,7 +7633,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             final boolean canEdit = placeProvider != null && placeProvider.canEdit(currentIndex);
             final boolean canReplace = placeProvider != null && placeProvider.canReplace(currentIndex);
             final boolean userIsSelf = UserObject.isUserSelf(user);
-            final boolean silentByDefault = NaConfig.INSTANCE.getSilentMessageByDefault().Bool();
+            final boolean silentByDefault = NyaConfig.INSTANCE.getSilentMessageByDefault().Bool();
 
             Object currentObject = imagesArrLocals.get(currentIndex);
             boolean canSpoiler = fragment instanceof ChatActivity && !((ChatActivity) fragment).isSecretChat() && currentObject instanceof MediaController.PhotoEntry;
@@ -7697,7 +7696,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
 
             if (options.getItemsCount() == 0) return false;
             try {
-                if (!NekoConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                if (!NyaConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
             } catch (Exception ignored) {}
 
             options.show();
@@ -10903,7 +10902,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                     if (!menuItem.isSubItemVisible(gallery_menu_openin)) {
                         return;
                     }
-                    if (currentMessageObject != null && currentMessageObject.isGif() && NekoConfig.takeGIFasVideo.Bool()) {
+                    if (currentMessageObject != null && currentMessageObject.isGif() && NyaConfig.takeGIFasVideo.Bool()) {
                         return;
                     }
                     AlertDialog.Builder builder = new AlertDialog.Builder(parentActivity, resourcesProvider);
@@ -14806,7 +14805,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                 NotificationCenter.getInstance(currentAccount).postNotificationName(NotificationCenter.dialogPhotosUpdate, dialogPhotos);
             }
         }
-        if (currentMessageObject != null && (currentMessageObject.isVideo() || (currentMessageObject.isGif() && NekoConfig.takeGIFasVideo.Bool())) || currentBotInlineResult != null && (currentBotInlineResult.type.equals("video") || MessageObject.isVideoDocument(currentBotInlineResult.document)) || (pageBlocksAdapter != null && (pageBlocksAdapter.isVideo(index) || pageBlocksAdapter.isHardwarePlayer(index))) || (sendPhotoType == SELECT_TYPE_NO_SELECT && ((MediaController.PhotoEntry)imagesArrLocals.get(index)).isVideo)) {
+        if (currentMessageObject != null && (currentMessageObject.isVideo() || (currentMessageObject.isGif() && NyaConfig.takeGIFasVideo.Bool())) || currentBotInlineResult != null && (currentBotInlineResult.type.equals("video") || MessageObject.isVideoDocument(currentBotInlineResult.document)) || (pageBlocksAdapter != null && (pageBlocksAdapter.isVideo(index) || pageBlocksAdapter.isHardwarePlayer(index))) || (sendPhotoType == SELECT_TYPE_NO_SELECT && ((MediaController.PhotoEntry)imagesArrLocals.get(index)).isVideo)) {
             playerAutoStarted = true;
             onActionClick(false);
         } else if (!imagesArrLocals.isEmpty()) {
@@ -14903,7 +14902,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             newMessageObject = imagesArr.get(switchingToIndex);
             newMessageObject.updateTranslation();
             isLivePhoto = newMessageObject.isLivePhoto();
-            isVideo = newMessageObject.isVideo() || (newMessageObject.isGif() && NekoConfig.takeGIFasVideo.Bool());
+            isVideo = newMessageObject.isVideo() || (newMessageObject.isGif() && NyaConfig.takeGIFasVideo.Bool());
 
             title = FilteredSearchView.createFromInfoString(newMessageObject, opennedFromMedia && !openedFromProfile, 0);
             CharSequence subtitle = null;
@@ -14988,8 +14987,8 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                     menuItem.hideSubItem(gallery_menu_delete);
                 }
                 boolean isTTL = newMessageObject.messageOwner.ttl != 0 && newMessageObject.messageOwner.ttl < 60 * 60;
-                boolean blockTTL = isTTL && !xyz.nextalone.nagram.NaConfig.INSTANCE.getSaveTTLMedia().Bool();
-                boolean blockNoForwards = noforwards && !xyz.nextalone.nagram.NaConfig.INSTANCE.getAllowCopyProtectedContent().Bool();
+                boolean blockTTL = isTTL && !top.nkbe.niagram.config.NyaConfig.INSTANCE.getSaveTTLMedia().Bool();
+                boolean blockNoForwards = noforwards && !top.nkbe.niagram.config.NyaConfig.INSTANCE.getAllowCopyProtectedContent().Bool();
                 boolean canPaint = !isLivePhoto && (newMessageObject.getDocument() == null || newMessageObject.canPreviewDocument() || newMessageObject.getMimeType().startsWith("video/")) && !(isEmbedVideo || blockTTL || blockNoForwards) && canSendMediaToParentChatActivity() && !opennedFromMedia;
                 if (isEmbedVideo) {
                     menuItem.showSubItem(gallery_menu_openin);
@@ -15052,7 +15051,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                 String restrictionReason = MessagesController.getInstance(newMessageObject.currentAccount).getRestrictionReason(newMessageObject.messageOwner.restriction_reason);
                 if (!TextUtils.isEmpty(restrictionReason)) {
                     caption = restrictionReason;
-                } else if (captionTranslated && newMessageObject.messageOwner != null && newMessageObject.messageOwner.translatedText != null && TextUtils.equals(newMessageObject.messageOwner.translatedToLanguage, NekoConfig.translateToLang.String()/*TranslateAlert2.getToLanguage()*/)) {
+                } else if (captionTranslated && newMessageObject.messageOwner != null && newMessageObject.messageOwner.translatedText != null && TextUtils.equals(newMessageObject.messageOwner.translatedToLanguage, NyaConfig.translateToLang.String()/*TranslateAlert2.getToLanguage()*/)) {
                     caption = postProcessTranslated(newMessageObject);
                 } else {
                     caption = newMessageObject.caption;
@@ -15185,8 +15184,8 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                 setItemVisible(sendItem, false, false);
             }
             boolean isTTL = newMessageObject.messageOwner.ttl != 0 && newMessageObject.messageOwner.ttl < 60 * 60;
-            boolean blockTTL = isTTL && !xyz.nextalone.nagram.NaConfig.INSTANCE.getSaveTTLMedia().Bool();
-            boolean blockNoForwards = noforwards && !xyz.nextalone.nagram.NaConfig.INSTANCE.getAllowCopyProtectedContent().Bool();
+            boolean blockTTL = isTTL && !top.nkbe.niagram.config.NyaConfig.INSTANCE.getSaveTTLMedia().Bool();
+            boolean blockNoForwards = noforwards && !top.nkbe.niagram.config.NyaConfig.INSTANCE.getAllowCopyProtectedContent().Bool();
             if (isEmbedVideo || blockTTL || blockNoForwards) {
                 allowShare = false;
                 galleryButton.setVisibility(View.GONE);
@@ -15299,7 +15298,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             }
             actionBarContainer.setSubtitle(subtitle, animated);
             final boolean noforwards = avatarsDialogId != 0 && MessagesController.getInstance(currentAccount).isPeerNoForwards(avatarsDialogId);
-            if (noforwards && !xyz.nextalone.nagram.NaConfig.INSTANCE.getAllowCopyProtectedContent().Bool()) {
+            if (noforwards && !top.nkbe.niagram.config.NyaConfig.INSTANCE.getAllowCopyProtectedContent().Bool()) {
                 galleryButton.setVisibility(View.GONE);
                 galleryGap.setVisibility(View.GONE);
             } else {
@@ -15729,7 +15728,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
             if (messageObject == null) {
                 return;
             }
-            if (captionTranslated && messageObject.messageOwner != null && messageObject.messageOwner.translatedText != null && TextUtils.equals(messageObject.messageOwner.translatedToLanguage, NekoConfig.translateToLang.String()/*TranslateAlert2.getToLanguage()*/)) {
+            if (captionTranslated && messageObject.messageOwner != null && messageObject.messageOwner.translatedText != null && TextUtils.equals(messageObject.messageOwner.translatedToLanguage, NyaConfig.translateToLang.String()/*TranslateAlert2.getToLanguage()*/)) {
                 setCurrentCaption(messageObject, postProcessTranslated(messageObject), false, true);
             } else {
                 setCurrentCaption(messageObject, messageObject.caption, captionTranslated, true);
@@ -16798,7 +16797,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         if (!isCaptionEmpty) {
             Theme.createChatResources(null, true);
             CharSequence str;
-            if (messageObject != null && captionTranslated && messageObject.messageOwner != null && messageObject.messageOwner.translatedText != null && TextUtils.equals(messageObject.messageOwner.translatedToLanguage, NekoConfig.translateToLang.String()/*TranslateAlert2.getToLanguage()*/)) {
+            if (messageObject != null && captionTranslated && messageObject.messageOwner != null && messageObject.messageOwner.translatedText != null && TextUtils.equals(messageObject.messageOwner.translatedToLanguage, NyaConfig.translateToLang.String()/*TranslateAlert2.getToLanguage()*/)) {
                 str = caption;
             } else if (messageObject != null && !messageObject.messageOwner.entities.isEmpty()) {
                 Spannable spannableString = new SpannableString(caption);
@@ -19252,7 +19251,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         if (photoPaintView != null) {
             photoPaintView.onResume();
         }
-        if (pausedOnPause && NekoConfig.autoPauseVideo.Bool() && videoPlayer != null && !videoPlayer.isPlaying()) {
+        if (pausedOnPause && NyaConfig.autoPauseVideo.Bool() && videoPlayer != null && !videoPlayer.isPlaying()) {
             pausedOnPause = false;
             videoPlayer.play();
         }
@@ -19272,7 +19271,7 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
         if (videoPlayer != null && playerLooping) {
             videoPlayer.setLooping(allowLoopingOnPause());
         }
-        if (NekoConfig.autoPauseVideo.Bool() && videoPlayer != null && videoPlayer.isPlaying()) {
+        if (NyaConfig.autoPauseVideo.Bool() && videoPlayer != null && videoPlayer.isPlaying()) {
             pausedOnPause = true;
             videoPlayer.pause();
         }

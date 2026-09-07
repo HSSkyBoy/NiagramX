@@ -90,7 +90,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class StoriesController {
 
@@ -251,7 +251,7 @@ public class StoriesController {
     }
 
     public boolean hasStories(long dialogId) {
-        if (NaConfig.INSTANCE.getDisableStories().Bool()) return false;
+        if (NyaConfig.INSTANCE.getDisableStories().Bool()) return false;
         if (dialogId == 0) {
             return false;
         }
@@ -285,7 +285,7 @@ public class StoriesController {
     }
 
     public boolean hasStories() {
-        if (NaConfig.INSTANCE.getDisableStories().Bool()) return false;
+        if (NyaConfig.INSTANCE.getDisableStories().Bool()) return false;
         return (dialogListStories != null && dialogListStories.size() > 0) || hasSelfStories();
     }
 
@@ -1075,7 +1075,7 @@ public class StoriesController {
     }
 
     public boolean hasSelfStories() {
-        if (NaConfig.INSTANCE.getDisableStories().Bool()) return false;
+        if (NyaConfig.INSTANCE.getDisableStories().Bool()) return false;
         long clientUserId = UserConfig.getInstance(currentAccount).clientUserId;
         TL_stories.PeerStories storyItem = allStoriesMap.get(clientUserId);
         if (storyItem != null && !storyItem.stories.isEmpty()) {

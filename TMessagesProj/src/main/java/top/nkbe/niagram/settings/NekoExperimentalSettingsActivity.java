@@ -40,7 +40,6 @@ import org.telegram.ui.Components.UndoView;
 import java.util.ArrayList;
 
 import kotlin.Unit;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.config.CellGroup;
 import top.nkbe.niagram.config.cell.AbstractConfigCell;
 import top.nkbe.niagram.config.cell.ConfigCellCustom;
@@ -49,7 +48,7 @@ import top.nkbe.niagram.config.cell.ConfigCellHeader;
 import top.nkbe.niagram.config.cell.ConfigCellSelectBox;
 import top.nkbe.niagram.config.cell.ConfigCellTextCheck;
 import top.nkbe.niagram.ui.PopupBuilder;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressLint("RtlHardcoded")
 @SuppressWarnings("unused")
@@ -80,7 +79,7 @@ public class NekoExperimentalSettingsActivity extends BaseNekoXSettingsActivity 
 
     // General
     private final AbstractConfigCell headerGeneral = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.General)));
-    private final AbstractConfigCell backAnimationStyleRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NaConfig.INSTANCE.getBackAnimationStyle(),
+    private final AbstractConfigCell backAnimationStyleRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NyaConfig.INSTANCE.getBackAnimationStyle(),
             Build.VERSION.SDK_INT >= 34 ? new String[]{
                     getString(R.string.BackAnimationClassic),
                     getString(R.string.BackAnimationSpring),
@@ -89,33 +88,33 @@ public class NekoExperimentalSettingsActivity extends BaseNekoXSettingsActivity 
                     getString(R.string.BackAnimationClassic),
                     getString(R.string.BackAnimationSpring),
             }, null));
-    private final AbstractConfigCell springAnimationCrossfadeRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getSpringAnimationCrossfade()));
-    private final AbstractConfigCell localPremiumRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.localPremium));
-    private final AbstractConfigCell unlimitedPinnedDialogsRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.unlimitedPinnedDialogs, getString(R.string.UnlimitedPinnedDialogsAbout)));
-    private final AbstractConfigCell unlimitedFavedStickersRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.unlimitedFavedStickers, getString(R.string.UnlimitedFavoredStickersAbout)));
+    private final AbstractConfigCell springAnimationCrossfadeRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getSpringAnimationCrossfade()));
+    private final AbstractConfigCell localPremiumRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.localPremium));
+    private final AbstractConfigCell unlimitedPinnedDialogsRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.unlimitedPinnedDialogs, getString(R.string.UnlimitedPinnedDialogsAbout)));
+    private final AbstractConfigCell unlimitedFavedStickersRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.unlimitedFavedStickers, getString(R.string.UnlimitedFavoredStickersAbout)));
     private final AbstractConfigCell dividerGeneral = cellGroup.appendCell(new ConfigCellDivider());
 
     // Connections
     private final AbstractConfigCell headerConnection = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.Connection)));
-    private final AbstractConfigCell boostUploadRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.uploadBoost));
-    private final AbstractConfigCell enhancedFileLoaderRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NekoConfig.enhancedFileLoader, new String[]{
+    private final AbstractConfigCell boostUploadRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.uploadBoost));
+    private final AbstractConfigCell enhancedFileLoaderRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NyaConfig.enhancedFileLoader, new String[]{
             getString(R.string.enhancedFileLoaderOff),
             getString(R.string.enhancedFileLoaderBalanced),
             getString(R.string.enhancedFileLoaderExtreme)
     }, new int[]{
-            NekoConfig.ENHANCED_LOADER_OFF,
-            NekoConfig.ENHANCED_LOADER_BALANCED,
-            NekoConfig.ENHANCED_LOADER_EXTREME
+            NyaConfig.ENHANCED_LOADER_OFF,
+            NyaConfig.ENHANCED_LOADER_BALANCED,
+            NyaConfig.ENHANCED_LOADER_EXTREME
     }, null));
     private final AbstractConfigCell dividerConnection = cellGroup.appendCell(new ConfigCellDivider());
 
     // Media
     private final AbstractConfigCell headerMedia = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.MediaSettings)));
-    private final AbstractConfigCell audioEnhanceRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getNoiseSuppressAndVoiceEnhance()));
-    private final AbstractConfigCell sendMp4DocumentAsVideoRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getSendMp4DocumentAsVideo()));
-    private final AbstractConfigCell enhancedVideoBitrateRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getEnhancedVideoBitrate()));
+    private final AbstractConfigCell audioEnhanceRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getNoiseSuppressAndVoiceEnhance()));
+    private final AbstractConfigCell sendMp4DocumentAsVideoRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getSendMp4DocumentAsVideo()));
+    private final AbstractConfigCell enhancedVideoBitrateRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getEnhancedVideoBitrate()));
     private final AbstractConfigCell customAudioBitrateRow = cellGroup.appendCell(new ConfigCellCustom("customGroupVoipAudioBitrate", CellGroup.ITEM_TYPE_TEXT_SETTINGS_CELL, true));
-    private final AbstractConfigCell playerDecoderRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NaConfig.INSTANCE.getPlayerDecoder(), new String[]{
+    private final AbstractConfigCell playerDecoderRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NyaConfig.INSTANCE.getPlayerDecoder(), new String[]{
             getString(R.string.VideoPlayerDecoderHardware),
             getString(R.string.VideoPlayerDecoderPreferHW),
             getString(R.string.VideoPlayerDecoderPreferSW),
@@ -124,35 +123,35 @@ public class NekoExperimentalSettingsActivity extends BaseNekoXSettingsActivity 
 
     // N-Config
     private final AbstractConfigCell headerNConfig = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.N_Config)));
-    private final AbstractConfigCell showRPCErrorRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getShowRPCError()));
-    private final ConfigCellTextCheck forceFontWeightFallbackRow = (ConfigCellTextCheck) cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.forceFontWeightFallback, null, getString(R.string.ForceFontWeightFallback)));
-    private final AbstractConfigCell disableChoosingStickerRow = cellGroup.appendCell(new ConfigCellTextCheck(NekoConfig.disableChoosingSticker));
+    private final AbstractConfigCell showRPCErrorRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getShowRPCError()));
+    private final ConfigCellTextCheck forceFontWeightFallbackRow = (ConfigCellTextCheck) cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.forceFontWeightFallback, null, getString(R.string.ForceFontWeightFallback)));
+    private final AbstractConfigCell disableChoosingStickerRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.disableChoosingSticker));
     private final AbstractConfigCell disableFilteringRow = cellGroup.appendCell(new ConfigCellCustom("SensitiveDisableFiltering", CellGroup.ITEM_TYPE_TEXT_CHECK, true));
-    private final AbstractConfigCell devicePerformanceClassRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NaConfig.INSTANCE.getPerformanceClass(), new String[]{
+    private final AbstractConfigCell devicePerformanceClassRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NyaConfig.INSTANCE.getPerformanceClass(), new String[]{
             getString(R.string.QualityAuto) + " [" + SharedConfig.getPerformanceClassName(SharedConfig.measureDevicePerformanceClass()) + "]",
             getString(R.string.PerformanceClassHigh),
             getString(R.string.PerformanceClassAverage),
             getString(R.string.PerformanceClassLow),
     }, null));
-    private final AbstractConfigCell allowScreenCaptureRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getAllowScreenCapture(), getString(R.string.AllowScreenCaptureNotice)));
-    private final AbstractConfigCell allowCopyProtectedContentRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getAllowCopyProtectedContent(), getString(R.string.AllowCopyProtectedContentNotice)));
-    private final AbstractConfigCell saveTTLMediaRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getSaveTTLMedia(), getString(R.string.SaveTTLMediaNotice)));
-    private final AbstractConfigCell compactChatInputRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getCompactChatInput(), getString(R.string.CompactChatInputNotice)));
+    private final AbstractConfigCell allowScreenCaptureRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getAllowScreenCapture(), getString(R.string.AllowScreenCaptureNotice)));
+    private final AbstractConfigCell allowCopyProtectedContentRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getAllowCopyProtectedContent(), getString(R.string.AllowCopyProtectedContentNotice)));
+    private final AbstractConfigCell saveTTLMediaRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getSaveTTLMedia(), getString(R.string.SaveTTLMediaNotice)));
+    private final AbstractConfigCell compactChatInputRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getCompactChatInput(), getString(R.string.CompactChatInputNotice)));
     private final AbstractConfigCell dividerNConfig = cellGroup.appendCell(new ConfigCellDivider());
 
     // Story
     private final AbstractConfigCell headerStory = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.Story)));
-    private final AbstractConfigCell disableStoriesRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getDisableStories()));
-    private final AbstractConfigCell hideFromHeaderRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getHideStoriesFromHeader()));
+    private final AbstractConfigCell disableStoriesRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getDisableStories()));
+    private final AbstractConfigCell hideFromHeaderRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getHideStoriesFromHeader()));
     private final AbstractConfigCell dividerStory = cellGroup.appendCell(new ConfigCellDivider());
 
     // Pangu
     private final AbstractConfigCell headerPangu = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.Pangu)));
-    private final AbstractConfigCell enablePanguOnSendingRow = cellGroup.appendCell(new ConfigCellTextCheck(NaConfig.INSTANCE.getEnablePanguOnSending(), getString(R.string.PanguInfo)));
+    private final AbstractConfigCell enablePanguOnSendingRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getEnablePanguOnSending(), getString(R.string.PanguInfo)));
     private final AbstractConfigCell dividerPangu = cellGroup.appendCell(new ConfigCellDivider());
 
     public NekoExperimentalSettingsActivity() {
-        if (NaConfig.INSTANCE.getBackAnimationStyle().Int() != ActionBarLayout.BACK_ANIMATION_SPRING) {
+        if (NyaConfig.INSTANCE.getBackAnimationStyle().Int() != ActionBarLayout.BACK_ANIMATION_SPRING) {
             cellGroup.rows.remove(springAnimationCrossfadeRow);
         }
         checkStoriesRows();
@@ -173,13 +172,13 @@ public class NekoExperimentalSettingsActivity extends BaseNekoXSettingsActivity 
 
         // Cells: Set OnSettingChanged Callbacks
         cellGroup.callBackSettingsChanged = (key, newValue) -> {
-            if (key.equals(NaConfig.INSTANCE.getDisableStories().getKey())) {
+            if (key.equals(NyaConfig.INSTANCE.getDisableStories().getKey())) {
                 checkStoriesRows();
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NekoConfig.localPremium.getKey())) {
+            } else if (key.equals(NyaConfig.localPremium.getKey())) {
                 NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.mainUserInfoChanged);
                 NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.reloadInterface);
-            } else if (key.equals(NaConfig.INSTANCE.getBackAnimationStyle().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getBackAnimationStyle().getKey())) {
                 final int style = (int) newValue;
                 if (style != ActionBarLayout.BACK_ANIMATION_SPRING) {
                     if (cellGroup.rows.contains(springAnimationCrossfadeRow)) {
@@ -195,25 +194,25 @@ public class NekoExperimentalSettingsActivity extends BaseNekoXSettingsActivity 
                     }
                 }
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getSpringAnimationCrossfade().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getSpringAnimationCrossfade().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getPerformanceClass().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getPerformanceClass().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getPlayerDecoder().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getPlayerDecoder().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NekoConfig.forceFontWeightFallback.getKey())) {
+            } else if (key.equals(NyaConfig.forceFontWeightFallback.getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NaConfig.INSTANCE.getHideStoriesFromHeader().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getHideStoriesFromHeader().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
-            } else if (key.equals(NekoConfig.enhancedFileLoader.getKey())) {
+            } else if (key.equals(NyaConfig.enhancedFileLoader.getKey())) {
                 final int mode = (int) newValue;
-                if (mode == NekoConfig.ENHANCED_LOADER_BALANCED) {
+                if (mode == NyaConfig.ENHANCED_LOADER_BALANCED) {
                     showDialog(new AlertDialog.Builder(getParentActivity(), getResourceProvider())
                             .setTitle(getString(R.string.enhancedFileLoader))
                             .setMessage(getString(R.string.enhancedFileLoaderBalancedNotice))
                             .setPositiveButton(getString(R.string.OK), null)
                             .create());
-                } else if (mode == NekoConfig.ENHANCED_LOADER_EXTREME) {
+                } else if (mode == NyaConfig.ENHANCED_LOADER_EXTREME) {
                     showDialog(new AlertDialog.Builder(getParentActivity(), getResourceProvider())
                             .setTitle(getString(R.string.enhancedFileLoader))
                             .setMessage(getString(R.string.enhancedFileLoaderExtremeNotice))
@@ -234,7 +233,7 @@ public class NekoExperimentalSettingsActivity extends BaseNekoXSettingsActivity 
     }
 
     private void updateForceFontWeightFallbackEnabled() {
-        forceFontWeightFallbackRow.setEnabled(NekoConfig.typeface.Bool());
+        forceFontWeightFallbackRow.setEnabled(NyaConfig.typeface.Bool());
     }
 
     @Override
@@ -267,22 +266,22 @@ public class NekoExperimentalSettingsActivity extends BaseNekoXSettingsActivity 
             }, (i, __) -> {
                 switch (i) {
                     case 0:
-                        NekoConfig.customAudioBitrate.setConfigInt(32);
+                        NyaConfig.customAudioBitrate.setConfigInt(32);
                         break;
                     case 1:
-                        NekoConfig.customAudioBitrate.setConfigInt(64);
+                        NyaConfig.customAudioBitrate.setConfigInt(64);
                         break;
                     case 2:
-                        NekoConfig.customAudioBitrate.setConfigInt(128);
+                        NyaConfig.customAudioBitrate.setConfigInt(128);
                         break;
                     case 3:
-                        NekoConfig.customAudioBitrate.setConfigInt(192);
+                        NyaConfig.customAudioBitrate.setConfigInt(192);
                         break;
                     case 4:
-                        NekoConfig.customAudioBitrate.setConfigInt(256);
+                        NyaConfig.customAudioBitrate.setConfigInt(256);
                         break;
                     case 5:
-                        NekoConfig.customAudioBitrate.setConfigInt(320);
+                        NyaConfig.customAudioBitrate.setConfigInt(320);
                         break;
                 }
                 listAdapter.notifyItemChanged(position);
@@ -369,8 +368,8 @@ public class NekoExperimentalSettingsActivity extends BaseNekoXSettingsActivity 
             } else if (holder.itemView instanceof TextSettingsCell textSettingsCell) {
                 textSettingsCell.setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteBlackText));
                 if (position == cellGroup.rows.indexOf(customAudioBitrateRow)) {
-                    String value = NekoConfig.customAudioBitrate.Int() + "kbps";
-                    if (NekoConfig.customAudioBitrate.Int() == 32)
+                    String value = NyaConfig.customAudioBitrate.Int() + "kbps";
+                    if (NyaConfig.customAudioBitrate.Int() == 32)
                         value += " (" + getString(R.string.Default) + ")";
                     textSettingsCell.setTextAndValue(getString(R.string.customGroupVoipAudioBitrate), value, true);
                 }
@@ -379,7 +378,7 @@ public class NekoExperimentalSettingsActivity extends BaseNekoXSettingsActivity 
     }
 
     private void checkStoriesRows() {
-        boolean disabled = NaConfig.INSTANCE.getDisableStories().Bool();
+        boolean disabled = NyaConfig.INSTANCE.getDisableStories().Bool();
         if (listAdapter == null) {
             if (disabled) {
                 cellGroup.rows.remove(hideFromHeaderRow);

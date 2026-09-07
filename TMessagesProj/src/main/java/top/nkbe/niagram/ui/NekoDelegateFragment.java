@@ -80,14 +80,13 @@ import java.util.Locale;
 import java.util.WeakHashMap;
 import java.util.function.Supplier;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
 import top.nkbe.niagram.translate.Translator;
 import top.nkbe.niagram.translate.TranslatorKt;
 import top.nkbe.niagram.ui.cells.NekoMessageCell;
 import top.nkbe.niagram.utils.AlertUtil;
 import top.nkbe.niagram.utils.AndroidUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public abstract class NekoDelegateFragment extends BaseFragment implements NotificationCenter.NotificationCenterDelegate, NekoMessageCell.NekoMessageCellDelegate {
 
@@ -522,7 +521,7 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
                 showDialog(builder.create());
             }
             try {
-                if (!NekoConfig.disableVibration.Bool()) cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                if (!NyaConfig.disableVibration.Bool()) cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
             } catch (Exception ignore) {
             }
             return true;
@@ -605,7 +604,7 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
 
         final Locale resolvedTargetLocale;
         if (targetLocale == null) {
-            String lang = NekoConfig.translateToLang.String();
+            String lang = NyaConfig.translateToLang.String();
             resolvedTargetLocale = TranslatorKt.getCode2Locale(lang == null ? "" : lang);
         } else {
             resolvedTargetLocale = targetLocale;
@@ -655,7 +654,7 @@ public abstract class NekoDelegateFragment extends BaseFragment implements Notif
             return;
         }
 
-        int mode = NaConfig.INSTANCE.getTranslatorMode().Int();
+        int mode = NyaConfig.INSTANCE.getTranslatorMode().Int();
         ArrayList<TLRPC.MessageEntity> entities = messageObject.messageOwner.entities;
         if (entities == null) {
             entities = new ArrayList<>();

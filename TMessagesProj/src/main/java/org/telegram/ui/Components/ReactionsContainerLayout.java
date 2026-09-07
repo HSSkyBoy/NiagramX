@@ -93,9 +93,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.PinnedElementsHelper;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ReactionsContainerLayout extends FrameLayout implements NotificationCenter.NotificationCenterDelegate {
 
@@ -301,7 +300,7 @@ public class ReactionsContainerLayout extends FrameLayout implements Notificatio
                     boolean b2 = newProgress > 1f;
                     if (b1 != b2) {
                         try {
-                            if (!NekoConfig.disableVibration.Bool()) recyclerListView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                            if (!NyaConfig.disableVibration.Bool()) recyclerListView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                         } catch (Exception ignore) {}
                     }
                     if (pullingLeftOffset < 0) {
@@ -334,7 +333,7 @@ public class ReactionsContainerLayout extends FrameLayout implements Notificatio
                     boolean b2 = newProgress > 1f;
                     if (b1 != b2) {
                         try {
-                            if (!NekoConfig.disableVibration.Bool()) recyclerListView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                            if (!NyaConfig.disableVibration.Bool()) recyclerListView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                         } catch (Exception ignore) {}
                     }
                     if (customReactionsContainer != null) {
@@ -1149,18 +1148,18 @@ public class ReactionsContainerLayout extends FrameLayout implements Notificatio
             fillRecentReactionsList(visibleReactions);
         } else if (hitLimit) {
             allReactionsAvailable = false;
-            if (NaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && reactionsChat != null && reactionsChat.paid_reactions_available) {
+            if (NyaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && reactionsChat != null && reactionsChat.paid_reactions_available) {
                 hasStar = true;
                 visibleReactions.add(ReactionsLayoutInBubble.VisibleReaction.asStar());
             }
             for (TLRPC.ReactionCount result : messageObject.messageOwner.reactions.results) {
-                if (!NaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && result.reaction instanceof TLRPC.TL_reactionPaid) {
+                if (!NyaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && result.reaction instanceof TLRPC.TL_reactionPaid) {
                     continue;
                 }
                 visibleReactions.add(ReactionsLayoutInBubble.VisibleReaction.fromTL(result.reaction));
             }
         } else if (reactionsChat != null) {
-            if (NaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && reactionsChat.paid_reactions_available) {
+            if (NyaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && reactionsChat.paid_reactions_available) {
                 hasStar = true;
                 visibleReactions.add(ReactionsLayoutInBubble.VisibleReaction.asStar());
             }
@@ -1223,7 +1222,7 @@ public class ReactionsContainerLayout extends FrameLayout implements Notificatio
             allReactionsAvailable = true;
             fillRecentReactionsList(visibleReactions);
         }
-        if (!NaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && visibleReactions.isEmpty() && reactionsChat != null && reactionsChat.paid_reactions_available) {
+        if (!NyaConfig.INSTANCE.getPremiumItemStarInReactions().Bool() && visibleReactions.isEmpty() && reactionsChat != null && reactionsChat.paid_reactions_available) {
             visibleReactions.add(ReactionsLayoutInBubble.VisibleReaction.asStar());
         }
         filterReactions(visibleReactions);
@@ -1647,7 +1646,7 @@ public class ReactionsContainerLayout extends FrameLayout implements Notificatio
         }
         if (type == TYPE_MESSAGE_EFFECTS) {
             try {
-                if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
             } catch (Exception ignore) {}
         }
     }
@@ -2332,7 +2331,7 @@ public class ReactionsContainerLayout extends FrameLayout implements Notificatio
             @Override
             public void run() {
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                    if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 } catch (Exception ignored) {}
                 pressedReactionPosition = visibleReactionsList.indexOf(currentReaction);
                 pressedReaction = currentReaction;

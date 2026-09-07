@@ -54,7 +54,7 @@ import org.telegram.ui.LaunchActivity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class FactCheckController {
 
@@ -485,7 +485,7 @@ public class FactCheckController {
                     s.delete(MAX_LENGTH, s.length());
                     AndroidUtilities.shakeView(editText);
                     try {
-                        if (!NekoConfig.disableVibration.Bool()) editText.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                        if (!NyaConfig.disableVibration.Bool()) editText.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                     } catch (Exception ignore) {}
                     ignoreTextChange = false;
                 }

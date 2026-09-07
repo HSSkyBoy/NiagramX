@@ -1,4 +1,5 @@
 package top.nkbe.niagram;
+import top.nkbe.niagram.config.NyaConfig;
 
 import static org.telegram.messenger.LocaleController.getString;
 
@@ -79,7 +80,7 @@ public class DatacenterActivity extends BaseNekoSettingsActivity implements Noti
     @Override
     protected void onItemClick(View view, int position, float x, float y) {
         if (position > datacentersRow && position < datacenters2Row) {
-            var datacenterInfo = NekoConfig.datacenterInfos.get(position - datacentersRow - 1);
+            var datacenterInfo = NyaConfig.datacenterInfos.get(position - datacentersRow - 1);
             if (datacenterInfo.checking) {
                 return;
             }
@@ -103,12 +104,12 @@ public class DatacenterActivity extends BaseNekoSettingsActivity implements Noti
         rowCount += 5;
         datacenters2Row = rowCount++;
 
-        for (var datacenterInfo : NekoConfig.datacenterInfos) {
+        for (var datacenterInfo : NyaConfig.datacenterInfos) {
             checkDatacenter(datacenterInfo, false);
         }
     }
 
-    private void checkDatacenter(NekoConfig.DatacenterInfo datacenterInfo, boolean force) {
+    private void checkDatacenter(NyaConfig.DatacenterInfo datacenterInfo, boolean force) {
         if (datacenterInfo.checking) {
             return;
         }
@@ -116,7 +117,7 @@ public class DatacenterActivity extends BaseNekoSettingsActivity implements Noti
             return;
         }
         datacenterInfo.checking = true;
-        int position = datacentersRow + NekoConfig.datacenterInfos.indexOf(datacenterInfo) + 1;
+        int position = datacentersRow + NyaConfig.datacenterInfos.indexOf(datacenterInfo) + 1;
         if (force) {
             listAdapter.notifyItemChanged(position);
         }
@@ -177,7 +178,7 @@ public class DatacenterActivity extends BaseNekoSettingsActivity implements Noti
                 }
                 case Integer.MAX_VALUE: {
                     DatacenterCell cell = (DatacenterCell) holder.itemView;
-                    cell.setDC(NekoConfig.datacenterInfos.get(position - datacentersRow - 1), position + 1 != datacenters2Row);
+                    cell.setDC(NyaConfig.datacenterInfos.get(position - datacentersRow - 1), position + 1 != datacenters2Row);
                     break;
                 }
             }
@@ -205,7 +206,7 @@ public class DatacenterActivity extends BaseNekoSettingsActivity implements Noti
         public boolean isEnabled(RecyclerView.ViewHolder holder) {
             var position = holder.getAdapterPosition();
             if (position > datacentersRow && position < datacenters2Row) {
-                var datacenterInfo = NekoConfig.datacenterInfos.get(position - datacentersRow - 1);
+                var datacenterInfo = NyaConfig.datacenterInfos.get(position - datacentersRow - 1);
                 return !datacenterInfo.checking;
             } else {
                 return super.isEnabled(holder);
@@ -318,7 +319,7 @@ public class DatacenterActivity extends BaseNekoSettingsActivity implements Noti
 
         private final TextView textView;
         private final TextView valueTextView;
-        private NekoConfig.DatacenterInfo currentInfo;
+        private NyaConfig.DatacenterInfo currentInfo;
 
         private boolean needDivider;
 
@@ -352,7 +353,7 @@ public class DatacenterActivity extends BaseNekoSettingsActivity implements Noti
             super.onMeasure(MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY), MeasureSpec.makeMeasureSpec(AndroidUtilities.dp(64) + (needDivider ? 1 : 0), MeasureSpec.EXACTLY));
         }
 
-        public void setDC(NekoConfig.DatacenterInfo info, boolean divider) {
+        public void setDC(NyaConfig.DatacenterInfo info, boolean divider) {
             textView.setText(String.format(Locale.US, "DC%d %s, %s", info.id, getDCName(info.id), getDCLocation(info.id)));
             currentInfo = info;
             needDivider = divider;

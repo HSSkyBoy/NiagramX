@@ -120,7 +120,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.helpers.LocalNameHelper;
 import top.nkbe.niagram.utils.AndroidUtil;
 
@@ -1141,7 +1141,7 @@ public class ChatEditActivity extends BaseFragment implements ImageUpdater.Image
                         }
                         BulletinFactory.of(this).createSimpleBulletin(R.raw.topics, text).show();
                         try {
-                            if (!NekoConfig.disableVibration.Bool()) frameLayout.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                            if (!NyaConfig.disableVibration.Bool()) frameLayout.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                         } catch (Exception ignored) {}
                         return;
                     }

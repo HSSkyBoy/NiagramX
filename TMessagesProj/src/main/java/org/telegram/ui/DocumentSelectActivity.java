@@ -100,12 +100,11 @@ import java.util.StringTokenizer;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import kotlin.Unit;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.ChatsHelper;
 import top.nkbe.niagram.translate.Translator;
 import top.nkbe.niagram.translate.TranslatorKt;
 import top.nkbe.niagram.utils.AlertUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class DocumentSelectActivity extends BaseFragment {
 
@@ -673,7 +672,7 @@ public class DocumentSelectActivity extends BaseFragment {
             if (chatActivity != null && chatActivity.isInScheduleMode()) {
                 AlertsCreator.createScheduleDatePickerDialog(getParentActivity(), chatActivity.getDialogId(), (notify, scheduleDate, scheduleRepeatPeriod) -> sendSelectedFiles(notify, scheduleDate));
             } else {
-                sendSelectedFiles(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
+                sendSelectedFiles(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
             }
         });
         writeButton.setOnLongClickListener(view -> {
@@ -743,7 +742,7 @@ public class DocumentSelectActivity extends BaseFragment {
                         } else if (num == 1) {
                             AlertsCreator.createScheduleDatePickerDialog(getParentActivity(), chatActivity.getDialogId(), (notify, scheduleDate, scheduleRepeatPeriod) -> sendSelectedFiles(notify, scheduleDate));
                         } else if (num == 2) {
-                            sendSelectedFiles(!NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
+                            sendSelectedFiles(!NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
                         }
                     });
                     itemCells[a].setOnLongClickListener(v -> {
@@ -778,7 +777,7 @@ public class DocumentSelectActivity extends BaseFragment {
             view.getLocationInWindow(location);
             sendPopupWindow.showAtLocation(view, Gravity.LEFT | Gravity.TOP, location[0] + view.getMeasuredWidth() - sendPopupLayout.getMeasuredWidth() + AndroidUtilities.dp(8), location[1] - sendPopupLayout.getMeasuredHeight() - AndroidUtilities.dp(2));
             sendPopupWindow.dimBehind();
-            if (!NekoConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+            if (!NyaConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
 
             return false;
         });

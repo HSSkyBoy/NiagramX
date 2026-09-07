@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 
 import org.telegram.messenger.FileLog;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ConfigItemKeyLinked extends ConfigItem {
     public final ConfigItem keyLinked;
@@ -36,9 +36,9 @@ public class ConfigItemKeyLinked extends ConfigItem {
     }
 
     public void saveConfig() {
-        synchronized (NekoConfig.sync) {
+        synchronized (NyaConfig.sync) {
             try {
-                SharedPreferences.Editor editor = NekoConfig.getPreferences().edit();
+                SharedPreferences.Editor editor = NyaConfig.getPreferences().edit();
 
                 if (this.type == configTypeBoolLinkInt) {
                     int currentConfig = this.keyLinked.Int();

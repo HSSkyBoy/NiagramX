@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class GoogleMapsProvider implements IMapsProvider {
 
@@ -592,7 +592,7 @@ public class GoogleMapsProvider implements IMapsProvider {
         @Override
         public void getMapAsync(Consumer<IMap> callback) {
             mapView.getMapAsync(googleMap -> {
-                if (NekoConfig.fixDriftingForGoogleMaps())
+                if (NyaConfig.fixDriftingForGoogleMaps())
                     googleMap.setLocationSource(new NekoLocationSource(mapView.getContext()));
                 callback.accept(new GoogleMapImpl(googleMap));
                 findGlSurfaceView(mapView);

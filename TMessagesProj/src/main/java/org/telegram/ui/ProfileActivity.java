@@ -359,7 +359,6 @@ import me.vkryl.core.reference.ReferenceList;
 
 import top.nkbe.niagram.BackButtonMenuRecent;
 import top.nkbe.niagram.DatacenterActivity;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.filters.AyuFilter;
 import top.nkbe.niagram.filters.RegexChatFiltersListActivity;
 import top.nkbe.niagram.filters.RegexFiltersSettingActivity;
@@ -385,7 +384,7 @@ import top.nkbe.niagram.utils.AlertUtil;
 import top.nkbe.niagram.utils.AndroidUtil;
 import top.nkbe.niagram.utils.FileUtil;
 import top.nkbe.niagram.utils.ShareUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ProfileActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate, DialogsActivity.DialogsActivityDelegate, SharedMediaLayout.SharedMediaPreloaderDelegate, ImageUpdater.ImageUpdaterDelegate, SharedMediaLayout.Delegate, MainTabsActivity.TabFragmentDelegate {
     private RecyclerListView listView;
@@ -974,7 +973,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
         public void createBlurEffect(int actionsSize) {
             this.actionsSize = actionsSize;
-            this.blurEnabled = !NaConfig.INSTANCE.getDisableAvatarBlur().Bool(); // actionsSize > 0;
+            this.blurEnabled = !NyaConfig.INSTANCE.getDisableAvatarBlur().Bool(); // actionsSize > 0;
         }
 
         public AvatarImageView(Context context) {
@@ -1315,7 +1314,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 actionBarBackgroundColor = currentColor;
                 hasColorById = false;
                 if (AndroidUtilities.computePerceivedBrightness(getThemedColor(Theme.key_actionBarDefault)) > .8f) {
-                    if (NaConfig.INSTANCE.getDisableAvatarBlur().Bool()) {
+                    if (NyaConfig.INSTANCE.getDisableAvatarBlur().Bool()) {
                         if (Theme.getActiveTheme().isMonet()) {
                             emojiColor = getThemedColor(Theme.key_chat_botKeyboardButtonBackground);
                             btnColor = Theme.multAlpha(getThemedColor(Theme.key_chat_botKeyboardButtonBackground), .15f * 3);
@@ -3794,7 +3793,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
             @Override
             protected boolean isStoriesView() {
-                return myProfile && !NaConfig.INSTANCE.getDisableStories().Bool();
+                return myProfile && !NyaConfig.INSTANCE.getDisableStories().Bool();
             }
 
             @Override
@@ -4809,7 +4808,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         });
 
                 String currentChannel = " - ";
-                switch (NaConfig.INSTANCE.getAutoUpdateChannel().Int()) {
+                switch (NyaConfig.INSTANCE.getAutoUpdateChannel().Int()) {
                     case UpdateHelper.UPDATE_OFF:
                         currentChannel += getString(R.string.AutoCheckUpdateOFF);
                         break;
@@ -4824,8 +4823,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 builder.addItem(getString(R.string.AutoCheckUpdateSwitch) + currentChannel, R.drawable.sync_outline_28, (it) -> {
                     BottomBuilder switchBuilder = new BottomBuilder(getParentActivity());
                     switchBuilder.addTitle(getString(R.string.AutoCheckUpdateSwitch));
-                    switchBuilder.addRadioItem(getString(R.string.AutoCheckUpdateOFF), NaConfig.INSTANCE.getAutoUpdateChannel().Int() == UpdateHelper.UPDATE_OFF, (radioButtonCell) -> {
-                        NaConfig.INSTANCE.getAutoUpdateChannel().setConfigInt(UpdateHelper.UPDATE_OFF);
+                    switchBuilder.addRadioItem(getString(R.string.AutoCheckUpdateOFF), NyaConfig.INSTANCE.getAutoUpdateChannel().Int() == UpdateHelper.UPDATE_OFF, (radioButtonCell) -> {
+                        NyaConfig.INSTANCE.getAutoUpdateChannel().setConfigInt(UpdateHelper.UPDATE_OFF);
                         switchBuilder.doRadioCheck(radioButtonCell);
                         AndroidUtilities.runOnUIThread(() -> {
                             switchBuilder.dismiss();
@@ -4833,8 +4832,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         }, 500);
                         return Unit.INSTANCE;
                     });
-                    switchBuilder.addRadioItem(getString(R.string.AutoCheckUpdateRelease), NaConfig.INSTANCE.getAutoUpdateChannel().Int() == UpdateHelper.UPDATE_CHANNEL_RELEASE, (radioButtonCell) -> {
-                        NaConfig.INSTANCE.getAutoUpdateChannel().setConfigInt(UpdateHelper.UPDATE_CHANNEL_RELEASE);
+                    switchBuilder.addRadioItem(getString(R.string.AutoCheckUpdateRelease), NyaConfig.INSTANCE.getAutoUpdateChannel().Int() == UpdateHelper.UPDATE_CHANNEL_RELEASE, (radioButtonCell) -> {
+                        NyaConfig.INSTANCE.getAutoUpdateChannel().setConfigInt(UpdateHelper.UPDATE_CHANNEL_RELEASE);
                         switchBuilder.doRadioCheck(radioButtonCell);
                         AndroidUtilities.runOnUIThread(() -> {
                             switchBuilder.dismiss();
@@ -4842,8 +4841,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         }, 500);
                         return Unit.INSTANCE;
                     });
-                    switchBuilder.addRadioItem(getString(R.string.AutoCheckUpdateBeta), NaConfig.INSTANCE.getAutoUpdateChannel().Int() == UpdateHelper.UPDATE_CHANNEL_BETA, (radioButtonCell) -> {
-                        NaConfig.INSTANCE.getAutoUpdateChannel().setConfigInt(UpdateHelper.UPDATE_CHANNEL_BETA);
+                    switchBuilder.addRadioItem(getString(R.string.AutoCheckUpdateBeta), NyaConfig.INSTANCE.getAutoUpdateChannel().Int() == UpdateHelper.UPDATE_CHANNEL_BETA, (radioButtonCell) -> {
+                        NyaConfig.INSTANCE.getAutoUpdateChannel().setConfigInt(UpdateHelper.UPDATE_CHANNEL_BETA);
                         switchBuilder.doRadioCheck(radioButtonCell);
                         AndroidUtilities.runOnUIThread(() -> {
                             switchBuilder.dismiss();
@@ -5748,7 +5747,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 //        }
         overlaysView = new OverlaysView(context);
         avatarsBlurView = new ProfileGalleryBlurView(context);
-        avatarsBlurView.setSize(NaConfig.INSTANCE.getDisableAvatarBlur().Bool() ? 0 : getActionsExtraHeight());
+        avatarsBlurView.setSize(NyaConfig.INSTANCE.getDisableAvatarBlur().Bool() ? 0 : getActionsExtraHeight());
         avatarsViewPager = new ProfileGalleryView(context, userId != 0 ? userId : -chatId, actionBar, listView, avatarImage, getClassGuid(), overlaysView, avatarsBlurView) {
             @Override
             protected void setCustomAvatarProgress(float progress) {
@@ -5935,7 +5934,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         });
         ratingView.setOnClickListener(this::showStarRatingBottomSheet);
         if (userInfo != null) {
-            ratingView.set(xyz.nextalone.nagram.NaConfig.INSTANCE.getHideStarsRating().Bool() ? null : userInfo.stars_rating);
+            ratingView.set(top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideStarsRating().Bool() ? null : userInfo.stars_rating);
         }
 
         avatarContainer2.addView(ratingView);
@@ -6307,7 +6306,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             avatarGooey.setAlpha(1f - v);
             avatarGooey.setBlurIntensity(0f);
             avatarGooey.setGooeyEnabled(false);
-        } else if (NaConfig.INSTANCE.getDisableGooeyAvatarAnimation().Bool()) {
+        } else if (NyaConfig.INSTANCE.getDisableGooeyAvatarAnimation().Bool()) {
             avatarGooey.setAlpha(androidx.core.math.MathUtils.clamp(1f - (pullUpProgress - 0.5f) / 0.5f, 0f, 1f));
             avatarGooey.setBlurIntensity(0f);
             avatarGooey.setGooeyEnabled(false);
@@ -6731,7 +6730,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 return dp(needInsetForStories() ? 24 : 38);
             }
         }
-        if (NaConfig.INSTANCE.getShowSquareAvatar().Bool()) {
+        if (NyaConfig.INSTANCE.getShowSquareAvatar().Bool()) {
             return dp(needInsetForStories() ? 24 : 38);
         }
         return dp(50);
@@ -7881,7 +7880,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 builder.addItem(getString(R.string.TranslateMessageLLM), R.drawable.magic_stick_solar, __ -> {
                     try {
                         if (!TextUtils.isEmpty(about)) {
-                            DialogTransKt.startTrans(getParentActivity(), about, NekoConfig.translateToLang.String(), Translator.providerLLMTranslator);
+                            DialogTransKt.startTrans(getParentActivity(), about, NyaConfig.translateToLang.String(), Translator.providerLLMTranslator);
                         }
                     } catch (Exception e) {
                         FileLog.e(e);
@@ -8457,7 +8456,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
     private void checkStarRatingVisible() {
         if (ratingView != null) {
-            ratingView.setVisibility(!xyz.nextalone.nagram.NaConfig.INSTANCE.getHideStarsRating().Bool() && !mediaHeaderVisible && isStarRatingVisible1);
+            ratingView.setVisibility(!top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideStarsRating().Bool() && !mediaHeaderVisible && isStarRatingVisible1);
         }
     }
 
@@ -8838,7 +8837,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         avatarsViewPager.setVisibility(View.VISIBLE);
 
                         try {
-                            if (!NekoConfig.disableVibration.Bool()) avatarContainer.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                            if (!NyaConfig.disableVibration.Bool()) avatarContainer.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                         } catch (Exception ignore) {
                         }
                     }
@@ -8922,7 +8921,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         expandAnimator.start();
                         ignoreScrollOnFullExpand = false;
                         try {
-                            if (!NekoConfig.disableVibration.Bool()) avatarContainer.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                            if (!NyaConfig.disableVibration.Bool()) avatarContainer.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                         } catch (Exception ignore) {
                         }
                     }
@@ -9466,7 +9465,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     avatarImage.setHasStories(needInsetForStories());
                 }
                 if (chatId != 0) {
-                    boolean gift = !xyz.nextalone.nagram.NaConfig.INSTANCE.getHideGiftButton().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked() && chatInfo != null && chatInfo.stargifts_available;
+                    boolean gift = !top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideGiftButton().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked() && chatInfo != null && chatInfo.stargifts_available;
                     otherItem.setSubItemShown(gift_premium, gift);
                     if (actionsView != null) {
                         actionsView.set(ProfileActionsView.KEY_GIFT, gift);
@@ -9558,7 +9557,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             if (uid == userId) {
                 userInfo = (TLRPC.UserFull) args[1];
                 if (ratingView != null) {
-                    ratingView.set(xyz.nextalone.nagram.NaConfig.INSTANCE.getHideStarsRating().Bool() ? null : userInfo.stars_rating);
+                    ratingView.set(top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideStarsRating().Bool() ? null : userInfo.stars_rating);
                 }
                 if (storyView != null) {
                     storyView.setStories(userInfo.stories);
@@ -9590,7 +9589,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                             resumeDelayedFragmentAnimation();
                             needLayout(true);
                         }
-                        if (NaConfig.INSTANCE.getPreferCommonGroupsTab().Bool() && userInfo.common_chats_count > 0 && sharedMediaLayout.scrollSlidingTextTabStrip != null && sharedMediaLayout.scrollSlidingTextTabStrip.getCurrentTabId() == SharedMediaLayout.TAB_GIFTS) {
+                        if (NyaConfig.INSTANCE.getPreferCommonGroupsTab().Bool() && userInfo.common_chats_count > 0 && sharedMediaLayout.scrollSlidingTextTabStrip != null && sharedMediaLayout.scrollSlidingTextTabStrip.getCurrentTabId() == SharedMediaLayout.TAB_GIFTS) {
                             AndroidUtilities.runOnUIThread(() -> {
                                 sharedMediaLayout.scrollToPage(SharedMediaLayout.TAB_COMMON_GROUPS);
                                 sharedMediaLayout.scrollSlidingTextTabStrip.selectTabWithId(SharedMediaLayout.TAB_COMMON_GROUPS, 1.0f, true);
@@ -9863,7 +9862,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
     @Override
     public boolean needDelayOpenAnimation() {
-        if (NaConfig.INSTANCE.getBackAnimationStyle().Int() == ActionBarLayout.BACK_ANIMATION_SPRING || NaConfig.INSTANCE.getCenterActionBarTitle().Bool() && NaConfig.INSTANCE.getCenterActionBarTitleType().Int() != 2) {
+        if (NyaConfig.INSTANCE.getBackAnimationStyle().Int() == ActionBarLayout.BACK_ANIMATION_SPRING || NyaConfig.INSTANCE.getCenterActionBarTitle().Bool() && NyaConfig.INSTANCE.getCenterActionBarTitleType().Int() != 2) {
             return false;
         } else {
             return playProfileAnimation == 0;
@@ -10686,7 +10685,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         }
         fetchUsersFromChannelInfo();
         if (chatId != 0) {
-            boolean gift = !xyz.nextalone.nagram.NaConfig.INSTANCE.getHideGiftButton().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked() && chatInfo != null && chatInfo.stargifts_available;
+            boolean gift = !top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideGiftButton().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked() && chatInfo != null && chatInfo.stargifts_available;
             otherItem.setSubItemShown(gift_premium, gift);
             if (actionsView != null) {
                 actionsView.set(ProfileActionsView.KEY_GIFT, gift);
@@ -10705,7 +10704,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     ) {
         userInfo = value;
         if (ratingView != null) {
-            ratingView.set(xyz.nextalone.nagram.NaConfig.INSTANCE.getHideStarsRating().Bool() ? null : userInfo.stars_rating);
+            ratingView.set(top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideStarsRating().Bool() ? null : userInfo.stars_rating);
         }
         if (storyView != null) {
             storyView.setStories(userInfo.stories);
@@ -10974,7 +10973,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     numberRow = rowCount++;
                 }
                 setUsernameRow = rowCount++;
-                if (NaConfig.INSTANCE.getIdDcType().Int() != 0) {
+                if (NyaConfig.INSTANCE.getIdDcType().Int() != 0) {
                     idDcRow = rowCount++;
                 }
                 bioRow = rowCount++;
@@ -11008,8 +11007,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 devicesRow = rowCount++;
                 languageRow = rowCount++;
                 // hide premium / help
-                boolean hidePremium = NaConfig.INSTANCE.getHidePremiumSection().Bool();
-                boolean hideHelp = NaConfig.INSTANCE.getHideHelpSection().Bool();
+                boolean hidePremium = NyaConfig.INSTANCE.getHidePremiumSection().Bool();
+                boolean hideHelp = NyaConfig.INSTANCE.getHideHelpSection().Bool();
                 if (!(hidePremium && hideHelp)) {
                     devicesSectionRow = rowCount++;
                 }
@@ -11085,7 +11084,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 if (user != null && username != null) {
                     usernameRow = rowCount++;
                 }
-                if (NaConfig.INSTANCE.getIdDcType().Int() != 0) {
+                if (NyaConfig.INSTANCE.getIdDcType().Int() != 0) {
                     idDcRow = rowCount++;
                 }
                 if (userInfo != null) {
@@ -11263,7 +11262,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     restrictionReasonRow = rowCount++;
                 }
             }
-            if (NaConfig.INSTANCE.getIdDcType().Int() != 0) {
+            if (NyaConfig.INSTANCE.getIdDcType().Int() != 0) {
                 idDcRow = rowCount++;
             }
             if (actionsView == null) {
@@ -11758,7 +11757,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     if (userInfo != null && userInfo.stars_rating != null && userInfo.stars_rating.stars < 0) {
                         newString2 = getString(R.string.StarRatingLevelNegative).toLowerCase(Locale.ROOT);
                     } else {
-                        if (!NekoConfig.sendOnlinePackets.Bool() || NekoConfig.sendOfflinePacketAfterOnline.Bool()) {
+                        if (!NyaConfig.sendOnlinePackets.Bool() || NyaConfig.sendOfflinePacketAfterOnline.Bool()) {
                             newString2 = getString(R.string.VoipOfflineTitle);
                         } else {
                             newString2 = LocaleController.getString(R.string.Online);
@@ -12568,7 +12567,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                             } else {
                                 otherItem.hideSubItem(bot_privacy);
                             }
-                            if (NekoConfig.ignoreBlocked.Bool()) {
+                            if (NyaConfig.ignoreBlocked.Bool()) {
                                 boolean customFiltered = AyuFilter.getCustomFilteredUsersList().contains(userId);
                                 otherItem.addSubItem(shadow_ban, R.drawable.hide_title, getString(customFiltered ? R.string.UnshadowBan : R.string.ShadowBan));
                             }
@@ -12579,7 +12578,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                                 otherItem.addSubItem(block_contact, R.drawable.msg_retry, LocaleController.getString(R.string.BotRestart));
                             }
                         } else {
-                            if (NekoConfig.ignoreBlocked.Bool()) {
+                            if (NyaConfig.ignoreBlocked.Bool()) {
                                 boolean customFiltered = AyuFilter.getCustomFilteredUsersList().contains(userId);
                                 otherItem.addSubItem(shadow_ban, R.drawable.hide_title, getString(customFiltered ? R.string.UnshadowBan : R.string.ShadowBan));
                             }
@@ -12597,7 +12596,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     if (!TextUtils.isEmpty(user.phone)) {
                         otherItem.addSubItem(share_contact, R.drawable.msg_share, LocaleController.getString(R.string.ShareContact));
                     }
-                    if (NekoConfig.ignoreBlocked.Bool()) {
+                    if (NyaConfig.ignoreBlocked.Bool()) {
                         boolean customFiltered = AyuFilter.getCustomFilteredUsersList().contains(userId);
                         otherItem.addSubItem(shadow_ban, R.drawable.hide_title, getString(customFiltered ? R.string.UnshadowBan : R.string.ShadowBan));
                     }
@@ -12606,7 +12605,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     otherItem.addSubItem(delete_contact, R.drawable.msg_delete, LocaleController.getString(R.string.DeleteContact));
                 }
                 if (!UserObject.isDeleted(user) && !isBot && currentEncryptedChat == null && !userBlocked && userId != 333000 && userId != 777000 && userId != 42777) {
-                    if (!xyz.nextalone.nagram.NaConfig.INSTANCE.getHideGiftButton().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !user.self && !user.bot && !MessagesController.isSupportUser(user) && !getMessagesController().premiumPurchaseBlocked()) {
+                    if (!top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideGiftButton().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !user.self && !user.bot && !MessagesController.isSupportUser(user) && !getMessagesController().premiumPurchaseBlocked()) {
                         StarsController.getInstance(currentAccount).loadStarGifts();
                         otherItem.addSubItem(gift_premium, R.drawable.msg_gift_premium, LocaleController.getString(R.string.ProfileSendAGift));
                         giftAction = true;
@@ -12711,7 +12710,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         shareAction = !chat.creator;
                         otherItem.addSubItem(share, R.drawable.msg_shareout, getString(R.string.BotShare));
                     }
-                    if (!xyz.nextalone.nagram.NaConfig.INSTANCE.getHideGiftButton().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked()) {
+                    if (!top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideGiftButton().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked()) {
                         StarsController.getInstance(currentAccount).loadStarGifts();
                         otherItem.addSubItem(gift_premium, R.drawable.msg_gift_premium, LocaleController.getString(R.string.ProfileSendAGiftToChannel));
                         otherItem.setSubItemShown(gift_premium, chatInfo != null && chatInfo.stargifts_available);
@@ -12805,7 +12804,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             actionsView.set(ProfileActionsView.KEY_VOICE_CHAT, voiceChatAction);
             actionsView.set(ProfileActionsView.KEY_STREAM, streamAction);
 
-            actionsView.set(ProfileActionsView.KEY_GIFT, !xyz.nextalone.nagram.NaConfig.INSTANCE.getHideGiftButton().Bool() && giftAction);
+            actionsView.set(ProfileActionsView.KEY_GIFT, !top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideGiftButton().Bool() && giftAction);
             callItemVisible = videoCallItemVisible = false;
             if (!discussAction) {
                 if (isTopic) {
@@ -12891,7 +12890,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     }
 
     private void createGhostModeExclusionItem(long chatId) {
-        if (!NekoConfig.showGhostInDrawer.Bool() || ChatObject.isChannelAndNotMegaGroup(currentChat)) {
+        if (!NyaConfig.showGhostInDrawer.Bool() || ChatObject.isChannelAndNotMegaGroup(currentChat)) {
             return;
         }
         if (currentEncryptedChat instanceof TLRPC.TL_encryptedChat) {
@@ -12902,13 +12901,13 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     }
 
     private void createSaveExclusionItem(long chatId) {
-        if (!NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) return;
+        if (!NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) return;
         var autoTranslatePopupWrapper = new SaveExclusionPopupWrapper(ProfileActivity.this, otherItem.getPopupLayout().getSwipeBack(), chatId, getResourceProvider());
         otherItem.addSwipeBackItem(R.drawable.msg_delete_24_solar, null, getString(R.string.SaveDeletedExclusionMenu), autoTranslatePopupWrapper.windowLayout);
     }
 
     private void createMessageFilterItem() {
-        if (!NaConfig.INSTANCE.getRegexFiltersEnabled().Bool()) {
+        if (!NyaConfig.INSTANCE.getRegexFiltersEnabled().Bool()) {
             return;
         }
         var popupLayout = otherItem.getPopupLayout();
@@ -13985,7 +13984,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         String text;
                         TLRPC.User user = getMessagesController().getUser(userId);
                         String phoneNumber;
-                        boolean shouldHide = NekoConfig.hidePhone.Bool() && (myProfile || (user != null && user.self));
+                        boolean shouldHide = NyaConfig.hidePhone.Bool() && (myProfile || (user != null && user.self));
                         if (!shouldHide && user != null && !TextUtils.isEmpty(vcardPhone)) {
                             text = PhoneFormat.getInstance().format("+" + vcardPhone);
                             phoneNumber = vcardPhone;
@@ -14109,7 +14108,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     } else if (position == numberRow) {
                         TLRPC.User user = UserConfig.getInstance(currentAccount).getCurrentUser();
                         String value;
-                        if (user != null && user.phone != null && user.phone.length() != 0 && !NekoConfig.hidePhone.Bool()) {
+                        if (user != null && user.phone != null && user.phone.length() != 0 && !NyaConfig.hidePhone.Bool()) {
                             value = PhoneFormat.getInstance().format("+" + user.phone);
                         } else {
                             value = LocaleController.getString(R.string.NumberUnknown);
@@ -16445,7 +16444,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
     private float lastRatingViewTranslationXOffset;
     private float getRatingViewTranslationXOffset() {
-        if (xyz.nextalone.nagram.NaConfig.INSTANCE.getHideStarsRating().Bool()) {
+        if (top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideStarsRating().Bool()) {
             return 0;
         }
         return (ratingView != null) ? dp(22) * ratingView.getVisibilityFactor() : 0;
@@ -16453,7 +16452,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
     private float lastRatingViewTranslationYOffset;
     private float getRatingViewTranslationYOffset() {
-        if (xyz.nextalone.nagram.NaConfig.INSTANCE.getHideStarsRating().Bool()) {
+        if (top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideStarsRating().Bool()) {
             return 0;
         }
         return (ratingView != null) ? dp(3) * ratingView.getVisibilityFactor() : 0;
@@ -17560,7 +17559,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
     private long getId(boolean styled) {
         long id = userId != 0 ? userId : chatId != 0 ? chatId : 0;
-        if (styled && chatId != 0 && NaConfig.INSTANCE.getIdDcType().Int() == NekoConfig.ID_TYPE_BOT_API) {
+        if (styled && chatId != 0 && NyaConfig.INSTANCE.getIdDcType().Int() == NyaConfig.ID_TYPE_BOT_API) {
             var chat = getMessagesController().getChat(chatId);
             if (chat != null) {
                 if (ChatObject.isChannel(chat)) {

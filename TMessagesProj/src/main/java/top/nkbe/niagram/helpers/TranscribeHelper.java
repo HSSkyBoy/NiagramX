@@ -51,7 +51,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import top.nkbe.niagram.utils.HttpClient;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class TranscribeHelper {
     private static final Gson gson = new Gson();
@@ -84,7 +84,7 @@ public class TranscribeHelper {
     private static final String OPENAI_COMPATIBLE_DEFAULT_PROMPT = GEMINI_PROMPT;
 
     public static boolean useTranscribeAI(int account) {
-        int provider = NaConfig.INSTANCE.getTranscribeProvider().Int();
+        int provider = NyaConfig.INSTANCE.getTranscribeProvider().Int();
         return provider == TRANSCRIBE_WORKERSAI || provider == TRANSCRIBE_GEMINI || provider == TRANSCRIBE_OPENAI ||
                 (!UserConfig.getInstance(account).isPremium() && provider == TRANSCRIBE_AUTO);
     }
@@ -136,7 +136,7 @@ public class TranscribeHelper {
         var editTextAccountId = createAndSetupEditText(
                 context,
                 resourcesProvider,
-                NaConfig.INSTANCE.getTranscribeProviderCfAccountID().String(),
+                NyaConfig.INSTANCE.getTranscribeProviderCfAccountID().String(),
                 getString(R.string.CloudflareAccountID),
                 EditorInfo.IME_ACTION_NEXT,
                 true
@@ -146,7 +146,7 @@ public class TranscribeHelper {
         var editTextApiToken = createAndSetupEditText(
                 context,
                 resourcesProvider,
-                NaConfig.INSTANCE.getTranscribeProviderCfApiToken().String(),
+                NyaConfig.INSTANCE.getTranscribeProviderCfApiToken().String(),
                 getString(R.string.CloudflareAPIToken),
                 EditorInfo.IME_ACTION_DONE,
                 false
@@ -173,8 +173,8 @@ public class TranscribeHelper {
                     BotWebViewVibrationEffect.APP_ERROR.vibrate();
                     return;
                 }
-                NaConfig.INSTANCE.getTranscribeProviderCfAccountID().setConfigString(accountId == null ? "" : accountId.toString());
-                NaConfig.INSTANCE.getTranscribeProviderCfApiToken().setConfigString(apiToken == null ? "" : apiToken.toString());
+                NyaConfig.INSTANCE.getTranscribeProviderCfAccountID().setConfigString(accountId == null ? "" : accountId.toString());
+                NyaConfig.INSTANCE.getTranscribeProviderCfApiToken().setConfigString(apiToken == null ? "" : apiToken.toString());
                 dialog.dismiss();
             });
         }
@@ -201,7 +201,7 @@ public class TranscribeHelper {
         var editTextApiKey = createAndSetupEditText(
                 context,
                 resourcesProvider,
-                NaConfig.INSTANCE.getTranscribeProviderGeminiApiKey().String(),
+                NyaConfig.INSTANCE.getTranscribeProviderGeminiApiKey().String(),
                 getString(R.string.LlmApiKey),
                 EditorInfo.IME_ACTION_DONE,
                 true
@@ -211,7 +211,7 @@ public class TranscribeHelper {
         var editTextPrompt = createAndSetupEditText(
                 context,
                 resourcesProvider,
-                NaConfig.INSTANCE.getTranscribeProviderGeminiPrompt().String(),
+                NyaConfig.INSTANCE.getTranscribeProviderGeminiPrompt().String(),
                 getString(R.string.TranscribeProviderGeminiPrompt),
                 EditorInfo.IME_ACTION_DONE,
                 false
@@ -232,12 +232,12 @@ public class TranscribeHelper {
                     BotWebViewVibrationEffect.APP_ERROR.vibrate();
                     return;
                 }
-                NaConfig.INSTANCE.getTranscribeProviderGeminiApiKey().setConfigString(apiKey == null ? "" : apiKey.toString());
-                if (NaConfig.INSTANCE.getLlmProviderGeminiKey().String().isEmpty()) {
-                    NaConfig.INSTANCE.getLlmProviderGeminiKey().setConfigString(apiKey == null ? "" : apiKey.toString());
+                NyaConfig.INSTANCE.getTranscribeProviderGeminiApiKey().setConfigString(apiKey == null ? "" : apiKey.toString());
+                if (NyaConfig.INSTANCE.getLlmProviderGeminiKey().String().isEmpty()) {
+                    NyaConfig.INSTANCE.getLlmProviderGeminiKey().setConfigString(apiKey == null ? "" : apiKey.toString());
                 }
                 var prompt = editTextPrompt.getText();
-                NaConfig.INSTANCE.getTranscribeProviderGeminiPrompt().setConfigString(prompt == null ? "" : prompt.toString());
+                NyaConfig.INSTANCE.getTranscribeProviderGeminiPrompt().setConfigString(prompt == null ? "" : prompt.toString());
                 dialog.dismiss();
             });
         }
@@ -265,7 +265,7 @@ public class TranscribeHelper {
         var editTextApiBase = createAndSetupEditText(
                 context,
                 resourcesProvider,
-                NaConfig.INSTANCE.getTranscribeProviderOpenAiApiBase().String(),
+                NyaConfig.INSTANCE.getTranscribeProviderOpenAiApiBase().String(),
                 getString(R.string.OpenAiApiBaseUrlHint),
                 EditorInfo.IME_ACTION_NEXT,
                 true
@@ -275,7 +275,7 @@ public class TranscribeHelper {
         var editTextModel = createAndSetupEditText(
                 context,
                 resourcesProvider,
-                NaConfig.INSTANCE.getTranscribeProviderOpenAiModel().String(),
+                NyaConfig.INSTANCE.getTranscribeProviderOpenAiModel().String(),
                 getString(R.string.LlmModelName),
                 EditorInfo.IME_ACTION_NEXT,
                 false
@@ -285,7 +285,7 @@ public class TranscribeHelper {
         var editTextApiKey = createAndSetupEditText(
                 context,
                 resourcesProvider,
-                NaConfig.INSTANCE.getTranscribeProviderOpenAiApiKey().String(),
+                NyaConfig.INSTANCE.getTranscribeProviderOpenAiApiKey().String(),
                 getString(R.string.LlmApiKey),
                 EditorInfo.IME_ACTION_DONE,
                 false
@@ -295,7 +295,7 @@ public class TranscribeHelper {
         var editTextPrompt = createAndSetupEditText(
                 context,
                 resourcesProvider,
-                NaConfig.INSTANCE.getTranscribeProviderOpenAiPrompt().String(),
+                NyaConfig.INSTANCE.getTranscribeProviderOpenAiPrompt().String(),
                 getString(R.string.TranscribeProviderGeminiPrompt),
                 EditorInfo.IME_ACTION_DONE,
                 false
@@ -315,10 +315,10 @@ public class TranscribeHelper {
                 var apiKey = editTextApiKey.getText();
                 var prompt = editTextPrompt.getText();
 
-                NaConfig.INSTANCE.getTranscribeProviderOpenAiApiBase().setConfigString(apiBase == null ? "" : apiBase.toString());
-                NaConfig.INSTANCE.getTranscribeProviderOpenAiModel().setConfigString(model == null ? "" : model.toString());
-                NaConfig.INSTANCE.getTranscribeProviderOpenAiApiKey().setConfigString(apiKey == null ? "" : apiKey.toString());
-                NaConfig.INSTANCE.getTranscribeProviderOpenAiPrompt().setConfigString(prompt == null ? "" : prompt.toString());
+                NyaConfig.INSTANCE.getTranscribeProviderOpenAiApiBase().setConfigString(apiBase == null ? "" : apiBase.toString());
+                NyaConfig.INSTANCE.getTranscribeProviderOpenAiModel().setConfigString(model == null ? "" : model.toString());
+                NyaConfig.INSTANCE.getTranscribeProviderOpenAiApiKey().setConfigString(apiKey == null ? "" : apiKey.toString());
+                NyaConfig.INSTANCE.getTranscribeProviderOpenAiPrompt().setConfigString(prompt == null ? "" : prompt.toString());
                 dialog.dismiss();
             });
         }
@@ -378,15 +378,15 @@ public class TranscribeHelper {
     }
 
     public static void sendRequest(String path, boolean video, BiConsumer<String, Exception> callback) {
-        switch (NaConfig.INSTANCE.getTranscribeProvider().Int()) {
+        switch (NyaConfig.INSTANCE.getTranscribeProvider().Int()) {
             case TRANSCRIBE_AUTO:
-                if (!TextUtils.isEmpty(NaConfig.INSTANCE.getTranscribeProviderGeminiApiKey().String()) ||
-                        !TextUtils.isEmpty(NaConfig.INSTANCE.getLlmProviderGeminiKey().String())
+                if (!TextUtils.isEmpty(NyaConfig.INSTANCE.getTranscribeProviderGeminiApiKey().String()) ||
+                        !TextUtils.isEmpty(NyaConfig.INSTANCE.getLlmProviderGeminiKey().String())
                 ) {
                     requestGeminiAi(path, video, callback);
-                } else if (!TextUtils.isEmpty(NaConfig.INSTANCE.getTranscribeProviderOpenAiApiBase().String()) &&
-                        !TextUtils.isEmpty(NaConfig.INSTANCE.getTranscribeProviderOpenAiModel().String()) &&
-                        !TextUtils.isEmpty(NaConfig.INSTANCE.getTranscribeProviderOpenAiApiKey().String())
+                } else if (!TextUtils.isEmpty(NyaConfig.INSTANCE.getTranscribeProviderOpenAiApiBase().String()) &&
+                        !TextUtils.isEmpty(NyaConfig.INSTANCE.getTranscribeProviderOpenAiModel().String()) &&
+                        !TextUtils.isEmpty(NyaConfig.INSTANCE.getTranscribeProviderOpenAiApiKey().String())
                 ) {
                     requestOpenAiCompatible(path, video, callback);
                 }
@@ -406,7 +406,7 @@ public class TranscribeHelper {
     }
 
     private static void requestWorkersAi(String path, boolean video, BiConsumer<String, Exception> callback) {
-        if (TextUtils.isEmpty(NaConfig.INSTANCE.getTranscribeProviderCfAccountID().String()) || TextUtils.isEmpty(NaConfig.INSTANCE.getTranscribeProviderCfApiToken().String())) {
+        if (TextUtils.isEmpty(NyaConfig.INSTANCE.getTranscribeProviderCfAccountID().String()) || TextUtils.isEmpty(NyaConfig.INSTANCE.getTranscribeProviderCfApiToken().String())) {
             callback.accept(null, new Exception(getString(R.string.CloudflareCredentialsNotSet)));
             return;
         }
@@ -436,8 +436,8 @@ public class TranscribeHelper {
 
             var client = getOkHttpClient();
             var request = new Request.Builder()
-                    .url("https://api.cloudflare.com/client/v4/accounts/" + NaConfig.INSTANCE.getTranscribeProviderCfAccountID().String() + "/ai/run/@cf/openai/whisper-large-v3-turbo")
-                    .header("Authorization", "Bearer " + NaConfig.INSTANCE.getTranscribeProviderCfApiToken().String())
+                    .url("https://api.cloudflare.com/client/v4/accounts/" + NyaConfig.INSTANCE.getTranscribeProviderCfAccountID().String() + "/ai/run/@cf/openai/whisper-large-v3-turbo")
+                    .header("Authorization", "Bearer " + NyaConfig.INSTANCE.getTranscribeProviderCfApiToken().String())
                     .header("Content-Type", "application/json")
                     .post(RequestBody.create(jsonBody, MediaType.get("application/json")));
             try (var response = client.newCall(request.build()).execute()) {
@@ -456,15 +456,15 @@ public class TranscribeHelper {
     }
 
     private static void requestGeminiAi(String path, boolean video, BiConsumer<String, Exception> callback) {
-        String apiKey = NaConfig.INSTANCE.getTranscribeProviderGeminiApiKey().String();
+        String apiKey = NyaConfig.INSTANCE.getTranscribeProviderGeminiApiKey().String();
         if (TextUtils.isEmpty(apiKey)) {
-            apiKey = NaConfig.INSTANCE.getLlmProviderGeminiKey().String().split(",")[0].trim();
+            apiKey = NyaConfig.INSTANCE.getLlmProviderGeminiKey().String().split(",")[0].trim();
         }
         if (TextUtils.isEmpty(apiKey)) {
             callback.accept(null, new Exception(getString(R.string.GeminiApiKeyNotSet)));
             return;
         }
-        String customPrompt = NaConfig.INSTANCE.getTranscribeProviderGeminiPrompt().String();
+        String customPrompt = NyaConfig.INSTANCE.getTranscribeProviderGeminiPrompt().String();
         final String finalApiKey = apiKey;
         final String finalPrompt = customPrompt.isEmpty() ? GEMINI_PROMPT : customPrompt;
         executorService.submit(() -> {
@@ -541,10 +541,10 @@ public class TranscribeHelper {
     }
 
     private static void requestOpenAiCompatible(String path, boolean video, BiConsumer<String, Exception> callback) {
-        String apiBaseUrl = NaConfig.INSTANCE.getTranscribeProviderOpenAiApiBase().String();
-        String model = NaConfig.INSTANCE.getTranscribeProviderOpenAiModel().String();
-        String apiKey = NaConfig.INSTANCE.getTranscribeProviderOpenAiApiKey().String();
-        String customPrompt = NaConfig.INSTANCE.getTranscribeProviderOpenAiPrompt().String();
+        String apiBaseUrl = NyaConfig.INSTANCE.getTranscribeProviderOpenAiApiBase().String();
+        String model = NyaConfig.INSTANCE.getTranscribeProviderOpenAiModel().String();
+        String apiKey = NyaConfig.INSTANCE.getTranscribeProviderOpenAiApiKey().String();
+        String customPrompt = NyaConfig.INSTANCE.getTranscribeProviderOpenAiPrompt().String();
 
         if (TextUtils.isEmpty(apiBaseUrl) || TextUtils.isEmpty(model) || TextUtils.isEmpty(apiKey)) {
             callback.accept(null, new Exception(getString(R.string.OpenAiCredentialsNotSet)));

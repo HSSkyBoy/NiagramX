@@ -56,7 +56,7 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class DeleteMessagesBottomSheet extends BottomSheetWithRecyclerListView {
     private UniversalAdapter adapter;
@@ -1434,7 +1434,7 @@ public class DeleteMessagesBottomSheet extends BottomSheetWithRecyclerListView {
     @Override
     protected void onPreDraw(Canvas canvas, int top, float progressToFullView) {
         super.onPreDraw(canvas, top, progressToFullView);
-        if (!NaConfig.INSTANCE.getCenterActionBarTitle().Bool() || NaConfig.INSTANCE.getCenterActionBarTitleType().Int() == 3) {
+        if (!NyaConfig.INSTANCE.getCenterActionBarTitle().Bool() || NyaConfig.INSTANCE.getCenterActionBarTitleType().Int() == 3) {
             return;
         }
         final SimpleTextView titleTextView = actionBar.getTitleTextView();

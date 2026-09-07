@@ -65,7 +65,7 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ThemesHorizontalListCell extends RecyclerListView implements NotificationCenter.NotificationCenterDelegate {
 
@@ -201,7 +201,7 @@ public class ThemesHorizontalListCell extends RecyclerListView implements Notifi
                         pressed = true;
                     } else {
                         try {
-                            if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                            if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                         } catch (Exception ignored) {}
                         showOptionsForTheme(themeInfo);
                     }

@@ -61,7 +61,7 @@ import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.NotificationCenterDelegate {
@@ -287,8 +287,8 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
     public void setEmojiPack(String pack, boolean manually) {
         emojiPack = pack;
         preferences.edit().putString("emoji_pack", pack).apply();
-        if (manually && NekoConfig.useSystemEmoji.Bool()) {
-            NekoConfig.useSystemEmoji.setConfigBool(false);
+        if (manually && NyaConfig.useSystemEmoji.Bool()) {
+            NyaConfig.useSystemEmoji.setConfigBool(false);
         }
     }
 
@@ -301,7 +301,7 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
     }
 
     public Typeface getCurrentTypeface() {
-        if (NekoConfig.useSystemEmoji.Bool()) {
+        if (NyaConfig.useSystemEmoji.Bool()) {
             return getSystemEmojiTypeface();
         } else {
             return getSelectedTypeface();
@@ -357,7 +357,7 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
     }
 
     public String getSelectedPackName() {
-        if (NekoConfig.useSystemEmoji.Bool()) return "System";
+        if (NyaConfig.useSystemEmoji.Bool()) return "System";
         return emojiPacksInfo
                 .parallelStream()
                 .filter(e -> {

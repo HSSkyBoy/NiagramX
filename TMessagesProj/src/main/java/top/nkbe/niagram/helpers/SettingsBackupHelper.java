@@ -38,13 +38,12 @@ import java.util.function.Function;
 
 import kotlin.text.StringsKt;
 import top.nkbe.niagram.DialogConfig;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.config.ConfigItem;
 import top.nkbe.niagram.utils.AlertUtil;
 import top.nkbe.niagram.utils.FileUtil;
 import top.nkbe.niagram.utils.GsonUtil;
 import top.nkbe.niagram.utils.ShareUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import xyz.nextalone.nagram.helper.BookmarksHelper;
 import xyz.nextalone.nagram.helper.LocalPeerColorHelper;
 import xyz.nextalone.nagram.helper.LocalPremiumStatusHelper;
@@ -161,8 +160,7 @@ public final class SettingsBackupHelper {
     public static void importSettings(JsonObject configJson) throws JSONException {
         Map<String, Integer> configTypes = new HashMap<>();
         try {
-            configTypes.putAll(NekoConfig.getConfigTypes());
-            configTypes.putAll(NaConfig.INSTANCE.getConfigTypes());
+            configTypes.putAll(NyaConfig.INSTANCE.getConfigTypes());
         } catch (Throwable ignore) {
         }
         String[] preservePrefixes = {
@@ -256,7 +254,7 @@ public final class SettingsBackupHelper {
     }
 
     private static boolean isCompatibleConfigValue(String key, JsonPrimitive value, int type) {
-        if (key.equals(NaConfig.INSTANCE.getPushServiceType().getKey())) {
+        if (key.equals(NyaConfig.INSTANCE.getPushServiceType().getKey())) {
             return value.isNumber() && value.getAsInt() >= 0 && value.getAsInt() <= 3;
         }
         if (type == ConfigItem.configTypeBool || type == ConfigItem.configTypeBoolLinkInt) {
@@ -310,9 +308,9 @@ public final class SettingsBackupHelper {
     }
 
     private static boolean isDeviceSpecificPushKey(String key) {
-        return key.equals(NaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().getKey())
-                || key.equals(NaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPrivateKey().getKey())
-                || key.equals(NaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPublicKey().getKey())
-                || key.equals(NaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushAuthSecret().getKey());
+        return key.equals(NyaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().getKey())
+                || key.equals(NyaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPrivateKey().getKey())
+                || key.equals(NyaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushPublicKey().getKey())
+                || key.equals(NyaConfig.INSTANCE.getPushServiceTypeUnifiedWebPushAuthSecret().getKey());
     }
 }

@@ -20,7 +20,7 @@ import top.nkbe.niagram.translate.HTMLKeeper
 import top.nkbe.niagram.translate.Translator
 import top.nkbe.niagram.translate.code2Locale
 import top.nkbe.niagram.utils.AndroidUtil
-import xyz.nextalone.nagram.NaConfig
+import top.nkbe.niagram.config.NyaConfig
 import java.io.IOException
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.coroutines.CoroutineContext
@@ -55,7 +55,7 @@ object LLMTranslator : Translator {
 
     @JvmStatic
     fun getContextMessageLimit(): Int {
-        val index = NaConfig.llmContextSize.Int()
+        val index = NyaConfig.llmContextSize.Int()
         return contextMessageLimitOptions.getOrElse(index) { 5 }
     }
 
@@ -71,7 +71,7 @@ object LLMTranslator : Translator {
     private var cachedKeyString: String? = null
 
     private fun updateApiKeys() {
-        val llmProvider = NaConfig.llmProviderPreset.Int()
+        val llmProvider = NyaConfig.llmProviderPreset.Int()
         val keyConfig = LlmConfig.getApiKeyConfigItem(llmProvider)
         val key = keyConfig.String()
 
@@ -172,10 +172,10 @@ object LLMTranslator : Translator {
 
     @Throws(IOException::class, RateLimitException::class, UnsupportedOperationException::class)
     private fun doLLMTranslate(to: String, query: String): String {
-        val llmProviderPreset = NaConfig.llmProviderPreset.Int()
+        val llmProviderPreset = NyaConfig.llmProviderPreset.Int()
         val model = LlmConfig.getEffectiveModelName(llmProviderPreset)
         val rawContext = currentTranslationContext()
-            ?.takeIf { NaConfig.llmUseContext.Bool() }
+            ?.takeIf { NyaConfig.llmUseContext.Bool() }
             ?.takeIf { it.isNotBlank() }
 
         TranslationCache.get(query, to, model, rawContext)?.let { cached ->
@@ -188,14 +188,14 @@ object LLMTranslator : Translator {
 
         val apiUrl = LlmConfig.getEffectiveBaseUrl(llmProviderPreset)
 
-        val configuredSystemPrompt = NaConfig.llmSystemPrompt.String()
+        val configuredSystemPrompt = NyaConfig.llmSystemPrompt.String()
         val hasCustomSystemPrompt = !configuredSystemPrompt.isNullOrEmpty()
         val sysPrompt = if (hasCustomSystemPrompt) {
             buildSystemPromptWithCustomInstructions(configuredSystemPrompt!!)
         } else {
             generateSystemPrompt()
         }
-        val userPrompt = NaConfig.llmUserPrompt.String()?.takeIf { it.isNotEmpty() }
+        val userPrompt = NyaConfig.llmUserPrompt.String()?.takeIf { it.isNotEmpty() }
             ?.replace("@text", query)
             ?.replace("@toLang", to)
             ?: generatePrompt(query, to)

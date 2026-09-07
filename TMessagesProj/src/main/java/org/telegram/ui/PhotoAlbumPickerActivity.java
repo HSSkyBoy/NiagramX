@@ -83,12 +83,11 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import kotlin.Unit;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.ChatsHelper;
 import top.nkbe.niagram.translate.Translator;
 import top.nkbe.niagram.translate.TranslatorKt;
 import top.nkbe.niagram.utils.AlertUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class PhotoAlbumPickerActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
@@ -445,7 +444,7 @@ public class PhotoAlbumPickerActivity extends BaseFragment implements Notificati
                     finishFragment();
                 });
             } else {
-                sendSelectedPhotos(selectedPhotos, selectedPhotosOrder, !NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
+                sendSelectedPhotos(selectedPhotos, selectedPhotosOrder, !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
                 finishFragment();
             }
         });
@@ -499,7 +498,7 @@ public class PhotoAlbumPickerActivity extends BaseFragment implements Notificati
                             itemCells[a].setTextAndIcon(LocaleController.getString(R.string.ScheduleMessage), R.drawable.msg_calendar2);
                         }
                     } else {
-                        boolean sendWithoutSoundNax = NaConfig.INSTANCE.getSilentMessageByDefault().Bool();
+                        boolean sendWithoutSoundNax = NyaConfig.INSTANCE.getSilentMessageByDefault().Bool();
                         itemCells[a].setTextAndIcon(sendWithoutSoundNax ? getString(R.string.SendWithSound) : getString(R.string.SendWithoutSound), sendWithoutSoundNax ? R.drawable.input_notify_on : R.drawable.input_notify_off);
                     }
                     itemCells[a].setMinimumWidth(AndroidUtilities.dp(196));
@@ -518,7 +517,7 @@ public class PhotoAlbumPickerActivity extends BaseFragment implements Notificati
                                 finishFragment();
                             });
                         } else if (num == 2) {
-                            sendSelectedPhotos(selectedPhotos, selectedPhotosOrder, NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
+                            sendSelectedPhotos(selectedPhotos, selectedPhotosOrder, NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
                             finishFragment();
                         }
                     });
@@ -556,7 +555,7 @@ public class PhotoAlbumPickerActivity extends BaseFragment implements Notificati
             sendPopupWindow.showAtLocation(view, Gravity.LEFT | Gravity.TOP, location[0] + view.getMeasuredWidth() - sendPopupLayout.getMeasuredWidth() + AndroidUtilities.dp(8), location[1] - sendPopupLayout.getMeasuredHeight() - AndroidUtilities.dp(2));
             sendPopupWindow.dimBehind();
             try {
-                if (!NekoConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                if (!NyaConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
             } catch (Exception ignored) {}
 
             return false;

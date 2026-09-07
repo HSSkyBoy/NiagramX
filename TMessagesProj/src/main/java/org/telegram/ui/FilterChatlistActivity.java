@@ -94,7 +94,7 @@ import org.telegram.ui.Components.spoilers.SpoilersTextView;
 
 import java.util.ArrayList;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class FilterChatlistActivity extends BaseFragment {
 
@@ -591,7 +591,7 @@ public class FilterChatlistActivity extends BaseFragment {
                                     s.delete(MAX_NAME_LENGTH, s.length());
                                     AndroidUtilities.shakeView(editText);
                                     try {
-                                        if (!NekoConfig.disableVibration.Bool()) editText.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                                        if (!NyaConfig.disableVibration.Bool()) editText.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                                     } catch (Exception ignored) {}
                                     ignoreTextChange = false;
                                 }

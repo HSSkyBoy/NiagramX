@@ -147,9 +147,8 @@ import java.util.Iterator;
 import java.util.concurrent.CountDownLatch;
 
 import top.nkbe.niagram.BackButtonMenuRecent;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MainTabsHelper;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class TopicsFragment extends BaseFragment implements NotificationCenter.NotificationCenterDelegate, ChatActivityInterface, RightSlidingDialogContainer.BaseFragmentWithFullscreen, MainTabsActivity.TabFragmentDelegate {
 
@@ -406,8 +405,8 @@ public class TopicsFragment extends BaseFragment implements NotificationCenter.N
 
     @Override
     public View createView(Context context) {
-        additionNavigationBarHeight = parentDialogsActivity != null && parentDialogsActivity.hasMainTabs && !NaConfig.INSTANCE.getHideBottomNavigationBar().Bool() ? dp(MainTabsHelper.getMainTabsHeightWithMargins()) : 0;
-        additionFloatingButtonOffset = parentDialogsActivity != null && parentDialogsActivity.hasMainTabs && !NaConfig.INSTANCE.getHideBottomNavigationBar().Bool() ? dp(MainTabsHelper.getMainTabsHeight() + MainTabsHelper.getMainTabsMargin()) : 0;
+        additionNavigationBarHeight = parentDialogsActivity != null && parentDialogsActivity.hasMainTabs && !NyaConfig.INSTANCE.getHideBottomNavigationBar().Bool() ? dp(MainTabsHelper.getMainTabsHeightWithMargins()) : 0;
+        additionFloatingButtonOffset = parentDialogsActivity != null && parentDialogsActivity.hasMainTabs && !NyaConfig.INSTANCE.getHideBottomNavigationBar().Bool() ? dp(MainTabsHelper.getMainTabsHeight() + MainTabsHelper.getMainTabsMargin()) : 0;
 
         fragmentView = contentView = new SizeNotifierFrameLayout(context) {
             {
@@ -1068,7 +1067,7 @@ public class TopicsFragment extends BaseFragment implements NotificationCenter.N
             }
             toggleSelection(view);
             try {
-                if (!NekoConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                if (!NyaConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             } catch (Exception ignored) {}
             return true;
         });
@@ -1201,7 +1200,7 @@ public class TopicsFragment extends BaseFragment implements NotificationCenter.N
                             canShowHiddenArchive = canShowInternal;
                             if (pullViewState == ARCHIVE_ITEM_STATE_HIDDEN) {
                                 try {
-                                    if (!NekoConfig.disableVibration.Bool()) recyclerListView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                                    if (!NyaConfig.disableVibration.Bool()) recyclerListView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                                 } catch (Exception ignored) {}
                                 if (pullForegroundDrawable != null) {
                                     pullForegroundDrawable.colorize(canShowInternal);
@@ -1864,7 +1863,7 @@ public class TopicsFragment extends BaseFragment implements NotificationCenter.N
                                 if (!canShowHiddenArchive) {
                                     canShowHiddenArchive = true;
                                     try {
-                                        if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                                        if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                                     } catch (Exception ignored) {}
                                     if (pullForegroundDrawable != null) {
                                         pullForegroundDrawable.colorize(true);
@@ -1960,7 +1959,7 @@ public class TopicsFragment extends BaseFragment implements NotificationCenter.N
 
     private boolean showChatPreview(DialogCell cell) {
         try {
-            if (!NekoConfig.disableVibration.Bool()) cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+            if (!NyaConfig.disableVibration.Bool()) cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
         } catch (Exception ignored) {}
         final ActionBarPopupWindow.ActionBarPopupWindowLayout[] previewMenu = new ActionBarPopupWindow.ActionBarPopupWindowLayout[1];
         int flags = ActionBarPopupWindow.ActionBarPopupWindowLayout.FLAG_USE_SWIPEBACK;

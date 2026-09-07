@@ -59,7 +59,7 @@ import org.telegram.ui.Components.AvatarDrawable;
 import org.telegram.ui.Components.ButtonBounce;
 import org.telegram.ui.Components.ColoredImageSpan;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import org.telegram.ui.Components.CubicBezierInterpolator;
 import org.telegram.ui.Components.GradientTools;
 import org.telegram.ui.Components.RecyclerListView;
@@ -69,8 +69,7 @@ import org.telegram.ui.LaunchActivity;
 import java.io.File;
 import java.util.Collections;
 
-import top.nkbe.niagram.NekoConfig;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class StoriesUtilities {
 
@@ -134,7 +133,7 @@ public class StoriesUtilities {
         int state;
         int unreadState = 0;
         boolean showProgress = storiesController.isLoading(dialogId);
-        boolean isForum = (ChatObject.isForum(UserConfig.selectedAccount, dialogId) || NaConfig.INSTANCE.getShowSquareAvatar().Bool()) && !params.isDialogStoriesCell;
+        boolean isForum = (ChatObject.isForum(UserConfig.selectedAccount, dialogId) || NyaConfig.INSTANCE.getShowSquareAvatar().Bool()) && !params.isDialogStoriesCell;
         if (params.drawHiddenStoriesAsSegments) {
             hasStories = storiesController.hasHiddenStories();
         }
@@ -203,7 +202,7 @@ public class StoriesUtilities {
             params.inc = false;
         }
         params.showProgress = showProgress;
-        if (NaConfig.INSTANCE.getDisableStories().Bool() || params.currentState == STATE_EMPTY && params.progressToSate == 1f) {
+        if (NyaConfig.INSTANCE.getDisableStories().Bool() || params.currentState == STATE_EMPTY && params.progressToSate == 1f) {
             avatarImage.setImageCoords(params.originalAvatarRect);
             canvas.save();
             canvas.scale(scale, scale, params.originalAvatarRect.centerX(), params.originalAvatarRect.centerY());
@@ -1346,7 +1345,7 @@ public class StoriesUtilities {
                         }
                         AndroidUtilities.runOnUIThread(longPressRunnable = () -> {
                             try {
-                                if (!NekoConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                                if (!NyaConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                             } catch (Exception ignored) {}
                             if (buttonBounce != null) {
                                 buttonBounce.setPressed(false);

@@ -56,7 +56,7 @@ import org.telegram.ui.Stories.recorder.HintView2;
 import java.util.ArrayList;
 import java.util.List;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.NekoXConfig;
 import top.nkbe.niagram.translate.Translator;
 
@@ -374,7 +374,7 @@ public class TranslateButton extends FrameLayout implements Theme.Colorable {
         });
         popupLayout.addView(hideButton);
 
-        boolean providerTelegram = NekoConfig.translationProvider.Int() == Translator.providerTelegram;
+        boolean providerTelegram = NyaConfig.translationProvider.Int() == Translator.providerTelegram;
         if (providerTelegram) {
             popupLayout.addView(new ActionBarPopupWindow.GapView(getContext(), resourcesProvider), LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 8));
         }

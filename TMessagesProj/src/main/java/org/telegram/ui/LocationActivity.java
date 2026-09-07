@@ -130,7 +130,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.location.NekoLocation;
 
 public class LocationActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
@@ -2520,7 +2520,7 @@ public class LocationActivity extends BaseFragment implements NotificationCenter
             for (int i = providers.size() - 1; i >= 0; i--) {
                 l = lm.getLastKnownLocation(providers.get(i));
                 if (l != null) {
-                    if (NekoConfig.fixDriftingForGoogleMaps()) {
+                    if (NyaConfig.fixDriftingForGoogleMaps()) {
                         NekoLocation.transform(l);
                     }
                     break;

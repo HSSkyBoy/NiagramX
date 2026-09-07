@@ -20,7 +20,7 @@ import org.telegram.ui.Components.SeekBarView;
 
 import java.util.Calendar;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public final class ScheduleTimeHelper {
 
@@ -38,7 +38,7 @@ public final class ScheduleTimeHelper {
 
     public static long getInitialTargetTime(long currentDate) {
         if (shouldUseDefaultSchedule(currentDate)) {
-            int step = getDefaultScheduleStep(NaConfig.INSTANCE.getDefaultScheduledTime().Int());
+            int step = getDefaultScheduleStep(NyaConfig.INSTANCE.getDefaultScheduledTime().Int());
             int minutes = getDefaultScheduleMinutes(step);
             return getTargetTimeFromNow(minutes);
         }
@@ -92,7 +92,7 @@ public final class ScheduleTimeHelper {
         quickScheduleHeader.addView(quickScheduleTitle, LayoutHelper.createLinear(0, LayoutHelper.MATCH_PARENT, 1f));
 
         final TextView quickScheduleValue = new TextView(context);
-        int step = getDefaultScheduleStep(NaConfig.INSTANCE.getDefaultScheduledTime().Int());
+        int step = getDefaultScheduleStep(NyaConfig.INSTANCE.getDefaultScheduledTime().Int());
         int minutes = getDefaultScheduleMinutes(step);
         quickScheduleValue.setText(formatDefaultScheduleMinutes(minutes));
         quickScheduleValue.setTextColor(accentColor);
@@ -111,8 +111,8 @@ public final class ScheduleTimeHelper {
                 int step = Math.round(progress * (DEFAULT_SCHEDULE_STEP_COUNT - 1));
                 int minutes = getDefaultScheduleMinutes(step);
                 quickScheduleValue.setText(formatDefaultScheduleMinutes(minutes));
-                if (NaConfig.INSTANCE.getDefaultScheduledTime().Int() != minutes) {
-                    NaConfig.INSTANCE.getDefaultScheduledTime().setConfigInt(minutes);
+                if (NyaConfig.INSTANCE.getDefaultScheduledTime().Int() != minutes) {
+                    NyaConfig.INSTANCE.getDefaultScheduledTime().setConfigInt(minutes);
                 }
                 setPickersFromTargetTime(getTargetTimeFromNow(minutes), calendar, dayPicker, hourPicker, minutePicker);
                 onPickersChanged.run();

@@ -111,7 +111,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressLint("NewApi")
 public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsListener, NotificationCenter.NotificationCenterDelegate {
@@ -236,7 +236,7 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
     }
 
     private int getPlayerExtensionRendererMode() {
-        return switch (NaConfig.INSTANCE.getPlayerDecoder().Int()) {
+        return switch (NyaConfig.INSTANCE.getPlayerDecoder().Int()) {
             case 0 -> DefaultRenderersFactory.EXTENSION_RENDERER_MODE_OFF;
             case 1 -> DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON;
             default -> DefaultRenderersFactory.EXTENSION_RENDERER_MODE_PREFER;
@@ -446,7 +446,7 @@ public class VideoPlayer implements Player.Listener, VideoListener, AnalyticsLis
 
     public static Quality getDefaultSavedQuality(ArrayList<Quality> qualities) {
         if (qualities == null || qualities.isEmpty()) return null;
-        int v = NaConfig.INSTANCE.getDefaultHlsVideoQuality().Int();
+        int v = NyaConfig.INSTANCE.getDefaultHlsVideoQuality().Int();
         if (v == 0) { // Auto
             return null;
         }

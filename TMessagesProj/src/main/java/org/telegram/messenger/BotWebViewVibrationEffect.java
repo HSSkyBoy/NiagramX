@@ -5,7 +5,7 @@ import android.os.VibrationEffect;
 
 import androidx.annotation.RequiresApi;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public enum BotWebViewVibrationEffect {
     IMPACT_LIGHT(new long[] {7}, new int[] {65}, new long[] {60}),
@@ -44,7 +44,7 @@ public enum BotWebViewVibrationEffect {
     }
 
     public void vibrate() {
-        if (NekoConfig.disableVibration.Bool()) return;
+        if (NyaConfig.disableVibration.Bool()) return;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             AndroidUtilities.getVibrator().vibrate(getVibrationEffectForOreo());
         } else {

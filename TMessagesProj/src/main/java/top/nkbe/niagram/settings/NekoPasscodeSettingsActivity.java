@@ -39,7 +39,7 @@ import java.util.Locale;
 import top.nkbe.niagram.helpers.PasscodeHelper;
 import top.nkbe.niagram.ui.cells.AccountCell;
 import top.nkbe.niagram.ui.cells.HeaderCell;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class NekoPasscodeSettingsActivity extends BaseNekoSettingsActivity {
 
@@ -168,7 +168,7 @@ public class NekoPasscodeSettingsActivity extends BaseNekoSettingsActivity {
                 ((TextCheckCell) view).setChecked(!PasscodeHelper.isSettingsHidden());
             }
         } else if (position == showNotificationContentWhenLockedRow) {
-            boolean value = NaConfig.INSTANCE.getShowNotificationPreviewWhenLocked().toggleConfigBool();
+            boolean value = NyaConfig.INSTANCE.getShowNotificationPreviewWhenLocked().toggleConfigBool();
             if (view instanceof TextCheckCell textCheckCell) {
                 textCheckCell.setChecked(value);
             }
@@ -269,7 +269,7 @@ public class NekoPasscodeSettingsActivity extends BaseNekoSettingsActivity {
                     if (position == showInSettingsRow) {
                         textCell.setTextAndCheck(getString(R.string.PasscodeShowInSettings), !PasscodeHelper.isSettingsHidden(), false);
                     } else if (position == showNotificationContentWhenLockedRow) {
-                        textCell.setTextAndCheck(getString(R.string.PasscodeShowMessagePreviewWhenLocked), NaConfig.INSTANCE.getShowNotificationPreviewWhenLocked().Bool(), false);
+                        textCell.setTextAndCheck(getString(R.string.PasscodeShowMessagePreviewWhenLocked), NyaConfig.INSTANCE.getShowNotificationPreviewWhenLocked().Bool(), false);
                     }
                     break;
                 }

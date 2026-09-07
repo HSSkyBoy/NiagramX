@@ -12,7 +12,7 @@ import top.nkbe.niagram.translate.HTMLKeeper
 import top.nkbe.niagram.translate.Translator
 import top.nkbe.niagram.translate.source.fallback.DeepLTranslatorNeko
 import top.nkbe.niagram.utils.HttpClient
-import xyz.nextalone.nagram.NaConfig
+import top.nkbe.niagram.config.NyaConfig
 import java.io.IOException
 import java.util.Locale
 
@@ -36,7 +36,7 @@ object DeepLTranslator : Translator {
             query, entities, false
         ) else query
 
-        val apiKey = NaConfig.deepLTranslateKey.String().trim()
+        val apiKey = NyaConfig.deepLTranslateKey.String().trim()
         val translatedText = if (apiKey.isEmpty()) {
             try {
                 DeepLTranslatorNeko.translate(

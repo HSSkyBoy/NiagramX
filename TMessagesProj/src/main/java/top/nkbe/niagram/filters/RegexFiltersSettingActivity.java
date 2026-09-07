@@ -38,12 +38,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.settings.BaseNekoSettingsActivity;
 import top.nkbe.niagram.ui.cells.FiltersChatCell;
 import top.nkbe.niagram.ui.cells.HeaderCell;
 import top.nkbe.niagram.utils.AlertUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class RegexFiltersSettingActivity extends BaseNekoSettingsActivity {
 
@@ -376,13 +375,13 @@ public class RegexFiltersSettingActivity extends BaseNekoSettingsActivity {
             TextCheckCell cell = (TextCheckCell) view;
             boolean enabled = !cell.isChecked();
             cell.setChecked(enabled);
-            NaConfig.INSTANCE.getRegexFiltersEnableInChats().setConfigBool(enabled);
+            NyaConfig.INSTANCE.getRegexFiltersEnableInChats().setConfigBool(enabled);
             AyuFilter.invalidateFilteredCache();
         } else if (position == ignoreBlockedRow) {
             TextCheckCell cell = (TextCheckCell) view;
             boolean enabled = !cell.isChecked();
             cell.setChecked(enabled);
-            NekoConfig.ignoreBlocked.setConfigBool(enabled);
+            NyaConfig.ignoreBlocked.setConfigBool(enabled);
         } else if (position == sharedFiltersPageRow) {
             presentFragment(new RegexSharedFiltersListActivity());
         } else if (position == userFiltersPageRow) {
@@ -496,9 +495,9 @@ public class RegexFiltersSettingActivity extends BaseNekoSettingsActivity {
                 case TYPE_CHECK:
                     TextCheckCell textCheckCell = (TextCheckCell) holder.itemView;
                     if (position == regexFiltersEnableInChatsRow) {
-                        textCheckCell.setTextAndCheck(getString(R.string.RegexFiltersEnableInChats), NaConfig.INSTANCE.getRegexFiltersEnableInChats().Bool(), true);
+                        textCheckCell.setTextAndCheck(getString(R.string.RegexFiltersEnableInChats), NyaConfig.INSTANCE.getRegexFiltersEnableInChats().Bool(), true);
                     } else if (position == ignoreBlockedRow) {
-                        textCheckCell.setTextAndCheck(getString(R.string.IgnoreBlocked), NekoConfig.ignoreBlocked.Bool(), true);
+                        textCheckCell.setTextAndCheck(getString(R.string.IgnoreBlocked), NyaConfig.ignoreBlocked.Bool(), true);
                     }
                     break;
                 case TYPE_TEXT:

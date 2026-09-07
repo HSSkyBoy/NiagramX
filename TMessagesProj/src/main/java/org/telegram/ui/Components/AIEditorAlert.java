@@ -95,7 +95,7 @@ import org.telegram.ui.Stories.recorder.HintView2;
 
 import java.util.ArrayList;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class AIEditorAlert extends BottomSheetWithRecyclerListView implements NotificationCenter.NotificationCenterDelegate {
 
@@ -663,7 +663,7 @@ public class AIEditorAlert extends BottomSheetWithRecyclerListView implements No
     @Override
     protected void onPreDraw(Canvas canvas, int top, float progressToFullView) {
         super.onPreDraw(canvas, top, progressToFullView);
-        if (!NaConfig.INSTANCE.getCenterActionBarTitle().Bool() || NaConfig.INSTANCE.getCenterActionBarTitleType().Int() == 3) {
+        if (!NyaConfig.INSTANCE.getCenterActionBarTitle().Bool() || NyaConfig.INSTANCE.getCenterActionBarTitleType().Int() == 3) {
             return;
         }
         final SimpleTextView titleTextView = actionBar.getTitleTextView();

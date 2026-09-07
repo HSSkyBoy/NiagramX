@@ -37,7 +37,7 @@ import org.telegram.ui.Components.UniversalAdapter;
 import org.telegram.ui.Components.UniversalRecyclerView;
 import org.telegram.ui.Components.spoilers.SpoilersTextView;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class TextDetailCell extends FrameLayout {
 
@@ -73,7 +73,7 @@ public class TextDetailCell extends FrameLayout {
         textView.setOnLinkLongPressListener(span -> {
             if (span != null) {
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                 } catch (Exception ignore) {};
                 span.onClick(textView);
             }
@@ -105,7 +105,7 @@ public class TextDetailCell extends FrameLayout {
         valueTextView.setOnLinkLongPressListener(span -> {
             if (span != null) {
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                 } catch (Exception ignore) {};
                 span.onClick(valueTextView);
             }
@@ -140,7 +140,7 @@ public class TextDetailCell extends FrameLayout {
         rightValueTextView.setOnLinkLongPressListener(span -> {
             if (span != null) {
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                 } catch (Exception ignore) {};
                 span.onClick(valueTextView);
             }

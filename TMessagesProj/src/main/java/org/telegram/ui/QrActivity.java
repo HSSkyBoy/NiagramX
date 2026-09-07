@@ -118,7 +118,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class QrActivity extends BaseFragment {
 
@@ -1189,7 +1189,7 @@ public class QrActivity extends BaseFragment {
                                 }
                             } catch (Exception ignore) {
                                 try {
-                                    if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                                    if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                                 } catch (Exception ignore2) {}
                             }
                         }

@@ -69,12 +69,11 @@ import org.telegram.ui.bots.BotWebViewAttachedSheet;
 
 import java.util.ArrayList;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.CloudStorageHelper;
 import top.nkbe.niagram.helpers.UserHelper;
 import top.nkbe.niagram.helpers.MessageHelper;
 import top.nkbe.niagram.utils.AndroidUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public abstract class BaseFragment {
 
@@ -314,7 +313,7 @@ public abstract class BaseFragment {
     }
 
     public boolean isActionBarCrossfadeEnabled() {
-        if (NaConfig.INSTANCE.getBackAnimationStyle().Int() == ActionBarLayout.BACK_ANIMATION_SPRING) {
+        if (NyaConfig.INSTANCE.getBackAnimationStyle().Int() == ActionBarLayout.BACK_ANIMATION_SPRING) {
             if (getLastStoryViewer() != null && getLastStoryViewer().attachedToParent()) {
                 return false;
             }
@@ -382,7 +381,7 @@ public abstract class BaseFragment {
     public void setParentFragment(BaseFragment fragment) {
         setParentLayout(fragment.parentLayout);
         fragmentView = createView(parentLayout.getView().getContext());
-        if (NekoConfig.disableVibration.Bool()) {
+        if (NyaConfig.disableVibration.Bool()) {
             AndroidUtil.disableHapticFeedback(fragmentView);
         }
     }

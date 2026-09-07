@@ -37,7 +37,7 @@ import org.telegram.ui.PremiumPreviewFragment;
 
 import java.util.Locale;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class StealthModeAlert extends BottomSheet {
 
@@ -174,7 +174,7 @@ public class StealthModeAlert extends BottomSheet {
 
                     }));
                     try {
-                        if (!NekoConfig.disableVibration.Bool()) containerView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                        if (!NyaConfig.disableVibration.Bool()) containerView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                     } catch (Exception ignored) {}
                     dismiss();
                     if (type == TYPE_FROM_STORIES) {

@@ -154,7 +154,6 @@ import java.util.Set;
 
 import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MainTabsHelper;
 import top.nkbe.niagram.helpers.MonetHelper;
 import top.nkbe.niagram.helpers.PasscodeHelper;
@@ -162,7 +161,7 @@ import top.nkbe.niagram.helpers.remote.UpdateHelper;
 import top.nkbe.niagram.settings.NekoSettingsActivity;
 import top.nkbe.niagram.ui.BottomBuilder;
 import top.nkbe.niagram.utils.AndroidUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 import kotlin.Unit;
 
@@ -576,12 +575,12 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
         avatarView.setForUserOrChat(user, avatarDrawable);
         titleView.setText(UserObject.getUserName(user));
         final StringBuilder sb = new StringBuilder();
-        if (!NekoConfig.hidePhone.Bool() && user != null) {
+        if (!NyaConfig.hidePhone.Bool() && user != null) {
             sb.append(PhoneFormat.getInstance().format("+" + user.phone));
         }
         final String username = UserObject.getPublicUsername(user);
         if (username != null) {
-            sb.append(NekoConfig.hidePhone.Bool() ? "@" : " • @").append(username);
+            sb.append(NyaConfig.hidePhone.Bool() ? "@" : " • @").append(username);
         }
         subtitleView.setText(sb);
 
@@ -735,7 +734,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
 
         items.add(SettingCell.Factory.of(1, IconBackgroundColors.BLUE.top, IconBackgroundColors.BLUE.bottom, R.drawable.settings_account, getString(R.string.SettingsAccount), getString(R.string.SettingsAccountInfo)));
         items.add(SettingCell.Factory.of(2, IconBackgroundColors.ORANGE.top, IconBackgroundColors.ORANGE.bottom, R.drawable.settings_chat, getString(R.string.SettingsChat), getString(R.string.SettingsChatInfo)));
-        if (NaConfig.INSTANCE.getShowStickersRowToplevel().Bool()) {
+        if (NyaConfig.INSTANCE.getShowStickersRowToplevel().Bool()) {
             items.add(SettingCell.Factory.of(101, 0xFFF38B31, 0xFFE26314, R.drawable.msg_premium_stickers, getString(R.string.StickersName), getString(R.string.StickersNameInfo2)));
         }
         items.add(SettingCell.Factory.of(3, IconBackgroundColors.GREEN.top, IconBackgroundColors.GREEN.bottom, R.drawable.settings_privacy, getString(R.string.SettingsPrivacySecurity), getString(R.string.SettingsPrivacySecurityInfo)));
@@ -746,8 +745,8 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
         items.add(SettingCell.Factory.of(9, IconBackgroundColors.ORANGE_DEEP.top, IconBackgroundColors.ORANGE_DEEP.bottom, R.drawable.settings_power, getString(R.string.SettingsPowerSaving), getString(R.string.SettingsPowerSavingInfo)));
         items.add(SettingCell.Factory.of(10, IconBackgroundColors.PURPLE.top, IconBackgroundColors.PURPLE.bottom, R.drawable.settings_language, getString(R.string.SettingsLanguage), LocaleController.getCurrentLanguageName()));
 
-        boolean hidePremium = NaConfig.INSTANCE.getHidePremiumSection().Bool();
-        boolean hideHelp = NaConfig.INSTANCE.getHideHelpSection().Bool();
+        boolean hidePremium = NyaConfig.INSTANCE.getHidePremiumSection().Bool();
+        boolean hideHelp = NyaConfig.INSTANCE.getHideHelpSection().Bool();
 
         if (!(hidePremium && hideHelp)) {
             items.add(UItem.asShadow(null));
@@ -1516,7 +1515,7 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
         });
 
         String currentChannel = " - ";
-        switch (NaConfig.INSTANCE.getAutoUpdateChannel().Int()) {
+        switch (NyaConfig.INSTANCE.getAutoUpdateChannel().Int()) {
             case UpdateHelper.UPDATE_OFF:
                 currentChannel += getString(R.string.AutoCheckUpdateOFF);
                 break;
@@ -1531,8 +1530,8 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
         builder.addItem(getString(R.string.AutoCheckUpdateSwitch) + currentChannel, R.drawable.sync_outline_28, (it) -> {
             BottomBuilder switchBuilder = new BottomBuilder(getParentActivity());
             switchBuilder.addTitle(getString(R.string.AutoCheckUpdateSwitch));
-            switchBuilder.addRadioItem(getString(R.string.AutoCheckUpdateOFF), NaConfig.INSTANCE.getAutoUpdateChannel().Int() == UpdateHelper.UPDATE_OFF, (radioButtonCell) -> {
-                NaConfig.INSTANCE.getAutoUpdateChannel().setConfigInt(UpdateHelper.UPDATE_OFF);
+            switchBuilder.addRadioItem(getString(R.string.AutoCheckUpdateOFF), NyaConfig.INSTANCE.getAutoUpdateChannel().Int() == UpdateHelper.UPDATE_OFF, (radioButtonCell) -> {
+                NyaConfig.INSTANCE.getAutoUpdateChannel().setConfigInt(UpdateHelper.UPDATE_OFF);
                 switchBuilder.doRadioCheck(radioButtonCell);
                 AndroidUtilities.runOnUIThread(() -> {
                     switchBuilder.dismiss();
@@ -1540,8 +1539,8 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                 }, 500);
                 return Unit.INSTANCE;
             });
-            switchBuilder.addRadioItem(getString(R.string.AutoCheckUpdateRelease), NaConfig.INSTANCE.getAutoUpdateChannel().Int() == UpdateHelper.UPDATE_CHANNEL_RELEASE, (radioButtonCell) -> {
-                NaConfig.INSTANCE.getAutoUpdateChannel().setConfigInt(UpdateHelper.UPDATE_CHANNEL_RELEASE);
+            switchBuilder.addRadioItem(getString(R.string.AutoCheckUpdateRelease), NyaConfig.INSTANCE.getAutoUpdateChannel().Int() == UpdateHelper.UPDATE_CHANNEL_RELEASE, (radioButtonCell) -> {
+                NyaConfig.INSTANCE.getAutoUpdateChannel().setConfigInt(UpdateHelper.UPDATE_CHANNEL_RELEASE);
                 switchBuilder.doRadioCheck(radioButtonCell);
                 AndroidUtilities.runOnUIThread(() -> {
                     switchBuilder.dismiss();
@@ -1549,8 +1548,8 @@ public class SettingsActivity extends BaseFragment implements NotificationCenter
                 }, 500);
                 return Unit.INSTANCE;
             });
-            switchBuilder.addRadioItem(getString(R.string.AutoCheckUpdateBeta), NaConfig.INSTANCE.getAutoUpdateChannel().Int() == UpdateHelper.UPDATE_CHANNEL_BETA, (radioButtonCell) -> {
-                NaConfig.INSTANCE.getAutoUpdateChannel().setConfigInt(UpdateHelper.UPDATE_CHANNEL_BETA);
+            switchBuilder.addRadioItem(getString(R.string.AutoCheckUpdateBeta), NyaConfig.INSTANCE.getAutoUpdateChannel().Int() == UpdateHelper.UPDATE_CHANNEL_BETA, (radioButtonCell) -> {
+                NyaConfig.INSTANCE.getAutoUpdateChannel().setConfigInt(UpdateHelper.UPDATE_CHANNEL_BETA);
                 switchBuilder.doRadioCheck(radioButtonCell);
                 AndroidUtilities.runOnUIThread(() -> {
                     switchBuilder.dismiss();

@@ -2,7 +2,7 @@ package xyz.nextalone.nagram.helper
 
 import androidx.core.content.edit
 import org.telegram.messenger.UserConfig
-import xyz.nextalone.nagram.NaConfig
+import top.nkbe.niagram.config.NyaConfig
 import xyz.nextalone.nagram.ToggleResult
 import java.util.concurrent.ConcurrentHashMap
 
@@ -30,7 +30,7 @@ object BookmarksHelper {
         migratedOwners[accountId] = ownerId
 
         val legacyPrefix = LEGACY_KEY_PREFIX + accountId + "_"
-        val prefs = NaConfig.getPreferences()
+        val prefs = NyaConfig.getPreferences()
         val legacyKeys = prefs.all.keys.filter { it.startsWith(legacyPrefix) }
         if (legacyKeys.isEmpty()) {
             return ownerId
@@ -93,7 +93,7 @@ object BookmarksHelper {
 
     private fun getIds(key: String): IntArray {
         return cache.computeIfAbsent(key) { k ->
-            val raw = NaConfig.getPreferences().getString(k, null)
+            val raw = NyaConfig.getPreferences().getString(k, null)
             if (raw.isNullOrBlank()) {
                 intArrayOf()
             } else {
@@ -135,7 +135,7 @@ object BookmarksHelper {
 
     @JvmStatic
     fun isBookmarked(accountId: Int, dialogId: Long, messageId: Int): Boolean {
-        if (!NaConfig.showAddToBookmark.Bool() || messageId == 0) {
+        if (!NyaConfig.showAddToBookmark.Bool() || messageId == 0) {
             return false
         }
         val ids = getIds(key(accountId, dialogId))
@@ -154,7 +154,7 @@ object BookmarksHelper {
 
     @JvmStatic
     fun areAllBookmarked(accountId: Int, dialogId: Long, messageIds: IntArray): Boolean {
-        if (!NaConfig.showAddToBookmark.Bool()) {
+        if (!NyaConfig.showAddToBookmark.Bool()) {
             return false
         }
         val ids = normalizeMessageIds(messageIds)
@@ -179,8 +179,8 @@ object BookmarksHelper {
         val ownerId = getOwnerId(accountId)
         val legacyPrefix = LEGACY_KEY_PREFIX + accountId + "_"
         val currentPrefix = CURRENT_KEY_PREFIX + ownerId + "_"
-        NaConfig.getPreferences().edit {
-            for (key in NaConfig.getPreferences().all.keys) {
+        NyaConfig.getPreferences().edit {
+            for (key in NyaConfig.getPreferences().all.keys) {
                 if (key.startsWith(currentPrefix) || key.startsWith(legacyPrefix)) {
                     remove(key)
                 }
@@ -194,7 +194,7 @@ object BookmarksHelper {
     fun getBookmarkedDialogsCounts(accountId: Int): Map<Long, Int> {
         val ownerId = ensureMigrated(accountId)
         val prefix = CURRENT_KEY_PREFIX + ownerId + "_"
-        val prefs = NaConfig.getPreferences()
+        val prefs = NyaConfig.getPreferences()
         val result = LinkedHashMap<Long, Int>()
         for (key in prefs.all.keys) {
             if (!key.startsWith(prefix)) {
@@ -266,12 +266,12 @@ object BookmarksHelper {
 
     private fun persist(key: String, ids: List<Int>) {
         if (ids.isEmpty()) {
-            NaConfig.getPreferences().edit { remove(key) }
+            NyaConfig.getPreferences().edit { remove(key) }
             cache[key] = intArrayOf()
             return
         }
         val normalized = ids.distinct().takeLast(MAX_PER_CHAT)
-        NaConfig.getPreferences().edit { putString(key, normalized.joinToString(",")) }
+        NyaConfig.getPreferences().edit { putString(key, normalized.joinToString(",")) }
         cache[key] = normalized.toIntArray()
     }
 }

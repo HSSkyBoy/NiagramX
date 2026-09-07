@@ -4,8 +4,7 @@ import androidx.core.content.edit
 import com.google.gson.Gson
 import org.telegram.messenger.UserConfig
 import org.telegram.tgnet.TLRPC
-import top.nkbe.niagram.NekoConfig
-import xyz.nextalone.nagram.NaConfig
+import top.nkbe.niagram.config.NyaConfig
 
 data class LocalQuoteColorData(
     var colorId: Int?, var emojiId: Long?, var profileColorId: Int?, var profileEmojiId: Long?
@@ -19,7 +18,7 @@ object LocalPeerColorHelper {
 
     @JvmStatic
     fun getColorId(user: TLRPC.User): Int? {
-        if (!NekoConfig.localPremium.Bool()) return null
+        if (!NyaConfig.localPremium.Bool()) return null
         if (!isLocalUser(user.id)) return null
         val data = getDataForUser(user.id) ?: return null
         return data.colorId
@@ -27,7 +26,7 @@ object LocalPeerColorHelper {
 
     @JvmStatic
     fun getEmojiId(user: TLRPC.User?): Long? {
-        if (!NekoConfig.localPremium.Bool()) return null
+        if (!NyaConfig.localPremium.Bool()) return null
         if (user == null || !isLocalUser(user.id)) return null
         val data = getDataForUser(user.id) ?: return null
         return data.emojiId
@@ -35,7 +34,7 @@ object LocalPeerColorHelper {
 
     @JvmStatic
     fun getProfileColorId(user: TLRPC.User): Int? {
-        if (!NekoConfig.localPremium.Bool()) return null
+        if (!NyaConfig.localPremium.Bool()) return null
         if (!isLocalUser(user.id)) return null
         val data = getDataForUser(user.id) ?: return null
         return data.profileColorId
@@ -43,7 +42,7 @@ object LocalPeerColorHelper {
 
     @JvmStatic
     fun getProfileEmojiId(user: TLRPC.User?): Long? {
-        if (!NekoConfig.localPremium.Bool()) return null
+        if (!NyaConfig.localPremium.Bool()) return null
         if (user == null || !isLocalUser(user.id)) return null
         val data = getDataForUser(user.id) ?: return null
         return data.profileEmojiId
@@ -79,13 +78,13 @@ object LocalPeerColorHelper {
             val gson = Gson()
             val userKey = KEY_PREFIX + userId
 
-            var jsonStr = NaConfig.getPreferences().getString(userKey, null)
+            var jsonStr = NyaConfig.getPreferences().getString(userKey, null)
 
             if (jsonStr.isNullOrEmpty()) {
-                val legacyJson = NaConfig.useLocalQuoteColorData.String()
+                val legacyJson = NyaConfig.useLocalQuoteColorData.String()
                 if (legacyJson.isNotEmpty()) {
                     jsonStr = legacyJson
-                    NaConfig.getPreferences().edit { putString(userKey, jsonStr) }
+                    NyaConfig.getPreferences().edit { putString(userKey, jsonStr) }
                 }
             }
 
@@ -101,7 +100,7 @@ object LocalPeerColorHelper {
 
     @JvmStatic
     fun apply(colorId: Int, emojiId: Long, profileColorId: Int, profileEmojiId: Long) {
-        if (!NekoConfig.localPremium.Bool()) return
+        if (!NyaConfig.localPremium.Bool()) return
 
         val userId = getCurrentUserId()
         if (userId == 0L) return
@@ -110,6 +109,6 @@ object LocalPeerColorHelper {
         dataMap[userId] = localData
 
         val userKey = KEY_PREFIX + userId
-        NaConfig.getPreferences().edit { putString(userKey, Gson().toJson(localData)) }
+        NyaConfig.getPreferences().edit { putString(userKey, Gson().toJson(localData)) }
     }
 }

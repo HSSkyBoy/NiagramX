@@ -56,7 +56,7 @@ import org.telegram.ui.Components.LayoutHelper;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class CollageLayoutView2 extends FrameLayout implements ItemOptions.ScrimView {
 
@@ -883,7 +883,7 @@ public class CollageLayoutView2 extends FrameLayout implements ItemOptions.Scrim
             })
             .show();
         try {
-            if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+            if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
         } catch (Exception ignored) {}
     }
 

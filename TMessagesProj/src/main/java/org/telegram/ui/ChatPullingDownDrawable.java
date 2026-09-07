@@ -44,7 +44,7 @@ import org.telegram.ui.Components.StaticLayoutEx;
 
 import java.util.ArrayList;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ChatPullingDownDrawable implements NotificationCenter.NotificationCenterDelegate {
 
@@ -331,7 +331,7 @@ public class ChatPullingDownDrawable implements NotificationCenter.NotificationC
             long time = System.currentTimeMillis();
             if (time - lastHapticTime > 100) {
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) parent.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) parent.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                 } catch (Exception ignored) {}
                 lastHapticTime = time;
             }

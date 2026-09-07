@@ -27,7 +27,7 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @Keep
 public class PushListenerController {
@@ -1698,7 +1698,7 @@ public class PushListenerController {
     public static IPushListenerServiceProvider getProvider() {
         if (instance != null)
             return instance;
-        switch (NaConfig.INSTANCE.getPushServiceType().Int()) {
+        switch (NyaConfig.INSTANCE.getPushServiceType().Int()) {
             case 1:
             case 3: {
                 instance = new GooglePushListenerServiceProvider();
@@ -1726,7 +1726,7 @@ public class PushListenerController {
             if (isPushTypeDisabled(PUSH_TYPE_WEB)) {
                 return;
             }
-            NaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().setConfigString(simplePushToken);
+            NyaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().setConfigString(simplePushToken);
             sendRegistrationToServerInternal(PUSH_TYPE_WEB, token);
         });
     }
@@ -1746,7 +1746,7 @@ public class PushListenerController {
     public static void reconcilePushRegistration() {
         reset();
         Utilities.stageQueue.postRunnable(() -> {
-            int serviceType = NaConfig.INSTANCE.getPushServiceType().Int();
+            int serviceType = NyaConfig.INSTANCE.getPushServiceType().Int();
             boolean googlePush = serviceType == 1 || serviceType == 3;
             boolean unifiedPushAvailable = serviceType == 2 && UnifiedPush.getAckDistributor(ApplicationLoader.applicationContext) != null;
             int expectedPushType = serviceType == 2 ? PUSH_TYPE_WEB : PUSH_TYPE_FIREBASE;
@@ -1763,8 +1763,8 @@ public class PushListenerController {
     }
 
     public static void unregisterSimplePush() {
-        String token = NaConfig.getPreferences().getString(NaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().getKey(), "");
-        NaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().setConfigString("");
+        String token = NyaConfig.getPreferences().getString(NyaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().getKey(), "");
+        NyaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().setConfigString("");
         unregisterPush(PUSH_TYPE_SIMPLE, token);
     }
 
@@ -1814,7 +1814,7 @@ public class PushListenerController {
     }
 
     private static boolean isPushTypeDisabled(@PushType int pushType) {
-        int serviceType = NaConfig.INSTANCE.getPushServiceType().Int();
+        int serviceType = NyaConfig.INSTANCE.getPushServiceType().Int();
         if (pushType == PUSH_TYPE_WEB || pushType == PUSH_TYPE_SIMPLE) {
             return serviceType != 2;
         }

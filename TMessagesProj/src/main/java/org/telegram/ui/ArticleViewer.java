@@ -238,9 +238,8 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.telegram.ui.iv.Latex;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.parts.ArticleTransKt;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ArticleViewer extends IArticleViewer implements NotificationCenter.NotificationCenterDelegate {
 
@@ -1188,7 +1187,7 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
 
         private boolean lastWebviewAllowedScroll;
         public boolean handleTouchEvent(MotionEvent event) {
-            if (NaConfig.INSTANCE.getDisableInAppBrowserGestures().Bool()) {
+            if (NyaConfig.INSTANCE.getDisableInAppBrowserGestures().Bool()) {
                 return false;
             }
             if (pageSwitchAnimation == null && !closeAnimationInProgress && fullscreenVideoContainer.getVisibility() != VISIBLE && !textSelectionHelper.isInSelectionMode()) {
@@ -1444,7 +1443,7 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
                 checkingForLongPress = false;
                 if (pressedLink != null) {
                     try {
-                        if (!NekoConfig.disableVibration.Bool()) windowView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                        if (!NyaConfig.disableVibration.Bool()) windowView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                     } catch (Exception ignored) {}
                     showCopyPopup(pressedLink.getSpan().getUrl());
                     pressedLink = null;
@@ -1460,12 +1459,12 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
                     }
                     if (textSelectionHelper.isInSelectionMode()) {
                         try {
-                            if (!NekoConfig.disableVibration.Bool()) windowView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                            if (!NyaConfig.disableVibration.Bool()) windowView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                         } catch (Exception ignored) {}
                     }
                 } else if (pressedLinkOwnerLayout != null && pressedLinkOwnerView != null) {
                     try {
-                        if (!NekoConfig.disableVibration.Bool()) windowView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                        if (!NyaConfig.disableVibration.Bool()) windowView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                     } catch (Exception ignored) {}
 
                     int[] location = new int[2];
@@ -13128,9 +13127,9 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
                 String currentUrl = AndroidUtilities.formapMapUrl(false, currentBlock.geo.lat, currentBlock.geo._long, (int) (photoWidth / AndroidUtilities.density), (int) (height / AndroidUtilities.density), true, 15);
                 WebFile currentWebFile = WebFile.createWithGeoPoint(currentBlock.geo, (int) (photoWidth / AndroidUtilities.density), (int) (height / AndroidUtilities.density), 15, Math.min(2, (int) Math.ceil(AndroidUtilities.density)));
 
-                if (NekoConfig.mapPreviewProvider.Int() == 0) {
+                if (NyaConfig.mapPreviewProvider.Int() == 0) {
                     currentMapProvider = 2;
-                } else if (NekoConfig.mapPreviewProvider.Int() == 1) {
+                } else if (NyaConfig.mapPreviewProvider.Int() == 1) {
                     currentMapProvider = 1;
                 } else {
                     currentMapProvider = -1;

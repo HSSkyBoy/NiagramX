@@ -78,7 +78,7 @@ import java.util.List;
 import top.nkbe.niagram.config.ConfigItem;
 import top.nkbe.niagram.helpers.PinnedElementsHelper;
 import top.nkbe.niagram.ui.cells.ReactionsContainerPreviewCell;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class PinnedReactionsActivity extends BaseFragment {
 
@@ -545,11 +545,11 @@ public class PinnedReactionsActivity extends BaseFragment {
         }
 
         private ConfigItem getCurrentState() {
-            return type == PAGE_CHATS ? NaConfig.INSTANCE.getUsePinnedReactionsChats() : NaConfig.INSTANCE.getUsePinnedReactionsChannels();
+            return type == PAGE_CHATS ? NyaConfig.INSTANCE.getUsePinnedReactionsChats() : NyaConfig.INSTANCE.getUsePinnedReactionsChannels();
         }
 
         private ConfigItem getList() {
-            return type == PAGE_CHATS ? NaConfig.INSTANCE.getPinnedReactionsChats() : NaConfig.INSTANCE.getPinnedReactionsChannels();
+            return type == PAGE_CHATS ? NyaConfig.INSTANCE.getPinnedReactionsChats() : NyaConfig.INSTANCE.getPinnedReactionsChannels();
         }
 
         private void initEmojiView() {

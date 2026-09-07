@@ -59,7 +59,7 @@ import java.util.Stack;
 import java.util.WeakHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class SpoilerEffect extends Drawable {
     public final static int MAX_PARTICLES_PER_ENTITY = measureMaxParticlesCount();
@@ -650,7 +650,7 @@ public class SpoilerEffect extends Drawable {
      * @param spoilers     Spoilers list to populate
      */
     public static void addSpoilers(@Nullable View v, Layout textLayout, @Nullable Stack<SpoilerEffect> spoilersPool, List<SpoilerEffect> spoilers) {
-        if (NekoConfig.showSpoilersDirectly.Bool()) {
+        if (NyaConfig.showSpoilersDirectly.Bool()) {
             return;
         }
         if (textLayout.getText() instanceof Spanned) {
@@ -659,7 +659,7 @@ public class SpoilerEffect extends Drawable {
     }
 
     public static void addSpoilers(@Nullable View v, Layout textLayout, int left, int right, @Nullable Stack<SpoilerEffect> spoilersPool, List<SpoilerEffect> spoilers) {
-        if (NekoConfig.showSpoilersDirectly.Bool()) {
+        if (NyaConfig.showSpoilersDirectly.Bool()) {
             return;
         }
         if (textLayout.getText() instanceof Spanned) {

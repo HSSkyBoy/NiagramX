@@ -75,7 +75,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
 
 public class ChatAvatarContainer extends FrameLayout implements FactorAnimator.Target, NotificationCenter.NotificationCenterDelegate {

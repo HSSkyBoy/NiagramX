@@ -96,7 +96,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import kotlin.Unit;
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.location.NekoLocation;
 import top.nkbe.niagram.ui.BottomBuilder;
 
@@ -1628,7 +1628,7 @@ public class ChatAttachAlertLocationLayout extends ChatAttachAlert.AttachAlertLa
             for (int i = providers.size() - 1; i >= 0; i--) {
                 l = lm.getLastKnownLocation(providers.get(i));
                 if (l != null) {
-                    if (NekoConfig.fixDriftingForGoogleMaps()) {
+                    if (NyaConfig.fixDriftingForGoogleMaps()) {
                         NekoLocation.transform(l);
                     }
                     break;

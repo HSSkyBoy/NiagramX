@@ -54,7 +54,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ImageReceiver implements NotificationCenter.NotificationCenterDelegate, AnimatedEmojiSpan.InvalidateHolder {
 
@@ -454,7 +454,7 @@ public class ImageReceiver implements NotificationCenter.NotificationCenterDeleg
                         }
                     }
                 }
-                if (NaConfig.INSTANCE.getPremiumItemVideoAvatar().Bool() && vectorImageMarkup == null && animationEnabled && MessagesController.getInstance(currentAccount).isPremiumUser(user) && user.photo.has_video && LiteMode.isEnabled(LiteMode.FLAG_AUTOPLAY_VIDEOS)) {
+                if (NyaConfig.INSTANCE.getPremiumItemVideoAvatar().Bool() && vectorImageMarkup == null && animationEnabled && MessagesController.getInstance(currentAccount).isPremiumUser(user) && user.photo.has_video && LiteMode.isEnabled(LiteMode.FLAG_AUTOPLAY_VIDEOS)) {
                     final TLRPC.UserFull userFull = MessagesController.getInstance(currentAccount).getUserFull(user.id);
                     if (userFull == null) {
                         MessagesController.getInstance(currentAccount).loadFullUser(user, currentGuid, false);
@@ -2614,7 +2614,7 @@ public class ImageReceiver implements NotificationCenter.NotificationCenterDeleg
         if (!useRoundRadius && includingEmpty) {
             return emptyRoundRadius;
         }
-        if ((isAvatar || useRoundForThumb || (currentThumbDrawable instanceof AvatarDrawable || currentImageDrawable instanceof AvatarDrawable)) && NaConfig.INSTANCE.getShowSquareAvatar().Bool()) {
+        if ((isAvatar || useRoundForThumb || (currentThumbDrawable instanceof AvatarDrawable || currentImageDrawable instanceof AvatarDrawable)) && NyaConfig.INSTANCE.getShowSquareAvatar().Bool()) {
             for (int a = 0; a < 4; a++) {
                 if (roundRadius[a] > AndroidUtilities.dp(14)) {
                     squareRoundRadius[a] = Math.max(AndroidUtilities.dp(4), Math.round(roundRadius[a] * 0.45f));

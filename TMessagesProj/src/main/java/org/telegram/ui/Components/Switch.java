@@ -44,9 +44,8 @@ import org.telegram.ui.Cells.BaseCell;
 
 import me.vkryl.android.animator.BoolAnimator;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MonetHelper;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class Switch extends View {
     private final BoolAnimator animatorIconVisibility = new BoolAnimator(this, CubicBezierInterpolator.EASE_OUT_QUINT, 380L, true);
@@ -130,7 +129,7 @@ public class Switch extends View {
         checkDrawable = ContextCompat.getDrawable(context, R.drawable.floating_check).mutate();
         checkDrawable.setColorFilter(new PorterDuffColorFilter(Theme.getColor(trackCheckedColorKey, resourcesProvider), PorterDuff.Mode.MULTIPLY));
 
-        setHapticFeedbackEnabled(!NekoConfig.disableVibration.Bool());
+        setHapticFeedbackEnabled(!NyaConfig.disableVibration.Bool());
     }
 
     @Keep
@@ -402,7 +401,7 @@ public class Switch extends View {
             return;
         }
 
-        int switchStyle = NaConfig.INSTANCE.getSwitchStyle().Int();
+        int switchStyle = NyaConfig.INSTANCE.getSwitchStyle().Int();
         if (switchStyle != SWITCH_STYLE_DEFAULT) {
             drawCustomSwitch(canvas, switchStyle);
             return;

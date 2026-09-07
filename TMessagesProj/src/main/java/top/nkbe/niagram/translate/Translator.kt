@@ -15,12 +15,11 @@ import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.R
 import org.telegram.messenger.TranslateController
 import org.telegram.tgnet.TLRPC
-import top.nkbe.niagram.NekoConfig
 import top.nkbe.niagram.translate.source.*
 import top.nkbe.niagram.ui.PopupBuilder
 import top.nkbe.niagram.utils.AppScope
 import top.nkbe.niagram.utils.receiveLazy
-import xyz.nextalone.nagram.NaConfig
+import top.nkbe.niagram.config.NyaConfig
 import java.io.IOException
 import java.util.Arrays
 import java.util.Locale
@@ -69,14 +68,14 @@ interface Translator {
         @JvmStatic
         fun getInputTranslateLangForChat(chatId: Long): String {
             val key = "translateInputLang_$chatId"
-            return NekoConfig.getPreferences().getString(key, null)
-                ?: NekoConfig.translateInputLang.String()
+            return NyaConfig.getPreferences().getString(key, null)
+                ?: NyaConfig.translateInputLang.String()
         }
 
         @JvmStatic
         fun setInputTranslateLangForChat(chatId: Long, langCode: String) {
             val key = "translateInputLang_$chatId"
-            NekoConfig.getPreferences().edit {
+            NyaConfig.getPreferences().edit {
                 putString(key, langCode)
             }
         }
@@ -88,20 +87,20 @@ interface Translator {
 
         @Throws(Exception::class)
         suspend fun translate(to: Locale, query: String, provider: Int = 0): String {
-            val result: TLRPC.TL_textWithEntities = translateBase(to, query, ArrayList(), provider.takeIf { it != 0 } ?: NekoConfig.translationProvider.Int())
+            val result: TLRPC.TL_textWithEntities = translateBase(to, query, ArrayList(), provider.takeIf { it != 0 } ?: NyaConfig.translationProvider.Int())
             return result.text.toString()
         }
 
         @Throws(Exception::class)
         suspend fun translate(to: Locale, query: String, entities: ArrayList<TLRPC.MessageEntity>, provider: Int = 0): TLRPC.TL_textWithEntities {
-            val result: TLRPC.TL_textWithEntities = translateBase(to, query, entities, provider.takeIf { it != 0 } ?: NekoConfig.translationProvider.Int())
+            val result: TLRPC.TL_textWithEntities = translateBase(to, query, entities, provider.takeIf { it != 0 } ?: NyaConfig.translationProvider.Int())
             return result
         }
 
         @JvmStatic
         @JvmOverloads
         fun translate(
-            to: Locale = NekoConfig.translateToLang.String()?.code2Locale
+            to: Locale = NyaConfig.translateToLang.String()?.code2Locale
                 ?: LocaleController.getInstance().currentLocale,
             query: String,
             provider: Int = 0,
@@ -110,7 +109,7 @@ interface Translator {
 
             AppScope.io.launch {
                 runCatching {
-                    val result: String = translate(to, query, provider.takeIf { it != 0 } ?: NekoConfig.translationProvider.Int())
+                    val result: String = translate(to, query, provider.takeIf { it != 0 } ?: NyaConfig.translationProvider.Int())
 
                     AndroidUtilities.runOnUIThread {
                         translateCallBack.onSuccess(result)
@@ -129,7 +128,7 @@ interface Translator {
         @JvmStatic
         @JvmOverloads
         fun translate(
-            to: Locale = NekoConfig.translateToLang.String()?.code2Locale
+            to: Locale = NyaConfig.translateToLang.String()?.code2Locale
                 ?: LocaleController.getInstance().currentLocale,
             query: String,
             entities: ArrayList<TLRPC.MessageEntity>,
@@ -139,7 +138,7 @@ interface Translator {
             AppScope.io.launch {
                 runCatching {
                     val result = translateBase(
-                        to, query, entities, NekoConfig.translationProvider.Int()
+                        to, query, entities, NyaConfig.translationProvider.Int()
                     )
 
                     AndroidUtilities.runOnUIThread { translateCallBack.onSuccess(result) }
@@ -167,7 +166,7 @@ interface Translator {
                 query,
                 entities,
                 context,
-                getBulkTranslateProvider(NekoConfig.translationProvider.Int()),
+                getBulkTranslateProvider(NyaConfig.translationProvider.Int()),
                 translateCallBack
             )
         }
@@ -183,7 +182,7 @@ interface Translator {
         ) {
             AppScope.io.launch {
                 runCatching {
-                    val effectiveProvider = provider.takeIf { it != 0 } ?: NekoConfig.translationProvider.Int()
+                    val effectiveProvider = provider.takeIf { it != 0 } ?: NyaConfig.translationProvider.Int()
                     val result = LLMTranslator.withTranslationContext(context) {
                         translateBase(to, query, entities, effectiveProvider)
                     }
@@ -201,14 +200,14 @@ interface Translator {
 
         @JvmStatic
         fun translatePoll(
-            to: Locale = NekoConfig.translateToLang.String()?.code2Locale
+            to: Locale = NyaConfig.translateToLang.String()?.code2Locale
                 ?: LocaleController.getInstance().currentLocale,
             query: TranslateController.PollText,
             translateCallBack: TranslateCallBack3
         ) {
             AppScope.io.launch {
                 runCatching {
-                    val effectiveProvider = getBulkTranslateProvider(NekoConfig.translationProvider.Int())
+                    val effectiveProvider = getBulkTranslateProvider(NyaConfig.translationProvider.Int())
                     val translatedPoll = TranslateController.PollText()
                     if (query.question != null) {
                         translatedPoll.question = translateBase(
@@ -243,16 +242,16 @@ interface Translator {
 
         @Throws(Exception::class)
         suspend fun translateArticle(query: String) = translateArticle(
-            NekoConfig.translateToLang.String()?.code2Locale
+            NyaConfig.translateToLang.String()?.code2Locale
                 ?: LocaleController.getInstance().currentLocale, query
         )
 
         @Throws(Exception::class)
         suspend fun translateArticle(to: Locale, query: String): String {
-            val provider = if (NaConfig.enableSeparateArticleTranslator.Bool()) {
-                NaConfig.articleTranslationProvider.Int()
+            val provider = if (NyaConfig.enableSeparateArticleTranslator.Bool()) {
+                NyaConfig.articleTranslationProvider.Int()
             } else {
-                NekoConfig.translationProvider.Int()
+                NyaConfig.translationProvider.Int()
             }
             val result: TLRPC.TL_textWithEntities = translateBase(
                 to,
@@ -391,7 +390,7 @@ interface Translator {
             locales.add(0, firstLocale)
 
             // Get preferred languages and insert after first position
-            val preferredLocales = NaConfig.preferredTranslateTargetLangList.mapNotNull { lang ->
+            val preferredLocales = NyaConfig.preferredTranslateTargetLangList.mapNotNull { lang ->
                 try {
                     lang.code2Locale
                 } catch (e: Exception) {

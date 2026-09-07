@@ -29,9 +29,8 @@ import org.telegram.ui.Components.BulletinFactory
 import org.telegram.ui.Components.LayoutHelper
 import org.telegram.ui.Components.RecyclerListView
 import org.telegram.ui.Components.SeekBarView
-import top.nkbe.niagram.NekoConfig
+import top.nkbe.niagram.config.FontConfig
 import top.nkbe.niagram.helpers.FontHelper
-import xyz.nextalone.nagram.NaConfig
 import java.io.File
 
 class NekoFontSettingsActivity : BaseFragment() {
@@ -109,8 +108,8 @@ class NekoFontSettingsActivity : BaseFragment() {
         listView?.setOnItemClickListener { view, position ->
             when (position) {
                 useDefaultTypefaceRow -> {
-                    val newState = !NekoConfig.typeface.Bool()
-                    NekoConfig.typeface.setConfigBool(newState)
+                    val newState = !FontConfig.typeface.Bool()
+                    FontConfig.typeface.setConfigBool(newState)
                     AndroidUtilities.clearTypefaceCache()
                     if (ApplicationLoader.applicationContext != null) {
                         Theme.reloadAllResources(ApplicationLoader.applicationContext)
@@ -119,8 +118,8 @@ class NekoFontSettingsActivity : BaseFragment() {
                     (view as? TextCheckCell)?.setChecked(newState)
                 }
                 forceFontWeightFallbackRow -> {
-                    val newState = !NekoConfig.forceFontWeightFallback.Bool()
-                    NekoConfig.forceFontWeightFallback.setConfigBool(newState)
+                    val newState = !FontConfig.forceFontWeightFallback.Bool()
+                    FontConfig.forceFontWeightFallback.setConfigBool(newState)
                     AndroidUtilities.clearTypefaceCache()
                     if (ApplicationLoader.applicationContext != null) {
                         Theme.reloadAllResources(ApplicationLoader.applicationContext)
@@ -200,10 +199,10 @@ class NekoFontSettingsActivity : BaseFragment() {
 
     private fun getCategoryFontName(category: Int): String {
         val path = when (category) {
-            FontHelper.CATEGORY_REGULAR -> NaConfig.customFontRegular.String()
-            FontHelper.CATEGORY_BOLD -> NaConfig.customFontBold.String()
-            FontHelper.CATEGORY_ITALIC -> NaConfig.customFontItalic.String()
-            FontHelper.CATEGORY_MONO -> NaConfig.customFontMono.String()
+            FontHelper.CATEGORY_REGULAR -> FontConfig.customFontRegular.String()
+            FontHelper.CATEGORY_BOLD -> FontConfig.customFontBold.String()
+            FontHelper.CATEGORY_ITALIC -> FontConfig.customFontItalic.String()
+            FontHelper.CATEGORY_MONO -> FontConfig.customFontMono.String()
             else -> null
         }
         if (path.isNullOrEmpty()) return getString(R.string.Default)
@@ -276,12 +275,12 @@ class NekoFontSettingsActivity : BaseFragment() {
                     when (position) {
                         useDefaultTypefaceRow -> checkCell.setTextAndCheck(
                             getString(R.string.TypefaceUseDefault),
-                            NekoConfig.typeface.Bool(),
+                            FontConfig.typeface.Bool(),
                             true
                         )
                         forceFontWeightFallbackRow -> checkCell.setTextAndCheck(
                             getString(R.string.ForceFontWeightFallback),
-                            NekoConfig.forceFontWeightFallback.Bool(),
+                            FontConfig.forceFontWeightFallback.Bool(),
                             false
                         )
                     }
@@ -298,12 +297,12 @@ class NekoFontSettingsActivity : BaseFragment() {
                 4 -> {
                     val frame = holder.itemView as FrameLayout
                     val seekBarView = frame.getChildAt(0) as? SeekBarView ?: return
-                    val currentSize = NaConfig.inputFieldTextSize.Int()
+                    val currentSize = FontConfig.inputFieldTextSize.Int()
                     val progress = if (currentSize <= 0) 0f else (currentSize - 12f) / 16f
                     seekBarView.setProgress(progress.coerceIn(0f, 1f))
                     seekBarView.delegate = SeekBarView.SeekBarViewDelegate { _, p ->
                         val size = if (p <= 0.05f) 0 else (12 + (p * 16).toInt())
-                        NaConfig.inputFieldTextSize.setConfigInt(size)
+                        FontConfig.inputFieldTextSize.setConfigInt(size)
                     }
                 }
             }

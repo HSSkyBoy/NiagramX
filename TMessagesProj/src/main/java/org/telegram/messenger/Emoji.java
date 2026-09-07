@@ -45,7 +45,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Objects;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.helpers.remote.EmojiHelper;
 
 public class Emoji {
@@ -96,7 +96,7 @@ public class Emoji {
     }
 
     public static boolean isSelectedCustomPack() {
-        return isSelectedEmojiPack || NekoConfig.useSystemEmoji.Bool();
+        return isSelectedEmojiPack || NyaConfig.useSystemEmoji.Bool();
     }
 
     public static void reloadEmoji() {
@@ -146,7 +146,7 @@ public class Emoji {
             loadingEmoji[page][page2] = true;
             Utilities.globalQueue.postRunnable(() -> {
                 Bitmap bitmap;
-                if (NekoConfig.useSystemEmoji.Bool() || isSelectedEmojiPack) {
+                if (NyaConfig.useSystemEmoji.Bool() || isSelectedEmojiPack) {
                     int emojiSize = 66;
                     bitmap = Bitmap.createBitmap(emojiSize, emojiSize, Bitmap.Config.ARGB_8888);
                     Canvas canvas = new Canvas(bitmap);
@@ -783,7 +783,7 @@ public class Emoji {
         if (cs == null || cs.length() == 0) {
             return cs;
         }
-        if (NekoConfig.useSystemEmoji.Bool() && !EmojiHelper.containsAppleLogo(cs)) {
+        if (NyaConfig.useSystemEmoji.Bool() && !EmojiHelper.containsAppleLogo(cs)) {
             return cs;
         }
 
@@ -794,7 +794,7 @@ public class Emoji {
             s = Spannable.Factory.getInstance().newSpannable(cs.toString());
         }
         boolean replacedAppleLogo = EmojiHelper.replaceAppleLogo(s, fontMetrics);
-        if (NekoConfig.useSystemEmoji.Bool()) {
+        if (NyaConfig.useSystemEmoji.Bool()) {
             return replacedAppleLogo ? s : cs;
         }
         final int currentAccount = UserConfig.selectedAccount;

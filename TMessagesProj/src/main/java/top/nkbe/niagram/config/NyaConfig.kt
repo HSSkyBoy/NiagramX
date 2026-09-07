@@ -1,29 +1,41 @@
-package xyz.nextalone.nagram
+package top.nkbe.niagram.config
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Base64
+import android.util.Pair
 import androidx.core.content.edit
+import com.radolyn.ayugram.utils.AyuGhostUtils
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.ApplicationLoader
 import org.telegram.messenger.BuildVars
 import org.telegram.messenger.FileLog
 import org.telegram.messenger.SharedConfig
-import top.nkbe.niagram.NekoConfig
+import top.nkbe.niagram.NekoXConfig
 import top.nkbe.niagram.config.ConfigItem
 import top.nkbe.niagram.config.ConfigItemKeyLinked
+import top.nkbe.niagram.helpers.CloudSettingsHelper
 import top.nkbe.niagram.llm.utils.UrlNormalizer
 import java.io.ByteArrayInputStream
 import java.io.ObjectInputStream
+import java.util.Arrays
 
 
-object NaConfig {
+object NyaConfig {
     @Volatile
     private var initialized = false
 
+    @Volatile
+    private var preferences: SharedPreferences? = null
+
     @JvmStatic
     fun getPreferences(): SharedPreferences {
-        return NekoConfig.getPreferences()
+        var p = preferences
+        if (p == null) {
+            p = ApplicationLoader.applicationContext.getSharedPreferences("nkmrcfg", Context.MODE_PRIVATE)
+            preferences = p
+        }
+        return p
     }
 
     @JvmStatic
@@ -43,6 +55,59 @@ object NaConfig {
         }
     }
 
+    // --- Constants from NekoConfig ---
+    const val TABLET_AUTO = 0
+    const val TABLET_ENABLE = 1
+    const val TABLET_DISABLE = 2
+    const val TABLET_LANDSCAPE = 3
+
+    const val DIALOG_FILTER_EXCLUDE_NONE = 0
+    const val DIALOG_FILTER_EXCLUDE_MUTED = 1
+    const val DIALOG_FILTER_EXCLUDE_ALL = 2
+
+    const val MARKDOWN_PARSER_TELEGRAM = 0
+    const val MARKDOWN_PARSER_NEKO = 1
+
+    const val DRAWER_BACKGROUND_DEFAULT = 0
+    const val DRAWER_BACKGROUND_AVATAR = 1
+    const val DRAWER_BACKGROUND_BIG_AVATAR = 2
+    const val DRAWER_BACKGROUND_WALLPAPER = 3
+
+    const val DNS_TYPE_DEFAULT = 0
+    const val DNS_TYPE_CLOUDFLARE = 1
+    const val DNS_TYPE_GOOGLE = 2
+    const val DNS_TYPE_TENCENT = 3
+    const val DNS_TYPE_ALIDNS = 4
+    const val DNS_TYPE_SYSTEM = 5
+    const val DNS_TYPE_CUSTOM_DOH = 6
+
+    const val WEB_PROXY_MODE_FOLLOW_TELEGRAM = 0
+    const val WEB_PROXY_MODE_DIRECT = 1
+    const val WEB_PROXY_MODE_CUSTOM = 2
+
+    const val WEB_PROXY_TYPE_HTTP = 0
+    const val WEB_PROXY_TYPE_SOCKS5 = 1
+
+    const val ID_TYPE_HIDDEN = 0
+    const val ID_TYPE_API = 1
+    const val ID_TYPE_BOT_API = 2
+
+    const val ENHANCED_LOADER_OFF = 0
+    const val ENHANCED_LOADER_BALANCED = 1
+    const val ENHANCED_LOADER_EXTREME = 2
+
+    class DatacenterInfo(@JvmField var id: Int) {
+        @JvmField var pingId: Long = 0
+        @JvmField var ping: Long = 0
+        @JvmField var checking: Boolean = false
+        @JvmField var available: Boolean = false
+        @JvmField var availableCheckTime: Long = 0
+    }
+
+    @JvmField
+    val datacenterInfos = ArrayList<DatacenterInfo>(5)
+
+    @JvmField
     val sync = Any()
     private var configLoaded = false
     private val configs = ArrayList<ConfigItem>()
@@ -611,6 +676,136 @@ object NaConfig {
             ConfigItem.configTypeInt,
             0
         )
+
+    // --- Merged from NekoConfig ---
+    @JvmField val unreadBadgeOnBackButton = addConfig("unreadBadgeOnBackButton", ConfigItem.configTypeBool, false)
+    @JvmField val useCustomEmoji = addConfig("useCustomEmoji", ConfigItem.configTypeBool, false)
+    @JvmField val repeatConfirm = addConfig("repeatConfirm", ConfigItem.configTypeBool, true)
+    @JvmField val disableInstantCamera = addConfig("DisableInstantCamera", ConfigItem.configTypeBool, true)
+    @JvmField val showSeconds = addConfig("showSeconds", ConfigItem.configTypeBool, false)
+    @JvmField val useIosSounds = addConfig("useIosSounds", ConfigItem.configTypeBool, false)
+
+    @JvmField val useIPv6 = addConfig("IPv6", ConfigItem.configTypeBool, false)
+    @JvmField val hidePhone = addConfig("HidePhone", ConfigItem.configTypeBool, true)
+    @JvmField val ignoreBlocked = addConfig("IgnoreBlocked", ConfigItem.configTypeBool, false)
+    @JvmField val tabletMode = addConfig("TabletMode", ConfigItem.configTypeInt, 0)
+
+    @JvmField val typeface = addConfig("TypefaceUseDefault", ConfigItem.configTypeBool, false)
+    @JvmField val forceFontWeightFallback = addConfig("forceFontWeightFallback", ConfigItem.configTypeBool, false)
+    @JvmField val nameOrder = addConfig("NameOrder", ConfigItem.configTypeInt, 1)
+    @JvmField val mapPreviewProvider = addConfig("MapPreviewProvider", ConfigItem.configTypeInt, 0)
+    @JvmField val showAddToSavedMessages = addConfig("showAddToSavedMessages", ConfigItem.configTypeBool, true)
+    @JvmField val showReport = addConfig("showReport", ConfigItem.configTypeBool, false)
+    @JvmField val showViewHistory = addConfig("showViewHistory", ConfigItem.configTypeBool, true)
+    @JvmField val showAdminActions = addConfig("showAdminActions", ConfigItem.configTypeBool, true)
+    @JvmField val showChangePermissions = addConfig("showChangePermissions", ConfigItem.configTypeBool, true)
+    @JvmField val showDeleteDownloadedFile = addConfig("showDeleteDownloadedFile", ConfigItem.configTypeBool, true)
+    @JvmField val showMessageDetails = addConfig("showMessageDetails", ConfigItem.configTypeBool, true)
+    @JvmField val showTranslate = addConfig("showTranslate", ConfigItem.configTypeBool, true)
+    @JvmField val showRepeat = addConfig("showRepeat", ConfigItem.configTypeBool, true)
+    @JvmField val showShareMessages = addConfig("showShareMessages", ConfigItem.configTypeBool, false)
+    @JvmField val showMessageHide = addConfig("showMessageHide", ConfigItem.configTypeBool, false)
+
+    @JvmField val actionBarDecoration = addConfig("ActionBarDecoration", ConfigItem.configTypeInt, 0)
+    @JvmField val stickerSize = addConfig("stickerSize", ConfigItem.configTypeFloat, 14.0f)
+    @JvmField val unlimitedFavedStickers = addConfig("UnlimitedFavoredStickers", ConfigItem.configTypeBool, false)
+    @JvmField val unlimitedPinnedDialogs = addConfig("UnlimitedPinnedDialogs", ConfigItem.configTypeBool, false)
+    @JvmField val openArchiveOnPull = addConfig("OpenArchiveOnPull", ConfigItem.configTypeBool, false)
+    @JvmField val hideKeyboardOnChatScroll = addConfig("HideKeyboardOnChatScroll", ConfigItem.configTypeBool, false)
+    @JvmField val useSystemEmoji = addConfig("EmojiUseDefault", ConfigItem.configTypeBool, false)
+    @JvmField val rearVideoMessages = addConfig("RearVideoMessages", ConfigItem.configTypeBool, false)
+    @JvmField val hideAllTab = addConfig("HideAllTab", ConfigItem.configTypeBool, false)
+
+    @JvmField val sortByUnmuted = addConfig("sort_by_unmuted", ConfigItem.configTypeBool, true)
+    @JvmField val sortByUser = addConfig("sort_by_user", ConfigItem.configTypeBool, true)
+    @JvmField val sortByContacts = addConfig("sort_by_contacts", ConfigItem.configTypeBool, true)
+
+    @JvmField val disableSystemAccount = addConfig("DisableSystemAccount", ConfigItem.configTypeBool, false)
+    @JvmField val skipOpenLinkConfirm = addConfig("SkipOpenLinkConfirm", ConfigItem.configTypeBool, false)
+
+    @JvmField val showIdAndDc = addConfig("ShowIdAndDc", ConfigItem.configTypeBool, true)
+
+    @JvmField val cachePath = addConfig("cache_path", ConfigItem.configTypeString, "")
+    @JvmField val customSavePath = addConfig("customSavePath", ConfigItem.configTypeString, "Niagram")
+
+    @JvmField val translationProvider = addConfig("translationProvider", ConfigItem.configTypeInt, 1)
+    @JvmField val translateToLang = addConfig("TransToLang", ConfigItem.configTypeString, "")
+    @JvmField val translateInputLang = addConfig("TransInputToLang", ConfigItem.configTypeString, "en")
+    @JvmField val googleCloudTranslateKey = addConfig("GoogleCloudTransKey", ConfigItem.configTypeString, "")
+
+    @JvmField val disableNotificationBubbles = addConfig("disableNotificationBubbles", ConfigItem.configTypeBool, false)
+
+    @JvmField val tabsTitleType = addConfig("TabTitleType", ConfigItem.configTypeInt, NekoXConfig.TITLE_TYPE_TEXT)
+    @JvmField val confirmAVMessage = addConfig("ConfirmAVMessage", ConfigItem.configTypeBool, false)
+    @JvmField val askBeforeCall = addConfig("AskBeforeCalling", ConfigItem.configTypeBool, true)
+    @JvmField val disableNumberRounding = addConfig("DisableNumberRounding", ConfigItem.configTypeBool, false)
+
+    @JvmField val dnsType = addConfig("DnsType", ConfigItem.configTypeInt, DNS_TYPE_DEFAULT)
+    @JvmField val customDoH = addConfig("CustomDoH", ConfigItem.configTypeString, "")
+
+    @JvmField val webProxyMode = addConfig("WebProxyMode", ConfigItem.configTypeInt, WEB_PROXY_MODE_FOLLOW_TELEGRAM)
+    @JvmField val webProxyType = addConfig("WebProxyType", ConfigItem.configTypeInt, WEB_PROXY_TYPE_HTTP)
+    @JvmField val webProxyHost = addConfig("WebProxyHost", ConfigItem.configTypeString, "")
+    @JvmField val webProxyPort = addConfig("WebProxyPort", ConfigItem.configTypeString, "")
+    @JvmField val webProxyUsername = addConfig("WebProxyUsername", ConfigItem.configTypeString, "")
+    @JvmField val webProxyPassword = addConfig("WebProxyPassword", ConfigItem.configTypeString, "")
+
+    @JvmField val mediaPreview = addConfig("MediaPreview", ConfigItem.configTypeBool, true)
+
+    @JvmField val disableVibration = addConfig("DisableVibration", ConfigItem.configTypeBool, false)
+    @JvmField val autoPauseVideo = addConfig("AutoPauseVideo", ConfigItem.configTypeBool, false)
+    @JvmField val disableProximityEvents = addConfig("DisableProximityEvents", ConfigItem.configTypeBool, false)
+
+    @JvmField val ignoreContentRestrictions = addConfig("ignoreContentRestrictions", ConfigItem.configTypeBool, true)
+    @JvmField val useChatAttachMediaMenu = addConfig("UseChatAttachEnterMenu", ConfigItem.configTypeBool, true)
+    @JvmField val disableLinkPreviewByDefault = addConfig("DisableLinkPreviewByDefault", ConfigItem.configTypeBool, false)
+    @JvmField val sendCommentAfterForward = addConfig("SendCommentAfterForward", ConfigItem.configTypeBool, true)
+    @JvmField val disableTrending = addConfig("DisableTrending", ConfigItem.configTypeBool, true)
+    @JvmField val dontSendGreetingSticker = addConfig("DontSendGreetingSticker", ConfigItem.configTypeBool, true)
+    @JvmField val hideTimeForSticker = addConfig("HideTimeForSticker", ConfigItem.configTypeBool, false)
+    @JvmField val takeGIFasVideo = addConfig("TakeGIFasVideo", ConfigItem.configTypeBool, false)
+    @JvmField val maxRecentStickerCount = addConfig("maxRecentStickerCount", ConfigItem.configTypeInt, 20)
+    @JvmField val disableSwipeToNext = addConfig("disableSwipeToNextChannel", ConfigItem.configTypeBool, false)
+    @JvmField val disableSwipeToNextTopic = addConfig("disableSwipeToNextTopic", ConfigItem.configTypeBool, false)
+    @JvmField val disableChoosingSticker = addConfig("disableChoosingSticker", ConfigItem.configTypeBool, false)
+    @JvmField val hideGroupSticker = addConfig("hideGroupSticker", ConfigItem.configTypeBool, false)
+    @JvmField val rememberAllBackMessages = addConfig("rememberAllBackMessages", ConfigItem.configTypeBool, false)
+    @JvmField val hideSendAsChannel = addConfig("hideSendAsChannel", ConfigItem.configTypeBool, false)
+    @JvmField val showSpoilersDirectly = addConfig("showSpoilersDirectly", ConfigItem.configTypeBool, false)
+
+    @JvmField val disableAutoDownloadingWin32Executable = addConfig("Win32ExecutableFiles", ConfigItem.configTypeBool, true)
+    @JvmField val disableAutoDownloadingArchive = addConfig("ArchiveFiles", ConfigItem.configTypeBool, true)
+    @JvmField val noPreloadTrackIfRepeatOne = addConfig("NoPreloadTrackIfRepeatOne", ConfigItem.configTypeBool, false)
+
+    @JvmField val customAudioBitrate = addConfig("customAudioBitrate", ConfigItem.configTypeInt, 32)
+    @JvmField val enhancedFileLoader = addConfig("enhancedFileLoader", ConfigItem.configTypeInt, ENHANCED_LOADER_OFF)
+    @JvmField val uploadBoost = addConfig("uploadBoost", ConfigItem.configTypeBool, false)
+    @JvmField val useOSMDroidMap = addConfig("useOSMDroidMap", ConfigItem.configTypeBool, false)
+    @JvmField val mapDriftingFixForGoogleMaps = addConfig("mapDriftingFixForGoogleMaps", ConfigItem.configTypeBool, true)
+
+    @JvmField val localPremium = addConfig("localPremium", ConfigItem.configTypeBool, false)
+
+    @JvmField val usePersianCalendar = addConfig("UsePersianCalendar", ConfigItem.configTypeBool, false)
+    @JvmField val displayPersianCalendarByLatin = addConfig("DisplayPersianCalendarByLatin", ConfigItem.configTypeBool, false)
+
+    @JvmField val minimizedStickerCreator = addConfig("minimizedStickerCreator", ConfigItem.configTypeBool, false)
+
+    // --- Ghost Mode ---
+    @JvmField val sendReadMessagePackets = addConfig("sendReadMessagePackets", ConfigItem.configTypeBool, true)
+    @JvmField val sendReadStoriesPackets = addConfig("sendReadStoriesPackets", ConfigItem.configTypeBool, true)
+    @JvmField val sendOnlinePackets = addConfig("sendOnlinePackets", ConfigItem.configTypeBool, true)
+    @JvmField val sendUploadProgress = addConfig("sendUploadProgress", ConfigItem.configTypeBool, true)
+    @JvmField val sendOfflinePacketAfterOnline = addConfig("sendOfflinePacketAfterOnline", ConfigItem.configTypeBool, false)
+    @JvmField val markReadAfterSend = addConfig("markReadAfterSend", ConfigItem.configTypeBool, true)
+    @JvmField val showGhostInDrawer = addConfig("showGhostInDrawer", ConfigItem.configTypeBool, false)
+    @JvmField val showGhostModeStatus = addConfig("showGhostModeStatus", ConfigItem.configTypeBool, false)
+
+    // --- Locked Status ---
+    @JvmField val sendReadMessagePacketsLocked = addConfig("sendReadMessagePacketsLocked", ConfigItem.configTypeBool, false)
+    @JvmField val sendReadStoriesPacketsLocked = addConfig("sendReadStoriesPacketsLocked", ConfigItem.configTypeBool, false)
+    @JvmField val sendOnlinePacketsLocked = addConfig("sendOnlinePacketsLocked", ConfigItem.configTypeBool, false)
+    @JvmField val sendUploadProgressLocked = addConfig("sendUploadProgressLocked", ConfigItem.configTypeBool, false)
+    @JvmField val sendOfflinePacketAfterOnlineLocked = addConfig("sendOfflinePacketAfterOnlineLocked", ConfigItem.configTypeBool, false)
 
     // NagramX
     val enableSaveDeletedMessages =
@@ -1427,7 +1622,7 @@ object NaConfig {
         addConfig(
             "MarkdownParser",
             ConfigItem.configTypeInt,
-            NekoConfig.MARKDOWN_PARSER_NEKO
+            MARKDOWN_PARSER_NEKO
         )
     val defaultScheduledTime =
         addConfig(
@@ -1625,13 +1820,13 @@ object NaConfig {
         return when {
             getPreferences().getBoolean(
                 "IgnoreFolderCount", false
-            ) -> NekoConfig.DIALOG_FILTER_EXCLUDE_ALL
+            ) -> DIALOG_FILTER_EXCLUDE_ALL
 
             getPreferences().getBoolean(
                 "IgnoreMutedCount", true
-            ) -> NekoConfig.DIALOG_FILTER_EXCLUDE_MUTED
+            ) -> DIALOG_FILTER_EXCLUDE_MUTED
 
-            else -> NekoConfig.DIALOG_FILTER_EXCLUDE_NONE
+            else -> DIALOG_FILTER_EXCLUDE_NONE
         }
     }
 
@@ -1736,6 +1931,57 @@ object NaConfig {
         return a
     }
 
+    @JvmStatic
+    fun fixDriftingForGoogleMaps(): Boolean {
+        return !useOSMDroidMap.Bool() && mapDriftingFixForGoogleMaps.Bool()
+    }
+
+    private val ghostToggleItems: List<Pair<ConfigItem, ConfigItem>> by lazy {
+        listOf(
+            Pair(sendReadMessagePackets, sendReadMessagePacketsLocked),
+            Pair(sendReadStoriesPackets, sendReadStoriesPacketsLocked),
+            Pair(sendOnlinePackets, sendOnlinePacketsLocked),
+            Pair(sendUploadProgress, sendUploadProgressLocked),
+            Pair(sendOfflinePacketAfterOnline, sendOfflinePacketAfterOnlineLocked)
+        )
+    }
+
+    @JvmStatic
+    fun isGhostModeActive(): Boolean {
+        for (pair in ghostToggleItems) {
+            val item = pair.first
+            val lockedItem = pair.second
+            if (!lockedItem.Bool()) {
+                val currentValue = item.Bool()
+                val isGhostState = (item == sendOfflinePacketAfterOnline) == currentValue
+                if (!isGhostState) {
+                    return false
+                }
+            }
+        }
+        return true
+    }
+
+    @JvmStatic
+    fun setGhostMode(enabled: Boolean) {
+        for (pair in ghostToggleItems) {
+            val item = pair.first
+            val lockedItem = pair.second
+            if (!lockedItem.Bool()) {
+                val targetValue = (item == sendOfflinePacketAfterOnline) == enabled
+                item.setConfigBool(targetValue)
+            }
+        }
+    }
+
+    @JvmStatic
+    fun toggleGhostMode() {
+        val newState = !isGhostModeActive()
+        setGhostMode(newState)
+        val sendOnlineNow = !newState && !sendOfflinePacketAfterOnlineLocked.Bool() && sendOfflinePacketAfterOnline.Bool()
+        AyuGhostUtils.performStatusRequest(sendOnlineNow)
+    }
+
     fun loadConfig(
         force: Boolean
     ) {
@@ -1757,9 +2003,19 @@ object NaConfig {
                         )
                     }
                     if (o.type == ConfigItem.configTypeInt) {
-                        o.value = getPreferences().getInt(
-                            o.key, o.defaultValue as Int
-                        )
+                        try {
+                            o.value = getPreferences().getInt(
+                                o.key, o.defaultValue as Int
+                            )
+                        } catch (e: ClassCastException) {
+                            try {
+                                val oldBool = getPreferences().getBoolean(o.key, false)
+                                o.value = if (oldBool) ENHANCED_LOADER_BALANCED else ENHANCED_LOADER_OFF
+                                getPreferences().edit().putInt(o.key, o.value as Int).apply()
+                            } catch (_: Exception) {
+                                o.value = o.defaultValue
+                            }
+                        }
                     }
                     if (o.type == ConfigItem.configTypeLong) {
                         o.value = getPreferences().getLong(
@@ -1823,6 +2079,12 @@ object NaConfig {
                     resetInvalidConfig(o, e)
                 } catch (e: NumberFormatException) {
                     resetInvalidConfig(o, e)
+                }
+            }
+            if (!configLoaded) {
+                getPreferences().registerOnSharedPreferenceChangeListener(CloudSettingsHelper.listener)
+                for (a in 1..5) {
+                    datacenterInfos.add(DatacenterInfo(a))
                 }
             }
             configLoaded = true

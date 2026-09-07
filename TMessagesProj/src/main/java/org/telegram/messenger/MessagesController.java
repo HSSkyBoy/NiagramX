@@ -139,14 +139,13 @@ import java.util.stream.Collectors;
 
 import me.vkryl.core.BitwiseUtils;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.filters.AyuFilter;
 import top.nkbe.niagram.filters.ReactionFilter;
 import top.nkbe.niagram.helpers.ChatsHelper;
 import top.nkbe.niagram.helpers.LocalNameHelper;
 import top.nkbe.niagram.helpers.MessageHelper;
 import top.nkbe.niagram.utils.AlertUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import xyz.nextalone.nagram.helper.LocalPremiumStatusHelper;
 
 import com.radolyn.ayugram.AyuConstants;
@@ -878,7 +877,7 @@ public class MessagesController extends BaseController implements NotificationCe
         if (dialogFilters.isEmpty()) {
             return;
         }
-        if (!premium && !NekoConfig.localPremium.Bool()) {
+        if (!premium && !NyaConfig.localPremium.Bool()) {
             if (!dialogFilters.get(0).isDefault()) {
                 for (int i = 1; i < dialogFilters.size(); i++) {
                     if (dialogFilters.get(i).isDefault()) {
@@ -911,7 +910,7 @@ public class MessagesController extends BaseController implements NotificationCe
                     if (!filtersSortedById.get(i).locked) {
                         changed = true;
                     }
-                    filtersSortedById.get(i).locked = !NekoConfig.localPremium.Bool();
+                    filtersSortedById.get(i).locked = !NyaConfig.localPremium.Bool();
                 } else {
                     if (filtersSortedById.get(i).locked) {
                         changed = true;
@@ -950,7 +949,7 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public boolean isPremiumUser(TLRPC.User currentUser) {
-        return currentUser != null && (currentUser.premium || currentUser.id == getUserConfig().getClientUserId() && NekoConfig.localPremium.Bool()) && !isSupportUser(currentUser);
+        return currentUser != null && (currentUser.premium || currentUser.id == getUserConfig().getClientUserId() && NyaConfig.localPremium.Bool()) && !isSupportUser(currentUser);
     }
 
     public boolean didPressTranscribeButtonEnough() {
@@ -1446,7 +1445,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 return 0;
             }
         }
-        if (NaConfig.INSTANCE.getSortByUnread().Bool()) {
+        if (NyaConfig.INSTANCE.getSortByUnread().Bool()) {
             boolean priority1 = ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog1);
             boolean priority2 = ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog2);
             if (priority1 != priority2) {
@@ -1489,7 +1488,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 return 0;
             }
         }
-        if (NaConfig.INSTANCE.getSortByUnread().Bool()) {
+        if (NyaConfig.INSTANCE.getSortByUnread().Bool()) {
             boolean priority1 = ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog1);
             boolean priority2 = ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog2);
             if (priority1 != priority2) {
@@ -2499,7 +2498,7 @@ public class MessagesController extends BaseController implements NotificationCe
             } else if (response instanceof TLRPC.TL_messages_dialogFilters) {
                 TLRPC.TL_messages_dialogFilters res = (TLRPC.TL_messages_dialogFilters) response;
                 if (folderTags != res.tags_enabled) {
-                    setFolderTags(res.tags_enabled || !getUserConfig().isPremium() && NekoConfig.localPremium.Bool());
+                    setFolderTags(res.tags_enabled || !getUserConfig().isPremium() && NyaConfig.localPremium.Bool());
                     AndroidUtilities.runOnUIThread(() -> {
                         getNotificationCenter().postNotificationName(NotificationCenter.dialogFiltersUpdated);
                     });
@@ -6906,7 +6905,7 @@ public class MessagesController extends BaseController implements NotificationCe
         }
         fromCache = fromCache && user.id / 1000 != 333 && user.id != 777000;
         TLRPC.User oldUser = users.get(user.id);
-        if (NaConfig.INSTANCE.getSaveLocalLastSeen().Bool() && user.id != getUserConfig().getClientUserId() && user.status instanceof TLRPC.TL_userStatusOffline) {
+        if (NyaConfig.INSTANCE.getSaveLocalLastSeen().Bool() && user.id != getUserConfig().getClientUserId() && user.status instanceof TLRPC.TL_userStatusOffline) {
             int lastSeen = user.status.expires;
             if (lastSeen > 0) {
                 LastSeenHelper.saveLastSeen(user.id, lastSeen);
@@ -9031,7 +9030,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 }
                 loadingBlockedPeers = false;
                 getNotificationCenter().postNotificationName(NotificationCenter.blockedUsersDidLoad);
-                if (!reset && !blockedEndReached && NekoConfig.ignoreBlocked.Bool()) {
+                if (!reset && !blockedEndReached && NyaConfig.ignoreBlocked.Bool()) {
                     getBlockedPeers(false);
                 }
             }
@@ -9454,7 +9453,7 @@ public class MessagesController extends BaseController implements NotificationCe
 
         // --- AyuGram hook
         int ayuDeletedMessagesCount = 0;
-        if (!scheduled && NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+        if (!scheduled && NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
             var ayuMessagesController = AyuMessagesController.getInstance();
             if (DialogObject.isEncryptedDialog(dialogId) && messages != null && !messages.isEmpty()) { // process TTL messages from secrets
                 final ArrayList<Integer> messagesCopy = new ArrayList<>(messages);
@@ -10054,7 +10053,7 @@ public class MessagesController extends BaseController implements NotificationCe
         if (dialogs == null) {
             return new ArrayList<>();
         }
-        if (NaConfig.INSTANCE.getHideArchive().Bool() && folderId != 1) {
+        if (NyaConfig.INSTANCE.getHideArchive().Bool() && folderId != 1) {
             removeFolder(1);
         }
         return dialogs;
@@ -10262,7 +10261,7 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     protected void deleteDialog(long did, int first, int onlyHistory, int max_id, boolean revoke, TLRPC.InputPeer peer, long taskId) {
-        if (onlyHistory == 3 && NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+        if (onlyHistory == 3 && NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
             return;
         }
         if (onlyHistory == 2) {
@@ -11405,7 +11404,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 Integer threadId = threadEntry.getKey();
                 ArrayList<PrintingUser> arr = threadEntry.getValue();
                 // ignoreBlocked start
-                if (NekoConfig.ignoreBlocked.Bool()) {
+                if (NyaConfig.ignoreBlocked.Bool()) {
                     LongSparseIntArray blockePeersCopy = blockePeers.clone();
                     ArrayList<PrintingUser> filteredArr = new ArrayList<>();
                     for (PrintingUser pu : arr) {
@@ -11684,7 +11683,7 @@ public class MessagesController extends BaseController implements NotificationCe
             } else if (action == 9) {
                 req.action = new TLRPC.TL_sendMessageUploadAudioAction();
             } else if (action == 10) {
-                if (NekoConfig.disableChoosingSticker.Bool())
+                if (NyaConfig.disableChoosingSticker.Bool())
                     req.action = new TLRPC.TL_sendMessageTypingAction();
                 else
                     req.action = new TLRPC.TL_sendMessageChooseStickerAction();
@@ -16427,7 +16426,7 @@ public class MessagesController extends BaseController implements NotificationCe
         }
         boolean registeredForCurrentPush = getUserConfig().registeredForPush && pushType == SharedConfig.pushType && regid.equals(SharedConfig.pushString);
         if (pushType == PushListenerController.PUSH_TYPE_WEB) {
-            String simplePushToken = NaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().String();
+            String simplePushToken = NyaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().String();
             if (!registeredForCurrentPush || !simplePushToken.equals(registeredSimplePushToken)) {
                 registerSimplePush(simplePushToken);
             }
@@ -17590,7 +17589,7 @@ public class MessagesController extends BaseController implements NotificationCe
                     newTaskId = taskId;
                 }
 
-                if (!NekoConfig.unlimitedPinnedDialogs.Bool()) getConnectionsManager().sendRequest(req, (response, error) -> {
+                if (!NyaConfig.unlimitedPinnedDialogs.Bool()) getConnectionsManager().sendRequest(req, (response, error) -> {
                     if (newTaskId != 0) {
                         getMessagesStorage().removePendingTask(newTaskId);
                     }
@@ -17602,7 +17601,7 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public void loadPinnedDialogs(final int folderId, long newDialogId, ArrayList<Long> order) {
-        if (NekoConfig.unlimitedPinnedDialogs.Bool()) {
+        if (NyaConfig.unlimitedPinnedDialogs.Bool()) {
             return;
         }
         if (loadingPinnedDialogs.indexOfKey(folderId) >= 0 || getUserConfig().isPinnedDialogsLoaded(folderId)) {
@@ -19817,7 +19816,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 long dialogId = MessageObject.getPeerId(update.peer);
 
                 getMessagesStorage().updateMessageReactions(dialogId, update.msg_id, update.reactions);
-                if (NaConfig.INSTANCE.getSaveLocalLastSeen().Bool()) {
+                if (NyaConfig.INSTANCE.getSaveLocalLastSeen().Bool()) {
                     LastSeenHelper.saveLastSeenFromMessageReactions(update.reactions, getUserConfig().getClientUserId());
                 }
 
@@ -19982,7 +19981,7 @@ public class MessagesController extends BaseController implements NotificationCe
         }
 
         // --- AyuGram request hook
-        if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() && deletedMessages != null) {
+        if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() && deletedMessages != null) {
             var ayuMessagesController = AyuMessagesController.getInstance();
             var deletedMessagesFinal = deletedMessages.clone();
             getMessagesStorage().getStorageQueue().postRunnable(() -> {
@@ -20222,7 +20221,7 @@ public class MessagesController extends BaseController implements NotificationCe
                         } else if (update.status instanceof TLRPC.TL_userStatusLastMonth) {
                             update.status.expires = -102;
                         }
-                        if (NaConfig.INSTANCE.getSaveLocalLastSeen().Bool() && update.status instanceof TLRPC.TL_userStatusOffline) {
+                        if (NyaConfig.INSTANCE.getSaveLocalLastSeen().Bool() && update.status instanceof TLRPC.TL_userStatusOffline) {
                             int lastSeen = update.status.expires;
                             if (lastSeen > 0) {
                                 LastSeenHelper.saveLastSeen(update.user_id, lastSeen);
@@ -22899,7 +22898,7 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public String getRestrictionReason(ArrayList<TLRPC.RestrictionReason> reasons) {
-        if (reasons.isEmpty() || NekoConfig.ignoreContentRestrictions.Bool()) {
+        if (reasons.isEmpty() || NyaConfig.ignoreContentRestrictions.Bool()) {
             return null;
         }
         for (int a = 0, N = reasons.size(); a < N; a++) {
@@ -24008,7 +24007,7 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     public boolean storiesEnabled() {
-        if (NaConfig.INSTANCE.getDisableStories().Bool()) return false;
+        if (NyaConfig.INSTANCE.getDisableStories().Bool()) return false;
         switch (storiesPosting) {
             case "premium":
                 return getUserConfig().isPremium();
@@ -25917,7 +25916,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 if (registrationId != simplePushRegistrationId) {
                     return;
                 }
-                String currentToken = NaConfig.getPreferences().getString(NaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().getKey(), "");
+                String currentToken = NyaConfig.getPreferences().getString(NyaConfig.INSTANCE.getPushServiceTypeUnifiedSimple().getKey(), "");
                 boolean currentRegistration = token.equals(currentToken);
                 if (response instanceof TLRPC.TL_boolTrue && currentRegistration) {
                     FileLog.d("account " + currentAccount + " registered simple push");

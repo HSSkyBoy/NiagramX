@@ -36,7 +36,7 @@ import org.telegram.ui.LaunchActivity;
 
 import java.util.ArrayList;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class StarReactionsOverlay extends View {
 
@@ -84,7 +84,7 @@ public class StarReactionsOverlay extends View {
         longPressRunnable = () -> {
             if (cell == null) return;
             try {
-                if (!NekoConfig.disableVibration.Bool()) cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                if (!NyaConfig.disableVibration.Bool()) cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             } catch (Exception ignored) {}
             onTouchEvent(MotionEvent.obtain(0, 0, MotionEvent.ACTION_CANCEL, 0, 0, 0));
 
@@ -367,7 +367,7 @@ public class StarReactionsOverlay extends View {
         if (btn != null) btn.startAnimation();
         if (send) {
             try {
-                if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
             } catch (Exception ignore) {}
             StarsController.getInstance(chatActivity.getCurrentAccount()).sendPaidReaction(msg, chatActivity, +1, true, false, null);
         }

@@ -2,7 +2,7 @@ package com.radolyn.ayugram.utils;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class AyuGhostPreferences {
     public static final String ghostReadExclusionPrefix = "ghostModeReadExclusion_";
@@ -13,26 +13,26 @@ public class AyuGhostPreferences {
     public static void setGhostModeReadExclusion(long chatId, boolean value) {
         long key = Math.abs(chatId);
         ghostModeReadExclusions.put(key, value);
-        NekoConfig.getPreferences().edit().putBoolean(ghostReadExclusionPrefix + key, value).apply();
+        NyaConfig.getPreferences().edit().putBoolean(ghostReadExclusionPrefix + key, value).apply();
     }
 
     public static boolean getGhostModeReadExclusion(long chatId) {
         long key = Math.abs(chatId);
         return ghostModeReadExclusions.computeIfAbsent(key, k ->
-                NekoConfig.getPreferences().getBoolean(ghostReadExclusionPrefix + k, false)
+                NyaConfig.getPreferences().getBoolean(ghostReadExclusionPrefix + k, false)
         );
     }
 
     public static void setGhostModeTypingExclusion(long chatId, boolean value) {
         long key = Math.abs(chatId);
         ghostModeTypingExclusions.put(key, value);
-        NekoConfig.getPreferences().edit().putBoolean(ghostTypingExclusionPrefix + key, value).apply();
+        NyaConfig.getPreferences().edit().putBoolean(ghostTypingExclusionPrefix + key, value).apply();
     }
 
     public static boolean getGhostModeTypingExclusion(long chatId) {
         long key = Math.abs(chatId);
         return ghostModeTypingExclusions.computeIfAbsent(key, k ->
-                NekoConfig.getPreferences().getBoolean(ghostTypingExclusionPrefix + k, false)
+                NyaConfig.getPreferences().getBoolean(ghostTypingExclusionPrefix + k, false)
         );
     }
 

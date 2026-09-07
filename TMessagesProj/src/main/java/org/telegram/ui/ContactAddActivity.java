@@ -75,7 +75,7 @@ import org.telegram.ui.LNavigation.NavigationExt;
 import java.io.File;
 import java.util.ArrayList;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ContactAddActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate, ImageUpdater.ImageUpdaterDelegate {
 

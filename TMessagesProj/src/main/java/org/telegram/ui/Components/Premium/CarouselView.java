@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class CarouselView extends View implements PagerHeaderView {
 
@@ -104,7 +104,7 @@ public class CarouselView extends View implements PagerHeaderView {
                             }
                             scrollToInternal(offsetAngle + (float) toAngle);
                             try {
-                                if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                                if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                             } catch (Exception ignored) {}
                         }
                         return true;
@@ -161,7 +161,7 @@ public class CarouselView extends View implements PagerHeaderView {
         if (lastSelected != selected) {
             lastSelected = selected;
             try {
-                if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
             } catch (Exception ignored) {}
         }
     }

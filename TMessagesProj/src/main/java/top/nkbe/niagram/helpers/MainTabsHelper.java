@@ -2,7 +2,7 @@ package top.nkbe.niagram.helpers;
 
 import org.telegram.ui.MainTabsActivity;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public final class MainTabsHelper {
     public static final int MAIN_TABS_HEIGHT = 56;
@@ -16,7 +16,7 @@ public final class MainTabsHelper {
     }
 
     public static boolean isMainTabsHideTitleStyle() {
-        return NaConfig.INSTANCE.getMainTabsHideTitles().Bool();
+        return NyaConfig.INSTANCE.getMainTabsHideTitles().Bool();
     }
 
     public static int getMainTabsHeight() {
@@ -32,7 +32,7 @@ public final class MainTabsHelper {
     }
 
     public static boolean isContactsTabHidden() {
-        return NaConfig.INSTANCE.getMainTabsHideContacts().Bool();
+        return NyaConfig.INSTANCE.getMainTabsHideContacts().Bool();
     }
 
     public static int getChatsPosition() {

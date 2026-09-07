@@ -29,7 +29,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import top.nkbe.niagram.utils.HttpClient;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class UpdateHelper extends BaseRemoteHelper {
 
@@ -76,7 +76,7 @@ public class UpdateHelper extends BaseRemoteHelper {
 
     @Override
     protected String getTag() {
-        return NaConfig.INSTANCE.getAutoUpdateChannel().Int() == UPDATE_CHANNEL_RELEASE ? "updateRelease" : "updateBeta";
+        return NyaConfig.INSTANCE.getAutoUpdateChannel().Int() == UPDATE_CHANNEL_RELEASE ? "updateRelease" : "updateBeta";
     }
 
     public void checkNewVersionAvailable(Delegate delegate) {
@@ -84,7 +84,7 @@ public class UpdateHelper extends BaseRemoteHelper {
     }
 
     public void checkNewVersionAvailable(Delegate delegate, boolean updateAlways) {
-        int channel = NaConfig.INSTANCE.getAutoUpdateChannel().Int();
+        int channel = NyaConfig.INSTANCE.getAutoUpdateChannel().Int();
         if (channel == UPDATE_OFF && !updateAlways) {
             notifyDelegate(delegate, null, null);
             return;

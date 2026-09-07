@@ -38,7 +38,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.location.NekoLocation;
 
 @SuppressLint("MissingPermission")
@@ -528,7 +528,7 @@ public class LocationController extends BaseController implements NotificationCe
         if (location != null && (SystemClock.elapsedRealtimeNanos() - location.getElapsedRealtimeNanos()) / 1000000000 > 60 * 5) {
             return;
         }
-        if (NekoConfig.fixDriftingForGoogleMaps() && location != null) {
+        if (NyaConfig.fixDriftingForGoogleMaps() && location != null) {
             NekoLocation.transform(location);
         }
         lastKnownLocation = location;

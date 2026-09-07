@@ -46,9 +46,8 @@ import org.telegram.ui.Components.CubicBezierInterpolator;
 
 import java.util.List;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.ui.icons.IconsResources;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class QuickShareSelectorDrawable extends Drawable implements Animator.AnimatorListener {
     public static class Sizes {
@@ -139,7 +138,7 @@ public class QuickShareSelectorDrawable extends Drawable implements Animator.Ani
 
         cell.setHideSideButtonByQuickShare(true);
 
-        if (!NekoConfig.disableVibration.Bool()) parent.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+        if (!NyaConfig.disableVibration.Bool()) parent.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
 
         updateColors();
 
@@ -264,7 +263,7 @@ public class QuickShareSelectorDrawable extends Drawable implements Animator.Ani
     }
 
     private void closeImpl () {
-        if (NaConfig.INSTANCE.getIconReplacements().Int() == IconsResources.ICON_REPLACE_SOLAR) {
+        if (NyaConfig.INSTANCE.getIconReplacements().Int() == IconsResources.ICON_REPLACE_SOLAR) {
             if (openAnimation.isRunning()) {
                 openAnimation.cancel();
                 openAnimation.setFloatValues(openProgress, 0);
@@ -595,7 +594,7 @@ public class QuickShareSelectorDrawable extends Drawable implements Animator.Ani
             return;
         }
 
-        if (!NekoConfig.disableVibration.Bool()) parent.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+        if (!NyaConfig.disableVibration.Bool()) parent.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
         selectedIndex = index;
         for (int i = 0; i < avatarCells.length; i++) {
             avatarCells[i].setSelected(index == i, true);

@@ -37,7 +37,7 @@ import org.telegram.ui.ActionBar.Theme;
 
 import java.util.Locale;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ProximitySheet extends FrameLayout {
 
@@ -202,7 +202,7 @@ public class ProximitySheet extends FrameLayout {
         kmPicker.setTextOffset(AndroidUtilities.dp(20));
         final NumberPicker.OnValueChangeListener onValueChangeListener = (picker, oldVal, newVal) -> {
             try {
-                if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
             } catch (Exception ignore) {
 
             }

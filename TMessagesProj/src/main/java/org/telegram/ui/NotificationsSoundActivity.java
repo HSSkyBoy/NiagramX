@@ -72,7 +72,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class NotificationsSoundActivity extends BaseFragment implements ChatAttachAlertDocumentLayout.DocumentSelectActivityDelegate, NotificationCenter.NotificationCenterDelegate {
 
@@ -417,7 +417,7 @@ public class NotificationsSoundActivity extends BaseFragment implements ChatAtta
             if (view instanceof ToneCell) {
                 ToneCell cell = (ToneCell) view;
                 checkSelection(cell.tone);
-                if (!NekoConfig.disableVibration.Bool()) cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                if (!NyaConfig.disableVibration.Bool()) cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             }
             return false;
         });

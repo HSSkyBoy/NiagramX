@@ -41,7 +41,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public abstract class BaseChartView<T extends ChartData, L extends LineViewData> extends View implements ChartPickerDelegate.Listener {
 
@@ -1097,7 +1097,7 @@ public abstract class BaseChartView<T extends ChartData, L extends LineViewData>
     }
 
     protected void runSmoothHaptic() {
-        if (NekoConfig.disableVibration.Bool()) return;
+        if (NyaConfig.disableVibration.Bool()) return;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             final Vibrator vibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
             if (vibrationEffect == null) {
@@ -1517,7 +1517,7 @@ public abstract class BaseChartView<T extends ChartData, L extends LineViewData>
         selectionA = 1f;
         moveLegend(chartFullWidth * (pickerDelegate.pickerStart) - HORIZONTAL_PADDING);
         try {
-            if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+            if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
         } catch (Exception ignored) {}
     }
 

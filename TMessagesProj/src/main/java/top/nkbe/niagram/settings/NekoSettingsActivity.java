@@ -55,7 +55,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.helpers.AppRestartHelper;
 import top.nkbe.niagram.helpers.CloudSettingsHelper;
 import top.nkbe.niagram.helpers.PasscodeHelper;
@@ -369,7 +369,7 @@ public class NekoSettingsActivity extends BaseNekoSettingsActivity {
                     () -> {
                         ApplicationLoader.applicationContext.getSharedPreferences("nekocloud", Activity.MODE_PRIVATE).edit().clear().commit();
                         ApplicationLoader.applicationContext.getSharedPreferences("nekox_config", Activity.MODE_PRIVATE).edit().clear().commit();
-                        NekoConfig.getPreferences().edit().clear().commit();
+                        NyaConfig.getPreferences().edit().clear().commit();
                         AppRestartHelper.triggerRebirth(getParentActivity(), new Intent(getParentActivity(), LaunchActivity.class));
                     });
         } else if (position == exportSettingsRow) {

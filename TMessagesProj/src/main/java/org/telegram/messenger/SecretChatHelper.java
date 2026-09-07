@@ -36,7 +36,7 @@ import java.util.Locale;
 import java.util.concurrent.ConcurrentHashMap;
 
 import top.nkbe.niagram.utils.AlertUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import com.radolyn.ayugram.AyuConstants;
 import com.radolyn.ayugram.messages.AyuMessagesController;
 import com.radolyn.ayugram.messages.AyuSavePreferences;
@@ -256,7 +256,7 @@ public class SecretChatHelper extends BaseController {
         }
         if (newChat instanceof TLRPC.TL_encryptedChatDiscarded && newChat.history_deleted) {
             // don't delete encrypted chat dialog if save deleted messages is enabled
-            if (!NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+            if (!NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
                 AndroidUtilities.runOnUIThread(() -> getMessagesController().deleteDialog(dialog_id, 0));
             }
         }
@@ -1150,7 +1150,7 @@ public class SecretChatHelper extends BaseController {
                 } else if (serviceMessage.action instanceof TLRPC.TL_decryptedMessageActionFlushHistory) {
                     long did = DialogObject.makeEncryptedDialogId(chat.id);
                     // save all messages before flushing encrypted chat history
-                    if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+                    if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
                         getMessagesStorage().getStorageQueue().postRunnable(() -> {
                             saveAllMessagesFromEncryptedChat(did);
                             AndroidUtilities.runOnUIThread(() -> performFlushEncryptedHistory(did));

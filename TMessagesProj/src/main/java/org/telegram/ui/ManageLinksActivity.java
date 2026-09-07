@@ -88,7 +88,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ManageLinksActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate {
 
@@ -666,7 +666,7 @@ public class ManageLinksActivity extends BaseFragment implements NotificationCen
                 LinkCell cell = (LinkCell) view;
                 cell.optionsView.callOnClick();
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                 } catch (Exception ignored) {}
                 return true;
             }

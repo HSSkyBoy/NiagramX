@@ -59,9 +59,8 @@ import java.io.File;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.utils.AndroidUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
@@ -123,7 +122,7 @@ public class ApplicationLoader extends Application {
 
     public static IMapsProvider getMapsProvider() {
         if (mapsProvider == null) {
-            if (NekoConfig.useOSMDroidMap.Bool())
+            if (NyaConfig.useOSMDroidMap.Bool())
                 mapsProvider = new OSMDroidMapsProvider();
             else {
                 mapsProvider = new GoogleMapsProvider();
@@ -275,8 +274,7 @@ public class ApplicationLoader extends Application {
         }
 
         SharedConfig.loadConfig();
-        NekoConfig.init();
-        NaConfig.init();
+        NyaConfig.init();
         SharedPrefsHelper.init(applicationContext);
         boolean enableDiagnostics = AndroidUtil.shouldEnableCrashlytics();
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(enableDiagnostics);
@@ -426,7 +424,7 @@ public class ApplicationLoader extends Application {
             AndroidUtilities.runOnUIThread(() -> {
                 try {
                     Log.d("TFOSS", "Starting push service...");
-                    if (NaConfig.INSTANCE.getPushServiceTypeInAppDialog().Bool()) {
+                    if (NyaConfig.INSTANCE.getPushServiceTypeInAppDialog().Bool()) {
                         applicationContext.startForegroundService(new Intent(applicationContext, NotificationsService.class));
                     } else {
                         applicationContext.startService(new Intent(applicationContext, NotificationsService.class));

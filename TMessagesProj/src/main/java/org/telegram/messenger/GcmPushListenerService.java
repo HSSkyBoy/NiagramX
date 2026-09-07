@@ -15,7 +15,7 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class GcmPushListenerService extends FirebaseMessagingService {
 
@@ -45,7 +45,7 @@ public class GcmPushListenerService extends FirebaseMessagingService {
     }
 
     private static boolean isGooglePushDisabled() {
-        int pushServiceType = NaConfig.getPreferences().getInt(NaConfig.INSTANCE.getPushServiceType().getKey(), 1);
+        int pushServiceType = NyaConfig.getPreferences().getInt(NyaConfig.INSTANCE.getPushServiceType().getKey(), 1);
         return pushServiceType != 1 && pushServiceType != 3;
     }
 }

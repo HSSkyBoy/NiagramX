@@ -54,7 +54,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class MultiContactsSelectorBottomSheet extends BottomSheetWithRecyclerListView {
     private static MultiContactsSelectorBottomSheet instance;
@@ -363,7 +363,7 @@ public class MultiContactsSelectorBottomSheet extends BottomSheetWithRecyclerLis
         String text = LocaleController.formatPluralString("BotMultiContactsSelectorLimit", maxCount);
         BulletinFactory.of(container, resourcesProvider).createSimpleBulletin(R.raw.chats_infotip, text).show(true);
         try {
-            if (!NekoConfig.disableVibration.Bool()) container.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+            if (!NyaConfig.disableVibration.Bool()) container.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
         } catch (Exception ignore) {
         }
     }

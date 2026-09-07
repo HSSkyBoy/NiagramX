@@ -22,7 +22,7 @@ import org.telegram.ui.Components.RLottieDrawable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class DownloadProgressIcon extends View implements NotificationCenter.NotificationCenterDelegate {
 

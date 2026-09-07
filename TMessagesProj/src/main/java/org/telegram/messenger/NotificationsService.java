@@ -22,7 +22,7 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class NotificationsService extends Service {
 
@@ -30,11 +30,11 @@ public class NotificationsService extends Service {
     public void onCreate() {
         super.onCreate();
         ApplicationLoader.postInitApplication();
-        if (NaConfig.INSTANCE.getPushServiceType().Int() != 0) {
+        if (NyaConfig.INSTANCE.getPushServiceType().Int() != 0) {
             stopSelf();
             return;
         }
-        if (NaConfig.INSTANCE.getPushServiceTypeInAppDialog().Bool()) {
+        if (NyaConfig.INSTANCE.getPushServiceTypeInAppDialog().Bool()) {
             String CHANNEL_ID = "push_service_channel";
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, LocaleController.getString(R.string.NiagramXPushService), NotificationManager.IMPORTANCE_DEFAULT);
@@ -63,7 +63,7 @@ public class NotificationsService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (NaConfig.INSTANCE.getPushServiceType().Int() != 0) {
+        if (NyaConfig.INSTANCE.getPushServiceType().Int() != 0) {
             try {
                 stopForeground(true);
             } catch (Throwable ignore) {
@@ -86,7 +86,7 @@ public class NotificationsService extends Service {
         } catch (Throwable ignore) {
         }
         SharedPreferences preferences = MessagesController.getGlobalNotificationsSettings();
-        if (NaConfig.INSTANCE.getPushServiceType().Int() == 0 && preferences.getBoolean("pushService", true)) {
+        if (NyaConfig.INSTANCE.getPushServiceType().Int() == 0 && preferences.getBoolean("pushService", true)) {
             Intent intent = new Intent("org.telegram.start");
             intent.setPackage(getPackageName());
             try {

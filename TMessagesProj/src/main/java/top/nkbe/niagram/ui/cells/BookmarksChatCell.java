@@ -26,7 +26,7 @@ import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.messenger.Emoji;
 
 import top.nkbe.niagram.ui.icons.IconsResources;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class BookmarksChatCell extends FrameLayout {
 
@@ -83,7 +83,7 @@ public class BookmarksChatCell extends FrameLayout {
 
     public void setData(TLObject peer, CharSequence title, CharSequence subtitle, int bookmarkCount, boolean divider) {
         needDivider = divider;
-        boolean useSolar = NaConfig.INSTANCE.getIconReplacements().Int() == IconsResources.ICON_REPLACE_SOLAR;
+        boolean useSolar = NyaConfig.INSTANCE.getIconReplacements().Int() == IconsResources.ICON_REPLACE_SOLAR;
 
         if (peer instanceof TLRPC.User user) {
             if (UserObject.isUserSelf(user)) {

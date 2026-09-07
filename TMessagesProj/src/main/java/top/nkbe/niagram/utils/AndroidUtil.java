@@ -51,9 +51,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class AndroidUtil {
 
@@ -80,7 +79,7 @@ public class AndroidUtil {
     }
 
     public static int getOnlineColor(TLRPC.User user, Theme.ResourcesProvider resourcesProvider) {
-        if (!NaConfig.INSTANCE.getShowOnlineStatus().Bool()) {
+        if (!NyaConfig.INSTANCE.getShowOnlineStatus().Bool()) {
             return 0;
         }
         if (user == null || user.status == null || user.bot || user.self) {
@@ -129,14 +128,14 @@ public class AndroidUtil {
     public static void setPushService(boolean fcm) {
         if (fcm) {
             disablePushService();
-            NaConfig.INSTANCE.getPushServiceType().setConfigInt(1);
-            NaConfig.INSTANCE.getPushServiceTypeInAppDialog().setConfigBool(false);
+            NyaConfig.INSTANCE.getPushServiceType().setConfigInt(1);
+            NyaConfig.INSTANCE.getPushServiceTypeInAppDialog().setConfigBool(false);
         } else {
             SharedPreferences.Editor editor = MessagesController.getGlobalNotificationsSettings().edit();
             editor.putBoolean("pushService", true).apply();
             editor.putBoolean("pushConnection", true).apply();
-            NaConfig.INSTANCE.getPushServiceType().setConfigInt(0);
-            NaConfig.INSTANCE.getPushServiceTypeInAppDialog().setConfigBool(true);
+            NyaConfig.INSTANCE.getPushServiceType().setConfigInt(0);
+            NyaConfig.INSTANCE.getPushServiceTypeInAppDialog().setConfigBool(true);
         }
     }
 
@@ -168,10 +167,10 @@ public class AndroidUtil {
         }
         String extension = documentName.substring(dotIndex + 1).toLowerCase();
 
-        boolean isExecutable = NekoConfig.disableAutoDownloadingWin32Executable.Bool() &&
+        boolean isExecutable = NyaConfig.disableAutoDownloadingWin32Executable.Bool() &&
                 WIN32_EXECUTABLE_EXTENSIONS.contains(extension);
 
-        boolean isArchive = NekoConfig.disableAutoDownloadingArchive.Bool() &&
+        boolean isArchive = NyaConfig.disableAutoDownloadingArchive.Bool() &&
                 ARCHIVE_EXTENSIONS.contains(extension);
 
         return isExecutable || isArchive;
@@ -254,7 +253,7 @@ public class AndroidUtil {
     }
 
     public static void performHapticFeedback() {
-        if (!NekoConfig.disableVibration.Bool()) {
+        if (!NyaConfig.disableVibration.Bool()) {
             try {
                 Optional.ofNullable(LaunchActivity.getSafeLastFragment())
                         .ifPresent(fragment ->
@@ -367,6 +366,6 @@ public class AndroidUtil {
     public static boolean shouldEnableCrashlytics() {
         return !BuildConfig.DEBUG
                 && "top.nkbe.niagram".equals(BuildConfig.APPLICATION_ID)
-                && !NaConfig.INSTANCE.getDisableCrashlyticsCollection().Bool();
+                && !NyaConfig.INSTANCE.getDisableCrashlyticsCollection().Bool();
     }
 }

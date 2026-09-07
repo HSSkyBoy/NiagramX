@@ -114,7 +114,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
 
 import com.radolyn.ayugram.proprietary.AyuMessageUtils;
@@ -972,7 +972,7 @@ public class SecretMediaViewer implements NotificationCenter.NotificationCenterD
                 WindowManager.LayoutParams.FLAG_LAYOUT_INSET_DECOR |
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
                 WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
-        if (!xyz.nextalone.nagram.NaConfig.INSTANCE.getAllowScreenCapture().Bool()) {
+        if (!top.nkbe.niagram.config.NyaConfig.INSTANCE.getAllowScreenCapture().Bool()) {
             windowLayoutParams.flags |= WindowManager.LayoutParams.FLAG_SECURE;
             AndroidUtilities.logFlagSecure();
         }
@@ -1174,7 +1174,7 @@ public class SecretMediaViewer implements NotificationCenter.NotificationCenterD
         if (!isCaptionEmpty) {
             Theme.createChatResources(null, true);
             CharSequence str;
-            if (messageObject != null /*&& captionTranslated*/ && messageObject.messageOwner != null && messageObject.messageOwner.translatedText != null && TextUtils.equals(messageObject.messageOwner.translatedToLanguage, NekoConfig.translateToLang.String())) {
+            if (messageObject != null /*&& captionTranslated*/ && messageObject.messageOwner != null && messageObject.messageOwner.translatedText != null && TextUtils.equals(messageObject.messageOwner.translatedToLanguage, NyaConfig.translateToLang.String())) {
                 str = caption;
             } else if (messageObject != null && !messageObject.messageOwner.entities.isEmpty()) {
                 Spannable spannableString = new SpannableString(caption);

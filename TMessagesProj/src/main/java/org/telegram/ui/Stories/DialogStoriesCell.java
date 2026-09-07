@@ -101,7 +101,7 @@ import java.util.Objects;
 import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
 import me.vkryl.android.animator.ReplaceAnimator;
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.helpers.TypefaceHelper;
 import top.nkbe.niagram.ui.components.AnimatedTitleView;
 
@@ -458,7 +458,7 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
             return;
         }
         try {
-            if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+            if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
         } catch (Exception ignored) {}
         if (cell.isSelf && !storiesController.hasSelfStories()) {
             if (!MessagesController.getInstance(currentAccount).storiesEnabled()) {
@@ -1086,7 +1086,7 @@ public class DialogStoriesCell extends FrameLayout implements NotificationCenter
                     public void onAnimationStart(Animator animation) {
                         super.onAnimationStart(animation);
                         try {
-                            if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                            if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                         } catch (Exception ignored) {}
                     }
                 });

@@ -56,7 +56,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class RLottieDrawable extends BitmapDrawable implements Animatable, BitmapsCache.Cacheable {
 
@@ -1152,7 +1152,7 @@ public class RLottieDrawable extends BitmapDrawable implements Animatable, Bitma
                 try {
                     Activity activity = LaunchActivity.instance;
                     if (activity == null) activity = BubbleActivity.instance;
-                    if (!NekoConfig.disableVibration.Bool()) activity.getWindow().getDecorView().performHapticFeedback(force == 1 ? HapticFeedbackConstants.LONG_PRESS : HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) activity.getWindow().getDecorView().performHapticFeedback(force == 1 ? HapticFeedbackConstants.LONG_PRESS : HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                         } catch (Exception ignored) {}
 
             }

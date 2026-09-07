@@ -25,9 +25,8 @@ import java.util.HashSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Pattern;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class AyuFilter {
     private static final Object cacheLock = new Object();
@@ -44,7 +43,7 @@ public class AyuFilter {
         if (filterModels == null) {
             synchronized (cacheLock) {
                 if (filterModels == null) {
-                    var str = NaConfig.INSTANCE.getRegexFiltersData().String();
+                    var str = NyaConfig.INSTANCE.getRegexFiltersData().String();
                     FilterModel[] arr = new Gson().fromJson(str, FilterModel[].class);
                     if (arr != null) {
                         filterModels = new ArrayList<>(Arrays.asList(arr));
@@ -56,7 +55,7 @@ public class AyuFilter {
                             filter.buildPattern();
                         }
                         if (migrated) {
-                            NaConfig.INSTANCE.getRegexFiltersData().setConfigString(new Gson().toJson(filterModels));
+                            NyaConfig.INSTANCE.getRegexFiltersData().setConfigString(new Gson().toJson(filterModels));
                         }
                     } else {
                         filterModels = new ArrayList<>();
@@ -90,7 +89,7 @@ public class AyuFilter {
 
     public static void saveFilter(ArrayList<FilterModel> filterModels1) {
         var str = new Gson().toJson(filterModels1);
-        NaConfig.INSTANCE.getRegexFiltersData().setConfigString(str);
+        NyaConfig.INSTANCE.getRegexFiltersData().setConfigString(str);
         AyuFilter.rebuildCache();
     }
 
@@ -191,7 +190,7 @@ public class AyuFilter {
         }
 
         boolean isPrivateDialog = dialogId > 0;
-        if (isPrivateDialog && !NaConfig.INSTANCE.getRegexFiltersEnableInChats().Bool()) {
+        if (isPrivateDialog && !NyaConfig.INSTANCE.getRegexFiltersEnableInChats().Bool()) {
             return false;
         }
 
@@ -210,7 +209,7 @@ public class AyuFilter {
     }
 
     public static boolean isFiltered(MessageObject msg, MessageObject.GroupedMessages group) {
-        if (!NaConfig.INSTANCE.getRegexFiltersEnabled().Bool()) {
+        if (!NyaConfig.INSTANCE.getRegexFiltersEnabled().Bool()) {
             return false;
         }
 
@@ -264,7 +263,7 @@ public class AyuFilter {
         if (chatFilterEntries == null) {
             synchronized (cacheLock) {
                 if (chatFilterEntries == null) {
-                    var str = NaConfig.INSTANCE.getRegexChatFiltersData().String();
+                    var str = NyaConfig.INSTANCE.getRegexChatFiltersData().String();
                     try {
                         ChatFilterEntry[] arr = new Gson().fromJson(str, ChatFilterEntry[].class);
                         if (arr != null) {
@@ -281,7 +280,7 @@ public class AyuFilter {
                             }
                             if (migrated) {
                                 var json = new Gson().toJson(chatFilterEntries);
-                                NaConfig.INSTANCE.getRegexChatFiltersData().setConfigString(json);
+                                NyaConfig.INSTANCE.getRegexChatFiltersData().setConfigString(json);
                             }
                         } else {
                             chatFilterEntries = new ArrayList<>();
@@ -297,7 +296,7 @@ public class AyuFilter {
 
     public static void saveChatFilterEntries(ArrayList<ChatFilterEntry> entries) {
         var str = new Gson().toJson(entries);
-        NaConfig.INSTANCE.getRegexChatFiltersData().setConfigString(str);
+        NyaConfig.INSTANCE.getRegexChatFiltersData().setConfigString(str);
         AyuFilter.rebuildCache();
     }
 
@@ -375,7 +374,7 @@ public class AyuFilter {
             synchronized (cacheLock) {
                 if (excludedDialogs == null) {
                     try {
-                        String str = NaConfig.INSTANCE.getRegexFiltersExcludedDialogs().String();
+                        String str = NyaConfig.INSTANCE.getRegexFiltersExcludedDialogs().String();
                         Long[] arr = new Gson().fromJson(str, Long[].class);
                         excludedDialogs = new HashSet<>();
                         if (arr != null) {
@@ -405,7 +404,7 @@ public class AyuFilter {
         if (changed) {
             Long[] arr = set.toArray(new Long[0]);
             String str = new Gson().toJson(arr);
-            NaConfig.INSTANCE.getRegexFiltersExcludedDialogs().setConfigString(str);
+            NyaConfig.INSTANCE.getRegexFiltersExcludedDialogs().setConfigString(str);
             synchronized (cacheLock) {
                 excludedDialogs = set;
             }
@@ -414,10 +413,10 @@ public class AyuFilter {
     }
 
     public static void clearAllFilters() {
-        NaConfig.INSTANCE.getRegexFiltersData().setConfigString("[]");
-        NaConfig.INSTANCE.getRegexChatFiltersData().setConfigString("[]");
-        NaConfig.INSTANCE.getRegexFiltersExcludedDialogs().setConfigString("[]");
-        NaConfig.INSTANCE.getCustomFilteredUsersData().setConfigString("[]");
+        NyaConfig.INSTANCE.getRegexFiltersData().setConfigString("[]");
+        NyaConfig.INSTANCE.getRegexChatFiltersData().setConfigString("[]");
+        NyaConfig.INSTANCE.getRegexFiltersExcludedDialogs().setConfigString("[]");
+        NyaConfig.INSTANCE.getCustomFilteredUsersData().setConfigString("[]");
         synchronized (cacheLock) {
             customFilteredUsers = new HashSet<>();
             customFilteredUsersData = new HashMap<>();
@@ -430,7 +429,7 @@ public class AyuFilter {
             synchronized (cacheLock) {
                 if (blockedChannels == null) {
                     try {
-                        String str = NaConfig.INSTANCE.getBlockedChannelsData().String();
+                        String str = NyaConfig.INSTANCE.getBlockedChannelsData().String();
                         Long[] arr = new Gson().fromJson(str, Long[].class);
                         blockedChannels = new HashSet<>();
                         if (arr != null) {
@@ -456,18 +455,18 @@ public class AyuFilter {
         }
         Collections.sort(sorted);
         String str = new Gson().toJson(sorted.toArray(new Long[0]));
-        NaConfig.INSTANCE.getBlockedChannelsData().setConfigString(str);
+        NyaConfig.INSTANCE.getBlockedChannelsData().setConfigString(str);
         synchronized (cacheLock) {
             blockedChannels = new HashSet<>(sorted);
         }
     }
 
     public static boolean isBlockedChannel(long dialogId) {
-        return NekoConfig.ignoreBlocked.Bool() && getBlockedChannels().contains(dialogId);
+        return NyaConfig.ignoreBlocked.Bool() && getBlockedChannels().contains(dialogId);
     }
 
     public static boolean isCustomFilteredPeer(long peerId) {
-        return NekoConfig.ignoreBlocked.Bool() && peerId > 0L && getCustomFilteredUsers().contains(peerId);
+        return NyaConfig.ignoreBlocked.Bool() && peerId > 0L && getCustomFilteredUsers().contains(peerId);
     }
 
     public static void blockPeer(long dialogId) {
@@ -559,7 +558,7 @@ public class AyuFilter {
             HashSet<Long> ids = new HashSet<>();
             HashMap<Long, CustomFilteredUser> data = new HashMap<>();
             try {
-                String str = NaConfig.INSTANCE.getCustomFilteredUsersData().String();
+                String str = NyaConfig.INSTANCE.getCustomFilteredUsersData().String();
                 CustomFilteredUser[] arr = new Gson().fromJson(str, CustomFilteredUser[].class);
                 if (arr != null) {
                     for (CustomFilteredUser item : arr) {
@@ -604,7 +603,7 @@ public class AyuFilter {
             resultMap.put(user.id, user);
         }
         String str = new Gson().toJson(out.toArray(new CustomFilteredUser[0]));
-        NaConfig.INSTANCE.getCustomFilteredUsersData().setConfigString(str);
+        NyaConfig.INSTANCE.getCustomFilteredUsersData().setConfigString(str);
         synchronized (cacheLock) {
             customFilteredUsers = new HashSet<>(resultMap.keySet());
             customFilteredUsersData = resultMap;

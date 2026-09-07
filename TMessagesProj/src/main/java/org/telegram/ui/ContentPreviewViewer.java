@@ -116,9 +116,8 @@ import java.util.List;
 
 import me.vkryl.core.reference.ReferenceList;
 
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ContentPreviewViewer {
 
@@ -730,7 +729,7 @@ public class ContentPreviewViewer {
                     menuVisible = true;
                     containerView.invalidate();
                     try {
-                        if (!NekoConfig.disableVibration.Bool()) containerView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                        if (!NyaConfig.disableVibration.Bool()) containerView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                     } catch (Exception ignored) {}
                     return;
                 }
@@ -745,7 +744,7 @@ public class ContentPreviewViewer {
                         actions.add(0);
                     }
                     if (delegate.needSend(currentContentType) && !delegate.isInScheduleMode()) {
-                        boolean sendWithoutSoundNax = NaConfig.INSTANCE.getSilentMessageByDefault().Bool();
+                        boolean sendWithoutSoundNax = NyaConfig.INSTANCE.getSilentMessageByDefault().Bool();
                         items.add(sendWithoutSoundNax ? getString(R.string.SendWithSound) : getString(R.string.SendWithoutSound));
                         icons.add(sendWithoutSoundNax ? R.drawable.input_notify_on : R.drawable.input_notify_off);
                         actions.add(6);
@@ -822,11 +821,11 @@ public class ContentPreviewViewer {
                         int which = (int) v.getTag();
                         if (actions.get(which) == 0) {
                             if (delegate != null) {
-                                delegate.sendSticker(currentDocument, currentQuery, parentObject, !NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
+                                delegate.sendSticker(currentDocument, currentQuery, parentObject, !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
                             }
                         } else if (actions.get(which) == 6) {
                             if (delegate != null) {
-                                delegate.sendSticker(currentDocument, currentQuery, parentObject, NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
+                                delegate.sendSticker(currentDocument, currentQuery, parentObject, NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
                             }
                         } else if (actions.get(which) == 1) {
                             if (delegate != null) {
@@ -934,7 +933,7 @@ public class ContentPreviewViewer {
                 popupWindow.showAtLocation(containerView, 0, (int) ((containerView.getMeasuredWidth() - previewMenu.getMeasuredWidth()) / 2f), y);
 
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) containerView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                    if (!NyaConfig.disableVibration.Bool()) containerView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 } catch (Exception ignored) {}
             } else if (currentContentType == CONTENT_TYPE_EMOJI && delegate != null) {
                 ArrayList<CharSequence> items = new ArrayList<>();
@@ -1049,7 +1048,7 @@ public class ContentPreviewViewer {
                 ActionBarPopupWindow.startAnimation(previewMenu);
 
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) containerView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                    if (!NyaConfig.disableVibration.Bool()) containerView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 } catch (Exception ignored) {}
 
                 if (moveY != 0) {
@@ -1078,7 +1077,7 @@ public class ContentPreviewViewer {
                     actions.add(0);
                 }
                 if (delegate.needSend(currentContentType) && !delegate.isInScheduleMode()) {
-                    boolean sendWithoutSoundNax = NaConfig.INSTANCE.getSilentMessageByDefault().Bool();
+                    boolean sendWithoutSoundNax = NyaConfig.INSTANCE.getSilentMessageByDefault().Bool();
                     items.add(sendWithoutSoundNax ? getString(R.string.SendWithSound) : getString(R.string.SendWithoutSound));
                     icons.add(sendWithoutSoundNax ? R.drawable.input_notify_on : R.drawable.input_notify_off);
                     actions.add(4);
@@ -1130,9 +1129,9 @@ public class ContentPreviewViewer {
                     }
                     int which = (int) v.getTag();
                     if (actions.get(which) == 0) {
-                        delegate.sendGif(currentDocument != null ? currentDocument : inlineResult, parentObject, !NaConfig.INSTANCE.getSilentMessageByDefault().Bool() && actions.get(which) == 0, 0, 0);
+                        delegate.sendGif(currentDocument != null ? currentDocument : inlineResult, parentObject, !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool() && actions.get(which) == 0, 0, 0);
                     } else if (actions.get(which) == 4) {
-                        delegate.sendGif(currentDocument != null ? currentDocument : inlineResult, parentObject, NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
+                        delegate.sendGif(currentDocument != null ? currentDocument : inlineResult, parentObject, NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
                     } else if (actions.get(which) == 1) {
                         MediaDataController.getInstance(currentAccount).removeRecentGif(currentDocument);
                         delegate.gifAddedOrDeleted();
@@ -1196,7 +1195,7 @@ public class ContentPreviewViewer {
                 popupWindow.showAtLocation(containerView, 0, (int) ((containerView.getMeasuredWidth() - previewMenu.getMeasuredWidth()) / 2f), y);
 
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) containerView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                    if (!NyaConfig.disableVibration.Bool()) containerView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                 } catch (Exception ignored) {}
 
                 if (moveY != 0) {
@@ -1548,7 +1547,7 @@ public class ContentPreviewViewer {
     VibrationEffect vibrationEffect;
 
     protected void runSmoothHaptic() {
-        if (NekoConfig.disableVibration.Bool()) return;
+        if (NyaConfig.disableVibration.Bool()) return;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             final Vibrator vibrator = (Vibrator) containerView.getContext().getSystemService(Context.VIBRATOR_SERVICE);
             if (vibrationEffect == null) {
@@ -1695,7 +1694,7 @@ public class ContentPreviewViewer {
                     }
                     if (opened) {
                         try {
-                            if (!NekoConfig.disableVibration.Bool()) currentPreviewCell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                            if (!NyaConfig.disableVibration.Bool()) currentPreviewCell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                         } catch (Exception ignored) {}
                         if (delegate != null) {
                             delegate.resetTouch();

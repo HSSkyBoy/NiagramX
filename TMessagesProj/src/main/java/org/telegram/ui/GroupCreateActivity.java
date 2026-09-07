@@ -98,7 +98,7 @@ import java.util.HashSet;
 import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class GroupCreateActivity extends BaseFragment implements NotificationCenter.NotificationCenterDelegate, FactorAnimator.Target, View.OnClickListener, WindowAnimatedInsetsProvider.Listener {
     private final int ADDITIONAL_LIST_HEIGHT_DP = Build.VERSION.SDK_INT >= 31 ? 48 : 0;
@@ -1283,7 +1283,7 @@ public class GroupCreateActivity extends BaseFragment implements NotificationCen
                 firstName = chat.title;
                 lastName = "";
             }
-            if (NekoConfig.nameOrder.Int() == 1) {
+            if (NyaConfig.nameOrder.Int() == 1) {
                 if (!TextUtils.isEmpty(firstName)) {
                     return firstName.substring(0, 1).toUpperCase();
                 } else if (!TextUtils.isEmpty(lastName)) {

@@ -171,8 +171,7 @@ import java.util.Objects;
 import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
 
-import top.nkbe.niagram.NekoConfig;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressLint("ViewConstructor")
 public class EmojiView extends FrameLayout implements
@@ -2094,7 +2093,7 @@ public class EmojiView extends FrameLayout implements
                             return;
                         }
                         if (position < gifAdapter.recentItemsCount) {
-                            delegate.onGifSelected(view, recentGifs.get(position), null, "gif", !NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
+                            delegate.onGifSelected(view, recentGifs.get(position), null, "gif", !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
                         } else {
                             int resultPos = position;
                             if (gifAdapter.recentItemsCount > 0) {
@@ -2102,14 +2101,14 @@ public class EmojiView extends FrameLayout implements
                                 resultPos--; // trending section item
                             }
                             if (resultPos >= 0 && resultPos < gifAdapter.results.size()) {
-                                delegate.onGifSelected(view, gifAdapter.results.get(resultPos), null, gifAdapter.bot, !NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
+                                delegate.onGifSelected(view, gifAdapter.results.get(resultPos), null, gifAdapter.bot, !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
                             }
                         }
                     } else if (gifGridView.getAdapter() == gifSearchAdapter) {
                         if (position < 0 || position >= gifSearchAdapter.results.size()) {
                             return;
                         }
-                        delegate.onGifSelected(view, gifSearchAdapter.results.get(position), gifSearchAdapter.lastSearchImageString, gifSearchAdapter.bot, !NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
+                        delegate.onGifSelected(view, gifSearchAdapter.results.get(position), gifSearchAdapter.lastSearchImageString, gifSearchAdapter.bot, !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
                         updateRecentGifs();
                     }
                 };
@@ -2361,7 +2360,7 @@ public class EmojiView extends FrameLayout implements
                     return;
                 }
                 cell.disable();
-                delegate.onStickerSelected(cell, cell.getSticker(), query, cell.getParentObject(), cell.getSendAnimationData(), !NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
+                delegate.onStickerSelected(cell, cell.getSticker(), query, cell.getParentObject(), cell.getSendAnimationData(), !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0);
             };
             stickersGridView.setOnItemClickListener(stickersOnItemClickListener);
             stickersGridView.setGlowColor(getThemedColor(Theme.key_chat_emojiPanelBackground));
@@ -2654,7 +2653,7 @@ public class EmojiView extends FrameLayout implements
                     if (!backspaceOnce) {
                         if (delegate != null && delegate.onBackspace()) {
                             try {
-                                if (!NekoConfig.disableVibration.Bool()) backspaceButton.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                                if (!NyaConfig.disableVibration.Bool()) backspaceButton.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                             } catch (Exception ignore) {}
                         }
                     }
@@ -2663,7 +2662,7 @@ public class EmojiView extends FrameLayout implements
                 return true;
             }
         };
-        backspaceButton.setHapticFeedbackEnabled(!NekoConfig.disableVibration.Bool());
+        backspaceButton.setHapticFeedbackEnabled(!NyaConfig.disableVibration.Bool());
         backspaceButton.setImageResource(R.drawable.smiles_tab_clear);
         backspaceButton.setColorFilter(new PorterDuffColorFilter(glassDesign ? getGlassIconColor(0.6f) : getThemedColor(Theme.key_chat_emojiPanelBackspace), PorterDuff.Mode.MULTIPLY));
         backspaceButton.setScaleType(ImageView.ScaleType.CENTER);
@@ -3095,7 +3094,7 @@ public class EmojiView extends FrameLayout implements
                             emojiTouchedView.setImageDrawable(Emoji.getEmojiBigDrawable(code), emojiTouchedView.isRecent);
                             sendEmoji(emojiTouchedView, null);
                             try {
-                                if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                                if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                             } catch (Exception ignore) {}
 
                             Emoji.saveEmojiColors();
@@ -3529,13 +3528,13 @@ public class EmojiView extends FrameLayout implements
                             ImageViewEmoji viewEmoji = (ImageViewEmoji) view;
                             sendEmoji(viewEmoji, null);
                             try {
-                                if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                                if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                             } catch (Exception ignore) {}
                         } else if (view instanceof EmojiPackExpand) {
                             EmojiPackExpand button = (EmojiPackExpand) view;
                             emojiAdapter.expand(position, button);
                             try {
-                                if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                                if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                             } catch (Exception ignore) {}
                         } else if (view != null) {
                             view.callOnClick();
@@ -5505,7 +5504,7 @@ public class EmojiView extends FrameLayout implements
             }
             if (delegate != null && delegate.onBackspace()) {
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) backspaceButton.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
+                    if (!NyaConfig.disableVibration.Bool()) backspaceButton.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP);
                 } catch (Exception ignore) {}
             }
             backspaceOnce = true;
@@ -5562,7 +5561,7 @@ public class EmojiView extends FrameLayout implements
         if (trendingAdapter != null) {
             trendingAdapter.notifyDataSetChanged();
         }
-        if (!NekoConfig.disableTrending.Bool() && !featured.isEmpty() && (!BuildVars.DEBUG_PRIVATE_VERSION || featuredStickerSets.isEmpty() || preferences.getLong("featured_hidden", 0) == featured.get(0).set.id)) {
+        if (!NyaConfig.disableTrending.Bool() && !featured.isEmpty() && (!BuildVars.DEBUG_PRIVATE_VERSION || featuredStickerSets.isEmpty() || preferences.getLong("featured_hidden", 0) == featured.get(0).set.id)) {
             final int id = mediaDataController.getUnreadStickerSets().isEmpty() ? 2 : 3;
             final StickerTabView trendingStickersTabView = stickersTab.addStickerIconTab(id, stickerIcons[id]);
             trendingStickersTabView.textView.setText(getString(R.string.FeaturedStickersShort));
@@ -5634,7 +5633,7 @@ public class EmojiView extends FrameLayout implements
 //            stickerTabView.setContentDescription(LocaleController.getString(R.string.PremiumStickers));
 //        }
 
-        if (info != null && (!NekoConfig.hideGroupSticker.Bool())) {
+        if (info != null && (!NyaConfig.hideGroupSticker.Bool())) {
             long hiddenStickerSetId = MessagesController.getEmojiSettings(currentAccount).getLong("group_hide_stickers_" + info.id, -1);
             TLRPC.Chat chat = MessagesController.getInstance(currentAccount).getChat(info.id);
             if (chat == null || info.stickerset == null || !ChatObject.hasAdminRights(chat)) {
@@ -5746,7 +5745,7 @@ public class EmojiView extends FrameLayout implements
             gifTabs.addIconTab(0, gifIcons[0]).setContentDescription(getString(R.string.RecentStickers));
         }
 
-        if (!NekoConfig.disableTrending.Bool()) {
+        if (!NyaConfig.disableTrending.Bool()) {
             gifTrendingTabNum = gifTabsCount++;
             gifTabs.addIconTab(1, gifIcons[1]).setContentDescription(getString(R.string.FeaturedGifs));
         }
@@ -6892,7 +6891,7 @@ public class EmojiView extends FrameLayout implements
                         }
                     });
                     containerLayout.setOnLongClickListener(v -> {
-                        NekoConfig.minimizedStickerCreator.toggleConfigBool();
+                        NyaConfig.minimizedStickerCreator.toggleConfigBool();
                         checkDocuments(false);
                         return true;
                     });
@@ -6990,13 +6989,13 @@ public class EmojiView extends FrameLayout implements
                             }
                         } else if (object == recentStickers) {
                             cell.setText(getString(R.string.RecentStickers), R.drawable.msg_close, getString(R.string.ClearRecentStickersAlertTitle));
-                            if (NekoConfig.minimizedStickerCreator.Bool()) {
+                            if (NyaConfig.minimizedStickerCreator.Bool()) {
                                 cell.setCreate(v -> {
                                     if (fragment instanceof ChatActivity) {
                                         ((ChatActivity) fragment).openAttachMenuForCreatingSticker();
                                     }
                                 }, v -> {
-                                    NekoConfig.minimizedStickerCreator.toggleConfigBool();
+                                    NyaConfig.minimizedStickerCreator.toggleConfigBool();
                                     checkDocuments(false);
                                     return true;
                                 });

@@ -22,8 +22,7 @@ import org.telegram.ui.Components.TypefaceSpan;
 
 import java.util.List;
 
-import top.nkbe.niagram.NekoConfig;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class TypefaceHelper {
 
@@ -63,12 +62,12 @@ public class TypefaceHelper {
         if (custom != null) {
             return custom;
         }
-        if (!NekoConfig.typeface.Bool()) {
+        if (!NyaConfig.typeface.Bool()) {
             return createTypefaceFromAsset(assetPath);
         }
         return switch (assetPath) {
             case AndroidUtilities.TYPEFACE_ROBOTO_MEDIUM -> {
-                if (NekoConfig.forceFontWeightFallback.Bool()) {
+                if (NyaConfig.forceFontWeightFallback.Bool()) {
                     yield createTypeface(700, false);
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -77,7 +76,7 @@ public class TypefaceHelper {
                 yield isMediumWeightSupported() ? Typeface.create("sans-serif-medium", Typeface.NORMAL) : Typeface.create("sans-serif", Typeface.BOLD);
             }
             case AndroidUtilities.TYPEFACE_ROBOTO_MEDIUM_ITALIC -> {
-                if (NekoConfig.forceFontWeightFallback.Bool()) {
+                if (NyaConfig.forceFontWeightFallback.Bool()) {
                     yield createTypeface(700, true);
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
@@ -131,7 +130,7 @@ public class TypefaceHelper {
         if (custom != null) {
             return custom;
         }
-        if (NekoConfig.typeface.Bool()) {
+        if (NyaConfig.typeface.Bool()) {
             return Typeface.DEFAULT;
         }
         return null;
@@ -201,8 +200,8 @@ public class TypefaceHelper {
     }
 
     public static SpannableStringBuilder getTitleText(int currentAccount) {
-        String title = NaConfig.INSTANCE.getCustomTitle().String();
-        if (NaConfig.INSTANCE.getCustomTitleUserName().Bool()) {
+        String title = NyaConfig.INSTANCE.getCustomTitle().String();
+        if (NyaConfig.INSTANCE.getCustomTitleUserName().Bool()) {
             TLRPC.User self = UserConfig.getInstance(currentAccount).getCurrentUser();
             if (self != null && self.first_name != null) {
                 title = self.first_name;
@@ -210,7 +209,7 @@ public class TypefaceHelper {
         }
         var builder = new SpannableStringBuilder(title);
         builder.setSpan(new LeadingMarginSpan.Standard(dp(2), 0), 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        Typeface titleTypeface = NekoConfig.typeface.Bool() && NekoConfig.forceFontWeightFallback.Bool() ? createTypeface(700, false) : createTypeface(600, false);
+        Typeface titleTypeface = NyaConfig.typeface.Bool() && NyaConfig.forceFontWeightFallback.Bool() ? createTypeface(700, false) : createTypeface(600, false);
         builder.setSpan(new TypefaceSpan(titleTypeface, 0, Theme.key_telegram_color_dialogsLogo, null), 0, builder.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return builder;
     }

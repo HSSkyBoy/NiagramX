@@ -133,7 +133,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 @SuppressLint("ViewConstructor")
 public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayout implements NotificationCenter.NotificationCenterDelegate {
@@ -1553,7 +1553,7 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
 
     private void openCameraByClick() {
         if (SharedConfig.inappCamera) {
-            if (NekoConfig.disableInstantCamera.Bool()) {
+            if (NyaConfig.disableInstantCamera.Bool()) {
                 showCamera();
             }
             openCamera(true);
@@ -2171,7 +2171,7 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
 
             @Override
             public boolean cancelButtonPressed() {
-                if (cameraOpened && cameraView != null && !NekoConfig.disableInstantCamera.Bool()) {
+                if (cameraOpened && cameraView != null && !NyaConfig.disableInstantCamera.Bool()) {
                     AndroidUtilities.runOnUIThread(() -> {
                         if (cameraView != null && !parentAlert.isDismissed()) {
                             cameraView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_FULLSCREEN);
@@ -2458,7 +2458,7 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
                 deviceHasGoodCamera = CameraController.getInstance().isCameraInitied();
             }
         }
-        if (deviceHasGoodCamera && NekoConfig.disableInstantCamera.Bool()) {
+        if (deviceHasGoodCamera && NyaConfig.disableInstantCamera.Bool()) {
             // Clear cached bitmap
             File file = new File(ApplicationLoader.getFilesDirFixed(), "cthumb.jpg");
             if (file.exists()) file.delete();
@@ -2466,7 +2466,7 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
         if ((old != deviceHasGoodCamera || old2 != noCameraPermissions) && adapter != null) {
             adapter.notifyDataSetChanged();
         }
-        if (!parentAlert.destroyed && parentAlert.isShowing() && deviceHasGoodCamera && parentAlert.getBackDrawable().getAlpha() != 0 && !cameraOpened && !NekoConfig.disableInstantCamera.Bool()) {
+        if (!parentAlert.destroyed && parentAlert.isShowing() && deviceHasGoodCamera && parentAlert.getBackDrawable().getAlpha() != 0 && !cameraOpened && !NyaConfig.disableInstantCamera.Bool()) {
             showCamera();
         }
     }
@@ -2729,7 +2729,7 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
     }
 
     private void saveLastCameraBitmap() {
-        if (!canSaveCameraPreview || NekoConfig.disableInstantCamera.Bool()) {
+        if (!canSaveCameraPreview || NyaConfig.disableInstantCamera.Bool()) {
             return;
         }
         try {
@@ -3882,7 +3882,7 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
     }
 
     public void setCheckCameraWhenShown(boolean checkCameraWhenShown) {
-        this.checkCameraWhenShown = checkCameraWhenShown && !NekoConfig.disableInstantCamera.Bool();
+        this.checkCameraWhenShown = checkCameraWhenShown && !NyaConfig.disableInstantCamera.Bool();
     }
 
     @Override
@@ -3971,7 +3971,7 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
 //                    afterCameraInitRunnable = null;
 //                    isCameraFrontfaceBeforeEnteringEditMode = null;
 //                };
-                if (!NekoConfig.disableInstantCamera.Bool()) {
+                if (!NyaConfig.disableInstantCamera.Bool()) {
                     showCamera();
                 }
             }
@@ -4098,7 +4098,7 @@ public class ChatAttachAlertPhotoLayout extends ChatAttachAlert.AttachAlertLayou
 
     @Override
     public void onOpenAnimationEnd() {
-        checkCamera(parentAlert != null && parentAlert.baseFragment instanceof ChatActivity && !NekoConfig.disableInstantCamera.Bool());
+        checkCamera(parentAlert != null && parentAlert.baseFragment instanceof ChatActivity && !NyaConfig.disableInstantCamera.Bool());
     }
 
     @Override

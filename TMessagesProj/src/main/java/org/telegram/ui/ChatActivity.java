@@ -388,7 +388,6 @@ import me.vkryl.core.BitwiseUtils;
 import me.vkryl.core.reference.ReferenceList;
 
 import top.nkbe.niagram.BackButtonMenuRecent;
-import top.nkbe.niagram.NekoConfig;
 import top.nkbe.niagram.filters.AyuFilter;
 import top.nkbe.niagram.filters.ReactionFilter;
 import top.nkbe.niagram.filters.RegexFilterEditActivity;
@@ -416,7 +415,7 @@ import top.nkbe.niagram.ui.components.GroupedIconsView;
 import top.nkbe.niagram.utils.AlertUtil;
 import top.nkbe.niagram.utils.AndroidUtil;
 import top.nkbe.niagram.utils.ProxyUtil;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 import xyz.nextalone.nagram.ToggleResult;
 import xyz.nextalone.nagram.helper.BookmarksHelper;
 import xyz.nextalone.nagram.helper.DoubleTap;
@@ -1683,7 +1682,7 @@ public class ChatActivity extends BaseFragment implements
 
         @Override
         public PhotoViewer.PlaceProviderObject getPlaceForPhoto(MessageObject messageObject, TLRPC.FileLocation fileLocation, int index, boolean needPreview, boolean closing) {
-            if (closing && xyz.nextalone.nagram.NaConfig.INSTANCE.getScrollToSeenPhotoOnClose().Bool() && messageObject != null) {
+            if (closing && top.nkbe.niagram.config.NyaConfig.INSTANCE.getScrollToSeenPhotoOnClose().Bool() && messageObject != null) {
                 scrollToMessageId(messageObject.getId(), 0, false, 0, false, 0);
             }
             return ChatActivity.this.getPlaceForPhoto(messageObject, fileLocation, index, needPreview, false);
@@ -1847,7 +1846,7 @@ public class ChatActivity extends BaseFragment implements
             if (isTryingTextSelection() || hasTextSelection() || inPreviewMode || isInsideContainer) {
                 return false;
             }
-            if((scrimPopupWindow != null && NaConfig.INSTANCE.getDoubleTapAction().Int() == DoubleTap.DOUBLE_TAP_ACTION_SHOW_REACTIONS))
+            if((scrimPopupWindow != null && NyaConfig.INSTANCE.getDoubleTapAction().Int() == DoubleTap.DOUBLE_TAP_ACTION_SHOW_REACTIONS))
                 return false;
             wasManualScroll = true;
             boolean result = true;
@@ -2051,7 +2050,7 @@ public class ChatActivity extends BaseFragment implements
             } else {
                 return false;
             }
-            var doubleTapAction = message.isOutOwner() ? NaConfig.INSTANCE.getDoubleTapActionOut().Int() : NaConfig.INSTANCE.getDoubleTapAction().Int();
+            var doubleTapAction = message.isOutOwner() ? NyaConfig.INSTANCE.getDoubleTapActionOut().Int() : NyaConfig.INSTANCE.getDoubleTapAction().Int();
             if (doubleTapAction == DoubleTap.DOUBLE_TAP_ACTION_NONE) {
                 return false;
             }
@@ -2143,7 +2142,7 @@ public class ChatActivity extends BaseFragment implements
             } else {
                 return;
             }
-            var doubleTapAction = messageObject.isOutOwner() ? NaConfig.INSTANCE.getDoubleTapActionOut().Int() : NaConfig.INSTANCE.getDoubleTapAction().Int();
+            var doubleTapAction = messageObject.isOutOwner() ? NyaConfig.INSTANCE.getDoubleTapActionOut().Int() : NyaConfig.INSTANCE.getDoubleTapAction().Int();
             if (doubleTapAction == DoubleTap.DOUBLE_TAP_ACTION_NONE) {
                 return;
             }
@@ -3077,7 +3076,7 @@ public class ChatActivity extends BaseFragment implements
             hasQuickReplies = false;
             if (currentUser != null && chatMode == 0 && !currentUser.bot) {
                 QuickRepliesController.getInstance(currentAccount).load();
-                if (NaConfig.INSTANCE.getShowQuickReplyInBotCommands().Bool()) {
+                if (NyaConfig.INSTANCE.getShowQuickReplyInBotCommands().Bool()) {
                     hasQuickReplies = QuickRepliesController.getInstance(currentAccount).hasReplies();
                 }
             }
@@ -3906,7 +3905,7 @@ public class ChatActivity extends BaseFragment implements
 
         @Override
         protected boolean canShowAddToFilter() {
-            if (chatActivity == null || !NaConfig.INSTANCE.getRegexFiltersEnabled().Bool()) return false;
+            if (chatActivity == null || !NyaConfig.INSTANCE.getRegexFiltersEnabled().Bool()) return false;
             return !(chatActivity.getDialogId() == chatActivity.getUserConfig().getClientUserId());
         }
 
@@ -4145,7 +4144,7 @@ public class ChatActivity extends BaseFragment implements
                         for (int b = 0; b < ids.size(); b++) {
                             Integer messageId = ids.get(b);
                             MessageObject messageObject = selectedMessagesCanCopyIds[a].get(messageId);
-                            if (b == 0 && NaConfig.INSTANCE.getCombineMessage().Int() == 0) {
+                            if (b == 0 && NyaConfig.INSTANCE.getCombineMessage().Int() == 0) {
                                 replyTo = messageObject.replyMessageObject;
                             }
                             if (str.length() != 0) {
@@ -4166,7 +4165,7 @@ public class ChatActivity extends BaseFragment implements
                     }
                     if (str.length() != 0) {
                         SendMessagesHelper.getInstance(currentAccount)
-                                .sendMessage(str.toString(), dialog_id, replyTo, getThreadMessage(), null, false, null, null, null, !NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, null, false);
+                                .sendMessage(str.toString(), dialog_id, replyTo, getThreadMessage(), null, false, null, null, null, !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, null, false);
                         MessagesController.getInstance(currentAccount).deleteMessages(toDeleteMessagesIds, null, null, dialog_id, 0, true, MODE_DEFAULT);
                     }
                     clearSelectionMode();
@@ -4876,23 +4875,23 @@ public class ChatActivity extends BaseFragment implements
 
             if (ChatObject.hasAdminRights(currentChat)) {
                 boolean hasAtLeastOneOption = false;
-                if (NaConfig.INSTANCE.getShortcutsAdministrators().Bool()) {
+                if (NyaConfig.INSTANCE.getShortcutsAdministrators().Bool()) {
                     hasAtLeastOneOption = true;
                     headerItem.lazilyAddSubItem(shortcuts_administrators, R.drawable.msg_admins, LocaleController.getString(R.string.ChannelAdministrators));
                 }
-                if (NaConfig.INSTANCE.getShortcutsRecentActions().Bool()) {
+                if (NyaConfig.INSTANCE.getShortcutsRecentActions().Bool()) {
                     hasAtLeastOneOption = true;
                     headerItem.lazilyAddSubItem(shortcuts_recent_actions, R.drawable.msg_log, LocaleController.getString(R.string.EventLog));
                 }
-                if (NaConfig.INSTANCE.getShortcutsStatistics().Bool()) {
+                if (NyaConfig.INSTANCE.getShortcutsStatistics().Bool()) {
                     hasAtLeastOneOption = true;
                     headerItem.lazilyAddSubItem(shortcuts_statistics, R.drawable.msg_stats, LocaleController.getString(R.string.Statistics));
                 }
-                if (NaConfig.INSTANCE.getShortcutsPermissions().Bool()) {
+                if (NyaConfig.INSTANCE.getShortcutsPermissions().Bool()) {
                     hasAtLeastOneOption = true;
                     headerItem.lazilyAddSubItem(shortcuts_permissions, R.drawable.msg_permissions, LocaleController.getString(R.string.ChannelPermissions));
                 }
-                if (NaConfig.INSTANCE.getShortcutsMembers().Bool()) {
+                if (NyaConfig.INSTANCE.getShortcutsMembers().Bool()) {
                     hasAtLeastOneOption = true;
                     headerItem.lazilyAddSubItem(shortcuts_members, R.drawable.msg_groups, LocaleController.getString(R.string.GroupMembers));
                 }
@@ -4903,7 +4902,7 @@ public class ChatActivity extends BaseFragment implements
 
             if (currentChat != null) {
                 headerItem.lazilyAddSubItem(open_direct, R.drawable.msg_markunread, getString(R.string.ChannelOpenDirect));
-                headerItem.setSubItemShown(open_direct, ChatObject.isChannel(currentChat) && !ChatObject.isMonoForum(currentChat) && currentChat.linked_monoforum_id != 0 && (NaConfig.INSTANCE.getDisableChannelMuteButton().Bool() || ChatObject.canManageMonoForum(currentAccount, -currentChat.linked_monoforum_id)));
+                headerItem.setSubItemShown(open_direct, ChatObject.isChannel(currentChat) && !ChatObject.isMonoForum(currentChat) && currentChat.linked_monoforum_id != 0 && (NyaConfig.INSTANCE.getDisableChannelMuteButton().Bool() || ChatObject.canManageMonoForum(currentAccount, -currentChat.linked_monoforum_id)));
             }
             if (currentUser != null && chatMode != MODE_SAVED) {
                 headerItem.lazilyAddSubItem(call, R.drawable.msg_callback, LocaleController.getString(R.string.Call));
@@ -4939,7 +4938,7 @@ public class ChatActivity extends BaseFragment implements
             }
             if (ChatObject.isBoostSupported(currentChat) && (getUserConfig().isPremium() || ChatObject.isBoosted(chatInfo) || ChatObject.hasAdminRights(currentChat))) {
                 RLottieDrawable drawable = new RLottieDrawable(R.raw.boosts, "" + R.raw.boosts, dp(24), dp(24));
-                if (NaConfig.INSTANCE.getChatMenuItemBoostGroup().Bool()) headerItem.lazilyAddSubItem(boost_group, drawable, LocaleController.getString(ChatObject.isChannelAndNotMegaGroup(currentChat) ? R.string.BoostingBoostChannelMenu : R.string.BoostingBoostGroupMenu));
+                if (NyaConfig.INSTANCE.getChatMenuItemBoostGroup().Bool()) headerItem.lazilyAddSubItem(boost_group, drawable, LocaleController.getString(ChatObject.isChannelAndNotMegaGroup(currentChat) ? R.string.BoostingBoostChannelMenu : R.string.BoostingBoostGroupMenu));
             }
             translateItem = headerItem.lazilyAddSubItem(translate, LlmConfig.llmIsDefaultProvider() ? R.drawable.magic_stick_solar : R.drawable.msg_translate, LocaleController.getString(R.string.TranslateMessage));
             updateTranslateItemVisibility();
@@ -4957,7 +4956,7 @@ public class ChatActivity extends BaseFragment implements
                     text = getString(R.string.LinkedChannelChat);
                     draw = R.drawable.msg_channel;
                 }
-                if (NaConfig.INSTANCE.getChatMenuItemLinkedChat().Bool()) headerItem.lazilyAddSubItem(nkheaderbtn_linked_chat, draw, text);
+                if (NyaConfig.INSTANCE.getChatMenuItemLinkedChat().Bool()) headerItem.lazilyAddSubItem(nkheaderbtn_linked_chat, draw, text);
             }
             if (currentUser != null && currentUser.id != UserObject.VERIFY && currentUser.id != UserObject.REPLY_BOT) {
                 addContactItem = headerItem.lazilyAddSubItem(share_contact, R.drawable.msg_addcontact, LocaleController.getString(R.string.AddToContacts));
@@ -4979,17 +4978,17 @@ public class ChatActivity extends BaseFragment implements
                     LocaleController.getString(UserObject.isBotForum(currentUser) ? R.string.ClearAllHistory : R.string.ClearHistory));
             }
             boolean addedSettings = false;
-            if (NaConfig.INSTANCE.getChatMenuItemToBeginning().Bool()) headerItem.lazilyAddSubItem(to_the_beginning, R.drawable.ic_upward, getString(R.string.ToTheBeginning));
-            if (NaConfig.INSTANCE.getChatMenuItemGoToMessage().Bool()) headerItem.lazilyAddSubItem(to_the_message, R.drawable.msg_go_up, getString(R.string.ToTheMessage));
-            if (NaConfig.INSTANCE.getShowAddToBookmark().Bool()) {
+            if (NyaConfig.INSTANCE.getChatMenuItemToBeginning().Bool()) headerItem.lazilyAddSubItem(to_the_beginning, R.drawable.ic_upward, getString(R.string.ToTheBeginning));
+            if (NyaConfig.INSTANCE.getChatMenuItemGoToMessage().Bool()) headerItem.lazilyAddSubItem(to_the_message, R.drawable.msg_go_up, getString(R.string.ToTheMessage));
+            if (NyaConfig.INSTANCE.getShowAddToBookmark().Bool()) {
                 bookmarksItem = headerItem.lazilyAddSubItem(nkbtn_bookmarks_manager, R.drawable.msg_fave, getString(R.string.BookmarksManager));
                 headerItem.setSubItemShown(nkbtn_bookmarks_manager, BookmarksHelper.getBookmarkedMessageIds(currentAccount, dialog_id).length > 0);
             }
-            hideTitleItem = NaConfig.INSTANCE.getChatMenuItemHideTitle().Bool() ? headerItem.lazilyAddSubItem(nkheaderbtn_hide_title, R.drawable.hide_title, getString(R.string.HideTitle)) : null;
-            if (NaConfig.INSTANCE.getChatMenuItemViewDeleted().Bool() && NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) headerItem.lazilyAddSubItem(nkbtn_viewDeleted, R.drawable.msg_view_file, getString(R.string.ViewDeleted));
-            if (NaConfig.INSTANCE.getChatMenuItemClearDeleted().Bool() && NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) headerItem.lazilyAddSubItem(nkbtn_clearDeleted, R.drawable.msg_clear, getString(R.string.ClearDeleted));
+            hideTitleItem = NyaConfig.INSTANCE.getChatMenuItemHideTitle().Bool() ? headerItem.lazilyAddSubItem(nkheaderbtn_hide_title, R.drawable.hide_title, getString(R.string.HideTitle)) : null;
+            if (NyaConfig.INSTANCE.getChatMenuItemViewDeleted().Bool() && NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) headerItem.lazilyAddSubItem(nkbtn_viewDeleted, R.drawable.msg_view_file, getString(R.string.ViewDeleted));
+            if (NyaConfig.INSTANCE.getChatMenuItemClearDeleted().Bool() && NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) headerItem.lazilyAddSubItem(nkbtn_clearDeleted, R.drawable.msg_clear, getString(R.string.ClearDeleted));
             if (!isTopic) {
-                if (NaConfig.INSTANCE.getChatMenuItemDeleteOwnMessages().Bool() && (ChatObject.isMegagroup(currentChat) || currentChat != null && !ChatObject.isChannel(currentChat))) {
+                if (NyaConfig.INSTANCE.getChatMenuItemDeleteOwnMessages().Bool() && (ChatObject.isMegagroup(currentChat) || currentChat != null && !ChatObject.isChannel(currentChat))) {
                     headerItem.lazilyAddSubItem(nkheaderbtn_zibi, R.drawable.msg_delete, LocaleController.getString(R.string.DeleteAllFromSelf));
                 }
                 if (ChatObject.isChannel(currentChat) && !currentChat.creator) {
@@ -5581,7 +5580,7 @@ public class ChatActivity extends BaseFragment implements
                         if (Math.abs(dx) >= AndroidUtilities.dp(50)) {
                             if (!wasTrackingVibrate) {
                                 try {
-                                    if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                                    if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                                 } catch (Exception ignore) {}
                                 wasTrackingVibrate = true;
                             }
@@ -7359,7 +7358,7 @@ public class ChatActivity extends BaseFragment implements
                         wasManualScroll = true;
                         scrollingChatListView = true;
                     } else if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-                        if (NekoConfig.hideKeyboardOnChatScroll.Bool()) {
+                        if (NyaConfig.hideKeyboardOnChatScroll.Bool()) {
                             if (isKeyboardVisible()) {
                                 AndroidUtilities.hideKeyboard(getParentActivity().getCurrentFocus());
                             } else if (chatActivityEnterView != null) {
@@ -8695,7 +8694,7 @@ public class ChatActivity extends BaseFragment implements
         });
         if (!noForwards) {
             actionsButtonsLayout.setReplyButtonOnLongClickListener(v -> {
-                if (!NekoConfig.disableVibration.Bool()) v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                if (!NyaConfig.disableVibration.Bool()) v.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                 chatsHelper.makeReplyButtonLongClick(this, isCurrentLeftButtonNoForwards(), getResourceProvider());
                 return false;
             });
@@ -8983,7 +8982,7 @@ public class ChatActivity extends BaseFragment implements
             }
         });
         bottomChannelButtonsLayout.setButtonOnFullyVisibleListener(ChatActivityChannelButtonsLayout.BUTTON_GIFT, (v, id, firstTime) -> {
-            if (!NaConfig.INSTANCE.getDisableChannelMuteButton().Bool() && bottomGiftHintView == null && firstTime && (bottomSuggestHintView == null || !bottomSuggestHintView.shown()) && HintsController.Hint.ChannelGiftHint.show()) {
+            if (!NyaConfig.INSTANCE.getDisableChannelMuteButton().Bool() && bottomGiftHintView == null && firstTime && (bottomSuggestHintView == null || !bottomSuggestHintView.shown()) && HintsController.Hint.ChannelGiftHint.show()) {
                 AndroidUtilities.runOnUIThread(() -> {
                     if (getContext() == null) return;
                     final float offset = windowInsetsStateHolder.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom / AndroidUtilities.density;
@@ -9002,7 +9001,7 @@ public class ChatActivity extends BaseFragment implements
             }
         });
         bottomChannelButtonsLayout.setButtonOnFullyVisibleListener(ChatActivityChannelButtonsLayout.BUTTON_DIRECT, (v, id, firstTime) -> {
-            if (!NaConfig.INSTANCE.getDisableChannelMuteButton().Bool() && bottomSuggestHintView == null && firstTime && HintsController.Hint.ChannelSuggestHint.show()) {
+            if (!NyaConfig.INSTANCE.getDisableChannelMuteButton().Bool() && bottomSuggestHintView == null && firstTime && HintsController.Hint.ChannelSuggestHint.show()) {
                 AndroidUtilities.runOnUIThread(() -> {
                     if (getContext() == null) return;
                     final float offset = windowInsetsStateHolder.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom / AndroidUtilities.density;
@@ -9736,7 +9735,7 @@ public class ChatActivity extends BaseFragment implements
         if (cell == null || cell.timeLayout == null || cell.getMessageObject() == null ||
                 cell.getMessageObject().messageOwner == null ||
                 (chatMode != MODE_DEFAULT && chatMode != MODE_PINNED && chatMode != MODE_SAVED) ||
-                (NekoConfig.hideTimeForSticker.Bool() && cell.getMessageObject().isAnyKindOfSticker())
+                (NyaConfig.hideTimeForSticker.Bool() && cell.getMessageObject().isAnyKindOfSticker())
         ) {
             return;
         }
@@ -11055,7 +11054,7 @@ public class ChatActivity extends BaseFragment implements
         actionModeViews.add(actionMode.addItemWithWidth(star, R.drawable.msg_fave, dp(54), LocaleController.getString(R.string.AddToFavorites)));
         actionModeViews.add(actionMode.addItemWithWidth(copy, R.drawable.msg_copy, dp(54), LocaleController.getString(R.string.Copy)));
         actionModeViews.add(actionMode.addItemWithWidth(combine_message, R.drawable.msg_replace, dp(54), LocaleController.getString(R.string.CombineMessage)));
-        if (currentEncryptedChat == null && getDialogId() != UserObject.VERIFY && NaConfig.INSTANCE.getActionBarButtonForward().Bool()) {
+        if (currentEncryptedChat == null && getDialogId() != UserObject.VERIFY && NyaConfig.INSTANCE.getActionBarButtonForward().Bool()) {
             actionModeViews.add(actionMode.addItemWithWidth(forward, R.drawable.msg_forward_noquote, dp(54), LocaleController.getString(R.string.Forward)));
         }
         actionModeViews.add(actionMode.addItemWithWidth(delete, R.drawable.msg_delete, dp(54), LocaleController.getString(R.string.Delete)));
@@ -11090,13 +11089,13 @@ public class ChatActivity extends BaseFragment implements
         actionModeOtherItem.addSubItem(nkbtn_report, R.drawable.msg_report, LocaleController.getString(R.string.ReportChat));
         actionModeOtherItem.addSubItem(nkbtn_detail,R.drawable.msg_info,LocaleController.getString(R.string.MessageDetails));
 
-        actionMode.setItemVisibility(nkactionbarbtn_reply, canSendMessages && (selectedMessagesIds[0].size() + selectedMessagesIds[1].size() == 1) && NaConfig.INSTANCE.getActionBarButtonReply().Bool() ? View.VISIBLE : View.GONE);
-        actionMode.setItemVisibility(edit, canEditMessagesCount == 1 && (selectedMessagesIds[0].size() + selectedMessagesIds[1].size() == 1) && NaConfig.INSTANCE.getActionBarButtonEdit().Bool() ? View.VISIBLE : View.GONE);
-        actionMode.setItemVisibility(nkactionbarbtn_selectBetween, NaConfig.INSTANCE.getActionBarButtonSelectBetween().Bool() ? View.VISIBLE : View.GONE);
-        actionMode.setItemVisibility(copy, /*!isPeerNoForwards() &&*/ (selectedMessagesCanCopyIds[0].size() + selectedMessagesCanCopyIds[1].size() != 0) && NaConfig.INSTANCE.getActionBarButtonCopy().Bool() ? View.VISIBLE : View.GONE);
+        actionMode.setItemVisibility(nkactionbarbtn_reply, canSendMessages && (selectedMessagesIds[0].size() + selectedMessagesIds[1].size() == 1) && NyaConfig.INSTANCE.getActionBarButtonReply().Bool() ? View.VISIBLE : View.GONE);
+        actionMode.setItemVisibility(edit, canEditMessagesCount == 1 && (selectedMessagesIds[0].size() + selectedMessagesIds[1].size() == 1) && NyaConfig.INSTANCE.getActionBarButtonEdit().Bool() ? View.VISIBLE : View.GONE);
+        actionMode.setItemVisibility(nkactionbarbtn_selectBetween, NyaConfig.INSTANCE.getActionBarButtonSelectBetween().Bool() ? View.VISIBLE : View.GONE);
+        actionMode.setItemVisibility(copy, /*!isPeerNoForwards() &&*/ (selectedMessagesCanCopyIds[0].size() + selectedMessagesCanCopyIds[1].size() != 0) && NyaConfig.INSTANCE.getActionBarButtonCopy().Bool() ? View.VISIBLE : View.GONE);
         actionMode.setItemVisibility(star, selectedMessagesCanStarIds[0].size() + selectedMessagesCanStarIds[1].size() != 0 ? View.VISIBLE : View.GONE);
         actionMode.setItemVisibility(combine_message, selectedMessagesCanCopyIds[0].size() + selectedMessagesCanCopyIds[1].size() != 0 ? View.VISIBLE : View.GONE);
-        actionMode.setItemVisibility(forward, NaConfig.INSTANCE.getActionBarButtonForward().Bool() ? View.VISIBLE : View.GONE);
+        actionMode.setItemVisibility(forward, NyaConfig.INSTANCE.getActionBarButtonForward().Bool() ? View.VISIBLE : View.GONE);
         actionMode.setItemVisibility(delete, cantDeleteMessagesCount == 0 ? View.VISIBLE : View.GONE);
         actionMode.setItemVisibility(tag_message, getUserConfig().isPremium() ? View.VISIBLE : View.GONE);
         actionMode.setItemVisibility(share, View.GONE);
@@ -11456,8 +11455,8 @@ public class ChatActivity extends BaseFragment implements
         };
         if (createUnreadMessageAfterId != 0) {
             scrollToMessageId(createUnreadMessageAfterId, 0, false, returnToLoadIndex, true, 0, null, inCaseLoading);
-        } else if (returnToMessageId > 0 || (NekoConfig.rememberAllBackMessages.Bool() && !returnToMessageIdsStack.empty())) {
-            if (NekoConfig.rememberAllBackMessages.Bool() && !returnToMessageIdsStack.empty())
+        } else if (returnToMessageId > 0 || (NyaConfig.rememberAllBackMessages.Bool() && !returnToMessageIdsStack.empty())) {
+            if (NyaConfig.rememberAllBackMessages.Bool() && !returnToMessageIdsStack.empty())
                 returnToMessageId = returnToMessageIdsStack.pop();
             scrollToMessageId(returnToMessageId, 0, true, returnToLoadIndex, true, 0, null, inCaseLoading);
         } else {
@@ -13989,7 +13988,7 @@ public class ChatActivity extends BaseFragment implements
         if (getParentActivity() == null || fragmentView == null || hide && voiceHintTextView == null || chatMode != 0 || chatActivityEnterView == null  || chatActivityEnterView.getAudioVideoButtonContainer() == null || chatActivityEnterView.getAudioVideoButtonContainer().getVisibility() != View.VISIBLE || isInPreviewMode()) {
             return;
         }
-        if (NekoConfig.useChatAttachMediaMenu.Bool()) return;
+        if (NyaConfig.useChatAttachMediaMenu.Bool()) return;
         if (voiceHintTextView == null) {
             SizeNotifierFrameLayout frameLayout = contentView;
             int index = frameLayout.indexOfChild(chatInputViewsContainer);
@@ -14154,7 +14153,7 @@ public class ChatActivity extends BaseFragment implements
         }
 
         try {
-            if (!NekoConfig.disableVibration.Bool()) fragmentView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+            if (!NyaConfig.disableVibration.Bool()) fragmentView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
         } catch (Exception e) {
             FileLog.e(e);
         }
@@ -15067,7 +15066,7 @@ public class ChatActivity extends BaseFragment implements
         }
     }
 
-    private boolean disableLinkPreview = NekoConfig.disableLinkPreviewByDefault.Bool();
+    private boolean disableLinkPreview = NyaConfig.disableLinkPreviewByDefault.Bool();
 
     public void searchLinks(final CharSequence charSequence, final boolean force) {
         if (currentEncryptedChat != null && getMessagesController().secretWebpagePreview == 0 || editingMessageObject != null && (!editingMessageObject.isWebpage() || editingMessageObject.messageOwner.media.webpage instanceof TLRPC.TL_webPagePending)) {
@@ -15212,7 +15211,7 @@ public class ChatActivity extends BaseFragment implements
                 req.message = textToCheck.toString();
             }
             // na: page preview rules
-            if (NaConfig.INSTANCE.getFixLinkPreview().Bool()) {
+            if (NyaConfig.INSTANCE.getFixLinkPreview().Bool()) {
                 try {
                     req.message = PagePreviewRulesHelper.getInstance().doRegex(textToCheck);
                 } catch (Exception ignored) {
@@ -15702,7 +15701,7 @@ public class ChatActivity extends BaseFragment implements
     }
 
     public void beforeMessageSend(boolean notify, int scheduleDate, boolean beforeSend, long payStars) {
-        if (beforeSend != NekoConfig.sendCommentAfterForward.Bool()) return;
+        if (beforeSend != NyaConfig.sendCommentAfterForward.Bool()) return;
         if (messagePreviewParams != null && messagePreviewParams.forwardMessages != null) {
             forbidForwardingWithDismiss = false;
             // if (messagePreviewParams.quote == null) {
@@ -16573,7 +16572,7 @@ public class ChatActivity extends BaseFragment implements
         if (messageObject == null || messageObject.isOut() || !messageObject.isSecretMedia() || messageObject.messageOwner.destroyTime != 0 || messageObject.messageOwner.ttl <= 0) {
             return null;
         }
-        if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() && !force) {
+        if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() && !force) {
             return null;
         }
         if (readNow) {
@@ -16609,7 +16608,7 @@ public class ChatActivity extends BaseFragment implements
         if (messageObject == null || messageObject.isOut() || !messageObject.isSecretMedia() || messageObject.messageOwner.ttl != 0x7FFFFFFF) {
             return null;
         }
-        if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() && !force) {
+        if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool() && !force) {
             return null;
         }
         final long taskId = getMessagesController().createDeleteShowOnceTask(dialog_id, messageObject.getId());
@@ -18025,7 +18024,7 @@ public class ChatActivity extends BaseFragment implements
             }
         }
         returnToMessageId = fromMessageId;
-        if (NekoConfig.rememberAllBackMessages.Bool() && fromMessageId > 0)
+        if (NyaConfig.rememberAllBackMessages.Bool() && fromMessageId > 0)
             returnToMessageIdsStack.push(returnToMessageId);
         returnToLoadIndex = loadIndex;
         needSelectFromMessageId = select;
@@ -20161,7 +20160,7 @@ public class ChatActivity extends BaseFragment implements
             if (selectedMessagesIds[index].indexOfKey(messageObject.getId()) >= 0) {
                 selectedMessagesIds[index].remove(messageObject.getId());
                 if (!isReport()) {
-                    boolean allowCopy = xyz.nextalone.nagram.NaConfig.INSTANCE.getAllowCopyProtectedContent().Bool();
+                    boolean allowCopy = top.nkbe.niagram.config.NyaConfig.INSTANCE.getAllowCopyProtectedContent().Bool();
                     if ((messageObject.type == MessageObject.TYPE_TEXT || messageObject.isAnimatedEmoji() || messageObject.caption != null) && (allowCopy || !(messageObject.messageOwner != null && messageObject.messageOwner.noforwards))) {
                         selectedMessagesCanCopyIds[index].remove(messageObject.getId());
                     }
@@ -20199,7 +20198,7 @@ public class ChatActivity extends BaseFragment implements
                 }
                 selectedMessagesIds[index].put(messageObject.getId(), messageObject);
                 if (!isReport()) {
-                    boolean allowCopy = xyz.nextalone.nagram.NaConfig.INSTANCE.getAllowCopyProtectedContent().Bool();
+                    boolean allowCopy = top.nkbe.niagram.config.NyaConfig.INSTANCE.getAllowCopyProtectedContent().Bool();
                     if ((messageObject.type == MessageObject.TYPE_TEXT || messageObject.isAnimatedEmoji() || messageObject.caption != null) && (allowCopy || !(messageObject.messageOwner != null && messageObject.messageOwner.noforwards))) {
                         selectedMessagesCanCopyIds[index].put(messageObject.getId(), messageObject);
                     }
@@ -20269,7 +20268,7 @@ public class ChatActivity extends BaseFragment implements
                 boolean hasSelectedAyuDeletedMessage = hasSelectedAyuDeletedMessage();
                 boolean noforwards = isPeerNoForwards() || hasSelectedNoforwardsMessage() || hasSelectedAyuDeletedMessage;
                 boolean canForward = chatMode != MODE_SCHEDULED && cantForwardMessagesCount == 0 && !noforwards;
-                boolean showForward = NaConfig.INSTANCE.getActionBarButtonForward().Bool();
+                boolean showForward = NyaConfig.INSTANCE.getActionBarButtonForward().Bool();
                 boolean canSendMessage = ChatObject.canSendMessages(currentChat);
                 boolean canReport = false;
                 if (selectedCount == 1 && !hasSelectedAyuDeletedMessage && chatMode != MODE_SCHEDULED && (currentChat != null || currentUser != null && currentUser.bot)) {
@@ -20280,7 +20279,7 @@ public class ChatActivity extends BaseFragment implements
                     }
                 }
                 if (forwardNoQuoteItem != null) {
-                    forwardNoQuoteItem.setVisibility(canForward && NaConfig.INSTANCE.getShowNoQuoteForward().Bool());
+                    forwardNoQuoteItem.setVisibility(canForward && NyaConfig.INSTANCE.getShowNoQuoteForward().Bool());
                 }
                 if (saveMessageItem != null) {
                     saveMessageItem.setVisibility(canForward);
@@ -20292,7 +20291,7 @@ public class ChatActivity extends BaseFragment implements
                     RepeatAsCopyItem.setVisibility(canSendMessage && (!noforwards || getMessageHelper().canSendMessagesAsCopy(getSelectedMessages1())));
                 }
                 if (forceForwardItem != null) {
-                    forceForwardItem.setVisibility(chatMode != MODE_SCHEDULED && NaConfig.INSTANCE.getShowForceForward().Bool() && getMessageHelper().canSendMessagesAsCopy(getSelectedMessages1()) ? View.VISIBLE : View.GONE);
+                    forceForwardItem.setVisibility(chatMode != MODE_SCHEDULED && NyaConfig.INSTANCE.getShowForceForward().Bool() && getMessageHelper().canSendMessagesAsCopy(getSelectedMessages1()) ? View.VISIBLE : View.GONE);
                 }
                 if (reportItem != null) {
                     reportItem.setVisibility(canReport);
@@ -20343,7 +20342,7 @@ public class ChatActivity extends BaseFragment implements
                 int copyVisible = View.GONE, starVisible = View.GONE, newCopyVisible = View.GONE, newStarVisible = View.GONE;
                 if (copyItem != null) {
                     copyVisible = copyItem.getVisibility();
-                    copyItem.setVisibility((selectedMessagesCanCopyIds[0].size() + selectedMessagesCanCopyIds[1].size() != 0) && NaConfig.INSTANCE.getActionBarButtonCopy().Bool() ? View.VISIBLE : View.GONE);
+                    copyItem.setVisibility((selectedMessagesCanCopyIds[0].size() + selectedMessagesCanCopyIds[1].size() != 0) && NyaConfig.INSTANCE.getActionBarButtonCopy().Bool() ? View.VISIBLE : View.GONE);
                     newCopyVisible = copyItem.getVisibility();
                 }
                 if (starItem != null) {
@@ -20353,7 +20352,7 @@ public class ChatActivity extends BaseFragment implements
                 }
 
                 if (replyItem != null) {
-                    boolean showReplyItem = !hasSelectedAyuDeletedMessage && chatMode != MODE_SCHEDULED && ChatObject.canSendMessages(currentChat) && selectedCount == 1 && NaConfig.INSTANCE.getActionBarButtonReply().Bool();
+                    boolean showReplyItem = !hasSelectedAyuDeletedMessage && chatMode != MODE_SCHEDULED && ChatObject.canSendMessages(currentChat) && selectedCount == 1 && NyaConfig.INSTANCE.getActionBarButtonReply().Bool();
                     boolean doShrinkActionBarItems = isActionBarTooNarrow && newCopyVisible == View.VISIBLE && canForward && canEditMessagesCount == 1 && selectedCount == 1;
                     replyItem.setVisibility(!doShrinkActionBarItems && showReplyItem);
                 }
@@ -20362,7 +20361,7 @@ public class ChatActivity extends BaseFragment implements
                 boolean canSelectBetweenComputed = false;
 
                 if (selectItem != null) {
-                    if (NaConfig.INSTANCE.getActionBarButtonSelectBetween().Bool()) {
+                    if (NyaConfig.INSTANCE.getActionBarButtonSelectBetween().Bool()) {
                         canSelectBetween = canSelectBetweenMessages();
                         canSelectBetweenComputed = true;
                         selectItem.setVisibility(canSelectBetween ? View.VISIBLE : View.GONE);
@@ -20390,7 +20389,7 @@ public class ChatActivity extends BaseFragment implements
                 if (starItem != null) {
                     starItem.setIcon(hasUnfavedSelected ? R.drawable.msg_fave : R.drawable.msg_unfave);
                 }
-                final int newEditVisibility = !hasSelectedAyuDeletedMessage && canEditMessagesCount == 1 && selectedCount == 1 && NaConfig.INSTANCE.getActionBarButtonEdit().Bool() ? View.VISIBLE : View.GONE;
+                final int newEditVisibility = !hasSelectedAyuDeletedMessage && canEditMessagesCount == 1 && selectedCount == 1 && NyaConfig.INSTANCE.getActionBarButtonEdit().Bool() ? View.VISIBLE : View.GONE;
                 if (actionsButtonsLayout != null) {
                     boolean allowChatActions = true;
                     if (bottomChannelButtonsLayout != null && bottomChannelButtonsLayout.getVisibility() == View.VISIBLE && !bottomOverlayChatWaitsReply ||
@@ -20399,7 +20398,7 @@ public class ChatActivity extends BaseFragment implements
                     }
 
                     int newVisibility;
-                    int configuredLeftButtonAction = NaConfig.INSTANCE.getLeftBottomButton().Int();
+                    int configuredLeftButtonAction = NyaConfig.INSTANCE.getLeftBottomButton().Int();
                     if (configuredLeftButtonAction == ChatsHelper.LEFT_BUTTON_SELECT_BETWEEN && !canSelectBetweenComputed) {
                         canSelectBetween = canSelectBetweenMessages();
                         canSelectBetweenComputed = true;
@@ -21430,7 +21429,7 @@ public class ChatActivity extends BaseFragment implements
     }
 
     private void sendUriAsDocument(Uri uri) {
-        sendUriAsDocument(uri, !NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
+        sendUriAsDocument(uri, !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0);
     }
     private void sendUriAsDocument(Uri uri, boolean notify, int schedule_date) {
         if (uri == null) {
@@ -22195,7 +22194,7 @@ public class ChatActivity extends BaseFragment implements
             }
 
             // --- AyuGram history hook start
-            if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+            if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
                 long dialogId = getDialogId();
                 long topicId = getTopicId();
 
@@ -23270,7 +23269,7 @@ public class ChatActivity extends BaseFragment implements
                 updateTopPanel(true);
             }
             if (headerItem != null) {
-                headerItem.setSubItemShown(open_direct, ChatObject.isChannel(currentChat) && !ChatObject.isMonoForum(currentChat) && currentChat.linked_monoforum_id != 0 && (NaConfig.INSTANCE.getDisableChannelMuteButton().Bool() || ChatObject.canManageMonoForum(currentAccount, -currentChat.linked_monoforum_id)));
+                headerItem.setSubItemShown(open_direct, ChatObject.isChannel(currentChat) && !ChatObject.isMonoForum(currentChat) && currentChat.linked_monoforum_id != 0 && (NyaConfig.INSTANCE.getDisableChannelMuteButton().Bool() || ChatObject.canManageMonoForum(currentAccount, -currentChat.linked_monoforum_id)));
             }
         } else if (id == NotificationCenter.didReceiveNewMessages) {
             FileLog.d("ChatActivity didReceiveNewMessages start");
@@ -24002,7 +24001,7 @@ public class ChatActivity extends BaseFragment implements
                 builder.setTopAnimationIsNew(true);
                 if (reason == 0) {
                     if (currentChat instanceof TLRPC.TL_channelForbidden) {
-                        if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) return;
+                        if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) return;
                         builder.setTitle(LocaleController.getString(R.string.ChannelCantOpenBannedByAdminTitle));
                         builder.setMessage(LocaleController.getString(R.string.ChannelCantOpenBannedByAdmin));
                     } else {
@@ -24412,7 +24411,7 @@ public class ChatActivity extends BaseFragment implements
                         }
                         if (hasChosen) {
                             try {
-                                if (!NekoConfig.disableVibration.Bool()) pollView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                                if (!NyaConfig.disableVibration.Bool()) pollView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                                 } catch (Exception ignored) {
                             }
                             if (isQuizWin) {
@@ -24705,7 +24704,7 @@ public class ChatActivity extends BaseFragment implements
                     }
                 }
                 // AyuHistoryHook: fix replyMessage
-                if (NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+                if (NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
                     for (int a = 0, N = messages.size(); a < N; a++) {
                         MessageObject messageObject = messages.get(a);
                         if (messageObject.getReplyMsgId() != 0 && (messageObject.replyMessageObject == null || messageObject.replyMessageObject.messageOwner instanceof TLRPC.TL_messageEmpty)) {
@@ -29040,33 +29039,33 @@ public class ChatActivity extends BaseFragment implements
         SpannableStringBuilder stringBuilder;
         Map<String, java.lang.Runnable> addActions = new HashMap<>();
         addActions.put("translate", () -> {
-            if (NaConfig.INSTANCE.getShowTextTranslate().Bool()) {
+            if (NyaConfig.INSTANCE.getShowTextTranslate().Bool()) {
                 menu.add(R.id.menu_translate, R.id.menu_translate, order.getAndIncrement(), LlmConfig.isLLMTranslatorAvailable() ? getString(R.string.TranslateMessageLLM) : getString(R.string.TranslateMessage));
             }
         });
         addActions.put("bold", () -> {
-            if (NaConfig.INSTANCE.getShowTextBold().Bool()) {
+            if (NyaConfig.INSTANCE.getShowTextBold().Bool()) {
                 SpannableStringBuilder s = new SpannableStringBuilder(getString(R.string.Bold));
                 s.setSpan(new TypefaceSpan(AndroidUtilities.bold()), 0, s.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 menu.add(R.id.menu_groupbolditalic, R.id.menu_bold, order.getAndIncrement(), s);
             }
         });
         addActions.put("italic", () -> {
-            if (NaConfig.INSTANCE.getShowTextItalic().Bool()) {
+            if (NyaConfig.INSTANCE.getShowTextItalic().Bool()) {
                 SpannableStringBuilder s = new SpannableStringBuilder(getString(R.string.Italic));
                 s.setSpan(new TypefaceSpan(AndroidUtilities.getTypeface("fonts/ritalic.ttf")), 0, s.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 menu.add(R.id.menu_groupbolditalic, R.id.menu_italic, order.getAndIncrement(), s);
             }
         });
         addActions.put("mono", () -> {
-            if (includeMono && NaConfig.INSTANCE.getShowTextMono().Bool()) {
+            if (includeMono && NyaConfig.INSTANCE.getShowTextMono().Bool()) {
                 SpannableStringBuilder s = new SpannableStringBuilder(LocaleController.getString(R.string.Mono));
                 s.setSpan(new TypefaceSpan(Typeface.MONOSPACE), 0, s.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 menu.add(R.id.menu_groupbolditalic, R.id.menu_mono, order.getAndIncrement(), s);
             }
         });
         addActions.put("code", () -> {
-            if (NaConfig.INSTANCE.getShowTextMonoCode().Bool()) {
+            if (NyaConfig.INSTANCE.getShowTextMonoCode().Bool()) {
                 SpannableStringBuilder s = new SpannableStringBuilder(getString(R.string.MonoCode));
                 s.setSpan(new TypefaceSpan(Typeface.MONOSPACE), 0, s.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 menu.add(R.id.menu_groupbolditalic, R.id.menu_code, order.getAndIncrement(), s);
@@ -29074,7 +29073,7 @@ public class ChatActivity extends BaseFragment implements
         });
         addActions.put("strike", () -> {
             if (encryptedChat == null || AndroidUtilities.getPeerLayerVersion(encryptedChat.layer) >= 101) {
-                if (NaConfig.INSTANCE.getShowTextStrikethrough().Bool()) {
+                if (NyaConfig.INSTANCE.getShowTextStrikethrough().Bool()) {
                     SpannableStringBuilder s = new SpannableStringBuilder(getString(R.string.Strike));
                     TextStyleSpan.TextStyleRun r = new TextStyleSpan.TextStyleRun();
                     r.flags |= TextStyleSpan.FLAG_STYLE_STRIKE;
@@ -29085,7 +29084,7 @@ public class ChatActivity extends BaseFragment implements
         });
         addActions.put("underline", () -> {
             if (encryptedChat == null || AndroidUtilities.getPeerLayerVersion(encryptedChat.layer) >= 101) {
-                if (NaConfig.INSTANCE.getShowTextUnderline().Bool()) {
+                if (NyaConfig.INSTANCE.getShowTextUnderline().Bool()) {
                     SpannableStringBuilder s = new SpannableStringBuilder(getString(R.string.Underline));
                     TextStyleSpan.TextStyleRun r = new TextStyleSpan.TextStyleRun();
                     r.flags |= TextStyleSpan.FLAG_STYLE_UNDERLINE;
@@ -29095,37 +29094,37 @@ public class ChatActivity extends BaseFragment implements
             }
         });
         addActions.put("quote", () -> {
-            if (chat && NaConfig.INSTANCE.getShowTextQuote().Bool()) {
+            if (chat && NyaConfig.INSTANCE.getShowTextQuote().Bool()) {
                 menu.add(R.id.menu_groupbolditalic, R.id.menu_quote, order.getAndIncrement(), getString(R.string.Quote));
             }
         });
         addActions.put("spoiler", () -> {
-            if (includeSpoilers && NaConfig.INSTANCE.getShowTextSpoiler().Bool()) {
+            if (includeSpoilers && NyaConfig.INSTANCE.getShowTextSpoiler().Bool()) {
                 menu.add(R.id.menu_groupbolditalic, R.id.menu_spoiler, order.getAndIncrement(), getString(R.string.Spoiler));
             }
         });
         addActions.put("link", () -> {
-            if (NaConfig.INSTANCE.getShowTextCreateLink().Bool()) {
+            if (NyaConfig.INSTANCE.getShowTextCreateLink().Bool()) {
                 if (includeLinks) menu.add(R.id.menu_groupbolditalic, R.id.menu_link, order.getAndIncrement(), getString(R.string.CreateLink));
             }
         });
         addActions.put("mention", () -> {
-            if (NaConfig.INSTANCE.getShowTextCreateMention().Bool()) {
+            if (NyaConfig.INSTANCE.getShowTextCreateMention().Bool()) {
                 menu.add(R.id.menu_groupbolditalic, R.id.menu_mention, order.getAndIncrement(), getString(R.string.CreateMention));
             }
         });
         addActions.put("date", () -> {
-            if (NaConfig.INSTANCE.getShowTextCreateDate().Bool() && chat && encryptedChat == null) {
+            if (NyaConfig.INSTANCE.getShowTextCreateDate().Bool() && chat && encryptedChat == null) {
                 menu.add(R.id.menu_groupbolditalic, R.id.menu_date, order.getAndIncrement(), getString(R.string.FormattedDate));
             }
         });
         addActions.put("regular", () -> {
-            if (NaConfig.INSTANCE.getShowTextRegular().Bool()) {
+            if (NyaConfig.INSTANCE.getShowTextRegular().Bool()) {
                 menu.add(R.id.menu_groupbolditalic, R.id.menu_regular, order.getAndIncrement(), getString(R.string.Regular));
             }
         });
         // Apply in saved order
-        String orderStr = NaConfig.INSTANCE.getTextStyleOrder().String();
+        String orderStr = NyaConfig.INSTANCE.getTextStyleOrder().String();
         if (!TextUtils.isEmpty(orderStr)) {
             String[] keys = orderStr.split(",");
             for (String k : keys) {
@@ -29171,13 +29170,13 @@ public class ChatActivity extends BaseFragment implements
     }
 
     private boolean shouldHideBottomFor3ButtonNav() {
-        return NaConfig.INSTANCE.getDisableChannelMuteButton().Bool() && !isGesture() &&
+        return NyaConfig.INSTANCE.getDisableChannelMuteButton().Bool() && !isGesture() &&
                 chatMode == MODE_DEFAULT && !isReport() && currentChat != null &&
                 ChatObject.isChannelAndNotMegaGroup(currentChat) && !ChatObject.canWriteToChat(currentChat) && !ChatObject.isNotInChat(currentChat);
     }
 
     private boolean shouldHideBottomForGesture() {
-        if (!NaConfig.INSTANCE.getDisableChannelMuteButton().Bool()) {
+        if (!NyaConfig.INSTANCE.getDisableChannelMuteButton().Bool()) {
             return false;
         }
         if (currentChat == null || !ChatObject.isChannelAndNotMegaGroup(currentChat)) {
@@ -29973,7 +29972,7 @@ public class ChatActivity extends BaseFragment implements
                         if (buttonTypeUrl != null) {
                             openClickableLink(null, buttonTypeUrl.url, true, null, buttonMessage, false);
                             try {
-                                if (!NekoConfig.disableVibration.Bool()) buttonTextView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                                if (!NyaConfig.disableVibration.Bool()) buttonTextView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                             } catch (Exception ignore) {}
                             return true;
                         }
@@ -32011,7 +32010,7 @@ public class ChatActivity extends BaseFragment implements
     }
 
     public boolean maybePlayVisibleVideo() {
-        if (NaConfig.INSTANCE.getDisablePreviewVideoSoundShortcut().Bool()) {
+        if (NyaConfig.INSTANCE.getDisablePreviewVideoSoundShortcut().Bool()) {
             return false;
         }
         if (chatListView == null) {
@@ -32541,7 +32540,7 @@ public class ChatActivity extends BaseFragment implements
             }
 
             // AyuMoments menu start
-            if (NaConfig.INSTANCE.getEnableSaveEditsHistory().Bool()
+            if (NyaConfig.INSTANCE.getEnableSaveEditsHistory().Bool()
                     && message.messageOwner.from_id != null
                     && message.messageOwner.from_id.user_id != getAccountInstance().getUserConfig().getClientUserId()
                     && !(AyuMessageUtils.isExpiredDocument(message) && (message.messageOwner.media.voice || message.messageOwner.media.round))
@@ -32553,7 +32552,7 @@ public class ChatActivity extends BaseFragment implements
                 icons.add(idx, R.drawable.msg_log);
             }
 
-            if (!isAyuDeleted && NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+            if (!isAyuDeleted && NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
                 if (message.messageOwner.ttl > 0 || message.isVoiceOnce() || message.isRoundOnce()) {
                     boolean isExpiredVideo = AyuMessageUtils.isExpiredDocument(message);
                     boolean isExpiredPhoto = AyuMessageUtils.isExpiredPhoto(message);
@@ -32575,7 +32574,7 @@ public class ChatActivity extends BaseFragment implements
                 }
             }
             if (!isAyuDeleted) {
-                if (!NekoConfig.sendReadMessagePackets.Bool()
+                if (!NyaConfig.sendReadMessagePackets.Bool()
                         && message.messageOwner.from_id != null
                         && message.messageOwner.from_id.user_id != getAccountInstance().getUserConfig().getClientUserId()
                         && !AyuGhostPreferences.getGhostModeReadExclusion(getDialogId())
@@ -32606,7 +32605,7 @@ public class ChatActivity extends BaseFragment implements
 
             List<TLRPC.TL_availableReaction> availableReacts = getMediaDataController().getEnabledReactionsList();
             final boolean isEphemeral = message != null && message.isEphemeral();
-            final boolean nekoXShowReactionsView = !NaConfig.INSTANCE.getHideReactions().Bool() && (NaConfig.INSTANCE.getShowReactions().Bool() || onDoubleTapped); // Show reactions and hide them from tap
+            final boolean nekoXShowReactionsView = !NyaConfig.INSTANCE.getHideReactions().Bool() && (NyaConfig.INSTANCE.getShowReactions().Bool() || onDoubleTapped); // Show reactions and hide them from tap
             boolean isReactionsViewAvailable = nekoXShowReactionsView && !isEphemeral && !suggestEdit && !isSecretChat() && !isInScheduleMode() && currentUser == null && primaryMessage.hasReactions() && (!ChatObject.isChannel(currentChat) || currentChat.megagroup) && !ChatObject.isMonoForum(currentChat) && !availableReacts.isEmpty() && primaryMessage.messageOwner.reactions.can_see_list && !primaryMessage.isSecretMedia();
             final boolean isReactionsAvailable;
             if (suggestEdit || isEphemeral) {
@@ -33673,7 +33672,7 @@ public class ChatActivity extends BaseFragment implements
                             return true;
                         });
                     }
-                    if (option == nkbtn_translate && !NaConfig.INSTANCE.getShowTranslateMessageLLM().Bool()) {
+                    if (option == nkbtn_translate && !NyaConfig.INSTANCE.getShowTranslateMessageLLM().Bool()) {
                         MessageObject msg = getMessageForTranslate();
                         boolean isRichMessage = msg != null && msg.isRich();
                         if (msg != null && !isRichMessage && !msg.isTranslated()) {
@@ -34122,7 +34121,7 @@ public class ChatActivity extends BaseFragment implements
         if (item != null) {
             item.setVisibility(View.VISIBLE);
         }
-        if (chatMode != MODE_SCHEDULED && actionModeOtherItem != null && NaConfig.INSTANCE.getShowNoQuoteForward().Bool()) {
+        if (chatMode != MODE_SCHEDULED && actionModeOtherItem != null && NyaConfig.INSTANCE.getShowNoQuoteForward().Bool()) {
             actionModeOtherItem.showSubItem(nkbtn_forward_noquote);
         }
         actionMode.setItemVisibility(delete, View.VISIBLE);
@@ -34495,7 +34494,7 @@ public class ChatActivity extends BaseFragment implements
             if (bigEmoji) {
                 if (cell != null) {
                     try {
-                        if (!NekoConfig.disableVibration.Bool()) cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                        if (!NyaConfig.disableVibration.Bool()) cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
                     } catch (Exception ignored) {}
                 }
                 ArrayList<TLRPC.MessageReactor> reactors = null;
@@ -34517,7 +34516,7 @@ public class ChatActivity extends BaseFragment implements
             }
             if (fragmentView != null) {
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) fragmentView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) fragmentView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
                 } catch (Exception ignore) {}
             }
             final long chatId = -StarsController.MessageId.from(primaryMessage).did;
@@ -35822,7 +35821,7 @@ public class ChatActivity extends BaseFragment implements
                     View view = bulletin.getLayout();
                     view.postDelayed(() -> {
                         try {
-                            if (!NekoConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                            if (!NyaConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                         } catch (Exception ignored) {}
                     }, 550);
                 });
@@ -36473,7 +36472,7 @@ public class ChatActivity extends BaseFragment implements
                 for (int a = 0; a < dids.size(); a++) {
                     final long did = dids.get(a).dialogId;
                     final Long price = prices == null ? (Long) 0L : prices.get(did);
-                    if (message != null && !NekoConfig.sendCommentAfterForward.Bool()) {
+                    if (message != null && !NyaConfig.sendCommentAfterForward.Bool()) {
                         SendMessagesHelper.SendMessageParams params = SendMessagesHelper.SendMessageParams.of(message.toString(), did, null, null, null, true, null, null, null, notify, scheduleDate, scheduleRepeatPeriod, null, false);
                         params.quick_reply_shortcut = quickReplyShortcut;
                         params.quick_reply_shortcut_id = getQuickReplyId();
@@ -36482,7 +36481,7 @@ public class ChatActivity extends BaseFragment implements
                     }
                     forwardMessages(fmessages, noForwardQuote, noForwardCaption, notify, scheduleDate, did, price == null ? 0 : price);
                     // getSendMessagesHelper().sendMessage(fmessages, did, false, false, notify, scheduleDate, scheduleRepeatPeriod, null, -1, price == null ? 0 : price, getSendMonoForumPeerId(), getSendMessageSuggestionParams());
-                    if (message != null && NekoConfig.sendCommentAfterForward.Bool()) {
+                    if (message != null && NyaConfig.sendCommentAfterForward.Bool()) {
                         final SendMessagesHelper.SendMessageParams params = SendMessagesHelper.SendMessageParams.of(message.toString(), did, null, null, null, true, null, null, null, notify, scheduleDate, scheduleRepeatPeriod, null, false);
                         params.sendMessageChatArguments = getMessageChatSendParams();
                         params.payStars = price == null ? 0 : price;
@@ -37228,10 +37227,10 @@ public class ChatActivity extends BaseFragment implements
         }
         if (channelHashtags || forcePublic || ChatObject.isChannelAndNotMegaGroup(currentChat) && ChatObject.isPublic(currentChat) && searchingHashtag != null) {
             defaultSearchPage = 2;
-            defaultSearchPage = NaConfig.INSTANCE.getSearchHashtagDefaultPageChannel().Int();
+            defaultSearchPage = NyaConfig.INSTANCE.getSearchHashtagDefaultPageChannel().Int();
         } else {
             defaultSearchPage = 0;
-            defaultSearchPage = NaConfig.INSTANCE.getSearchHashtagDefaultPageChat().Int();
+            defaultSearchPage = NyaConfig.INSTANCE.getSearchHashtagDefaultPageChat().Int();
         }
         openSearchKeyboard = false;
         if (searchType == SEARCH_CHANNEL_POSTS) {
@@ -38244,7 +38243,7 @@ public class ChatActivity extends BaseFragment implements
                     builder.setTitleMultipleLines(true);
                 }
                 final int finalTimestamp = timestamp;
-                boolean blockNoForwards = (isPeerNoForwards() || (messageObject != null && messageObject.messageOwner != null && messageObject.messageOwner.noforwards)) && !xyz.nextalone.nagram.NaConfig.INSTANCE.getAllowCopyProtectedContent().Bool();
+                boolean blockNoForwards = (isPeerNoForwards() || (messageObject != null && messageObject.messageOwner != null && messageObject.messageOwner.noforwards)) && !top.nkbe.niagram.config.NyaConfig.INSTANCE.getAllowCopyProtectedContent().Bool();
                 CharSequence[] items = blockNoForwards ? new CharSequence[]{
                         getString(R.string.Open)
                 } : new CharSequence[]{
@@ -40151,7 +40150,7 @@ public class ChatActivity extends BaseFragment implements
                 if (msg == null || msg.messageOwner != null && msg.messageOwner.hide) {
                     return -1000;
                 }
-                if (NekoConfig.ignoreBlocked.Bool() && ChatObject.isMegagroup(currentChat)) {
+                if (NyaConfig.ignoreBlocked.Bool() && ChatObject.isMegagroup(currentChat)) {
                     long fromId = msg.getFromChatId();
                     if (isBlockedUser(fromId) || AyuFilter.isBlockedChannel(fromId)) {
                         return -1000;
@@ -40175,7 +40174,7 @@ public class ChatActivity extends BaseFragment implements
                         if (m.messageOwner != null && m.messageOwner.hide) {
                             continue;
                         }
-                        if (NekoConfig.ignoreBlocked.Bool() && ChatObject.isMegagroup(currentChat)) {
+                        if (NyaConfig.ignoreBlocked.Bool() && ChatObject.isMegagroup(currentChat)) {
                             long fromId = m.getFromChatId();
                             if (isBlockedUser(fromId) || AyuFilter.isBlockedChannel(fromId)) {
                                 continue;
@@ -41425,7 +41424,7 @@ public class ChatActivity extends BaseFragment implements
             final boolean isSavedMessages = did == UserConfig.getInstance(UserConfig.selectedAccount).clientUserId;
             final ArrayList<MessageObject> finalArrayList = arrayList;
             Runnable delayedRunnalble = () -> {
-                int result = SendMessagesHelper.getInstance(currentAccount).sendMessage(finalArrayList, did, false, false, !NaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, null, -1, 0, getSendMonoForumPeerId(), getSendMessageSuggestionParams());
+                int result = SendMessagesHelper.getInstance(currentAccount).sendMessage(finalArrayList, did, false, false, !NyaConfig.INSTANCE.getSilentMessageByDefault().Bool(), 0, 0, null, -1, 0, getSendMonoForumPeerId(), getSendMessageSuggestionParams());
                 AlertsCreator.showSendMediaAlert(result, ChatActivity.this, null);
             };
 
@@ -41601,7 +41600,7 @@ public class ChatActivity extends BaseFragment implements
 
         @Override
         public void didPressTime(ChatMessageCell cell) {
-            if (!cell.getMessageObject().isImportedForward() && NaConfig.INSTANCE.getShowTimeHint().Bool()) {
+            if (!cell.getMessageObject().isImportedForward() && NyaConfig.INSTANCE.getShowTimeHint().Bool()) {
                 showTimeHint(cell);
                 return;
             }
@@ -42322,7 +42321,7 @@ public class ChatActivity extends BaseFragment implements
                     getMessagesController().pressTranscribeButton();
                 });
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) topUndoView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) topUndoView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                 } catch (Exception ignored) {}
             } else if (type == 1) {
                 String until = LocaleController.formatDateTime(getMessagesController().transcribeAudioTrialCooldownUntil, true);
@@ -42331,7 +42330,7 @@ public class ChatActivity extends BaseFragment implements
                     AndroidUtilities.replaceTags(LocaleController.formatPluralString("TranscriptionTrialLeft", TranscribeButton.getTranscribeTrialCount(currentAccount)));
                 BulletinFactory.of(ChatActivity.this).createSimpleBulletin(R.raw.transcribe, text, 6).show(true);
                 try {
-                    if (!NekoConfig.disableVibration.Bool()) fragmentView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) fragmentView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                 } catch (Exception ignored) {}
             } else if (type == 2 || type == 3) {
                 String until = LocaleController.formatDateTime(getMessagesController().transcribeAudioTrialCooldownUntil, true);
@@ -42412,7 +42411,7 @@ public class ChatActivity extends BaseFragment implements
                 showDialog(builder.create());
             }
             try {
-                if (!NekoConfig.disableVibration.Bool()) cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+                if (!NyaConfig.disableVibration.Bool()) cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
             } catch (Exception ignore) {}
             return true;
         }
@@ -46586,7 +46585,7 @@ public class ChatActivity extends BaseFragment implements
     private void updateBotHelpCellClick(BotHelpCell cell) {
         final CharSequence text = cell.getText();
         if (!TextUtils.isEmpty(text)) {
-            String toLang = NekoConfig.translateToLang.String();
+            String toLang = NyaConfig.translateToLang.String();
             cell.setOnClickListener(e -> {
                 ActionBarPopupWindow.ActionBarPopupWindowLayout layout = new ActionBarPopupWindow.ActionBarPopupWindowLayout(getContext());
                 Drawable shadowDrawable2 = ContextCompat.getDrawable(getContext(), R.drawable.popup_fixed_alert4).mutate();
@@ -46782,7 +46781,7 @@ public class ChatActivity extends BaseFragment implements
                         getNotificationCenter().postNotificationName(NotificationCenter.closeChats);
                         finishFragment();
                     });
-                    if (!NekoConfig.disableVibration.Bool()) LaunchActivity.getLastFragment().getFragmentView().performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+                    if (!NyaConfig.disableVibration.Bool()) LaunchActivity.getLastFragment().getFragmentView().performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
                 });
             });
             builder.setNegativeButton(LocaleController.getString(R.string.Cancel), null);
@@ -47172,7 +47171,7 @@ public class ChatActivity extends BaseFragment implements
         } else if (selectedObject != null) {
             messages.add(selectedObject);
         }
-        if (!NekoConfig.repeatConfirm.Bool()) {
+        if (!NyaConfig.repeatConfirm.Bool()) {
             doRepeatMessage(isLongClick, messages, isRepeatasCopy);
             return;
         }
@@ -48219,7 +48218,7 @@ public class ChatActivity extends BaseFragment implements
             return;
         }
         if (longpress && reaction.reaction instanceof TLRPC.TL_reactionPaid) {
-            if (!NekoConfig.disableVibration.Bool()) cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+            if (!NyaConfig.disableVibration.Bool()) cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             ArrayList<TLRPC.MessageReactor> reactors = null;
             if (messageObject.messageOwner != null && messageObject.messageOwner.reactions != null) {
                 reactors = messageObject.messageOwner.reactions.top_reactors;
@@ -48232,7 +48231,7 @@ public class ChatActivity extends BaseFragment implements
             return;
         }
         if (longpress || messageObject.areTags() && (isInsideContainer || searchingReaction != null && searchingReaction.isSame(reaction.reaction))) {
-            if (!NekoConfig.disableVibration.Bool()) cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+            if (!NyaConfig.disableVibration.Bool()) cell.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
             FrameLayout scrimPopupContainerLayout = new FrameLayout(getParentActivity()) {
                 @Override
                 public boolean dispatchKeyEvent(KeyEvent event) {
@@ -48873,7 +48872,7 @@ public class ChatActivity extends BaseFragment implements
 //                            options.add(OPTION_EDIT_PRICE);
 //                            icons.add(R.drawable.menu_feature_paid);
 //                        }
-                if (NekoConfig.showReport.Bool() && !isAyuDeleted && chatMode != MODE_WELCOME_MESSAGES && selectedObject.contentType == 0 && !selectedObject.isMediaEmptyWebpage() && selectedObject.getId() > 0 && !selectedObject.isOut() && (currentChat != null || currentUser != null && currentUser.bot)) {
+                if (NyaConfig.showReport.Bool() && !isAyuDeleted && chatMode != MODE_WELCOME_MESSAGES && selectedObject.contentType == 0 && !selectedObject.isMediaEmptyWebpage() && selectedObject.getId() > 0 && !selectedObject.isOut() && (currentChat != null || currentUser != null && currentUser.bot)) {
                     items.add(LocaleController.getString(R.string.ReportChat));
                     options.add(OPTION_REPORT_CHAT);
                     icons.add(R.drawable.msg_report);
@@ -48911,7 +48910,7 @@ public class ChatActivity extends BaseFragment implements
                 }
             }
             boolean allowViewHistory = currentChat != null && chatMode == 0 && !currentChat.broadcast && !(threadMessageObjects != null && threadMessageObjects.contains(message));
-            if (allowViewHistory && NekoConfig.showViewHistory.Bool()) {
+            if (allowViewHistory && NyaConfig.showViewHistory.Bool()) {
                 items.add(LocaleController.getString(R.string.ViewHistory));
                 options.add(nkbtn_view_history);
                 icons.add(R.drawable.msg_recent_solar);
@@ -48963,7 +48962,7 @@ public class ChatActivity extends BaseFragment implements
                 }
                 if (!noforwardsOrPaidMedia && !selectedObject.isSponsored() && selectedObject.contentType == 0 && chatMode == MODE_DEFAULT && !isInsideContainer && currentChat != null && currentUser == null && selectedObject.messageOwner.peer_id.user_id == 0 && selectedObject.messageOwner.from_id.user_id > 0 && selectedObject.messageOwner.from_id.user_id != getUserConfig().getClientUserId() && !isAyuDeleted) {
                     allowReplyPm = true;
-                    if (NaConfig.INSTANCE.getShowReplyInPrivate().Bool()) {
+                    if (NyaConfig.INSTANCE.getShowReplyInPrivate().Bool()) {
                         items.add(LocaleController.getString(R.string.ReplyInPrivate));
                         options.add(nkbtn_reply_private);
                         icons.add(R.drawable.menu_reply);
@@ -48993,9 +48992,9 @@ public class ChatActivity extends BaseFragment implements
                 if (!isEphemeral && !selectedObject.isSponsored() && chatMode != MODE_SCHEDULED && ChatObject.isChannel(currentChat) && !ChatObject.isMonoForum(currentChat) && selectedObject.getDialogId() != mergeDialogId && !selectedObject.isAyuDeleted()) {
                     allowCopyLink = true;
                     if (
-                        (!GroupedIconsView.useGroupedIcons() && (NaConfig.INSTANCE.getShowCopyLink().Bool() || selectedObject.isAnyKindOfSticker() || selectedObject.isPoll()))
+                        (!GroupedIconsView.useGroupedIcons() && (NyaConfig.INSTANCE.getShowCopyLink().Bool() || selectedObject.isAnyKindOfSticker() || selectedObject.isPoll()))
                         ||
-                        (GroupedIconsView.useGroupedIcons() && NaConfig.INSTANCE.getShowCopyLink().Bool() && ((!isMessageTextEmpty || hasCaption) && selectedObject.isPhoto() && !selectedObject.isWebpage() || (canDeleteMessage && (!isMessageTextEmpty || selectedObject.isPhoto() || isStaticSticker))))
+                        (GroupedIconsView.useGroupedIcons() && NyaConfig.INSTANCE.getShowCopyLink().Bool() && ((!isMessageTextEmpty || hasCaption) && selectedObject.isPhoto() && !selectedObject.isWebpage() || (canDeleteMessage && (!isMessageTextEmpty || selectedObject.isPhoto() || isStaticSticker))))
                     ) {
                         items.add(LocaleController.getString(R.string.CopyLink));
                         options.add(OPTION_COPY_LINK);
@@ -49005,9 +49004,9 @@ public class ChatActivity extends BaseFragment implements
                 if (!selectedObject.isSponsored() && chatMode != MODE_SCHEDULED && currentUser != null && selectedObject.getDialogId() != mergeDialogId) {
                     allowCopyLinkPm = true;
                     if (
-                        (!GroupedIconsView.useGroupedIcons() && NaConfig.INSTANCE.getShowCopyLink().Bool())
+                        (!GroupedIconsView.useGroupedIcons() && NyaConfig.INSTANCE.getShowCopyLink().Bool())
                         ||
-                        (GroupedIconsView.useGroupedIcons() && NaConfig.INSTANCE.getShowCopyLink().Bool() && (!isMessageTextEmpty && !selectedObject.isPhoto() || selectedObject.isPhoto() && !selectedObject.needDrawBluredPreview() || isStaticSticker))
+                        (GroupedIconsView.useGroupedIcons() && NyaConfig.INSTANCE.getShowCopyLink().Bool() && (!isMessageTextEmpty && !selectedObject.isPhoto() || selectedObject.isPhoto() && !selectedObject.needDrawBluredPreview() || isStaticSticker))
                     ) {
                         items.add(getString(R.string.CopyLink));
                         options.add(nkbtn_copy_link_in_pm);
@@ -49123,7 +49122,7 @@ public class ChatActivity extends BaseFragment implements
                             options.add(OPTION_SHARE);
                             icons.add(R.drawable.msg_shareout);
                         } else if (selectedObject.getDocument() != null && !selectedObject.isVoiceOnce() && !selectedObject.isRoundOnce()) {
-                            if (NaConfig.INSTANCE.getShowCopyFrame().Bool()) {
+                            if (NyaConfig.INSTANCE.getShowCopyFrame().Bool()) {
                                 BaseCell cell = findMessageCell(selectedObject.getId(), true);
                                 if (cell instanceof ChatMessageCell chatMessageCell) {
                                     AnimatedFileDrawable animation = chatMessageCell.getPhotoImage().getAnimation();
@@ -49152,18 +49151,18 @@ public class ChatActivity extends BaseFragment implements
                                 icons.add(R.drawable.msg_gallery);
                                 allowCopyPhoto = true;
                                 if (
-                                    (!GroupedIconsView.useGroupedIcons() && NaConfig.INSTANCE.getShowCopyPhoto().Bool())
+                                    (!GroupedIconsView.useGroupedIcons() && NyaConfig.INSTANCE.getShowCopyPhoto().Bool())
                                     ||
-                                    (GroupedIconsView.useGroupedIcons() && (!isMessageTextEmpty || hasCaption) && canDeleteMessage && NaConfig.INSTANCE.getShowCopyPhoto().Bool())
+                                    (GroupedIconsView.useGroupedIcons() && (!isMessageTextEmpty || hasCaption) && canDeleteMessage && NyaConfig.INSTANCE.getShowCopyPhoto().Bool())
                                 ) {
                                     items.add(LocaleController.getString(R.string.CopyPhoto));
                                     options.add(OPTION_COPY_PHOTO);
                                     icons.add(R.drawable.msg_copy_photo);
                                 }
                                 if (
-                                    (!GroupedIconsView.useGroupedIcons() && NaConfig.INSTANCE.getShowCopyAsSticker().Bool())
+                                    (!GroupedIconsView.useGroupedIcons() && NyaConfig.INSTANCE.getShowCopyAsSticker().Bool())
                                     ||
-                                    (GroupedIconsView.useGroupedIcons() && (!isMessageTextEmpty || hasCaption) && canDeleteMessage && NaConfig.INSTANCE.getShowCopyAsSticker().Bool())
+                                    (GroupedIconsView.useGroupedIcons() && (!isMessageTextEmpty || hasCaption) && canDeleteMessage && NyaConfig.INSTANCE.getShowCopyAsSticker().Bool())
                                 ) {
                                     items.add(LocaleController.getString(R.string.CopyPhotoAsSticker));
                                     options.add(OPTION_COPY_PHOTO_AS_STICKER);
@@ -49218,7 +49217,7 @@ public class ChatActivity extends BaseFragment implements
                     }
                 } else if (type == MESSAGE_TYPE_IMAGE_OR_VIDEO && !noforwardsOrPaidMedia && !selectedObject.hasRevealedExtendedMedia()) {
                     if (!selectedObject.needDrawBluredPreview() && !selectedObject.isVoiceOnce() && !selectedObject.isRoundOnce()) {
-                        if (NaConfig.INSTANCE.getShowCopyFrame().Bool()) {
+                        if (NyaConfig.INSTANCE.getShowCopyFrame().Bool()) {
                             BaseCell cell = findMessageCell(selectedObject.getId(), true);
                             if (cell instanceof ChatMessageCell chatMessageCell) {
                                 AnimatedFileDrawable animation = chatMessageCell.getPhotoImage().getAnimation();
@@ -49258,14 +49257,14 @@ public class ChatActivity extends BaseFragment implements
                                 }
                             }
                         }
-                        if (NaConfig.INSTANCE.getShowAddToStickers().Bool()) {
+                        if (NyaConfig.INSTANCE.getShowAddToStickers().Bool()) {
                             items.add(LocaleController.getString(R.string.AddToStickers));
                             options.add(OPTION_ADD_TO_STICKERS_OR_MASKS);
                             icons.add(R.drawable.msg_sticker);
                         }
                         TLRPC.Document document = selectedObject.getDocument();
                         if (!getMediaDataController().isStickerInFavorites(document)) {
-                            if (NaConfig.INSTANCE.getShowAddToFavorites().Bool() && getMediaDataController().canAddStickerToFavorites()) {
+                            if (NyaConfig.INSTANCE.getShowAddToFavorites().Bool() && getMediaDataController().canAddStickerToFavorites()) {
                                 items.add(LocaleController.getString(R.string.AddToFavorites));
                                 options.add(OPTION_ADD_STICKER_TO_FAVORITES);
                                 icons.add(R.drawable.msg_fave);
@@ -49305,7 +49304,7 @@ public class ChatActivity extends BaseFragment implements
                     }
                     TLRPC.Document document = selectedObject.getDocument();
                     if (!getMediaDataController().isStickerInFavorites(document)) {
-                        if (NaConfig.INSTANCE.getShowAddToFavorites().Bool() && getMediaDataController().canAddStickerToFavorites() && !selectedObject.isDice()) {
+                        if (NyaConfig.INSTANCE.getShowAddToFavorites().Bool() && getMediaDataController().canAddStickerToFavorites() && !selectedObject.isDice()) {
                             items.add(LocaleController.getString(R.string.AddToFavorites));
                             options.add(OPTION_ADD_STICKER_TO_FAVORITES);
                             icons.add(R.drawable.msg_fave);
@@ -49338,29 +49337,29 @@ public class ChatActivity extends BaseFragment implements
                     if (!GroupedIconsView.useGroupedIcons() || allowEdit) {
                         items.add(LocaleController.getString(R.string.Forward));
                         options.add(OPTION_FORWARD);
-                        icons.add(NaConfig.INSTANCE.getShowNoQuoteForward().Bool() ? R.drawable.msg_forward : R.drawable.msg_forward_noquote);
+                        icons.add(NyaConfig.INSTANCE.getShowNoQuoteForward().Bool() ? R.drawable.msg_forward : R.drawable.msg_forward_noquote);
                     }
                 }
                 // --- NagramX Start ---
                 if (chatMode != MODE_SCHEDULED) {
                     if (chatMode != MODE_WELCOME_MESSAGES && !selectedObject.needDrawBluredPreview() && !selectedObject.isLiveLocation() && selectedObject.type != 16) {
-                        if (!noforwards && NaConfig.INSTANCE.getShowNoQuoteForward().Bool()) {
+                        if (!noforwards && NyaConfig.INSTANCE.getShowNoQuoteForward().Bool()) {
                             items.add(LocaleController.getString(R.string.NoQuoteForward));
                             options.add(nkbtn_forward_noquote);
                             icons.add(R.drawable.msg_forward_noquote);
                         }
                     }
-                    if (NaConfig.INSTANCE.getShowSetReminder().Bool()) {
+                    if (NyaConfig.INSTANCE.getShowSetReminder().Bool()) {
                         items.add(LocaleController.getString(R.string.SetReminder));
                         options.add(nkbtn_setReminder);
                         icons.add(R.drawable.msg_calendar2);
                     }
-                    if (chatMode != MODE_WELCOME_MESSAGES && NekoConfig.showAddToSavedMessages.Bool() && !UserObject.isUserSelf(currentUser) && !noforwards && selectedObject.canForwardMessage()) {
+                    if (chatMode != MODE_WELCOME_MESSAGES && NyaConfig.showAddToSavedMessages.Bool() && !UserObject.isUserSelf(currentUser) && !noforwards && selectedObject.canForwardMessage()) {
                         items.add(getString(R.string.AddToSavedMessages));
                         options.add(nkbtn_savemessage);
                         icons.add(R.drawable.msg_saved);
                     }
-                    if (NaConfig.INSTANCE.getShowAddToBookmark().Bool() && selectedObject != null && !selectedObject.isAnyKindOfSticker()) {
+                    if (NyaConfig.INSTANCE.getShowAddToBookmark().Bool() && selectedObject != null && !selectedObject.isAnyKindOfSticker()) {
                         boolean bookmarked;
                         if (selectedObjectGroup != null && selectedObjectGroup.messages != null && !selectedObjectGroup.messages.isEmpty()) {
                             int size = selectedObjectGroup.messages.size();
@@ -49377,35 +49376,35 @@ public class ChatActivity extends BaseFragment implements
                         icons.add(bookmarked ? R.drawable.msg_unfave : R.drawable.msg_fave);
                     }
                     boolean allowRepeat = currentUser != null || (currentChat != null && ChatObject.canSendMessages(currentChat));
-                    if (chatMode != MODE_WELCOME_MESSAGES && allowRepeat && !noforwards && selectedObject.canForwardMessage() && NekoConfig.showRepeat.Bool()) {
+                    if (chatMode != MODE_WELCOME_MESSAGES && allowRepeat && !noforwards && selectedObject.canForwardMessage() && NyaConfig.showRepeat.Bool()) {
                         items.add(LocaleController.getString(R.string.Repeat));
                         options.add(nkbtn_repeat);
                         icons.add(R.drawable.msg_repeat);
                     }
-                    if (chatMode != MODE_WELCOME_MESSAGES && (NaConfig.INSTANCE.getShowRepeatAsCopy().Bool() || (NekoConfig.showRepeat.Bool() && noforwards)) && allowRepeat && !isAyuDeleted && !selectedObject.needDrawBluredPreview() && (!noforwards || getMessageHelper().canSendMessageAsCopy(selectedObject, selectedObjectGroup))){
+                    if (chatMode != MODE_WELCOME_MESSAGES && (NyaConfig.INSTANCE.getShowRepeatAsCopy().Bool() || (NyaConfig.showRepeat.Bool() && noforwards)) && allowRepeat && !isAyuDeleted && !selectedObject.needDrawBluredPreview() && (!noforwards || getMessageHelper().canSendMessageAsCopy(selectedObject, selectedObjectGroup))){
                         items.add(LocaleController.getString(R.string.RepeatAsCopy));
                         options.add(nkbtn_repeatascopy);
                         icons.add(R.drawable.msg_repeat);
                     }
-                    if (chatMode != MODE_WELCOME_MESSAGES && !isAyuDeleted && !selectedObject.needDrawBluredPreview() && getMessageHelper().canSendMessageAsCopy(selectedObject, selectedObjectGroup) && (noforwards || !selectedObject.canForwardMessage() || NaConfig.INSTANCE.getShowForceForward().Bool())) {
+                    if (chatMode != MODE_WELCOME_MESSAGES && !isAyuDeleted && !selectedObject.needDrawBluredPreview() && getMessageHelper().canSendMessageAsCopy(selectedObject, selectedObjectGroup) && (noforwards || !selectedObject.canForwardMessage() || NyaConfig.INSTANCE.getShowForceForward().Bool())) {
                         items.add(LocaleController.getString(R.string.ForceForward));
                         options.add(nkbtn_force_forward);
                         icons.add(R.drawable.msg_forward);
                     }
-                    if (NekoConfig.showDeleteDownloadedFile.Bool() && getMessageHelper().messageObjectIsFile(type, selectedObject)) {
+                    if (NyaConfig.showDeleteDownloadedFile.Bool() && getMessageHelper().messageObjectIsFile(type, selectedObject)) {
                         items.add(LocaleController.getString(R.string.DeleteDownloadedFile));
                         options.add(nkbtn_deldlcache);
                         icons.add(R.drawable.msg_clear);
                     }
                     boolean allowViewHistory = currentChat != null && chatMode == 0 && !currentChat.broadcast && !(threadMessageObjects != null && threadMessageObjects.contains(message));
-                    if (allowViewHistory && NekoConfig.showViewHistory.Bool()) {
+                    if (allowViewHistory && NyaConfig.showViewHistory.Bool()) {
                         items.add(LocaleController.getString(R.string.ViewHistory));
                         options.add(nkbtn_view_history);
                         icons.add(R.drawable.msg_recent_solar);
                     }
                     final MessageObject msg = getMessageForTranslate();
-                    boolean showTranslate = NekoConfig.showTranslate.Bool() || (NaConfig.INSTANCE.getShowTranslateMessageLLM().Bool() && LlmConfig.llmIsDefaultProvider());
-                    boolean showTranslateLLM = NaConfig.INSTANCE.getShowTranslateMessageLLM().Bool() && LlmConfig.isLLMTranslatorAvailable() && !LlmConfig.llmIsDefaultProvider();
+                    boolean showTranslate = NyaConfig.showTranslate.Bool() || (NyaConfig.INSTANCE.getShowTranslateMessageLLM().Bool() && LlmConfig.llmIsDefaultProvider());
+                    boolean showTranslateLLM = NyaConfig.INSTANCE.getShowTranslateMessageLLM().Bool() && LlmConfig.isLLMTranslatorAvailable() && !LlmConfig.llmIsDefaultProvider();
                     boolean isTranslatableMessage = msg != null && !msg.isAnimatedEmoji() && !msg.isDice();
                     if ((showTranslate || showTranslateLLM) && isTranslatableMessage) {
                         boolean isRichMessage = msg != null && msg.isRich();
@@ -49437,13 +49436,13 @@ public class ChatActivity extends BaseFragment implements
                             icons.add(R.drawable.magic_stick_solar);
                         }
                     }
-                    if (NekoConfig.showShareMessages.Bool() && msg != null) {
+                    if (NyaConfig.showShareMessages.Bool() && msg != null) {
                         items.add(LocaleController.getString(R.string.ShareMessages));
                         options.add(nkbtn_sharemessage);
                         icons.add(R.drawable.msg_shareout);
                     }
                 }
-                if (NekoConfig.showMessageHide.Bool()) {
+                if (NyaConfig.showMessageHide.Bool()) {
                     items.add(LocaleController.getString(R.string.Hide));
                     options.add(nkbtn_hide);
                     icons.add(R.drawable.msg_disable);
@@ -49503,7 +49502,7 @@ public class ChatActivity extends BaseFragment implements
                         items.add(LocaleController.getString(R.string.BlockContact));
                         options.add(OPTION_REPORT_CHAT);
                         icons.add(R.drawable.msg_block2);
-                    } else if (NekoConfig.showReport.Bool() && !isAyuDeleted) {
+                    } else if (NyaConfig.showReport.Bool() && !isAyuDeleted) {
                         items.add(LocaleController.getString(R.string.ReportChat));
                         options.add(OPTION_REPORT_CHAT);
                         icons.add(R.drawable.msg_report);
@@ -49580,18 +49579,18 @@ public class ChatActivity extends BaseFragment implements
                         icons.add(R.drawable.msg_gallery);
                         allowCopyPhoto = true;
                         if (
-                            (!GroupedIconsView.useGroupedIcons() && NaConfig.INSTANCE.getShowCopyPhoto().Bool())
+                            (!GroupedIconsView.useGroupedIcons() && NyaConfig.INSTANCE.getShowCopyPhoto().Bool())
                             ||
-                            (GroupedIconsView.useGroupedIcons() && (!isMessageTextEmpty || hasCaption) && canDeleteMessage && NaConfig.INSTANCE.getShowCopyPhoto().Bool())
+                            (GroupedIconsView.useGroupedIcons() && (!isMessageTextEmpty || hasCaption) && canDeleteMessage && NyaConfig.INSTANCE.getShowCopyPhoto().Bool())
                         ) {
                             items.add(LocaleController.getString(R.string.CopyPhoto));
                             options.add(OPTION_COPY_PHOTO);
                             icons.add(R.drawable.msg_copy_photo);
                         }
                         if (
-                            (!GroupedIconsView.useGroupedIcons() && NaConfig.INSTANCE.getShowCopyAsSticker().Bool())
+                            (!GroupedIconsView.useGroupedIcons() && NyaConfig.INSTANCE.getShowCopyAsSticker().Bool())
                             ||
-                            (GroupedIconsView.useGroupedIcons() && (!isMessageTextEmpty || hasCaption) && canDeleteMessage && NaConfig.INSTANCE.getShowCopyAsSticker().Bool())
+                            (GroupedIconsView.useGroupedIcons() && (!isMessageTextEmpty || hasCaption) && canDeleteMessage && NyaConfig.INSTANCE.getShowCopyAsSticker().Bool())
                         ) {
                             items.add(LocaleController.getString(R.string.CopyPhotoAsSticker));
                             options.add(OPTION_COPY_PHOTO_AS_STICKER);
@@ -49606,7 +49605,7 @@ public class ChatActivity extends BaseFragment implements
                     items.add(LocaleController.getString(R.string.ApplyThemeFile));
                     options.add(OPTION_APPLY_LOCALIZATION_OR_THEME);
                     icons.add(R.drawable.msg_theme);
-                } else if (type == MESSAGE_TYPE_STICKER_PACK_NOT_INSTALLED && NaConfig.INSTANCE.getShowAddToStickers().Bool()) {
+                } else if (type == MESSAGE_TYPE_STICKER_PACK_NOT_INSTALLED && NyaConfig.INSTANCE.getShowAddToStickers().Bool()) {
                     items.add(LocaleController.getString(R.string.AddToStickers));
                     options.add(OPTION_ADD_TO_STICKERS_OR_MASKS);
                     icons.add(R.drawable.msg_sticker);
@@ -49633,8 +49632,8 @@ public class ChatActivity extends BaseFragment implements
                     }
                 }
                 final MessageObject msg = getMessageForTranslate();
-                boolean showTranslate = NekoConfig.showTranslate.Bool() || (NaConfig.INSTANCE.getShowTranslateMessageLLM().Bool() && LlmConfig.llmIsDefaultProvider());
-                boolean showTranslateLLM = NaConfig.INSTANCE.getShowTranslateMessageLLM().Bool() && LlmConfig.isLLMTranslatorAvailable() && !LlmConfig.llmIsDefaultProvider();
+                boolean showTranslate = NyaConfig.showTranslate.Bool() || (NyaConfig.INSTANCE.getShowTranslateMessageLLM().Bool() && LlmConfig.llmIsDefaultProvider());
+                boolean showTranslateLLM = NyaConfig.INSTANCE.getShowTranslateMessageLLM().Bool() && LlmConfig.isLLMTranslatorAvailable() && !LlmConfig.llmIsDefaultProvider();
                 boolean isTranslatableMessage = msg != null && !msg.isAnimatedEmoji() && !msg.isDice();
                 if ((showTranslate || showTranslateLLM) && isTranslatableMessage) {
                     boolean isRichMessage = msg != null && msg.isRich();
@@ -49696,13 +49695,13 @@ public class ChatActivity extends BaseFragment implements
                         editingAdmin = participant instanceof TLRPC.TL_chatParticipantAdmin;
                     }
 
-                    if (canEditAdmin && NekoConfig.showAdminActions.Bool()) {
+                    if (canEditAdmin && NyaConfig.showAdminActions.Bool()) {
                         items.add(editingAdmin ? LocaleController.getString(R.string.EditAdminRights) : LocaleController.getString(R.string.SetAsAdmin));
                         icons.add(R.drawable.profile_admin);
                         options.add(nkbtn_editAdmin);
                         selectedParticipant = participant;
                     }
-                    if (canRestrict && NekoConfig.showChangePermissions.Bool()) {
+                    if (canRestrict && NyaConfig.showChangePermissions.Bool()) {
                         items.add(LocaleController.getString(R.string.ChangePermissions));
                         icons.add(R.drawable.msg_permissions);
                         options.add(nkbtn_editPermission);
@@ -49718,7 +49717,7 @@ public class ChatActivity extends BaseFragment implements
             icons.add(R.drawable.outline_revert_24);
         }
 
-        if (NekoConfig.showMessageDetails.Bool()) {
+        if (NyaConfig.showMessageDetails.Bool()) {
             items.add(LocaleController.getString(R.string.MessageDetails));
             options.add(nkbtn_detail);
             icons.add(R.drawable.msg_info);
@@ -49735,10 +49734,10 @@ public class ChatActivity extends BaseFragment implements
     }
 
     private boolean canShowCenteredTitle(ChatActivity parentFragment) {
-        if (!NaConfig.INSTANCE.getCenterActionBarTitle().Bool()) {
+        if (!NyaConfig.INSTANCE.getCenterActionBarTitle().Bool()) {
             return false;
         }
-        if (NaConfig.INSTANCE.getCenterActionBarTitleType().Int() == 2) {
+        if (NyaConfig.INSTANCE.getCenterActionBarTitleType().Int() == 2) {
             return false;
         }
         if (parentFragment == null) {
@@ -49803,7 +49802,7 @@ public class ChatActivity extends BaseFragment implements
         if (TextUtils.isEmpty(text)) {
             return false;
         }
-        DialogTransKt.startTrans(getParentActivity(), text, toLang != null ? toLang : NekoConfig.translateToLang.String(), Translator.providerLLMTranslator);
+        DialogTransKt.startTrans(getParentActivity(), text, toLang != null ? toLang : NyaConfig.translateToLang.String(), Translator.providerLLMTranslator);
         return true;
     }
 
@@ -49819,7 +49818,7 @@ public class ChatActivity extends BaseFragment implements
     }
 
     public boolean isBlockedUser(long senderId) {
-        if (!NekoConfig.ignoreBlocked.Bool()) {
+        if (!NyaConfig.ignoreBlocked.Bool()) {
             return false;
         }
         return getMessagesController().blockePeers.indexOfKey(senderId) >= 0 || AyuFilter.isCustomFilteredPeer(senderId);
@@ -50385,11 +50384,11 @@ public class ChatActivity extends BaseFragment implements
                     scrimPopupWindow.dismiss();
                 }
             };
-        } else if (buttonId == ChatActivitySideControlsButtonsLayout.BUTTON_PAGE_DOWN && NekoConfig.rememberAllBackMessages.Bool()) {
+        } else if (buttonId == ChatActivitySideControlsButtonsLayout.BUTTON_PAGE_DOWN && NyaConfig.rememberAllBackMessages.Bool()) {
             returnToMessageId = 0;
             returnToMessageIdsStack.clear();
             onPageDownClicked();
-            if (NekoConfig.disableVibration.Bool()) {
+            if (NyaConfig.disableVibration.Bool()) {
                 AndroidUtil.disableHapticFeedback(view);
             }
             return true;
@@ -50413,7 +50412,7 @@ public class ChatActivity extends BaseFragment implements
             }
         });
         try {
-            if (!NekoConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+            if (!NyaConfig.disableVibration.Bool()) view.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
         } catch (Exception ignored) {}
         return true;
     }
@@ -50603,7 +50602,7 @@ public class ChatActivity extends BaseFragment implements
         }
         fireworksOverlay.start();
         try {
-            if (!NekoConfig.disableVibration.Bool()) fireworksOverlay.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
+            if (!NyaConfig.disableVibration.Bool()) fireworksOverlay.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING);
         } catch (Exception ignored) {};
     }
 

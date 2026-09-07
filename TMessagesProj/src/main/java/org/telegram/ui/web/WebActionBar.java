@@ -60,7 +60,7 @@ import org.telegram.ui.Components.LayoutHelper;
 import org.telegram.ui.Components.LineProgressView;
 import org.telegram.ui.GradientClip;
 
-import top.nkbe.niagram.NekoConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class WebActionBar extends FrameLayout {
     private final Theme.ResourcesProvider resourcesProvider;
@@ -1013,7 +1013,7 @@ public class WebActionBar extends FrameLayout {
             getParent().requestDisallowInterceptTouchEvent(true);
         }
         try {
-            if (!NekoConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
+            if (!NyaConfig.disableVibration.Bool()) performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING);
         } catch (Exception ignored) {}
     };
 

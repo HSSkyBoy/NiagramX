@@ -42,7 +42,7 @@ import java.util.List;
 import me.vkryl.core.BitwiseUtils;
 
 import top.nkbe.niagram.DialogConfig;
-import xyz.nextalone.nagram.NaConfig;
+import top.nkbe.niagram.config.NyaConfig;
 
 public class ChatObject {
 
@@ -1964,7 +1964,7 @@ public class ChatObject {
     }
 
     public static boolean isNotInChat(TLRPC.Chat chat) {
-        if (!NaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
+        if (!NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) {
             return chat == null || chat instanceof TLRPC.TL_chatEmpty || isForbidden(chat) || chat.left || chat.kicked || chat.deactivated;
         }
 
