@@ -9,4 +9,5 @@ java {
 
 dependencies {
     implementation 'com.neovisionaries:nv-websocket-client:2.14'
+    compileOnly 'org.jetbrains:annotations:24.1.0'
 }
