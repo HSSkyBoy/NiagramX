@@ -558,4 +558,13 @@
     <string name="UseFastestProxy">切换至最快代理</string>
     <string name="SwitchedToFastestProxy">已切换至最快代理</string>
     <string name="AlreadyFastestProxy">当前已在使用最快代理</string>
+
+    <string name="PrioritizeEmailCode">优先使用邮箱接收验证码</string>
+    <string name="SendCodeViaEmail">通过邮箱发送验证码</string>
+    <string name="FastResendDialogTitle">重新发送验证码</string>
+    <string name="FastResendDialogMessage">尚未收到验证码？是否跳过等待倒计时并立即重新发送？</string>
+    <string name="FastResendNow">立即重发</string>
+    <string name="CodeSentToOtherDeviceTitle">查看您的 Telegram 应用</string>
+    <string name="CodeSentToOtherDeviceInfo">登录验证码已发送至您其他设备上的 Telegram 应用。\n\n提示：如需通过邮箱接收验证码，请先在 Telegram 官方应用的“设置 > 隐私与安全 > 两步验证”中绑定“登录邮箱”。</string>
+    <string name="SendCodeUnavailableInfo">Telegram 目前无法通过其他途径发送验证码。若您其他设备已登录，请查看该设备收到的应用内验证码。\n\n如需使用邮箱登录，请确保已在 Telegram 的隐私与安全设置中绑定“登录邮箱”。</string>
 </resources>

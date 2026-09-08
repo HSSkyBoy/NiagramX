@@ -1815,6 +1815,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
 
     private boolean isRequestingFirebaseSms;
     private void fillNextCodeParams(Bundle params, TLRPC.auth_SentCode res, boolean animate) {
+        FileLog.d("LoginAuth: received sentCode type=" + (res.type != null ? res.type.getClass().getSimpleName() : "null") + ", next_type=" + (res.next_type != null ? res.next_type.getClass().getSimpleName() : "null") + ", timeout=" + res.timeout);
         if (res instanceof TLRPC.TL_auth_sentCodePaymentRequired) {
             final TLRPC.TL_auth_sentCodePaymentRequired auth = (TLRPC.TL_auth_sentCodePaymentRequired) res;
             params.putString("product", auth.store_product);
@@ -2027,6 +2028,8 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
         private ImageView chevronRight;
         private CheckBoxCell syncContactsBox;
         private CheckBoxCell testBackendCheckBox;
+        private CheckBoxCell prioritizeEmailCheckBox;
+        private boolean prioritizeEmailCode = false;
 
         @CountryState
         private int countryState = COUNTRY_STATE_NOT_SET_OR_VALID;
@@ -2532,6 +2535,21 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                     } else {
                         BulletinFactory.of(slideViewsContainer, null).createSimpleBulletin(R.raw.contacts_sync_off, getString("SyncContactsOff", R.string.SyncContactsOff)).show();
                     }
+                });
+            }
+
+            if (activityMode == MODE_LOGIN) {
+                prioritizeEmailCheckBox = new CheckBoxCell(context, 2);
+                prioritizeEmailCheckBox.setText(getString(R.string.PrioritizeEmailCode), "", prioritizeEmailCode, false);
+                addView(prioritizeEmailCheckBox, LayoutHelper.createLinear(LayoutHelper.WRAP_CONTENT, LayoutHelper.MATCH_PARENT, Gravity.LEFT | Gravity.TOP, 16, 0, 16 + (LocaleController.isRTL && AndroidUtilities.isSmallScreen() ? 56 : 0), 0));
+                bottomMargin -= 24;
+                prioritizeEmailCheckBox.setOnClickListener(v -> {
+                    if (getParentActivity() == null) {
+                        return;
+                    }
+                    CheckBoxCell cell = (CheckBoxCell) v;
+                    prioritizeEmailCode = !prioritizeEmailCode;
+                    cell.setChecked(prioritizeEmailCode, true);
                 });
             }
 
@@ -3168,6 +3186,10 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
             }
 
             TLRPC.TL_codeSettings settings = new TLRPC.TL_codeSettings();
+            if (prioritizeEmailCode) {
+                settings.request_email_code = true;
+                settings.flags |= 1;
+            }
             settings.allow_flashcall = simcardAvailable && allowCall && allowCancelCall && allowReadCallLog;
             settings.allow_missed_call = simcardAvailable && allowCall;
             settings.allow_app_hash = settings.allow_firebase = PushListenerController.getProvider().hasServices();
@@ -3265,11 +3287,13 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
             if (currentCountry != null) {
                 params.putString("country", currentCountry.code);
             }
+            params.putBoolean("prioritizeEmailCode", prioritizeEmailCode);
             nextPressed = true;
             PhoneInputData phoneInputData = new PhoneInputData();
             phoneInputData.phoneNumber = "+" + codeField.getText() + " " + phoneField.getText();
             phoneInputData.country = currentCountry;
             phoneInputData.patterns = phoneFormatMap.get(codeField.getText().toString());
+            FileLog.d("LoginAuth: sending auth_sendCode for phone=" + phone + ", request_email_code=" + settings.request_email_code);
             int reqId = ConnectionsManager.getInstance(currentAccount).sendRequest(req, (response, error) -> AndroidUtilities.runOnUIThread(() -> {
                 nextPressed = false;
                 if (error == null) {
@@ -3710,6 +3734,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
         @AuthType
         private int prevType;
 
+        private boolean prioritizeEmailCode;
         private boolean isResendingCode = false;
 
         private String pattern = "*";
@@ -3896,7 +3921,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                 }
                 @Override
                 protected boolean isRippleEnabled() {
-                    return getVisibility() == View.VISIBLE && !(time > 0 && timeTimer != null);
+                    return getVisibility() == View.VISIBLE;
                 }
             };
             timeText.setLinkTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteValueText));
@@ -3905,10 +3930,25 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
             timeText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 15);
             timeText.setGravity(Gravity.TOP | Gravity.LEFT);
             timeText.setOnClickListener(v -> {
-//                if (isRequestingFirebaseSms || isResendingCode) {
-//                    return;
-//                }
+                if (isRequestingFirebaseSms || isResendingCode) {
+                    return;
+                }
                 if (time > 0 && timeTimer != null) {
+                    if (getParentActivity() != null) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getParentActivity());
+                        builder.setTitle(getString(R.string.FastResendDialogTitle));
+                        builder.setMessage(getString(R.string.FastResendDialogMessage));
+                        builder.setPositiveButton(getString(R.string.FastResendNow), (dialog, which) -> {
+                            destroyTimer();
+                            time = 0;
+                            isResendingCode = true;
+                            timeText.invalidate();
+                            timeText.setTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteValueText));
+                            resendCode();
+                        });
+                        builder.setNegativeButton(getString(R.string.Cancel), null);
+                        showDialog(builder.create());
+                    }
                     return;
                 }
                 isResendingCode = true;
@@ -4053,8 +4093,16 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                     if (nextPressed || timeText != null && timeText.getVisibility() != View.GONE || isResendingCode) {
                         return;
                     }
+                    if (currentType == AUTH_TYPE_MESSAGE && nextType == 0) {
+                        new AlertDialog.Builder(context)
+                                .setTitle(getString(R.string.CodeSentToOtherDeviceTitle))
+                                .setMessage(AndroidUtilities.replaceTags(getString(R.string.CodeSentToOtherDeviceInfo)))
+                                .setPositiveButton(getString(R.string.OK), null)
+                                .show();
+                        return;
+                    }
                     boolean email = nextType == 0;
-                    if (!email) {
+                    if (!email || prioritizeEmailCode) {
                         if (radialProgressView.getTag() != null) {
                             return;
                         }
@@ -4283,15 +4331,18 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
             params.putString("ephone", emailPhone);
             params.putString("phoneFormated", requestPhone);
             params.putInt("prevType", currentType);
+            params.putBoolean("prioritizeEmailCode", prioritizeEmailCode);
 
             nextPressed = true;
 
             TLRPC.TL_auth_resendCode req = new TLRPC.TL_auth_resendCode();
             req.phone_number = requestPhone;
             req.phone_code_hash = phoneHash;
+            FileLog.d("LoginAuth: calling auth_resendCode for phone=" + requestPhone + ", prioritizeEmailCode=" + prioritizeEmailCode);
             int reqId = ConnectionsManager.getInstance(currentAccount).sendRequest(req, (response, error) -> AndroidUtilities.runOnUIThread(() -> {
                 nextPressed = false;
                 if (error == null) {
+                    FileLog.d("LoginAuth: auth_resendCode success, response type=" + (response instanceof TLRPC.TL_auth_sentCode && ((TLRPC.TL_auth_sentCode) response).type != null ? ((TLRPC.TL_auth_sentCode) response).type.getClass().getSimpleName() : "null"));
                     nextCodeParams = params;
                     nextCodeAuth = (TLRPC.TL_auth_sentCode) response;
                     if (nextCodeAuth.type instanceof TLRPC.TL_auth_sentCodeTypeSmsPhrase) {
@@ -4301,6 +4352,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                     }
                     fillNextCodeParams(nextCodeParams, nextCodeAuth);
                 } else {
+                    FileLog.d("LoginAuth: auth_resendCode error=" + error.text + " code=" + error.code);
                     if (error.text != null) {
                         if (error.text.contains("PHONE_NUMBER_INVALID")) {
                             needShowAlert(getString(R.string.RestorePasswordNoEmailTitle), getString(R.string.InvalidPhoneNumber));
@@ -4312,6 +4364,8 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                             needShowAlert(getString(R.string.RestorePasswordNoEmailTitle), getString(R.string.CodeExpired));
                         } else if (error.text.startsWith("FLOOD_WAIT")) {
                             needShowAlert(getString(R.string.RestorePasswordNoEmailTitle), getString(R.string.FloodWait) + "\n" + error.text);
+                        } else if (error.text.contains("SEND_CODE_UNAVAILABLE")) {
+                            needShowAlert(getString(R.string.RestorePasswordNoEmailTitle), getString(R.string.SendCodeUnavailableInfo));
                         } else if (error.code != -1000) {
                             needShowAlert(getString(R.string.RestorePasswordNoEmailTitle), getString(R.string.ErrorOccurred) + "\n" + error.text);
                         }
@@ -4456,6 +4510,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
             prefix = params.getString("prefix");
             length = params.getInt("length");
             prevType = params.getInt("prevType", 0);
+            prioritizeEmailCode = params.getBoolean("prioritizeEmailCode", false);
             if (length == 0) {
                 length = 5;
             }
@@ -4547,7 +4602,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                     } else if (nextType == 0) {
                         problemText.setText(getString(R.string.DidNotGetTheCode));
                     } else {
-                        problemText.setText(getString(R.string.DidNotGetTheCodeSms));
+                        problemText.setText(prioritizeEmailCode ? getString(R.string.SendCodeViaEmail) : getString(R.string.DidNotGetTheCodeSms));
                     }
                 } else {
                     problemText.setText(getString(R.string.DidNotGetTheCode));
