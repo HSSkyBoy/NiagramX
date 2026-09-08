@@ -4093,6 +4093,14 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                     if (nextPressed || timeText != null && timeText.getVisibility() != View.GONE || isResendingCode) {
                         return;
                     }
+                    if (currentType == AUTH_TYPE_MESSAGE && nextType == 0) {
+                        new AlertDialog.Builder(context)
+                                .setTitle(getString(R.string.CodeSentToOtherDeviceTitle))
+                                .setMessage(AndroidUtilities.replaceTags(getString(R.string.CodeSentToOtherDeviceInfo)))
+                                .setPositiveButton(getString(R.string.OK), null)
+                                .show();
+                        return;
+                    }
                     boolean email = nextType == 0;
                     if (!email || prioritizeEmailCode) {
                         if (radialProgressView.getTag() != null) {
@@ -4356,6 +4364,8 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                             needShowAlert(getString(R.string.RestorePasswordNoEmailTitle), getString(R.string.CodeExpired));
                         } else if (error.text.startsWith("FLOOD_WAIT")) {
                             needShowAlert(getString(R.string.RestorePasswordNoEmailTitle), getString(R.string.FloodWait) + "\n" + error.text);
+                        } else if (error.text.contains("SEND_CODE_UNAVAILABLE")) {
+                            needShowAlert(getString(R.string.RestorePasswordNoEmailTitle), getString(R.string.SendCodeUnavailableInfo));
                         } else if (error.code != -1000) {
                             needShowAlert(getString(R.string.RestorePasswordNoEmailTitle), getString(R.string.ErrorOccurred) + "\n" + error.text);
                         }
@@ -4585,16 +4595,14 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
 
             if (currentType != AUTH_TYPE_FRAGMENT_SMS) {
                 if (currentType == AUTH_TYPE_MESSAGE) {
-                    if (prioritizeEmailCode) {
-                        problemText.setText(getString(R.string.SendCodeViaEmail));
-                    } else if (nextType == AUTH_TYPE_FLASH_CALL || nextType == AUTH_TYPE_CALL || nextType == AUTH_TYPE_MISSED_CALL) {
+                    if (nextType == AUTH_TYPE_FLASH_CALL || nextType == AUTH_TYPE_CALL || nextType == AUTH_TYPE_MISSED_CALL) {
                         problemText.setText(getString(R.string.DidNotGetTheCodePhone));
                     } else if (nextType == AUTH_TYPE_FRAGMENT_SMS) {
                         problemText.setText(getString(R.string.DidNotGetTheCodeFragment));
                     } else if (nextType == 0) {
                         problemText.setText(getString(R.string.DidNotGetTheCode));
                     } else {
-                        problemText.setText(getString(R.string.DidNotGetTheCodeSms));
+                        problemText.setText(prioritizeEmailCode ? getString(R.string.SendCodeViaEmail) : getString(R.string.DidNotGetTheCodeSms));
                     }
                 } else {
                     problemText.setText(getString(R.string.DidNotGetTheCode));
