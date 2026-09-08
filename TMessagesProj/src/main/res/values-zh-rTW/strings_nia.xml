@@ -573,4 +573,7 @@
     <string name="PublicProxyDescription">代理隧道技術由 Nullgram 提供 (WebSocket via Cloudflare)</string>
     <string name="PublicProxyCannotDelete">內建公共代理不支援刪除</string>
     <string name="PublicProxyCannotShare">內建公共代理不支援分享</string>
+    <string name="AutoActivateMainlandProxy">大陸 IP 自動啟動代理</string>
+    <string name="AutoActivateMainlandProxyDesc">冷啟動時若偵測到處於中國大陸或海南網路，自動在背景啟動並啟用內建代理。</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">偵測到系統已開啟全域 VPN 時，自動掛起內建隧道與代理，避免流量衝突。</string>
 </resources>

@@ -595,4 +595,7 @@
     <string name="PublicProxyDescription">Proxy tunnel powered by Nullgram (WebSocket via Cloudflare)</string>
     <string name="PublicProxyCannotDelete">Built-in public proxy cannot be deleted.</string>
     <string name="PublicProxyCannotShare">Built-in public proxy cannot be shared.</string>
+    <string name="AutoActivateMainlandProxy">Auto-Activate for Chinese IP</string>
+    <string name="AutoActivateMainlandProxyDesc">Automatically enable built-in proxy on startup when detected connecting from mainland China / Hainan.</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">Automatically suspend proxy and tcp2ws tunnel when system VPN is detected.</string>
 </resources>

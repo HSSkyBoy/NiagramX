@@ -299,6 +299,12 @@ object NyaConfig {
             ConfigItem.configTypeBool,
             false
         )
+    val autoActivateMainlandProxy =
+        addConfig(
+            "AutoActivateMainlandProxy",
+            ConfigItem.configTypeBool,
+            true
+        )
     val notificationIcon =
         addConfig(
             "NotificationIcon",

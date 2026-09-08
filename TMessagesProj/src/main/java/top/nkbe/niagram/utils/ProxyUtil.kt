@@ -42,9 +42,15 @@ import org.telegram.messenger.R
 import org.telegram.messenger.SharedConfig
 import org.telegram.messenger.TelegramQRCodeWriter
 import org.telegram.messenger.browser.Browser
+import top.nkbe.niagram.config.NyaConfig
+import top.nkbe.niagram.helpers.WebSocketHelper
 import top.nkbe.niagram.ui.BottomBuilder
 import top.nkbe.niagram.utils.AlertUtil.showToast
 import java.io.File
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import org.json.JSONObject
+import java.util.concurrent.TimeUnit
 
 
 object ProxyUtil {
@@ -63,22 +69,38 @@ object ProxyUtil {
                     val networkCapabilities =
                         connectivityManager.getNetworkCapabilities(network) ?: return
                     val vpn = networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN)
-                    if (!vpn) {
-                        if (SharedConfig.currentProxy == null) {
+
+                    if (vpn) {
+                        if (NyaConfig.disableProxyWhenVpnEnabled.Bool()) {
+                            WebSocketHelper.stopServer()
+                            if (SharedConfig.isProxyEnabled()) {
+                                SharedConfig.setProxyEnable(false)
+                                AndroidUtilities.runOnUIThread {
+                                    NotificationCenter.getGlobalInstance()
+                                        .postNotificationName(NotificationCenter.proxySettingsChanged)
+                                }
+                            }
+                        }
+                    } else {
+                        if (NyaConfig.disableProxyWhenVpnEnabled.Bool() && !SharedConfig.isProxyEnabled()) {
+                            if (SharedConfig.currentProxy == null && !SharedConfig.proxyList.isEmpty()) {
+                                SharedConfig.setCurrentProxy(SharedConfig.proxyList[0])
+                            }
+                            if (SharedConfig.currentProxy != null) {
+                                SharedConfig.setProxyEnable(true)
+                                AndroidUtilities.runOnUIThread {
+                                    NotificationCenter.getGlobalInstance()
+                                        .postNotificationName(NotificationCenter.proxySettingsChanged)
+                                }
+                            }
+                        } else if (SharedConfig.currentProxy == null) {
                             if (!SharedConfig.proxyList.isEmpty()) {
                                 SharedConfig.setCurrentProxy(SharedConfig.proxyList[0])
-                            } else {
-                                return
                             }
                         }
                     }
-                    if ((SharedConfig.isProxyEnabled() && vpn) || (!SharedConfig.isProxyEnabled() && !vpn)) {
-                        SharedConfig.setProxyEnable(!vpn)
-                        AndroidUtilities.runOnUIThread {
-                            NotificationCenter.getGlobalInstance()
-                                .postNotificationName(NotificationCenter.proxySettingsChanged)
-                        }
-                    } else if (SharedConfig.isProxyEnabled() && SharedConfig.proxyAutoSpeedAcceleration) {
+
+                    if (SharedConfig.isProxyEnabled() && SharedConfig.proxyAutoSpeedAcceleration) {
                         AndroidUtilities.runOnUIThread {
                             org.telegram.messenger.ProxyRotationController.checkAndAccelerate(false)
                         }
@@ -89,6 +111,69 @@ object ProxyUtil {
         try {
             connectivityManager.registerDefaultNetworkCallback(networkCallback)
         } catch (_: Exception) {}
+    }
+
+    private var geoIpChecked = false
+
+    @JvmStatic
+    fun checkAndActivateMainlandProxy() {
+        if (geoIpChecked) return
+        geoIpChecked = true
+
+        if (!NyaConfig.autoActivateMainlandProxy.Bool()) return
+
+        val connectivityManager = ApplicationLoader.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = connectivityManager.activeNetwork
+        if (activeNetwork != null) {
+            val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork)
+            if (capabilities != null && capabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN)) {
+                return
+            }
+        }
+
+        Thread {
+            try {
+                val client = OkHttpClient.Builder()
+                    .connectTimeout(3, TimeUnit.SECONDS)
+                    .readTimeout(3, TimeUnit.SECONDS)
+                    .build()
+                val request = Request.Builder()
+                    .url("http://ip-api.com/json/?fields=countryCode,region,status")
+                    .header("User-Agent", "Mozilla/5.0")
+                    .build()
+                val response = client.newCall(request).execute()
+                if (response.isSuccessful) {
+                    val body = response.body?.string()
+                    if (!body.isNullOrEmpty()) {
+                        val json = JSONObject(body)
+                        val countryCode = json.optString("countryCode", "")
+                        val region = json.optString("region", "")
+                        val isMainlandOrHainan = "CN".equals(countryCode, ignoreCase = true) || "HI".equals(region, ignoreCase = true) || "HAINAN".equals(region, ignoreCase = true)
+                        if (isMainlandOrHainan) {
+                            FileLog.d("Detected Mainland / Hainan IP: $countryCode, region: $region. Activating built-in proxy...")
+                            AndroidUtilities.runOnUIThread {
+                                SharedConfig.loadProxyList()
+                                var builtInInfo: SharedConfig.ProxyInfo? = null
+                                for (info in SharedConfig.proxyList) {
+                                    if (WebSocketHelper.proxyServer == info.address) {
+                                        builtInInfo = info
+                                        break
+                                    }
+                                }
+                                if (builtInInfo != null) {
+                                    SharedConfig.setCurrentProxy(builtInInfo)
+                                    SharedConfig.setProxyEnable(true)
+                                    NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.proxySettingsChanged)
+                                    FileLog.d("Built-in tcp2ws proxy activated successfully.")
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                FileLog.e("Failed to check GeoIP: ${e.message}")
+            }
+        }.start()
     }
 
     @JvmStatic
