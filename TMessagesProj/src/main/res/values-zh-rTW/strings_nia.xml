@@ -567,4 +567,10 @@
     <string name="CodeSentToOtherDeviceTitle">查看您的 Telegram 應用</string>
     <string name="CodeSentToOtherDeviceInfo">登入驗證碼已發送至您其他設備上的 Telegram 應用。\n\n提示：如需透過郵箱接收驗證碼，請先在 Telegram 官方應用的「設定 > 隱私與安全 > 兩步驗證」中綁定「登錄郵箱」。</string>
     <string name="SendCodeUnavailableInfo">Telegram 目前無法透過其他途徑發送驗證碼。若您其他設備已登入，請查看該設備收到的應用內驗證碼。\n\n如需使用郵箱登入，請確保已在 Telegram 的隱私與安全設定中綁定「登錄郵箱」。</string>
+
+    <!-- Public Proxy Nullgram -->
+    <string name="PublicProxy">內建公共代理</string>
+    <string name="PublicProxyDescription">代理隧道技術由 Nullgram 提供 (WebSocket via Cloudflare)</string>
+    <string name="PublicProxyCannotDelete">內建公共代理不支援刪除</string>
+    <string name="PublicProxyCannotShare">內建公共代理不支援分享</string>
 </resources>

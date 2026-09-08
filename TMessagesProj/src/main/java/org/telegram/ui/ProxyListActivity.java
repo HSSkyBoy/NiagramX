@@ -72,6 +72,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import top.nkbe.niagram.helpers.WebSocketHelper;
 import top.nkbe.niagram.utils.AlertUtil;
 import top.nkbe.niagram.utils.ProxyUtil;
 
@@ -166,7 +167,13 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
             checkImageView.setScaleType(ImageView.ScaleType.CENTER);
             checkImageView.setContentDescription(getString(R.string.Edit));
             addView(checkImageView, LayoutHelper.createFrame(48, 48, (LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT) | Gravity.TOP, 8, 8, 8, 0));
-            checkImageView.setOnClickListener(v -> presentFragment(new ProxySettingsActivity(currentInfo)));
+            checkImageView.setOnClickListener(v -> {
+                if (currentInfo != null && WebSocketHelper.proxyServer.equals(currentInfo.address)) {
+                    AlertUtil.showSimpleAlert(getParentActivity(), LocaleController.getString(R.string.PublicProxyDescription));
+                } else {
+                    presentFragment(new ProxySettingsActivity(currentInfo));
+                }
+            });
 
             checkBox = new CheckBox2(context, 21);
             checkBox.setColor(Theme.key_checkbox, Theme.key_radioBackground, Theme.key_checkboxCheck);
@@ -183,7 +190,11 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
         }
 
         public void setProxy(SharedConfig.ProxyInfo proxyInfo) {
-            textView.setText(proxyInfo.address + ":" + proxyInfo.port);
+            if (proxyInfo != null && WebSocketHelper.proxyServer.equals(proxyInfo.address)) {
+                textView.setText(LocaleController.getString(R.string.PublicProxy));
+            } else {
+                textView.setText(proxyInfo.address + ":" + proxyInfo.port);
+            }
             currentInfo = proxyInfo;
         }
 
@@ -422,7 +433,11 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                 LocaleController.getString("DeleteAllServer", R.string.DeleteAllServer),
                 R.drawable.msg_delete, LocaleController.getString("Delete", R.string.Delete),
                 true, () -> {
-                    SharedConfig.deleteAllProxy();
+                    for (SharedConfig.ProxyInfo info : SharedConfig.getProxyList()) {
+                        if (!WebSocketHelper.proxyServer.equals(info.address)) {
+                            SharedConfig.deleteProxy(info);
+                        }
+                    }
                     updateRows(true);
                 })
         );
@@ -432,7 +447,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                     R.drawable.msg_delete, LocaleController.getString("Delete", R.string.Delete),
                     true, () -> {
                         for (SharedConfig.ProxyInfo info : SharedConfig.getProxyList()) {
-                            if (info.checking) {
+                            if (info.checking || WebSocketHelper.proxyServer.equals(info.address)) {
                                 continue;
                             }
                             if (!info.available) {
@@ -591,7 +606,9 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                 builder.setTitle(getString(R.string.DeleteProxyTitle));
                 builder.setPositiveButton(getString(R.string.Delete), (dialog, which) -> {
                     for (SharedConfig.ProxyInfo info : proxyList) {
-                        SharedConfig.deleteProxy(info);
+                        if (!WebSocketHelper.proxyServer.equals(info.address)) {
+                            SharedConfig.deleteProxy(info);
+                        }
                     }
                     useProxyForCalls = false;
                     useProxySettings = false;
@@ -615,6 +632,11 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
         });
         listView.setOnItemLongClickListener((view, position) -> {
             if (position >= proxyStartRow && position < proxyEndRow) {
+                SharedConfig.ProxyInfo info = proxyList.get(position - proxyStartRow);
+                if (WebSocketHelper.proxyServer.equals(info.address)) {
+                    AlertUtil.showToast(LocaleController.getString(R.string.PublicProxyDescription));
+                    return true;
+                }
                 listAdapter.toggleSelected(position);
                 return true;
             }
@@ -652,7 +674,9 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                         builder.setTitle(getString(R.string.DeleteProxyTitle));
                         builder.setPositiveButton(getString(R.string.Delete), (dialog, which) -> {
                             for (SharedConfig.ProxyInfo info : selectedItems) {
-                                SharedConfig.deleteProxy(info);
+                                if (!WebSocketHelper.proxyServer.equals(info.address)) {
+                                    SharedConfig.deleteProxy(info);
+                                }
                             }
                             if (SharedConfig.currentProxy == null) {
                                 useProxyForCalls = false;
@@ -680,10 +704,21 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                     case MENU_SHARE:
                         StringBuilder links = new StringBuilder();
                         for (SharedConfig.ProxyInfo info : selectedItems) {
+                            if (WebSocketHelper.proxyServer.equals(info.address)) {
+                                continue;
+                            }
                             if (links.length() > 0) {
                                 links.append("\n\n");
                             }
                             links.append(info.getLink());
+                        }
+
+                        if (links.length() == 0) {
+                            AlertUtil.showToast(LocaleController.getString(R.string.PublicProxyCannotShare));
+                            if (listAdapter != null) {
+                                listAdapter.clearSelected();
+                            }
+                            break;
                         }
 
                         Intent shareIntent = new Intent(Intent.ACTION_SEND);
@@ -1030,7 +1065,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                     cell.setProxy(info);
                     cell.setChecked(SharedConfig.currentProxy == info);
                     cell.setItemSelected(selectedItems.contains(proxyList.get(position - proxyStartRow)), false);
-                    cell.setSelectionEnabled(!selectedItems.isEmpty(), false);
+                    cell.setSelectionEnabled(!selectedItems.isEmpty() && !WebSocketHelper.proxyServer.equals(info.address), false);
                     break;
                 }
                 case VIEW_TYPE_SLIDE_CHOOSER: {
@@ -1057,11 +1092,12 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, @NonNull List payloads) {
             if (holder.getItemViewType() == VIEW_TYPE_PROXY_DETAIL && !payloads.isEmpty()) {
                 TextDetailProxyCell cell = (TextDetailProxyCell) holder.itemView;
+                SharedConfig.ProxyInfo info = proxyList.get(position - proxyStartRow);
                 if (payloads.contains(PAYLOAD_SELECTION_CHANGED)) {
-                    cell.setItemSelected(selectedItems.contains(proxyList.get(position - proxyStartRow)), true);
+                    cell.setItemSelected(selectedItems.contains(info), true);
                 }
                 if (payloads.contains(PAYLOAD_SELECTION_MODE_CHANGED)) {
-                    cell.setSelectionEnabled(!selectedItems.isEmpty(), true);
+                    cell.setSelectionEnabled(!selectedItems.isEmpty() && !WebSocketHelper.proxyServer.equals(info.address), true);
                 }
             } else if (holder.getItemViewType() == VIEW_TYPE_TEXT_CHECK && payloads.contains(PAYLOAD_CHECKED_CHANGED)) {
                 TextCheckCell checkCell = (TextCheckCell) holder.itemView;
