@@ -29,7 +29,9 @@ object WebSocketHelper {
     private var tcp2wsStarted = false
     private var tcp2wsServer: tcp2wsServer? = null
 
-    private val userAgent = "Nullgram  ()"
+    private const val NULLGRAM_VERSION_NAME = "v12.2.10-2d6df6a"
+    private const val NULLGRAM_VERSION_CODE = "1645201751"
+    private val userAgent = "Nullgram $NULLGRAM_VERSION_NAME ($NULLGRAM_VERSION_CODE)"
     private val connHash = "381d52f35f552e10ad1701445dba9cd14acb7e43"
 
     @JvmStatic
@@ -38,6 +40,20 @@ object WebSocketHelper {
     @JvmStatic
     fun getSocksPort(): Int {
         return getSocksPort(6356)
+    }
+
+    @JvmStatic
+    fun wsReloadConfig() {
+        if (tcp2wsServer != null) {
+            try {
+                tcp2wsServer?.setCdnDomain(proxyServer)
+                    ?.setTls(wsEnableTLS)
+                    ?.setUserAgent((System.getProperty("http.agent") ?: "") + " " + userAgent)
+                    ?.setConnHash(connHash)
+            } catch (e: Exception) {
+                FileLog.e(e)
+            }
+        }
     }
 
     @JvmStatic
@@ -68,7 +84,7 @@ object WebSocketHelper {
                 socket.close()
             }
             if (!tcp2wsStarted) {
-                FileLog.d("Starting tcp2ws on port " + socksPort)
+                FileLog.d("Starting tcp2ws on port $socksPort with UA: ${System.getProperty("http.agent")} $userAgent")
                 val server = tcp2wsServer()
                 server.setCdnDomain(proxyServer)
                 server.setTls(wsEnableTLS)
