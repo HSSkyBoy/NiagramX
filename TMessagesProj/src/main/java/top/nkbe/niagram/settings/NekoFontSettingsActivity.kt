@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.text.TextPaint
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.telegram.messenger.AndroidUtilities
 import org.telegram.messenger.AndroidUtilities.dp
-import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.ApplicationLoader
+import org.telegram.messenger.LocaleController.getString
 import org.telegram.messenger.NotificationCenter
 import org.telegram.messenger.R
+import org.telegram.messenger.SharedConfig
 import org.telegram.ui.ActionBar.ActionBar
 import org.telegram.ui.ActionBar.AlertDialog
 import org.telegram.ui.ActionBar.BaseFragment
@@ -131,6 +135,15 @@ class NekoFontSettingsActivity : BaseFragment() {
                 boldFontRow -> showFontOptionsDialog(FontHelper.CATEGORY_BOLD)
                 italicFontRow -> showFontOptionsDialog(FontHelper.CATEGORY_ITALIC)
                 monoFontRow -> showFontOptionsDialog(FontHelper.CATEGORY_MONO)
+                headerInputTextSizeRow -> {
+                    if (FontConfig.inputFieldTextSize.Int() > 0) {
+                        FontConfig.inputFieldTextSize.setConfigInt(0)
+                        listAdapter?.notifyItemChanged(headerInputTextSizeRow)
+                        listAdapter?.notifyItemChanged(inputTextSizeSliderRow)
+                        NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.didSetNewTheme, false, true, true)
+                        BulletinFactory.of(this).createSuccessBulletin(getString(R.string.FontAppliedSuccess)).show()
+                    }
+                }
             }
         }
 
@@ -215,6 +228,87 @@ class NekoFontSettingsActivity : BaseFragment() {
         listAdapter?.notifyDataSetChanged()
     }
 
+    private fun updateHeaderSubtitle() {
+        val holder = listView?.findViewHolderForAdapterPosition(headerInputTextSizeRow)
+        if (holder != null && holder.itemView is HeaderCell) {
+            val headerCell = holder.itemView as HeaderCell
+            val isCustom = FontConfig.inputFieldTextSize.Int() > 0
+            headerCell.setText2(if (isCustom) getString(R.string.Reset) else getString(R.string.Default))
+        }
+    }
+
+    private inner class InputTextSizeCell(context: Context) : FrameLayout(context) {
+        val sizeBar = SeekBarView(context)
+        private val textPaint = TextPaint(Paint.ANTI_ALIAS_FLAG)
+        private val startFontSize = 12
+        private val endFontSize = 30
+        private val totalSteps = endFontSize - startFontSize
+
+        init {
+            setWillNotDraw(false)
+            setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite))
+            textPaint.textSize = dp(16f).toFloat()
+
+            sizeBar.setReportChanges(true)
+            sizeBar.setSeparatorsCount(totalSteps + 1)
+            sizeBar.setInnerColor(Theme.getColor(Theme.key_player_progressBackground))
+            sizeBar.setOuterColor(Theme.getColor(Theme.key_player_progress))
+            sizeBar.delegate = object : SeekBarView.SeekBarViewDelegate {
+                override fun onSeekBarDrag(stop: Boolean, progress: Float) {
+                    val size = Math.round(startFontSize + totalSteps * progress)
+                    FontConfig.inputFieldTextSize.setConfigInt(size)
+                    invalidate()
+                    updateHeaderSubtitle()
+                    if (stop) {
+                        NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.didSetNewTheme, false, true, true)
+                    }
+                }
+            }
+            addView(
+                sizeBar,
+                LayoutHelper.createFrame(
+                    LayoutHelper.MATCH_PARENT,
+                    38f,
+                    Gravity.LEFT or Gravity.CENTER_VERTICAL,
+                    5f,
+                    0f,
+                    42f,
+                    0f
+                )
+            )
+        }
+
+        override fun onDraw(canvas: Canvas) {
+            textPaint.color = Theme.getColor(Theme.key_windowBackgroundWhiteValueText)
+            val currentSize = getCurrentDisplaySize()
+            canvas.drawText("$currentSize", (measuredWidth - dp(39f)).toFloat(), dp(28f).toFloat(), textPaint)
+        }
+
+        override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+            super.onMeasure(
+                MeasureSpec.makeMeasureSpec(MeasureSpec.getSize(widthMeasureSpec), MeasureSpec.EXACTLY),
+                MeasureSpec.makeMeasureSpec(dp(48f), MeasureSpec.EXACTLY)
+            )
+            updateProgress()
+        }
+
+        fun updateProgress() {
+            val currentSize = getCurrentDisplaySize()
+            sizeBar.setInnerColor(Theme.getColor(Theme.key_player_progressBackground))
+            sizeBar.setOuterColor(Theme.getColor(Theme.key_player_progress))
+            sizeBar.setProgress((currentSize - startFontSize) / totalSteps.toFloat())
+        }
+
+        private fun getCurrentDisplaySize(): Int {
+            val configured = FontConfig.inputFieldTextSize.Int()
+            return if (configured in startFontSize..endFontSize) {
+                configured
+            } else {
+                SharedConfig.fontSize
+            }
+        }
+    }
+
     private inner class ListAdapter(private val mContext: Context) : RecyclerListView.SelectionAdapter() {
 
         override fun isEnabled(holder: RecyclerView.ViewHolder): Boolean {
@@ -224,7 +318,8 @@ class NekoFontSettingsActivity : BaseFragment() {
                     position == regularFontRow ||
                     position == boldFontRow ||
                     position == italicFontRow ||
-                    position == monoFontRow
+                    position == monoFontRow ||
+                    (position == headerInputTextSizeRow && FontConfig.inputFieldTextSize.Int() > 0)
         }
 
         override fun getItemCount(): Int = rowCount
@@ -241,7 +336,7 @@ class NekoFontSettingsActivity : BaseFragment() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             val view: View = when (viewType) {
-                0 -> HeaderCell(mContext).apply {
+                0 -> HeaderCell(mContext, Theme.key_windowBackgroundWhiteBlueHeader, 21, 15, true).apply {
                     setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite))
                 }
                 1 -> TextCheckCell(mContext).apply {
@@ -250,7 +345,7 @@ class NekoFontSettingsActivity : BaseFragment() {
                 2 -> TextDetailSettingsCell(mContext).apply {
                     setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite))
                 }
-                4 -> buildSeekBarRow()
+                4 -> InputTextSizeCell(mContext)
                 else -> View(mContext).apply {
                     setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundGray))
                     layoutParams = RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dp(12f))
@@ -265,9 +360,19 @@ class NekoFontSettingsActivity : BaseFragment() {
                 0 -> {
                     val headerCell = holder.itemView as HeaderCell
                     when (position) {
-                        headerTypefaceRow -> headerCell.setText(getString(R.string.Appearance))
-                        headerCategoriesRow -> headerCell.setText(getString(R.string.FontSettings))
-                        headerInputTextSizeRow -> headerCell.setText(getString(R.string.InputFieldTextSize))
+                        headerTypefaceRow -> {
+                            headerCell.setText(getString(R.string.Appearance))
+                            headerCell.setText2(null)
+                        }
+                        headerCategoriesRow -> {
+                            headerCell.setText(getString(R.string.FontSettings))
+                            headerCell.setText2(null)
+                        }
+                        headerInputTextSizeRow -> {
+                            headerCell.setText(getString(R.string.InputFieldTextSize))
+                            val isCustom = FontConfig.inputFieldTextSize.Int() > 0
+                            headerCell.setText2(if (isCustom) getString(R.string.Reset) else getString(R.string.Default))
+                        }
                     }
                 }
                 1 -> {
@@ -295,25 +400,10 @@ class NekoFontSettingsActivity : BaseFragment() {
                     }
                 }
                 4 -> {
-                    val frame = holder.itemView as FrameLayout
-                    val seekBarView = frame.getChildAt(0) as? SeekBarView ?: return
-                    val currentSize = FontConfig.inputFieldTextSize.Int()
-                    val progress = if (currentSize <= 0) 0f else (currentSize - 12f) / 16f
-                    seekBarView.setProgress(progress.coerceIn(0f, 1f))
-                    seekBarView.delegate = SeekBarView.SeekBarViewDelegate { _, p ->
-                        val size = if (p <= 0.05f) 0 else (12 + (p * 16).toInt())
-                        FontConfig.inputFieldTextSize.setConfigInt(size)
-                    }
+                    val cell = holder.itemView as? InputTextSizeCell ?: return
+                    cell.updateProgress()
+                    cell.invalidate()
                 }
-            }
-        }
-
-        private fun buildSeekBarRow(): FrameLayout {
-            return FrameLayout(mContext).apply {
-                setBackgroundColor(Theme.getColor(Theme.key_windowBackgroundWhite))
-                val seekBar = SeekBarView(mContext)
-                seekBar.setReportChanges(true)
-                addView(seekBar, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, 38f, Gravity.CENTER_VERTICAL, 16f, 4f, 16f, 4f))
             }
         }
     }

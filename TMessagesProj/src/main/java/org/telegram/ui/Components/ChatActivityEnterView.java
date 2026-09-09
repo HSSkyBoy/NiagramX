@@ -2694,6 +2694,7 @@ public class ChatActivityEnterView extends FrameLayout implements
         NotificationCenter.getInstance(currentAccount).addObserver(this, NotificationCenter.didUpdatePremiumGiftFieldIcon);
         NotificationCenter.getInstance(currentAccount).addObserver(this, NotificationCenter.currentUserPremiumStatusChanged);
         NotificationCenter.getGlobalInstance().addObserver(this, NotificationCenter.emojiLoaded);
+        NotificationCenter.getGlobalInstance().addObserver(this, NotificationCenter.didSetNewTheme);
 
         parentActivity = context;
         parentFragment = fragment;
@@ -6532,6 +6533,19 @@ public class ChatActivityEnterView extends FrameLayout implements
         }
     }
 
+    public void updateFieldTextSize() {
+        if (messageEditText != null) {
+            int customSize = top.nkbe.niagram.config.NyaConfig.INSTANCE.getInputFieldTextSize().Int();
+            float size = customSize > 0 ? customSize : SharedConfig.fontSize;
+            messageEditText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, size);
+            messageEditText.setCursorSize(dp(size + 2));
+            android.graphics.Typeface regularTf = top.nkbe.niagram.helpers.TypefaceHelper.getRegularTypeface();
+            if (regularTf != null) {
+                messageEditText.setTypeface(regularTf);
+            }
+        }
+    }
+
     private void createMessageEditText() {
         if (messageEditText != null) {
             return;
@@ -6664,7 +6678,7 @@ public class ChatActivityEnterView extends FrameLayout implements
         updateFieldHint(false);
         messageEditText.setSingleLine(false);
         messageEditText.setMaxLines(6);
-        messageEditText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, SharedConfig.fontSize);
+        updateFieldTextSize();
         messageEditText.setGravity(Gravity.BOTTOM);
         messageEditText.setPadding(0, dp(9), 0, dp(10));
         messageEditText.setBackgroundDrawable(null);
@@ -6674,7 +6688,6 @@ public class ChatActivityEnterView extends FrameLayout implements
         messageEditText.setHintColor(getThemedColor(Theme.key_chat_messagePanelHint));
         messageEditText.setHintTextColor(getThemedColor(Theme.key_chat_messagePanelHint));
         messageEditText.setCursorColor(getThemedColor(Theme.key_chat_messagePanelCursor));
-        messageEditText.setCursorSize(dp(SharedConfig.fontSize + 2));
         messageEditText.setHandlesColor(getThemedColor(Theme.key_chat_TextSelectionCursor));
         messageEditTextContainer.addView(messageEditText, 1, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.BOTTOM, fieldLeftDp, 0, fieldRightDp, 1.5f));
 
@@ -7541,6 +7554,7 @@ public class ChatActivityEnterView extends FrameLayout implements
         NotificationCenter.getInstance(currentAccount).removeObserver(this, NotificationCenter.didUpdatePremiumGiftFieldIcon);
         NotificationCenter.getInstance(currentAccount).removeObserver(this, NotificationCenter.currentUserPremiumStatusChanged);
         NotificationCenter.getGlobalInstance().removeObserver(this, NotificationCenter.emojiLoaded);
+        NotificationCenter.getGlobalInstance().removeObserver(this, NotificationCenter.didSetNewTheme);
         if (emojiView != null) {
             emojiView.onDestroy();
         }
@@ -7669,6 +7683,7 @@ public class ChatActivityEnterView extends FrameLayout implements
 
     public void onResume() {
         isPaused = false;
+        updateFieldTextSize();
         updateSendBubbleGlass();
         updateAudioVideoSendButtonColor();
         if (hideKeyboardRunnable != null) {
@@ -14941,7 +14956,9 @@ public class ChatActivityEnterView extends FrameLayout implements
     @SuppressWarnings("unchecked")
     @Override
     public void didReceivedNotification(int id, int account, Object... args) {
-        if (id == NotificationCenter.emojiLoaded) {
+        if (id == NotificationCenter.didSetNewTheme) {
+            updateFieldTextSize();
+        } else if (id == NotificationCenter.emojiLoaded) {
             if (emojiView != null) {
                 emojiView.invalidateViews();
             }
