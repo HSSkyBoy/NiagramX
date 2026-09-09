@@ -157,8 +157,17 @@ public class Socks4Impl {
     private String getCdn() {
         String _server = m_ServerIP.getHostAddress();
         String server = null;
-        for (int i = 0; server == null && i <= 3; i++)
-            server = (tcp2wsServer.cdn).get(_server.substring(0, _server.length() - i));
+        for (int i = 0; server == null && i <= 4; i++) {
+            if (_server.length() > i) {
+                server = (tcp2wsServer.cdn).get(_server.substring(0, _server.length() - i));
+            }
+        }
+        if (server == null) {
+            int lastDot = _server.lastIndexOf('.');
+            if (lastDot != -1) {
+                server = (tcp2wsServer.cdn).get(_server.substring(0, lastDot + 1));
+            }
+        }
         return server != null ? server : _server;
     }
 

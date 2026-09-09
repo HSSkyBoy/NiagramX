@@ -68,6 +68,52 @@ public class tcp2wsServer {
         cdn.put("91.108.56.", "flora." + domain);
         cdn.put("111.62.91.", "venus." + domain);
 
+        // Official Telegram DC IP prefixes (AS62041 / AS44907)
+        // DC1 - Miami (pluto)
+        cdn.put("149.154.175.", "pluto." + domain);
+        cdn.put("149.154.160.", "pluto." + domain);
+        cdn.put("149.154.161.", "pluto." + domain);
+        cdn.put("149.154.162.", "pluto." + domain);
+        cdn.put("149.154.163.", "pluto." + domain);
+
+        // DC2 - Amsterdam (venus)
+        cdn.put("149.154.167.", "venus." + domain);
+        cdn.put("149.154.168.", "venus." + domain);
+        cdn.put("149.154.169.", "venus." + domain);
+        cdn.put("149.154.170.", "venus." + domain);
+        cdn.put("149.154.171.", "venus." + domain);
+        cdn.put("91.108.8.", "venus." + domain);
+        cdn.put("91.108.9.", "venus." + domain);
+        cdn.put("91.108.10.", "venus." + domain);
+        cdn.put("91.108.11.", "venus." + domain);
+        cdn.put("91.108.16.", "venus." + domain);
+        cdn.put("91.108.17.", "venus." + domain);
+        cdn.put("91.108.18.", "venus." + domain);
+        cdn.put("91.108.19.", "venus." + domain);
+
+        // DC3 - Miami (aurora)
+        cdn.put("149.154.172.", "aurora." + domain);
+        cdn.put("149.154.173.", "aurora." + domain);
+        cdn.put("149.154.174.", "aurora." + domain);
+
+        // DC4 - Amsterdam (vesta)
+        cdn.put("91.108.5.", "vesta." + domain);
+        cdn.put("91.108.6.", "vesta." + domain);
+        cdn.put("91.108.7.", "vesta." + domain);
+        cdn.put("91.108.12.", "vesta." + domain);
+        cdn.put("91.108.13.", "vesta." + domain);
+        cdn.put("91.108.14.", "vesta." + domain);
+        cdn.put("91.108.15.", "vesta." + domain);
+
+        // DC5 - Singapore (flora) - Key data center for Asian users
+        cdn.put("91.108.20.", "flora." + domain);
+        cdn.put("91.108.21.", "flora." + domain);
+        cdn.put("91.108.22.", "flora." + domain);
+        cdn.put("91.108.23.", "flora." + domain);
+        cdn.put("91.108.57.", "flora." + domain);
+        cdn.put("91.108.58.", "flora." + domain);
+        cdn.put("91.108.59.", "flora." + domain);
+
         try {
             cdn.put(InetAddress.getByName("2001:b28:f23d:f001:0000:0000:0000:000d").getHostAddress(), "pluto." + domain);
             cdn.put(InetAddress.getByName("2001:67c:4e8:f002:0000:0000:0000:000d").getHostAddress(), "venus." + domain);
