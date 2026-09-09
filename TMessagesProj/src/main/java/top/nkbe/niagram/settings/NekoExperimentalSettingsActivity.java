@@ -96,6 +96,8 @@ public class NekoExperimentalSettingsActivity extends BaseNekoXSettingsActivity 
 
     // Connections
     private final AbstractConfigCell headerConnection = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.Connection)));
+    private final AbstractConfigCell autoActivateMainlandProxyRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getAutoActivateMainlandProxy(), getString(R.string.AutoActivateMainlandProxyDesc)));
+    private final AbstractConfigCell disableProxyWhenVpnEnabledRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getDisableProxyWhenVpnEnabled(), getString(R.string.DisableProxyWhenVpnEnabledDesc)));
     private final AbstractConfigCell boostUploadRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.uploadBoost));
     private final AbstractConfigCell enhancedFileLoaderRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NyaConfig.enhancedFileLoader, new String[]{
             getString(R.string.enhancedFileLoaderOff),

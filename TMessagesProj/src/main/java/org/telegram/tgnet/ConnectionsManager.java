@@ -49,6 +49,7 @@ import org.telegram.messenger.UserConfig;
 import org.telegram.messenger.Utilities;
 import org.telegram.ui.Components.VideoPlayer;
 import org.telegram.ui.LoginActivity;
+import top.nkbe.niagram.helpers.WebSocketHelper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -664,7 +665,11 @@ public class ConnectionsManager extends BaseController {
         int proxyPort = preferences.getInt("proxy_port", 1080);
 
         if (preferences.getBoolean("proxy_enabled", false) && !TextUtils.isEmpty(proxyAddress)) {
-            native_setProxySettings(currentAccount, proxyAddress, proxyPort, proxyUsername, proxyPassword, proxySecret);
+            if (WebSocketHelper.proxyServer.equals(proxyAddress)) {
+                native_setProxySettings(currentAccount, "127.0.0.1", WebSocketHelper.getSocksPort(), "", "", "");
+            } else {
+                native_setProxySettings(currentAccount, proxyAddress, proxyPort, proxyUsername, proxyPassword, proxySecret);
+            }
         }
         String installer = "";
         try {
@@ -771,6 +776,11 @@ public class ConnectionsManager extends BaseController {
             password = "";
         }
         if (secret == null) {
+            secret = "";
+        }
+        if (WebSocketHelper.proxyServer.equals(address)) {
+            address = "127.0.0.1";
+            port = WebSocketHelper.getSocksPort();
             secret = "";
         }
         return native_checkProxy(currentAccount, address, port, username, password, secret, requestTimeDelegate);
@@ -993,9 +1003,18 @@ public class ConnectionsManager extends BaseController {
             secret = "";
         }
 
+        String finalAddress = address;
+        int finalPort = port;
+        String finalSecret = secret;
+        if (WebSocketHelper.proxyServer.equals(address)) {
+            finalAddress = "127.0.0.1";
+            finalPort = WebSocketHelper.getSocksPort();
+            finalSecret = "";
+        }
+
         for (int a = 0; a < UserConfig.MAX_ACCOUNT_COUNT; a++) {
-            if (enabled && !TextUtils.isEmpty(address)) {
-                native_setProxySettings(a, address, port, username, password, secret);
+            if (enabled && !TextUtils.isEmpty(finalAddress)) {
+                native_setProxySettings(a, finalAddress, finalPort, username, password, finalSecret);
             } else {
                 native_setProxySettings(a, "", 1080, "", "", "");
             }

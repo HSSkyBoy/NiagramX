@@ -25,5 +25,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "NiagramX"
 include ':TMessagesProj'
+include ':libs:tcp2ws'
 include ':jlatexmath'
 project(':jlatexmath').projectDir = file('TMessagesProj/lib/jlatexmath/jlatexmath')

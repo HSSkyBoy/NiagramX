@@ -61,6 +61,7 @@ import java.util.concurrent.CountDownLatch;
 
 import top.nkbe.niagram.utils.AndroidUtil;
 import top.nkbe.niagram.config.NyaConfig;
+import top.nkbe.niagram.utils.ProxyUtil;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
@@ -310,6 +311,13 @@ public class ApplicationLoader extends Application {
             DownloadController.getInstance(a);
         }
         BillingController.getInstance().startConnection();
+
+        try {
+            ProxyUtil.registerNetworkCallback();
+            ProxyUtil.checkAndActivateMainlandProxy();
+        } catch (Throwable e) {
+            FileLog.e(e);
+        }
     }
 
     public ApplicationLoader() {

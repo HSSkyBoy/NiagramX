@@ -589,4 +589,13 @@
     <string name="CodeSentToOtherDeviceTitle">Check Your Telegram App</string>
     <string name="CodeSentToOtherDeviceInfo">The login code was sent to the Telegram app on your other devices.\n\nNote: To receive login codes via email, you must first bind a Login Email in the official Telegram app under Settings > Privacy &amp; Security > Two-Step Verification.</string>
     <string name="SendCodeUnavailableInfo">Telegram cannot send a code through other channels right now. If your other device is logged in, please check the code sent to your Telegram app.\n\nTo use email login, ensure you have set up a Login Email in Telegram\'s Privacy &amp; Security settings.</string>
+
+    <!-- Public Proxy Nullgram -->
+    <string name="PublicProxy">Built-in Public Proxy</string>
+    <string name="PublicProxyDescription">Proxy tunnel powered by Nullgram (WebSocket via Cloudflare)</string>
+    <string name="PublicProxyCannotDelete">Built-in public proxy cannot be deleted.</string>
+    <string name="PublicProxyCannotShare">Built-in public proxy cannot be shared.</string>
+    <string name="AutoActivateMainlandProxy">Auto-Activate for Chinese IP</string>
+    <string name="AutoActivateMainlandProxyDesc">Automatically enable built-in proxy on startup when detected connecting from mainland China / Hainan.</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">Automatically suspend proxy and tcp2ws tunnel when system VPN is detected.</string>
 </resources>

@@ -41,6 +41,7 @@ import org.telegram.ui.Components.AudioPlayerAlert;
 import org.telegram.ui.Components.SwipeGestureSettingsView;
 import org.telegram.tgnet.TLRPC;
 import org.telegram.ui.LaunchActivity;
+import top.nkbe.niagram.helpers.WebSocketHelper;
 
 import java.io.File;
 import java.io.RandomAccessFile;
@@ -1552,6 +1553,17 @@ public class SharedConfig {
             ProxyInfo info = currentProxy = new ProxyInfo(proxyAddress, proxyPort, proxyUsername, proxyPassword, proxySecret);
             proxyList.add(0, info);
         }
+        boolean hasBuiltInProxy = false;
+        for (ProxyInfo info : proxyList) {
+            if (WebSocketHelper.proxyServer.equals(info.address)) {
+                hasBuiltInProxy = true;
+                break;
+            }
+        }
+        if (!hasBuiltInProxy) {
+            ProxyInfo info = new ProxyInfo(WebSocketHelper.proxyServer, 6356, "", "", "");
+            proxyList.add(info);
+        }
     }
 
     public static void saveProxyList() {
@@ -1570,10 +1582,18 @@ public class SharedConfig {
         SerializedData serializedData = new SerializedData();
         serializedData.writeInt32(-1);
         serializedData.writeByte(PROXY_CURRENT_SCHEMA_VERSION);
-        int count = infoToSerialize.size();
-        serializedData.writeInt32(count);
-        for (int a = count - 1; a >= 0; a--) {
+        int validCount = 0;
+        for (ProxyInfo info : infoToSerialize) {
+            if (!WebSocketHelper.proxyServer.equals(info.address)) {
+                validCount++;
+            }
+        }
+        serializedData.writeInt32(validCount);
+        for (int a = infoToSerialize.size() - 1; a >= 0; a--) {
             ProxyInfo info = infoToSerialize.get(a);
+            if (WebSocketHelper.proxyServer.equals(info.address)) {
+                continue;
+            }
             serializedData.writeString(info.address != null ? info.address : "");
             serializedData.writeInt32(info.port);
             serializedData.writeString(info.username != null ? info.username : "");
@@ -1608,6 +1628,9 @@ public class SharedConfig {
     }
 
     public static void deleteProxy(ProxyInfo proxyInfo) {
+        if (proxyInfo != null && WebSocketHelper.proxyServer.equals(proxyInfo.address)) {
+            return;
+        }
         if (currentProxy == proxyInfo) {
             currentProxy = null;
             SharedPreferences preferences = MessagesController.getGlobalMainSettings();

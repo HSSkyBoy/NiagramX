@@ -323,6 +323,8 @@ dependencies {
     implementation 'org.apache.commons:commons-text:1.15.0'
     // translator from nekogram
     implementation 'app.nekogram.translator:translator:1.6.1'
+    // tcp2ws from Nullgram
+    implementation project(':libs:tcp2ws')
 
     compileOnly fileTree('libs')
 }
