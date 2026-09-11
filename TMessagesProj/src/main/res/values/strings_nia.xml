@@ -605,4 +605,13 @@
     <string name="VerifySelfDetail">Locally display exclusive verified badge for your current account</string>
     <string name="NiagramVerifiedOfficial">NiagramX Official</string>
     <string name="NagramVerifiedDev">Nagram Developer</string>
+
+    <!-- Input Text Animations -->
+    <string name="InputTextAnimations">Input animation and deletion particles</string>
+    <string name="InputAnimationStrength">Animation strength</string>
+    <string name="InputAnimationWeakest">Weakest</string>
+    <string name="InputAnimationWeak">Weak</string>
+    <string name="InputAnimationModerate">Moderate</string>
+    <string name="InputAnimationStrong">Strong</string>
+    <string name="InputAnimationStrongest">Strongest</string>
 </resources>

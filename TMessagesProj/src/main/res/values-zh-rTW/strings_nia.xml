@@ -581,4 +581,13 @@
     <string name="VerifySelfDetail">在本地為目前自用帳號顯示專屬認證徽章</string>
     <string name="NiagramVerifiedOfficial">NiagramX 核心開發者</string>
     <string name="NagramVerifiedDev">Nagram 開發者</string>
+
+    <!-- Input Text Animations -->
+    <string name="InputTextAnimations">輸入動畫與刪除粒子效果</string>
+    <string name="InputAnimationStrength">動畫強度</string>
+    <string name="InputAnimationWeakest">最弱</string>
+    <string name="InputAnimationWeak">較弱</string>
+    <string name="InputAnimationModerate">適中</string>
+    <string name="InputAnimationStrong">較強</string>
+    <string name="InputAnimationStrongest">最強</string>
 </resources>

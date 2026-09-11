@@ -1812,6 +1812,8 @@ object NyaConfig {
             ConfigItem.configTypeString,
             ""
         )
+    val inputTextAnimations = addConfig("InputTextAnimations", ConfigItem.configTypeBool, false)
+    val inputAnimationStrength = addConfig("InputAnimationStrength", ConfigItem.configTypeInt, 2)
 
     val preferredTranslateTargetLangList = ArrayList<String>()
     fun updatePreferredTranslateTargetLangList() {

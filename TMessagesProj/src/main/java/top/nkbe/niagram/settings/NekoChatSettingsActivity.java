@@ -74,6 +74,7 @@ import top.nkbe.niagram.config.cell.ConfigCellTextCheck;
 import top.nkbe.niagram.config.cell.ConfigCellTextCheck2;
 import top.nkbe.niagram.config.cell.ConfigCellTextCheckIcon;
 import top.nkbe.niagram.config.cell.ConfigCellTextInput;
+import top.nkbe.niagram.config.cell.InputAnimationStrengthSeekBar;
 import top.nkbe.niagram.helpers.ChatsHelper;
 import top.nkbe.niagram.helpers.TranscribeHelper;
 import top.nkbe.niagram.helpers.remote.EmojiHelper;
@@ -119,6 +120,8 @@ public class NekoChatSettingsActivity extends BaseNekoXSettingsActivity implemen
             ActionButtonStyle.NEUTRAL,
             ActionButtonStyle.WHITE
     }, null));
+    private final AbstractConfigCell inputTextAnimationsRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getInputTextAnimations()));
+    private final AbstractConfigCell inputAnimationStrengthRow = cellGroup.appendCell(new ConfigCellCustom("InputAnimationStrength", ConfigCellCustom.CUSTOM_ITEM_InputAnimationStrength, true));
     private final AbstractConfigCell dividerInputBar = cellGroup.appendCell(new ConfigCellDivider());
 
     // Sticker Size
@@ -1070,6 +1073,9 @@ public class NekoChatSettingsActivity extends BaseNekoXSettingsActivity implemen
                     break;
                 case ConfigCellCustom.CUSTOM_ITEM_EmojiSet:
                     view = new EmojiSetCell(mContext, false);
+                    break;
+                case ConfigCellCustom.CUSTOM_ITEM_InputAnimationStrength:
+                    view = new InputAnimationStrengthSeekBar(mContext);
                     break;
                 case CellGroup.ITEM_TYPE_CHECK2:
                     view = new TextCheckCell2(mContext);
