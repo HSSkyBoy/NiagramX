@@ -616,6 +616,18 @@ public class ProxySettingsActivity extends BaseFragment {
                 }
             }
 
+            if (params == null && clipText.trim().toLowerCase().startsWith("vless://")) {
+                top.nkbe.niagram.vless.VlessConfig vlessConfig = top.nkbe.niagram.vless.VlessConfig.parse(clipText.trim());
+                if (vlessConfig != null) {
+                    top.nkbe.niagram.vless.VlessManager.INSTANCE.addOrUpdateNode(vlessConfig);
+                    pasteType = TYPE_SOCKS5;
+                    pasteFields[FIELD_IP] = "127.0.0.1";
+                    pasteFields[FIELD_PORT] = String.valueOf(top.nkbe.niagram.vless.VlessManager.DEFAULT_LOCAL_PORT);
+                    pasteFields[FIELD_USER] = top.nkbe.niagram.vless.VlessManager.VLESS_PROXY_USER_TAG;
+                    pasteFields[FIELD_PASSWORD] = vlessConfig.getId();
+                }
+            }
+
             if (params != null) {
                 for (int i = 0; i < params.length; i++) {
                     final String[] pair = params[i].split("=");
