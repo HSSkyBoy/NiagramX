@@ -212,9 +212,14 @@ public class GroupCallUserCell extends FrameLayout {
         private Drawable[] drawables = new Drawable[2];
 
         public VerifiedDrawable(Context context) {
+            this(context, 0);
+        }
+
+        public VerifiedDrawable(Context context, int verifiedType) {
             super();
             drawables[0] = context.getResources().getDrawable(R.drawable.verified_area).mutate();
-            drawables[0].setColorFilter(new PorterDuffColorFilter(0xff75B3EE, PorterDuff.Mode.MULTIPLY));
+            int color = top.nkbe.niagram.helpers.NiagramVerifiedHelper.INSTANCE.getBadgeBackgroundColor(verifiedType, 0xff75B3EE);
+            drawables[0].setColorFilter(new PorterDuffColorFilter(color, PorterDuff.Mode.MULTIPLY));
             drawables[1] = context.getResources().getDrawable(R.drawable.verified_check).mutate();
         }
 
@@ -479,8 +484,8 @@ public class GroupCallUserCell extends FrameLayout {
 
             nameTextView.setText(UserObject.getUserName(currentUser));
             botVerificationIcon = DialogObject.getBotVerificationIcon(currentUser);
-            if (currentUser != null && currentUser.verified) {
-                rightDrawable.set(verifiedDrawable = (verifiedDrawable == null ? new VerifiedDrawable(getContext()) : verifiedDrawable), animated);
+            if (currentUser != null && currentUser.verifiedExtended()) {
+                rightDrawable.set(verifiedDrawable = (verifiedDrawable == null ? new VerifiedDrawable(getContext(), currentUser.getVerifiedType()) : verifiedDrawable), animated);
             } else if (currentUser != null && DialogObject.getEmojiStatusDocumentId(currentUser.emoji_status) != 0) {
                 rightDrawable.set(DialogObject.getEmojiStatusDocumentId(currentUser.emoji_status), animated);
             } else if (currentUser != null && currentUser.premium) {
@@ -519,8 +524,8 @@ public class GroupCallUserCell extends FrameLayout {
             botVerificationIcon = DialogObject.getBotVerificationIcon(currentChat);
             if (currentChat != null) {
                 nameTextView.setText(currentChat.title);
-                if (currentChat.verified) {
-                    rightDrawable.set(verifiedDrawable = (verifiedDrawable == null ? new VerifiedDrawable(getContext()) : verifiedDrawable), animated);
+                if (currentChat.verifiedExtended()) {
+                    rightDrawable.set(verifiedDrawable = (verifiedDrawable == null ? new VerifiedDrawable(getContext(), currentChat.getVerifiedType()) : verifiedDrawable), animated);
                 } else if (currentChat != null && DialogObject.getEmojiStatusDocumentId(currentChat.emoji_status) != 0) {
                     rightDrawable.set(DialogObject.getEmojiStatusDocumentId(currentChat.emoji_status), animated);
                 } else {

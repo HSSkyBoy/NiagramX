@@ -1113,14 +1113,31 @@ public class ChatAvatarContainer extends FrameLayout implements FactorAnimator.T
                 rightDrawableIsScamOrVerified = true;
             }
         } else if (verified) {
+            int verifiedType = top.nkbe.niagram.helpers.NiagramVerifiedHelper.TYPE_NONE;
+            if (parentFragment instanceof org.telegram.ui.ChatActivity) {
+                org.telegram.ui.ChatActivity ca = (org.telegram.ui.ChatActivity) parentFragment;
+                if (ca.getCurrentUser() != null) {
+                    verifiedType = ca.getCurrentUser().getVerifiedType();
+                } else if (ca.getCurrentChat() != null) {
+                    verifiedType = ca.getCurrentChat().getVerifiedType();
+                }
+            }
+            int defaultColor = getThemedColor(Theme.key_profile_verifiedBackground);
+            int bgColor = top.nkbe.niagram.helpers.NiagramVerifiedHelper.getBadgeBackgroundColor(verifiedType, defaultColor);
             verifiedBackground = getResources().getDrawable(R.drawable.verified_area).mutate();
-            verifiedBackground.setColorFilter(new PorterDuffColorFilter(getThemedColor(Theme.key_profile_verifiedBackground), PorterDuff.Mode.MULTIPLY));
+            verifiedBackground.setColorFilter(new PorterDuffColorFilter(bgColor, PorterDuff.Mode.MULTIPLY));
             verifiedCheck = getResources().getDrawable(R.drawable.verified_check).mutate();
             verifiedCheck.setColorFilter(new PorterDuffColorFilter(getThemedColor(Theme.key_profile_verifiedCheck), PorterDuff.Mode.MULTIPLY));
             Drawable verifiedDrawable = new CombinedDrawable(verifiedBackground, verifiedCheck);
             titleTextView.setRightDrawable2(verifiedDrawable);
             rightDrawableIsScamOrVerified = true;
-            rightDrawable2ContentDescription = getString(R.string.AccDescrVerified);
+            if (verifiedType == top.nkbe.niagram.helpers.NiagramVerifiedHelper.TYPE_NIAGRAM_OFFICIAL) {
+                rightDrawable2ContentDescription = getString(R.string.NiagramVerifiedOfficial);
+            } else if (verifiedType == top.nkbe.niagram.helpers.NiagramVerifiedHelper.TYPE_NAGRAM_DEV) {
+                rightDrawable2ContentDescription = getString(R.string.NagramVerifiedDev);
+            } else {
+                rightDrawable2ContentDescription = getString(R.string.AccDescrVerified);
+            }
         } else if (titleTextView.getRightDrawable() instanceof ScamDrawable) {
             titleTextView.setRightDrawable2(null);
             rightDrawableIsScamOrVerified = false;

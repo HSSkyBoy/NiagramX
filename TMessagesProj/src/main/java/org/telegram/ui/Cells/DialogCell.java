@@ -268,6 +268,7 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
     private boolean visibleOnScreen = true;
     private boolean updateLayout;
     private boolean wasDrawnOnline;
+    private int verifiedType;
 
     public void setMoving(boolean moving) {
         this.moving = moving;
@@ -1304,6 +1305,7 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
 
         drawNameLock = false;
         drawVerified = false;
+        verifiedType = 0;
         drawBotVerified = false;
         drawPremium = false;
         drawForwardIcon = false;
@@ -1505,7 +1507,10 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
                             emojiStatus.set(DialogObject.getEmojiStatusDocumentId(chat.emoji_status), false);
                             emojiStatus.setParticles(DialogObject.isEmojiStatusCollectible(chat.emoji_status), false);
                         } else {
-                            drawVerified = !forbidVerified && chat.verified;
+                            drawVerified = !forbidVerified && chat.verifiedExtended();
+                            if (drawVerified) {
+                                verifiedType = chat.getVerifiedType();
+                            }
                             drawBotVerified = !forbidVerified && chat.bot_verification_icon != 0;
                         }
                     } else if (user != null) {
@@ -1517,7 +1522,10 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
                             drawScam = 2;
                             Theme.dialogs_fakeDrawable.checkText();
                         } else {
-                            drawVerified = !forbidVerified && user.verified;
+                            drawVerified = !forbidVerified && user.verifiedExtended();
+                            if (drawVerified) {
+                                verifiedType = user.getVerifiedType();
+                            }
                             drawBotVerified = !forbidVerified && !UserObject.isUserSelf(user) && user.bot_verification_icon != 0;
                         }
                         drawPremium = MessagesController.getInstance(currentAccount).isPremiumUser(user) && UserConfig.getInstance(currentAccount).clientUserId != user.id && user.id != 0;
@@ -4578,8 +4586,15 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
                 }
                 setDrawableBounds(Theme.dialogs_verifiedDrawable, nameMuteLeft - dp(1), y);
                 setDrawableBounds(Theme.dialogs_verifiedCheckDrawable, nameMuteLeft - dp(1), y);
+                int customVerifiedColor = top.nkbe.niagram.helpers.NiagramVerifiedHelper.INSTANCE.getBadgeBackgroundColor(verifiedType, 0);
+                if (customVerifiedColor != 0) {
+                    Theme.setDrawableColor(Theme.dialogs_verifiedDrawable, customVerifiedColor);
+                }
                 Theme.dialogs_verifiedDrawable.draw(canvas);
                 Theme.dialogs_verifiedCheckDrawable.draw(canvas);
+                if (customVerifiedColor != 0) {
+                    Theme.setDrawableColorByKey(Theme.dialogs_verifiedDrawable, Theme.key_chats_verifiedBackground);
+                }
             } else if (drawPremium) {
                 int y = dp(useForceThreeLines || SharedConfig.useThreeLinesLayout ? 12.5f : 15.5f);
                 if ((!(useForceThreeLines || SharedConfig.useThreeLinesLayout) || isForumCell()) && hasTags()) {

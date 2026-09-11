@@ -21401,6 +21401,14 @@ public class TLRPC {
         public long fromMessageDialogId; //custom
         public int fromMessageId; //custom
 
+        public boolean verifiedExtended() {
+            return top.nkbe.niagram.helpers.NiagramVerifiedHelper.isVerified(this);
+        }
+
+        public int getVerifiedType() {
+            return top.nkbe.niagram.helpers.NiagramVerifiedHelper.getUserVerifiedType(this);
+        }
+
         public static User TLdeserialize(InputSerializedData stream, int constructor, boolean exception) {
             return TLdeserialize(User.class, fromConstructor(constructor), stream, constructor, exception);
         }
@@ -38882,6 +38890,14 @@ public class TLRPC {
         public int fromMessageId; //custom
 
         public ArrayList<TL_username> usernames = new ArrayList<>();
+
+        public boolean verifiedExtended() {
+            return top.nkbe.niagram.helpers.NiagramVerifiedHelper.isVerified(this);
+        }
+
+        public int getVerifiedType() {
+            return top.nkbe.niagram.helpers.NiagramVerifiedHelper.getChatVerifiedType(this);
+        }
 
         public static Chat TLdeserialize(InputSerializedData stream, int constructor, boolean exception) {
             return TLdeserialize(stream, constructor, exception, true);

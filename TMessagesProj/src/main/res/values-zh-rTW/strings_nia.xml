@@ -576,4 +576,8 @@
     <string name="AutoActivateMainlandProxy">大陸 IP 自動啟動代理</string>
     <string name="AutoActivateMainlandProxyDesc">冷啟動時若偵測到處於中國大陸或海南網路，自動在背景啟動並啟用內建代理。</string>
     <string name="DisableProxyWhenVpnEnabledDesc">偵測到系統已開啟全域 VPN 時，自動掛起內建隧道與代理，避免流量衝突。</string>
+    <string name="VerifySelf">給自己點亮認證徽章</string>
+    <string name="VerifySelfDetail">在本地為目前自用帳號顯示專屬認證徽章</string>
+    <string name="NiagramVerifiedOfficial">NiagramX 核心開發者</string>
+    <string name="NagramVerifiedDev">Nagram 開發者</string>
 </resources>

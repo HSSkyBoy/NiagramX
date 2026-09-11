@@ -598,4 +598,10 @@
     <string name="AutoActivateMainlandProxy">Auto-Activate for Chinese IP</string>
     <string name="AutoActivateMainlandProxyDesc">Automatically enable built-in proxy on startup when detected connecting from mainland China / Hainan.</string>
     <string name="DisableProxyWhenVpnEnabledDesc">Automatically suspend proxy and tcp2ws tunnel when system VPN is detected.</string>
+
+    <!-- Verified Badge -->
+    <string name="VerifySelf">Verify Self</string>
+    <string name="VerifySelfDetail">Locally display exclusive verified badge for your current account</string>
+    <string name="NiagramVerifiedOfficial">NiagramX Official</string>
+    <string name="NagramVerifiedDev">Nagram Developer</string>
 </resources>

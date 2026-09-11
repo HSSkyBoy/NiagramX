@@ -50,6 +50,7 @@ public class DialogMeUrlCell extends BaseCell {
     private StaticLayout messageLayout;
 
     private boolean drawVerified;
+    private int verifiedType;
 
     private int avatarTop = AndroidUtilities.dp(10);
 
@@ -101,10 +102,16 @@ public class DialogMeUrlCell extends BaseCell {
 
         drawNameLock = false;
         drawVerified = false;
+        verifiedType = 0;
 
         if (recentMeUrl instanceof TLRPC.TL_recentMeUrlChat) {
             TLRPC.Chat chat = MessagesController.getInstance(currentAccount).getChat(recentMeUrl.chat_id);
-            drawVerified = chat.verified;
+            if (chat != null) {
+                drawVerified = chat.verifiedExtended();
+                if (drawVerified) {
+                    verifiedType = chat.getVerifiedType();
+                }
+            }
 
             if (!LocaleController.isRTL) {
                 nameLockLeft = AndroidUtilities.dp(AndroidUtilities.leftBaseline);
@@ -113,7 +120,7 @@ public class DialogMeUrlCell extends BaseCell {
                 nameLockLeft = getMeasuredWidth() - AndroidUtilities.dp(AndroidUtilities.leftBaseline);
                 nameLeft = AndroidUtilities.dp(14);
             }
-            nameString = chat.title;
+            nameString = chat != null ? chat.title : "";
             avatarDrawable.setInfo(currentAccount, chat);
             avatarImage.setForUserOrChat(chat, avatarDrawable, recentMeUrl);
         } else if (recentMeUrl instanceof TLRPC.TL_recentMeUrlUser) {
@@ -134,7 +141,10 @@ public class DialogMeUrlCell extends BaseCell {
                         nameLeft = AndroidUtilities.dp(14);
                     }
                 }
-                drawVerified = user.verified;
+                drawVerified = user.verifiedExtended();
+                if (drawVerified) {
+                    verifiedType = user.getVerifiedType();
+                }
             }
             nameString = UserObject.getUserName(user);
             avatarDrawable.setInfo(currentAccount, user);
@@ -157,7 +167,10 @@ public class DialogMeUrlCell extends BaseCell {
             if (recentMeUrl.chat_invite.chat != null) {
                 avatarDrawable.setInfo(currentAccount, recentMeUrl.chat_invite.chat);
                 nameString = recentMeUrl.chat_invite.chat.title;
-                drawVerified = recentMeUrl.chat_invite.chat.verified;
+                drawVerified = recentMeUrl.chat_invite.chat.verifiedExtended();
+                if (drawVerified) {
+                    verifiedType = recentMeUrl.chat_invite.chat.getVerifiedType();
+                }
                 avatarImage.setForUserOrChat(recentMeUrl.chat_invite.chat, avatarDrawable, recentMeUrl);
             } else {
                 nameString = recentMeUrl.chat_invite.title;
@@ -323,8 +336,15 @@ public class DialogMeUrlCell extends BaseCell {
         if (drawVerified) {
             setDrawableBounds(Theme.dialogs_verifiedDrawable, nameMuteLeft, AndroidUtilities.dp(16.5f));
             setDrawableBounds(Theme.dialogs_verifiedCheckDrawable, nameMuteLeft, AndroidUtilities.dp(16.5f));
+            int customVerifiedColor = top.nkbe.niagram.helpers.NiagramVerifiedHelper.INSTANCE.getBadgeBackgroundColor(verifiedType, 0);
+            if (customVerifiedColor != 0) {
+                Theme.setDrawableColor(Theme.dialogs_verifiedDrawable, customVerifiedColor);
+            }
             Theme.dialogs_verifiedDrawable.draw(canvas);
             Theme.dialogs_verifiedCheckDrawable.draw(canvas);
+            if (customVerifiedColor != 0) {
+                Theme.setDrawableColorByKey(Theme.dialogs_verifiedDrawable, Theme.key_chats_verifiedBackground);
+            }
         }
 
         if (useSeparator) {

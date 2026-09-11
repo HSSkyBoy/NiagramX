@@ -11461,7 +11461,13 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         if (verifiedCrossfadeDrawable[a] == null) {
             verifiedDrawable[a] = Theme.profile_verifiedDrawable.getConstantState().newDrawable().mutate();
             verifiedCheckDrawable[a] = Theme.profile_verifiedCheckDrawable.getConstantState().newDrawable().mutate();
-            if (a == 1 && peerColor != null) {
+            TLRPC.User user = getMessagesController().getUser(userId);
+            TLRPC.Chat chat = getMessagesController().getChat(chatId);
+            int verifiedType = user != null ? user.getVerifiedType() : (chat != null ? chat.getVerifiedType() : top.nkbe.niagram.helpers.NiagramVerifiedHelper.TYPE_NONE);
+            if (verifiedType != top.nkbe.niagram.helpers.NiagramVerifiedHelper.TYPE_NONE && verifiedType != top.nkbe.niagram.helpers.NiagramVerifiedHelper.TYPE_TELEGRAM) {
+                int targetColor = top.nkbe.niagram.helpers.NiagramVerifiedHelper.getBadgeBackgroundColor(verifiedType, getThemedColor(Theme.key_profile_verifiedBackground));
+                verifiedDrawable[a].setColorFilter(new PorterDuffColorFilter(targetColor, PorterDuff.Mode.MULTIPLY));
+            } else if (a == 1 && peerColor != null) {
                 int color = Theme.adaptHSV(peerColor.hasColor6(Theme.isCurrentThemeDark()) ? peerColor.getColor5() : peerColor.getColor3(), +.1f, Theme.isCurrentThemeDark() ? -.1f : -.08f);
                 verifiedDrawable[1].setColorFilter(AndroidUtilities.getOffsetColor(color, getThemedColor(Theme.key_player_actionBarTitle), mediaHeaderAnimationProgress, 1.0f), PorterDuff.Mode.MULTIPLY);
                 color = Color.WHITE;
@@ -11843,7 +11849,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     if (user.scam || user.fake) {
                         nameTextView[a].setRightDrawable2(getScamDrawable(user.scam ? 0 : 1));
                         nameTextViewRightDrawable2ContentDescription = LocaleController.getString(R.string.ScamMessage);
-                    } else if (user.verified) {
+                    } else if (user.verifiedExtended()) {
                         nameTextView[a].setRightDrawable2(getVerifiedCrossfadeDrawable(a));
                         nameTextViewRightDrawable2ContentDescription = LocaleController.getString(R.string.AccDescrVerified);
                     } else if (getMessagesController().isDialogMuted(dialogId != 0 ? dialogId : userId, topicId)) {
@@ -11877,7 +11883,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 } else if (a == 1) {
                     if (user.scam || user.fake) {
                         nameTextView[a].setRightDrawable2(getScamDrawable(user.scam ? 0 : 1));
-                    } else if (user.verified) {
+                    } else if (user.verifiedExtended()) {
                         nameTextView[a].setRightDrawable2(getVerifiedCrossfadeDrawable(a));
                     } else {
                         nameTextView[a].setRightDrawable2(null);
@@ -12179,7 +12185,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     if (chat.scam || chat.fake) {
                         nameTextView[a].setRightDrawable2(getScamDrawable(chat.scam ? 0 : 1));
                         nameTextViewRightDrawableContentDescription = LocaleController.getString(R.string.ScamMessage);
-                    } else if (chat.verified) {
+                    } else if (chat.verifiedExtended()) {
                         nameTextView[a].setRightDrawable2(getVerifiedCrossfadeDrawable(a));
                         nameTextViewRightDrawableContentDescription = LocaleController.getString(R.string.AccDescrVerified);
                     } else {
@@ -12208,7 +12214,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 } else if (!copyFromChatActivity) {
                     if (chat.scam || chat.fake) {
                         nameTextView[a].setRightDrawable2(getScamDrawable(chat.scam ? 0 : 1));
-                    } else if (chat.verified) {
+                    } else if (chat.verifiedExtended()) {
                         nameTextView[a].setRightDrawable2(getVerifiedCrossfadeDrawable(a));
                     } else if (getMessagesController().isDialogMuted(-chatId, topicId)) {
                         nameTextView[a].setRightDrawable2(getThemedDrawable(Theme.key_drawable_muteIconDrawable));

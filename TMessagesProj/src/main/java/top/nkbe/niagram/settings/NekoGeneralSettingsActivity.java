@@ -112,6 +112,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
         }));
     private final AbstractConfigCell folderNameAsTitleRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getFolderNameAsTitle()));
     private final AbstractConfigCell customTitleUserNameRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getCustomTitleUserName()));
+    private final AbstractConfigCell verifySelfRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.verifySelf, getString(R.string.VerifySelfDetail)));
     private final AbstractConfigCell disableNumberRoundingRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.disableNumberRounding, "4.8K -> 4777"));
     private final AbstractConfigCell preferCommonGroupsTabRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getPreferCommonGroupsTab(), getString(R.string.PreferCommonGroupsTabNotice)));
     private final AbstractConfigCell usePersianCalendarRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.usePersianCalendar, getString(R.string.UsePersianCalendarInfo)));
@@ -435,6 +436,8 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
                 parentLayout.rebuildFragments(0);
             } else if (key.equals(NyaConfig.INSTANCE.getEnableQuickSchedule().getKey())) {
                 checkQuickScheduleRows();
+            } else if (key.equals(NyaConfig.verifySelf.getKey())) {
+                parentLayout.rebuildFragments(0);
             }
         };
 

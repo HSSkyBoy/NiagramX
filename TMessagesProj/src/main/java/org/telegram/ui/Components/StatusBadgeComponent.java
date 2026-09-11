@@ -12,6 +12,7 @@ import org.telegram.ui.Components.Premium.PremiumGradient;
 
 public class StatusBadgeComponent {
 
+    private final View parentView;
     private final AnimatedEmojiDrawable.SwapAnimatedEmojiDrawable statusDrawable;
     private Drawable verifiedDrawable;
 
@@ -20,6 +21,7 @@ public class StatusBadgeComponent {
     }
 
     public StatusBadgeComponent(View parentView, int sizeDp) {
+        this.parentView = parentView;
         statusDrawable = new AnimatedEmojiDrawable.SwapAnimatedEmojiDrawable(parentView, AndroidUtilities.dp(sizeDp));
     }
 
@@ -33,14 +35,18 @@ public class StatusBadgeComponent {
     }
 
     public Drawable updateDrawable(TLRPC.User user, TLRPC.Chat chat, int colorFilter, boolean animated) {
-        if (chat != null && chat.verified) {
-            statusDrawable.set(verifiedDrawable = (verifiedDrawable == null ? new CombinedDrawable(Theme.dialogs_verifiedDrawable, Theme.dialogs_verifiedCheckDrawable) : verifiedDrawable), animated);
+        if (chat != null && chat.verifiedExtended()) {
+            android.content.Context context = parentView != null ? parentView.getContext() : org.telegram.messenger.ApplicationLoader.applicationContext;
+            Drawable d = top.nkbe.niagram.helpers.NiagramVerifiedHelper.createVerifiedDrawable(context, chat.getVerifiedType(), Theme.getColor(Theme.key_chats_verifiedBackground));
+            statusDrawable.set(d, animated);
             statusDrawable.setColor(null);
         } else if (chat != null && DialogObject.getEmojiStatusDocumentId(chat.emoji_status) != 0) {
             statusDrawable.set(DialogObject.getEmojiStatusDocumentId(chat.emoji_status), animated);
             statusDrawable.setColor(colorFilter);
-        } else if (user != null && user.verified) {
-            statusDrawable.set(verifiedDrawable = (verifiedDrawable == null ? new CombinedDrawable(Theme.dialogs_verifiedDrawable, Theme.dialogs_verifiedCheckDrawable) : verifiedDrawable), animated);
+        } else if (user != null && user.verifiedExtended()) {
+            android.content.Context context = parentView != null ? parentView.getContext() : org.telegram.messenger.ApplicationLoader.applicationContext;
+            Drawable d = top.nkbe.niagram.helpers.NiagramVerifiedHelper.createVerifiedDrawable(context, user.getVerifiedType(), Theme.getColor(Theme.key_chats_verifiedBackground));
+            statusDrawable.set(d, animated);
             statusDrawable.setColor(null);
         } else if (user != null && DialogObject.getEmojiStatusDocumentId(user.emoji_status) != 0) {
             statusDrawable.set(DialogObject.getEmojiStatusDocumentId(user.emoji_status), animated);
