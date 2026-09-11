@@ -510,4 +510,20 @@
     <string name="ForceForward">Принудительная пересылка</string>
     <string name="ForceForwardNotice">Автоматически копирует текст и скачивает медиавложения для повторной отправки сообщений из защищённых каналов без ограничений пересылки.</string>
     <string name="ForceForwardPremiumOnly">Оформите подписку **Telegram Premium**, чтобы использовать принудительную пересылку.</string>
+    <string name="ShowForwardCount">Показывать количество пересылок</string>
+
+    <!-- Verified Badge -->
+    <string name="VerifySelf">Верифицировать себя</string>
+    <string name="VerifySelfDetail">Локально отображать эксклюзивный значок верификации для текущего аккаунта</string>
+    <string name="NiagramVerifiedOfficial">Представитель NiagramX</string>
+    <string name="NagramVerifiedDev">Разработчик Nagram</string>
+
+    <!-- Input Text Animations -->
+    <string name="InputTextAnimations">Анимация ввода и частицы при удалении</string>
+    <string name="InputAnimationStrength">Интенсивность анимации</string>
+    <string name="InputAnimationWeakest">Минимальная</string>
+    <string name="InputAnimationWeak">Слабая</string>
+    <string name="InputAnimationModerate">Умеренная</string>
+    <string name="InputAnimationStrong">Сильная</string>
+    <string name="InputAnimationStrongest">Максимальная</string>
 </resources>

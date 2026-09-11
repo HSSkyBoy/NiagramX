@@ -479,4 +479,20 @@
     <string name="ForceForward">فوروارد اجباری</string>
     <string name="ForceForwardNotice">کپی خودکار متن و دانلود رسانه‌ها برای ارسال مجدد پیام‌ها از کانال‌های دارای محدودیت فوروارد.</string>
     <string name="ForceForwardPremiumOnly">برای استفاده از فوروارد اجباری، **تلگرام پرمیوم** را فعال کنید.</string>
+    <string name="ShowForwardCount">نمایش تعداد فوروارد</string>
+
+    <!-- Verified Badge -->
+    <string name="VerifySelf">تأیید خود</string>
+    <string name="VerifySelfDetail">نمایش محلی نشان تأیید ویژه برای حساب فعلی شما</string>
+    <string name="NiagramVerifiedOfficial">رسمی NiagramX</string>
+    <string name="NagramVerifiedDev">توسعه‌دهنده Nagram</string>
+
+    <!-- Input Text Animations -->
+    <string name="InputTextAnimations">انیمیشن متن ورودی و ذرات حذف</string>
+    <string name="InputAnimationStrength">شدت انیمیشن</string>
+    <string name="InputAnimationWeakest">بسیار ضعیف</string>
+    <string name="InputAnimationWeak">ضعیف</string>
+    <string name="InputAnimationModerate">متوسط</string>
+    <string name="InputAnimationStrong">قوی</string>
+    <string name="InputAnimationStrongest">بسیار قوی</string>
 </resources>

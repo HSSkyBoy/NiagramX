@@ -17,4 +17,20 @@
     <string name="ForwardTextEmptyNotice">Le texte du message ne peut pas être vide</string>
     <string name="HideReadReceiptsLocally">Masquer les accusés de lecture localement</string>
     <string name="HideReadReceiptsLocallyNotice">Toujours afficher vos messages envoyés avec une seule coche localement, même après lecture par le destinataire.</string>
+    <string name="ShowForwardCount">Afficher le nombre de transferts</string>
+
+    <!-- Verified Badge -->
+    <string name="VerifySelf">Se certifier</string>
+    <string name="VerifySelfDetail">Affiche localement un badge de certification exclusif pour votre compte actuel</string>
+    <string name="NiagramVerifiedOfficial">Officiel NiagramX</string>
+    <string name="NagramVerifiedDev">Développeur Nagram</string>
+
+    <!-- Input Text Animations -->
+    <string name="InputTextAnimations">Animation de saisie et particules de suppression</string>
+    <string name="InputAnimationStrength">Intensité de l\'animation</string>
+    <string name="InputAnimationWeakest">La plus faible</string>
+    <string name="InputAnimationWeak">Faible</string>
+    <string name="InputAnimationModerate">Moyenne</string>
+    <string name="InputAnimationStrong">Forte</string>
+    <string name="InputAnimationStrongest">La plus forte</string>
 </resources>

@@ -487,4 +487,20 @@
     <string name="ForceForward">強制転送</string>
     <string name="ForceForwardNotice">テキストを自動的にコピーしメディア添付ファイルをダウンロードして、転送制限のあるチャンネルからでもメッセージを再送信します。</string>
     <string name="ForceForwardPremiumOnly">**Telegram Premium** に加入して強制転送を使用します。</string>
+    <string name="ShowForwardCount">転送回数を表示</string>
+
+    <!-- Verified Badge -->
+    <string name="VerifySelf">自身を認証済みにする</string>
+    <string name="VerifySelfDetail">現在のアカウントにローカルで専用の認証バッジを表示します</string>
+    <string name="NiagramVerifiedOfficial">NiagramX 公式</string>
+    <string name="NagramVerifiedDev">Nagram 開発者</string>
+
+    <!-- Input Text Animations -->
+    <string name="InputTextAnimations">入力アニメーションと削除パーティクル</string>
+    <string name="InputAnimationStrength">アニメーション強度</string>
+    <string name="InputAnimationWeakest">最弱</string>
+    <string name="InputAnimationWeak">弱い</string>
+    <string name="InputAnimationModerate">標準</string>
+    <string name="InputAnimationStrong">強い</string>
+    <string name="InputAnimationStrongest">最強</string>
 </resources>

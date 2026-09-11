@@ -479,4 +479,20 @@
     <string name="ForceForward">Wymuszone przekazywanie</string>
     <string name="ForceForwardNotice">Automatycznie kopiuje tekst i pobiera załączniki multimedialne, aby ponownie wysłać wiadomości z ograniczonych kanałów bez limitów przekazywania.</string>
     <string name="ForceForwardPremiumOnly">Zasubskrybuj **Telegram Premium**, aby używać wymuszonego przekazywania.</string>
+    <string name="ShowForwardCount">Pokaż liczbę przekazań</string>
+
+    <!-- Verified Badge -->
+    <string name="VerifySelf">Zweryfikuj siebie</string>
+    <string name="VerifySelfDetail">Wyświetlaj lokalnie ekskluzywną odznakę weryfikacji dla swojego konta</string>
+    <string name="NiagramVerifiedOfficial">Oficjalny NiagramX</string>
+    <string name="NagramVerifiedDev">Deweloper Nagram</string>
+
+    <!-- Input Text Animations -->
+    <string name="InputTextAnimations">Animacja wprowadzania i cząsteczki usuwania</string>
+    <string name="InputAnimationStrength">Intensywność animacji</string>
+    <string name="InputAnimationWeakest">Najsłabsza</string>
+    <string name="InputAnimationWeak">Słaba</string>
+    <string name="InputAnimationModerate">Umiarkowana</string>
+    <string name="InputAnimationStrong">Silna</string>
+    <string name="InputAnimationStrongest">Najsilniejsza</string>
 </resources>

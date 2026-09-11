@@ -479,4 +479,21 @@
     <string name="ForceForward">강제 전달</string>
     <string name="ForceForwardNotice">전달이 제한된 채널에서도 제한 없이 메시지를 다시 보낼 수 있도록 텍스트를 자동으로 복사하고 미디어 첨부 파일을 다운로드합니다.</string>
     <string name="ForceForwardPremiumOnly">강제 전달 기능을 사용하려면 **Telegram Premium**을 구독하세요.</string>
+
+    <string name="ShowForwardCount">전달 횟수 표시</string>
+
+    <!-- Verified Badge -->
+    <string name="VerifySelf">본인 인증 배지 켜기</string>
+    <string name="VerifySelfDetail">현재 계정에 로컬 전용 인증 배지를 표시합니다</string>
+    <string name="NiagramVerifiedOfficial">NiagramX 공식</string>
+    <string name="NagramVerifiedDev">Nagram 개발者</string>
+
+    <!-- Input Text Animations -->
+    <string name="InputTextAnimations">입력 애니메이션 및 삭제 파티클 효과</string>
+    <string name="InputAnimationStrength">애니메이션 강도</string>
+    <string name="InputAnimationWeakest">가장 약하게</string>
+    <string name="InputAnimationWeak">약하게</string>
+    <string name="InputAnimationModerate">보통</string>
+    <string name="InputAnimationStrong">강하게</string>
+    <string name="InputAnimationStrongest">가장 강하게</string>
 </resources>

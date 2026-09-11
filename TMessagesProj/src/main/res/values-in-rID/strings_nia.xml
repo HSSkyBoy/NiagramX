@@ -480,4 +480,20 @@
     <string name="ForceForward">Teruskan Paksa</string>
     <string name="ForceForwardNotice">Salin teks dan unduh lampiran media secara otomatis untuk mengirim ulang pesan dari saluran yang dibatasi tanpa batas penerusan.</string>
     <string name="ForceForwardPremiumOnly">Berlangganan **Telegram Premium** untuk menggunakan fitur teruskan paksa.</string>
+    <string name="ShowForwardCount">Tampilkan Jumlah Penerusan</string>
+
+    <!-- Verified Badge -->
+    <string name="VerifySelf">Verifikasi Diri Sendiri</string>
+    <string name="VerifySelfDetail">Tampilkan lencana terverifikasi eksklusif secara lokal untuk akun Anda saat ini</string>
+    <string name="NiagramVerifiedOfficial">Resmi NiagramX</string>
+    <string name="NagramVerifiedDev">Pengembang Nagram</string>
+
+    <!-- Input Text Animations -->
+    <string name="InputTextAnimations">Animasi input dan partikel penghapusan</string>
+    <string name="InputAnimationStrength">Kekuatan animasi</string>
+    <string name="InputAnimationWeakest">Paling Lemah</string>
+    <string name="InputAnimationWeak">Lemah</string>
+    <string name="InputAnimationModerate">Sedang</string>
+    <string name="InputAnimationStrong">Kuat</string>
+    <string name="InputAnimationStrongest">Paling Kuat</string>
 </resources>

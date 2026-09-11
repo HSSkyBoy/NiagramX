@@ -478,4 +478,20 @@
     <string name="ForceForward">Encaminhamento forçado</string>
     <string name="ForceForwardNotice">Copia o texto e baixa as mídias automaticamente para reenviar mensagens de canais restritos sem limites de encaminhamento.</string>
     <string name="ForceForwardPremiumOnly">Assine o **Telegram Premium** para usar o encaminhamento forçado.</string>
+    <string name="ShowForwardCount">Mostrar contagem de encaminhamentos</string>
+
+    <!-- Verified Badge -->
+    <string name="VerifySelf">Verificar a si mesmo</string>
+    <string name="VerifySelfDetail">Exibe localmente o selo de verificação exclusivo para a sua conta atual</string>
+    <string name="NiagramVerifiedOfficial">Oficial NiagramX</string>
+    <string name="NagramVerifiedDev">Desenvolvedor Nagram</string>
+
+    <!-- Input Text Animations -->
+    <string name="InputTextAnimations">Animação de entrada e partículas de exclusão</string>
+    <string name="InputAnimationStrength">Intensidade da animação</string>
+    <string name="InputAnimationWeakest">Mínima</string>
+    <string name="InputAnimationWeak">Fraca</string>
+    <string name="InputAnimationModerate">Moderada</string>
+    <string name="InputAnimationStrong">Forte</string>
+    <string name="InputAnimationStrongest">Máxima</string>
 </resources>

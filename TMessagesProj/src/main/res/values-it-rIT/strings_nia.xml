@@ -484,4 +484,20 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="ForceForward">Inoltro forzato</string>
     <string name="ForceForwardNotice">Copia automaticamente il testo e scarica i file multimediali per reinviare i messaggi dai canali con restrizioni senza limiti di inoltro.</string>
     <string name="ForceForwardPremiumOnly">Abbonati a **Telegram Premium** per usare l\'inoltro forzato.</string>
+    <string name="ShowForwardCount">Mostra conteggio inoltri</string>
+
+    <!-- Verified Badge -->
+    <string name="VerifySelf">Verifica te stesso</string>
+    <string name="VerifySelfDetail">Mostra localmente il badge di verifica esclusivo per il tuo account attuale</string>
+    <string name="NiagramVerifiedOfficial">Ufficiale NiagramX</string>
+    <string name="NagramVerifiedDev">Sviluppatore Nagram</string>
+
+    <!-- Input Text Animations -->
+    <string name="InputTextAnimations">Animazione di digitazione e particelle di cancellazione</string>
+    <string name="InputAnimationStrength">Intensità dell\'animazione</string>
+    <string name="InputAnimationWeakest">Minima</string>
+    <string name="InputAnimationWeak">Debole</string>
+    <string name="InputAnimationModerate">Moderata</string>
+    <string name="InputAnimationStrong">Forte</string>
+    <string name="InputAnimationStrongest">Massima</string>
 </resources>

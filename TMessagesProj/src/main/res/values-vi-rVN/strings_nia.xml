@@ -446,4 +446,21 @@
     <string name="ForceForwardNotice">Tự động sao chép văn bản và tải tệp đính kèm để gửi lại tin nhắn từ các kênh bị giới hạn mà không bị giới hạn chuyển tiếp.</string>
     <string name="ForceForwardPremiumOnly">Đăng ký **Telegram Premium** để sử dụng tính năng chuyển tiếp bắt buộc.</string>
     <string name="FolderTabsStroke">Viền nổi bật tab thư mục</string>
+
+    <string name="ShowForwardCount">Hiển thị số lượt chuyển tiếp</string>
+
+    <!-- Verified Badge -->
+    <string name="VerifySelf">Tự xác minh tài khoản</string>
+    <string name="VerifySelfDetail">Hiển thị cục bộ huy hiệu đã xác minh độc quyền cho tài khoản hiện tại của bạn</string>
+    <string name="NiagramVerifiedOfficial">Đại diện NiagramX</string>
+    <string name="NagramVerifiedDev">Nhà phát triển Nagram</string>
+
+    <!-- Input Text Animations -->
+    <string name="InputTextAnimations">Hiệu ứng nhập văn bản và hạt phân rã khi xóa</string>
+    <string name="InputAnimationStrength">Cường độ hoạt ảnh</string>
+    <string name="InputAnimationWeakest">Rất yếu</string>
+    <string name="InputAnimationWeak">Yếu</string>
+    <string name="InputAnimationModerate">Vừa phải</string>
+    <string name="InputAnimationStrong">Mạnh</string>
+    <string name="InputAnimationStrongest">Rất mạnh</string>
 </resources>

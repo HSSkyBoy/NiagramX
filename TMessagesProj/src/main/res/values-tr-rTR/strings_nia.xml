@@ -478,4 +478,20 @@
     <string name="ForceForward">Zorla İlet</string>
     <string name="ForceForwardNotice">İletme kısıtlaması olan kanallardan iletme sınırı olmaksızın mesajları yeniden göndermek için metni otomatik olarak kopyalar ve medya eklerini indirir.</string>
     <string name="ForceForwardPremiumOnly">Zorla ilet özelliğini kullanmak için **Telegram Premium** abonesi olun.</string>
+    <string name="ShowForwardCount">İletme Sayısını Göster</string>
+
+    <!-- Verified Badge -->
+    <string name="VerifySelf">Kendini Doğrula</string>
+    <string name="VerifySelfDetail">Mevcut hesabınız için yerel olarak özel onaylanmış rozeti gösterin</string>
+    <string name="NiagramVerifiedOfficial">NiagramX Yetkilisi</string>
+    <string name="NagramVerifiedDev">Nagram Geliştiricisi</string>
+
+    <!-- Input Text Animations -->
+    <string name="InputTextAnimations">Giriş animasyonu ve silme parçacıkları</string>
+    <string name="InputAnimationStrength">Animasyon gücü</string>
+    <string name="InputAnimationWeakest">En Zayıf</string>
+    <string name="InputAnimationWeak">Zayıf</string>
+    <string name="InputAnimationModerate">Orta</string>
+    <string name="InputAnimationStrong">Güçlü</string>
+    <string name="InputAnimationStrongest">En Güçlü</string>
 </resources>

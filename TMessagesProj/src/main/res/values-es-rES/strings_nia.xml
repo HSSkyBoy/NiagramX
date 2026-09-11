@@ -480,4 +480,20 @@ También puede utilizar texto sin formato, pero no olvide escapar los paréntesi
     <string name="ForceForward">Reenvío forzado</string>
     <string name="ForceForwardNotice">Copia automáticamente el texto y descarga los archivos adjuntos para reenviar mensajes de canales restringidos sin limitaciones de reenvío.</string>
     <string name="ForceForwardPremiumOnly">Suscríbete a **Telegram Premium** para usar el reenvío forzado.</string>
+    <string name="ShowForwardCount">Mostrar contador de reenvíos</string>
+
+    <!-- Verified Badge -->
+    <string name="VerifySelf">Verificarse a sí mismo</string>
+    <string name="VerifySelfDetail">Muestra localmente una insignia de verificación exclusiva para tu cuenta actual</string>
+    <string name="NiagramVerifiedOfficial">Oficial de NiagramX</string>
+    <string name="NagramVerifiedDev">Desarrollador de Nagram</string>
+
+    <!-- Input Text Animations -->
+    <string name="InputTextAnimations">Animación de entrada y partículas de eliminación</string>
+    <string name="InputAnimationStrength">Intensidad de la animación</string>
+    <string name="InputAnimationWeakest">Mínima</string>
+    <string name="InputAnimationWeak">Débil</string>
+    <string name="InputAnimationModerate">Moderada</string>
+    <string name="InputAnimationStrong">Fuerte</string>
+    <string name="InputAnimationStrongest">Máxima</string>
 </resources>

@@ -498,4 +498,20 @@
     <string name="ForceForward">Примусове пересилання</string>
     <string name="ForceForwardNotice">Автоматично копіює текст та завантажує медіавкладення для повторного надсилання повідомлень із захищених каналів без обмежень пересилання.</string>
     <string name="ForceForwardPremiumOnly">Оформіть підписку **Telegram Premium**, щоб використовувати примусове пересилання.</string>
+    <string name="ShowForwardCount">Показувати кількість пересилань</string>
+
+    <!-- Verified Badge -->
+    <string name="VerifySelf">Верифікувати себе</string>
+    <string name="VerifySelfDetail">Локально відображати ексклюзивний значок верифікації для поточного акаунта</string>
+    <string name="NiagramVerifiedOfficial">Представник NiagramX</string>
+    <string name="NagramVerifiedDev">Розробник Nagram</string>
+
+    <!-- Input Text Animations -->
+    <string name="InputTextAnimations">Анімація введення та частинки видалення</string>
+    <string name="InputAnimationStrength">Інтенсивність анімації</string>
+    <string name="InputAnimationWeakest">Найслабша</string>
+    <string name="InputAnimationWeak">Слабка</string>
+    <string name="InputAnimationModerate">Помірна</string>
+    <string name="InputAnimationStrong">Сильна</string>
+    <string name="InputAnimationStrongest">Найсильніша</string>
 </resources>
