@@ -112,7 +112,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
         }));
     private final AbstractConfigCell folderNameAsTitleRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getFolderNameAsTitle()));
     private final AbstractConfigCell customTitleUserNameRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getCustomTitleUserName()));
-    private final AbstractConfigCell verifySelfRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.verifySelf, getString(R.string.VerifySelfDetail)));
+    private final AbstractConfigCell verifySelfRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.verifySelf, getString(R.string.VerifySelfDetail), getString(R.string.VerifySelf)));
     private final AbstractConfigCell disableNumberRoundingRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.disableNumberRounding, "4.8K -> 4777"));
     private final AbstractConfigCell preferCommonGroupsTabRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getPreferCommonGroupsTab(), getString(R.string.PreferCommonGroupsTabNotice)));
     private final AbstractConfigCell usePersianCalendarRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.usePersianCalendar, getString(R.string.UsePersianCalendarInfo)));

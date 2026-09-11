@@ -63,7 +63,7 @@ public class ConfigCellTextCheck extends AbstractConfigCell implements WithBindC
         if (subtitle == null) {
             cell.setTextAndCheck(title, bindConfig.Bool(), cellGroup.needSetDivider(this), true);
         } else {
-            cell.setTextAndValueAndCheck(title.toString(), subtitle, bindConfig.Bool(), true, cellGroup.needSetDivider(this), true);
+            cell.setTextAndValueAndCheck(title != null ? title.toString() : "", subtitle, bindConfig.Bool(), true, cellGroup.needSetDivider(this), true);
         }
         cell.setEnabled(enabled, null);
     }

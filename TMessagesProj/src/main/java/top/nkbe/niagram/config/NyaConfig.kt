@@ -697,7 +697,7 @@ object NyaConfig {
     @JvmField val showSeconds = addConfig("showSeconds", ConfigItem.configTypeBool, false)
     @JvmField val hideSponsoredMessage = addConfig("hideSponsoredMessage", ConfigItem.configTypeBool, true)
     @JvmField val useIosSounds = addConfig("useIosSounds", ConfigItem.configTypeBool, false)
-    @JvmField val verifySelf = addConfig("verifySelf", ConfigItem.configTypeBool, false)
+    @JvmField val verifySelf = addConfig("VerifySelf", ConfigItem.configTypeBool, false)
 
     @JvmField val useIPv6 = addConfig("IPv6", ConfigItem.configTypeBool, false)
     @JvmField val hidePhone = addConfig("HidePhone", ConfigItem.configTypeBool, true)
