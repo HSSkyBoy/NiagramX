@@ -16,6 +16,7 @@
     <string name="PhotoCopied">Photo copied to clipboard</string>
     <string name="ToTheBeginning">To Beginning</string>
     <string name="DateOfForwardedMsg">Show Date on Forwarded Messages</string>
+    <string name="ShowForwardCount">Show Forward Count</string>
     <string name="ShowMessageID">Show Message ID</string>
     <string name="HideReadReceiptsLocally">Hide Read Receipts Locally</string>
     <string name="HideReadReceiptsLocallyNotice">Always display your sent messages with a single checkmark locally even after they have been read by the recipient.</string>
