@@ -247,5 +247,4 @@
 -keepattributes Signature,InnerClasses,EnclosingMethod
 -keepattributes SourceFile,LineNumberTable
 -keepattributes *Annotation*
--dontoptimize
--dontobfuscate
+-repackageclasses ''
