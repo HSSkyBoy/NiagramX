@@ -14,10 +14,8 @@
 -keep class org.telegram.messenger.video.* { *; }
 -keep class org.telegram.messenger.voip.* { *; }
 -keep class org.telegram.SQLite.** { *; }
--keep class org.telegram.tgnet.ConnectionsManager { *; }
--keep class org.telegram.tgnet.NativeByteBuffer { *; }
--keep class org.telegram.tgnet.RequestTimeDelegate { *; }
--keep class org.telegram.tgnet.RequestDelegate { *; }
+-keep class org.telegram.tgnet.** { *; }
+-keepclassmembers class org.telegram.tgnet.** { *; }
 -keep class com.google.android.exoplayer2.ext.** { *; }
 -keep class com.google.android.exoplayer2.extractor.FlacStreamMetadata { *; }
 -keep class com.google.android.exoplayer2.metadata.flac.PictureFrame { *; }
@@ -27,10 +25,7 @@
 -keep class androidx.mediarouter.app.MediaRouteButton { *; }
 -keep class org.telegram.messenger.AnimatedFileDrawableStream { <methods>; }
 -keep class org.telegram.SQLite.SQLiteException { <methods>; }
--keep class org.telegram.tgnet.ConnectionsManager { <methods>; }
--keep class org.telegram.tgnet.NativeByteBuffer { <methods>; }
 -keep class * extends org.telegram.ui.Components.UItem$UItemFactory { public <init>(...); }
--keepnames class org.telegram.tgnet.** extends org.telegram.tgnet.TLObject
 -keepclassmembernames,allowshrinking class org.telegram.ui.* { <fields>; }
 -keepclassmembernames,allowshrinking class org.telegram.ui.Cells.* { <fields>; }
 -keepclassmembernames,allowshrinking class org.telegram.ui.Components.* { <fields>; }
@@ -243,8 +238,9 @@
 -dontwarn android.support.v4.app.NotificationCompat$Builder
 
 -allowaccessmodification
--optimizationpasses 6
+-dontoptimize
 -keepattributes Signature,InnerClasses,EnclosingMethod
 -keepattributes SourceFile,LineNumberTable
 -keepattributes *Annotation*
+-renamesourcefileattribute SourceFile
 -repackageclasses ''

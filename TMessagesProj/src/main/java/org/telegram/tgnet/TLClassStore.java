@@ -55,10 +55,14 @@ public class TLClassStore {
         if (objClass != null) {
             TLObject response;
             try {
-                response = (TLObject) objClass.newInstance();
+                response = (TLObject) objClass.getDeclaredConstructor().newInstance();
             } catch (Throwable e) {
-                FileLog.e(e);
-                return null;
+                try {
+                    response = (TLObject) objClass.newInstance();
+                } catch (Throwable e2) {
+                    FileLog.e(e2);
+                    return null;
+                }
             }
             response.readParams(stream, exception);
             return response;
