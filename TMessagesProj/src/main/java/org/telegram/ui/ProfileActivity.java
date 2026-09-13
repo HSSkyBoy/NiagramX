@@ -7148,7 +7148,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         TLRPC.Photo carouselPhoto = avatarsViewPager != null ? avatarsViewPager.getPhoto(carouselPosition) : null;
         if (userId != 0) {
             TLRPC.User user = getMessagesController().getUser(userId);
-            if (user.photo != null && user.photo.photo_big != null) {
+            if (!UserObject.isDeleted(user) && AvatarDrawable.isClownPeer(currentAccount, userId)) {
+                return;
+            }
+            if (user != null && user.photo != null && user.photo.photo_big != null) {
                 PhotoViewer.getInstance().setParentActivity(ProfileActivity.this);
                 if (user.photo.dc_id != 0) {
                     user.photo.photo_big.dc_id = user.photo.dc_id;
@@ -9439,6 +9442,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 createActionBarMenu(true);
                 updateListAnimated(false);
             }
+            updateProfileData(false);
         } else if (id == NotificationCenter.groupCallUpdated) {
             Long chatId = (Long) args[0];
             if (currentChat != null && chatId == currentChat.id && ChatObject.canManageCalls(currentChat)) {
@@ -11713,12 +11717,16 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             setCollectibleGiftStatus(user.emoji_status instanceof TLRPC.TL_emojiStatusCollectible ? (TLRPC.TL_emojiStatusCollectible) user.emoji_status : null);
 
 
-            final ImageLocation imageLocation = ImageLocation.getForUserOrChat(user, ImageLocation.TYPE_BIG);
-            final ImageLocation thumbLocation = ImageLocation.getForUserOrChat(user, ImageLocation.TYPE_SMALL);
-            final ImageLocation videoThumbLocation = ImageLocation.getForUserOrChat(user, ImageLocation.TYPE_VIDEO_BIG);
+            boolean isBlockedClown = !UserObject.isDeleted(user) && AvatarDrawable.isClownPeer(currentAccount, userId);
+            if (isBlockedClown) {
+                avatarDrawable.setDrawClown(true);
+            }
+            final ImageLocation imageLocation = isBlockedClown ? null : ImageLocation.getForUserOrChat(user, ImageLocation.TYPE_BIG);
+            final ImageLocation thumbLocation = isBlockedClown ? null : ImageLocation.getForUserOrChat(user, ImageLocation.TYPE_SMALL);
+            final ImageLocation videoThumbLocation = isBlockedClown ? null : ImageLocation.getForUserOrChat(user, ImageLocation.TYPE_VIDEO_BIG);
             VectorAvatarThumbDrawable vectorAvatarThumbDrawable = null;
             TLRPC.VideoSize vectorAvatar = null;
-            if (userInfo != null) {
+            if (userInfo != null && !isBlockedClown) {
                 vectorAvatar = FileLoader.getVectorMarkupVideoSize(user.photo != null && user.photo.personal ? userInfo.personal_photo : userInfo.profile_photo);
                 if (vectorAvatar != null) {
                     vectorAvatarThumbDrawable = new VectorAvatarThumbDrawable(vectorAvatar, user.premium, VectorAvatarThumbDrawable.TYPE_PROFILE);

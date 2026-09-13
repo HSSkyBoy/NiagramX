@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.ContactsController;
 import org.telegram.messenger.LocaleController;
+import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.PushListenerController;
 import org.telegram.messenger.R;
@@ -128,6 +129,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     }, null));
     private final AbstractConfigCell disableGooeyAvatarAnimationRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getDisableGooeyAvatarAnimation()));
     private final AbstractConfigCell showSquareAvatarRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getShowSquareAvatar()));
+    private final AbstractConfigCell clownAvatarForBlockedUsersRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getClownAvatarForBlockedUsers(), getString(R.string.ClownAvatarForBlockedUsersDetail)));
     private final AbstractConfigCell dividerGeneral = cellGroup.appendCell(new ConfigCellDivider());
 
     // Storage
@@ -349,6 +351,9 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
             } else if (key.equals(NyaConfig.tabletMode.getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
+            } else if (key.equals(NyaConfig.INSTANCE.getClownAvatarForBlockedUsers().getKey())) {
+                getNotificationCenter().postNotificationName(NotificationCenter.blockedUsersDidLoad);
+                getNotificationCenter().postNotificationName(NotificationCenter.updateInterfaces, MessagesController.UPDATE_MASK_AVATAR);
             } else if (key.equals(NyaConfig.disableSystemAccount.getKey())) {
                 if ((boolean) newValue) {
                     getContactsController().deleteUnknownAppAccounts();

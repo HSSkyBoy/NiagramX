@@ -1614,6 +1614,12 @@ object NyaConfig {
             ConfigItem.configTypeBool,
             false
         )
+    val clownAvatarForBlockedUsers =
+        addConfig(
+            "ClownAvatarForBlockedUsers",
+            ConfigItem.configTypeBool,
+            true
+        )
     val showForwardTextEdit =
         addConfig(
             "ShowForwardTextEdit",

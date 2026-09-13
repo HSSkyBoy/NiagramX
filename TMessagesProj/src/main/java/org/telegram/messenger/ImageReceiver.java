@@ -441,6 +441,13 @@ public class ImageReceiver implements NotificationCenter.NotificationCenterDeleg
         boolean isPremium = false;
         if (object instanceof TLRPC.User) {
             TLRPC.User user = (TLRPC.User) object;
+            if (!UserObject.isDeleted(user) && AvatarDrawable.isClownPeer(currentAccount, user.id)) {
+                if (avatarDrawable instanceof AvatarDrawable) {
+                    ((AvatarDrawable) avatarDrawable).setDrawClown(true);
+                }
+                setImage(null, null, avatarDrawable, null, parentObject, 0);
+                return;
+            }
             isPremium = user.premium;
             if (user.photo != null) {
                 strippedBitmap = user.photo.strippedBitmap;

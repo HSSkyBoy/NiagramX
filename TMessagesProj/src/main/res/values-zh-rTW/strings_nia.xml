@@ -121,6 +121,8 @@
     <string name="LiquidGlassIntensity">液態玻璃強度</string>
     <string name="DisableGooeyAvatarAnimation">停用頭像流體動畫</string>
     <string name="ShowSquareAvatar">方形頭像</string>
+    <string name="ClownAvatarForBlockedUsers">被封鎖使用者頭像顯示為小丑</string>
+    <string name="ClownAvatarForBlockedUsersDetail">為您封鎖的使用者顯示小丑頭像，而不是其原本頭像或空白頭像</string>
     <string name="ShowForwardTextEdit">轉發時編輯訊息文字</string>
     <string name="AccDescrForwardTextEdit">編輯訊息文字</string>
     <string name="ForwardTextPlaceholder">訊息文字</string>

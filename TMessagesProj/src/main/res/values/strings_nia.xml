@@ -127,6 +127,8 @@
     <string name="LiquidGlassIntensity">Liquid Glass intensity</string>
     <string name="DisableGooeyAvatarAnimation">Disable \"Gooey\" avatar animation</string>
     <string name="ShowSquareAvatar">Square avatars</string>
+    <string name="ClownAvatarForBlockedUsers">Clown avatar for blocked users</string>
+    <string name="ClownAvatarForBlockedUsersDetail">Show a clown avatar for users you have blocked instead of their avatar or empty avatar</string>
     <string name="ShowForwardTextEdit">Edit message text when forwarding</string>
     <string name="AccDescrForwardTextEdit">Edit message text</string>
     <string name="ForwardTextPlaceholder">Message text</string>
