@@ -14,6 +14,7 @@ import org.telegram.messenger.AndroidUtilities;
 import org.telegram.messenger.BaseController;
 import org.telegram.messenger.ChatObject;
 import org.telegram.messenger.DialogObject;
+import org.telegram.messenger.FileLog;
 import org.telegram.messenger.MessageObject;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.R;
@@ -375,6 +376,16 @@ public class ChatsHelper extends BaseController {
         if (dialog == null || dialog instanceof TLRPC.TL_dialogFolder) {
             return false;
         }
+        try {
+            return getUnreadSortPriority(dialog);
+        } catch (Exception e) {
+            // Comparator exception would abort TimSort; fall back to plain unread flag
+            FileLog.e(e);
+            return dialog.unread_count > 0;
+        }
+    }
+
+    private boolean getUnreadSortPriority(TLRPC.Dialog dialog) {
         int unreadCount;
         int mentionCount;
         int reactionCount;

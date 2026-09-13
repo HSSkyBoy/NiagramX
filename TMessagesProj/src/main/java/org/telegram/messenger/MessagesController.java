@@ -1425,6 +1425,7 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     private DialogFilter sortingDialogFilter;
+    private boolean unreadSortSuspended;
     private final Comparator<TLRPC.Dialog> dialogDateComparator = (dialog1, dialog2) -> {
         int pinnedNum1 = sortingDialogFilter == null ? Integer.MIN_VALUE : sortingDialogFilter.pinnedDialogs.get(dialog1.id, Integer.MIN_VALUE);
         int pinnedNum2 = sortingDialogFilter == null ? Integer.MIN_VALUE : sortingDialogFilter.pinnedDialogs.get(dialog2.id, Integer.MIN_VALUE);
@@ -1445,7 +1446,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 return 0;
             }
         }
-        if (NyaConfig.INSTANCE.getSortByUnread().Bool()) {
+        if (!unreadSortSuspended && NyaConfig.INSTANCE.getSortByUnread().Bool()) {
             boolean priority1 = ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog1);
             boolean priority2 = ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog2);
             if (priority1 != priority2) {
@@ -1470,6 +1471,36 @@ public class MessagesController extends BaseController implements NotificationCe
         Collections.sort(dialogs, dialogComparator);
     }
 
+    private void sortDialogsOnUnreadStateChanged(boolean sortByUnread, boolean unreadPriorityBefore, TLRPC.Dialog dialog) {
+        if (!sortByUnread || dialog == null) {
+            return;
+        }
+        if (unreadPriorityBefore == ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog)) {
+            return;
+        }
+        sortDialogs(null);
+        getNotificationCenter().postNotificationName(NotificationCenter.dialogsNeedReload);
+    }
+
+    private void sortDialogsWithFallback(ArrayList<TLRPC.Dialog> dialogs, Comparator<TLRPC.Dialog> comparator) {
+        try {
+            Collections.sort(dialogs, comparator);
+        } catch (Exception e) {
+            FileLog.e(e);
+            if (unreadSortSuspended || !NyaConfig.INSTANCE.getSortByUnread().Bool()) {
+                return;
+            }
+            unreadSortSuspended = true;
+            try {
+                Collections.sort(dialogs, comparator);
+            } catch (Exception e2) {
+                FileLog.e(e2);
+            } finally {
+                unreadSortSuspended = false;
+            }
+        }
+    }
+
     private Comparator<TLRPC.Dialog> dialogComparator = (dialog1, dialog2) -> {
         if (dialog1 instanceof TLRPC.TL_dialogFolder && !(dialog2 instanceof TLRPC.TL_dialogFolder)) {
             return -1;
@@ -1488,7 +1519,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 return 0;
             }
         }
-        if (NyaConfig.INSTANCE.getSortByUnread().Bool()) {
+        if (!unreadSortSuspended && NyaConfig.INSTANCE.getSortByUnread().Bool()) {
             boolean priority1 = ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog1);
             boolean priority2 = ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog2);
             if (priority1 != priority2) {
@@ -14087,6 +14118,8 @@ public class MessagesController extends BaseController implements NotificationCe
     public void processDialogsUpdateRead(final LongSparseIntArray dialogsToUpdate, LongSparseIntArray dialogsMentionsToUpdate) {
         AndroidUtilities.runOnUIThread(() -> {
             boolean filterDialogsChanged = false;
+            final boolean sortByUnread = NyaConfig.INSTANCE.getSortByUnread().Bool();
+            boolean unreadSortOrderChanged = false;
             if (dialogsToUpdate != null) {
                 for (int a = 0; a < dialogsToUpdate.size(); a++) {
                     long dialogId = dialogsToUpdate.keyAt(a);
@@ -14107,8 +14140,13 @@ public class MessagesController extends BaseController implements NotificationCe
                         pendingUnreadCounter.put(dialogId, dialogsToUpdate.valueAt(a));
                     }
                     if (currentDialog != null) {
+                        boolean unreadPriorityBefore = sortByUnread && ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(currentDialog);
                         int prevCount = currentDialog.unread_count;
                         currentDialog.unread_count = dialogsToUpdate.valueAt(a);
+                        if (sortByUnread && !unreadSortOrderChanged
+                                && unreadPriorityBefore != ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(currentDialog)) {
+                            unreadSortOrderChanged = true;
+                        }
                         if (BuildVars.DEBUG_PRIVATE_VERSION) {
                             FileLog.d("update dialog " + dialogId + " with new unread " + currentDialog.unread_count);
                         }
@@ -14145,7 +14183,12 @@ public class MessagesController extends BaseController implements NotificationCe
                     long dialogId = dialogsMentionsToUpdate.keyAt(a);
                     TLRPC.Dialog currentDialog = dialogs_dict.get(dialogId);
                     if (currentDialog != null) {
+                        boolean unreadPriorityBefore = sortByUnread && ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(currentDialog);
                         currentDialog.unread_mentions_count = dialogsMentionsToUpdate.valueAt(a);
+                        if (sortByUnread && !unreadSortOrderChanged
+                                && unreadPriorityBefore != ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(currentDialog)) {
+                            unreadSortOrderChanged = true;
+                        }
                         if (createdDialogMainThreadIds.contains(currentDialog.id)) {
                             getNotificationCenter().postNotificationName(NotificationCenter.updateMentionsCount, currentDialog.id, 0L, currentDialog.unread_mentions_count);
                         }
@@ -14160,7 +14203,7 @@ public class MessagesController extends BaseController implements NotificationCe
                     }
                 }
             }
-            if (filterDialogsChanged) {
+            if (filterDialogsChanged || unreadSortOrderChanged) {
                 sortDialogs(null);
                 getNotificationCenter().postNotificationName(NotificationCenter.dialogsNeedReload);
             }
@@ -14926,6 +14969,8 @@ public class MessagesController extends BaseController implements NotificationCe
                 getMessagesStorage().getStorageQueue().postRunnable(() -> AndroidUtilities.runOnUIThread(() -> {
                     TLRPC.Dialog dialog = dialogs_dict.get(dialogId);
                     if (dialog != null) {
+                        final boolean sortByUnread = NyaConfig.INSTANCE.getSortByUnread().Bool();
+                        boolean unreadPriorityBefore = sortByUnread && ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog);
                         int prevCount = dialog.unread_count;
                         if (countDiff == 0 || maxPositiveId >= dialog.top_message) {
                             dialog.unread_count = 0;
@@ -14953,6 +14998,7 @@ public class MessagesController extends BaseController implements NotificationCe
                                 }
                             }
                         }
+                        sortDialogsOnUnreadStateChanged(sortByUnread, unreadPriorityBefore, dialog);
                         getNotificationCenter().postNotificationName(NotificationCenter.updateInterfaces, UPDATE_MASK_READ_DIALOG_MESSAGE);
                     }
                     if (!popup) {
@@ -14981,6 +15027,8 @@ public class MessagesController extends BaseController implements NotificationCe
                     getNotificationsController().processReadMessages(null, dialogId, maxDate, 0, popup);
                     TLRPC.Dialog dialog = dialogs_dict.get(dialogId);
                     if (dialog != null) {
+                        final boolean sortByUnread = NyaConfig.INSTANCE.getSortByUnread().Bool();
+                        boolean unreadPriorityBefore = sortByUnread && ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog);
                         int prevCount = dialog.unread_count;
                         if (countDiff == 0 || maxNegativeId <= dialog.top_message) {
                             dialog.unread_count = 0;
@@ -15007,6 +15055,7 @@ public class MessagesController extends BaseController implements NotificationCe
                                 }
                             }
                         }
+                        sortDialogsOnUnreadStateChanged(sortByUnread, unreadPriorityBefore, dialog);
                         getNotificationCenter().postNotificationName(NotificationCenter.updateInterfaces, UPDATE_MASK_READ_DIALOG_MESSAGE);
                     }
                     LongSparseIntArray dialogsToUpdate = new LongSparseIntArray(1);
@@ -22666,11 +22715,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 ArrayList<TLRPC.Dialog> dialogsForward = sortingDialogFilter.dialogsForward;
                 dialogs.clear();
                 dialogsForward.clear();
-                try {
-                    Collections.sort(allDialogs, dialogDateComparator);
-                } catch (Exception e) {
-                    FileLog.e(e);
-                }
+                sortDialogsWithFallback(allDialogs, dialogDateComparator);
                 for (int a = 0, N = allDialogs.size(); a < N; a++) {
                     final TLRPC.Dialog d = allDialogs.get(a);
                     final boolean isCommunity = d instanceof TLRPC.TL_dialogCommunity;
@@ -22700,9 +22745,7 @@ public class MessagesController extends BaseController implements NotificationCe
             }
         }
 
-        try {
-            Collections.sort(allDialogs, dialogComparator);
-        } catch (Exception e) {}
+        sortDialogsWithFallback(allDialogs, dialogComparator);
         isLeftPromoChannel = true;
         if (promoDialog != null && promoDialog.id < 0) {
             TLRPC.Chat chat = getChat(-promoDialog.id);
