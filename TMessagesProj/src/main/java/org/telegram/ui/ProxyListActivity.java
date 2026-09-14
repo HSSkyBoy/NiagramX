@@ -193,7 +193,12 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
             if (proxyInfo != null && WebSocketHelper.proxyServer.equals(proxyInfo.address)) {
                 textView.setText(LocaleController.getString(R.string.PublicProxy));
             } else {
-                textView.setText(proxyInfo.address + ":" + proxyInfo.port);
+                String vlessRemark = top.nkbe.niagram.vless.VlessManager.getNodeRemark(proxyInfo);
+                if (vlessRemark != null && !vlessRemark.isEmpty()) {
+                    textView.setText("VLESS · " + vlessRemark);
+                } else {
+                    textView.setText(proxyInfo.address + ":" + proxyInfo.port);
+                }
             }
             currentInfo = proxyInfo;
         }

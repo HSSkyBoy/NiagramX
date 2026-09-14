@@ -59,6 +59,7 @@ object ProxyUtil {
 
     @JvmStatic
     fun registerNetworkCallback() {
+        top.nkbe.niagram.vless.VlessManager.init()
         if (networkCallbackRegistered) return
         networkCallbackRegistered = true
 
@@ -407,6 +408,24 @@ object ProxyUtil {
 
                     }
 
+                } else if (line.startsWith("vless://", ignoreCase = true)) {
+
+                    val vlessConfig = top.nkbe.niagram.vless.VlessConfig.parse(line)
+                    if (vlessConfig != null) {
+                        top.nkbe.niagram.vless.VlessManager.addOrUpdateNode(vlessConfig)
+                        val pInfo = SharedConfig.ProxyInfo(
+                            "127.0.0.1",
+                            top.nkbe.niagram.vless.VlessManager.DEFAULT_LOCAL_PORT,
+                            top.nkbe.niagram.vless.VlessManager.VLESS_PROXY_USER_TAG,
+                            vlessConfig.id,
+                            ""
+                        )
+                        proxies.add(pInfo)
+                    } else {
+                        error = true
+                        showToast(getString(R.string.BrokenLink) + ": Invalid VLESS URL")
+                    }
+
                 }
 
             }
@@ -434,6 +453,24 @@ object ProxyUtil {
 
                             }
 
+                        } else if (line.startsWith("vless://", ignoreCase = true)) {
+
+                            val vlessConfig = top.nkbe.niagram.vless.VlessConfig.parse(line)
+                            if (vlessConfig != null) {
+                                top.nkbe.niagram.vless.VlessManager.addOrUpdateNode(vlessConfig)
+                                val pInfo = SharedConfig.ProxyInfo(
+                                    "127.0.0.1",
+                                    top.nkbe.niagram.vless.VlessManager.DEFAULT_LOCAL_PORT,
+                                    top.nkbe.niagram.vless.VlessManager.VLESS_PROXY_USER_TAG,
+                                    vlessConfig.id,
+                                    ""
+                                )
+                                proxies.add(pInfo)
+                            } else {
+                                error = true
+                                showToast(getString(R.string.BrokenLink) + ": Invalid VLESS URL")
+                            }
+
                         }
 
                     }
@@ -452,7 +489,10 @@ object ProxyUtil {
 
         } else if (!error) {
 
-            AlertUtil.showSimpleAlert(ctx, getString(R.string.ImportedProxies) + "\n\n" + proxies.joinToString("\n") { it.address })
+            AlertUtil.showSimpleAlert(ctx, getString(R.string.ImportedProxies) + "\n\n" + proxies.joinToString("\n") {
+                val remark = top.nkbe.niagram.vless.VlessManager.getNodeRemark(it)
+                if (remark != null) "VLESS: $remark" else "${it.address}:${it.port}"
+            })
 
         }
 
