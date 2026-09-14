@@ -377,49 +377,45 @@ public class ChatsHelper extends BaseController {
             return false;
         }
         try {
-            return getUnreadSortPriority(dialog);
-        } catch (Exception e) {
-            // Comparator exception would abort TimSort; fall back to plain unread flag
-            FileLog.e(e);
-            return dialog.unread_count > 0;
-        }
-    }
-
-    private boolean getUnreadSortPriority(TLRPC.Dialog dialog) {
-        int unreadCount;
-        int mentionCount;
-        int reactionCount;
-        boolean counterMuted;
-        if (dialog.id < 0) {
-            TLRPC.Chat chat = MessagesController.getInstance(currentAccount).getChat(-dialog.id);
-            if (chat != null && (chat.forum || chat.monoforum && ChatObject.canManageMonoForum(currentAccount, chat))) {
-                int[] counts = MessagesController.getInstance(currentAccount).getTopicsController().getForumUnreadCount(chat.id);
-                unreadCount = counts[0];
-                mentionCount = counts[1];
-                reactionCount = counts[2];
-                counterMuted = counts[3] == 0;
+            int unreadCount;
+            int mentionCount;
+            int reactionCount;
+            boolean counterMuted;
+            if (dialog.id < 0) {
+                TLRPC.Chat chat = MessagesController.getInstance(currentAccount).getChat(-dialog.id);
+                if (chat != null && (chat.forum || chat.monoforum && ChatObject.canManageMonoForum(currentAccount, chat))) {
+                    int[] counts = MessagesController.getInstance(currentAccount).getTopicsController().getForumUnreadCount(chat.id);
+                    unreadCount = counts[0];
+                    mentionCount = counts[1];
+                    reactionCount = counts[2];
+                    counterMuted = counts[3] == 0;
+                } else {
+                    unreadCount = dialog.unread_count;
+                    mentionCount = dialog.unread_mentions_count;
+                    reactionCount = dialog.unread_reactions_count;
+                    counterMuted = MessagesController.getInstance(currentAccount).isDialogMuted(dialog.id);
+                }
+                if (ChatObject.isMonoForum(chat)) {
+                    mentionCount = 0;
+                }
             } else {
                 unreadCount = dialog.unread_count;
                 mentionCount = dialog.unread_mentions_count;
                 reactionCount = dialog.unread_reactions_count;
                 counterMuted = MessagesController.getInstance(currentAccount).isDialogMuted(dialog.id);
             }
-            if (ChatObject.isMonoForum(chat)) {
-                mentionCount = 0;
+            if (mentionCount > 0) {
+                return true;
             }
-        } else {
-            unreadCount = dialog.unread_count;
-            mentionCount = dialog.unread_mentions_count;
-            reactionCount = dialog.unread_reactions_count;
-            counterMuted = MessagesController.getInstance(currentAccount).isDialogMuted(dialog.id);
+            if (reactionCount > 0) {
+                return true;
+            }
+            return unreadCount > 0 && !counterMuted;
+        } catch (Exception e) {
+            // Comparator exception would abort TimSort; fall back to plain unread flag
+            FileLog.e(e);
+            return dialog.unread_count > 0;
         }
-        if (mentionCount > 0) {
-            return true;
-        }
-        if (reactionCount > 0) {
-            return true;
-        }
-        return unreadCount > 0 && !counterMuted;
     }
 
     @SuppressWarnings("rawtypes")

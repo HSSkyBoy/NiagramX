@@ -1425,7 +1425,6 @@ public class MessagesController extends BaseController implements NotificationCe
     }
 
     private DialogFilter sortingDialogFilter;
-    private boolean unreadSortSuspended;
     private final Comparator<TLRPC.Dialog> dialogDateComparator = (dialog1, dialog2) -> {
         int pinnedNum1 = sortingDialogFilter == null ? Integer.MIN_VALUE : sortingDialogFilter.pinnedDialogs.get(dialog1.id, Integer.MIN_VALUE);
         int pinnedNum2 = sortingDialogFilter == null ? Integer.MIN_VALUE : sortingDialogFilter.pinnedDialogs.get(dialog2.id, Integer.MIN_VALUE);
@@ -1446,7 +1445,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 return 0;
             }
         }
-        if (!unreadSortSuspended && NyaConfig.INSTANCE.getSortByUnread().Bool()) {
+        if (NyaConfig.INSTANCE.getSortByUnread().Bool()) {
             boolean priority1 = ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog1);
             boolean priority2 = ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog2);
             if (priority1 != priority2) {
@@ -1482,25 +1481,6 @@ public class MessagesController extends BaseController implements NotificationCe
         getNotificationCenter().postNotificationName(NotificationCenter.dialogsNeedReload);
     }
 
-    private void sortDialogsWithFallback(ArrayList<TLRPC.Dialog> dialogs, Comparator<TLRPC.Dialog> comparator) {
-        try {
-            Collections.sort(dialogs, comparator);
-        } catch (Exception e) {
-            FileLog.e(e);
-            if (unreadSortSuspended || !NyaConfig.INSTANCE.getSortByUnread().Bool()) {
-                return;
-            }
-            unreadSortSuspended = true;
-            try {
-                Collections.sort(dialogs, comparator);
-            } catch (Exception e2) {
-                FileLog.e(e2);
-            } finally {
-                unreadSortSuspended = false;
-            }
-        }
-    }
-
     private Comparator<TLRPC.Dialog> dialogComparator = (dialog1, dialog2) -> {
         if (dialog1 instanceof TLRPC.TL_dialogFolder && !(dialog2 instanceof TLRPC.TL_dialogFolder)) {
             return -1;
@@ -1519,7 +1499,7 @@ public class MessagesController extends BaseController implements NotificationCe
                 return 0;
             }
         }
-        if (!unreadSortSuspended && NyaConfig.INSTANCE.getSortByUnread().Bool()) {
+        if (NyaConfig.INSTANCE.getSortByUnread().Bool()) {
             boolean priority1 = ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog1);
             boolean priority2 = ChatsHelper.getInstance(currentAccount).isUnreadSortPriority(dialog2);
             if (priority1 != priority2) {
@@ -22715,7 +22695,11 @@ public class MessagesController extends BaseController implements NotificationCe
                 ArrayList<TLRPC.Dialog> dialogsForward = sortingDialogFilter.dialogsForward;
                 dialogs.clear();
                 dialogsForward.clear();
-                sortDialogsWithFallback(allDialogs, dialogDateComparator);
+                try {
+                    Collections.sort(allDialogs, dialogDateComparator);
+                } catch (Exception e) {
+                    FileLog.e(e);
+                }
                 for (int a = 0, N = allDialogs.size(); a < N; a++) {
                     final TLRPC.Dialog d = allDialogs.get(a);
                     final boolean isCommunity = d instanceof TLRPC.TL_dialogCommunity;
@@ -22745,7 +22729,9 @@ public class MessagesController extends BaseController implements NotificationCe
             }
         }
 
-        sortDialogsWithFallback(allDialogs, dialogComparator);
+        try {
+            Collections.sort(allDialogs, dialogComparator);
+        } catch (Exception e) {}
         isLeftPromoChannel = true;
         if (promoDialog != null && promoDialog.id < 0) {
             TLRPC.Chat chat = getChat(-promoDialog.id);
