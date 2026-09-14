@@ -49,6 +49,9 @@
     <string name="ShowOnlineStatusNotice">Show the online status of other people next to their profile photo in groups.</string>
     <string name="DoActionsInCommonGroups">Applied in common groups</string>
     <string name="ShowFullAbout">Always Expand Chat Description</string>
+    <string name="ShowGroupMemberJoinDate">Show Group Member Join Date</string>
+    <string name="ShowGroupMemberJoinDateNotice">Show when a member joined the group in member menu and profile.</string>
+    <string name="GroupMemberJoinDate">Joined Group</string>
     <string name="TypeMessageHintUseGroupName">Use Group Name as Hint Text</string>
     <string name="HideBotButtonInInputField">Hide Bot Button in Input Field</string>
     <string name="ShowSendAsUnderMessageHint">Show Sender Under Message Hint</string>

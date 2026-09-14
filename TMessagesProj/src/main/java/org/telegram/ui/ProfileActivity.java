@@ -706,6 +706,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private int channelInfoRow;
     private int usernameRow;
     private int idDcRow;
+    private int groupMemberJoinDateRow = -1;
+    private long fromChatId;
+    private int fromChatJoined;
     private int restrictionReasonRow;
     private int notificationsDividerRow;
     private int notificationsRow;
@@ -2151,6 +2154,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     public boolean onFragmentCreate() {
         userId = arguments.getLong("user_id", 0);
         chatId = arguments.getLong("chat_id", 0);
+        fromChatId = arguments.getLong("from_chat_id", 0);
+        fromChatJoined = arguments.getInt("from_chat_joined", 0);
         topicId = arguments.getLong("topic_id", 0);
         saved = arguments.getBoolean("saved", false);
         openSimilar = arguments.getBoolean("similar", false);
@@ -7448,8 +7453,9 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             }
 
             boolean result = (canEditAdmin || canEditTag || canRestrict || allowKick);
-            if (resultOnly || !result && joined == 0) {
-                return result;
+            boolean showJoinDate = NyaConfig.INSTANCE.getShowGroupMemberJoinDate().Bool() && joined != 0;
+            if (resultOnly || (!result && !showJoinDate)) {
+                return result || showJoinDate;
             }
 
             Utilities.Callback<Integer> openRightsEdit = action -> {
@@ -7470,6 +7476,15 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     .setLongPressSelectionEnabled(false)
                     .addIf(!self, R.drawable.msg_discussion, getString(R.string.SendMessage), () -> {
                         presentFragment(ChatActivity.of(user.id));
+                    })
+                    .addIf(!self, R.drawable.msg_openprofile, getString(R.string.OpenProfile), () -> {
+                        Bundle args = new Bundle();
+                        args.putLong("user_id", user.id);
+                        if (currentChat != null) {
+                            args.putLong("from_chat_id", currentChat.id);
+                            args.putInt("from_chat_joined", joined);
+                        }
+                        presentFragment(new ProfileActivity(args));
                     })
                     .addGapIf(!self && (canEditAdmin || canEditTag || canRestrict || allowKick))
                     .addIf(canEditTag, !isAdmin && TextUtils.isEmpty(rank) ? R.drawable.menu_tag_plus : R.drawable.menu_tag_edit, getString(isAdmin ? R.string.EditAdminTag : TextUtils.isEmpty(rank) ? R.string.AddMemberTag : R.string.EditMemberTag), () -> {
@@ -7494,8 +7509,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         kickUser(selectedUser, participant);
                     })
                     .setMinWidth(190);
-            if (joined != 0) {
-                if (result) options.addGap();
+            if (showJoinDate) {
+                if (result || !self) options.addGap();
                 options.addText(LocaleController.formatJoined(joined), 13);
             }
             options.show();
@@ -7841,6 +7856,10 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             return true;
         } else if (position == idDcRow) {
             showIdDcBottomSheet();
+            return true;
+        } else if (position == groupMemberJoinDateRow) {
+            AndroidUtilities.addToClipboard(LocaleController.formatJoined(fromChatJoined));
+            BulletinFactory.of(this).createCopyBulletin(getString(R.string.TextCopied)).show();
             return true;
         } else if (position == channelInfoRow || position == userInfoRow || position == locationRow || position == bioRow) {
             if (position == bioRow && (userInfo == null || TextUtils.isEmpty(userInfo.about))) {
@@ -10808,6 +10827,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         birthdayRow = -1;
         setUsernameRow = -1;
         idDcRow = -1;
+        groupMemberJoinDateRow = -1;
         bioRow = -1;
         channelRow = -1;
         channelDividerRow = -1;
@@ -11090,6 +11110,20 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 }
                 if (NyaConfig.INSTANCE.getIdDcType().Int() != 0) {
                     idDcRow = rowCount++;
+                }
+                if (fromChatJoined == 0 && fromChatId != 0 && userId != 0) {
+                    TLRPC.ChatFull chatFull = getMessagesController().getChatFull(fromChatId);
+                    if (chatFull != null && chatFull.participants != null && chatFull.participants.participants != null) {
+                        for (TLRPC.ChatParticipant cp : chatFull.participants.participants) {
+                            if (cp != null && cp.user_id == userId) {
+                                fromChatJoined = cp.date;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (fromChatJoined != 0 && NyaConfig.INSTANCE.getShowGroupMemberJoinDate().Bool()) {
+                    groupMemberJoinDateRow = rowCount++;
                 }
                 if (userInfo != null) {
                     if (userInfo.birthday != null) {
@@ -14093,6 +14127,8 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         int dc = getDc();
                         boolean isUserSelf = userId == UserConfig.getInstance(currentAccount).getClientUserId();
                         detailCell.setTextAndValue(id + "", dc != 0 ? String.format(Locale.US, "DC%d %s, %s", dc, getDCName(dc), getDCLocation(dc)) : "DC " + getString(R.string.NumberUnknown), isUserSelf);
+                    } else if (position == groupMemberJoinDateRow) {
+                        detailCell.setTextAndValue(LocaleController.formatJoined(fromChatJoined), getString(R.string.GroupMemberJoinDate), position == infoEndRow);
                     } else if (position == restrictionReasonRow) {
                         ArrayList<TLRPC.RestrictionReason> reasons = new ArrayList<>();
                         if (userId != 0) {
@@ -14834,7 +14870,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         position == clearLogsRow || position == switchBackendRow || position == setAvatarRow ||
                         position == addToGroupButtonRow || position == premiumRow || position == premiumGiftingRow ||
                         position == businessRow || position == liteModeRow || position == birthdayRow || position == channelRow ||
-                        position == starsRow || position == tonRow || position == linkedCommunityRow || position == idDcRow || position == nekoRow;
+                        position == starsRow || position == tonRow || position == linkedCommunityRow || position == idDcRow || position == groupMemberJoinDateRow || position == nekoRow;
             }
             if (holder.itemView instanceof UserCell) {
                 UserCell userCell = (UserCell) holder.itemView;
@@ -14862,7 +14898,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             if (position == infoHeaderRow || position == membersHeaderRow || position == settingsSectionRow2 ||
                     position == numberSectionRow || position == helpHeaderRow || position == debugHeaderRow || position == botPermissionsHeader) {
                 return VIEW_TYPE_HEADER;
-            } else if (position == phoneRow || position == locationRow || position == numberRow || position == birthdayRow || position == restrictionReasonRow || position == idDcRow) {
+            } else if (position == phoneRow || position == locationRow || position == numberRow || position == birthdayRow || position == restrictionReasonRow || position == idDcRow || position == groupMemberJoinDateRow) {
                 return VIEW_TYPE_TEXT_DETAIL;
             } else if (position == usernameRow || position == setUsernameRow) {
                 return VIEW_TYPE_TEXT_DETAIL_MULTILINE;
@@ -16250,6 +16286,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             put(++pointer, numberRow, sparseIntArray);
             put(++pointer, setUsernameRow, sparseIntArray);
             put(++pointer, idDcRow, sparseIntArray);
+            put(++pointer, groupMemberJoinDateRow, sparseIntArray);
             put(++pointer, bioRow, sparseIntArray);
             put(++pointer, phoneSuggestionRow, sparseIntArray);
             put(++pointer, phoneSuggestionSectionRow, sparseIntArray);

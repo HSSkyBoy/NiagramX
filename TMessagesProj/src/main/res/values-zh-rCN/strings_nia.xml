@@ -48,6 +48,9 @@
     <string name="ShowOnlineStatusNotice">在群组聊天时用户头像的右下角显示在线状态。</string>
     <string name="DoActionsInCommonGroups">应用到共同群组</string>
     <string name="ShowFullAbout">总是展开群组简介</string>
+    <string name="ShowGroupMemberJoinDate">群组成员显示入群时间</string>
+    <string name="ShowGroupMemberJoinDateNotice">在群组成员菜单与个人资料页中显示成员加入群组的时间。</string>
+    <string name="GroupMemberJoinDate">入群时间</string>
     <string name="TypeMessageHintUseGroupName">使用群组名称作为输入框提示</string>
     <string name="HideBotButtonInInputField">隐藏输入框中的机器人按钮</string>
     <string name="ShowSendAsUnderMessageHint">在输入提示下显示发送者</string>

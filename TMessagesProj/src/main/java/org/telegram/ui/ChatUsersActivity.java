@@ -43,6 +43,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.telegram.messenger.AndroidUtilities;
+import top.nkbe.niagram.config.NyaConfig;
 import org.telegram.messenger.AnimationNotificationsLocker;
 import org.telegram.messenger.BotWebViewVibrationEffect;
 import org.telegram.messenger.ChatObject;
@@ -1944,8 +1945,9 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
             }
 
             boolean result = allowSetAdmin || (ChatObject.canBlockUsers(currentChat) && canEditAdmin);
-            if (resultOnly || !result && joined == 0) {
-                return result;
+            boolean showJoinDate = NyaConfig.INSTANCE.getShowGroupMemberJoinDate().Bool() && joined != 0;
+            if (resultOnly || (!result && !showJoinDate)) {
+                return result || showJoinDate;
             }
 
             Utilities.Callback<Integer> openRightsFor = action ->
@@ -1953,6 +1955,19 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
 
             var options = ItemOptions.makeOptions(this, view)
                 .setScrimViewBackground(listView.getClipBackground(view))
+                .addIf(user != null, R.drawable.msg_discussion, getString(R.string.SendMessage), () -> {
+                    presentFragment(ChatActivity.of(user.id));
+                })
+                .addIf(user != null, R.drawable.msg_openprofile, getString(R.string.OpenProfile), () -> {
+                    Bundle args = new Bundle();
+                    args.putLong("user_id", user.id);
+                    if (currentChat != null) {
+                        args.putLong("from_chat_id", currentChat.id);
+                        args.putInt("from_chat_joined", joined);
+                    }
+                    presentFragment(new ProfileActivity(args));
+                })
+                .addGapIf(user != null && result)
                 .addIf(allowSetAdmin, R.drawable.msg_admins, editingAdmin ? getString(R.string.EditAdminRights) : getString(R.string.SetAsAdmin), () -> openRightsFor.run(0))
                 .addIf(canChangePermission, R.drawable.msg_permissions, getString("ChangePermissions", R.string.ChangePermissions), () -> {
                     if (participant instanceof TLRPC.TL_channelParticipantAdmin || participant instanceof TLRPC.TL_chatParticipantAdmin) {
@@ -1976,8 +1991,8 @@ public class ChatUsersActivity extends BaseFragment implements NotificationCente
                     }
                 })
                 .setMinWidth(190);
-            if (joined != 0) {
-                if (result) options.addGap();
+            if (showJoinDate) {
+                if (result || user != null) options.addGap();
                 options.addText(LocaleController.formatJoined(joined), 13);
             }
             options.show();

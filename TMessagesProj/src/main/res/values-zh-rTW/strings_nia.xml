@@ -48,6 +48,9 @@
     <string name="ShowOnlineStatusNotice">在群組內時在使用者頭像的右下角顯示線上狀態。</string>
     <string name="DoActionsInCommonGroups">套用至共同群組</string>
     <string name="ShowFullAbout">總是展開群組簡介</string>
+    <string name="ShowGroupMemberJoinDate">群組成員顯示入群時間</string>
+    <string name="ShowGroupMemberJoinDateNotice">在群組成員功能表與個人資料頁中顯示成員加入群組的時間。</string>
+    <string name="GroupMemberJoinDate">入群時間</string>
     <string name="TypeMessageHintUseGroupName">在輸入框中顯示群組名稱</string>
     <string name="HideBotButtonInInputField">在群組中隱藏輸入框中的命令按鈕</string>
     <string name="ShowSendAsUnderMessageHint">在輸入框中顯示傳送身分</string>

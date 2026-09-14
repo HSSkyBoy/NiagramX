@@ -335,6 +335,12 @@ object NyaConfig {
             ConfigItem.configTypeBool,
             true
         )
+    val showGroupMemberJoinDate =
+        addConfig(
+            "ShowGroupMemberJoinDate",
+            ConfigItem.configTypeBool,
+            true
+        )
     val typeMessageHintUseGroupName =
         addConfig(
             "TypeMessageHintUseGroupName",

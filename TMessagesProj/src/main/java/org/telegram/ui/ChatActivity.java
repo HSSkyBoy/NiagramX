@@ -42083,6 +42083,9 @@ public class ChatActivity extends BaseFragment implements
                 }
                 Bundle args = new Bundle();
                 args.putLong("user_id", user.id);
+                if (currentChat != null) {
+                    args.putLong("from_chat_id", currentChat.id);
+                }
                 args.putBoolean("expandPhoto", expandPhoto);
                 if (!user.bot) LastSeenHelper.saveLastSeenFromLoadedMessages(user.id, getUserConfig().getClientUserId(), messages, chatAdapter);
                 ProfileActivity fragment = new ProfileActivity(args);
