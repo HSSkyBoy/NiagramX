@@ -8655,7 +8655,7 @@ public class ChatActivity extends BaseFragment implements
 
         chatInputBubbleContainer.addView(chatActivityEnterView, LayoutHelper.createFrame(LayoutHelper.MATCH_PARENT, LayoutHelper.WRAP_CONTENT, Gravity.LEFT | Gravity.BOTTOM, 7, 0, 7, 0));
         chatActivityEnterView.setInputBarGlassFactory(glassBackgroundDrawableFactory, blurredBackgroundColorProvider, blurredBackgroundColorProviderWhiteSend, blurredBackgroundColorProviderAccentSend);
-        chatInputViewsContainer.drawInputBackground = !chatActivityEnterView.isIosInputAppearance() || chatActivityEnterView.getVisibility() != View.VISIBLE;
+        updateChatInputBackground();
 
         int chatListIndex = contentView.indexOfChild(chatListView);
         chatListIndex = chatListIndex < 0 ? contentView.getChildCount() : (chatListIndex + 1);
@@ -29464,6 +29464,7 @@ public class ChatActivity extends BaseFragment implements
                         chatActivityEnterView.setVisibility(View.INVISIBLE);
                         bottomChannelButtonsLayout.setVisibility(View.INVISIBLE);
                         invalidateChatListViewTopPadding();
+                        updateChatInputBackground();
                     }
                 });
                 searchExpandAnimator.setDuration(250);
@@ -29473,6 +29474,7 @@ public class ChatActivity extends BaseFragment implements
                 chatActivityEnterView.setVisibility(View.INVISIBLE);
                 bottomChannelButtonsLayout.setVisibility(View.INVISIBLE);
                 invalidateChatListViewTopPadding();
+                updateChatInputBackground();
             }
 
             chatActivityEnterView.setFieldFocused(false);
@@ -29511,11 +29513,15 @@ public class ChatActivity extends BaseFragment implements
                     public void onAnimationEnd(Animator animation) {
                         searchExpandProgress = 0;
                         invalidateChatListViewTopPadding();
+                        updateChatInputBackground();
                     }
                 });
                 searchExpandAnimator.setDuration(250);
                 searchExpandAnimator.setInterpolator(ChatListItemAnimator.DEFAULT_INTERPOLATOR);
                 searchExpandAnimator.start();
+            } else {
+                invalidateChatListViewTopPadding();
+                updateChatInputBackground();
             }
 
             if (muteItem != null) {
@@ -29595,13 +29601,30 @@ public class ChatActivity extends BaseFragment implements
         bottomChannelButtonsLayout.showButton(ChatActivityChannelButtonsLayout.BUTTON_GIFT, !showSuggestButton && showGiftButton && bottomChannelButtonsLayout.getVisibility() == View.VISIBLE, animated);
         bottomChannelButtonsLayout.showButton(ChatActivityChannelButtonsLayout.BUTTON_GIGA_GROUP_INFO, showGigaGroupButton && bottomChannelButtonsLayout.getVisibility() == View.VISIBLE, animated);
 
-        if (chatInputViewsContainer != null && chatActivityEnterView != null) {
-            boolean enterViewVisible = chatActivityEnterView.getVisibility() == View.VISIBLE;
-            chatInputViewsContainer.drawInputBackground = !chatActivityEnterView.isIosInputAppearance() || !enterViewVisible;
-            chatInputViewsContainer.invalidate();
-        }
+        updateChatInputBackground();
 
         checkRaiseSensors();
+    }
+
+    public void updateChatInputBackground() {
+        if (chatInputViewsContainer == null || chatActivityEnterView == null) {
+            return;
+        }
+        boolean searching = (searchItem != null && searchItemVisible)
+                || chatMode == MODE_SEARCH
+                || (searchContainer != null && searchContainer.getVisibility() == View.VISIBLE)
+                || (bottomViewsVisibilityController != null && bottomViewsVisibilityController.getVisibility(MESSAGE_SEARCH_CONTAINER) > 0);
+        boolean actions = (actionsButtonsLayout != null && actionsButtonsLayout.getVisibility() == View.VISIBLE)
+                || (bottomViewsVisibilityController != null && bottomViewsVisibilityController.getVisibility(MESSAGE_ACTION_CONTAINER) > 0);
+        boolean overlays = (bottomOverlay != null && bottomOverlay.getVisibility() == View.VISIBLE)
+                || (bottomChannelButtonsLayout != null && bottomChannelButtonsLayout.getVisibility() == View.VISIBLE);
+        boolean enterViewActive = chatActivityEnterView.getVisibility() == View.VISIBLE && !searching && !actions && !overlays;
+
+        boolean drawBackground = !chatActivityEnterView.isIosInputAppearance() || !enterViewActive;
+        if (chatInputViewsContainer.drawInputBackground != drawBackground) {
+            chatInputViewsContainer.drawInputBackground = drawBackground;
+            chatInputViewsContainer.invalidate();
+        }
     }
 
     private boolean shouldDisplaySwipeToLeftToReplyInForum() {
@@ -50231,6 +50254,7 @@ public class ChatActivity extends BaseFragment implements
         if (chatInputViewsContainer != null) {
             chatInputViewsContainer.setInputBubbleAlpha((int) (255 * (1f - hideFactor)));
             chatInputViewsContainer.setInputBubbleTranslationY(dp(54) * hideFactor);
+            updateChatInputBackground();
         }
 
 
