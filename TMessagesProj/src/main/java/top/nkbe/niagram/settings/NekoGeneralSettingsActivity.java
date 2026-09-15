@@ -148,7 +148,6 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     // Connections
     private final AbstractConfigCell headerConnection = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.Connection)));
     private final AbstractConfigCell useIPv6Row = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.useIPv6));
-    private final AbstractConfigCell disableProxyWhenVpnEnabledRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getDisableProxyWhenVpnEnabled()));
     private final AbstractConfigCell dnsTypeRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NyaConfig.dnsType, new String[]{
             getString(R.string.MapPreviewProviderTelegram),
             getString(R.string.DnsTypeCloudflare),
