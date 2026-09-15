@@ -50,8 +50,14 @@ public class BlurredBackgroundWithFadeDrawable extends Drawable {
 
     private int fadeHeight;
     private boolean opacity;
+    private boolean transparent;
 
     public BlurredBackgroundWithFadeDrawable(BlurredBackgroundDrawable drawable) {
+        this(drawable, false);
+    }
+
+    public BlurredBackgroundWithFadeDrawable(BlurredBackgroundDrawable drawable, boolean transparent) {
+        this.transparent = transparent;
         this.drawable = drawable;
         maskFadeGradientPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
         bitmapPaint.setFilterBitmap(true);
@@ -208,8 +214,8 @@ public class BlurredBackgroundWithFadeDrawable extends Drawable {
         return PixelFormat.UNKNOWN;
     }
 
-    private static LinearGradient createGradient(int color, boolean opacity) {
-        final int alpha = Color.alpha(color);
+    private LinearGradient createGradient(int color, boolean opacity) {
+        final int alpha = transparent ? 0 : Color.alpha(color);
 
         if (opacity) {
             return new LinearGradient(0, 0, 0, 1, new int[]{

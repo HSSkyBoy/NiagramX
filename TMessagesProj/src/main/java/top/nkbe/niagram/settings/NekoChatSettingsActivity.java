@@ -111,6 +111,7 @@ public class NekoChatSettingsActivity extends BaseNekoXSettingsActivity implemen
     private final AbstractConfigCell iosButtonPlacementRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getIosButtonPlacement()));
     private final AbstractConfigCell iosInputAppearanceRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getIosInputAppearance()));
     private final AbstractConfigCell compactInputSizeRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getCompactInputSize()));
+    private final AbstractConfigCell chatActivityNavbarTransparentRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getChatActivityNavbarTransparent()));
     private final AbstractConfigCell actionButtonStyleRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NyaConfig.INSTANCE.getActionButtonStyle(), new String[]{
             getString(R.string.ActionButtonStyleAccent),
             getString(R.string.ActionButtonStyleNeutral),

@@ -47,7 +47,7 @@ public class ChatActivityFadeView extends View implements Theme.Colorable {
         fadeDrawableTop = new BlurredBackgroundWithFadeDrawable(factory.create(this).setColorProvider(colorProvider));
         fadeDrawableTop.setFadeHeight(-dp(30), true);
 
-        fadeDrawableBottom = new BlurredBackgroundWithFadeDrawable(factory.create(this).setColorProvider(colorProvider));
+        fadeDrawableBottom = new BlurredBackgroundWithFadeDrawable(factory.create(this).setColorProvider(colorProvider), top.nkbe.niagram.config.NyaConfig.INSTANCE.getChatActivityNavbarTransparent().Bool());
         fadeDrawableBottom.setFadeHeight(dp(30), true);
     }
 

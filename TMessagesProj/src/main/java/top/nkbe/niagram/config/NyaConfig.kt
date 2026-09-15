@@ -1608,6 +1608,12 @@ object NyaConfig {
             ConfigItem.configTypeBool,
             false
         )
+    val chatActivityNavbarTransparent =
+        addConfig(
+            "ChatActivityNavbarTransparent",
+            ConfigItem.configTypeBool,
+            false
+        )
     val disableGooeyAvatarAnimation =
         addConfig(
             "DisableGooeyAvatarAnimation",

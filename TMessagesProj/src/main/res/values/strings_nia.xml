@@ -626,4 +626,7 @@
     <string name="ChatLocked">Chat Locked</string>
     <string name="ChatLockedDescription">Verify your identity to open this chat</string>
     <string name="ChatLockedMessage">Chat is locked</string>
+
+    <!-- Bottom Style -->
+    <string name="ChatActivityNavbarTransparent">Chat navbar fully transparent</string>
 </resources>

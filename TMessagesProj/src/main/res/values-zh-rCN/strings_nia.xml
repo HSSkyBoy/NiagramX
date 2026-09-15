@@ -602,4 +602,7 @@
     <string name="ChatLocked">聊天已锁定</string>
     <string name="ChatLockedDescription">验证身份以打开此聊天</string>
     <string name="ChatLockedMessage">聊天已锁定</string>
+
+    <!-- Bottom Style -->
+    <string name="ChatActivityNavbarTransparent">聊天页面底部导航栏全透明</string>
 </resources>
