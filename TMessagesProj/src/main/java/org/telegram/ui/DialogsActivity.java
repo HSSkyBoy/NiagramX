@@ -603,6 +603,8 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
     private ActionBarMenuSubItem readItem;
     @Nullable
     private ActionBarMenuSubItem blockItem;
+    @Nullable
+    private ActionBarMenuSubItem lockItem;
 
     private float additionalFloatingTranslation;
     private float floatingButtonPanOffset;
@@ -723,6 +725,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
     private final static int add_to_folder = 109;
     private final static int remove_from_folder = 110;
     private final static int community_ungroup = 111;
+    private final static int lock_chat = 112;
 
     private final static int select_all = 1000;
 
@@ -4153,6 +4156,26 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                         undoView.showWithAction(did, UndoView.ACTION_REMOVED_FROM_FOLDER, neverShow.size(), filter, null, null);
                     }
                     hideActionMode(false);
+                } else if (id == lock_chat) {
+                    if (!selectedDialogs.isEmpty()) {
+                        long singleDialogId = selectedDialogs.get(0);
+                        boolean isLocked = top.nkbe.niagram.helpers.ChatLockManager.isChatLocked(currentAccount, singleDialogId);
+                        if (isLocked) {
+                            top.nkbe.niagram.helpers.ChatLockManager.unlockChat(getParentActivity(), singleDialogId, success -> {
+                                if (success) {
+                                    top.nkbe.niagram.helpers.ChatLockManager.setChatLocked(currentAccount, singleDialogId, false);
+                                    hideActionMode(false);
+                                }
+                            });
+                        } else {
+                            top.nkbe.niagram.helpers.ChatLockManager.unlockChat(getParentActivity(), singleDialogId, success -> {
+                                if (success) {
+                                    top.nkbe.niagram.helpers.ChatLockManager.setChatLocked(currentAccount, singleDialogId, true);
+                                    hideActionMode(false);
+                                }
+                            });
+                        }
+                    }
                 } else if (id == pin || id == read || id == delete || id == clear || id == mute || id == archive || id == block || id == archive2 || id == pin2) {
                     performSelectedDialogsAction(selectedDialogs, id, true, false);
                 } else if (id == select_all) {
@@ -6934,6 +6957,7 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
         readItem = otherItem.addSubItem(read, R.drawable.msg_markread, LocaleController.getString(R.string.MarkAsRead));
         clearItem = otherItem.addSubItem(clear, R.drawable.msg_clear, LocaleController.getString(R.string.ClearHistory));
         blockItem = otherItem.addSubItem(block, R.drawable.msg_block, LocaleController.getString(R.string.BlockUser));
+        lockItem = otherItem.addSubItem(lock_chat, R.drawable.baseline_lock_24, LocaleController.getString(R.string.LockChat));
         otherItem.addSubItem(select_all, R.drawable.msg_select_between_solar, LocaleController.getString(R.string.SelectAll));
 
         muteItem.setOnLongClickListener(e -> {
@@ -8260,6 +8284,15 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 }
             }
         } else {
+            if (top.nkbe.niagram.helpers.ChatLockManager.isChatLocked(currentAccount, dialogId) && !top.nkbe.niagram.helpers.ChatLockManager.isChatUnlockedInSession(dialogId)) {
+                final long fDialogId = dialogId;
+                top.nkbe.niagram.helpers.ChatLockManager.unlockChat(getParentActivity(), dialogId, success -> {
+                    if (success) {
+                        onItemClick(view, position, adapter, x, y);
+                    }
+                });
+                return;
+            }
             Bundle args = new Bundle();
             if (DialogObject.isEncryptedDialog(dialogId)) {
                 args.putInt("enc_id", DialogObject.getEncryptedChatId(dialogId));
@@ -10152,6 +10185,17 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                 blockItem.setVisibility(View.VISIBLE);
             }
         }
+        if (lockItem != null) {
+            if (count == 1) {
+                long singleDialogId = selectedDialogs.get(0);
+                boolean isLocked = top.nkbe.niagram.helpers.ChatLockManager.isChatLocked(currentAccount, singleDialogId);
+                lockItem.setText(LocaleController.getString(isLocked ? R.string.UnlockChat : R.string.LockChat));
+                lockItem.setIcon(isLocked ? R.drawable.menu_unlock : R.drawable.baseline_lock_24);
+                lockItem.setVisibility(View.VISIBLE);
+            } else {
+                lockItem.setVisibility(View.GONE);
+            }
+        }
         if (removeFromFolderItem != null) {
             boolean cantRemoveFromFolder = filterTabsView == null || filterTabsView.getVisibility() != View.VISIBLE || filterTabsView.currentTabIsDefault();
             if (!cantRemoveFromFolder) {
@@ -11957,6 +12001,14 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
     }
 
     public void didSelectResult(final long dialogId, long topicId, boolean useAlert, final boolean param, TopicsFragment topicsFragment) {
+        if (top.nkbe.niagram.helpers.ChatLockManager.isChatLocked(currentAccount, dialogId) && !top.nkbe.niagram.helpers.ChatLockManager.isChatUnlockedInSession(dialogId)) {
+            top.nkbe.niagram.helpers.ChatLockManager.unlockChat(getParentActivity(), dialogId, success -> {
+                if (success) {
+                    didSelectResult(dialogId, topicId, useAlert, param, topicsFragment);
+                }
+            });
+            return;
+        }
         if (!checkCanWrite(dialogId)) {
             return;
         }
@@ -13333,6 +13385,15 @@ public class DialogsActivity extends BaseFragment implements NotificationCenter.
                         didSelectResult(did, 0, true, false);
                     }
                 } else {
+                    if (top.nkbe.niagram.helpers.ChatLockManager.isChatLocked(currentAccount, did) && !top.nkbe.niagram.helpers.ChatLockManager.isChatUnlockedInSession(did)) {
+                        final long fDid = did;
+                        top.nkbe.niagram.helpers.ChatLockManager.unlockChat(getParentActivity(), did, success -> {
+                            if (success) {
+                                didPressedOnSubDialog(fDid);
+                            }
+                        });
+                        return;
+                    }
                     Bundle args = new Bundle();
                     if (DialogObject.isUserDialog(did)) {
                         args.putLong("user_id", did);

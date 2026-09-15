@@ -6003,6 +6003,10 @@ public class DialogCell extends BaseCell implements StoriesListPlaceProvider.Ava
 
     public SpannableStringBuilder getMessageStringFormatted(int messageFormatType, String restrictionReason, CharSequence messageNameString, boolean applyThumbs) {
         SpannableStringBuilder stringBuilder;
+        if (top.nkbe.niagram.helpers.ChatLockManager.isChatLocked(currentAccount, currentDialogId)) {
+            applyName = false;
+            return SpannableStringBuilder.valueOf("🔒 " + LocaleController.getString(R.string.ChatLockedMessage));
+        }
         MessageObject captionMessage = getCaptionMessage();
         CharSequence msgText = message != null ? message.messageText : null;
         applyName = true;

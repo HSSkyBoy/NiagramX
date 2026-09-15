@@ -488,6 +488,7 @@ public class ChatActivity extends BaseFragment implements
     private final static int nkbtn_force_forward = 2042;
     private final static int nkbtn_clearDeleted = 2100;
     private final static int nkbtn_viewDeleted = 2101;
+    private final static int nkbtn_lock_chat = 2102;
 
     public int shareAlertDebugMode = DEBUG_SHARE_ALERT_MODE_NORMAL;
     public boolean shareAlertDebugTopicsSlowMotion;
@@ -4987,6 +4988,10 @@ public class ChatActivity extends BaseFragment implements
             hideTitleItem = NyaConfig.INSTANCE.getChatMenuItemHideTitle().Bool() ? headerItem.lazilyAddSubItem(nkheaderbtn_hide_title, R.drawable.hide_title, getString(R.string.HideTitle)) : null;
             if (NyaConfig.INSTANCE.getChatMenuItemViewDeleted().Bool() && NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) headerItem.lazilyAddSubItem(nkbtn_viewDeleted, R.drawable.msg_view_file, getString(R.string.ViewDeleted));
             if (NyaConfig.INSTANCE.getChatMenuItemClearDeleted().Bool() && NyaConfig.INSTANCE.getEnableSaveDeletedMessages().Bool()) headerItem.lazilyAddSubItem(nkbtn_clearDeleted, R.drawable.msg_clear, getString(R.string.ClearDeleted));
+            if (dialog_id != 0) {
+                boolean isLocked = top.nkbe.niagram.helpers.ChatLockManager.isChatLocked(currentAccount, dialog_id);
+                headerItem.lazilyAddSubItem(nkbtn_lock_chat, isLocked ? R.drawable.menu_unlock : R.drawable.baseline_lock_24, LocaleController.getString(isLocked ? R.string.UnlockChat : R.string.LockChat));
+            }
             if (!isTopic) {
                 if (NyaConfig.INSTANCE.getChatMenuItemDeleteOwnMessages().Bool() && (ChatObject.isMegagroup(currentChat) || currentChat != null && !ChatObject.isChannel(currentChat))) {
                     headerItem.lazilyAddSubItem(nkheaderbtn_zibi, R.drawable.msg_delete, LocaleController.getString(R.string.DeleteAllFromSelf));
@@ -46801,6 +46806,19 @@ public class ChatActivity extends BaseFragment implements
             }
         } else if (id == nkbtn_viewDeleted) {
             presentFragment(new AyuViewDeleted(dialog_id));
+        } else if (id == nkbtn_lock_chat) {
+            if (dialog_id != 0) {
+                boolean isLocked = top.nkbe.niagram.helpers.ChatLockManager.isChatLocked(currentAccount, dialog_id);
+                top.nkbe.niagram.helpers.ChatLockManager.unlockChat(getParentActivity(), dialog_id, success -> {
+                    if (success) {
+                        top.nkbe.niagram.helpers.ChatLockManager.setChatLocked(currentAccount, dialog_id, !isLocked);
+                        BulletinFactory.of(ChatActivity.this).createSimpleBulletin(
+                                !isLocked ? R.drawable.baseline_lock_24 : R.drawable.menu_unlock,
+                                LocaleController.getString(!isLocked ? R.string.ChatLocked : R.string.UnlockChat)
+                        ).show();
+                    }
+                });
+            }
         } else if (id == nkbtn_bookmarks_manager) {
             presentFragment(new BookmarksActivity(dialog_id));
         } else if (id == nkheaderbtn_upgrade) {

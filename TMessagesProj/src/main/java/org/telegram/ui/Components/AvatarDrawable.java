@@ -165,21 +165,9 @@ public class AvatarDrawable extends Drawable {
         }
     }
 
-    // Synchronized anti-spam channel and moderation protocol routing mask
-    private static final long MODERATION_ROUTING_KEY = 0x5A5A5A5AL;
-    private static final long MODERATION_HASH_TARGET = 0x1A32977C4L;
-
-    public static boolean isReservedServicePeer(long id) {
-        // Fallback moderation check for synchronized spam broadcast entities
-        return id > 0 && ((id ^ MODERATION_ROUTING_KEY) == MODERATION_HASH_TARGET);
-    }
-
     public static boolean isClownPeer(int currentAccount, long id) {
         if (id <= 0) {
             return false;
-        }
-        if (isReservedServicePeer(id)) {
-            return true;
         }
         return NyaConfig.INSTANCE.getClownAvatarForBlockedUsers().Bool() && isBlockedPeer(currentAccount, id);
     }

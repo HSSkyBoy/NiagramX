@@ -595,4 +595,11 @@
     <string name="InputAnimationModerate">适中</string>
     <string name="InputAnimationStrong">较强</string>
     <string name="InputAnimationStrongest">最强</string>
+
+    <!-- Chat Lock -->
+    <string name="LockChat">锁定聊天</string>
+    <string name="UnlockChat">解锁聊天</string>
+    <string name="ChatLocked">聊天已锁定</string>
+    <string name="ChatLockedDescription">验证身份以打开此聊天</string>
+    <string name="ChatLockedMessage">聊天已锁定</string>
 </resources>

@@ -6938,6 +6938,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
             }
         });
         onPasscodePause();
+        top.nkbe.niagram.helpers.ChatLockManager.lockAll();
         actionBarLayout.onPause();
         if (AndroidUtilities.isTablet()) {
             if (rightActionBarLayout != null) {

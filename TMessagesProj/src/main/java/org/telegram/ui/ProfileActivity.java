@@ -647,6 +647,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private final static int clear_cache = 104;
     private final static int add_to_folder = 105;
     private final static int shadow_ban = 107;
+    private final static int lock_chat = 108;
 
     private Rect rect = new Rect();
 
@@ -3072,6 +3073,20 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     presentFragment(fragment);
                 } else if (id == add_to_folder) {
                     showAddCurrentChatToFolderSheet();
+                } else if (id == lock_chat) {
+                    long curDialogId = getDialogId();
+                    if (curDialogId != 0) {
+                        boolean isLocked = top.nkbe.niagram.helpers.ChatLockManager.isChatLocked(currentAccount, curDialogId);
+                        top.nkbe.niagram.helpers.ChatLockManager.unlockChat(getParentActivity(), curDialogId, success -> {
+                            if (success) {
+                                top.nkbe.niagram.helpers.ChatLockManager.setChatLocked(currentAccount, curDialogId, !isLocked);
+                                BulletinFactory.of(ProfileActivity.this).createSimpleBulletin(
+                                        !isLocked ? R.drawable.baseline_lock_24 : R.drawable.menu_unlock,
+                                        LocaleController.getString(!isLocked ? R.string.ChatLocked : R.string.UnlockChat)
+                                ).show();
+                            }
+                        });
+                    }
                 }
             }
         });
@@ -12984,6 +12999,11 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
     private void createExtraItems(ActionBarMenuItem menu) {
         if (!FiltersListBottomSheet.getCanAddDialogFilters(this, getDialogId()).isEmpty()) {
             menu.addSubItem(add_to_folder, R.drawable.msg_folders, getString(R.string.FilterAddTo));
+        }
+        long curDialogId = getDialogId();
+        if (curDialogId != 0) {
+            boolean isLocked = top.nkbe.niagram.helpers.ChatLockManager.isChatLocked(currentAccount, curDialogId);
+            menu.addSubItem(lock_chat, isLocked ? R.drawable.menu_unlock : R.drawable.baseline_lock_24, LocaleController.getString(isLocked ? R.string.UnlockChat : R.string.LockChat));
         }
         menu.addSubItem(clear_cache, R.drawable.msg_clear, getString(R.string.ClearCache));
         if (userId == 0 && !ChatObject.hasAdminRights(currentChat)) {

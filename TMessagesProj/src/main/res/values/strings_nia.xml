@@ -619,4 +619,11 @@
     <string name="InputAnimationModerate">Moderate</string>
     <string name="InputAnimationStrong">Strong</string>
     <string name="InputAnimationStrongest">Strongest</string>
+
+    <!-- Chat Lock -->
+    <string name="LockChat">Lock chat</string>
+    <string name="UnlockChat">Unlock chat</string>
+    <string name="ChatLocked">Chat Locked</string>
+    <string name="ChatLockedDescription">Verify your identity to open this chat</string>
+    <string name="ChatLockedMessage">Chat is locked</string>
 </resources>
