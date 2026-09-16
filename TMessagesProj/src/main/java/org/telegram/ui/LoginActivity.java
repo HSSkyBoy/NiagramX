@@ -3527,7 +3527,12 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
         private Runnable cancelRequestingPasskey;
         private void requestPasskey(boolean clickedButton, boolean force) {
             if (activityMode != MODE_LOGIN) return;
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P || !BuildVars.SUPPORTS_PASSKEYS) return;
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.P || !BuildVars.SUPPORTS_PASSKEYS) {
+                if (clickedButton) {
+                    BulletinFactory.of(LoginActivity.this).createSimpleBulletin(R.raw.error, getString(R.string.PasskeyUnsupportedTitle)).show();
+                }
+                return;
+            }
             if (force) {
                 if (cancelRequestingPasskey != null) {
                     cancelRequestingPasskey.run();
@@ -3543,7 +3548,7 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
             cancelRequestingPasskey = PasskeysController.login(getContext(), currentAccount, clickedButton, (userId, authObject, err) -> {
                 cancelRequestingPasskey = null;
                 requestingPasskey = false;
-                if (err != null && ("EMPTY".equals(err) || "CANCELLED".equals(err))) {
+                if (err != null && ("EMPTY".equals(err) || "CANCELLED".equals(err) || "UNSUPPORTED".equals(err))) {
                     if (subtitleView != null && "CANCELLED".equals(err)) {
                         subtitleView.setText(AndroidUtilities.replaceArrows(AndroidUtilities.replaceSingleTag(getString(R.string.StartTextPasskey), () -> {
                             requestPasskey(true, false);
@@ -3551,6 +3556,8 @@ public class LoginActivity extends BaseFragment implements NotificationCenter.No
                     }
                     if ("EMPTY".equals(err)) {
                         BulletinFactory.of(LoginActivity.this).createSimpleBulletin(R.raw.info, getString(R.string.PasskeyNoCredentialAvailable)).show();
+                    } else if ("UNSUPPORTED".equals(err)) {
+                        BulletinFactory.of(LoginActivity.this).createSimpleBulletin(R.raw.error, getString(R.string.PasskeyUnsupportedTitle)).show();
                     }
                     return;
                 }

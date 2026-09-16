@@ -64,9 +64,19 @@ import top.nkbe.niagram.NekoXConfig;
 public class PasskeysController {
 
     public static void create(Context context, int currentAccount, Utilities.Callback2<TL_account.Passkey, String> done) {
-        if (!BuildVars.SUPPORTS_PASSKEYS) return;
+        if (!BuildVars.SUPPORTS_PASSKEYS) {
+            done.run(null, "Passkeys not supported on this device");
+            return;
+        }
 
-        final CredentialManager credentialManager = CredentialManager.create(context);
+        final CredentialManager credentialManager;
+        try {
+            credentialManager = CredentialManager.create(context);
+        } catch (Throwable t) {
+            FileLog.e(t);
+            done.run(null, t.getMessage());
+            return;
+        }
         final AlertDialog progressDialog = new AlertDialog(context, AlertDialog.ALERT_TYPE_SPINNER);
         progressDialog.showDelayed(500);
 
@@ -168,7 +178,7 @@ public class PasskeysController {
                             });
                         });
                     }));
-                } catch (Exception e) {
+                } catch (Throwable e) {
                     FileLog.e(e);
                     AndroidUtilities.runOnUIThread(() -> {
                         done.run(null, e.getMessage());
@@ -179,9 +189,23 @@ public class PasskeysController {
     }
 
     public static Runnable login(Context context, int currentAccount, boolean clickedButton, Utilities.Callback3<Long, TLRPC.auth_Authorization, String> done) {
-        if (!BuildVars.SUPPORTS_PASSKEYS) return null;
+        if (!BuildVars.SUPPORTS_PASSKEYS) {
+            if (clickedButton) {
+                done.run(0L, null, "UNSUPPORTED");
+            }
+            return null;
+        }
 
-        final CredentialManager credentialManager = CredentialManager.create(context);
+        final CredentialManager credentialManager;
+        try {
+            credentialManager = CredentialManager.create(context);
+        } catch (Throwable t) {
+            FileLog.e(t);
+            if (clickedButton) {
+                done.run(0L, null, t.getMessage());
+            }
+            return null;
+        }
 
         final boolean[] cancelled = new boolean[1];
         final Runnable[] cancel = new Runnable[1];
@@ -306,7 +330,8 @@ public class PasskeysController {
                 });
 
                 cancel[0] = cancellationSignal::cancel;
-            } catch (Exception e) {
+            } catch (Throwable e) {
+                FileLog.e(e);
                 done.run(0L, null, e.getMessage());
             }
 
@@ -344,7 +369,7 @@ public class PasskeysController {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
                 CredentialManager.create(activity).createSettingsPendingIntent().send();
             }
-        } catch (PendingIntent.CanceledException ignored) {
+        } catch (Throwable ignored) {
         }
     }
 

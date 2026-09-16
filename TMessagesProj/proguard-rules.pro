@@ -244,3 +244,8 @@
 -keepattributes *Annotation*
 -renamesourcefileattribute SourceFile
 -repackageclasses ''
+
+# CredentialManager
+-keep class androidx.credentials.** { *; }
+-dontwarn androidx.credentials.**
+-dontwarn android.credentials.**
