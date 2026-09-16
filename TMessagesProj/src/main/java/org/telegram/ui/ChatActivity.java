@@ -407,6 +407,7 @@ import top.nkbe.niagram.parts.PollTransUpdatesKt;
 import top.nkbe.niagram.parts.RichMessageTransHelper;
 import top.nkbe.niagram.helpers.SettingsBackupHelper;
 import top.nkbe.niagram.translate.Translator;
+import xyz.nextalone.nagram.helper.MotionPhotoHelper;
 import top.nkbe.niagram.translate.TranslatorKt;
 import top.nkbe.niagram.ui.BookmarksActivity;
 import top.nkbe.niagram.ui.BottomBuilder;
@@ -34986,21 +34987,10 @@ public class ChatActivity extends BaseFragment implements
             return;
         }
         if (messageObject.isLivePhoto()) {
-            final TLRPC.Document videoDoc = MessageObject.getMedia(messageObject.messageOwner) != null
-                    ? MessageObject.getMedia(messageObject.messageOwner).document
-                    : null;
-            String videoPath = null;
-            if (videoDoc != null) {
-                File videoFile = FileLoader.getInstance(currentAccount).getPathToAttach(videoDoc, false);
-                if (videoFile == null || !videoFile.exists()) {
-                    videoFile = FileLoader.getInstance(currentAccount).getPathToAttach(videoDoc, true);
-                }
-                if (videoFile != null && videoFile.exists()) {
-                    videoPath = videoFile.getPath();
-                }
-            }
-            if (!TextUtils.isEmpty(videoPath)) {
-                MediaController.saveFile(path, videoPath, getParentActivity(), null);
+            MotionPhotoHelper.MergeResult result = MotionPhotoHelper.INSTANCE.createMotionPhoto(currentAccount, messageObject);
+            if (result instanceof MotionPhotoHelper.MergeResult.Success) {
+                String outputPath = ((MotionPhotoHelper.MergeResult.Success) result).getOutputPath();
+                MediaController.saveFile(messageObject, outputPath, getParentActivity(), 0, null, null);
                 return;
             }
         }
@@ -35555,23 +35545,9 @@ public class ChatActivity extends BaseFragment implements
                     return;
                 }
                 if (selectedObject.isLivePhoto()) {
-                    final TLRPC.Document videoDoc = MessageObject.getMedia(selectedObject.messageOwner) != null
-                            ? MessageObject.getMedia(selectedObject.messageOwner).document
-                            : null;
-                    String videoPath = null;
-                    if (videoDoc != null) {
-                        File videoFile = FileLoader.getInstance(currentAccount).getPathToAttach(videoDoc, false);
-                        if (videoFile == null || !videoFile.exists()) {
-                            videoFile = FileLoader.getInstance(currentAccount).getPathToAttach(videoDoc, true);
-                        }
-                        if (videoFile != null && videoFile.exists()) {
-                            videoPath = videoFile.getPath();
-                        }
-                    }
-                    if (!TextUtils.isEmpty(videoPath)) {
-                        MediaController.saveFile(path, videoPath, getParentActivity(), null);
-                        BulletinFactory.createSaveToGalleryBulletin(this, false, true, themeDelegate).show();
-                        break;
+                    MotionPhotoHelper.MergeResult result = MotionPhotoHelper.INSTANCE.createMotionPhoto(currentAccount, selectedObject);
+                    if (result instanceof MotionPhotoHelper.MergeResult.Success) {
+                        path = ((MotionPhotoHelper.MergeResult.Success) result).getOutputPath();
                     }
                 }
                 MediaController.saveFile(selectedObject, path, getParentActivity(), 0, null, null);

@@ -356,6 +356,7 @@ import top.nkbe.niagram.utils.ProxyUtil;
 import top.nkbe.niagram.config.NyaConfig;
 import top.nkbe.niagram.helpers.MessageHelper;
 import top.nkbe.niagram.streaming.MediaStreamingProvider;
+import xyz.nextalone.nagram.helper.MotionPhotoHelper;
 
 import me.vkryl.android.animator.BoolAnimator;
 import me.vkryl.android.animator.FactorAnimator;
@@ -5008,26 +5009,14 @@ public class PhotoViewer implements NotificationCenter.NotificationCenterDelegat
                             f = new File(FileLoader.getDirectory(FileLoader.MEDIA_DIR_CACHE), f.getName());
                         }
 
-                        final boolean isLivePhoto = currentMessageObject != null && currentMessageObject.isLivePhoto();
-                        File videoFileForLivePhoto = null;
-                        if (isLivePhoto) {
-                            final TLRPC.Document videoDoc = MessageObject.getMedia(currentMessageObject.messageOwner) != null
-                                    ? MessageObject.getMedia(currentMessageObject.messageOwner).document
-                                    : null;
-                            if (videoDoc != null) {
-                                videoFileForLivePhoto = FileLoader.getInstance(currentAccount).getPathToAttach(videoDoc, false);
-                                if (videoFileForLivePhoto == null || !videoFileForLivePhoto.exists()) {
-                                    videoFileForLivePhoto = FileLoader.getInstance(currentAccount).getPathToAttach(videoDoc, true);
-                                }
+                        if (currentMessageObject != null && currentMessageObject.isLivePhoto()) {
+                            MotionPhotoHelper.MergeResult result = MotionPhotoHelper.INSTANCE.createMotionPhoto(currentAccount, currentMessageObject);
+                            if (result instanceof MotionPhotoHelper.MergeResult.Success) {
+                                f = new File(((MotionPhotoHelper.MergeResult.Success) result).getOutputPath());
                             }
                         }
-                        if (isLivePhoto) {
-                            if (f != null && f.exists() && videoFileForLivePhoto != null && videoFileForLivePhoto.exists()) {
-                                MediaController.saveFile(f.toString(), videoFileForLivePhoto.toString(), parentActivity, uri -> BulletinFactory.createSaveToGalleryBulletin(containerView, false, true, 0xf9222222, 0xffffffff).show());
-                            } else {
-                                showDownloadAlert();
-                            }
-                        } else if (f != null && f.exists()) {
+
+                        if (f != null && f.exists()) {
                             MediaController.saveFile(f.toString(), parentActivity, isVideo ? 1 : 0, null, null, uri -> BulletinFactory.createSaveToGalleryBulletin(containerView, isVideo, 0xf9222222, 0xffffffff).show());
                         } else {
                             showDownloadAlert();
