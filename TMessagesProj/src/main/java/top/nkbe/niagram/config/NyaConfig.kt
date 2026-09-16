@@ -1218,12 +1218,14 @@ object NyaConfig {
             ConfigItem.configTypeBool,
             true
         )
-    val useEditedIcon =
+    val showEditedIcon =
         addConfig(
-            "UseEditedIcon",
+            "ShowEditedIcon",
             ConfigItem.configTypeBool,
             true
         )
+    @JvmField
+    val useEditedIcon = showEditedIcon
     val saveToChatSubfolder =
         addConfig(
             "SaveToChatSubfolder",
@@ -1710,12 +1712,14 @@ object NyaConfig {
             ConfigItem.configTypeBool,
             true
         )
-    val disableAvatarBlur =
+    val disableProfileAvatarBlur =
         addConfig(
-            "DisableAvatarBlur",
+            "DisableProfileAvatarBlur",
             ConfigItem.configTypeBool,
             false
         )
+    @JvmField
+    val disableAvatarBlur = disableProfileAvatarBlur
     val disableInAppBrowserGestures =
         addConfig(
             "DisableInAppBrowserGestures",
@@ -2027,6 +2031,13 @@ object NyaConfig {
             }
             if (ApplicationLoader.applicationContext == null) {
                 return
+            }
+            val prefs = getPreferences()
+            if (prefs.contains("UseEditedIcon") && !prefs.contains("ShowEditedIcon")) {
+                prefs.edit().putBoolean("ShowEditedIcon", prefs.getBoolean("UseEditedIcon", true)).apply()
+            }
+            if (prefs.contains("DisableAvatarBlur") && !prefs.contains("DisableProfileAvatarBlur")) {
+                prefs.edit().putBoolean("DisableProfileAvatarBlur", prefs.getBoolean("DisableAvatarBlur", false)).apply()
             }
             for (i in configs.indices) {
                 val o = configs[i]

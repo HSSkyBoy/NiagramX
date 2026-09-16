@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-설정</string>
     <string name="CombineMessage">메시지 합치기</string>
@@ -208,7 +208,7 @@
     <string name="TranslatorMinimizedGroup">이 그룹에서 번역기 바가 최소화되었습니다.</string>
     <string name="TranslatorMinimized">이 채팅에서 번역기 바가 최소화되었습니다.</string>
     <string name="UseDeletedIcon">\"삭제됨\" 대신 아이콘 표시</string>
-    <string name="UseEditedIcon">\"수정됨\" 대신 아이콘 표시</string>
+    <string name="ShowEditedIcon">\"수정됨\" 대신 아이콘 표시</string>
     <string name="SilentMessageByDefault">소리 없이 보내기</string>
     <string name="FolderNameAsTitle">폴더 이름을 제목으로 사용</string>
     <string name="SaveDeletedMessageForBotUser">봇 메시지 저장</string>
@@ -364,7 +364,7 @@
     <string name="PinnedReactions_Type">이 이모지는 지원되지 않습니다.</string>
     <string name="PinnedReactions_Apply">고정 반응 업데이트</string>
     <string name="HideStoriesFromHeader">헤더에서 숨기기</string>
-    <string name="DisableAvatarBlur">아바타 블러 비활성화</string>
+    <string name="DisableProfileAvatarBlur">아바타 블러 비활성화</string>
     <string name="ExportSettingsIncludeApiKeys">API 키 포함</string>
     <string name="DisableInAppBrowserGestures">제스처 비활성화</string>
     <string name="HowToObtain">얻는 방법</string>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Cấu hình Niagram</string>
     <string name="CombineMessage">Kết hợp Tin nhắn</string>
@@ -199,7 +199,7 @@
     <string name="TranslatorMinimizedGroup">Thanh dịch thuật đã được thu nhỏ cho nhóm này.</string>
     <string name="TranslatorMinimized">Thanh dịch thuật đã được thu nhỏ cho cuộc trò chuyện này.</string>
     <string name="UseDeletedIcon">Hiển thị biểu tượng thay vì \"đã xóa\"</string>
-    <string name="UseEditedIcon">Hiển thị biểu tượng thay vì \"đã chỉnh sửa\"</string>
+    <string name="ShowEditedIcon">Hiển thị biểu tượng thay vì \"đã chỉnh sửa\"</string>
     <string name="SilentMessageByDefault">Gửi không cần âm thanh</string>
     <string name="FolderNameAsTitle">Sử dụng tên thư mục làm tiêu đề</string>
     <string name="SaveDeletedMessageForBotUser">Lưu tin nhắn của Bot</string>
@@ -351,7 +351,7 @@
     <string name="PinnedReactions_Type">Biểu tượng cảm xúc này không được hỗ trợ.</string>
     <string name="PinnedReactions_Apply">Cập nhật phản ứng đã ghim</string>
     <string name="HideStoriesFromHeader">Ẩn khỏi Tiêu đề</string>
-    <string name="DisableAvatarBlur">Vô hiệu hóa hiệu ứng mờ avatar</string>
+    <string name="DisableProfileAvatarBlur">Vô hiệu hóa hiệu ứng mờ avatar</string>
     <string name="ExportSettingsIncludeApiKeys">Bao gồm Khóa API</string>
     <string name="DisableInAppBrowserGestures">Vô hiệu hóa cử chỉ</string>
     <string name="HowToObtain">Làm sao để lấy?</string>

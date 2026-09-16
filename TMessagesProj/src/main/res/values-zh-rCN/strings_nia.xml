@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Neo 设置</string>
     <string name="CombineMessage">合并消息</string>
@@ -244,7 +244,7 @@
     <string name="TranslatorMinimizedGroup">翻译栏已为此群组最小化。</string>
     <string name="TranslatorMinimized">翻译栏已为此聊天最小化。</string>
     <string name="UseDeletedIcon">使用图标代替“已删除”标记</string>
-    <string name="UseEditedIcon">使用图标代替“已编辑”标记</string>
+    <string name="ShowEditedIcon">使用图标代替“已编辑”标记</string>
     <string name="SilentMessageByDefault">默认发送无声消息</string>
     <string name="FolderNameAsTitle">使用文件夹名称作为标题</string>
     <string name="SaveDeletedMessageForBotUser">保存机器人消息</string>
@@ -422,7 +422,7 @@
     <string name="PinnedReactions_Type">不支持此 Emoji。</string>
     <string name="PinnedReactions_Apply">更新置顶的表情回应</string>
     <string name="HideStoriesFromHeader">在标题栏中隐藏动态</string>
-    <string name="DisableAvatarBlur">禁用头像模糊</string>
+    <string name="DisableProfileAvatarBlur">禁用头像模糊</string>
     <string name="ExportSettingsIncludeApiKeys">包含 API 密钥</string>
     <string name="DisableInAppBrowserGestures">禁用手势</string>
     <string name="HowToObtain">如何获取？</string>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Konfiguracja N</string>
     <string name="CombineMessage">Połącz wiadomości</string>
@@ -208,7 +208,7 @@
     <string name="TranslatorMinimizedGroup">Pasek tłumacza został zminimalizowany dla tej grupy.</string>
     <string name="TranslatorMinimized">Pasek tłumacza został zminimalizowany na potrzeby tego czatu.</string>
     <string name="UseDeletedIcon">Pokaż ikonę zamiast „usunięto”</string>
-    <string name="UseEditedIcon">Pokaż ikonę zamiast „edytowano”</string>
+    <string name="ShowEditedIcon">Pokaż ikonę zamiast „edytowano”</string>
     <string name="SilentMessageByDefault">Wyślij bez dźwięku</string>
     <string name="FolderNameAsTitle">Użyj nazwy folderu jako tytułu</string>
     <string name="SaveDeletedMessageForBotUser">Zapisz wiadomości bota</string>
@@ -364,7 +364,7 @@
     <string name="PinnedReactions_Type">Ta emoji nie jest obsługiwana.</string>
     <string name="PinnedReactions_Apply">Aktualizuj przypięte reakcje</string>
     <string name="HideStoriesFromHeader">Ukryj w nagłówku</string>
-    <string name="DisableAvatarBlur">Wyłącz rozmycie awatara</string>
+    <string name="DisableProfileAvatarBlur">Wyłącz rozmycie awatara</string>
     <string name="ExportSettingsIncludeApiKeys">Dołącz klucze API</string>
     <string name="DisableInAppBrowserGestures">Wyłącz gesty</string>
     <string name="HowToObtain">Jak zdobyć?</string>

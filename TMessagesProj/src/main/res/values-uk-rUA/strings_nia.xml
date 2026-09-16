@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Налаштування N</string>
     <string name="CombineMessage">Об\'єднати повідомлення</string>
@@ -208,7 +208,7 @@
     <string name="TranslatorMinimizedGroup">Для цього групового чату було згорнуто панель перекладу.</string>
     <string name="TranslatorMinimized">Для цього чату згорнуто панель перекладу.</string>
     <string name="UseDeletedIcon">Показати значок замість \"видалено\"</string>
-    <string name="UseEditedIcon">Показати значок замість \"відредаговано\"</string>
+    <string name="ShowEditedIcon">Показати значок замість \"відредаговано\"</string>
     <string name="SilentMessageByDefault">Надіслати повідомлення без звуку за замовчуванням</string>
     <string name="FolderNameAsTitle">Використовувати ім\'я теки як заголовок</string>
     <string name="SaveDeletedMessageForBotUser">Зберегти повідомлення бота</string>
@@ -383,7 +383,7 @@
     <string name="PinnedReactions_Type">Цей емодзі не підтримується.</string>
     <string name="PinnedReactions_Apply">Оновити закріплені реакції</string>
     <string name="HideStoriesFromHeader">Приховати з заголовка</string>
-    <string name="DisableAvatarBlur">Вимкнути розмиття аватара</string>
+    <string name="DisableProfileAvatarBlur">Вимкнути розмиття аватара</string>
     <string name="ExportSettingsIncludeApiKeys">Включити ключі API</string>
     <string name="DisableInAppBrowserGestures">Вимкнути жести</string>
     <string name="HowToObtain">Як отримати?</string>

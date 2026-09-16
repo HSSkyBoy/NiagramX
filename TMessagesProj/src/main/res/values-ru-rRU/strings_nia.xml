@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Настройки N</string>
     <string name="CombineMessage">Объединить сообщения</string>
@@ -217,7 +217,7 @@
     <string name="TranslatorMinimizedGroup">Панель переводчика для этой группы была свёрнута.</string>
     <string name="TranslatorMinimized">Панель переводчика для этого чата была свёрнута.</string>
     <string name="UseDeletedIcon">Показывать значок вместо «удалено»</string>
-    <string name="UseEditedIcon">Показывать значок вместо «изменено»</string>
+    <string name="ShowEditedIcon">Показывать значок вместо «изменено»</string>
     <string name="SilentMessageByDefault">Отправлять без звука</string>
     <string name="FolderNameAsTitle">Название папки в качестве заголовка</string>
     <string name="SaveDeletedMessageForBotUser">Сохранять сообщения ботов</string>
@@ -395,7 +395,7 @@
     <string name="PinnedReactions_Type">Этот эмодзи не поддерживается.</string>
     <string name="PinnedReactions_Apply">Обновить закреплённые реакции</string>
     <string name="HideStoriesFromHeader">Скрыть из заголовка</string>
-    <string name="DisableAvatarBlur">Отключить размытие аватаров</string>
+    <string name="DisableProfileAvatarBlur">Отключить размытие аватаров</string>
     <string name="ExportSettingsIncludeApiKeys">Включать ключи API</string>
     <string name="DisableInAppBrowserGestures">Отключить жесты</string>
     <string name="HowToObtain">Как получить?</string>

@@ -152,7 +152,7 @@ public class ProfileGalleryBlurView extends View {
     }
 
     private void swap(int from, int to, int clear) {
-        if (NyaConfig.INSTANCE.getDisableAvatarBlur().Bool()) {
+        if (NyaConfig.INSTANCE.getDisableProfileAvatarBlur().Bool()) {
             return;
         }
         synchronized (lock) {
@@ -430,7 +430,7 @@ public class ProfileGalleryBlurView extends View {
     }
 
     public void draw(Canvas canvas, ProfileActivity.AvatarImageView avatarImageView, float width, float height, boolean translate, float fraction, float alpha) {
-        if (view == null || !view.isAttachedToWindow() || view.getVisibility() == GONE || NyaConfig.INSTANCE.getDisableAvatarBlur().Bool()) {
+        if (view == null || !view.isAttachedToWindow() || view.getVisibility() == GONE || NyaConfig.INSTANCE.getDisableProfileAvatarBlur().Bool()) {
             return;
         }
         if (usingRenderNode && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -586,7 +586,7 @@ public class ProfileGalleryBlurView extends View {
         blurNode.setAlpha(alpha.set(1f));
 
         canvas.save();
-        canvas.scale(scale, scale);
+        canvas.scale(width / blurNode.getWidth(), (float) (size + actionSize) / blurNode.getHeight());
         canvas.drawRenderNode(blurNode);
         canvas.restore();
 
@@ -679,6 +679,7 @@ public class ProfileGalleryBlurView extends View {
         actionsBlurNode.endRecording();
         actionsBlurNode.setAlpha(alpha.set(1f));
 
+        scale = width / actionsBlurNode.getWidth();
         if (actionsView != null) {
             if (avatarImageView != null) {
                 actionsView.drawingBlur(actionsBlurNode, avatarImageView, scale / openingScale, -size);

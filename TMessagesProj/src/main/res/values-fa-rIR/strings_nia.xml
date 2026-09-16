@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">پیکربندی N</string>
     <string name="CombineMessage">ترکیب پیام‌ها</string>
@@ -208,7 +208,7 @@
     <string name="TranslatorMinimizedGroup">نوار ترجمه برای این گروه کوچک شد.</string>
     <string name="TranslatorMinimized">نوار ترجمه برای این گفتگو کوچک شد.</string>
     <string name="UseDeletedIcon">نمایش نماد به جای \"حذف شده\"</string>
-    <string name="UseEditedIcon">نمایش نماد به جای \"ویرایش شده\"</string>
+    <string name="ShowEditedIcon">نمایش نماد به جای \"ویرایش شده\"</string>
     <string name="SilentMessageByDefault">ارسال بی‌صدا به طور پیش‌فرض</string>
     <string name="FolderNameAsTitle">نمایش نام پوشه به عنوان عنوان</string>
     <string name="SaveDeletedMessageForBotUser">ذخیره پیام‌های ربات</string>
@@ -364,7 +364,7 @@
     <string name="PinnedReactions_Type">این ایموجی پشتیبانی نمی‌شود.</string>
     <string name="PinnedReactions_Apply">به‌روزرسانی واکنش‌های پین شده</string>
     <string name="HideStoriesFromHeader">پنهان کردن از هدر</string>
-    <string name="DisableAvatarBlur">غیرفعال کردن تاری آواتار</string>
+    <string name="DisableProfileAvatarBlur">غیرفعال کردن تاری آواتار</string>
     <string name="ExportSettingsIncludeApiKeys">کلیدهای API را وارد کنید</string>
     <string name="DisableInAppBrowserGestures">غیرفعال کردن حرکات</string>
     <string name="HowToObtain">چگونه به دست آورم؟</string>

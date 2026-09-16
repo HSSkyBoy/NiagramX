@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Neo-Settings</string>
     <string name="CombineMessage">Combine Messages</string>
@@ -262,7 +262,7 @@
     <string name="TranslatorMinimizedGroup">Translator bar has been minimized for this group.</string>
     <string name="TranslatorMinimized">Translator bar has been minimized for this chat.</string>
     <string name="UseDeletedIcon">Show Icon Instead of \"deleted\"</string>
-    <string name="UseEditedIcon">Show Icon Instead of \"edited\"</string>
+    <string name="ShowEditedIcon">Show icon instead of \"edited\"</string>
     <string name="SilentMessageByDefault">Send without Sound</string>
     <string name="FolderNameAsTitle">Use Folder Name as Title</string>
     <string name="SaveDeletedMessageForBotUser">Save Bot Messages</string>
@@ -441,7 +441,7 @@
     <string name="PinnedReactions_Type">This emoji is unsupported.</string>
     <string name="PinnedReactions_Apply">Update Pinned Reactions</string>
     <string name="HideStoriesFromHeader">Hide from Header</string>
-    <string name="DisableAvatarBlur">Disable Avatar Blur</string>
+    <string name="DisableProfileAvatarBlur">Disable Profile Avatar Blur</string>
     <string name="ExportSettingsIncludeApiKeys">Include API Keys</string>
     <string name="DisableInAppBrowserGestures">Disable Gestures</string>
     <string name="HowToObtain">How to obtain?</string>

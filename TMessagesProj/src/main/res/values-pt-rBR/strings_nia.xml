@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-Configuração</string>
     <string name="CombineMessage">Combinar mensagens</string>
@@ -207,7 +207,7 @@
     <string name="TranslatorMinimizedGroup">A barra de tradução foi minimizada para este grupo.</string>
     <string name="TranslatorMinimized">A barra de tradução foi minimizada para este chat.</string>
     <string name="UseDeletedIcon">Mostrar ícone em vez de \"apagada\"</string>
-    <string name="UseEditedIcon">Mostrar ícone em vez de \"editada\"</string>
+    <string name="ShowEditedIcon">Mostrar ícone em vez de \"editada\"</string>
     <string name="SilentMessageByDefault">Enviar sem som</string>
     <string name="FolderNameAsTitle">Usar nome da pasta como título</string>
     <string name="SaveDeletedMessageForBotUser">Salvar mensagens do bot</string>
@@ -363,7 +363,7 @@
     <string name="PinnedReactions_Type">Este emoji não é suportado.</string>
     <string name="PinnedReactions_Apply">Atualizar reações fixadas</string>
     <string name="HideStoriesFromHeader">Ocultar do cabeçalho</string>
-    <string name="DisableAvatarBlur">Desativar desfoque do avatar</string>
+    <string name="DisableProfileAvatarBlur">Desativar desfoque do avatar</string>
     <string name="ExportSettingsIncludeApiKeys">Incluir chaves de API</string>
     <string name="DisableInAppBrowserGestures">Desativar gestos</string>
     <string name="HowToObtain">Como obter?</string>

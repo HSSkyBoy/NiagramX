@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-Ayarları</string>
     <string name="CombineMessage">Mesajları Birleştir</string>
@@ -208,7 +208,7 @@
     <string name="TranslatorMinimizedGroup">Çevirmen çubuğu bu grup için küçültüldü.</string>
     <string name="TranslatorMinimized">Çevirmen çubuğu bu sohbet için küçültüldü.</string>
     <string name="UseDeletedIcon">\"silindi\" Yerine Simge Göster</string>
-    <string name="UseEditedIcon">\"düzenlendi\" Yerine Simge Göster</string>
+    <string name="ShowEditedIcon">\"düzenlendi\" Yerine Simge Göster</string>
     <string name="SilentMessageByDefault">Sessiz Gönder</string>
     <string name="FolderNameAsTitle">Klasör Adını Başlık Olarak Kullan</string>
     <string name="SaveDeletedMessageForBotUser">Bot Mesajlarını Kaydet</string>
@@ -363,7 +363,7 @@
     <string name="PinnedReactions_Type">Bu emoji desteklenmiyor.</string>
     <string name="PinnedReactions_Apply">Sabitlenmiş Tepkileri Güncelle</string>
     <string name="HideStoriesFromHeader">Başlıktan Gizle</string>
-    <string name="DisableAvatarBlur">Avatar Bulanıklığını Devre Dışı Bırak</string>
+    <string name="DisableProfileAvatarBlur">Avatar Bulanıklığını Devre Dışı Bırak</string>
     <string name="ExportSettingsIncludeApiKeys">API Anahtarlarını Dahil Et</string>
     <string name="DisableInAppBrowserGestures">Hareketleri (Gestures) Devre Dışı Bırak</string>
     <string name="HowToObtain">Nasıl alınır?</string>

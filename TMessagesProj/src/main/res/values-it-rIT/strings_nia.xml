@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-Config</string>
     <string name="CombineMessage">Unisci Messaggi</string>
@@ -209,7 +209,7 @@
     <string name="TranslatorMinimizedGroup">Per questo gruppo la barra del traduttore è stata ridotta al minimo.</string>
     <string name="TranslatorMinimized">Per questa chat la barra del traduttore è stata ridotta al minimo.</string>
     <string name="UseDeletedIcon">Mostra icona invece di \"eliminato\"</string>
-    <string name="UseEditedIcon">Mostra icona invece di \"modificato\"</string>
+    <string name="ShowEditedIcon">Mostra icona invece di \"modificato\"</string>
     <string name="SilentMessageByDefault">Invia senza Suono</string>
     <string name="FolderNameAsTitle">Usa il nome della cartella come titolo</string>
     <string name="SaveDeletedMessageForBotUser">Salva i messaggi del bot</string>
@@ -369,7 +369,7 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="PinnedReactions_Type">Questa emoji non è supportata.</string>
     <string name="PinnedReactions_Apply">Aggiorna Reazioni Fissate</string>
     <string name="HideStoriesFromHeader">Nascondi dall\'Header</string>
-    <string name="DisableAvatarBlur">Disabilita la sfocatura dell\'avatar</string>
+    <string name="DisableProfileAvatarBlur">Disabilita la sfocatura dell\'avatar</string>
     <string name="ExportSettingsIncludeApiKeys">Includi chiavi API</string>
     <string name="DisableInAppBrowserGestures">Disattiva gestures</string>
     <string name="HowToObtain">Come si ottiene?</string>

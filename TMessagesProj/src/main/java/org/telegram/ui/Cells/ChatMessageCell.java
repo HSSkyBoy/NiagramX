@@ -18669,7 +18669,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             } else if (messageObject.messageOwner.fwd_from != null && messageObject.messageOwner.fwd_from.imported) {
                 currentTimeString.insert(0, " ");
             } else {
-                String toInsert = edited && !NyaConfig.INSTANCE.getUseEditedIcon().Bool() ? ", " : " ";
+                String toInsert = edited && !NyaConfig.INSTANCE.getShowEditedIcon().Bool() ? ", " : " ";
                 currentTimeString.insert(0, toInsert);
             }
         }
@@ -18710,7 +18710,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         }
         timeTextWidth = timeWidth = (int) Math.ceil(Theme.chat_timePaint.measureText(currentTimeString, 0, currentTimeString == null ? 0 : currentTimeString.length()));
         if (timeString instanceof SpannableStringBuilder) {
-            if (edited && NyaConfig.INSTANCE.getUseEditedIcon().Bool() && TimeStringHelper.editedDrawable != null) {
+            if (edited && NyaConfig.INSTANCE.getShowEditedIcon().Bool() && TimeStringHelper.editedDrawable != null) {
                 timeTextWidth = timeWidth += TimeStringHelper.editedDrawable.getIntrinsicWidth();
             }
             if (ayuDeleted && NyaConfig.INSTANCE.getUseDeletedIcon().Bool() && TimeStringHelper.deletedDrawable != null) {

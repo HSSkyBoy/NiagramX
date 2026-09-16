@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Konfig-N</string>
     <string name="CombineMessage">Gabungkan Pesan</string>
@@ -209,7 +209,7 @@
     <string name="TranslatorMinimizedGroup">Bar penerjemah telah diperkecil untuk grup ini.</string>
     <string name="TranslatorMinimized">Bar penerjemah telah diperkecil untuk obrolan ini.</string>
     <string name="UseDeletedIcon">Tampilkan Ikon Alih-alih \"dihapus\"</string>
-    <string name="UseEditedIcon">Tampilkan Ikon Alih-alih \"disunting\"</string>
+    <string name="ShowEditedIcon">Tampilkan Ikon Alih-alih \"disunting\"</string>
     <string name="SilentMessageByDefault">Kirim tanpa Suara</string>
     <string name="FolderNameAsTitle">Gunakan Nama Folder sebagai Judul</string>
     <string name="SaveDeletedMessageForBotUser">Simpan Pesan Bot</string>
@@ -365,7 +365,7 @@
     <string name="PinnedReactions_Type">Emoji ini tidak didukung.</string>
     <string name="PinnedReactions_Apply">Perbarui Reaksi yang Disematkan</string>
     <string name="HideStoriesFromHeader">Sembunyikan dari Header</string>
-    <string name="DisableAvatarBlur">Nonaktifkan Avatar Buram</string>
+    <string name="DisableProfileAvatarBlur">Nonaktifkan Avatar Buram</string>
     <string name="ExportSettingsIncludeApiKeys">Sertakan Kunci API</string>
     <string name="DisableInAppBrowserGestures">Nonaktifkan Gerakan</string>
     <string name="HowToObtain">Bagaimana cara mendapatkannya?</string>

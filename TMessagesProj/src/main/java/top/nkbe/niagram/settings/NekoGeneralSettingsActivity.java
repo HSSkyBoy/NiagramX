@@ -268,7 +268,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     // Blur
     private final AbstractConfigCell headerBlur = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.LiteOptionsBlur2)));
     private final AbstractConfigCell strokeOnViews = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getStrokeOnViews()));
-    private final AbstractConfigCell disableAvatarBlurRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getDisableAvatarBlur()));
+    private final AbstractConfigCell disableProfileAvatarBlurRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getDisableProfileAvatarBlur()));
     private final AbstractConfigCell liquidGlassAngleRow = cellGroup.appendCell(new ConfigCellCustom("LiquidGlassAngle", ConfigCellCustom.CUSTOM_ITEM_LiquidGlassAngle, true));
     private final AbstractConfigCell liquidGlassIntensityRow = cellGroup.appendCell(new ConfigCellCustom("LiquidGlassIntensity", ConfigCellCustom.CUSTOM_ITEM_LiquidGlassIntensity, true));
     private final AbstractConfigCell dividerBlur = cellGroup.appendCell(new ConfigCellDivider());

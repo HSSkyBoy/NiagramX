@@ -977,7 +977,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 
         public void createBlurEffect(int actionsSize) {
             this.actionsSize = actionsSize;
-            this.blurEnabled = !NyaConfig.INSTANCE.getDisableAvatarBlur().Bool(); // actionsSize > 0;
+            this.blurEnabled = !NyaConfig.INSTANCE.getDisableProfileAvatarBlur().Bool(); // actionsSize > 0;
         }
 
         public AvatarImageView(Context context) {
@@ -1318,7 +1318,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                 actionBarBackgroundColor = currentColor;
                 hasColorById = false;
                 if (AndroidUtilities.computePerceivedBrightness(getThemedColor(Theme.key_actionBarDefault)) > .8f) {
-                    if (NyaConfig.INSTANCE.getDisableAvatarBlur().Bool()) {
+                    if (NyaConfig.INSTANCE.getDisableProfileAvatarBlur().Bool()) {
                         if (Theme.getActiveTheme().isMonet()) {
                             emojiColor = getThemedColor(Theme.key_chat_botKeyboardButtonBackground);
                             btnColor = Theme.multAlpha(getThemedColor(Theme.key_chat_botKeyboardButtonBackground), .15f * 3);
@@ -5767,7 +5767,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
 //        }
         overlaysView = new OverlaysView(context);
         avatarsBlurView = new ProfileGalleryBlurView(context);
-        avatarsBlurView.setSize(NyaConfig.INSTANCE.getDisableAvatarBlur().Bool() ? 0 : getActionsExtraHeight());
+        avatarsBlurView.setSize(NyaConfig.INSTANCE.getDisableProfileAvatarBlur().Bool() ? 0 : getActionsExtraHeight());
         avatarsViewPager = new ProfileGalleryView(context, userId != 0 ? userId : -chatId, actionBar, listView, avatarImage, getClassGuid(), overlaysView, avatarsBlurView) {
             @Override
             protected void setCustomAvatarProgress(float progress) {

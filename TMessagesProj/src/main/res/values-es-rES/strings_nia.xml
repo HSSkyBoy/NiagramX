@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-Configuración</string>
     <string name="CombineMessage">Combinar mensajes</string>
@@ -209,7 +209,7 @@ También puede utilizar texto sin formato, pero no olvide escapar los paréntesi
     <string name="TranslatorMinimizedGroup">La barra del traductor se ha minimizado para este grupo.</string>
     <string name="TranslatorMinimized">La barra del traductor se ha minimizado para este chat.</string>
     <string name="UseDeletedIcon">Mostrar icono en lugar de \"eliminado\"</string>
-    <string name="UseEditedIcon">Mostrar icono en lugar de \"editado\"</string>
+    <string name="ShowEditedIcon">Mostrar icono en lugar de \"editado\"</string>
     <string name="SilentMessageByDefault">Enviar sin sonido</string>
     <string name="FolderNameAsTitle">Usar nombre de carpeta como título</string>
     <string name="SaveDeletedMessageForBotUser">Guardar mensajes de bot</string>
@@ -365,7 +365,7 @@ También puede utilizar texto sin formato, pero no olvide escapar los paréntesi
     <string name="PinnedReactions_Type">Este emoji no es compatible.</string>
     <string name="PinnedReactions_Apply">Actualizar reacciones ancladas</string>
     <string name="HideStoriesFromHeader">Ocultar del encabezado</string>
-    <string name="DisableAvatarBlur">Deshabilitar desenfoque de avatar</string>
+    <string name="DisableProfileAvatarBlur">Deshabilitar desenfoque de avatar</string>
     <string name="ExportSettingsIncludeApiKeys">Incluir claves de API</string>
     <string name="DisableInAppBrowserGestures">Deshabilitar gestos</string>
     <string name="HowToObtain">¿Cómo obtener?</string>

@@ -65,7 +65,7 @@ public class TimeStringHelper {
         String editedStrFin = editedStr.isEmpty() ? getString(R.string.EditedMessage) : editedStr;
         String deletedStr = NyaConfig.INSTANCE.getCustomDeletedMark().String();
         String deletedStrFin = deletedStr.isEmpty() ? getString(R.string.DeletedMessage) : deletedStr;
-        boolean useEditedIcon = NyaConfig.INSTANCE.getUseEditedIcon().Bool();
+        boolean useEditedIcon = NyaConfig.INSTANCE.getShowEditedIcon().Bool();
         boolean primaryEditedDate = isEdited && AppGlobalConfig.getInstance(messageObject.currentAccount).messagePrimaryEditedDate.get() && !useEditedIcon && editedStr.isEmpty();
 
         createSpan();
@@ -107,7 +107,7 @@ public class TimeStringHelper {
     public static CharSequence createEditedString(MessageObject messageObject, boolean isTranslated, boolean isBookmarked, int senderNameColor, int editDate) {
         String editedStr = NyaConfig.INSTANCE.getCustomEditedMessage().String();
         String editedStrFin = editedStr.isEmpty() ? getString(R.string.EditedMessage) : editedStr;
-        boolean useEditedIcon = NyaConfig.INSTANCE.getUseEditedIcon().Bool();
+        boolean useEditedIcon = NyaConfig.INSTANCE.getShowEditedIcon().Bool();
         boolean primaryEditedDate = AppGlobalConfig.getInstance(messageObject.currentAccount).messagePrimaryEditedDate.get() && !useEditedIcon && editedStr.isEmpty();
 
         createSpan();

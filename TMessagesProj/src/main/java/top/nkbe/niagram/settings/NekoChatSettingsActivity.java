@@ -158,7 +158,7 @@ public class NekoChatSettingsActivity extends BaseNekoXSettingsActivity implemen
     private final AbstractConfigCell hideReadReceiptsLocallyRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getHideReadReceiptsLocally(), getString(R.string.HideReadReceiptsLocallyNotice)));
     private final AbstractConfigCell useIosSoundsRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.useIosSounds, getString(R.string.UseIosSoundsNotice)));
     private final AbstractConfigCell showSeconds = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.showSeconds));
-    private final AbstractConfigCell useEditedIconRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getUseEditedIcon()));
+    private final AbstractConfigCell showEditedIconRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getShowEditedIcon()));
     private final AbstractConfigCell customEditedMessageRow = cellGroup.appendCell(new ConfigCellTextInput(null, NyaConfig.INSTANCE.getCustomEditedMessage(), "", null));
     private final AbstractConfigCell dateOfForwardMsgRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getDateOfForwardedMsg()));
     private final AbstractConfigCell showForwardCountRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getShowForwardCount()));
@@ -536,7 +536,7 @@ public class NekoChatSettingsActivity extends BaseNekoXSettingsActivity implemen
     private InputBarPreviewCell inputBarPreviewCell;
 
     public NekoChatSettingsActivity() {
-        if (NyaConfig.INSTANCE.getUseEditedIcon().Bool()) {
+        if (NyaConfig.INSTANCE.getShowEditedIcon().Bool()) {
             cellGroup.rows.remove(customEditedMessageRow);
         }
         if (NyaConfig.INSTANCE.getTranscribeProvider().Int() != TranscribeHelper.TRANSCRIBE_OPENAI) {
@@ -595,7 +595,7 @@ public class NekoChatSettingsActivity extends BaseNekoXSettingsActivity implemen
                 checkSkipOpenLinkConfirmRows();
             } else if (key.equals(NyaConfig.useChatAttachMediaMenu.getKey())) {
                 checkConfirmAVRows();
-            } else if (key.equals(NyaConfig.INSTANCE.getUseEditedIcon().getKey())) {
+            } else if (key.equals(NyaConfig.INSTANCE.getShowEditedIcon().getKey())) {
                 if ((boolean) newValue) {
                     if (cellGroup.rows.contains(customEditedMessageRow)) {
                         final int index = cellGroup.rows.indexOf(customEditedMessageRow);
@@ -604,7 +604,7 @@ public class NekoChatSettingsActivity extends BaseNekoXSettingsActivity implemen
                     }
                 } else {
                     if (!cellGroup.rows.contains(customEditedMessageRow)) {
-                        final int index = cellGroup.rows.indexOf(useEditedIconRow) + 1;
+                        final int index = cellGroup.rows.indexOf(showEditedIconRow) + 1;
                         cellGroup.rows.add(index, customEditedMessageRow);
                         listAdapter.notifyItemInserted(index);
                     }
