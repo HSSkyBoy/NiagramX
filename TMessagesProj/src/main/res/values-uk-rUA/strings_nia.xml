@@ -486,7 +486,7 @@
     <string name="InputFieldTextSize">Розмір тексту в полі введення</string>
     <string name="InputFieldTextSizeDefault">За замовчуванням</string>
     <string name="HideStarRating">Приховати зіркові оцінки в профілях</string>
-    <string name="HideGiftButtons">Приховати кнопку подарунка в профілях</string>
+    <string name="HideGiftButtons">Приховати кнопку подарунка</string>
     <string name="EnableQuickSchedule">Швидке планування</string>
     <string name="EnableQuickScheduleNotice">Показує параметри планування при довгому натисканні кнопки відправки з урахуванням стану беззвучного режиму.</string>
     <string name="UseSystemPhotoPicker">Сумісність із системним вибором фото</string>
@@ -727,8 +727,8 @@
     <string name="ImportStickersX">Імпорт наліпок з файлу</string>
     <string name="ImportStickersList">Імпорт наліпок</string>
     <string name="StickerSets">Набори наліпок</string>
-    <string name="InvalidStickersFile">Недійсний файл наліпок:</string>
-    <string name="ImportedProxies">Імпортовані проксі-сервери:</string>
+    <string name="InvalidStickersFile">Недійсний файл наліпок: </string>
+    <string name="ImportedProxies">Імпортовані проксі-сервери: </string>
     <string name="DeleteAllServer">Видалити усі сервери</string>
     <string name="DeleteUnavailableServer">Видалити недоступні сервери</string>
     <string name="ImportProxyFromClipboard">Імпортувати з буфера обміну</string>
@@ -789,4 +789,112 @@
     <string name="EmojiUseDefault">Використовувати системні емодзі</string>
     <string name="Chat">Чати</string>
     <string name="Appearance">Зовнішній вигляд</string>
+
+    <!-- Added from PR #23 -->
+    <string name="HideStarsRating">Приховати зіркові оцінки</string>
+    <string name="ScrollToSeenPhotoOnClose">Прокручувати до переглянутого фото при закритті</string>
+    <string name="ProviderTelegramAPI">Telegram API</string>
+    <string name="NekoX" translatable="false">NekoX</string>
+    <string name="GoogleCloudTransKey">Ключ Google Cloud Translate</string>
+    <string name="ThemeAmoledDark">AMOLED Темна</string>
+    <string name="NoPreloadTrackIfRepeatOne">Не завантажувати наступний трек, якщо повторюється один</string>
+    <string name="AppIconMusheen">Musheen</string>
+    <string name="AppIconSpace">Space</string>
+    <string name="AppIconCloud">Cloud</string>
+    <string name="AppIconNeon">Neon</string>
+    <string name="AppIconMaterial">Material</string>
+    <string name="Nagram" translatable="false">Nagram</string>
+    <string name="ShowGroupMemberJoinDate">Показувати дату приєднання учасника групи</string>
+    <string name="ShowGroupMemberJoinDateNotice">Показувати, коли учасник приєднався до групи, у меню учасника та профілі.</string>
+    <string name="GroupMemberJoinDate">Приєднався(-лася) до групи</string>
+    <string name="PushServiceTypeFCM" translatable="false">Google FCM</string>
+    <string name="PushServiceTypeUnified" translatable="false">UnifiedPush</string>
+    <string name="PushServiceTypeMicroG" translatable="false">microG</string>
+    <string name="PushServiceTypeUnifiedGateway">Шлюз Unified Push</string>
+    <string name="Pangu" translatable="false">Pangu</string>
+    <string name="InputBar">Панель введення</string>
+    <string name="IosButtonPlacement">Розташування кнопок (iOS)</string>
+    <string name="IosInputAppearance">Вигляд (iOS)</string>
+    <string name="CompactInputSize">Компактний розмір</string>
+    <string name="ActionButtonStyle">Стиль кнопки дій</string>
+    <string name="ActionButtonStyleAccent">Акцентний</string>
+    <string name="ActionButtonStyleNeutral">Нейтральний</string>
+    <string name="ActionButtonStyleWhite">Білий</string>
+    <string name="LiquidGlassAngle">Кут Liquid Glass</string>
+    <string name="LiquidGlassIntensity">Інтенсивність Liquid Glass</string>
+    <string name="ClownAvatarForBlockedUsers">Аватар клоуна для заблокованих</string>
+    <string name="ClownAvatarForBlockedUsersDetail">Показувати аватар клоуна для заблокованих вами користувачів замість їхнього справжнього або порожнього аватара</string>
+    <string name="NiagramX" translatable="false">Niagram</string>
+    <string name="SpyMode">Режим шпигуна</string>
+    <string name="SaveDeletedChatTypesHeader">Типи чатів</string>
+    <string name="SaveDeletedMessagesInPrivate">Особисті чати</string>
+    <string name="SaveDeletedMessagesInGroups">Групи</string>
+    <string name="SaveDeletedMessagesInChannels">Канали</string>
+    <string name="AllowScreenCapture">Дозволити знімок екрана</string>
+    <string name="AllowScreenCaptureNotice">Вимкнути обмеження FLAG_SECURE, щоб дозволити знімки екрана та запис екрана в усіх чатах, медіа з таймером (TTL) та захищених переглядах.</string>
+    <string name="AllowCopyProtectedContent">Дозволити копіювання захищеного вмісту</string>
+    <string name="AllowCopyProtectedContentNotice">Дозволити копіювання тексту, збереження фото/відео та повторне надсилання повідомлень із захищених каналів та чатів (де заборонено пересилання).</string>
+    <string name="SaveTTLMedia">Зберігати зникаючі та TTL медіа</string>
+    <string name="SaveTTLMediaNotice">Завжди дозволяти зберігати, ділитися та переглядати зникаючі фото та відео без обмежень.</string>
+    <string name="CompactChatInput">Компактний режим</string>
+    <string name="CompactChatInputNotice">Зменшити висоту панелі введення до 40dp та звузити відступи.</string>
+    <string name="useIosSounds">Звуки повідомлень iOS</string>
+    <string name="UseIosSoundsNotice">Використовувати внутрішні звуки повідомлень з Telegram для iOS.</string>
+    <string name="LlmApiUrlHint" translatable="false">https://api.openai.com/v1</string>
+    <string name="LlmApiUrlDefault" translatable="false">https://generativelanguage.googleapis.com/v1beta/openai</string>
+    <string name="LlmModelNameDefault" translatable="false">gemini-flash-latest</string>
+    <string name="LlmProviderOpenAIModel" translatable="false">gpt-5.6-luna</string>
+    <string name="LlmProviderGeminiModel" translatable="false">gemini-flash-lite-latest</string>
+    <string name="LlmProviderGroqModel" translatable="false">openai/gpt-oss-120b</string>
+    <string name="LlmProviderDeepSeekModel" translatable="false">deepseek-v4-flash</string>
+    <string name="LlmProviderXAIModel" translatable="false"></string>
+    <string name="LlmProviderCerebrasModel" translatable="false">gpt-oss-120b</string>
+    <string name="LlmProviderOllamaCloudModel" translatable="false">gemma4:31b</string>
+    <string name="LlmProviderOpenRouterModel" translatable="false">openrouter/free</string>
+    <string name="LlmProviderVercelAIGatewayModel" translatable="false">google/gemma-4-31b-it</string>
+    <string name="StyleMaterialDesign3" translatable="false">Material Design 3</string>
+    <string name="CustomApiDefault">Стандартний API</string>
+    <string name="CustomApiOfficial">Офіційний Telegram</string>
+    <string name="CustomApiCustom">Власний API</string>
+    <string name="TabletModeLandscape">Тільки альбомна</string>
+    <string name="DefaultHlsVideoQualityAuto">Авто</string>
+    <string name="DefaultHlsVideoQualityOriginal">Оригінальна</string>
+    <string name="DefaultHlsVideoQualityHigh">Висока якість (1080p+)</string>
+    <string name="DefaultHlsVideoQualityMedium">Середня якість (720p)</string>
+    <string name="DefaultHlsVideoQualityLow">Низька якість (480p)</string>
+    <string name="NiaBanById">Заблокувати за ID користувача</string>
+    <string name="NiaBanByIdDialogTitle">Заблокувати користувача за ID</string>
+    <string name="NiaBanByIdDialogMessage">Введіть 64-бітний числовий ID цільового користувача. Запит на блокування буде надіслано безпосередньо на сервер Telegram.</string>
+    <string name="NiaBanByIdHint">напр. 123456789</string>
+    <string name="NiaBanByIdConfirm">Заблокувати користувача</string>
+    <string name="NiaBanByIdConfirmTitle">Підтвердити блокування</string>
+    <string name="NiaBanByIdConfirmMessage">Ви впевнені, що хочете заблокувати користувача з ID: %1$s?</string>
+    <string name="NiaBanByIdSuccess">Користувача з ID %1$s успішно заблоковано.</string>
+    <string name="NiaBanByIdCannotBanSelf">Ви не можете заблокувати себе.</string>
+    <string name="NiaBanByIdCannotBanCreator">Неможливо заблокувати творця або власника цієї групи.</string>
+    <string name="NiaBanByIdInvalid">Будь ласка, введіть дійсний додатній числовий ID.</string>
+    <string name="NiaBanByIdErrorNotParticipant">Цього користувача немає в групі. Сервер Telegram не дозволяє блокувати користувачів, які не є учасниками.</string>
+    <string name="NiaBanByIdErrorInvalidUser">Недійсний ID користувача або користувача не знайдено в Telegram.</string>
+    <string name="NiaBanByIdErrorAdminRequired">У вас недостатньо прав адміністратора, щоб заблокувати цього користувача.</string>
+    <string name="NiaBanByIdServerError">Не вдалося заблокувати користувача: %1$s</string>
+    <string name="ProxyAutoSpeedAcceleration">Автовибір найшвидшого проксі</string>
+    <string name="ProxyAutoSpeedAccelerationInfo">Автоматично перевіряти та перемикатися на проксі з найнижчим пінгом для швидшого з\'єднання.</string>
+    <string name="UseFastestProxy">Перемкнутись на найшвидший проксі</string>
+    <string name="SwitchedToFastestProxy">Перемкнено на найшвидший проксі</string>
+    <string name="AlreadyFastestProxy">Наразі вже використовується найшвидший проксі</string>
+    <string name="PrioritizeEmailCode">Надавати перевагу коду з email</string>
+    <string name="SendCodeViaEmail">Надіслати код на email</string>
+    <string name="FastResendDialogTitle">Надіслати код ще раз</string>
+    <string name="FastResendDialogMessage">Ще не отримали код? Пропустити зворотний відлік і негайно зробити запит на новий код?</string>
+    <string name="FastResendNow">Надіслати зараз</string>
+    <string name="CodeSentToOtherDeviceTitle">Перевірте ваш додаток Telegram</string>
+    <string name="CodeSentToOtherDeviceInfo">Код для входу було надіслано в додаток Telegram на інших ваших пристроях.\n\nПримітка: щоб отримувати коди входу електронною поштою, спочатку необхідно прив\'язати Email для входу в офіційному додатку Telegram у меню Налаштування > Приватність і безпека > Двоетапна перевірка.</string>
+    <string name="SendCodeUnavailableInfo">Наразі Telegram не може надіслати код іншими каналами. Якщо на вашому іншому пристрої виконано вхід, перевірте код, надісланий у ваш додаток Telegram.\n\nЩоб використовувати вхід через електронну пошту, переконайтеся, що ви налаштували Email для входу в налаштуваннях приватності та безпеки Telegram.</string>
+    <string name="PublicProxy">Вбудований публічний проксі</string>
+    <string name="PublicProxyDescription">Проксі-тунель на базі Nullgram (WebSocket через Cloudflare)</string>
+    <string name="PublicProxyCannotDelete">Вбудований публічний проксі не можна видалити.</string>
+    <string name="PublicProxyCannotShare">Вбудованим публічним проксі не можна поділитися.</string>
+    <string name="AutoActivateMainlandProxy">Автоактивація для китайських IP</string>
+    <string name="AutoActivateMainlandProxyDesc">Автоматично вмикати вбудований проксі під час запуску у разі виявлення підключення з материкового Китаю / Хайнаня.</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">Автоматично призупиняти проксі та тунель tcp2ws у разі виявлення системного VPN.</string>
 </resources>
