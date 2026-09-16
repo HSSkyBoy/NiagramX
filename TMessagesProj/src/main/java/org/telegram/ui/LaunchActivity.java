@@ -37,6 +37,8 @@ import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -86,6 +88,7 @@ import androidx.annotation.RequiresApi;
 import androidx.arch.core.util.Function;
 import androidx.collection.LongSparseArray;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.pm.ShortcutInfoCompat;
 import androidx.core.content.pm.ShortcutManagerCompat;
 import androidx.core.graphics.ColorUtils;
@@ -473,11 +476,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
         }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setTheme(R.style.Theme_TMessages);
-        try {
-            setTaskDescription(new ActivityManager.TaskDescription(null, null, Theme.getColor(Theme.key_actionBarDefault) | 0xff000000));
-        } catch (Throwable ignore) {
-
-        }
+        updateTaskDescription();
         getWindow().setBackgroundDrawable(new ActivityWindowEmptyBackgroundDrawable());
         getWindow().setFormat(PixelFormat.OPAQUE);
 
@@ -7553,11 +7552,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
         } else if (id == NotificationCenter.didSetNewTheme) {
             Boolean nightTheme = (Boolean) args[0];
             if (!nightTheme) {
-                try {
-                    setTaskDescription(new ActivityManager.TaskDescription(null, null, Theme.getColor(Theme.key_actionBarDefault) | 0xff000000));
-                } catch (Exception ignore) {
-
-                }
+                updateTaskDescription();
             }
             boolean checkNavigationBarColor = true;
             if (args.length > 1) {
@@ -9433,6 +9428,36 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
 
         public void hide() {
             setHidden(true);
+        }
+    }
+
+    public void updateTaskDescription() {
+        if (Build.VERSION.SDK_INT < 21) {
+            return;
+        }
+        try {
+            int color = Theme.getColor(Theme.key_actionBarDefault) | 0xff000000;
+            LauncherIconController.LauncherIcon icon = LauncherIconController.getCurrentIcon();
+            int iconRes = icon != null ? icon.iconRes : R.mipmap.icon_9_launcher;
+            if (Build.VERSION.SDK_INT >= 28) {
+                setTaskDescription(new ActivityManager.TaskDescription(null, iconRes, color));
+            } else {
+                Bitmap bitmap = null;
+                Drawable drawable = ContextCompat.getDrawable(this, iconRes);
+                if (drawable instanceof BitmapDrawable) {
+                    bitmap = ((BitmapDrawable) drawable).getBitmap();
+                } else if (drawable != null) {
+                    bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth() > 0 ? drawable.getIntrinsicWidth() : AndroidUtilities.dp(48),
+                            drawable.getIntrinsicHeight() > 0 ? drawable.getIntrinsicHeight() : AndroidUtilities.dp(48),
+                            Bitmap.Config.ARGB_8888);
+                    Canvas canvas = new Canvas(bitmap);
+                    drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+                    drawable.draw(canvas);
+                }
+                setTaskDescription(new ActivityManager.TaskDescription(null, bitmap, color));
+            }
+        } catch (Throwable ignore) {
+
         }
     }
 
