@@ -1090,7 +1090,7 @@ public class ChatActivityEnterView extends FrameLayout implements
         public RecordDot(Context context) {
             super(context);
             int resId = R.raw.chat_audio_record_delete_2;
-            drawable = new RLottieDrawable(resId, "" + resId, dp(28), dp(28), false, null);
+            drawable = new RLottieDrawable(resId, dp(28), dp(28), false, null);
             drawable.setInvalidateOnProgressSet(true);
             updateColors();
         }

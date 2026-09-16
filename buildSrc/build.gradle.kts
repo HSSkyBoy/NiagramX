@@ -4,9 +4,13 @@ plugins {
 
 gradlePlugin {
     plugins {
-        register("lottiePreParser") {
-            id = "org.telegram.lottie-meta"
-            implementationClass = "org.telegram.lottie.LottieMetaPlugin"
+        register("telegramBuildPlugin") {
+            id = "org.telegram.build-plugin"
+            implementationClass = "org.telegram.plugin.TelegramBuildPlugin"
+        }
+        register("telegramBuildAppPlugin") {
+            id = "org.telegram.build-app-plugin"
+            implementationClass = "org.telegram.plugin.TelegramBuildAppPlugin"
         }
     }
 }

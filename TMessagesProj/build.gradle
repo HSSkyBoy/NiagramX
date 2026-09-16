@@ -5,17 +5,23 @@ plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
-    id 'org.telegram.lottie-meta'
+    id 'org.telegram.build-plugin'
     id 'idea'
 }
 
 idea {
     module {
         excludeDirs += [
-            file('jni/third_party'),
-            file('jni/ffmpeg'),
+            file('jni/td'),
+            file('jni/third_party/boringssl'),
+            file('jni/third_party/dav1d'),
+            file('jni/third_party/ffmpeg'),
+            file('jni/third_party/libvpx'),
+            file('jni/third_party/libyuv'),
+            file('jni/third_party/openh264'),
+            file('jni/third_party/xiph'),
             file('jni/tlottie'),
-            file('jni/boringssl'),
+            file('jni/voip/webrtc'),
             file('jni/sqlite')
         ]
     }
@@ -263,11 +269,17 @@ dependencies {
     implementation 'androidx.sharetarget:sharetarget:1.2.0'
     implementation 'androidx.interpolator:interpolator:1.0.0'
     implementation 'androidx.biometric:biometric:1.1.0'
+    implementation 'androidx.webkit:webkit:1.14.0'
     implementation 'androidx.car.app:app:1.7.0'
     implementation 'androidx.car.app:app-projected:1.7.0'
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
     compileOnly 'org.checkerframework:checker-qual:2.5.2'
     compileOnly 'org.checkerframework:checker-compat-qual:2.5.0'
+    api project(":TMessagesProj_Modules:media3:media-lib-exoplayer")
+    api project(":TMessagesProj_Modules:media3:media-lib-exoplayer-dash")
+    api project(":TMessagesProj_Modules:media3:media-lib-exoplayer-hls")
+    api project(":TMessagesProj_Modules:media3:media-lib-decoder-ffmpeg")
+    api project(":TMessagesProj_Modules:media3:media-lib-session")
     implementation 'com.google.firebase:firebase-messaging:25.1.2'
     implementation 'com.google.firebase:firebase-crashlytics:20.1.0'
     implementation 'com.google.firebase:firebase-analytics:22.2.0'
