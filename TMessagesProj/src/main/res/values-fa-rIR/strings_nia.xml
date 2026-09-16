@@ -467,7 +467,7 @@
     <string name="InputFieldTextSize">اندازه متن فیلد ورودی</string>
     <string name="InputFieldTextSizeDefault">پیش‌فرض</string>
     <string name="HideStarRating">پنهان کردن امتیاز ستاره در پروفایل‌ها</string>
-    <string name="HideGiftButton">پنهان کردن دکمه هدیه در پروفایل‌ها</string>
+    <string name="HideGiftButtons">پنهان کردن دکمه هدیه در پروفایل‌ها</string>
     <string name="EnableQuickSchedule">زمان‌بندی سریع</string>
     <string name="EnableQuickScheduleNotice">با نگه‌داشتن دکمه ارسال، گزینه‌های زمان‌بندی را نمایش می‌دهد.</string>
     <string name="UseSystemPhotoPicker">سازگاری انتخابگر عکس سیستم</string>

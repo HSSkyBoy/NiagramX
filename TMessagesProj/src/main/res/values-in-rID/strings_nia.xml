@@ -468,7 +468,7 @@
     <string name="InputFieldTextSize">Ukuran Teks Bidang Masukan</string>
     <string name="InputFieldTextSizeDefault">Bawaan</string>
     <string name="HideStarRating">Sembunyikan Penilaian Bintang di Profil</string>
-    <string name="HideGiftButton">Sembunyikan Tombol Hadiah di Profil</string>
+    <string name="HideGiftButtons">Sembunyikan Tombol Hadiah di Profil</string>
     <string name="EnableQuickSchedule">Jadwal Cepat</string>
     <string name="EnableQuickScheduleNotice">Tampilkan opsi penjadwalan saat menekan lama tombol kirim, mempertimbangkan status senyap.</string>
     <string name="UseSystemPhotoPicker">Kompatibilitas pemilih foto sistem</string>

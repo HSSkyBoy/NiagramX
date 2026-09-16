@@ -8993,7 +8993,7 @@ public class ChatActivity extends BaseFragment implements
             }
         });
         bottomChannelButtonsLayout.setButtonOnFullyVisibleListener(ChatActivityChannelButtonsLayout.BUTTON_GIFT, (v, id, firstTime) -> {
-            if (!NyaConfig.INSTANCE.getDisableChannelMuteButton().Bool() && bottomGiftHintView == null && firstTime && (bottomSuggestHintView == null || !bottomSuggestHintView.shown()) && HintsController.Hint.ChannelGiftHint.show()) {
+            if (!NyaConfig.INSTANCE.getHideGiftButtons().Bool() && !NyaConfig.INSTANCE.getDisableChannelMuteButton().Bool() && bottomGiftHintView == null && firstTime && (bottomSuggestHintView == null || !bottomSuggestHintView.shown()) && HintsController.Hint.ChannelGiftHint.show()) {
                 AndroidUtilities.runOnUIThread(() -> {
                     if (getContext() == null) return;
                     final float offset = windowInsetsStateHolder.getInsets(WindowInsetsCompat.Type.navigationBars()).bottom / AndroidUtilities.density;
@@ -29331,7 +29331,7 @@ public class ChatActivity extends BaseFragment implements
                         } else {
                             bottomOverlayChatText.setText(LocaleController.getString(ChatObject.isChannelAndNotMegaGroup(currentChat) ? R.string.ChannelJoinNoCaps : R.string.GroupJoinNoCaps));
                             bottomOverlayChatText.setEnabled(true);
-                            showGiftButton = chatInfo != null && chatInfo.stargifts_available;
+                            showGiftButton = !NyaConfig.INSTANCE.getHideGiftButtons().Bool() && chatInfo != null && chatInfo.stargifts_available;
                             showSuggestButton = currentChat.broadcast_messages_allowed && currentChat.linked_monoforum_id != 0;
                             accentTextButton = true;
                         }
@@ -29351,7 +29351,7 @@ public class ChatActivity extends BaseFragment implements
                         bottomOverlayChatText.setEnabled(true);
                     }
                     showBottomOverlayProgress(false, bottomOverlayProgress.getTag() != null);
-                    showGiftButton = chatInfo != null && chatInfo.stargifts_available;
+                    showGiftButton = !NyaConfig.INSTANCE.getHideGiftButtons().Bool() && chatInfo != null && chatInfo.stargifts_available;
                     showSuggestButton = currentChat.broadcast_messages_allowed && currentChat.linked_monoforum_id != 0;
                 } else if (forumTopic != null && forumTopic.closed) {
                     if (!ChatObject.canManageTopic(currentAccount, currentChat, forumTopic)) {
@@ -48195,7 +48195,7 @@ public class ChatActivity extends BaseFragment implements
         }
 
         if (chatInfo != null) {
-            final boolean giftUpdate = (chatInfo.stargifts_available)
+            final boolean giftUpdate = (!NyaConfig.INSTANCE.getHideGiftButtons().Bool() && chatInfo.stargifts_available)
                 != (bottomChannelButtonsLayout != null && bottomChannelButtonsLayout.isButtonVisible(ChatActivityChannelButtonsLayout.BUTTON_GIFT));
 
             final boolean suggestUpdate = (currentChat != null && currentChat.broadcast_messages_allowed && currentChat.linked_monoforum_id != 0)

@@ -466,7 +466,7 @@
     <string name="InputFieldTextSize">Giriş Alanı Metin Boyutu</string>
     <string name="InputFieldTextSizeDefault">Varsayılan</string>
     <string name="HideStarRating">Profillerde Yıldız Derecelendirmeyi Gizle</string>
-    <string name="HideGiftButton">Profillerde Hediye Düğmesini Gizle</string>
+    <string name="HideGiftButtons">Profillerde Hediye Düğmesini Gizle</string>
     <string name="EnableQuickSchedule">Hızlı Zamanlama</string>
     <string name="EnableQuickScheduleNotice">Gönder düğmesine uzun basıldığında, sessiz durumuna göre zamanlama seçeneklerini gösterir.</string>
     <string name="UseSystemPhotoPicker">Sistem fotoğraf seçici uyumluluğu</string>

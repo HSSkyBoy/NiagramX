@@ -475,7 +475,7 @@
     <string name="InputFieldTextSize">入力フィールドのテキストサイズ</string>
     <string name="InputFieldTextSizeDefault">デフォルト</string>
     <string name="HideStarRating">プロフィールの星評価を非表示</string>
-    <string name="HideGiftButton">プロフィールのギフトボタンを非表示</string>
+    <string name="HideGiftButtons">プロフィールのギフトボタンを非表示</string>
     <string name="EnableQuickSchedule">クイックスケジュール</string>
     <string name="EnableQuickScheduleNotice">送信ボタンを長押しすると、ミュート状態に応じた送信タイミングの選択肢を表示します。</string>
     <string name="UseSystemPhotoPicker">システム写真ピッカーの互換性</string>

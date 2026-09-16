@@ -9503,7 +9503,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     avatarImage.setHasStories(needInsetForStories());
                 }
                 if (chatId != 0) {
-                    boolean gift = !top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideGiftButton().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked() && chatInfo != null && chatInfo.stargifts_available;
+                    boolean gift = !top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideGiftButtons().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked() && chatInfo != null && chatInfo.stargifts_available;
                     otherItem.setSubItemShown(gift_premium, gift);
                     if (actionsView != null) {
                         actionsView.set(ProfileActionsView.KEY_GIFT, gift);
@@ -10723,7 +10723,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
         }
         fetchUsersFromChannelInfo();
         if (chatId != 0) {
-            boolean gift = !top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideGiftButton().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked() && chatInfo != null && chatInfo.stargifts_available;
+            boolean gift = !top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideGiftButtons().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked() && chatInfo != null && chatInfo.stargifts_available;
             otherItem.setSubItemShown(gift_premium, gift);
             if (actionsView != null) {
                 actionsView.set(ProfileActionsView.KEY_GIFT, gift);
@@ -12668,7 +12668,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                     otherItem.addSubItem(delete_contact, R.drawable.msg_delete, LocaleController.getString(R.string.DeleteContact));
                 }
                 if (!UserObject.isDeleted(user) && !isBot && currentEncryptedChat == null && !userBlocked && userId != 333000 && userId != 777000 && userId != 42777) {
-                    if (!top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideGiftButton().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !user.self && !user.bot && !MessagesController.isSupportUser(user) && !getMessagesController().premiumPurchaseBlocked()) {
+                    if (!top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideGiftButtons().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !user.self && !user.bot && !MessagesController.isSupportUser(user) && !getMessagesController().premiumPurchaseBlocked()) {
                         StarsController.getInstance(currentAccount).loadStarGifts();
                         otherItem.addSubItem(gift_premium, R.drawable.msg_gift_premium, LocaleController.getString(R.string.ProfileSendAGift));
                         giftAction = true;
@@ -12773,7 +12773,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
                         shareAction = !chat.creator;
                         otherItem.addSubItem(share, R.drawable.msg_shareout, getString(R.string.BotShare));
                     }
-                    if (!top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideGiftButton().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked()) {
+                    if (!top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideGiftButtons().Bool() && !BuildVars.IS_BILLING_UNAVAILABLE && !getMessagesController().premiumPurchaseBlocked()) {
                         StarsController.getInstance(currentAccount).loadStarGifts();
                         otherItem.addSubItem(gift_premium, R.drawable.msg_gift_premium, LocaleController.getString(R.string.ProfileSendAGiftToChannel));
                         otherItem.setSubItemShown(gift_premium, chatInfo != null && chatInfo.stargifts_available);
@@ -12867,7 +12867,7 @@ public class ProfileActivity extends BaseFragment implements NotificationCenter.
             actionsView.set(ProfileActionsView.KEY_VOICE_CHAT, voiceChatAction);
             actionsView.set(ProfileActionsView.KEY_STREAM, streamAction);
 
-            actionsView.set(ProfileActionsView.KEY_GIFT, !top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideGiftButton().Bool() && giftAction);
+            actionsView.set(ProfileActionsView.KEY_GIFT, !top.nkbe.niagram.config.NyaConfig.INSTANCE.getHideGiftButtons().Bool() && giftAction);
             callItemVisible = videoCallItemVisible = false;
             if (!discussAction) {
                 if (isTopic) {

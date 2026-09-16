@@ -466,7 +466,7 @@
     <string name="InputFieldTextSize">Tamanho do texto no campo de entrada</string>
     <string name="InputFieldTextSizeDefault">Padrão</string>
     <string name="HideStarRating">Ocultar avaliação por estrelas nos perfis</string>
-    <string name="HideGiftButton">Ocultar botão de presente nos perfis</string>
+    <string name="HideGiftButtons">Ocultar botão de presente nos perfis</string>
     <string name="EnableQuickSchedule">Agendamento rápido</string>
     <string name="EnableQuickScheduleNotice">Exibe opções de agendamento ao pressionar longamente o botão de enviar, respeitando o estado de silêncio.</string>
     <string name="UseSystemPhotoPicker">Compatibilidade com o seletor de fotos do sistema</string>

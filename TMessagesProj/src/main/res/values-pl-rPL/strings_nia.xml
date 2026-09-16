@@ -467,7 +467,7 @@
     <string name="InputFieldTextSize">Rozmiar tekstu pola wejściowego</string>
     <string name="InputFieldTextSizeDefault">Domyślny</string>
     <string name="HideStarRating">Ukryj ocenę gwiazdkową w profilach</string>
-    <string name="HideGiftButton">Ukryj przycisk prezentu w profilach</string>
+    <string name="HideGiftButtons">Ukryj przycisk prezentu w profilach</string>
     <string name="EnableQuickSchedule">Szybkie planowanie</string>
     <string name="EnableQuickScheduleNotice">Wyświetla opcje planowania wysyłki przy długim naciśnięciu przycisku wysyłania, uwzględniając stan wyciszenia.</string>
     <string name="UseSystemPhotoPicker">Zgodność z systemowym wyborem zdjęć</string>

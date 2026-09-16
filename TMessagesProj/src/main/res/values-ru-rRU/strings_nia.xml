@@ -498,7 +498,7 @@
     <string name="InputFieldTextSize">Размер текста в поле ввода</string>
     <string name="InputFieldTextSizeDefault">По умолчанию</string>
     <string name="HideStarRating">Скрыть звёздный рейтинг в профилях</string>
-    <string name="HideGiftButton">Скрыть кнопку подарка в профилях</string>
+    <string name="HideGiftButtons">Скрыть кнопку подарка в профилях</string>
     <string name="EnableQuickSchedule">Быстрое планирование</string>
     <string name="EnableQuickScheduleNotice">Показывает параметры планирования при долгом нажатии кнопки отправки с учётом состояния беззвучного режима.</string>
     <string name="UseSystemPhotoPicker">Совместимость с системным выбором фото</string>

@@ -284,7 +284,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     private final AbstractConfigCell headerPrivacy = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.PrivacyTitle)));
     private final AbstractConfigCell hidePhoneRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.hidePhone));
     private final AbstractConfigCell hideStarsRatingRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getHideStarsRating()));
-    private final AbstractConfigCell hideGiftButtonRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getHideGiftButton()));
+    private final AbstractConfigCell hideGiftButtonRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getHideGiftButtons()));
     private final AbstractConfigCell disableSystemAccountRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.disableSystemAccount));
     private final AbstractConfigCell disableCrashlyticsCollectionRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getDisableCrashlyticsCollection()));
     private final AbstractConfigCell dividerPrivacy = cellGroup.appendCell(new ConfigCellDivider());

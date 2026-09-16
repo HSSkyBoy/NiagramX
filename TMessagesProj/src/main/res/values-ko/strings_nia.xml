@@ -467,7 +467,7 @@
     <string name="InputFieldTextSize">입력 필드 텍스트 크기</string>
     <string name="InputFieldTextSizeDefault">기본값</string>
     <string name="HideStarRating">프로필의 별점 숨기기</string>
-    <string name="HideGiftButton">프로필의 선물 버튼 숨기기</string>
+    <string name="HideGiftButtons">프로필의 선물 버튼 숨기기</string>
     <string name="EnableQuickSchedule">빠른 일정</string>
     <string name="EnableQuickScheduleNotice">음소거 상태를 존중하며, 보내기 버튼을 길게 눌렀을 때 일정 옵션을 표시합니다.</string>
     <string name="UseSystemPhotoPicker">시스템 사진 선택기 호환성</string>

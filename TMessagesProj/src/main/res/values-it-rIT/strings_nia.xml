@@ -472,7 +472,7 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="InputFieldTextSize">Dimensione testo campo input</string>
     <string name="InputFieldTextSizeDefault">Predefinito</string>
     <string name="HideStarRating">Nascondi valutazione a stelle nei profili</string>
-    <string name="HideGiftButton">Nascondi pulsante regalo nei profili</string>
+    <string name="HideGiftButtons">Nascondi pulsante regalo nei profili</string>
     <string name="EnableQuickSchedule">Programmazione rapida</string>
     <string name="EnableQuickScheduleNotice">Mostra le opzioni di programmazione tenendo premuto il pulsante di invio, rispettando lo stato di silenziamento.</string>
     <string name="UseSystemPhotoPicker">Compatibilità selettore foto di sistema</string>

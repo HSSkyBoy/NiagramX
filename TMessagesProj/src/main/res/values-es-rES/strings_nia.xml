@@ -468,7 +468,7 @@ También puede utilizar texto sin formato, pero no olvide escapar los paréntesi
     <string name="InputFieldTextSize">Tamaño de texto del campo de entrada</string>
     <string name="InputFieldTextSizeDefault">Predeterminado</string>
     <string name="HideStarRating">Ocultar calificación de estrellas en perfiles</string>
-    <string name="HideGiftButton">Ocultar botón de regalo en perfiles</string>
+    <string name="HideGiftButtons">Ocultar botón de regalo en perfiles</string>
     <string name="EnableQuickSchedule">Programación rápida</string>
     <string name="EnableQuickScheduleNotice">Muestra opciones de programación al mantener presionado el botón de enviar, respetando el estado de silencio.</string>
     <string name="UseSystemPhotoPicker">Compatibilidad con el selector de fotos del sistema</string>

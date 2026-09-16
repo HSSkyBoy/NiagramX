@@ -433,7 +433,7 @@
     <string name="InputFieldTextSize">Cỡ chữ ô nhập liệu</string>
     <string name="InputFieldTextSizeDefault">Mặc định</string>
     <string name="HideStarRating">Ẩn xếp hạng sao trong hồ sơ</string>
-    <string name="HideGiftButton">Ẩn nút quà tặng trong hồ sơ</string>
+    <string name="HideGiftButtons">Ẩn nút quà tặng trong hồ sơ</string>
     <string name="EnableQuickSchedule">Lên lịch nhanh</string>
     <string name="EnableQuickScheduleNotice">Hiển thị tùy chọn lên lịch gửi khi nhấn giữ nút gửi, tôn trọng trạng thái tắt tiếng.</string>
     <string name="UseSystemPhotoPicker">Tương thích bộ chọn ảnh hệ thống</string>

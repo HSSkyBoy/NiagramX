@@ -459,9 +459,9 @@ object NyaConfig {
             ConfigItem.configTypeBool,
             false
         )
-    val hideGiftButton =
+    val hideGiftButtons =
         addConfig(
-            "HideGiftButton",
+            "HideGiftButtons",
             ConfigItem.configTypeBool,
             false
         )
@@ -2038,6 +2038,9 @@ object NyaConfig {
             }
             if (prefs.contains("DisableAvatarBlur") && !prefs.contains("DisableProfileAvatarBlur")) {
                 prefs.edit().putBoolean("DisableProfileAvatarBlur", prefs.getBoolean("DisableAvatarBlur", false)).apply()
+            }
+            if (prefs.contains("HideGiftButton") && !prefs.contains("HideGiftButtons")) {
+                prefs.edit().putBoolean("HideGiftButtons", prefs.getBoolean("HideGiftButton", false)).remove("HideGiftButton").apply()
             }
             for (i in configs.indices) {
                 val o = configs[i]

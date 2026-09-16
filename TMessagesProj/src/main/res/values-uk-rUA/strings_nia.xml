@@ -486,7 +486,7 @@
     <string name="InputFieldTextSize">Розмір тексту в полі введення</string>
     <string name="InputFieldTextSizeDefault">За замовчуванням</string>
     <string name="HideStarRating">Приховати зіркові оцінки в профілях</string>
-    <string name="HideGiftButton">Приховати кнопку подарунка в профілях</string>
+    <string name="HideGiftButtons">Приховати кнопку подарунка в профілях</string>
     <string name="EnableQuickSchedule">Швидке планування</string>
     <string name="EnableQuickScheduleNotice">Показує параметри планування при довгому натисканні кнопки відправки з урахуванням стану беззвучного режиму.</string>
     <string name="UseSystemPhotoPicker">Сумісність із системним вибором фото</string>
