@@ -172,31 +172,33 @@ public class EmojiSetCell extends FrameLayout {
     private void setPackPreview(EmojiHelper.EmojiPackBase pack) {
         if (pack instanceof EmojiHelper.EmojiPackInfo) {
             var document = ((EmojiHelper.EmojiPackInfo) pack).getPreviewDocument();
-            if (document == null) {
-                imageView.setImageBitmap(null);
-                return;
-            }
-            var thumbs = document.thumbs;
-            BitmapDrawable strippedThumb = null;
-            if (thumbs != null) {
-                for (int a = 0, N = thumbs.size(); a < N; a++) {
-                    TLRPC.PhotoSize photoSize = thumbs.get(a);
-                    if (photoSize instanceof TLRPC.TL_photoStrippedSize) {
-                        strippedThumb = new BitmapDrawable(ApplicationLoader.applicationContext.getResources(), ImageLoader.getStrippedPhotoBitmap(photoSize.bytes, "b"));
-                        break;
+            if (document != null) {
+                var thumbs = document.thumbs;
+                BitmapDrawable strippedThumb = null;
+                if (thumbs != null) {
+                    for (int a = 0, N = thumbs.size(); a < N; a++) {
+                        TLRPC.PhotoSize photoSize = thumbs.get(a);
+                        if (photoSize instanceof TLRPC.TL_photoStrippedSize) {
+                            strippedThumb = new BitmapDrawable(ApplicationLoader.applicationContext.getResources(), ImageLoader.getStrippedPhotoBitmap(photoSize.bytes, "b"));
+                            break;
+                        }
                     }
                 }
+                if (strippedThumb != null) {
+                    imageView.setImage(ImageLocation.getForDocument(document), "146_146", strippedThumb, pack);
+                } else if (thumbs != null && !thumbs.isEmpty()) {
+                    TLRPC.PhotoSize thumb = FileLoader.getClosestPhotoSizeWithSize(thumbs, 146);
+                    imageView.setImage(ImageLocation.getForDocument(document), "146_146", ImageLocation.getForDocument(thumb, document), "146_146_B", thumb.size, pack);
+                } else {
+                    imageView.setImage(ImageLocation.getForDocument(document), "146_146", null, null, pack);
+                }
+                return;
             }
-            if (strippedThumb != null) {
-                imageView.setImage(ImageLocation.getForDocument(document), "146_146", strippedThumb, pack);
-            } else if (thumbs != null && !thumbs.isEmpty()) {
-                TLRPC.PhotoSize thumb = FileLoader.getClosestPhotoSizeWithSize(thumbs, 146);
-                imageView.setImage(ImageLocation.getForDocument(document), "146_146", ImageLocation.getForDocument(thumb, document), "146_146_B", thumb.size, pack);
-            } else {
-                imageView.setImage(ImageLocation.getForDocument(document), "146_146", null, null, pack);
-            }
+        }
+        if (pack != null && pack.getPreview() != null) {
+            imageView.setImage(pack.getPreview(), null, null);
         } else {
-            imageView.setImage(pack != null ? pack.getPreview() : null, null, null);
+            imageView.setImageBitmap(null);
         }
     }
 

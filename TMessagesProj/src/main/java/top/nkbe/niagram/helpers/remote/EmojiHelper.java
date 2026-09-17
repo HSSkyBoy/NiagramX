@@ -23,6 +23,10 @@ import androidx.annotation.NonNull;
 
 import com.jaredrummler.truetypeparser.TTFFile;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.telegram.messenger.AndroidUtilities;
@@ -34,6 +38,7 @@ import org.telegram.messenger.LocaleController;
 import org.telegram.messenger.NotificationCenter;
 import org.telegram.messenger.R;
 import org.telegram.messenger.UserConfig;
+import org.telegram.messenger.Utilities;
 import org.telegram.tgnet.AbstractSerializedData;
 import org.telegram.tgnet.SerializedData;
 import org.telegram.tgnet.TLObject;
@@ -54,17 +59,22 @@ import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 import top.nkbe.niagram.config.NyaConfig;
+import top.nkbe.niagram.utils.HttpClient;
 
 @SuppressWarnings("ResultOfMethodCallIgnored")
 public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.NotificationCenterDelegate {
+    public static final String EMOJI_INDEX_URL = "https://www.nkbe.top/emojis/index.json";
     private static final String EMOJI_TAG = "emojiv2";
     private static final String EMOJI_FONT_AOSP = "NotoColorEmoji.ttf";
     private static final String EMOJI_FONT_NAME = "font.ttf";
@@ -90,6 +100,7 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
     private final CopyOnWriteArrayList<EmojiPackBase> emojiPacksInfo = new CopyOnWriteArrayList<>();
     private final SharedPreferences preferences = ApplicationLoader.applicationContext.getSharedPreferences("nekoemojis", Context.MODE_PRIVATE);
     private final HashMap<String, Pair<EmojiPackInfo, Boolean[]>> loadingEmojiPacks = new HashMap<>();
+    private final Set<String> downloadingPacks = Collections.synchronizedSet(new HashSet<>());
     private final CopyOnWriteArrayList<EmojiPackLoadListener> listeners = new CopyOnWriteArrayList<>();
 
     private String emojiPack;
@@ -388,22 +399,91 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
         emojiPacksInfo.clear();
         loadCustomEmojiPacks();
         loadEmojiPackInfo();
-        getInstance().load((res, error) -> AndroidUtilities.runOnUIThread(() -> {
-            loadingPack = false;
-            listener.emojiPacksLoaded(error);
-        }));
+
+        Utilities.globalQueue.postRunnable(() -> {
+            try {
+                OkHttpClient client = HttpClient.INSTANCE.getInstance();
+                Request request = new Request.Builder()
+                        .url(EMOJI_INDEX_URL)
+                        .header("User-Agent", "NiagramX")
+                        .build();
+
+                try (Response response = client.newCall(request).execute()) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        String body = response.body().string();
+                        JSONObject json = new JSONObject(body);
+                        JSONArray array = json.getJSONArray("emojis");
+                        ArrayList<EmojiPackInfo> packs = new ArrayList<>();
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject obj = array.getJSONObject(i);
+                            String id = obj.getString("id");
+                            String name = obj.getString("name");
+                            int version = obj.optInt("version", 1);
+                            String url = obj.getString("url");
+                            String preview = obj.optString("preview", "");
+                            packs.add(new EmojiPackInfo(name, id, version, url, preview));
+                        }
+
+                        preferences.edit().putString("emoji_packs_json", body).apply();
+
+                        AndroidUtilities.runOnUIThread(() -> {
+                            loadingPack = false;
+                            emojiPacksInfo.removeIf(p -> p instanceof EmojiPackInfo);
+                            emojiPacksInfo.addAll(packs);
+                            if (listener != null) {
+                                listener.emojiPacksLoaded(null);
+                            }
+                        });
+                        return;
+                    }
+                }
+            } catch (Exception e) {
+                FileLog.e("Failed to load emojis info from " + EMOJI_INDEX_URL, e);
+            }
+
+            AndroidUtilities.runOnUIThread(() -> {
+                loadingPack = false;
+                if (listener != null) {
+                    listener.emojiPacksLoaded("Failed to load emojis");
+                }
+            });
+        });
     }
 
     public void loadEmojiPackInfo() {
+        String jsonStr = preferences.getString("emoji_packs_json", "");
+        if (!TextUtils.isEmpty(jsonStr)) {
+            try {
+                JSONObject json = new JSONObject(jsonStr);
+                JSONArray array = json.getJSONArray("emojis");
+                for (int i = 0; i < array.length(); i++) {
+                    JSONObject obj = array.getJSONObject(i);
+                    String id = obj.getString("id");
+                    String name = obj.getString("name");
+                    int version = obj.optInt("version", 1);
+                    String url = obj.getString("url");
+                    String preview = obj.optString("preview", "");
+                    emojiPacksInfo.add(new EmojiPackInfo(name, id, version, url, preview));
+                }
+                return;
+            } catch (Exception e) {
+                FileLog.e(e);
+            }
+        }
+
         String list = preferences.getString("emoji_packs_v2", "");
         if (!TextUtils.isEmpty(list)) {
-            byte[] bytes = Base64.decode(list, Base64.DEFAULT);
-            SerializedData data = new SerializedData(bytes);
-            int count = data.readInt32(false);
-            for (int a = 0; a < count; a++) {
-                emojiPacksInfo.add(EmojiPackInfo.deserialize(data));
+            try {
+                byte[] bytes = Base64.decode(list, Base64.DEFAULT);
+                SerializedData data = new SerializedData(bytes);
+                int count = data.readInt32(false);
+                for (int a = 0; a < count; a++) {
+                    emojiPacksInfo.add(EmojiPackInfo.deserialize(data));
+                }
+                data.cleanup();
+            } catch (Exception e) {
+                FileLog.e(e);
             }
-            data.cleanup();
         }
     }
 
@@ -500,7 +580,7 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
     }
 
     public boolean isEmojiPackDownloading(EmojiPackInfo pack) {
-        return FileLoader.getInstance(currentAccount).isLoadingFile(FileLoader.getAttachFileName(pack.getFileDocument()));
+        return pack != null && downloadingPacks.contains(pack.getPackId());
     }
 
     public void installDownloadedEmoji(EmojiPackInfo pack, boolean update) {
@@ -518,6 +598,21 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
                 loadingEmojiPacks.remove(pack.fileLocation);
                 pack.fileLocation = newFile.toString();
             }
+
+            File previewFile = new File(emojiDir, "preview.png");
+            if (!previewFile.exists()) {
+                try {
+                    Typeface typeface = Typeface.createFromFile(newFile);
+                    Bitmap bitmap = drawPreviewBitmap(typeface);
+                    try (FileOutputStream outputStream = new FileOutputStream(previewFile)) {
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                    }
+                    pack.preview = previewFile.getAbsolutePath();
+                } catch (Exception e) {
+                    FileLog.e(e);
+                }
+            }
+
             if (isPackInstalled(pack)) {
                 if (update) {
                     EmojiHelper.getInstance().deleteOldVersions(pack);
@@ -527,7 +622,7 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
                 reloadEmoji();
             }
         }
-        callProgressChanged(pack, true, 100, pack.fileSize);
+        callProgressChanged(pack, true, 1.0f, pack.fileSize);
     }
 
     public EmojiPackBase installEmoji(File emojiFile) throws Exception {
@@ -880,10 +975,77 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
     }
 
     public void downloadPack(EmojiPackInfo pack, boolean update, boolean tried) {
+        if (pack == null || TextUtils.isEmpty(pack.getDownloadUrl())) {
+            return;
+        }
         EmojiHelper.mkDirs();
-        loadingEmojiPacks.put(FileLoader.getAttachFileName(pack.fileDocument), Pair.create(pack, new Boolean[]{update, tried}));
-        checkAccount();
-        FileLoader.getInstance(currentAccount).loadFile(pack.getFileDocument(), pack, FileLoader.PRIORITY_NORMAL, 0);
+        downloadingPacks.add(pack.getPackId());
+        callProgressChanged(pack, false, 0f, 0);
+
+        Utilities.globalQueue.postRunnable(() -> {
+            File tempFile = new File(EMOJI_PACKS_FILE_DIR, pack.getPackId() + "_" + pack.getPackVersion() + ".tmp");
+            try {
+                OkHttpClient client = HttpClient.INSTANCE.getInstance();
+                Request request = new Request.Builder()
+                        .url(pack.getDownloadUrl())
+                        .header("User-Agent", "NiagramX")
+                        .build();
+
+                try (Response response = client.newCall(request).execute()) {
+                    if (!response.isSuccessful() || response.body() == null) {
+                        throw new IOException("HTTP " + response.code());
+                    }
+
+                    long totalBytes = response.body().contentLength();
+                    if (totalBytes <= 0) {
+                        totalBytes = pack.getFileSize();
+                    }
+
+                    try (InputStream is = response.body().byteStream();
+                         FileOutputStream fos = new FileOutputStream(tempFile)) {
+                        byte[] buffer = new byte[16 * 1024];
+                        long downloaded = 0;
+                        int read;
+                        long lastNotifyTime = 0;
+
+                        while ((read = is.read(buffer)) != -1) {
+                            fos.write(buffer, 0, read);
+                            downloaded += read;
+
+                            long now = SystemClock.uptimeMillis();
+                            if (now - lastNotifyTime > 150 || downloaded == totalBytes) {
+                                lastNotifyTime = now;
+                                float progress = totalBytes > 0 ? (float) downloaded / totalBytes : 0f;
+                                final long finalDownloaded = downloaded;
+                                AndroidUtilities.runOnUIThread(() -> {
+                                    callProgressChanged(pack, false, progress, finalDownloaded);
+                                });
+                            }
+                        }
+                        fos.flush();
+                    }
+
+                    pack.fileLocation = tempFile.getAbsolutePath();
+                    pack.fileSize = tempFile.length();
+                    AndroidUtilities.runOnUIThread(() -> {
+                        downloadingPacks.remove(pack.getPackId());
+                        installDownloadedEmoji(pack, update);
+                        tempFile.delete();
+                    });
+                    return;
+                }
+            } catch (Exception e) {
+                FileLog.e("Failed to download emoji pack: " + pack.getPackId(), e);
+                if (tempFile.exists()) {
+                    tempFile.delete();
+                }
+            }
+
+            AndroidUtilities.runOnUIThread(() -> {
+                downloadingPacks.remove(pack.getPackId());
+                callProgressChanged(pack, true, 0f, 0);
+            });
+        });
     }
 
     public void checkEmojiPacks() {
@@ -936,7 +1098,7 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
         protected String packName;
         protected String packId;
         protected String fileLocation;
-        private String preview;
+        protected String preview;
         protected long fileSize;
 
         public EmojiPackBase() {
@@ -993,18 +1155,47 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
         private int previewId;
         private int fileId;
         private int packVersion;
+        private String downloadUrl;
+        private String previewUrl;
 
         private TLRPC.Document previewDocument;
         private TLRPC.Document fileDocument;
 
+        public EmojiPackInfo(String packName, String packId, int packVersion, String downloadUrl, String previewUrl) {
+            super(packName, Objects.equals(packId, "apple") ? "default" : packId, null, previewUrl, 0);
+            this.packVersion = packVersion;
+            this.downloadUrl = downloadUrl;
+            this.previewUrl = previewUrl;
+
+            File dir = EmojiHelper.getEmojiDir(this.packId, packVersion);
+            File fontFile = new File(dir, EMOJI_FONT_NAME);
+            if (fontFile.exists()) {
+                this.fileLocation = fontFile.getAbsolutePath();
+                this.fileSize = fontFile.length();
+            }
+            File previewFile = new File(dir, "preview.png");
+            if (previewFile.exists()) {
+                this.preview = previewFile.getAbsolutePath();
+            } else if (!TextUtils.isEmpty(previewUrl)) {
+                this.preview = previewUrl;
+            }
+        }
+
         public EmojiPackInfo(String packName, int fileId, int previewId, String packId, int packVersion) {
-            super(packName, Objects.equals(packId, "apple") ? "default" : packId, null, null, 0);
+            this(packName, packId, packVersion, null, null);
             this.previewId = previewId;
             this.fileId = fileId;
-            this.packVersion = packVersion;
         }
 
         public EmojiPackInfo() {
+        }
+
+        public String getDownloadUrl() {
+            return downloadUrl;
+        }
+
+        public String getPreviewUrl() {
+            return previewUrl;
         }
 
         public TLRPC.Document getPreviewDocument() {
