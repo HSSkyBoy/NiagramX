@@ -28,7 +28,8 @@ object NiagramVerifiedHelper {
     )
 
     private val NIAGRAM_OFFICIAL_CHATS = longArrayOf(
-        3959358684L, // Channel
+        3923009423L, // Channel
+        3959358684L, // CI Channel
         4352791341L, // Chat Group
         2163306347L  // Chat Channel
     )

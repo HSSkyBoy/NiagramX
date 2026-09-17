@@ -54,10 +54,19 @@ jobs:
           append-timestamp: false
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v6
-      - name: Set up Android SDK Tools
-        uses: android-actions/setup-android@v4
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v4.0.1
         with:
-          packages: "build-tools;36.1.0 ndk;27.2.12479018 platforms;android-37.0"
+          cmdline-tools-version: 14742923
+          packages: ''
+      - name: Accept licenses
+        run: yes | sdkmanager --licenses
+      - name: Install SDK 37 & NDK
+        run: |
+          sdkmanager "platform-tools"
+          sdkmanager "platforms;android-37.0"
+          sdkmanager "build-tools;37.0.0"
+          sdkmanager "ndk;27.2.12479018"
       - name: Install Native Build Dependencies
         run: |
           sudo apt-get update
