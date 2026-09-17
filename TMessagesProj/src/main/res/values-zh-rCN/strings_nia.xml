@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Neo 设置</string>
     <string name="CombineMessage">合并消息</string>
@@ -680,7 +680,7 @@
     <string name="CallTo">呼叫 **%1$s**？</string>
     <string name="DisableNumberRounding">禁用数字舍入</string>
     <string name="Categories">类别</string>
-    <string name="OfficialChannel">Nagram 频道</string>
+    <string name="OfficialChannel">Niagram 构建频道</string>
     <string name="About">关于</string>
     <string name="IgnoreBlockedAbout">您将不会再看到被屏蔽的用户在群组中的消息。</string>
     <string name="SourceCode">源代码</string>

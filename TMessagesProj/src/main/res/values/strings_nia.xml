@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Neo-Settings</string>
     <string name="CombineMessage">Combine Messages</string>
@@ -704,7 +704,7 @@
     <string name="CallTo">Call to **%1$s**?</string>
     <string name="DisableNumberRounding">Disable Number Rounding</string>
     <string name="Categories">Categories</string>
-    <string name="OfficialChannel">Nagram Channel</string>
+    <string name="OfficialChannel">Niagram Build Channel</string>
     <string name="About">About</string>
     <string name="IgnoreBlockedAbout">You\'ll no longer see messages from blocked users in groups.</string>
     <string name="SourceCode">Source Code</string>

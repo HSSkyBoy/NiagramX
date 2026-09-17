@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Neo 設定</string>
     <string name="CombineMessage">合併訊息</string>
@@ -680,7 +680,7 @@
     <string name="CallTo">撥打給 **%1$s**？</string>
     <string name="DisableNumberRounding">停用數字四捨五入</string>
     <string name="Categories">分類</string>
-    <string name="OfficialChannel">Nagram 頻道</string>
+    <string name="OfficialChannel">Niagram 構建頻道</string>
     <string name="About">關於</string>
     <string name="IgnoreBlockedAbout">您將不會再看到被封鎖的使用者在群組中的訊息。</string>
     <string name="SourceCode">原始碼</string>

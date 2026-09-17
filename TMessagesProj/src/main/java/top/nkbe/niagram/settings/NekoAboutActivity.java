@@ -44,9 +44,9 @@ public class NekoAboutActivity extends BaseNekoSettingsActivity {
     @Override
     protected void onItemClick(View view, int position, float x, float y) {
         if (position == xChannelRow) {
-            MessagesController.getInstance(currentAccount).openByUserName("NiagramX", NekoAboutActivity.this, 1);
+            MessagesController.getInstance(currentAccount).openByUserName("niagramx_channel", NekoAboutActivity.this, 1);
         } else if (position == channelRow) {
-            MessagesController.getInstance(currentAccount).openByUserName("nagram_channel", NekoAboutActivity.this, 1);
+            MessagesController.getInstance(currentAccount).openByUserName("NiagramX", NekoAboutActivity.this, 1);
         } else if (position == channelTipsRow) {
             MessagesController.getInstance(currentAccount).openByUserName("NagramTips", NekoAboutActivity.this, 1);
         } else if (position == translationRow) {
@@ -74,9 +74,9 @@ public class NekoAboutActivity extends BaseNekoSettingsActivity {
             if (holder.getItemViewType() == TYPE_SETTINGS) {
                 TextSettingsCell textCell = (TextSettingsCell) holder.itemView;
                 if (position == xChannelRow) {
-                    textCell.setTextAndValue(getString(R.string.XChannel), "@NiagramX", true);
+                    textCell.setTextAndValue(getString(R.string.XChannel), "@NiagramX_Channel", true);
                 } else if (position == channelRow) {
-                    textCell.setTextAndValue(getString(R.string.OfficialChannel), "@nagram_channel", true);
+                    textCell.setTextAndValue(getString(R.string.OfficialChannel), "@NiagramX", true);
                 } else if (position == channelTipsRow) {
                     textCell.setTextAndValue(getString(R.string.TipsChannel), "@" + "NagramTips", true);
                 } else if (position == sourceCodeRow) {
