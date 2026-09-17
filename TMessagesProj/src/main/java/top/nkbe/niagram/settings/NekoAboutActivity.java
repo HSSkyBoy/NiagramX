@@ -11,28 +11,39 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.telegram.messenger.MessagesController;
 import org.telegram.messenger.R;
 import org.telegram.messenger.browser.Browser;
-import org.telegram.ui.Cells.TextSettingsCell;
+import org.telegram.ui.Cells.TextCell;
 
 import top.nkbe.niagram.DatacenterActivity;
+import top.nkbe.niagram.ui.cells.HeaderCell;
 
 public class NekoAboutActivity extends BaseNekoSettingsActivity {
 
+    private int communityHeaderRow;
     private int xChannelRow;
     private int channelRow;
     private int channelTipsRow;
+
+    private int developmentHeaderRow;
     private int sourceCodeRow;
     private int translationRow;
+
+    private int diagnosticsHeaderRow;
     private int datacenterStatusRow;
 
     @Override
     protected void updateRows() {
         super.updateRows();
 
+        communityHeaderRow = addRow();
         xChannelRow = addRow();
         channelRow = addRow();
         channelTipsRow = addRow();
+
+        developmentHeaderRow = addRow();
         sourceCodeRow = addRow();
         translationRow = addRow();
+
+        diagnosticsHeaderRow = addRow();
         datacenterStatusRow = addRow();
     }
 
@@ -71,27 +82,44 @@ public class NekoAboutActivity extends BaseNekoSettingsActivity {
 
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position, boolean partial) {
-            if (holder.getItemViewType() == TYPE_SETTINGS) {
-                TextSettingsCell textCell = (TextSettingsCell) holder.itemView;
-                if (position == xChannelRow) {
-                    textCell.setTextAndValue(getString(R.string.XChannel), "@NiagramX_Channel", true);
-                } else if (position == channelRow) {
-                    textCell.setTextAndValue(getString(R.string.OfficialChannel), "@NiagramX", true);
-                } else if (position == channelTipsRow) {
-                    textCell.setTextAndValue(getString(R.string.TipsChannel), "@" + "NagramTips", true);
-                } else if (position == sourceCodeRow) {
-                    textCell.setTextAndValue(getString(R.string.SourceCode), "Github", true);
-                } else if (position == translationRow) {
-                    textCell.setTextAndValue(getString(R.string.TransSite), "Crowdin", true);
-                } else if (position == datacenterStatusRow) {
-                    textCell.setText(getString(R.string.DatacenterStatus), false);
+            switch (holder.getItemViewType()) {
+                case TYPE_HEADER: {
+                    HeaderCell headerCell = (HeaderCell) holder.itemView;
+                    if (position == communityHeaderRow) {
+                        headerCell.setText(getString(R.string.NekoAboutSectionCommunity));
+                    } else if (position == developmentHeaderRow) {
+                        headerCell.setText(getString(R.string.NekoAboutSectionDevelopment));
+                    } else if (position == diagnosticsHeaderRow) {
+                        headerCell.setText(getString(R.string.NekoAboutSectionDiagnostics));
+                    }
+                    break;
+                }
+                case TYPE_TEXT: {
+                    TextCell textCell = (TextCell) holder.itemView;
+                    if (position == xChannelRow) {
+                        textCell.setTextAndValueAndIcon(getString(R.string.XChannel), "@NiagramX_Channel", R.drawable.msg_channel, true);
+                    } else if (position == channelRow) {
+                        textCell.setTextAndValueAndIcon(getString(R.string.OfficialChannel), "@NiagramX", R.drawable.msg_channel, true);
+                    } else if (position == channelTipsRow) {
+                        textCell.setTextAndValueAndIcon(getString(R.string.TipsChannel), "@NagramTips", R.drawable.msg_help, false);
+                    } else if (position == sourceCodeRow) {
+                        textCell.setTextAndValueAndIcon(getString(R.string.SourceCode), "GitHub", R.drawable.msg_pin_code, translationRow != -1);
+                    } else if (position == translationRow) {
+                        textCell.setTextAndValueAndIcon(getString(R.string.TransSite), "Crowdin", R.drawable.msg_translate, false);
+                    } else if (position == datacenterStatusRow) {
+                        textCell.setTextAndIcon(getString(R.string.DatacenterStatus), R.drawable.msg_stats, false);
+                    }
+                    break;
                 }
             }
         }
 
         @Override
         public int getItemViewType(int position) {
-            return TYPE_SETTINGS;
+            if (position == communityHeaderRow || position == developmentHeaderRow || position == diagnosticsHeaderRow) {
+                return TYPE_HEADER;
+            }
+            return TYPE_TEXT;
         }
     }
 }

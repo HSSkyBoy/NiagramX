@@ -886,4 +886,7 @@
     <string name="Appearance">外觀</string>
     <string name="ThemeAmoledDark">純黑 (AMOLED)</string>
     <string name="NoPreloadTrackIfRepeatOne">單曲循環時不預載下一首</string>
+    <string name="NekoAboutSectionCommunity">社群</string>
+    <string name="NekoAboutSectionDevelopment">開發</string>
+    <string name="NekoAboutSectionDiagnostics">診斷</string>
 </resources>
