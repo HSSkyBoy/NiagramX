@@ -475,7 +475,7 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
             }
         }
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setTheme(R.style.Theme_TMessages);
+        setTheme(Theme.isCurrentThemeDark() ? R.style.Theme_TMessages_Dark : R.style.Theme_TMessages);
         updateTaskDescription();
         getWindow().setBackgroundDrawable(new ActivityWindowEmptyBackgroundDrawable());
         getWindow().setFormat(PixelFormat.OPAQUE);

@@ -15,6 +15,7 @@ import static org.telegram.messenger.LocaleController.getString;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.UiModeManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
@@ -4517,6 +4518,7 @@ public class Theme {
             editor.remove("nighttheme");
         }
         editor.commit();
+        syncApplicationNightMode();
     }
 
     @SuppressLint("PrivateApi")
@@ -6226,6 +6228,35 @@ public class Theme {
         applyChatTheme(false, bg);
         boolean checkNavigationBarColor = !hasPreviousTheme;
         AndroidUtilities.runOnUIThread(() -> NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.didSetNewTheme, false, checkNavigationBarColor, true));
+        syncApplicationNightMode();
+    }
+
+    private static int lastSyncedNightMode = -999;
+
+    public static void syncApplicationNightMode() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            AndroidUtilities.runOnUIThread(() -> {
+                try {
+                    int targetMode;
+                    if (selectedAutoNightType == AUTO_NIGHT_TYPE_SYSTEM) {
+                        targetMode = UiModeManager.MODE_NIGHT_AUTO;
+                    } else if (isCurrentThemeDark()) {
+                        targetMode = UiModeManager.MODE_NIGHT_YES;
+                    } else {
+                        targetMode = UiModeManager.MODE_NIGHT_NO;
+                    }
+                    if (lastSyncedNightMode != targetMode) {
+                        UiModeManager uiModeManager = (UiModeManager) ApplicationLoader.applicationContext.getSystemService(Context.UI_MODE_SERVICE);
+                        if (uiModeManager != null) {
+                            uiModeManager.setApplicationNightMode(targetMode);
+                            lastSyncedNightMode = targetMode;
+                        }
+                    }
+                } catch (Throwable e) {
+                    FileLog.e(e);
+                }
+            });
+        }
     }
 
     public static boolean hasHue(int color) {
