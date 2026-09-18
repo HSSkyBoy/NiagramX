@@ -794,7 +794,7 @@ object NyaConfig {
     @JvmField val customAudioBitrate = addConfig("customAudioBitrate", ConfigItem.configTypeInt, 32)
     @JvmField val enhancedFileLoader = addConfig("enhancedFileLoader", ConfigItem.configTypeInt, ENHANCED_LOADER_OFF)
     @JvmField val uploadBoost = addConfig("uploadBoost", ConfigItem.configTypeBool, false)
-    @JvmField val useOSMDroidMap = addConfig("useOSMDroidMap", ConfigItem.configTypeBool, false)
+    @JvmField val useOSMDroidMap = addConfig("useOSMDroidMap", ConfigItem.configTypeBool, true)
     @JvmField val mapDriftingFixForGoogleMaps = addConfig("mapDriftingFixForGoogleMaps", ConfigItem.configTypeBool, true)
 
     @JvmField val localPremium = addConfig("localPremium", ConfigItem.configTypeBool, false)
@@ -1965,7 +1965,7 @@ object NyaConfig {
 
     @JvmStatic
     fun fixDriftingForGoogleMaps(): Boolean {
-        return !useOSMDroidMap.Bool() && mapDriftingFixForGoogleMaps.Bool()
+        return false;
     }
 
     private val ghostToggleItems: List<Pair<ConfigItem, ConfigItem>> by lazy {

@@ -123,11 +123,7 @@ public class ApplicationLoader extends Application {
 
     public static IMapsProvider getMapsProvider() {
         if (mapsProvider == null) {
-            if (NyaConfig.useOSMDroidMap.Bool())
-                mapsProvider = new OSMDroidMapsProvider();
-            else {
-                mapsProvider = new GoogleMapsProvider();
-            }
+            mapsProvider = new OSMDroidMapsProvider();
         }
         return mapsProvider;
     }

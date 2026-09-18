@@ -175,8 +175,6 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
 
     // Map
     private final AbstractConfigCell headerMap = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.Map)));
-    private final AbstractConfigCell useOSMDroidMapRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.useOSMDroidMap));
-    private final AbstractConfigCell mapDriftingFixForGoogleMapsRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.mapDriftingFixForGoogleMaps));
     private final AbstractConfigCell mapPreviewRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NyaConfig.mapPreviewProvider, new String[]{
             getString(R.string.MapPreviewProviderTelegram),
             getString(R.string.MapPreviewProviderYandexNax),
@@ -322,7 +320,6 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
 
         checkCustomDoHRows();
         checkWebProxyRows();
-        checkMapDriftingFixRows();
         checkCustomTitleRows();
         checkPushServiceTypeRows();
         checkOpenArchiveOnPullRows();
@@ -361,8 +358,6 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
                         ContactsController.getInstance(a).checkAppAccount();
                     }
                 }
-            } else if (key.equals(NyaConfig.useOSMDroidMap.getKey())) {
-                checkMapDriftingFixRows();
             } else if (key.equals(NyaConfig.INSTANCE.getPushServiceType().getKey())) {
                 PushListenerController.reconcilePushRegistration();
                 if ((int) newValue == 0) {
@@ -688,29 +683,6 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
         addRowsToMap(cellGroup);
     }
 
-    private void checkMapDriftingFixRows() {
-        boolean useOSMDroid = NyaConfig.useOSMDroidMap.Bool();
-        if (listAdapter == null) {
-            if (useOSMDroid) {
-                cellGroup.rows.remove(mapDriftingFixForGoogleMapsRow);
-            }
-            return;
-        }
-        if (!useOSMDroid) {
-            final int index = cellGroup.rows.indexOf(useOSMDroidMapRow);
-            if (!cellGroup.rows.contains(mapDriftingFixForGoogleMapsRow)) {
-                cellGroup.rows.add(index + 1, mapDriftingFixForGoogleMapsRow);
-                listAdapter.notifyItemInserted(index + 1);
-            }
-        } else {
-            int rowIndex = cellGroup.rows.indexOf(mapDriftingFixForGoogleMapsRow);
-            if (rowIndex != -1) {
-                cellGroup.rows.remove(mapDriftingFixForGoogleMapsRow);
-                listAdapter.notifyItemRemoved(rowIndex);
-            }
-        }
-        addRowsToMap(cellGroup);
-    }
 
     private void checkCustomTitleRows() {
         boolean useUserName = NyaConfig.INSTANCE.getCustomTitleUserName().Bool();

@@ -1576,8 +1576,6 @@
     <string name="MapPreviewProviderGoogle">Google</string>
     <string name="MapPreviewProviderYandex">Yandex</string>
     <string name="MapPreviewProviderNobody">No previews</string>
-    <string name="InstallGoogleMaps">Install Google Maps?</string>
-    <string name="InstallHuaweiMaps">Install Petal Maps?</string>
     <string name="ScamMessage">SCAM</string>
     <string name="FakeMessage">FAKE</string>
     <string name="ViaBot">via</string>
