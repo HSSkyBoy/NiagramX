@@ -305,12 +305,6 @@ object NyaConfig {
             ConfigItem.configTypeBool,
             false
         )
-    val autoActivateMainlandProxy =
-        addConfig(
-            "AutoActivateMainlandProxy",
-            ConfigItem.configTypeBool,
-            true
-        )
     val notificationIcon =
         addConfig(
             "NotificationIcon",
@@ -705,7 +699,7 @@ object NyaConfig {
     @JvmField val useIosSounds = addConfig("useIosSounds", ConfigItem.configTypeBool, false)
     @JvmField val verifySelf = addConfig("VerifySelf", ConfigItem.configTypeBool, false)
 
-    @JvmField val useIPv6 = addConfig("IPv6", ConfigItem.configTypeBool, false)
+    @JvmField val useIPv6 = addConfig("IPv6", ConfigItem.configTypeBool, true)
     @JvmField val hidePhone = addConfig("HidePhone", ConfigItem.configTypeBool, true)
     @JvmField val ignoreBlocked = addConfig("IgnoreBlocked", ConfigItem.configTypeBool, false)
     @JvmField val tabletMode = addConfig("TabletMode", ConfigItem.configTypeInt, 0)

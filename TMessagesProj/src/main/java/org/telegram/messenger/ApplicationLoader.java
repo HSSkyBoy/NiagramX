@@ -314,7 +314,6 @@ public class ApplicationLoader extends Application {
 
         try {
             ProxyUtil.registerNetworkCallback();
-            ProxyUtil.checkAndActivateMainlandProxy();
         } catch (Throwable e) {
             FileLog.e(e);
         }

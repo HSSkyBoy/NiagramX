@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Налаштування N</string>
     <string name="CombineMessage">Об\'єднати повідомлення</string>
@@ -894,7 +894,5 @@
     <string name="PublicProxyDescription">Проксі-тунель на базі Nullgram (WebSocket через Cloudflare)</string>
     <string name="PublicProxyCannotDelete">Вбудований публічний проксі не можна видалити.</string>
     <string name="PublicProxyCannotShare">Вбудованим публічним проксі не можна поділитися.</string>
-    <string name="AutoActivateMainlandProxy">Автоактивація для китайських IP</string>
-    <string name="AutoActivateMainlandProxyDesc">Автоматично вмикати вбудований проксі під час запуску у разі виявлення підключення з материкового Китаю / Хайнаня.</string>
     <string name="DisableProxyWhenVpnEnabledDesc">Автоматично призупиняти проксі та тунель tcp2ws у разі виявлення системного VPN.</string>
 </resources>

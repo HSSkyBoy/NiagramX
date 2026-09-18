@@ -47,15 +47,12 @@ import top.nkbe.niagram.helpers.WebSocketHelper
 import top.nkbe.niagram.ui.BottomBuilder
 import top.nkbe.niagram.utils.AlertUtil.showToast
 import java.io.File
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.json.JSONObject
-import java.util.concurrent.TimeUnit
 
 
 object ProxyUtil {
 
     private var networkCallbackRegistered = false
+    private var proxyDisabledByVpn = false
 
     @JvmStatic
     fun registerNetworkCallback() {
@@ -74,6 +71,7 @@ object ProxyUtil {
                         if (NyaConfig.disableProxyWhenVpnEnabled.Bool()) {
                             WebSocketHelper.stopServer()
                             if (SharedConfig.isProxyEnabled()) {
+                                proxyDisabledByVpn = true
                                 SharedConfig.setProxyEnable(false)
                                 AndroidUtilities.runOnUIThread {
                                     NotificationCenter.getGlobalInstance()
@@ -82,7 +80,8 @@ object ProxyUtil {
                             }
                         }
                     } else {
-                        if (NyaConfig.disableProxyWhenVpnEnabled.Bool() && !SharedConfig.isProxyEnabled()) {
+                        if (NyaConfig.disableProxyWhenVpnEnabled.Bool() && proxyDisabledByVpn && !SharedConfig.isProxyEnabled()) {
+                            proxyDisabledByVpn = false
                             if (SharedConfig.currentProxy == null && !SharedConfig.proxyList.isEmpty()) {
                                 SharedConfig.setCurrentProxy(SharedConfig.proxyList[0])
                             }
@@ -111,69 +110,6 @@ object ProxyUtil {
         try {
             connectivityManager.registerDefaultNetworkCallback(networkCallback)
         } catch (_: Exception) {}
-    }
-
-    private var geoIpChecked = false
-
-    @JvmStatic
-    fun checkAndActivateMainlandProxy() {
-        if (geoIpChecked) return
-        geoIpChecked = true
-
-        if (!NyaConfig.autoActivateMainlandProxy.Bool()) return
-
-        val connectivityManager = ApplicationLoader.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork = connectivityManager.activeNetwork
-        if (activeNetwork != null) {
-            val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork)
-            if (capabilities != null && capabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN)) {
-                return
-            }
-        }
-
-        Thread {
-            try {
-                val client = OkHttpClient.Builder()
-                    .connectTimeout(3, TimeUnit.SECONDS)
-                    .readTimeout(3, TimeUnit.SECONDS)
-                    .build()
-                val request = Request.Builder()
-                    .url("http://ip-api.com/json/?fields=countryCode,region,status")
-                    .header("User-Agent", "Mozilla/5.0")
-                    .build()
-                val response = client.newCall(request).execute()
-                if (response.isSuccessful) {
-                    val body = response.body?.string()
-                    if (!body.isNullOrEmpty()) {
-                        val json = JSONObject(body)
-                        val countryCode = json.optString("countryCode", "")
-                        val region = json.optString("region", "")
-                        val isMainlandOrHainan = "CN".equals(countryCode, ignoreCase = true) || "HI".equals(region, ignoreCase = true) || "HAINAN".equals(region, ignoreCase = true)
-                        if (isMainlandOrHainan) {
-                            FileLog.d("Detected Mainland / Hainan IP: $countryCode, region: $region. Activating built-in proxy...")
-                            AndroidUtilities.runOnUIThread {
-                                SharedConfig.loadProxyList()
-                                var builtInInfo: SharedConfig.ProxyInfo? = null
-                                for (info in SharedConfig.proxyList) {
-                                    if (WebSocketHelper.proxyServer == info.address) {
-                                        builtInInfo = info
-                                        break
-                                    }
-                                }
-                                if (builtInInfo != null) {
-                                    SharedConfig.setCurrentProxy(builtInInfo)
-                                    SharedConfig.setProxyEnable(true)
-                                    NotificationCenter.getGlobalInstance().postNotificationName(NotificationCenter.proxySettingsChanged)
-                                    FileLog.d("Built-in tcp2ws proxy activated successfully.")
-                                }
-                            }
-                        }
-                    }
-                }
-            } catch (e: Exception) {
-                FileLog.e("Failed to check GeoIP: ${e.message}")
-            }
-        }.start()
     }
 
     @JvmStatic
