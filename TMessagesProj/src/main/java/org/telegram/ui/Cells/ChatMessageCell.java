@@ -9618,24 +9618,12 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                         currentUrl = AndroidUtilities.formapMapUrl(isSecretChat, lat, lon, (int) (photoWidth / AndroidUtilities.density), (int) (photoHeight / AndroidUtilities.density), true, 15);
                         currentWebFile = WebFile.createWithGeoPoint(point, (int) (photoWidth / AndroidUtilities.density), (int) (photoHeight / AndroidUtilities.density), 15, Math.min(2, (int) Math.ceil(AndroidUtilities.density)));
                     }
-                    if (isSecretChat) {
-                        if (SharedConfig.mapPreviewType == 0) {
-                            currentMapProvider = 2;
-                        } else if (SharedConfig.mapPreviewType == 1) {
-                            currentMapProvider = 1;
-                        } else if (SharedConfig.mapPreviewType == 3) {
-                            currentMapProvider = 1;
-                        } else {
-                            currentMapProvider = -1;
-                        }
+                    if (SharedConfig.mapPreviewType == 0) {
+                        currentMapProvider = 2;
+                    } else if (SharedConfig.mapPreviewType == 1 || SharedConfig.mapPreviewType == 3) {
+                        currentMapProvider = 1;
                     } else {
-                        if (NyaConfig.mapPreviewProvider.Int() == 0) {
-                            currentMapProvider = 2;
-                        } else if (NyaConfig.mapPreviewProvider.Int() == 1) {
-                            currentMapProvider = 1;
-                        } else {
-                            currentMapProvider = -1;
-                        }
+                        currentMapProvider = -1;
                     }
                     if (locationLoadingThumb == null) {
                         SvgHelper.SvgDrawable svgThumb = DocumentObject.getSvgThumb(R.raw.map_placeholder, Theme.key_chat_outLocationIcon, (Theme.isCurrentThemeDark() ? 3 : 6) * .12f);

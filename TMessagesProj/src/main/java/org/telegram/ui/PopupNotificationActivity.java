@@ -947,9 +947,9 @@ public class PopupNotificationActivity extends Activity implements NotificationC
                 double lat = geoPoint.lat;
                 double lon = geoPoint._long;
 
-                if (NyaConfig.mapPreviewProvider.Int() == 0) {
+                if (SharedConfig.mapPreviewType == 0) {
                     imageView.setImage(ImageLocation.getForWebFile(WebFile.createWithGeoPoint(geoPoint, 100, 100, 15, Math.min(2, (int) Math.ceil(AndroidUtilities.density)))), null, null, null, messageObject);
-                } else {
+                } else if (SharedConfig.mapPreviewType != 2) {
                     String currentUrl = AndroidUtilities.formapMapUrl(false, lat, lon, 100, 100, true, 15);
                     imageView.setImage(currentUrl, null, null);
                 }

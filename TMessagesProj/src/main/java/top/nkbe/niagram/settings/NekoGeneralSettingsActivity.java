@@ -173,14 +173,7 @@ public class NekoGeneralSettingsActivity extends BaseNekoXSettingsActivity {
     private final AbstractConfigCell webProxyPassRow = cellGroup.appendCell(new ConfigCellTextInput2(getString(R.string.WebProxyPassword), NyaConfig.webProxyPassword, "", null));
     private final AbstractConfigCell dividerConnection = cellGroup.appendCell(new ConfigCellDivider());
 
-    // Map
-    private final AbstractConfigCell headerMap = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.Map)));
-    private final AbstractConfigCell mapPreviewRow = cellGroup.appendCell(new ConfigCellSelectBox(null, NyaConfig.mapPreviewProvider, new String[]{
-            getString(R.string.MapPreviewProviderTelegram),
-            getString(R.string.MapPreviewProviderYandexNax),
-            getString(R.string.MapPreviewProviderNobody)
-    }, null));
-    private final AbstractConfigCell dividerMap = cellGroup.appendCell(new ConfigCellDivider());
+
 
     // Folder
     private final AbstractConfigCell headerFolder = cellGroup.appendCell(new ConfigCellHeader(getString(R.string.Folder)));

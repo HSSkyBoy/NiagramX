@@ -707,7 +707,6 @@ object NyaConfig {
     @JvmField val typeface = addConfig("TypefaceUseDefault", ConfigItem.configTypeBool, false)
     @JvmField val forceFontWeightFallback = addConfig("forceFontWeightFallback", ConfigItem.configTypeBool, false)
     @JvmField val nameOrder = addConfig("NameOrder", ConfigItem.configTypeInt, 1)
-    @JvmField val mapPreviewProvider = addConfig("MapPreviewProvider", ConfigItem.configTypeInt, 0)
     @JvmField val showAddToSavedMessages = addConfig("showAddToSavedMessages", ConfigItem.configTypeBool, true)
     @JvmField val showReport = addConfig("showReport", ConfigItem.configTypeBool, false)
     @JvmField val showViewHistory = addConfig("showViewHistory", ConfigItem.configTypeBool, true)

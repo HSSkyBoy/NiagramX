@@ -2853,9 +2853,6 @@ public class AndroidUtilities {
         if (provider == -1) {
             provider = MessagesController.getInstance(account).mapProvider;
         }
-        if (NyaConfig.mapPreviewProvider.Int() == 1) {
-            provider = 1;
-        }
         if (provider == 1 || provider == 3) {
             String lang = null;
             String[] availableLangs = new String[]{"ru_RU", "tr_TR"};

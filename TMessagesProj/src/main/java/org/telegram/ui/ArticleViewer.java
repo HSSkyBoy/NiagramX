@@ -13127,9 +13127,9 @@ public class ArticleViewer extends IArticleViewer implements NotificationCenter.
                 String currentUrl = AndroidUtilities.formapMapUrl(false, currentBlock.geo.lat, currentBlock.geo._long, (int) (photoWidth / AndroidUtilities.density), (int) (height / AndroidUtilities.density), true, 15);
                 WebFile currentWebFile = WebFile.createWithGeoPoint(currentBlock.geo, (int) (photoWidth / AndroidUtilities.density), (int) (height / AndroidUtilities.density), 15, Math.min(2, (int) Math.ceil(AndroidUtilities.density)));
 
-                if (NyaConfig.mapPreviewProvider.Int() == 0) {
+                if (SharedConfig.mapPreviewType == 0) {
                     currentMapProvider = 2;
-                } else if (NyaConfig.mapPreviewProvider.Int() == 1) {
+                } else if (SharedConfig.mapPreviewType == 1 || SharedConfig.mapPreviewType == 3) {
                     currentMapProvider = 1;
                 } else {
                     currentMapProvider = -1;
