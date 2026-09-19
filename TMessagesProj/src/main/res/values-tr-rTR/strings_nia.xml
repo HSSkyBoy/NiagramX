@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-Ayarları</string>
     <string name="CombineMessage">Mesajları Birleştir</string>
@@ -690,6 +690,7 @@
     <string name="DisableSystemAccount">Sistem Hesabını Devre Dışı Bırak</string>
     <string name="FilterMenu">Sohbetler Filtre Menüsü</string>
     <string name="DisableProxyWhenVpnEnabled">VPN Etkinken Proxy\'yi Devre Dışı Bırak</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">Sistem VPN\'i algılandığında proxy\'yi otomatik olarak askıya alır. Not: Ağ değiştirme (örn. Wi-Fi\'dan hücresel veriye) veya VPN\'in yeniden bağlanması proxy\'nin geçici olarak devam etmesine neden olabilir.</string>
     <string name="SkipOpenLinkConfirm">Bağlantı Açma Onayını Atla</string>
     <string name="DeleteAllInChatAlert">Uyarı! Bu işlem bu sohbetteki **tüm mesajları tüm** katılımcılar için **silecektir**.</string>
     <string name="UnblockAll">Tümünün Engelini Kaldır</string>

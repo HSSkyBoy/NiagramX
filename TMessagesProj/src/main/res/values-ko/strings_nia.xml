@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-설정</string>
     <string name="CombineMessage">메시지 합치기</string>
@@ -697,6 +697,7 @@
     <string name="DisableSystemAccount">시스템 계정 끄기</string>
     <string name="FilterMenu">채팅 필터 메뉴</string>
     <string name="DisableProxyWhenVpnEnabled">VPN이 켜져 있으면 프록시 끄기</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">시스템 VPN 감지 시 프록시를 자동으로 일시 중지합니다. 참고: 네트워크 전환(예: Wi-Fi에서 모바일 데이터로) 또는 VPN 재연결 시 일시적으로 프록시가 다시 활성화될 수 있습니다.</string>
     <string name="SkipOpenLinkConfirm">링크 열기 확인 건너뛰기</string>
     <string name="DeleteAllInChatAlert">경고! 이 채팅의 **모든 메시지**가 **모든** 참가자에게서 삭제됩니다.</string>
     <string name="UnblockAll">모두 차단 해제</string>
@@ -771,4 +772,154 @@
     <string name="EmojiUseDefault">시스템 이모지 사용</string>
     <string name="Chat">채팅</string>
     <string name="Appearance">모양</string>
+
+    <!-- App Icons -->
+    <string name="AppIconMusheen">Musheen</string>
+    <string name="AppIconSpace">Space</string>
+    <string name="AppIconCloud">Cloud</string>
+    <string name="AppIconNeon">Neon</string>
+    <string name="AppIconMaterial">Material</string>
+
+    <!-- Group Member Join Date -->
+    <string name="ShowGroupMemberJoinDate">그룹 멤버 가입일 표시</string>
+    <string name="ShowGroupMemberJoinDateNotice">멤버 메뉴 및 프로필에 멤버가 그룹에 가입한 날짜를 표시합니다.</string>
+    <string name="GroupMemberJoinDate">그룹 가입</string>
+
+    <!-- Input Bar iOS Style -->
+    <string name="InputBar">입력 바</string>
+    <string name="IosButtonPlacement">버튼 배치 (iOS)</string>
+    <string name="IosInputAppearance">디자인 (iOS)</string>
+    <string name="CompactInputSize">컴팩트 크기</string>
+    <string name="ActionButtonStyle">액션 버튼 스타일</string>
+    <string name="ActionButtonStyleAccent">강조</string>
+    <string name="ActionButtonStyleNeutral">보통</string>
+    <string name="ActionButtonStyleWhite">화이트</string>
+
+    <!-- Liquid Glass -->
+    <string name="LiquidGlassAngle">Liquid Glass 각도</string>
+    <string name="LiquidGlassIntensity">Liquid Glass 강도</string>
+
+    <!-- Clown Avatar -->
+    <string name="ClownAvatarForBlockedUsers">차단된 사용자에 광대 아바타 표시</string>
+    <string name="ClownAvatarForBlockedUsersDetail">차단한 사용자의 아바타 또는 빈 아바타 대신 광대 아바타를 표시합니다</string>
+
+    <!-- Spy Mode -->
+    <string name="SpyMode">스파이 모드</string>
+
+    <!-- Anti-delete chat types -->
+    <string name="SaveDeletedChatTypesHeader">채팅 종류</string>
+    <string name="SaveDeletedMessagesInPrivate">개인 채팅</string>
+    <string name="SaveDeletedMessagesInGroups">그룹</string>
+    <string name="SaveDeletedMessagesInChannels">채널</string>
+
+    <!-- Allow Screen Capture & Protected Content -->
+    <string name="AllowScreenCapture">화면 캡처 허용</string>
+    <string name="AllowScreenCaptureNotice">FLAG_SECURE 제한을 비활성화하여 모든 채팅, 만료 미디어 및 보호된 화면에서 스크린샷과 화면 녹화를 허용합니다.</string>
+    <string name="AllowCopyProtectedContent">보호된 콘텐츠 복사 허용</string>
+    <string name="AllowCopyProtectedContentNotice">전달 금지된 채널 및 채팅에서 텍스트 복사, 사진/동영상 저장 및 메시지 재전송을 허용합니다.</string>
+    <string name="SaveTTLMedia">만료 및 TTL 미디어 저장</string>
+    <string name="SaveTTLMediaNotice">만료되는 사진 및 동영상을 제한 없이 저장, 공유 및 볼 수 있도록 항상 허용합니다.</string>
+
+    <!-- Compact Chat Input -->
+    <string name="CompactChatInput">컴팩트 모드</string>
+    <string name="CompactChatInputNotice">입력 바 높이를 40dp로 줄이고 여백을 좁힙니다.</string>
+
+    <!-- iOS Sounds & Theme -->
+    <string name="useIosSounds">iOS 메시지 알림음</string>
+    <string name="UseIosSoundsNotice">Telegram iOS 버전의 인앱 메시지 효과음을 사용합니다.</string>
+    <string name="StyleMaterialDesign3">Material Design 3</string>
+    <string name="TabletModeLandscape">가로 모드 전용</string>
+
+    <!-- DNS / DoH -->
+    <string name="DnsTypeCloudflare">Cloudflare</string>
+    <string name="DnsTypeGoogle">Google Public DNS</string>
+    <string name="DnsTypeTencent">Tencent DNS</string>
+    <string name="DnsTypeAliDNS">AliDNS</string>
+    <string name="CustomDoHHint">https://1.0.0.1/dns-query, ... (길게 눌러 프리셋 선택)</string>
+    <string name="PresetDoHServers">프리셋 DoH 서버</string>
+
+    <!-- Custom API -->
+    <string name="CustomApiDefault">기본 API</string>
+    <string name="CustomApiOfficial">Telegram 공식</string>
+    <string name="CustomApiCustom">사용자 지정 API</string>
+
+    <!-- Web / HTTP Proxy -->
+    <string name="WebProxy">웹 / HTTP 프록시</string>
+    <string name="WebProxyMode">웹 / HTTP 프록시</string>
+    <string name="WebProxyAbout">외부 HTTP/HTTPS 요청(예: LLM 번역, 업데이트 확인, 음성 텍스트 변환 등)을 프록시를 통해 라우팅합니다.</string>
+    <string name="WebProxyModeFollow">Telegram 프록시 사용 (SOCKS5)</string>
+    <string name="WebProxyModeDirect">직접 연결 (비활성화)</string>
+    <string name="WebProxyModeCustom">사용자 지정 프록시</string>
+    <string name="WebProxyType">프록시 종류</string>
+    <string name="WebProxyTypeHttp">HTTP / HTTPS</string>
+    <string name="WebProxyTypeSocks5">SOCKS5</string>
+    <string name="WebProxyHost">프록시 호스트</string>
+    <string name="WebProxyPort">프록시 포트</string>
+    <string name="WebProxyUsername">사용자 이름 (선택 사항)</string>
+    <string name="WebProxyPassword">비밀번호 (선택 사항)</string>
+
+    <!-- HLS Video Quality -->
+    <string name="DefaultHlsVideoQualityAuto">자동</string>
+    <string name="DefaultHlsVideoQualityOriginal">원본 화질</string>
+    <string name="DefaultHlsVideoQualityHigh">고화질 (1080p+)</string>
+    <string name="DefaultHlsVideoQualityMedium">일반 화질 (720p)</string>
+    <string name="DefaultHlsVideoQualityLow">저화질 (480p)</string>
+
+    <!-- Ban by User ID -->
+    <string name="NiaBanById">사용자 ID로 차단</string>
+    <string name="NiaBanByIdDialogTitle">사용자 ID로 차단</string>
+    <string name="NiaBanByIdDialogMessage">대상 사용자의 64비트 정수 ID를 입력하세요. 차단 요청은 Telegram 서버로 직접 전송됩니다.</string>
+    <string name="NiaBanByIdHint">예: 123456789</string>
+    <string name="NiaBanByIdConfirm">사용자 차단</string>
+    <string name="NiaBanByIdConfirmTitle">차단 확인</string>
+    <string name="NiaBanByIdConfirmMessage">ID: %1$s 사용자를 정말 차단하시겠습니까?</string>
+    <string name="NiaBanByIdSuccess">사용자 ID %1$s을(를) 성공적으로 차단했습니다.</string>
+    <string name="NiaBanByIdCannotBanSelf">자기 자신을 차단할 수 없습니다.</string>
+    <string name="NiaBanByIdCannotBanCreator">이 그룹의 소유자 또는 생성자를 차단할 수 없습니다.</string>
+    <string name="NiaBanByIdInvalid">올바른 양의 정수 ID를 입력하세요.</string>
+    <string name="NiaBanByIdErrorNotParticipant">이 사용자는 그룹 멤버가 아닙니다. Telegram 서버는 참여자가 아닌 사용자의 차단을 허용하지 않습니다.</string>
+    <string name="NiaBanByIdErrorInvalidUser">잘못된 사용자 ID이거나 Telegram에서 사용자를 찾을 수 없습니다.</string>
+    <string name="NiaBanByIdErrorAdminRequired">이 사용자를 차단할 수 있는 충분한 관리자 권한이 없습니다.</string>
+    <string name="NiaBanByIdServerError">사용자 차단 실패: %1$s</string>
+
+    <!-- Fastest Proxy -->
+    <string name="ProxyAutoSpeedAcceleration">가장 빠른 프록시 자동 선택</string>
+    <string name="ProxyAutoSpeedAccelerationInfo">더 빠른 연결을 위해 핑(Ping)이 가장 낮은 프록시를 자동으로 테스트하고 전환합니다.</string>
+    <string name="UseFastestProxy">가장 빠른 프록시로 전환</string>
+    <string name="SwitchedToFastestProxy">가장 빠른 프록시로 전환되었습니다</string>
+    <string name="AlreadyFastestProxy">이미 가장 빠른 프록시를 사용 중입니다</string>
+
+    <!-- Login & Email Code -->
+    <string name="PrioritizeEmailCode">이메일 인증 코드 우선</string>
+    <string name="SendCodeViaEmail">이메일로 코드 받기</string>
+    <string name="FastResendDialogTitle">코드 재전송</string>
+    <string name="FastResendDialogMessage">아직 코드를 받지 못하셨나요? 카운트다운을 건너뛰고 새 코드를 즉시 요청하시겠습니까?</string>
+    <string name="FastResendNow">지금 재전송</string>
+    <string name="CodeSentToOtherDeviceTitle">Telegram 앱을 확인하세요</string>
+    <string name="CodeSentToOtherDeviceInfo">로그인 코드가 다른 기기의 Telegram 앱으로 전송되었습니다.\n\n참고: 이메일로 로그인 코드를 받으려면 먼저 공식 Telegram 앱의 설정 > 개인 정보 및 보안 > 2단계 인증에서 로그인 이메일을 연동해야 합니다.</string>
+    <string name="SendCodeUnavailableInfo">현재 Telegram에서 다른 경로로 코드를 보낼 수 없습니다. 다른 기기에 로그인되어 있다면 Telegram 앱으로 전송된 코드를 확인하세요.\n\n이메일 로그인을 사용하려면 Telegram의 개인 정보 및 보안 설정에 로그인 이메일이 등록되어 있는지 확인하세요.</string>
+
+    <!-- Public Proxy -->
+    <string name="PublicProxy">내장 공개 프록시</string>
+    <string name="PublicProxyDescription">Nullgram 제공 프록시 터널 (WebSocket via Cloudflare)</string>
+    <string name="PublicProxyCannotDelete">내장 공개 프록시는 삭제할 수 없습니다.</string>
+    <string name="PublicProxyCannotShare">내장 공개 프록시는 공유할 수 없습니다.</string>
+
+    <!-- Lock Chat -->
+    <string name="LockChat">채팅 잠금</string>
+    <string name="UnlockChat">채팅 잠금 해제</string>
+    <string name="ChatLocked">채팅이 잠겨 있습니다</string>
+    <string name="ChatLockedDescription">이 채팅을 열려면 본인 인증을 완료하세요</string>
+    <string name="ChatLockedMessage">채팅이 잠겨 있습니다</string>
+    <string name="ChatActivityNavbarTransparent">채팅 화면 하단 내비게이션 바 완전 투명화</string>
+
+    <!-- Other settings -->
+    <string name="HideStarsRating">별 개수 숨기기</string>
+    <string name="ScrollToSeenPhotoOnClose">닫을 때 마지막으로 본 사진으로 스크롤</string>
+    <string name="GoogleCloudTransKey">Google Cloud 번역 키</string>
+    <string name="ThemeAmoledDark">AMOLED 다크</string>
+    <string name="NoPreloadTrackIfRepeatOne">한 곡 반복 시 다음 곡 미리 로드 안 함</string>
+    <string name="NekoAboutSectionCommunity">커뮤니티</string>
+    <string name="NekoAboutSectionDevelopment">개발</string>
+    <string name="NekoAboutSectionDiagnostics">진단</string>
 </resources>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Настройки N</string>
     <string name="CombineMessage">Объединить сообщения</string>
@@ -728,6 +728,7 @@
     <string name="DisableSystemAccount">Скрыть аккаунт в системе</string>
     <string name="FilterMenu">Меню фильтра диалогов</string>
     <string name="DisableProxyWhenVpnEnabled">Отключить прокси при включении VPN</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">Автоматически приостанавливать прокси при обнаружении системного VPN. Примечание: переключение сетей (например, с Wi-Fi на мобильный интернет) или переподключение VPN может привести к кратковременному возобновлению работы прокси.</string>
     <string name="SkipOpenLinkConfirm">Открывать ссылки без подтверждения</string>
     <string name="DeleteAllInChatAlert">Внимание! Это **удалит все сообщения** в этом чате для **всех**.</string>
     <string name="UnblockAll">Разблокировать всех</string>
@@ -802,4 +803,115 @@
     <string name="EmojiUseDefault">Использовать системные эмодзи</string>
     <string name="Chat">Чаты</string>
     <string name="Appearance">Внешний вид</string>
+
+    <!-- App Icons -->
+    <string name="AppIconMusheen">Musheen</string>
+    <string name="AppIconSpace">Space</string>
+    <string name="AppIconCloud">Cloud</string>
+    <string name="AppIconNeon">Neon</string>
+    <string name="AppIconMaterial">Material</string>
+
+    <!-- Group Member Join Date -->
+    <string name="ShowGroupMemberJoinDate">Показывать дату вступления участника</string>
+    <string name="ShowGroupMemberJoinDateNotice">Показывать, когда участник вступил в группу, в меню участника и профиле.</string>
+    <string name="GroupMemberJoinDate">Вступил(а) в группу</string>
+
+    <!-- Liquid Glass -->
+    <string name="LiquidGlassAngle">Угол Liquid Glass</string>
+    <string name="LiquidGlassIntensity">Интенсивность Liquid Glass</string>
+
+    <!-- Clown Avatar -->
+    <string name="ClownAvatarForBlockedUsers">Аватар клоуна для заблокированных</string>
+    <string name="ClownAvatarForBlockedUsersDetail">Показывать аватар клоуна для заблокированных вами пользователей вместо их аватара или пустого аватара</string>
+
+    <!-- Spy Mode -->
+    <string name="SpyMode">Режим шпиона</string>
+
+    <!-- Anti-delete chat types -->
+    <string name="SaveDeletedChatTypesHeader">Типы чатов</string>
+    <string name="SaveDeletedMessagesInPrivate">Личные чаты</string>
+    <string name="SaveDeletedMessagesInGroups">Группы</string>
+    <string name="SaveDeletedMessagesInChannels">Каналы</string>
+
+    <!-- Allow Screen Capture & Protected Content -->
+    <string name="AllowScreenCapture">Разрешить снимок экрана</string>
+    <string name="AllowScreenCaptureNotice">Отключить ограничения FLAG_SECURE, чтобы разрешить скриншоты и запись экрана во всех чатах, самоуничтожающихся медиа и защищенных экранах.</string>
+    <string name="AllowCopyProtectedContent">Разрешить копирование защищенного контента</string>
+    <string name="AllowCopyProtectedContentNotice">Разрешить копирование текста, сохранение фото/видео и повторную отправку сообщений из защищенных каналов и чатов (где запрещена пересылка).</string>
+    <string name="SaveTTLMedia">Сохранять исчезающие и TTL-медиа</string>
+    <string name="SaveTTLMediaNotice">Всегда разрешать сохранение, отправку и просмотр исчезающих фото и видео без ограничений.</string>
+
+    <!-- Compact Chat Input -->
+    <string name="CompactChatInput">Компактный режим</string>
+    <string name="CompactChatInputNotice">Уменьшить высоту панели ввода до 40dp и сузить отступы.</string>
+
+    <!-- iOS Sounds & Theme -->
+    <string name="useIosSounds">Звуки сообщений iOS</string>
+    <string name="UseIosSoundsNotice">Использовать звуки сообщений из Telegram для iOS.</string>
+    <string name="StyleMaterialDesign3">Material Design 3</string>
+    <string name="TabletModeLandscape">Только альбомная</string>
+
+    <!-- HLS Video Quality -->
+    <string name="DefaultHlsVideoQualityAuto">Авто</string>
+    <string name="DefaultHlsVideoQualityOriginal">Исходное</string>
+    <string name="DefaultHlsVideoQualityHigh">Высокое качество (1080p+)</string>
+    <string name="DefaultHlsVideoQualityMedium">Среднее качество (720p)</string>
+    <string name="DefaultHlsVideoQualityLow">Низкое качество (480p)</string>
+
+    <!-- Ban by User ID -->
+    <string name="NiaBanById">Заблокировать по ID пользователя</string>
+    <string name="NiaBanByIdDialogTitle">Заблокировать пользователя по ID</string>
+    <string name="NiaBanByIdDialogMessage">Введите 64-битный числовой ID пользователя. Запрос на блокировку будет отправлен напрямую на сервер Telegram.</string>
+    <string name="NiaBanByIdHint">напр. 123456789</string>
+    <string name="NiaBanByIdConfirm">Заблокировать пользователя</string>
+    <string name="NiaBanByIdConfirmTitle">Подтвердить блокировку</string>
+    <string name="NiaBanByIdConfirmMessage">Вы уверены, что хотите заблокировать пользователя с ID: %1$s?</string>
+    <string name="NiaBanByIdSuccess">Пользователь с ID %1$s успешно заблокирован.</string>
+    <string name="NiaBanByIdCannotBanSelf">Вы не можете заблокировать себя.</string>
+    <string name="NiaBanByIdCannotBanCreator">Невозможно заблокировать создателя или владельца этой группы.</string>
+    <string name="NiaBanByIdInvalid">Пожалуйста, введите корректный положительный числовой ID.</string>
+    <string name="NiaBanByIdErrorNotParticipant">Этого пользователя нет в группе. Сервер Telegram не позволяет блокировать пользователей, которые не состоят в группе.</string>
+    <string name="NiaBanByIdErrorInvalidUser">Недействительный ID пользователя или пользователь не найден в Telegram.</string>
+    <string name="NiaBanByIdErrorAdminRequired">У вас недостаточно прав администратора, чтобы заблокировать этого пользователя.</string>
+    <string name="NiaBanByIdServerError">Не удалось заблокировать пользователя: %1$s</string>
+
+    <!-- Fastest Proxy -->
+    <string name="ProxyAutoSpeedAcceleration">Автовыбор самого быстрого прокси</string>
+    <string name="ProxyAutoSpeedAccelerationInfo">Автоматически проверять и переключаться на прокси с наименьшим пингом для более быстрого соединения.</string>
+    <string name="UseFastestProxy">Переключиться на самый быстрый прокси</string>
+    <string name="SwitchedToFastestProxy">Переключено на самый быстрый прокси</string>
+    <string name="AlreadyFastestProxy">Уже используется самый быстрый прокси</string>
+
+    <!-- Login & Email Code -->
+    <string name="PrioritizeEmailCode">Использовать код из email в первую очередь</string>
+    <string name="SendCodeViaEmail">Отправить код на email</string>
+    <string name="FastResendDialogTitle">Отправить код повторно</string>
+    <string name="FastResendDialogMessage">Еще не получили код? Пропустить обратный отсчет и запросить новый код немедленно?</string>
+    <string name="FastResendNow">Отправить сейчас</string>
+    <string name="CodeSentToOtherDeviceTitle">Проверьте приложение Telegram</string>
+    <string name="CodeSentToOtherDeviceInfo">Код для входа был отправлен в приложение Telegram на других ваших устройствах.\n\nПримечание: чтобы получать коды входа по электронной почте, сначала необходимо привязать Email для входа в официальном приложении Telegram в разделе Настройки > Конфиденциальность > Двухэтапная аутентификация.</string>
+    <string name="SendCodeUnavailableInfo">В настоящее время Telegram не может отправить код другими способами. Если вход выполнен на другом вашем устройстве, проверьте код, отправленный в ваше приложение Telegram.\n\nЧтобы использовать вход по электронной почте, убедитесь, что вы настроили Email для входа в настройках конфиденциальности Telegram.</string>
+
+    <!-- Public Proxy -->
+    <string name="PublicProxy">Встроенный публичный прокси</string>
+    <string name="PublicProxyDescription">Прокси-туннель на базе Nullgram (WebSocket через Cloudflare)</string>
+    <string name="PublicProxyCannotDelete">Встроенный публичный прокси нельзя удалить.</string>
+    <string name="PublicProxyCannotShare">Встроенным публичным прокси нельзя поделиться.</string>
+
+    <!-- Lock Chat -->
+    <string name="LockChat">Заблокировать чат</string>
+    <string name="UnlockChat">Разблокировать чат</string>
+    <string name="ChatLocked">Чат заблокирован</string>
+    <string name="ChatLockedDescription">Подтвердите свою личность, чтобы открыть этот чат</string>
+    <string name="ChatLockedMessage">Чат заблокирован</string>
+    <string name="ChatActivityNavbarTransparent">Полностью прозрачная панель навигации чата</string>
+
+    <!-- Other settings -->
+    <string name="HideStarsRating">Скрыть количество звезд</string>
+    <string name="ScrollToSeenPhotoOnClose">Прокручивать к просмотренному фото при закрытии</string>
+    <string name="ThemeAmoledDark">AMOLED Тёмная</string>
+    <string name="NoPreloadTrackIfRepeatOne">Не предзагружать следующий трек при повторе одного</string>
+    <string name="NekoAboutSectionCommunity">Сообщество</string>
+    <string name="NekoAboutSectionDevelopment">Разработка</string>
+    <string name="NekoAboutSectionDiagnostics">Диагностика</string>
 </resources>

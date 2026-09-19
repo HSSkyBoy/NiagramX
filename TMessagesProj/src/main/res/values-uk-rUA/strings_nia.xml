@@ -894,5 +894,14 @@
     <string name="PublicProxyDescription">Проксі-тунель на базі Nullgram (WebSocket через Cloudflare)</string>
     <string name="PublicProxyCannotDelete">Вбудований публічний проксі не можна видалити.</string>
     <string name="PublicProxyCannotShare">Вбудованим публічним проксі не можна поділитися.</string>
-    <string name="DisableProxyWhenVpnEnabledDesc">Автоматично призупиняти проксі та тунель tcp2ws у разі виявлення системного VPN.</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">Автоматично призупиняти проксі у разі виявлення системного VPN. Примітка: перемикання мереж (наприклад, з Wi-Fi на мобільні дані) або повторне підключення VPN можуть спричинити короткочасне відновлення проксі.</string>
+    <string name="LockChat">Заблокувати чат</string>
+    <string name="UnlockChat">Розблокувати чат</string>
+    <string name="ChatLocked">Чат заблоковано</string>
+    <string name="ChatLockedDescription">Підтвердьте свою особу, щоб відкрити цей чат</string>
+    <string name="ChatLockedMessage">Чат заблоковано</string>
+    <string name="ChatActivityNavbarTransparent">Повністю прозора панель навігації чату</string>
+    <string name="NekoAboutSectionCommunity">Спільнота</string>
+    <string name="NekoAboutSectionDevelopment">Розробка</string>
+    <string name="NekoAboutSectionDiagnostics">Діагностика</string>
 </resources>

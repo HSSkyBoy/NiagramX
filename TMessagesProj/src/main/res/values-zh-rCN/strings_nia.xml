@@ -888,4 +888,7 @@
     <string name="NekoAboutSectionCommunity">社区</string>
     <string name="NekoAboutSectionDevelopment">开发</string>
     <string name="NekoAboutSectionDiagnostics">诊断</string>
+    <string name="ShowPremiumStickersAnimation">显示 Premium 贴纸动画</string>
+    <string name="StyleMaterialDesign3">Material Design 3</string>
+    <string name="ImportAyuDBAlert">当前消息数据库将被替换。导入后应用将重启。</string>
 </resources>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-Configuración</string>
     <string name="CombineMessage">Combinar mensajes</string>
@@ -692,6 +692,7 @@ También puede utilizar texto sin formato, pero no olvide escapar los paréntesi
     <string name="DisableSystemAccount">Desactivar cuenta del sistema</string>
     <string name="FilterMenu">Menú de filtros de diálogos</string>
     <string name="DisableProxyWhenVpnEnabled">Desactivar proxy cuando la VPN está habilitada</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">Suspende automáticamente el proxy cuando se detecta una VPN del sistema. Nota: Cambiar de red (ej. de Wi-Fi a datos móviles) o reconectar la VPN puede reanudar el proxy momentáneamente.</string>
     <string name="SkipOpenLinkConfirm">Omitir confirmación de Abrir Enlace</string>
     <string name="DeleteAllInChatAlert">¡Advertencia! Esto **eliminará todos los mensajes** en este chat para **todos** los participantes.</string>
     <string name="UnblockAll">Desbloquear todo</string>

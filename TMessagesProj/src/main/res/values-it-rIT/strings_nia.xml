@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-Config</string>
     <string name="CombineMessage">Unisci Messaggi</string>
@@ -696,6 +696,7 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="DisableSystemAccount">Disabilita account di sistema</string>
     <string name="FilterMenu">Menu Filtro Dialoghi</string>
     <string name="DisableProxyWhenVpnEnabled">Disabilita proxy quando VPN è abilitato</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">Sospende automaticamente il proxy quando viene rilevata una VPN di sistema. Nota: Il cambio di rete (es. da Wi-Fi a dati mobili) o la riconnessione della VPN potrebbero riattivare temporaneamente il proxy.</string>
     <string name="SkipOpenLinkConfirm">Ignora conferma apertura link</string>
     <string name="DeleteAllInChatAlert">Attenzione! Questa operazione **eliminerà tutti i messaggi** presenti in questa chat per **tutti** i partecipanti.</string>
     <string name="UnblockAll">Sblocca tutti</string>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Konfiguracja N</string>
     <string name="CombineMessage">Połącz wiadomości</string>
@@ -691,6 +691,7 @@
     <string name="DisableSystemAccount">Wyłącz konto systemowe</string>
     <string name="FilterMenu">Menu filtra czatów</string>
     <string name="DisableProxyWhenVpnEnabled">Wyłącz serwer proxy, gdy VPN jest włączony</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">Automatycznie zawiesza serwer proxy po wykryciu systemowej sieci VPN. Uwaga: przełączenie sieci (np. z Wi-Fi na dane komórkowe) lub ponowne połączenie VPN może chwilowo wznowić działanie proxy.</string>
     <string name="SkipOpenLinkConfirm">Pomiń potwierdzenie otwierania linków</string>
     <string name="DeleteAllInChatAlert">Uwaga! Spowoduje to **usunięcie wszystkich wiadomości** w tym czacie dla **wszystkich** uczestników.</string>
     <string name="UnblockAll">Odblokuj wszystkich</string>

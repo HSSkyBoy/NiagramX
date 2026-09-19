@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">پیکربندی N</string>
     <string name="CombineMessage">ترکیب پیام‌ها</string>
@@ -691,6 +691,7 @@
     <string name="DisableSystemAccount">غیرفعال کردن حساب سیستمی</string>
     <string name="FilterMenu">منوی فیلتر گفتگوها</string>
     <string name="DisableProxyWhenVpnEnabled">غیرفعال کردن پروکسی هنگام روشن بودن VPN</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">هنگام شناسایی VPN سیستم، پروکسی را به طور خودکار به حالت تعلیق درآورید. توجه: تغییر شبکه (مثلاً Wi-Fi به داده تلفن همراه) یا اتصال مجدد VPN ممکن است باعث فعال شدن مجدد موقت پروکسی شود.</string>
     <string name="SkipOpenLinkConfirm">رد کردن تایید باز کردن لینک</string>
     <string name="DeleteAllInChatAlert">هشدار! این کار **تمام پیام‌ها** را در این گفتگو برای **همه** شرکت‌کنندگان حذف می‌کند.</string>
     <string name="UnblockAll">رفع انسداد همه</string>

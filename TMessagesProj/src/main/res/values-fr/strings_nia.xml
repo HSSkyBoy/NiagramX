@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="InputBar">Barre de saisie</string>
     <string name="IosButtonPlacement">Disposition des boutons (iOS)</string>
@@ -33,4 +33,7 @@
     <string name="InputAnimationModerate">Moyenne</string>
     <string name="InputAnimationStrong">Forte</string>
     <string name="InputAnimationStrongest">La plus forte</string>
+
+    <string name="DisableProxyWhenVpnEnabled">Désactiver le proxy lorsque le VPN est activé</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">Suspend automatiquement le proxy lorsqu\'un VPN système est détecté. Remarque : le changement de réseau (ex. Wi-Fi vers données mobiles) ou la reconnexion du VPN peut réactiver temporairement le proxy.</string>
 </resources>

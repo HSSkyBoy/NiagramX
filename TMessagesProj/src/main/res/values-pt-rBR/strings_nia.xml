@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">N-Configuração</string>
     <string name="CombineMessage">Combinar mensagens</string>
@@ -692,6 +692,7 @@
     <string name="DisableSystemAccount">Desativar conta do sistema</string>
     <string name="FilterMenu">Menu de filtros de diálogos</string>
     <string name="DisableProxyWhenVpnEnabled">Desativar proxy quando a VPN estiver ativada</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">Suspende automaticamente o proxy quando a VPN do sistema for detectada. Nota: Trocar de rede (ex.: de Wi-Fi para dados móveis) ou reconectar a VPN pode reativar o proxy momentaneamente.</string>
     <string name="SkipOpenLinkConfirm">Ignorar confirmação ao abrir links</string>
     <string name="DeleteAllInChatAlert">Aviso! Isso irá **excluir todas as mensagens** neste chat para **todos** os participantes.</string>
     <string name="UnblockAll">Desbloquear todos</string>

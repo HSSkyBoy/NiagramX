@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Konfig-N</string>
     <string name="CombineMessage">Gabungkan Pesan</string>
@@ -694,6 +694,7 @@
     <string name="DisableSystemAccount">Nonaktifkan Akun Sistem</string>
     <string name="FilterMenu">Menu Penyaring Dialog</string>
     <string name="DisableProxyWhenVpnEnabled">Nonaktifkan Proksi Saat VPN Diaktifkan</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">Tangguhkan proksi secara otomatis saat VPN sistem terdeteksi. Catatan: Beralih jaringan (misal: Wi-Fi ke data seluler) atau menyambung ulang VPN dapat menyebabkan proksi aktif kembali untuk sementara.</string>
     <string name="SkipOpenLinkConfirm">Lewati Konfirmasi Buka Tautan</string>
     <string name="DeleteAllInChatAlert">Peringatan! Ini akan **menghapus semua pesan** di obrolan ini untuk **semua** peserta.</string>
     <string name="UnblockAll">Buka Blokir Semua</string>

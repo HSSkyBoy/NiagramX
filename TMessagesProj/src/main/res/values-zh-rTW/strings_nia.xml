@@ -887,4 +887,6 @@
     <string name="NekoAboutSectionCommunity">社群</string>
     <string name="NekoAboutSectionDevelopment">開發</string>
     <string name="NekoAboutSectionDiagnostics">診斷</string>
+    <string name="ShowPremiumStickersAnimation">顯示 Premium 貼圖動畫</string>
+    <string name="StyleMaterialDesign3">Material Design 3</string>
 </resources>

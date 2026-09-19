@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="N_Config">Neo 設定</string>
     <string name="CombineMessage">メッセージを結合</string>
@@ -704,6 +704,7 @@
     <string name="DisableSystemAccount">システムアカウントを無効化</string>
     <string name="FilterMenu">ダイアログフィルターメニュー</string>
     <string name="DisableProxyWhenVpnEnabled">VPN が有効な場合プロキシを無効化</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">システム VPN を検出したときにプロキシを自動的に一時停止します。注意: ネットワークの切り替え（Wi-Fi からモバイル通信など）や VPN の再接続時に、一時的にプロキシが復帰することがあります。</string>
     <string name="SkipOpenLinkConfirm">リンクを開くときの確認をスキップする</string>
     <string name="DeleteAllInChatAlert">警告！このチャットの全てのメッセージは**削除**されます。</string>
     <string name="UnblockAll">すべてのブロックを解除</string>
@@ -778,4 +779,144 @@
     <string name="EmojiUseDefault">システム絵文字を使用</string>
     <string name="Chat">チャット</string>
     <string name="Appearance">外観</string>
+
+    <!-- App Icons -->
+    <string name="AppIconMusheen">Musheen</string>
+    <string name="AppIconSpace">Space</string>
+    <string name="AppIconCloud">Cloud</string>
+    <string name="AppIconNeon">Neon</string>
+    <string name="AppIconMaterial">Material</string>
+
+    <!-- Group Member Join Date -->
+    <string name="ShowGroupMemberJoinDate">メンバーの参加日時を表示</string>
+    <string name="ShowGroupMemberJoinDateNotice">メンバーメニューやプロフィールに参加日時を表示します。</string>
+    <string name="GroupMemberJoinDate">グループに参加</string>
+
+    <!-- Liquid Glass -->
+    <string name="LiquidGlassAngle">Liquid Glass の角度</string>
+    <string name="LiquidGlassIntensity">Liquid Glass の強度</string>
+
+    <!-- Clown Avatar -->
+    <string name="ClownAvatarForBlockedUsers">ブロックされたユーザーにピエロアイコンを表示</string>
+    <string name="ClownAvatarForBlockedUsersDetail">ブロックしたユーザーのアバターや空のアバターの代わりにピエロのアバターを表示します</string>
+
+    <!-- Spy Mode -->
+    <string name="SpyMode">スパイモード</string>
+
+    <!-- Anti-delete chat types -->
+    <string name="SaveDeletedChatTypesHeader">チャットの種類</string>
+    <string name="SaveDeletedMessagesInPrivate">ダイレクトメッセージ</string>
+    <string name="SaveDeletedMessagesInGroups">グループ</string>
+    <string name="SaveDeletedMessagesInChannels">チャンネル</string>
+
+    <!-- Allow Screen Capture & Protected Content -->
+    <string name="AllowScreenCapture">画面キャプチャを許可</string>
+    <string name="AllowScreenCaptureNotice">FLAG_SECURE の制限を解除し、すべてのチャット、消えるメディア、保護された画面でのスクリーンショットや画面録画を許可します。</string>
+    <string name="AllowCopyProtectedContent">保護されたコンテンツのコピーを許可</string>
+    <string name="AllowCopyProtectedContentNotice">転送禁止のチャンネルやチャットからテキストのコピー、写真/動画の保存、メッセージの再送信を許可します。</string>
+    <string name="SaveTTLMedia">消えるメディアと TTL メディアを保存</string>
+    <string name="SaveTTLMediaNotice">消える写真や動画を制限なく保存、共有、表示できるようにします。</string>
+
+    <!-- Compact Chat Input -->
+    <string name="CompactChatInput">コンパクトモード</string>
+    <string name="CompactChatInputNotice">入力バーの高さを 40dp に圧縮し、余白を狭めます。</string>
+
+    <!-- iOS Sounds & Theme -->
+    <string name="useIosSounds">iOS メッセージサウンド</string>
+    <string name="UseIosSoundsNotice">Telegram iOS 版のアプリ内メッセージサウンドを使用します。</string>
+    <string name="StyleMaterialDesign3">Material Design 3</string>
+    <string name="TabletModeLandscape">横画面のみ</string>
+
+    <!-- DNS / DoH -->
+    <string name="DnsTypeCloudflare">Cloudflare</string>
+    <string name="DnsTypeGoogle">Google Public DNS</string>
+    <string name="DnsTypeTencent">Tencent DNS</string>
+    <string name="DnsTypeAliDNS">AliDNS</string>
+    <string name="CustomDoHHint">https://1.0.0.1/dns-query, ... (長押しでプリセットを選択)</string>
+    <string name="PresetDoHServers">プリセット DoH サーバー</string>
+
+    <!-- Custom API -->
+    <string name="CustomApiDefault">デフォルト API</string>
+    <string name="CustomApiOfficial">Telegram 公式</string>
+    <string name="CustomApiCustom">カスタム API</string>
+
+    <!-- Web / HTTP Proxy -->
+    <string name="WebProxy">Web / HTTP プロキシ</string>
+    <string name="WebProxyMode">Web / HTTP プロキシ</string>
+    <string name="WebProxyAbout">外部 HTTP/HTTPS リクエスト（LLM 翻訳、更新確認、音声書き起こしなど）をプロキシ経由でルーティングします。</string>
+    <string name="WebProxyModeFollow">Telegram に従う (SOCKS5)</string>
+    <string name="WebProxyModeDirect">直接接続 (無効)</string>
+    <string name="WebProxyModeCustom">カスタムプロキシ</string>
+    <string name="WebProxyType">プロキシの種類</string>
+    <string name="WebProxyTypeHttp">HTTP / HTTPS</string>
+    <string name="WebProxyTypeSocks5">SOCKS5</string>
+    <string name="WebProxyHost">プロキシホスト</string>
+    <string name="WebProxyPort">プロキシポート</string>
+    <string name="WebProxyUsername">ユーザー名 (任意)</string>
+    <string name="WebProxyPassword">パスワード (任意)</string>
+
+    <!-- HLS Video Quality -->
+    <string name="DefaultHlsVideoQualityAuto">自動</string>
+    <string name="DefaultHlsVideoQualityOriginal">オリジナル</string>
+    <string name="DefaultHlsVideoQualityHigh">高画質 (1080p+)</string>
+    <string name="DefaultHlsVideoQualityMedium">中画質 (720p)</string>
+    <string name="DefaultHlsVideoQualityLow">低画質 (480p)</string>
+
+    <!-- Ban by User ID -->
+    <string name="NiaBanById">ユーザー ID で BAN</string>
+    <string name="NiaBanByIdDialogTitle">ユーザー ID で BAN</string>
+    <string name="NiaBanByIdDialogMessage">対象ユーザーの 64 ビット整数 ID を入力してください。BAN リクエストは Telegram サーバーに直接送信されます。</string>
+    <string name="NiaBanByIdHint">例: 123456789</string>
+    <string name="NiaBanByIdConfirm">ユーザーを BAN</string>
+    <string name="NiaBanByIdConfirmTitle">BAN の確認</string>
+    <string name="NiaBanByIdConfirmMessage">ID: %1$s のユーザーを本当に BAN しますか？</string>
+    <string name="NiaBanByIdSuccess">ユーザー ID %1$s を正常に BAN しました。</string>
+    <string name="NiaBanByIdCannotBanSelf">自分自身を BAN することはできません。</string>
+    <string name="NiaBanByIdCannotBanCreator">このグループの作成者またはオーナーを BAN することはできません。</string>
+    <string name="NiaBanByIdInvalid">正の整数で有効な ID を入力してください。</string>
+    <string name="NiaBanByIdErrorNotParticipant">このユーザーはグループに参加していません。Telegram サーバーはメンバーでないユーザーの BAN を許可していません。</string>
+    <string name="NiaBanByIdErrorInvalidUser">無効なユーザー ID か、Telegram 上で見つかりません。</string>
+    <string name="NiaBanByIdErrorAdminRequired">このユーザーを BAN するための十分な管理者権限がありません。</string>
+    <string name="NiaBanByIdServerError">ユーザーの BAN に失敗しました: %1$s</string>
+
+    <!-- Fastest Proxy -->
+    <string name="ProxyAutoSpeedAcceleration">最速プロキシを自動選択</string>
+    <string name="ProxyAutoSpeedAccelerationInfo">Ping が最も低いプロキシを自動的にテストして切り替え、接続を高速化します。</string>
+    <string name="UseFastestProxy">最速プロキシに切り替え</string>
+    <string name="SwitchedToFastestProxy">最速プロキシに切り替えました</string>
+    <string name="AlreadyFastestProxy">すでに最速のプロキシを使用しています</string>
+
+    <!-- Login & Email Code -->
+    <string name="PrioritizeEmailCode">メールでの認証コードを優先</string>
+    <string name="SendCodeViaEmail">メールでコードを送信</string>
+    <string name="FastResendDialogTitle">コードを再送信</string>
+    <string name="FastResendDialogMessage">コードが届きませんか？カウントダウンをスキップして、今すぐ新しいコードをリクエストしますか？</string>
+    <string name="FastResendNow">今すぐ再送信</string>
+    <string name="CodeSentToOtherDeviceTitle">Telegram アプリを確認してください</string>
+    <string name="CodeSentToOtherDeviceInfo">ログインコードは他のデバイスの Telegram アプリに送信されました。\n\n注意: メールでログインコードを受け取るには、まず公式 Telegram アプリの「設定 > プライバシーとセキュリティ > 2段階認証」でログイン用メールアドレスを紐付ける必要があります。</string>
+    <string name="SendCodeUnavailableInfo">現在、Telegram は他の方法でコードを送信できません。他のデバイスでログイン済みの場合は、Telegram アプリに届いたコードをご確認ください。\n\nメールでログインするには、Telegram のプライバシー設定でログイン用メールが設定されていることを確認してください。</string>
+
+    <!-- Public Proxy -->
+    <string name="PublicProxy">内蔵パブリックプロキシ</string>
+    <string name="PublicProxyDescription">Nullgram 提供のプロキシトンネル (WebSocket via Cloudflare)</string>
+    <string name="PublicProxyCannotDelete">内蔵パブリックプロキシは削除できません。</string>
+    <string name="PublicProxyCannotShare">内蔵パブリックプロキシは共有できません。</string>
+
+    <!-- Lock Chat -->
+    <string name="LockChat">チャットをロック</string>
+    <string name="UnlockChat">チャットのロックを解除</string>
+    <string name="ChatLocked">チャットがロックされています</string>
+    <string name="ChatLockedDescription">このチャットを開くには本人確認を行ってください</string>
+    <string name="ChatLockedMessage">チャットがロックされています</string>
+    <string name="ChatActivityNavbarTransparent">チャット画面のナビゲーションバーを完全透明化</string>
+
+    <!-- Other settings -->
+    <string name="HideStarsRating">スター数を非表示</string>
+    <string name="ScrollToSeenPhotoOnClose">閉じるときに閲覧済みの写真までスクロール</string>
+    <string name="GoogleCloudTransKey">Google Cloud 翻訳キー</string>
+    <string name="ThemeAmoledDark">AMOLED ダーク</string>
+    <string name="NoPreloadTrackIfRepeatOne">1曲リピート時は次の曲をプリロードしない</string>
+    <string name="NekoAboutSectionCommunity">コミュニティ</string>
+    <string name="NekoAboutSectionDevelopment">開発</string>
+    <string name="NekoAboutSectionDiagnostics">診断</string>
 </resources>
