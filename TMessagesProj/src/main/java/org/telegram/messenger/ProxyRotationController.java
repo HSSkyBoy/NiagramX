@@ -20,6 +20,10 @@ public class ProxyRotationController implements NotificationCenter.NotificationC
 
     private boolean isCurrentlyChecking;
     private Runnable checkProxyAndSwitchRunnable = () -> {
+        if (!SharedConfig.isProxyEnabled() || !SharedConfig.proxyRotationEnabled) {
+            isCurrentlyChecking = false;
+            return;
+        }
         isCurrentlyChecking = true;
 
         int currentAccount = UserConfig.selectedAccount;
@@ -144,7 +148,7 @@ public class ProxyRotationController implements NotificationCenter.NotificationC
     private void switchToAvailable() {
         isCurrentlyChecking = false;
 
-        if (!SharedConfig.proxyRotationEnabled) {
+        if (!SharedConfig.proxyRotationEnabled || !SharedConfig.isProxyEnabled()) {
             return;
         }
 

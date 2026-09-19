@@ -601,7 +601,7 @@
     <string name="PublicProxyDescription">Proxy tunnel powered by Nullgram (WebSocket via Cloudflare)</string>
     <string name="PublicProxyCannotDelete">Built-in public proxy cannot be deleted.</string>
     <string name="PublicProxyCannotShare">Built-in public proxy cannot be shared.</string>
-    <string name="DisableProxyWhenVpnEnabledDesc">Automatically suspend proxy and tcp2ws tunnel when system VPN is detected.</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">Automatically suspend proxy when system VPN is detected. Note: Switching networks (e.g. Wi-Fi to cellular) or VPN reconnecting may cause proxy to resume momentarily.</string>
 
     <!-- Verified Badge -->
     <string name="VerifySelf">Verify Self</string>

@@ -59,6 +59,14 @@ object ProxyUtil {
         if (networkCallbackRegistered) return
         networkCallbackRegistered = true
 
+        NotificationCenter.getGlobalInstance().addObserver({ id, _, _ ->
+            if (id == NotificationCenter.proxySettingsChanged) {
+                if (!SharedConfig.isProxyEnabled()) {
+                    proxyDisabledByVpn = false
+                }
+            }
+        }, NotificationCenter.proxySettingsChanged)
+
         val connectivityManager = ApplicationLoader.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val networkCallback: ConnectivityManager.NetworkCallback =
             object : ConnectivityManager.NetworkCallback() {
@@ -82,19 +90,12 @@ object ProxyUtil {
                     } else {
                         if (NyaConfig.disableProxyWhenVpnEnabled.Bool() && proxyDisabledByVpn && !SharedConfig.isProxyEnabled()) {
                             proxyDisabledByVpn = false
-                            if (SharedConfig.currentProxy == null && !SharedConfig.proxyList.isEmpty()) {
-                                SharedConfig.setCurrentProxy(SharedConfig.proxyList[0])
-                            }
                             if (SharedConfig.currentProxy != null) {
                                 SharedConfig.setProxyEnable(true)
                                 AndroidUtilities.runOnUIThread {
                                     NotificationCenter.getGlobalInstance()
                                         .postNotificationName(NotificationCenter.proxySettingsChanged)
                                 }
-                            }
-                        } else if (SharedConfig.currentProxy == null) {
-                            if (!SharedConfig.proxyList.isEmpty()) {
-                                SharedConfig.setCurrentProxy(SharedConfig.proxyList[0])
                             }
                         }
                     }

@@ -579,7 +579,7 @@
     <string name="PublicProxyDescription">代理隧道技术由 Nullgram 提供 (WebSocket via Cloudflare)</string>
     <string name="PublicProxyCannotDelete">内置公共代理不支持删除</string>
     <string name="PublicProxyCannotShare">内置公共代理不支持分享</string>
-    <string name="DisableProxyWhenVpnEnabledDesc">检测到系统已开启全局 VPN 时，自动挂起内置隧道与代理，避免流量冲突。</string>
+    <string name="DisableProxyWhenVpnEnabledDesc">检测到系统开启 VPN 时自动暂停代理。注意：在切换网络 (如 Wi-Fi 至移动网络) 或 VPN 重连瞬间，可能因短暂失去 VPN 状态而自动恢复代理。</string>
     <string name="VerifySelf">给自己点亮认证徽章</string>
     <string name="VerifySelfDetail">在本地为当前自用账号显示专属认证徽章</string>
     <string name="NiagramVerifiedOfficial">NiagramX 开发者</string>
