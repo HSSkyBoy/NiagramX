@@ -904,8 +904,7 @@ public class MessageHelper extends BaseController {
     // Merged from xyz.nextalone.nagram.helper.MessageHelper.kt
 
     private static final SpannableStringBuilder[] spannedStrings = new SpannableStringBuilder[5];
-    private static final Pattern ZALGO_PATTERN = Pattern.compile("\\p{M}{4}");
-    private static final Pattern ZALGO_CLEANUP = Pattern.compile("\\p{M}+");
+    private static final Pattern ZALGO_CLEANUP = Pattern.compile("(?<=^|[\\s\\p{Z}])\\p{M}+|\\p{M}{3,}|(?:\\uD807[\\uDCA0-\\uDCB6]){2,}");
 
     public static void addMessageToClipboard(MessageObject selectedObject, Runnable callback) {
         String path = getPathToMessage(selectedObject);
@@ -978,14 +977,15 @@ public class MessageHelper extends BaseController {
         if (TextUtils.isEmpty(text)) return "";
         if (!NyaConfig.INSTANCE.getZalgoFilter().Bool()) return text;
         if (text.length() < 4 || text.length() > 2048) return text;
-        if (!ZALGO_PATTERN.matcher(text).find()) return text;
+        Matcher matcher = ZALGO_CLEANUP.matcher(text);
+        if (!matcher.find()) return text;
 
         if (!(text instanceof Spannable)) {
             return ZALGO_CLEANUP.matcher(text).replaceAll("");
         }
 
         SpannableStringBuilder ssb = new SpannableStringBuilder(text);
-        Matcher matcher = ZALGO_CLEANUP.matcher(ssb);
+        matcher = ZALGO_CLEANUP.matcher(ssb);
         List<int[]> ranges = new ArrayList<>();
 
         while (matcher.find()) {

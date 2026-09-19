@@ -285,7 +285,7 @@ object NyaConfig {
         addConfig(
             "ZalgoFilter",
             ConfigItem.configTypeBool,
-            false
+            true
         )
     val alwaysShowDownloadIcon =
         addConfig(
