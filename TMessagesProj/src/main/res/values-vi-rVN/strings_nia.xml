@@ -10,8 +10,6 @@
     <string name="ShowReactions">Hiện phản ứng</string>
     <string name="CustomTitle">Tùy chỉnh Tiêu Đề</string>
     <string name="CustomTitleHint">Để trống để sử dụng Niagram</string>
-    <string name="CreateMono">Tạo Monospace</string>
-    <string name="CreateMonoLanguage">Ngôn ngữ code</string>
     <string name="CopyPhoto">Sao chép Ảnh</string>
     <string name="PhotoCopied">Ảnh đã được sao chép vào bộ nhớ tạm</string>
     <string name="ToTheBeginning">Về đầu cuộc trò chuyện</string>
@@ -20,7 +18,6 @@
     <string name="HideReadReceiptsLocally">Ẩn thông báo đã đọc cục bộ</string>
     <string name="HideReadReceiptsLocallyNotice">Luôn hiển thị tin nhắn đã gửi với một dấu tích cục bộ ngay cả khi người nhận đã đọc.</string>
     <string name="ShowRPCError">Lỗi RPC Toast</string>
-    <string name="ShowPremiumStickersAnimation">Hiển thị hoạt ảnh của nhãn dán cao cấp</string>
     <string name="AppIconNeko">Neko</string>
     <string name="AppIconNekoDark">Neko Dark</string>
     <string name="AppIconNekoColorful">Neko Colorful</string>
@@ -36,7 +33,6 @@
     <string name="SendAsEmoji">Gửi dưới dạng emoji</string>
     <string name="NotificationIcon">Biểu tượng thông báo</string>
     <string name="Official">Official</string>
-    <string name="HalloWeen">HalloWeen</string>
     <string name="ShowOnlineStatus">Hiển thị trạng thái trực tuyến</string>
     <string name="ShowOnlineStatusNotice">Hiển thị trạng thái trực tuyến của người khác bên cạnh ảnh đại diện của họ trong các nhóm.</string>
     <string name="DoActionsInCommonGroups">Áp dụng trong các nhóm chung</string>
@@ -47,7 +43,6 @@
     <string name="CheckAllForum">Thêm diễn đàn</string>
     <string name="DecorationNone">Không có</string>
     <string name="ChatDecoration">Bong bóng trò chuyện</string>
-    <string name="NeedChangeNekoSettings">Bạn cần thay đổi N-Settings</string>
     <string name="DoNotUnarchiveBySwipe">Tắt tính năng vuốt để khôi phục</string>
     <string name="DefaultDeleteMenu">Menu Xóa Mặc định</string>
     <string name="DisableStories">Vô hiệu hóa Tin</string>
@@ -215,7 +210,6 @@
     <string name="DontAutoPlayNextVoice">Không tự động phát tin nhắn thoại tiếp theo</string>
     <string name="SaveToChatSubfolder">Lưu tệp đính kèm theo tên đoạn chat</string>
     <string name="MessageColoredBackground">Nền tin nhắn nhiều màu</string>
-    <string name="ColoredBackgroundNotice">Màu nền và biểu tượng cảm xúc cho câu trả lời, trích dẫn và xem trước liên kết.</string>
     <string name="ChatMenu">Menu trò chuyện</string>
     <string name="MediaViewerMenu">Menu trình xem phương tiện</string>
     <string name="MenuAndButtons">Menu và Nút</string>
@@ -226,7 +220,6 @@
     <string name="DoubleTapOutgoing">Tin nhắn đi</string>
     <string name="TgBrowserOpenFail">Trình duyệt trong ứng dụng không khả dụng</string>
     <string name="TgBrowserOpenFail_Desc">Thao tác đã chọn không khả dụng vì trình duyệt trong ứng dụng đã bị tắt.</string>
-    <string name="MapPreviewProviderYandexNax">Yandex</string>
     <string name="GhostMode">Chế độ Ghost</string>
     <string name="GhostEssentialsHeader">Cơ bản về Ghost</string>
     <string name="EnableGhostMode">Bật Ghost</string>
@@ -263,7 +256,6 @@
     <string name="CloudflareCredentialsDialog">Cấu hình ID tài khoản Cloudflare và Token API.\n**Cách lấy?**\n</string>
     <string name="GeminiApiKeyNotSet">Khóa API Gemini chưa được cấu hình.</string>
     <string name="GeminiApiKeyDialog">Cấu hình Khóa API Gemini, sử dụng khóa từ cài đặt trình dịch nếu để trống.\n**Làm thế nào để lấy?**\n</string>
-    <string name="GeminiNotSupport">Gemini không được hỗ trợ trên thiết bị này.</string>
     <string name="ReplyInPrivate">Trả lời trong Trò chuyện riêng tư</string>
     <string name="TranscribeProviderGeminiPrompt">Lời nhắc (tùy chọn)</string>
     <string name="uploadBoost">Tăng tốc độ tải lên</string>
@@ -294,7 +286,6 @@
     <string name="OpenAiApiCredentialsDialog">Cấu hình API tương thích với OpenAI. Bạn có thể tham khảo **tài liệu** này.\n</string>
     <string name="OpenAiApiBaseUrlHint">API URL ([…]/chat/completions)</string>
     <string name="OpenAiCredentialsNotSet">Thông tin xác thực API chưa được cấu hình.</string>
-    <string name="ApiNotSupportedOnAndroidVersion">API này không được hỗ trợ trên phiên bản Android của bạn (yêu cầu Android 8.0+ trở lên).</string>
     <string name="AppIconTelegramOriginal">Gốc</string>
     <string name="BurnTtlMessage">Hủy</string>
     <string name="StreamMkvNax">Hiển thị Video dưới dạng MKV</string>
@@ -356,13 +347,11 @@
     <string name="DisableInAppBrowserGestures">Vô hiệu hóa cử chỉ</string>
     <string name="HowToObtain">Làm sao để lấy?</string>
     <string name="BlockChannel">Chặn kênh</string>
-    <string name="UnblockChannel">Bỏ chặn kênh</string>
     <string name="BlockedChannels">Các kênh đã chặn</string>
     <string name="BlockedChannelsCount_one">%1$d kênh đã chặn</string>
     <string name="BlockedChannelsCount_other">%1$d kênh đã chặn</string>
     <string name="BlockedChannelsInfo">Bạn có thể ẩn tin nhắn từ các kênh bị chặn trong nhóm. %s</string>
     <string name="ChannelBlocked">Đã chặn kênh.</string>
-    <string name="ChannelUnblocked">Đã bỏ chặn kênh.</string>
     <string name="BlockedChannelsEmpty">Chưa có kênh nào bị chặn</string>
     <string name="UnblockAllChannelsWarn">Bạn có chắc chắn muốn bỏ chặn **tất cả các kênh** không?</string>
     <string name="BlockChannelsUnavailable">Một số kênh tạm thời không khả dụng.</string>
@@ -432,18 +421,11 @@
     <string name="FontInvalidFile">Tệp phông chữ không hợp lệ hoặc bị hỏng.</string>
     <string name="InputFieldTextSize">Cỡ chữ ô nhập liệu</string>
     <string name="InputFieldTextSizeDefault">Mặc định</string>
-    <string name="HideStarRating">Ẩn xếp hạng sao trong hồ sơ</string>
     <string name="HideGiftButtons">Ẩn nút quà tặng trong hồ sơ</string>
     <string name="EnableQuickSchedule">Lên lịch nhanh</string>
     <string name="EnableQuickScheduleNotice">Hiển thị tùy chọn lên lịch gửi khi nhấn giữ nút gửi, tôn trọng trạng thái tắt tiếng.</string>
-    <string name="UseSystemPhotoPicker">Tương thích bộ chọn ảnh hệ thống</string>
-    <string name="UseSystemPhotoPickerDesc">Trên Android 13 trở lên, sử dụng bộ chọn ảnh hệ thống cho tệp đính kèm từ thư viện mà không cần yêu cầu quyền truy cập đầy đủ vào ảnh và video.</string>
-    <string name="ProviderVolcengineTranslate">Dịch thuật Volcengine</string>
     <string name="DisableAiEditor">Tắt trình chỉnh sửa AI</string>
-    <string name="DisableGlareEffects">Tắt hiệu ứng lóa sáng</string>
-    <string name="ShowRecentForwardTab">Hiển thị tab chat gần đây khi chuyển tiếp</string>
     <string name="ForceForward">Chuyển tiếp bắt buộc</string>
-    <string name="ForceForwardNotice">Tự động sao chép văn bản và tải tệp đính kèm để gửi lại tin nhắn từ các kênh bị giới hạn mà không bị giới hạn chuyển tiếp.</string>
     <string name="ForceForwardPremiumOnly">Đăng ký **Telegram Premium** để sử dụng tính năng chuyển tiếp bắt buộc.</string>
     <string name="FolderTabsStroke">Viền nổi bật tab thư mục</string>
 
@@ -488,7 +470,6 @@
     <string name="ActionBarDecoration">Trang tri thanh tiêu đe</string>
     <string name="DependsOnDate">Dựa theo ngày</string>
     <string name="Christmas">Giáng sinh</string>
-    <string name="Valentine">Lễ dành cho các bạn có bồ</string>
     <string name="Snowflakes">Tuyết rơi</string>
     <string name="Fireworks">Pháo hoa</string>
     <string name="DeleteDownloadedFile">Xoá tệp đã tải xuống</string>
@@ -537,7 +518,6 @@
     <string name="Categories">Danh mục</string>
     <string name="OfficialChannel">Kênh của Nagram</string>
     <string name="About">Thông tin</string>
-    <string name="IgnoreBlockedAbout">Bạn sẽ không thấy tin nhắn của người đã chặn trong nhóm.</string>
     <string name="SourceCode">Mã nguồn</string>
     <string name="ResetStickerSize">Đặt lại kích thước nhãn dán</string>
     <string name="RestartAppToTakeEffect">Khởi động lại ứng dụng để áp dụng thay đổi.</string>
@@ -620,9 +600,7 @@
     <string name="CloudConfigSyncDate">Lần đồng bộ cuối: %1$s, đám mây: %2$s</string>
     <string name="CloudConfigSyncDateNever">không bao giờ</string>
     <string name="CloudConfigSync">Đồng bộ lên cloud</string>
-    <string name="CloudConfigSyncShort">Đồng bộ</string>
     <string name="CloudConfigRestore">Khôi phục từ cloud</string>
-    <string name="CloudConfigRestoreShort">Khôi phục</string>
     <string name="CloudConfigSyncing">Đang đồng bộ hóa...</string>
     <string name="CloudConfigAutoSync">Tự động đồng bộ</string>
     <string name="CloudConfigAutoSyncDesc">Tự động đồng bộ lên đám mây sau khi thực hiện thay đổi đối với N-Settings.</string>
@@ -653,19 +631,15 @@
     <string name="TransInputToLang">Gửi trước ngôn ngữ dịch</string>
     <string name="More">Thêm</string>
     <string name="ShowIdAndDc">Hiển thị ID / DC trong hồ sơ</string>
-    <string name="UseDefaultTheme">Sử dụng chủ đề mặc định *</string>
     <string name="DialogsSettings">Hộp Thoại</string>
     <string name="NiagramXPushService">Dịch vụ Push</string>
     <string name="DisableSystemAccount">Vô hiệu hóa tài khoản hệ thống</string>
-    <string name="FilterMenu">Bộ lọc hội thoại</string>
     <string name="DisableProxyWhenVpnEnabled">Tắt Proxy khi Vpn được bật</string>
     <string name="DisableProxyWhenVpnEnabledDesc">Tự động tạm dừng proxy khi phát hiện VPN hệ thống. Lưu ý: Chuyển đổi mạng (ví dụ: từ Wi-Fi sang dữ liệu di động) hoặc VPN kết nối lại có thể khiến proxy tạm thời tiếp tục hoạt động.</string>
     <string name="SkipOpenLinkConfirm">Bỏ qua xác nhận mở link</string>
-    <string name="DeleteAllInChatAlert">Cảnh báo! Thao tác này sẽ **xóa tất cả tin nhắn** trong cuộc trò chuyện này đối với tất cả thành viên.</string>
     <string name="UnblockAll">Mở chặn tất cả</string>
     <string name="UnblockAllWarn">Bạn có chắc chắn muốn bỏ chặn với tất cả người dùng và bot?</string>
     <string name="BlockedListEmpty">Bạn chưa chặn ai cả :)</string>
-    <string name="AddProxySocks5">Thêm Proxy SOCKS5</string>
     <string name="AddProxyTelegram">Thêm Proxy MTProto</string>
     <string name="RetestPing">Kiểm tra ping mọi máy chủ</string>
     <string name="ExportStickers">Xuất nhãn dán</string>
@@ -681,7 +655,6 @@
     <string name="ShareQRCode">Mã QR</string>
     <string name="ScanQRCode">Quét mã QR</string>
     <string name="NoQrFound">Không tìm thấy QR</string>
-    <string name="DeveloperSettings">Cài đặt nhà phát triển</string>
     <string name="TransSite">Trợ giúp dịch thuật</string>
     <string name="ShareMessages">Chia sẻ</string>
     <string name="DisableVibration">Tắt rung</string>
@@ -702,13 +675,8 @@
     <string name="BackupSettings">Xuất cấu hình cài đặt</string>
     <string name="ImportSettings">Nhập cấu hình cài đặt</string>
     <string name="ImportSettingsAlert">Bạn có chắc chắn muốn ghi đè cài đặt không\? Việc nhập cài đặt từ các nguồn không xác định có thể khiến mã pin bị ghi đè và khiến ứng dụng bị khóa.</string>
-    <string name="nekoXPaymentRemovedToast">Tính năng thanh toán đã bị gỡ bỏ.</string>
     <string name="unreadBadgeOnBackButton">Huy hiệu Chưa đọc trên Nút Quay lại</string>
-    <string name="DeleteDownloadedFileConfirm">Xóa tệp này khỏi bộ nhớ đệm cục bộ?</string>
-    <string name="DeleteDownloadedFileSucceed">Đã xóa</string>
-    <string name="DeleteDownloadedFileExternal">Tệp tin bên ngoài bị bỏ qua.</string>
     <string name="useCustomEmoji">Sử dụng biểu tượng cảm xúc tùy chỉnh</string>
-    <string name="useCustomEmojiInvalid">Gói biểu tượng cảm xúc không hợp lệ.</string>
     <string name="repeatConfirm">Hỏi trước khi đăng lại</string>
     <string name="repeatConfirmText">Bạn có chắc chắn muốn đăng lại không?</string>
     <string name="rememberAllBackMessages">Ghi nhớ tất cả các câu trả lời đã nhấp</string>
@@ -719,13 +687,9 @@
     <string name="ConfirmSettings">Xác nhận</string>
     <string name="InteractionSettings">Tương tác</string>
     <string name="localPremium">Local Premium</string>
-    <string name="ReactionSettings">Biểu tượng cảm xúc</string>
-    <string name="UpgradeGroup">Nâng cấp Nhóm</string>
     <string name="AccDescrShowKeyboard">Hiển thị bàn phím</string>
     <string name="ConvertGroupAlertWarning">Cảnh báo</string>
     <string name="ConvertGroupAlert">Hành động này không thể đảo ngược. Không thể hạ cấp một siêu nhóm xuống thành nhóm thông thường.</string>
-    <string name="SharedPhotosAndVideos">Ảnh và video</string>
-    <string name="UnofficialApp">ứng dụng không chính thức</string>
     <string name="FileUploadLimit">Kích thước tệp không được lớn hơn %1$s</string>
     <string name="NoFilesInfo">Thư mục này trống.</string>
     <string name="SearchRecentFiles">Tìm kiếm Tệp gần đây</string>

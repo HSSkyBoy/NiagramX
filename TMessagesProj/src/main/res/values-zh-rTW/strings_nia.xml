@@ -10,8 +10,6 @@
     <string name="ShowReactions">顯示表情符號反應選單</string>
     <string name="CustomTitle">自訂標題</string>
     <string name="CustomTitleHint">留空則使用 Niagram</string>
-    <string name="CreateMono">建立等寬</string>
-    <string name="CreateMonoLanguage">等寬語言</string>
     <string name="CopyPhoto">複製圖片</string>
     <string name="PhotoCopied">圖片已複製到剪貼簿</string>
     <string name="ToTheBeginning">回到頂部</string>
@@ -43,7 +41,6 @@
     <string name="CustomEditedMessage">自訂已編輯訊息標記</string>
     <string name="NotificationIcon">通知圖示樣式</string>
     <string name="Official">官方</string>
-    <string name="HalloWeen">萬聖節</string>
     <string name="ShowOnlineStatus">顯示使用者線上狀態</string>
     <string name="ShowOnlineStatusNotice">在群組內時在使用者頭像的右下角顯示線上狀態。</string>
     <string name="DoActionsInCommonGroups">套用至共同群組</string>
@@ -57,7 +54,6 @@
     <string name="CheckAllForum">新增所有話題模式的群組</string>
     <string name="DecorationNone">無</string>
     <string name="ChatDecoration">聊天框裝飾</string>
-    <string name="NeedChangeNekoSettings">此設定項已被 Neo 設定 覆寫</string>
     <string name="DoNotUnarchiveBySwipe">禁用滑動取消封存</string>
     <string name="DefaultDeleteMenu">預設訊息刪除選單</string>
     <string name="DisableStories">禁用動態功能</string>
@@ -134,7 +130,6 @@
     <string name="XChannel">Niagram 頻道</string>
     <string name="EnableSaveDeletedMessages">儲存已刪除訊息</string>
     <string name="SpyMode">幽匿模式</string>
-    <string name="SaveDeletedChatTypesHeader">聊天類型</string>
     <string name="SaveDeletedMessagesInPrivate">私聊</string>
     <string name="SaveDeletedMessagesInGroups">群聊</string>
     <string name="SaveDeletedMessagesInChannels">頻道</string>
@@ -209,7 +204,6 @@
     <string name="RegexFiltersImportSuccess">過濾器已匯入。</string>
     <string name="RegexFiltersImportError">無法從剪貼簿匯入過濾器。</string>
     <string name="RegexFiltersExportError">匯出過濾器失敗。</string>
-    <string name="RegexFiltersUserHeader">使用者過濾器</string>
     <string name="RegexFiltersUserFilterHint">輸入使用者 ID</string>
     <string name="RegexFiltersGlobalHeader">全域過濾器</string>
     <string name="RegexFiltersTextSelectionAddtoShared">新增到通用過濾器</string>
@@ -259,7 +253,6 @@
     <string name="DontAutoPlayNextVoice">停用自動播放下一條語音訊息</string>
     <string name="SaveToChatSubfolder">按聊天名稱儲存附件</string>
     <string name="MessageColoredBackground">多彩訊息背景</string>
-    <string name="ColoredBackgroundNotice">回覆，引用，連結預覽的背景色和 Emoji。</string>
     <string name="ChatMenu">聊天選單</string>
     <string name="MediaViewerMenu">媒體檢視器選單</string>
     <string name="MenuAndButtons">菜單和按鈕</string>
@@ -270,7 +263,6 @@
     <string name="DoubleTapOutgoing">傳送的訊息</string>
     <string name="TgBrowserOpenFail">應用內瀏覽器不可用</string>
     <string name="TgBrowserOpenFail_Desc">由於應用內瀏覽器已被停用，所選操作不可用。</string>
-    <string name="MapPreviewProviderYandexNax">Yandex</string>
     <string name="GhostMode">幽靈模式</string>
     <string name="GhostEssentialsHeader">幽靈選項</string>
     <string name="EnableGhostMode">啟用幽靈模式</string>
@@ -308,7 +300,6 @@
     <string name="CloudflareCredentialsDialog">設定 Cloudflare 帳戶 ID 和 API 權杖。\n**如何取得？**\n</string>
     <string name="GeminiApiKeyNotSet">尚未設定 Gemini API 金鑰。</string>
     <string name="GeminiApiKeyDialog">設定 Gemini API 金鑰，留空時將嘗試使用翻譯器設定中的金鑰。\n**如何取得？**\n</string>
-    <string name="GeminiNotSupport">此裝置不支援 Gemini。</string>
     <string name="ReplyInPrivate">在私聊中回覆</string>
     <string name="TranscribeProviderGeminiPrompt">提示詞（可選）</string>
     <string name="uploadBoost">上傳加速</string>
@@ -341,7 +332,6 @@
     <string name="OpenAiApiCredentialsDialog">設定 OpenAI 相容的 API。您可以參考此 **文件**。\n</string>
     <string name="OpenAiApiBaseUrlHint">API URL ([…]/chat/completions)</string>
     <string name="OpenAiCredentialsNotSet">尚未設定 API 憑證。</string>
-    <string name="ApiNotSupportedOnAndroidVersion">此 API 提供者不支援您的 Android 版本 (需要 Android 8.0+)。</string>
     <string name="AppIconTelegramOriginal">官方預設</string>
     <string name="BurnTtlMessage">銷燬</string>
     <string name="StreamMkvNax">MKV 顯示為影片</string>
@@ -426,13 +416,11 @@
     <string name="DisableInAppBrowserGestures">停用手勢</string>
     <string name="HowToObtain">如何取得？</string>
     <string name="BlockChannel">封鎖頻道</string>
-    <string name="UnblockChannel">取消封鎖頻道</string>
     <string name="BlockedChannels">已封鎖的頻道</string>
     <string name="BlockedChannelsCount_one">%1$d 個被封鎖的頻道</string>
     <string name="BlockedChannelsCount_other">%1$d 個被封鎖的頻道</string>
     <string name="BlockedChannelsInfo">您可以在群組中隱藏來自已封鎖頻道的訊息。 %s</string>
     <string name="ChannelBlocked">已封鎖該頻道。</string>
-    <string name="ChannelUnblocked">已取消封鎖該頻道。</string>
     <string name="BlockedChannelsEmpty">暫無已封鎖的頻道</string>
     <string name="UnblockAllChannelsWarn">您確定要解除封鎖**所有頻道**？</string>
     <string name="BlockChannelsUnavailable">某些頻道暫時無法顯示。</string>
@@ -524,17 +512,10 @@
     <string name="FontInvalidFile">無效或已損壞的字體檔案。</string>
     <string name="InputFieldTextSize">輸入框文字大小</string>
     <string name="InputFieldTextSizeDefault">預設</string>
-    <string name="HideStarRating">隱藏個人檔案中的星星評分</string>
     <string name="EnableQuickSchedule">快速定時發送</string>
     <string name="EnableQuickScheduleNotice">長按發送按鈕時顯示定時選項（稍後發送 / 上線時發送），並自動繼承靜音狀態。</string>
-    <string name="UseSystemPhotoPicker">系統相片選取器相容</string>
-    <string name="UseSystemPhotoPickerDesc">在 Android 13 及更高版本上，使用系統相片選取器選取圖庫附件，無需請求完整的相片與影片存取權限。</string>
-    <string name="ProviderVolcengineTranslate">火山引擎翻譯</string>
     <string name="DisableAiEditor">停用 AI 編輯器</string>
-    <string name="DisableGlareEffects">停用炫光效果</string>
-    <string name="ShowRecentForwardTab">轉發時顯示最近聊天標籤</string>
     <string name="ForceForward">強制轉發</string>
-    <string name="ForceForwardNotice">自動複製文字並下載媒體附件，突破頻道與群組限制以相同格式重新發送。</string>
     <string name="ForceForwardPremiumOnly">訂閱 **Telegram Premium** 即可使用強制轉發功能。</string>
     <string name="DefaultHlsVideoQualityAuto">自動</string>
     <string name="DefaultHlsVideoQualityOriginal">原畫</string>
@@ -631,7 +612,6 @@
     <string name="ActionBarDecoration">標題列裝飾</string>
     <string name="DependsOnDate">基於日期</string>
     <string name="Christmas">聖誕節</string>
-    <string name="Valentine">情人節</string>
     <string name="Snowflakes">聖誕節</string>
     <string name="Fireworks">煙火</string>
     <string name="DeleteDownloadedFile">清除</string>
@@ -680,7 +660,6 @@
     <string name="Categories">分類</string>
     <string name="OfficialChannel">Niagram 構建頻道</string>
     <string name="About">關於</string>
-    <string name="IgnoreBlockedAbout">您將不會再看到被封鎖的使用者在群組中的訊息。</string>
     <string name="SourceCode">原始碼</string>
     <string name="ResetStickerSize">重設貼圖大小</string>
     <string name="RestartAppToTakeEffect">重新啟動應用程式以生效。</string>
@@ -768,9 +747,7 @@
     <string name="CloudConfigSyncDate">最後同步：%1$s，雲端：%2$s</string>
     <string name="CloudConfigSyncDateNever">從未</string>
     <string name="CloudConfigSync">同步到雲端</string>
-    <string name="CloudConfigSyncShort">同步</string>
     <string name="CloudConfigRestore">從雲端恢復</string>
-    <string name="CloudConfigRestoreShort">恢復</string>
     <string name="CloudConfigSyncing">正在同步…</string>
     <string name="CloudConfigAutoSync">自動同步</string>
     <string name="CloudConfigAutoSyncDesc">修改 Neo 設定後自動同步到雲端。</string>
@@ -802,18 +779,14 @@
     <string name="TransInputToLang">發送前翻譯目標語言</string>
     <string name="More">更多</string>
     <string name="ShowIdAndDc">在個人資料中顯示 ID/DC</string>
-    <string name="UseDefaultTheme">使用預設主題＊</string>
     <string name="DialogsSettings">聊天列表</string>
     <string name="NiagramXPushService">推播服務</string>
     <string name="DisableSystemAccount">禁用系統帳戶</string>
-    <string name="FilterMenu">分類選單</string>
     <string name="DisableProxyWhenVpnEnabled">啟用 VPN 時禁用代理</string>
     <string name="SkipOpenLinkConfirm">跳過開啟連結確認</string>
-    <string name="DeleteAllInChatAlert">**注意！**這將**刪除**此聊天中**所有使用者**的**所有訊息**。</string>
     <string name="UnblockAll">解除封鎖所有帳號</string>
     <string name="UnblockAllWarn">您確定要解除封鎖**所有使用者和機器人**嗎？</string>
     <string name="BlockedListEmpty">您還沒有封鎖任何人 :)</string>
-    <string name="AddProxySocks5">新增 SOCKS5 代理</string>
     <string name="AddProxyTelegram">新增 MTProto 代理</string>
     <string name="RetestPing">重新測試所有 Ping 值</string>
     <string name="ExportStickers">匯出貼圖包</string>
@@ -829,7 +802,6 @@
     <string name="ShareQRCode">QR 碼</string>
     <string name="ScanQRCode">掃描 QR 碼</string>
     <string name="NoQrFound">找不到 QR 碼</string>
-    <string name="DeveloperSettings">開發者設定</string>
     <string name="TransSite">翻譯平台</string>
     <string name="ShareMessages">分享</string>
     <string name="DisableVibration">停用振動</string>
@@ -851,13 +823,8 @@
     <string name="BackupSettings">備份設定</string>
     <string name="ImportSettings">匯入設定</string>
     <string name="ImportSettingsAlert">確定要覆蓋設定嗎？從未知來源匯入設定可能導致 PIN 被覆蓋，進而使應用程式被鎖定。</string>
-    <string name="nekoXPaymentRemovedToast">付款功能已移除。</string>
     <string name="unreadBadgeOnBackButton">聊天視窗返回按鈕上顯示未讀數</string>
-    <string name="DeleteDownloadedFileConfirm">從本機快取中刪除此檔案？</string>
-    <string name="DeleteDownloadedFileSucceed">已刪除</string>
-    <string name="DeleteDownloadedFileExternal">已略過外部檔案。</string>
     <string name="useCustomEmoji">使用自訂 Emoji</string>
-    <string name="useCustomEmojiInvalid">不是有效的 Emoji Zip 檔案。</string>
     <string name="repeatConfirm">復讀前確認</string>
     <string name="repeatConfirmText">確定要復讀這條訊息？</string>
     <string name="rememberAllBackMessages">記住所有已點擊的回覆</string>
@@ -868,13 +835,9 @@
     <string name="ConfirmSettings">操作確認</string>
     <string name="InteractionSettings">互動</string>
     <string name="localPremium">本機 Premium</string>
-    <string name="ReactionSettings">回應</string>
-    <string name="UpgradeGroup">升級群組</string>
     <string name="AccDescrShowKeyboard">顯示鍵盤</string>
     <string name="ConvertGroupAlertWarning">注意</string>
     <string name="ConvertGroupAlert">該操作不可逆。您無法將超級群組降級為普通群組。</string>
-    <string name="SharedPhotosAndVideos">照片和影片</string>
-    <string name="UnofficialApp">非官方應用程式</string>
     <string name="FileUploadLimit">檔案大小不能超過 %1$s</string>
     <string name="NoFilesInfo">此資料夾為空。</string>
     <string name="SearchRecentFiles">搜尋最近的檔案</string>
@@ -887,6 +850,5 @@
     <string name="NekoAboutSectionCommunity">社群</string>
     <string name="NekoAboutSectionDevelopment">開發</string>
     <string name="NekoAboutSectionDiagnostics">診斷</string>
-    <string name="ShowPremiumStickersAnimation">顯示 Premium 貼圖動畫</string>
     <string name="StyleMaterialDesign3">Material Design 3</string>
 </resources>

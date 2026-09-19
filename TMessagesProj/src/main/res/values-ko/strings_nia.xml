@@ -10,8 +10,6 @@
     <string name="ShowReactions">반응 표시</string>
     <string name="CustomTitle">사용자 지정 제목</string>
     <string name="CustomTitleHint">비워 두면 Niagram 을 사용합니다</string>
-    <string name="CreateMono">고정폭 만들기</string>
-    <string name="CreateMonoLanguage">코드 언어</string>
     <string name="CopyPhoto">사진 복사</string>
     <string name="PhotoCopied">사진을 클립보드에 복사했습니다</string>
     <string name="ToTheBeginning">처음으로</string>
@@ -20,7 +18,6 @@
     <string name="HideReadReceiptsLocally">읽음 확인 로컬에서 숨기기</string>
     <string name="HideReadReceiptsLocallyNotice">상대방이 메시지를 읽더라도 로컬에서는 항상 체크 표시 1개(전송됨)로 표시합니다.</string>
     <string name="ShowRPCError">RPC 오류 토스트 표시</string>
-    <string name="ShowPremiumStickersAnimation">Premium 스티커 애니메이션 표시</string>
     <string name="AppIconNeko">Neko</string>
     <string name="AppIconNekoDark">Neko Dark</string>
     <string name="AppIconNekoColorful">Neko Colorful</string>
@@ -37,7 +34,6 @@
     <string name="CustomEditedMessage">편집 표시 사용자 지정</string>
     <string name="NotificationIcon">알림 아이콘</string>
     <string name="Official">공식</string>
-    <string name="HalloWeen">할로윈</string>
     <string name="ShowOnlineStatus">온라인 상태 표시</string>
     <string name="ShowOnlineStatusNotice">그룹에서 다른 사람의 온라인 상태를 프로필 사진 옆에 표시합니다.</string>
     <string name="DoActionsInCommonGroups">공통 그룹에 적용</string>
@@ -48,7 +44,6 @@
     <string name="CheckAllForum">포럼 추가</string>
     <string name="DecorationNone">없음</string>
     <string name="ChatDecoration">채팅 꾸미기</string>
-    <string name="NeedChangeNekoSettings">N-Settings를 변경해야 합니다</string>
     <string name="DoNotUnarchiveBySwipe">스와이프로 보관 해제 비활성화</string>
     <string name="DefaultDeleteMenu">기본 삭제 메뉴</string>
     <string name="DisableStories">스토리 비활성화</string>
@@ -174,7 +169,6 @@
     <string name="RegexFiltersImportSuccess">필터를 가져왔습니다.</string>
     <string name="RegexFiltersImportError">클립보드에서 필터를 가져오지 못했습니다.</string>
     <string name="RegexFiltersExportError">필터를 내보내지 못했습니다.</string>
-    <string name="RegexFiltersUserHeader">사용자 필터</string>
     <string name="RegexFiltersUserFilterHint">사용자 ID 입력</string>
     <string name="RegexFiltersGlobalHeader">전역 필터</string>
     <string name="RegexFiltersTextSelectionAddtoShared">공유 필터에 추가</string>
@@ -224,7 +218,6 @@
     <string name="DontAutoPlayNextVoice">다음 음성 메시지 자동 재생 안 함</string>
     <string name="SaveToChatSubfolder">채팅 이름별로 첨부 파일 저장</string>
     <string name="MessageColoredBackground">다채로운 메시지 배경</string>
-    <string name="ColoredBackgroundNotice">답장, 인용, 링크 미리보기의 배경색과 이모지입니다.</string>
     <string name="ChatMenu">채팅 메뉴</string>
     <string name="MediaViewerMenu">미디어 뷰어 메뉴</string>
     <string name="MenuAndButtons">메뉴 및 버튼</string>
@@ -235,7 +228,6 @@
     <string name="DoubleTapOutgoing">발신 메시지</string>
     <string name="TgBrowserOpenFail">인앱 브라우저를 사용할 수 없습니다</string>
     <string name="TgBrowserOpenFail_Desc">인앱 브라우저가 비활성화되어 선택한 작업을 사용할 수 없습니다.</string>
-    <string name="MapPreviewProviderYandexNax">Yandex</string>
     <string name="GhostMode">고스트 모드</string>
     <string name="GhostEssentialsHeader">고스트 모드 기본 설정</string>
     <string name="EnableGhostMode">고스트 켜기</string>
@@ -273,7 +265,6 @@
     <string name="CloudflareCredentialsDialog">Cloudflare Account ID와 API Token을 구성하세요.\n**얻는 방법**\n</string>
     <string name="GeminiApiKeyNotSet">Gemini API 키가 구성되지 않았습니다.</string>
     <string name="GeminiApiKeyDialog">Gemini API 키를 구성하세요. 비워 두면 번역기 설정의 키를 사용합니다.\n**얻는 방법**\n</string>
-    <string name="GeminiNotSupport">이 기기에서는 Gemini가 지원되지 않습니다.</string>
     <string name="ReplyInPrivate">개인 채팅에서 답장</string>
     <string name="TranscribeProviderGeminiPrompt">프롬프트(선택 사항)</string>
     <string name="uploadBoost">업로드 속도 부스트</string>
@@ -306,7 +297,6 @@
     <string name="OpenAiApiCredentialsDialog">OpenAI 호환 API를 구성하세요. 이 **문서**를 참조할 수 있습니다.\n</string>
     <string name="OpenAiApiBaseUrlHint">API URL ([…]/chat/completions)</string>
     <string name="OpenAiCredentialsNotSet">API 자격 증명이 구성되지 않았습니다.</string>
-    <string name="ApiNotSupportedOnAndroidVersion">이 API 제공자는 현재 Android 버전에서 지원되지 않습니다(Android 8.0+ 필요).</string>
     <string name="AppIconTelegramOriginal">원본</string>
     <string name="BurnTtlMessage">태우기</string>
     <string name="StreamMkvNax">MKV를 동영상으로 표시</string>
@@ -369,13 +359,11 @@
     <string name="DisableInAppBrowserGestures">제스처 비활성화</string>
     <string name="HowToObtain">얻는 방법</string>
     <string name="BlockChannel">채널 차단</string>
-    <string name="UnblockChannel">채널 차단 해제</string>
     <string name="BlockedChannels">차단된 채널</string>
     <string name="BlockedChannelsCount_one">차단된 채널 %1$d개</string>
     <string name="BlockedChannelsCount_other">차단된 채널 %1$d개</string>
     <string name="BlockedChannelsInfo">그룹에서 차단된 채널의 메시지를 숨길 수 있습니다. %s</string>
     <string name="ChannelBlocked">채널이 차단되었습니다.</string>
-    <string name="ChannelUnblocked">채널 차단이 해제되었습니다.</string>
     <string name="BlockedChannelsEmpty">아직 차단된 채널이 없습니다</string>
     <string name="UnblockAllChannelsWarn">**모든 채널**의 차단을 해제하시겠습니까?</string>
     <string name="BlockChannelsUnavailable">일부 채널을 일시적으로 사용할 수 없습니다.</string>
@@ -466,18 +454,11 @@
     <string name="FontInvalidFile">잘못되거나 손상된 폰트 파일입니다.</string>
     <string name="InputFieldTextSize">입력 필드 텍스트 크기</string>
     <string name="InputFieldTextSizeDefault">기본값</string>
-    <string name="HideStarRating">프로필의 별점 숨기기</string>
     <string name="HideGiftButtons">프로필의 선물 버튼 숨기기</string>
     <string name="EnableQuickSchedule">빠른 일정</string>
     <string name="EnableQuickScheduleNotice">음소거 상태를 존중하며, 보내기 버튼을 길게 눌렀을 때 일정 옵션을 표시합니다.</string>
-    <string name="UseSystemPhotoPicker">시스템 사진 선택기 호환성</string>
-    <string name="UseSystemPhotoPickerDesc">Android 13 이상에서 갤러리 첨부 파일에 시스템 사진 선택기를 사용하여 사진 및 동영상에 대한 전체 액세스 권한을 요청하지 않습니다.</string>
-    <string name="ProviderVolcengineTranslate">Volcengine 번역</string>
     <string name="DisableAiEditor">AI 편집기 비활성화</string>
-    <string name="DisableGlareEffects">눈부심 효과 비활성화</string>
-    <string name="ShowRecentForwardTab">전달 시 최근 채팅 탭 표시</string>
     <string name="ForceForward">강제 전달</string>
-    <string name="ForceForwardNotice">전달이 제한된 채널에서도 제한 없이 메시지를 다시 보낼 수 있도록 텍스트를 자동으로 복사하고 미디어 첨부 파일을 다운로드합니다.</string>
     <string name="ForceForwardPremiumOnly">강제 전달 기능을 사용하려면 **Telegram Premium**을 구독하세요.</string>
 
     <string name="ShowForwardCount">전달 횟수 표시</string>
@@ -521,7 +502,6 @@
     <string name="ActionBarDecoration">제목 표시줄 장식</string>
     <string name="DependsOnDate">날짜에 따라 변경</string>
     <string name="Christmas">성탄절</string>
-    <string name="Valentine">발렌타인데이</string>
     <string name="Snowflakes">눈송이</string>
     <string name="Fireworks">불꽃놀이</string>
     <string name="DeleteDownloadedFile">지우기</string>
@@ -570,7 +550,6 @@
     <string name="Categories">카테고리</string>
     <string name="OfficialChannel">Nagram 채널</string>
     <string name="About">정보</string>
-    <string name="IgnoreBlockedAbout">그룹에서 차단한 사용자의 메시지가 더 이상 표시되지 않습니다.</string>
     <string name="SourceCode">소스 코드</string>
     <string name="ResetStickerSize">스티커 크기 초기화</string>
     <string name="RestartAppToTakeEffect">변경 사항을 적용하려면 앱을 다시 시작하세요.</string>
@@ -658,9 +637,7 @@
     <string name="CloudConfigSyncDate">마지막 동기화: %1$s, 클라우드: %2$s</string>
     <string name="CloudConfigSyncDateNever">없음</string>
     <string name="CloudConfigSync">클라우드에 동기화</string>
-    <string name="CloudConfigSyncShort">동기화</string>
     <string name="CloudConfigRestore">클라우드에서 복원</string>
-    <string name="CloudConfigRestoreShort">복원</string>
     <string name="CloudConfigSyncing">동기화 중...</string>
     <string name="CloudConfigAutoSync">자동 동기화</string>
     <string name="CloudConfigAutoSyncDesc">N-Settings를 변경한 뒤 자동으로 클라우드에 동기화합니다.</string>
@@ -691,19 +668,15 @@
     <string name="TransInputToLang">전송 전 번역 언어</string>
     <string name="More">더보기</string>
     <string name="ShowIdAndDc">프로필에 ID / DC 표시</string>
-    <string name="UseDefaultTheme">기본 테마 사용 *</string>
     <string name="DialogsSettings">채팅</string>
     <string name="NiagramXPushService">푸시 서비스</string>
     <string name="DisableSystemAccount">시스템 계정 끄기</string>
-    <string name="FilterMenu">채팅 필터 메뉴</string>
     <string name="DisableProxyWhenVpnEnabled">VPN이 켜져 있으면 프록시 끄기</string>
     <string name="DisableProxyWhenVpnEnabledDesc">시스템 VPN 감지 시 프록시를 자동으로 일시 중지합니다. 참고: 네트워크 전환(예: Wi-Fi에서 모바일 데이터로) 또는 VPN 재연결 시 일시적으로 프록시가 다시 활성화될 수 있습니다.</string>
     <string name="SkipOpenLinkConfirm">링크 열기 확인 건너뛰기</string>
-    <string name="DeleteAllInChatAlert">경고! 이 채팅의 **모든 메시지**가 **모든** 참가자에게서 삭제됩니다.</string>
     <string name="UnblockAll">모두 차단 해제</string>
     <string name="UnblockAllWarn">**모든 사용자와 봇**의 차단을 해제하시겠습니까?</string>
     <string name="BlockedListEmpty">차단한 사람이 없습니다 :)</string>
-    <string name="AddProxySocks5">SOCKS5 프록시 추가</string>
     <string name="AddProxyTelegram">MTProto 프록시 추가</string>
     <string name="RetestPing">모든 서버의 핑 다시 테스트</string>
     <string name="ExportStickers">스티커 내보내기</string>
@@ -719,7 +692,6 @@
     <string name="ShareQRCode">QR 코드</string>
     <string name="ScanQRCode">QR 코드 스캔</string>
     <string name="NoQrFound">QR 코드를 찾을 수 없음</string>
-    <string name="DeveloperSettings">개발자 설정</string>
     <string name="TransSite">번역 돕기</string>
     <string name="ShareMessages">공유</string>
     <string name="DisableVibration">진동 끄기</string>
@@ -741,13 +713,8 @@
     <string name="BackupSettings">설정 내보내기</string>
     <string name="ImportSettings">설정 가져오기</string>
     <string name="ImportSettingsAlert">설정을 덮어쓸까요? 알 수 없는 출처의 설정을 가져오면 PIN이 덮어써져 앱이 잠길 수 있습니다.</string>
-    <string name="nekoXPaymentRemovedToast">결제 기능이 제거되었습니다.</string>
     <string name="unreadBadgeOnBackButton">뒤로 버튼에 읽지 않음 배지 표시</string>
-    <string name="DeleteDownloadedFileConfirm">로컬 캐시에서 이 파일을 삭제할까요?</string>
-    <string name="DeleteDownloadedFileSucceed">삭제됨</string>
-    <string name="DeleteDownloadedFileExternal">외부 파일은 건너뜁니다.</string>
     <string name="useCustomEmoji">사용자 지정 이모지 사용</string>
-    <string name="useCustomEmojiInvalid">올바른 이모지 팩이 아닙니다.</string>
     <string name="repeatConfirm">재게시 전 확인</string>
     <string name="repeatConfirmText">재게시하시겠습니까?</string>
     <string name="rememberAllBackMessages">누른 모든 답장 기억</string>
@@ -758,13 +725,9 @@
     <string name="ConfirmSettings">확인</string>
     <string name="InteractionSettings">상호작용</string>
     <string name="localPremium">로컬 Premium</string>
-    <string name="ReactionSettings">반응</string>
-    <string name="UpgradeGroup">그룹 업그레이드</string>
     <string name="AccDescrShowKeyboard">키보드 표시</string>
     <string name="ConvertGroupAlertWarning">경고</string>
     <string name="ConvertGroupAlert">이 작업은 되돌릴 수 없습니다. 슈퍼그룹을 일반 그룹으로 다운그레이드할 수 없습니다.</string>
-    <string name="SharedPhotosAndVideos">사진 및 동영상</string>
-    <string name="UnofficialApp">비공식 앱</string>
     <string name="FileUploadLimit">파일 크기는 %1$s보다 클 수 없습니다</string>
     <string name="NoFilesInfo">이 폴더는 비어 있습니다.</string>
     <string name="SearchRecentFiles">최근 파일 검색</string>
@@ -807,7 +770,6 @@
     <string name="SpyMode">스파이 모드</string>
 
     <!-- Anti-delete chat types -->
-    <string name="SaveDeletedChatTypesHeader">채팅 종류</string>
     <string name="SaveDeletedMessagesInPrivate">개인 채팅</string>
     <string name="SaveDeletedMessagesInGroups">그룹</string>
     <string name="SaveDeletedMessagesInChannels">채널</string>

@@ -10,8 +10,6 @@
     <string name="ShowReactions">Tampilkan Reaksi</string>
     <string name="CustomTitle">Judul Khusus</string>
     <string name="CustomTitleHint">Biarkan kosong untuk menggunakan Niagram</string>
-    <string name="CreateMono">Buat Monospace</string>
-    <string name="CreateMonoLanguage">Bahasa Kode</string>
     <string name="CopyPhoto">Salin Foto</string>
     <string name="PhotoCopied">Foto disalin ke papan klip</string>
     <string name="ToTheBeginning">Ke Awal</string>
@@ -20,7 +18,6 @@
     <string name="HideReadReceiptsLocally">Sembunyikan tanda dibaca secara lokal</string>
     <string name="HideReadReceiptsLocallyNotice">Selalu tampilkan pesan terkirim dengan satu centang secara lokal meskipun telah dibaca oleh penerima.</string>
     <string name="ShowRPCError">Beritahu Kesalahan RPC</string>
-    <string name="ShowPremiumStickersAnimation">Tampilkan Animasi Stiker Premium</string>
     <string name="AppIconNeko">Neko</string>
     <string name="AppIconNekoDark">Neko Dark</string>
     <string name="AppIconNekoColorful">Neko Colorful</string>
@@ -37,7 +34,6 @@
     <string name="CustomEditedMessage">Tanda Disunting Khusus</string>
     <string name="NotificationIcon">Ikon Pemberitahuan</string>
     <string name="Official">Resmi</string>
-    <string name="HalloWeen">HalloWeen</string>
     <string name="ShowOnlineStatus">Tampilkan Status Online</string>
     <string name="ShowOnlineStatusNotice">Tampilkan status online orang lain di sebelah foto profil mereka di grup.</string>
     <string name="DoActionsInCommonGroups">Diterapkan di grup umum</string>
@@ -48,7 +44,6 @@
     <string name="CheckAllForum">Tambah forum</string>
     <string name="DecorationNone">Tidak ada</string>
     <string name="ChatDecoration">Dekorasi Obrolan</string>
-    <string name="NeedChangeNekoSettings">Anda perlu mengubah Pengaturan-N</string>
     <string name="DoNotUnarchiveBySwipe">Nonaktifkan Geser untuk Membatalkan Arsip</string>
     <string name="DefaultDeleteMenu">Menu Hapus Default</string>
     <string name="DisableStories">Nonaktifkan Cerita</string>
@@ -175,7 +170,6 @@
     <string name="RegexFiltersImportSuccess">Penyaring telah diimpor.</string>
     <string name="RegexFiltersImportError">Gagal mengimpor penyaring dari papan klip.</string>
     <string name="RegexFiltersExportError">Gagal mengekspor penyaring.</string>
-    <string name="RegexFiltersUserHeader">Penyaring Pengguna</string>
     <string name="RegexFiltersUserFilterHint">Masukkan ID Pengguna</string>
     <string name="RegexFiltersGlobalHeader">Penyaring Global</string>
     <string name="RegexFiltersTextSelectionAddtoShared">Tambahkan ke penyaring bersama</string>
@@ -225,7 +219,6 @@
     <string name="DontAutoPlayNextVoice">Jangan Putar Otomatis Pesan Suara Berikutnya</string>
     <string name="SaveToChatSubfolder">Simpan Lampiran Berdasarkan Nama Obrolan</string>
     <string name="MessageColoredBackground">Latar Belakang Pesan Berwarna</string>
-    <string name="ColoredBackgroundNotice">Warna latar belakang dan emoji untuk balasan, kutipan, dan pratinjau tautan.</string>
     <string name="ChatMenu">Menu Obrolan</string>
     <string name="MediaViewerMenu">Menu Penampil Media</string>
     <string name="MenuAndButtons">Menu dan Tombol</string>
@@ -236,7 +229,6 @@
     <string name="DoubleTapOutgoing">Pesan Keluar</string>
     <string name="TgBrowserOpenFail">Peramban dalam aplikasi tidak tersedia</string>
     <string name="TgBrowserOpenFail_Desc">Operasi yang dipilih tidak tersedia karena peramban dalam aplikasi telah dinonaktifkan.</string>
-    <string name="MapPreviewProviderYandexNax">Yandex</string>
     <string name="GhostMode">Mode Hantu</string>
     <string name="GhostEssentialsHeader">Hal Penting Mode Hantu</string>
     <string name="EnableGhostMode">Aktifkan Hantu</string>
@@ -274,7 +266,6 @@
     <string name="CloudflareCredentialsDialog">Konfigurasikan ID Akun Cloudflare dan Token API.\n**Bagaimana cara mendapatkannya?**\n</string>
     <string name="GeminiApiKeyNotSet">Kunci API Gemini belum dikonfigurasi.</string>
     <string name="GeminiApiKeyDialog">Konfigurasikan Kunci API Gemini, gunakan yang hanya dari pengaturan penerjemah jika dibiarkan kosong.\n**Bagaimana cara mendapatkannya?**\n</string>
-    <string name="GeminiNotSupport">Gemini tidak didukung pada perangkat ini.</string>
     <string name="ReplyInPrivate">Balas di Obrolan Pribadi</string>
     <string name="TranscribeProviderGeminiPrompt">Perintah (opsional)</string>
     <string name="uploadBoost">Peningkatan Kecepatan Unggah</string>
@@ -307,7 +298,6 @@
     <string name="OpenAiApiCredentialsDialog">Konfigurasikan API yang kompatibel dengan OpenAI. Anda dapat merujuk ke **dokumentasi** ini.\n</string>
     <string name="OpenAiApiBaseUrlHint">URL API ([…]/chat/completions)</string>
     <string name="OpenAiCredentialsNotSet">Kredensial API tidak dikonfigurasi.</string>
-    <string name="ApiNotSupportedOnAndroidVersion">Penyedia API ini tidak didukung pada versi Android Anda (membutuhkan Android 8.0+).</string>
     <string name="AppIconTelegramOriginal">Asli</string>
     <string name="BurnTtlMessage">Bakar</string>
     <string name="StreamMkvNax">Tampilkan MKV sebagai Video</string>
@@ -370,13 +360,11 @@
     <string name="DisableInAppBrowserGestures">Nonaktifkan Gerakan</string>
     <string name="HowToObtain">Bagaimana cara mendapatkannya?</string>
     <string name="BlockChannel">Blokir saluran</string>
-    <string name="UnblockChannel">Buka blokir saluran</string>
     <string name="BlockedChannels">Saluran yang Diblokir</string>
     <string name="BlockedChannelsCount_one">%1$d saluran yang diblokir</string>
     <string name="BlockedChannelsCount_other">%1$d saluran yang diblokir</string>
     <string name="BlockedChannelsInfo">Anda dapat menyembunyikan pesan dari saluran yang diblokir di grup. %s</string>
     <string name="ChannelBlocked">Saluran diblokir.</string>
-    <string name="ChannelUnblocked">Saluran dibuka kembali.</string>
     <string name="BlockedChannelsEmpty">Belum ada saluran yang diblokir</string>
     <string name="UnblockAllChannelsWarn">Apakah Anda yakin ingin membuka blokir **semua saluran**?</string>
     <string name="BlockChannelsUnavailable">Beberapa saluran sementara tidak tersedia.</string>
@@ -467,18 +455,11 @@
     <string name="FontInvalidFile">File font tidak valid atau rusak.</string>
     <string name="InputFieldTextSize">Ukuran Teks Bidang Masukan</string>
     <string name="InputFieldTextSizeDefault">Bawaan</string>
-    <string name="HideStarRating">Sembunyikan Penilaian Bintang di Profil</string>
     <string name="HideGiftButtons">Sembunyikan Tombol Hadiah di Profil</string>
     <string name="EnableQuickSchedule">Jadwal Cepat</string>
     <string name="EnableQuickScheduleNotice">Tampilkan opsi penjadwalan saat menekan lama tombol kirim, mempertimbangkan status senyap.</string>
-    <string name="UseSystemPhotoPicker">Kompatibilitas pemilih foto sistem</string>
-    <string name="UseSystemPhotoPickerDesc">Di Android 13 dan yang lebih baru, gunakan pemilih foto sistem untuk lampiran galeri tanpa meminta akses penuh ke foto dan video.</string>
-    <string name="ProviderVolcengineTranslate">Terjemahan Volcengine</string>
     <string name="DisableAiEditor">Nonaktifkan Editor AI</string>
-    <string name="DisableGlareEffects">Nonaktifkan Efek Silau</string>
-    <string name="ShowRecentForwardTab">Tampilkan tab obrolan terbaru saat meneruskan</string>
     <string name="ForceForward">Teruskan Paksa</string>
-    <string name="ForceForwardNotice">Salin teks dan unduh lampiran media secara otomatis untuk mengirim ulang pesan dari saluran yang dibatasi tanpa batas penerusan.</string>
     <string name="ForceForwardPremiumOnly">Berlangganan **Telegram Premium** untuk menggunakan fitur teruskan paksa.</string>
     <string name="ShowForwardCount">Tampilkan Jumlah Penerusan</string>
 
@@ -521,7 +502,6 @@
     <string name="ActionBarDecoration">Dekorasi Bilah Judul</string>
     <string name="DependsOnDate">Tergantung pada tanggal</string>
     <string name="Christmas">Pesta Natal</string>
-    <string name="Valentine">Hari Valentine</string>
     <string name="Snowflakes">Butir Salju</string>
     <string name="Fireworks">Kembang Api</string>
     <string name="DeleteDownloadedFile">Bersihkan</string>
@@ -570,7 +550,6 @@
     <string name="Categories">Kategori</string>
     <string name="OfficialChannel">Saluran Nagram</string>
     <string name="About">Tentang</string>
-    <string name="IgnoreBlockedAbout">Anda tidak akan lagi melihat pesan dari pengguna yang diblokir di grup.</string>
     <string name="SourceCode">Kode Sumber</string>
     <string name="ResetStickerSize">Atur ulang ukuran stiker</string>
     <string name="RestartAppToTakeEffect">Mulai ulang aplikasi untuk menerapkan perubahan.</string>
@@ -654,9 +633,7 @@
     <string name="CloudConfigSyncDate">Terakhir disinkronkan: %1$s, cloud: %2$s</string>
     <string name="CloudConfigSyncDateNever">tidak pernah</string>
     <string name="CloudConfigSync">Sinkronkan ke cloud</string>
-    <string name="CloudConfigSyncShort">Sinkron</string>
     <string name="CloudConfigRestore">Pulihkan dari cloud</string>
-    <string name="CloudConfigRestoreShort">Pulihkan</string>
     <string name="CloudConfigSyncing">Sinkronisasi...</string>
     <string name="CloudConfigAutoSync">Sinkronisasi otomatis</string>
     <string name="CloudConfigAutoSyncDesc">Sinkronkan ke cloud secara otomatis setelah melakukan perubahan pada Pengaturan-N.</string>
@@ -688,19 +665,15 @@
     <string name="TransInputToLang">Bahasa Terjemahan Pra-Kirim</string>
     <string name="More">Selengkapnya</string>
     <string name="ShowIdAndDc">Tampilkan ID / DC di Profil</string>
-    <string name="UseDefaultTheme">Gunakan tema default *</string>
     <string name="DialogsSettings">Dialog</string>
     <string name="NiagramXPushService">Layanan Dorong</string>
     <string name="DisableSystemAccount">Nonaktifkan Akun Sistem</string>
-    <string name="FilterMenu">Menu Penyaring Dialog</string>
     <string name="DisableProxyWhenVpnEnabled">Nonaktifkan Proksi Saat VPN Diaktifkan</string>
     <string name="DisableProxyWhenVpnEnabledDesc">Tangguhkan proksi secara otomatis saat VPN sistem terdeteksi. Catatan: Beralih jaringan (misal: Wi-Fi ke data seluler) atau menyambung ulang VPN dapat menyebabkan proksi aktif kembali untuk sementara.</string>
     <string name="SkipOpenLinkConfirm">Lewati Konfirmasi Buka Tautan</string>
-    <string name="DeleteAllInChatAlert">Peringatan! Ini akan **menghapus semua pesan** di obrolan ini untuk **semua** peserta.</string>
     <string name="UnblockAll">Buka Blokir Semua</string>
     <string name="UnblockAllWarn">Apakah Anda yakin ingin membuka blokir **semua pengguna dan bot**?</string>
     <string name="BlockedListEmpty">Anda belum memblokir siapa pun :)</string>
-    <string name="AddProxySocks5">Tambah Proksi SOCKS5</string>
     <string name="AddProxyTelegram">Tambah Proksi MTProto</string>
     <string name="RetestPing">Tes ulang ping untuk semua server</string>
     <string name="ExportStickers">Ekspor Stiker</string>
@@ -716,7 +689,6 @@
     <string name="ShareQRCode">Kode QR</string>
     <string name="ScanQRCode">Pindai Kode QR</string>
     <string name="NoQrFound">Tidak ada Kode QR ditemukan</string>
-    <string name="DeveloperSettings">Pengaturan Pengembang</string>
     <string name="TransSite">Bantu Terjemahan</string>
     <string name="ShareMessages">Bagikan</string>
     <string name="DisableVibration">Nonaktifkan Getaran</string>
@@ -738,13 +710,8 @@
     <string name="BackupSettings">Ekspor Pengaturan</string>
     <string name="ImportSettings">Impor Pengaturan</string>
     <string name="ImportSettingsAlert">Timpa pengaturan\? Mengimpor pengaturan dari sumber yang tidak dikenal dapat menyebabkan kunci pin tertimpa dan aplikasi terkunci.</string>
-    <string name="nekoXPaymentRemovedToast">Fitur pembayaran telah dihapus.</string>
     <string name="unreadBadgeOnBackButton">Lencana Belum Dibaca di Tombol Kembali</string>
-    <string name="DeleteDownloadedFileConfirm">Hapus berkas ini dari cache lokal?</string>
-    <string name="DeleteDownloadedFileSucceed">Dihapus</string>
-    <string name="DeleteDownloadedFileExternal">Berkas eksternal dilewati.</string>
     <string name="useCustomEmoji">Gunakan emoji khusus</string>
-    <string name="useCustomEmojiInvalid">Bukan paket emoji yang sah.</string>
     <string name="repeatConfirm">Tanya Sebelum Memposting Ulang</string>
     <string name="repeatConfirmText">Apakah Anda yakin ingin memposting ulang?</string>
     <string name="rememberAllBackMessages">Ingat Semua Balasan yang Diklik</string>
@@ -755,13 +722,9 @@
     <string name="ConfirmSettings">Konfirmasi</string>
     <string name="InteractionSettings">Interaksi</string>
     <string name="localPremium">Premium Lokal</string>
-    <string name="ReactionSettings">Reaksi</string>
-    <string name="UpgradeGroup">Tingkatkan Grup</string>
     <string name="AccDescrShowKeyboard">Tampilkan keyboard</string>
     <string name="ConvertGroupAlertWarning">Peringatan</string>
     <string name="ConvertGroupAlert">Tindakan ini tidak dapat dibatalkan. Tidak mungkin menurunkan supergrup menjadi grup biasa.</string>
-    <string name="SharedPhotosAndVideos">Foto dan video</string>
-    <string name="UnofficialApp">aplikasi tidak resmi</string>
     <string name="FileUploadLimit">Ukuran berkas tidak boleh lebih besar dari %1$s</string>
     <string name="NoFilesInfo">Folder ini kosong.</string>
     <string name="SearchRecentFiles">Cari Berkas Terbaru</string>

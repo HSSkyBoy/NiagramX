@@ -10,8 +10,6 @@
     <string name="ShowReactions">Show Reactions</string>
     <string name="CustomTitle">Custom Title</string>
     <string name="CustomTitleHint">Leave blank to use Niagram</string>
-    <string name="CreateMono">Create Monospace</string>
-    <string name="CreateMonoLanguage">Code Language</string>
     <string name="CopyPhoto">Copy Photo</string>
     <string name="PhotoCopied">Photo copied to clipboard</string>
     <string name="ToTheBeginning">To Beginning</string>
@@ -21,7 +19,6 @@
     <string name="HideReadReceiptsLocally">Hide Read Receipts Locally</string>
     <string name="HideReadReceiptsLocallyNotice">Always display your sent messages with a single checkmark locally even after they have been read by the recipient.</string>
     <string name="ShowRPCError">Toast RPC Errors</string>
-    <string name="ShowPremiumStickersAnimation">Show Premium Stickers Animation</string>
     <string name="AppIconNeko">Neko</string>
     <string name="AppIconNekoDark">Neko Dark</string>
     <string name="AppIconNekoColorful">Neko Colorful</string>
@@ -44,7 +41,6 @@
     <string name="NotificationIcon">Notification Icon</string>
     <string name="Official">Official</string>
     <string name="Nagram" translatable="false">Nagram</string>
-    <string name="HalloWeen">HalloWeen</string>
     <string name="ShowOnlineStatus">Show Online Status</string>
     <string name="ShowOnlineStatusNotice">Show the online status of other people next to their profile photo in groups.</string>
     <string name="DoActionsInCommonGroups">Applied in common groups</string>
@@ -58,7 +54,6 @@
     <string name="CheckAllForum">Add forum</string>
     <string name="DecorationNone">None</string>
     <string name="ChatDecoration">Chat Decoration</string>
-    <string name="NeedChangeNekoSettings">You need to change Neo-Settings</string>
     <string name="DoNotUnarchiveBySwipe">Disable Swipe to Unarchive</string>
     <string name="DefaultDeleteMenu">Default Delete Menu</string>
     <string name="DisableStories">Disable Stories</string>
@@ -141,7 +136,6 @@
     <string name="XChannel">Niagram Channel</string>
     <string name="EnableSaveDeletedMessages">Save Deleted Messages</string>
     <string name="SpyMode">Spy Mode</string>
-    <string name="SaveDeletedChatTypesHeader">Chat Types</string>
     <string name="SaveDeletedMessagesInPrivate">Direct Chats</string>
     <string name="SaveDeletedMessagesInGroups">Groups</string>
     <string name="SaveDeletedMessagesInChannels">Channels</string>
@@ -228,7 +222,6 @@
     <string name="RegexFiltersImportSuccess">Filters imported.</string>
     <string name="RegexFiltersImportError">Failed to import filters from clipboard.</string>
     <string name="RegexFiltersExportError">Failed to export filters.</string>
-    <string name="RegexFiltersUserHeader">User Filters</string>
     <string name="RegexFiltersUserFilterHint">Enter User ID</string>
     <string name="RegexFiltersGlobalHeader">Global Filters</string>
     <string name="RegexFiltersTextSelectionAddtoShared">Add to shared filters</string>
@@ -278,7 +271,6 @@
     <string name="DontAutoPlayNextVoice">Don\'t Auto Play Next Voice Message</string>
     <string name="SaveToChatSubfolder">Save Attachments by Chat Name</string>
     <string name="MessageColoredBackground">Colorful Message Backgrounds</string>
-    <string name="ColoredBackgroundNotice">Background color and emojis for replies, quotes, and link previews.</string>
     <string name="ChatMenu">Chat Menu</string>
     <string name="MediaViewerMenu">Media Viewer Menu</string>
     <string name="MenuAndButtons">Menu and Buttons</string>
@@ -289,7 +281,6 @@
     <string name="DoubleTapOutgoing">Outgoing Messages</string>
     <string name="TgBrowserOpenFail">In-App Browser is unavailable</string>
     <string name="TgBrowserOpenFail_Desc">The selected operation is not available because the in-app browser has been disabled.</string>
-    <string name="MapPreviewProviderYandexNax">Yandex</string>
     <string name="GhostMode">Ghost Mode</string>
     <string name="GhostEssentialsHeader">Ghost essentials</string>
     <string name="EnableGhostMode">Enable Ghost</string>
@@ -327,7 +318,6 @@
     <string name="CloudflareCredentialsDialog">Configure Cloudflare Account ID and API Token.\n**How to obtain?**\n</string>
     <string name="GeminiApiKeyNotSet">Gemini API Key is not configured.</string>
     <string name="GeminiApiKeyDialog">Configure Gemini API Key, using the one from translator settings if left blank.\n**How to obtain?**\n</string>
-    <string name="GeminiNotSupport">Gemini is not supported on this device.</string>
     <string name="ReplyInPrivate">Reply in Private Chat</string>
     <string name="TranscribeProviderGeminiPrompt">Prompt (optional)</string>
     <string name="uploadBoost">Upload Speed Boost</string>
@@ -360,7 +350,6 @@
     <string name="OpenAiApiCredentialsDialog">Configure OpenAI-compatible API. You can refer to this **documentation**.\n</string>
     <string name="OpenAiApiBaseUrlHint">API URL ([…]/chat/completions)</string>
     <string name="OpenAiCredentialsNotSet">API credentials are not configured.</string>
-    <string name="ApiNotSupportedOnAndroidVersion">This API provider is not supported on your Android version (requires Android 8.0+).</string>
     <string name="AppIconTelegramOriginal">Original</string>
     <string name="BurnTtlMessage">Burn</string>
     <string name="StreamMkvNax">Show MKV as Video</string>
@@ -446,13 +435,11 @@
     <string name="DisableInAppBrowserGestures">Disable Gestures</string>
     <string name="HowToObtain">How to obtain?</string>
     <string name="BlockChannel">Block channel</string>
-    <string name="UnblockChannel">Unblock channel</string>
     <string name="BlockedChannels">Blocked Channels</string>
     <string name="BlockedChannelsCount_one">%1$d blocked channel</string>
     <string name="BlockedChannelsCount_other">%1$d blocked channels</string>
     <string name="BlockedChannelsInfo">You can hide messages from blocked channels in groups. %s</string>
     <string name="ChannelBlocked">Channel blocked.</string>
-    <string name="ChannelUnblocked">Channel unblocked.</string>
     <string name="BlockedChannelsEmpty">No blocked channels yet</string>
     <string name="UnblockAllChannelsWarn">Are you sure you want to unblock **all channels**?</string>
     <string name="BlockChannelsUnavailable">Some channels are temporarily unavailable.</string>
@@ -544,17 +531,10 @@
     <string name="FontInvalidFile">Invalid or corrupted font file.</string>
     <string name="InputFieldTextSize">Input Field Text Size</string>
     <string name="InputFieldTextSizeDefault">Default</string>
-    <string name="HideStarRating">Hide Star Rating in Profiles</string>
     <string name="EnableQuickSchedule">Quick Schedule</string>
     <string name="EnableQuickScheduleNotice">Show scheduling options (Send later / Send when online) on long pressing the send button, respecting mute state.</string>
-    <string name="UseSystemPhotoPicker">System photo picker compatibility</string>
-    <string name="UseSystemPhotoPickerDesc">On Android 13 and later, use the system photo picker for gallery attachments without requesting full photo and video access.</string>
-    <string name="ProviderVolcengineTranslate">Volcengine Translate</string>
     <string name="DisableAiEditor">Disable AI Editor</string>
-    <string name="DisableGlareEffects">Disable Glare effects</string>
-    <string name="ShowRecentForwardTab">Show recent chats tab when forwarding</string>
     <string name="ForceForward">Force Forward</string>
-    <string name="ForceForwardNotice">Automatically copy text and download media attachments to re-send messages from restricted channels without forward limits.</string>
     <string name="ForceForwardPremiumOnly">Subscribe to **Telegram Premium** to force forward messages.</string>
     <string name="DefaultHlsVideoQualityAuto">Auto</string>
     <string name="DefaultHlsVideoQualityOriginal">Original</string>
@@ -655,7 +635,6 @@
     <string name="ActionBarDecoration">Title Bar Decoration</string>
     <string name="DependsOnDate">Depends on date</string>
     <string name="Christmas">Yule</string>
-    <string name="Valentine">Valentine\'s day</string>
     <string name="Snowflakes">Snowflakes</string>
     <string name="Fireworks">Fireworks</string>
     <string name="DeleteDownloadedFile">Clear</string>
@@ -704,7 +683,6 @@
     <string name="Categories">Categories</string>
     <string name="OfficialChannel">Niagram Build Channel</string>
     <string name="About">About</string>
-    <string name="IgnoreBlockedAbout">You\'ll no longer see messages from blocked users in groups.</string>
     <string name="SourceCode">Source Code</string>
     <string name="ResetStickerSize">Reset sticker size</string>
     <string name="RestartAppToTakeEffect">Restart app to apply changes.</string>
@@ -793,9 +771,7 @@
     <string name="CloudConfigSyncDate">Last synced: %1$s, cloud: %2$s</string>
     <string name="CloudConfigSyncDateNever">never</string>
     <string name="CloudConfigSync">Sync to cloud</string>
-    <string name="CloudConfigSyncShort">Sync</string>
     <string name="CloudConfigRestore">Restore from cloud</string>
-    <string name="CloudConfigRestoreShort">Restore</string>
     <string name="CloudConfigSyncing">Syncing...</string>
     <string name="CloudConfigAutoSync">Auto sync</string>
     <string name="CloudConfigAutoSyncDesc">Sync to cloud automatically after making changes to Neo-Settings.</string>
@@ -828,18 +804,14 @@
     <string name="TransInputToLang">Pre-Send Translation Language</string>
     <string name="More">More</string>
     <string name="ShowIdAndDc">Show ID / DC in Profile</string>
-    <string name="UseDefaultTheme">Use default theme *</string>
     <string name="DialogsSettings">Dialogs</string>
     <string name="NiagramXPushService">Push Service</string>
     <string name="DisableSystemAccount">Disable System Account</string>
-    <string name="FilterMenu">Dialogs Filter Menu</string>
     <string name="DisableProxyWhenVpnEnabled">Disable Proxy When VPN is Enabled</string>
     <string name="SkipOpenLinkConfirm">Skip Open Link Confirmation</string>
-    <string name="DeleteAllInChatAlert">Warning! This will **delete all messages** in this chat for **all** participants.</string>
     <string name="UnblockAll">Unblock All</string>
     <string name="UnblockAllWarn">Are you sure you want to unblock **all users and bots**?</string>
     <string name="BlockedListEmpty">You haven\'t blocked anyone :)</string>
-    <string name="AddProxySocks5">Add SOCKS5 Proxy</string>
     <string name="AddProxyTelegram">Add MTProto Proxy</string>
     <string name="RetestPing">Retest ping for all servers</string>
     <string name="ExportStickers">Export Stickers</string>
@@ -855,7 +827,6 @@
     <string name="ShareQRCode">QR Code</string>
     <string name="ScanQRCode">Scan QR Code</string>
     <string name="NoQrFound">No QR Code found</string>
-    <string name="DeveloperSettings">Developer Settings</string>
     <string name="TransSite">Help with Translation</string>
     <string name="ShareMessages">Share</string>
     <string name="DisableVibration">Disable Vibration</string>
@@ -877,13 +848,8 @@
     <string name="BackupSettings">Export Settings</string>
     <string name="ImportSettings">Import Settings</string>
     <string name="ImportSettingsAlert">Overwrite the settings\? Importing settings from unknown sources may cause the pin to be overwritten and the app to be locked.</string>
-    <string name="nekoXPaymentRemovedToast">Payment features have been removed.</string>
     <string name="unreadBadgeOnBackButton">Unread Badge on Back Button</string>
-    <string name="DeleteDownloadedFileConfirm">Delete this file from local cache?</string>
-    <string name="DeleteDownloadedFileSucceed">Deleted</string>
-    <string name="DeleteDownloadedFileExternal">External file is skipped.</string>
     <string name="useCustomEmoji">Use custom emoji</string>
-    <string name="useCustomEmojiInvalid">Not a valid emoji pack.</string>
     <string name="repeatConfirm">Ask Before Repost</string>
     <string name="repeatConfirmText">Are you sure you want to Repost?</string>
     <string name="rememberAllBackMessages">Remember All Clicked Replies</string>
@@ -894,13 +860,9 @@
     <string name="ConfirmSettings">Confirmations</string>
     <string name="InteractionSettings">Interactions</string>
     <string name="localPremium">Local Premium</string>
-    <string name="ReactionSettings">Reaction</string>
-    <string name="UpgradeGroup">Upgrade Group</string>
     <string name="AccDescrShowKeyboard">Show keyboard</string>
     <string name="ConvertGroupAlertWarning">Warning</string>
     <string name="ConvertGroupAlert">This action is irreversible. It is not possible to downgrade a supergroup to a regular group.</string>
-    <string name="SharedPhotosAndVideos">Photos and videos</string>
-    <string name="UnofficialApp">unofficial app</string>
     <string name="FileUploadLimit">File size shouldn\'t be greater than %1$s</string>
     <string name="NoFilesInfo">This folder is empty.</string>
     <string name="SearchRecentFiles">Search Recent Files</string>

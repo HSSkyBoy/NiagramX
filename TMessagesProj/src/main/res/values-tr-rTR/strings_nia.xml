@@ -10,8 +10,6 @@
     <string name="ShowReactions">Tepkileri Göster</string>
     <string name="CustomTitle">Özel Başlık</string>
     <string name="CustomTitleHint">Niagram kullanmak için boş bırakın</string>
-    <string name="CreateMono">Eşaralıklı (Monospace) Oluştur</string>
-    <string name="CreateMonoLanguage">Kod Dili</string>
     <string name="CopyPhoto">Fotoğrafı Kopyala</string>
     <string name="PhotoCopied">Fotoğraf panoya kopyalandı</string>
     <string name="ToTheBeginning">Başa Dön</string>
@@ -20,7 +18,6 @@
     <string name="HideReadReceiptsLocally">Okundu bilgisini yerel olarak gizle</string>
     <string name="HideReadReceiptsLocallyNotice">Gönderilen mesajları, alıcı tarafından okunmuş olsa bile yerel olarak her zaman tek onay işaretiyle göster.</string>
     <string name="ShowRPCError">RPC Hatalarını Ekranda Bildir (Toast)</string>
-    <string name="ShowPremiumStickersAnimation">Premium Çıkartma Animasyonlarını Göster</string>
     <string name="AppIconNeko">Neko</string>
     <string name="AppIconNekoDark">Neko Dark</string>
     <string name="AppIconNekoColorful">Neko Colorful</string>
@@ -37,7 +34,6 @@
     <string name="CustomEditedMessage">Özel Düzenlendi İşareti</string>
     <string name="NotificationIcon">Bildirim Simgesi</string>
     <string name="Official">Resmi</string>
-    <string name="HalloWeen">Cadılar Bayramı (Halloween)</string>
     <string name="ShowOnlineStatus">Çevrimiçi Durumu Göster</string>
     <string name="ShowOnlineStatusNotice">Gruplarda diğer kişilerin çevrimiçi durumunu profil fotoğraflarının yanında gösterin.</string>
     <string name="DoActionsInCommonGroups">Ortak gruplarda uygulandı</string>
@@ -48,7 +44,6 @@
     <string name="CheckAllForum">Forum ekle</string>
     <string name="DecorationNone">Yok</string>
     <string name="ChatDecoration">Sohbet Dekorasyonu</string>
-    <string name="NeedChangeNekoSettings">N-Ayarlarını değiştirmeniz gerekiyor</string>
     <string name="DoNotUnarchiveBySwipe">Arşivden Çıkarmak İçin Kaydırmayı Devre Dışı Bırak</string>
     <string name="DefaultDeleteMenu">Varsayılan Silme Menüsü</string>
     <string name="DisableStories">Hikayeleri Devre Dışı Bırak</string>
@@ -174,7 +169,6 @@
     <string name="RegexFiltersImportSuccess">Filtreler içe aktarıldı.</string>
     <string name="RegexFiltersImportError">Filtreler panodan içe aktarılamadı.</string>
     <string name="RegexFiltersExportError">Filtreler dışa aktarılamadı.</string>
-    <string name="RegexFiltersUserHeader">Kullanıcı Filtreleri</string>
     <string name="RegexFiltersUserFilterHint">Kullanıcı Kimliği (ID) Girin</string>
     <string name="RegexFiltersGlobalHeader">Genel Filtreler</string>
     <string name="RegexFiltersTextSelectionAddtoShared">Paylaşılan filtrelere ekle</string>
@@ -224,7 +218,6 @@
     <string name="DontAutoPlayNextVoice">Sonraki Sesli Mesajı Otomatik Oynatma</string>
     <string name="SaveToChatSubfolder">Ekleri Sohbet Adına Göre Kaydet</string>
     <string name="MessageColoredBackground">Renkli Mesaj Arka Planları</string>
-    <string name="ColoredBackgroundNotice">Yanıtlar, alıntılar ve bağlantı önizlemeleri için arka plan rengi ve emojiler.</string>
     <string name="ChatMenu">Sohbet Menüsü</string>
     <string name="MediaViewerMenu">Medya Görüntüleyici Menüsü</string>
     <string name="MenuAndButtons">Menü ve Butonlar</string>
@@ -235,7 +228,6 @@
     <string name="DoubleTapOutgoing">Giden Mesajlar</string>
     <string name="TgBrowserOpenFail">Uygulama İçi Tarayıcı kullanılamıyor</string>
     <string name="TgBrowserOpenFail_Desc">Uygulama içi tarayıcı devre dışı bırakıldığı için seçilen işlem gerçekleştirilemiyor.</string>
-    <string name="MapPreviewProviderYandexNax">Yandex</string>
     <string name="GhostMode">Hayalet Modu</string>
     <string name="GhostEssentialsHeader">Hayalet Modu Temelleri</string>
     <string name="EnableGhostMode">Hayaleti Etkinleştir</string>
@@ -273,7 +265,6 @@
     <string name="CloudflareCredentialsDialog">Cloudflare Hesap Kimliğini ve API Jetonunu yapılandırın.\n**Nasıl alınır?**\n</string>
     <string name="GeminiApiKeyNotSet">Gemini API Anahtarı yapılandırılmadı.</string>
     <string name="GeminiApiKeyDialog">Gemini API Anahtarını yapılandırın, boş bırakılırsa çevirmen ayarlarındaki anahtar kullanılacaktır.\n**Nasıl alınır?**\n</string>
-    <string name="GeminiNotSupport">Gemini bu cihazda desteklenmiyor.</string>
     <string name="ReplyInPrivate">Özel Sohbette Yanıtla</string>
     <string name="TranscribeProviderGeminiPrompt">İstem (isteğe bağlı)</string>
     <string name="uploadBoost">Yükleme Hızlandırma</string>
@@ -306,7 +297,6 @@
     <string name="OpenAiApiCredentialsDialog">OpenAI uyumlu API\'yi yapılandırın. Bu **belgelere** başvurabilirsiniz.\n</string>
     <string name="OpenAiApiBaseUrlHint">API URL\'si ([…]/chat/completions)</string>
     <string name="OpenAiCredentialsNotSet">API kimlik bilgileri yapılandırılmadı.</string>
-    <string name="ApiNotSupportedOnAndroidVersion">Bu API sağlayıcısı Android sürümünüzde desteklenmiyor (Android 8.0+ gerektirir).</string>
     <string name="AppIconTelegramOriginal">Orijinal</string>
     <string name="BurnTtlMessage">Yak</string>
     <string name="StreamMkvNax">MKV\'yi Video Olarak Göster</string>
@@ -368,13 +358,11 @@
     <string name="DisableInAppBrowserGestures">Hareketleri (Gestures) Devre Dışı Bırak</string>
     <string name="HowToObtain">Nasıl alınır?</string>
     <string name="BlockChannel">Kanalı engelle</string>
-    <string name="UnblockChannel">Kanalın engelini kaldır</string>
     <string name="BlockedChannels">Engellenen Kanallar</string>
     <string name="BlockedChannelsCount_one">%1$d engellenen kanal</string>
     <string name="BlockedChannelsCount_other">%1$d engellenen kanal</string>
     <string name="BlockedChannelsInfo">Gruplardaki engellenmiş kanallardan gelen mesajları gizleyebilirsiniz. %s</string>
     <string name="ChannelBlocked">Kanal engellendi.</string>
-    <string name="ChannelUnblocked">Kanalın engeli kaldırıldı.</string>
     <string name="BlockedChannelsEmpty">Henüz engellenen kanal yok</string>
     <string name="UnblockAllChannelsWarn">**Tüm kanalların** engelini kaldırmak istediğinizden emin misiniz?</string>
     <string name="BlockChannelsUnavailable">Bazı kanallar geçici olarak kullanılamıyor.</string>
@@ -465,18 +453,11 @@
     <string name="FontInvalidFile">Geçersiz veya bozuk yazı tipi dosyası.</string>
     <string name="InputFieldTextSize">Giriş Alanı Metin Boyutu</string>
     <string name="InputFieldTextSizeDefault">Varsayılan</string>
-    <string name="HideStarRating">Profillerde Yıldız Derecelendirmeyi Gizle</string>
     <string name="HideGiftButtons">Profillerde Hediye Düğmesini Gizle</string>
     <string name="EnableQuickSchedule">Hızlı Zamanlama</string>
     <string name="EnableQuickScheduleNotice">Gönder düğmesine uzun basıldığında, sessiz durumuna göre zamanlama seçeneklerini gösterir.</string>
-    <string name="UseSystemPhotoPicker">Sistem fotoğraf seçici uyumluluğu</string>
-    <string name="UseSystemPhotoPickerDesc">Android 13 ve sonrasında, fotoğraf ve video için tam erişim izni istemeden galeri ekleri için sistem fotoğraf seçiciyi kullanın.</string>
-    <string name="ProviderVolcengineTranslate">Volcengine Çevirisi</string>
     <string name="DisableAiEditor">Yapay Zeka Editörünü Devre Dışı Bırak</string>
-    <string name="DisableGlareEffects">Parıltı Efektlerini Devre Dışı Bırak</string>
-    <string name="ShowRecentForwardTab">İletirken son sohbetler sekmesini göster</string>
     <string name="ForceForward">Zorla İlet</string>
-    <string name="ForceForwardNotice">İletme kısıtlaması olan kanallardan iletme sınırı olmaksızın mesajları yeniden göndermek için metni otomatik olarak kopyalar ve medya eklerini indirir.</string>
     <string name="ForceForwardPremiumOnly">Zorla ilet özelliğini kullanmak için **Telegram Premium** abonesi olun.</string>
     <string name="ShowForwardCount">İletme Sayısını Göster</string>
 
@@ -519,7 +500,6 @@
     <string name="ActionBarDecoration">Başlık Çubuğu Dekorasyonu</string>
     <string name="DependsOnDate">Tarihe bağlı</string>
     <string name="Christmas">Yılbaşı</string>
-    <string name="Valentine">Sevgililer Günü</string>
     <string name="Snowflakes">Kar Taneleri</string>
     <string name="Fireworks">Havai Fişekler</string>
     <string name="DeleteDownloadedFile">Temizle</string>
@@ -568,7 +548,6 @@
     <string name="Categories">Kategoriler</string>
     <string name="OfficialChannel">Nagram Kanalı</string>
     <string name="About">Hakkında</string>
-    <string name="IgnoreBlockedAbout">Artık gruplarda engellenen kullanıcılardan gelen mesajları görmeyeceksiniz.</string>
     <string name="SourceCode">Kaynak Kod</string>
     <string name="ResetStickerSize">Çıkartma boyutunu sıfırla</string>
     <string name="RestartAppToTakeEffect">Değişikliklerin uygulanması için uygulamayı yeniden başlatın.</string>
@@ -651,9 +630,7 @@
     <string name="CloudConfigSyncDate">Son senkronizasyon: %1$s, bulut: %2$s</string>
     <string name="CloudConfigSyncDateNever">asla</string>
     <string name="CloudConfigSync">Bulutla senkronize et</string>
-    <string name="CloudConfigSyncShort">Senkronize Et</string>
     <string name="CloudConfigRestore">Buluttan geri yükle</string>
-    <string name="CloudConfigRestoreShort">Geri Yükle</string>
     <string name="CloudConfigSyncing">Senkronize ediliyor...</string>
     <string name="CloudConfigAutoSync">Otomatik senkronizasyon</string>
     <string name="CloudConfigAutoSyncDesc">N-Ayarlarında değişiklik yaptıktan sonra bulutla otomatik olarak senkronize et.</string>
@@ -684,19 +661,15 @@
     <string name="TransInputToLang">Gönderme Öncesi Çeviri Dili</string>
     <string name="More">Daha Fazla</string>
     <string name="ShowIdAndDc">Profilde Kimlik (ID) / Veri Merkezini Göster</string>
-    <string name="UseDefaultTheme">Varsayılan temayı kullan *</string>
     <string name="DialogsSettings">Sohbetler</string>
     <string name="NiagramXPushService">Bildirim (Push) Servisi</string>
     <string name="DisableSystemAccount">Sistem Hesabını Devre Dışı Bırak</string>
-    <string name="FilterMenu">Sohbetler Filtre Menüsü</string>
     <string name="DisableProxyWhenVpnEnabled">VPN Etkinken Proxy\'yi Devre Dışı Bırak</string>
     <string name="DisableProxyWhenVpnEnabledDesc">Sistem VPN\'i algılandığında proxy\'yi otomatik olarak askıya alır. Not: Ağ değiştirme (örn. Wi-Fi\'dan hücresel veriye) veya VPN\'in yeniden bağlanması proxy\'nin geçici olarak devam etmesine neden olabilir.</string>
     <string name="SkipOpenLinkConfirm">Bağlantı Açma Onayını Atla</string>
-    <string name="DeleteAllInChatAlert">Uyarı! Bu işlem bu sohbetteki **tüm mesajları tüm** katılımcılar için **silecektir**.</string>
     <string name="UnblockAll">Tümünün Engelini Kaldır</string>
     <string name="UnblockAllWarn">**Tüm kullanıcıların ve botların** engelini kaldırmak istediğinizden emin misiniz?</string>
     <string name="BlockedListEmpty">Kimseyi engellemediniz :)</string>
-    <string name="AddProxySocks5">SOCKS5 Proxy Ekle</string>
     <string name="AddProxyTelegram">MTProto Proxy Ekle</string>
     <string name="RetestPing">Tüm sunucular için ping\'i yeniden test et</string>
     <string name="ExportStickers">Çıkartmaları Dışa Aktar</string>
@@ -712,7 +685,6 @@
     <string name="ShareQRCode">QR Kodu</string>
     <string name="ScanQRCode">QR Kodunu Tara</string>
     <string name="NoQrFound">QR Kodu bulunamadı</string>
-    <string name="DeveloperSettings">Geliştirici Ayarları</string>
     <string name="TransSite">Çeviriye Yardımcı Olun</string>
     <string name="ShareMessages">Paylaş</string>
     <string name="DisableVibration">Titreşimi Devre Dışı Bırak</string>
@@ -734,13 +706,8 @@
     <string name="BackupSettings">Ayarları Dışa Aktar</string>
     <string name="ImportSettings">Ayarları İçe Aktar</string>
     <string name="ImportSettingsAlert">Ayarların üzerine yazılsın mı\? Bilinmeyen kaynaklardan ayarları içe aktarmak şifrenin üzerine yazılmasına ve uygulamanın kilitlenmesine neden olabilir.</string>
-    <string name="nekoXPaymentRemovedToast">Ödeme özellikleri kaldırıldı.</string>
     <string name="unreadBadgeOnBackButton">Geri Butonunda Okunmamış Sayacı</string>
-    <string name="DeleteDownloadedFileConfirm">Bu dosya yerel önbellekten silinsin mi?</string>
-    <string name="DeleteDownloadedFileSucceed">Silindi</string>
-    <string name="DeleteDownloadedFileExternal">Harici dosya atlandı.</string>
     <string name="useCustomEmoji">Özel emoji kullan</string>
-    <string name="useCustomEmojiInvalid">Geçerli bir emoji paketi değil.</string>
     <string name="repeatConfirm">Yeniden Göndermeden Önce Sor</string>
     <string name="repeatConfirmText">Yeniden Göndermek (Repost) istediğinizden emin misiniz?</string>
     <string name="rememberAllBackMessages">Tıklanan Tüm Yanıtları Hatırla</string>
@@ -751,13 +718,9 @@
     <string name="ConfirmSettings">Onaylar</string>
     <string name="InteractionSettings">Etkileşimler</string>
     <string name="localPremium">Yerel Premium</string>
-    <string name="ReactionSettings">Tepki</string>
-    <string name="UpgradeGroup">Grubu Yükselt</string>
     <string name="AccDescrShowKeyboard">Klavyeyi göster</string>
     <string name="ConvertGroupAlertWarning">Uyarı</string>
     <string name="ConvertGroupAlert">Bu işlem geri alınamaz. Bir süper grubu tekrar normal bir gruba düşürmek mümkün değildir.</string>
-    <string name="SharedPhotosAndVideos">Fotoğraflar ve videolar</string>
-    <string name="UnofficialApp">resmi olmayan uygulama</string>
     <string name="FileUploadLimit">Dosya boyutu %1$s değerinden büyük olmamalıdır</string>
     <string name="NoFilesInfo">Bu klasör boş.</string>
     <string name="SearchRecentFiles">Son Dosyaları Ara</string>

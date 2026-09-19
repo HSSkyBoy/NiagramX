@@ -10,8 +10,6 @@
     <string name="ShowReactions">Mostra Reazioni</string>
     <string name="CustomTitle">Titolo Personalizzato</string>
     <string name="CustomTitleHint">Lascia vuoto per usare Niagram</string>
-    <string name="CreateMono">Crea monospazio</string>
-    <string name="CreateMonoLanguage">Linguaggio Codice</string>
     <string name="CopyPhoto">Copia foto</string>
     <string name="PhotoCopied">Foto copiata negli appunti</string>
     <string name="ToTheBeginning">All\'inizio</string>
@@ -20,7 +18,6 @@
     <string name="HideReadReceiptsLocally">Nascondi conferme di lettura localmente</string>
     <string name="HideReadReceiptsLocallyNotice">Mostra sempre i messaggi inviati con una sola spunta localmente, anche dopo essere stati letti dal destinatario.</string>
     <string name="ShowRPCError">Errori RPC Toast</string>
-    <string name="ShowPremiumStickersAnimation">Mostra Animazioni Sticker Premium</string>
     <string name="AppIconNeko">Neko</string>
     <string name="AppIconNekoDark">Neko Dark</string>
     <string name="AppIconNekoColorful">Neko Colorful</string>
@@ -37,7 +34,6 @@
     <string name="CustomEditedMessage">Icona Modificata Personalizzata</string>
     <string name="NotificationIcon">Icona Notifiche</string>
     <string name="Official">Ufficiale</string>
-    <string name="HalloWeen">HalloWeen</string>
     <string name="ShowOnlineStatus">Mostra Stato Online</string>
     <string name="ShowOnlineStatusNotice">Mostra lo stato online di altre persone di fianco alla loro foto profilo.</string>
     <string name="DoActionsInCommonGroups">Applica in gruppi comuni</string>
@@ -48,7 +44,6 @@
     <string name="CheckAllForum">Aggiungi forum</string>
     <string name="DecorationNone">Nessuno</string>
     <string name="ChatDecoration">Decorazioni Chat</string>
-    <string name="NeedChangeNekoSettings">Hai bisogno di cambiare le N-Config</string>
     <string name="DoNotUnarchiveBySwipe">Disabilita scorri per togliere dall\'archivio</string>
     <string name="DefaultDeleteMenu">Menù di Eliminazione Predefinito</string>
     <string name="DisableStories">Disabilita le Storie</string>
@@ -175,7 +170,6 @@
     <string name="RegexFiltersImportSuccess">Filtri importati.</string>
     <string name="RegexFiltersImportError">Impossibile importare i filtri dagli appunti.</string>
     <string name="RegexFiltersExportError">Impossibile esportare i filtri.</string>
-    <string name="RegexFiltersUserHeader">Filtri Utente</string>
     <string name="RegexFiltersUserFilterHint">Inserisci l\'ID Utente</string>
     <string name="RegexFiltersGlobalHeader">Filtri Globali</string>
     <string name="RegexFiltersTextSelectionAddtoShared">Aggiungi ai filtri condivisi</string>
@@ -225,7 +219,6 @@
     <string name="DontAutoPlayNextVoice">Non Riprodurre Automaticamente il Messaggio Vocale Successivo</string>
     <string name="SaveToChatSubfolder">Salva allegati per nome chat</string>
     <string name="MessageColoredBackground">Sfondi colorati per messaggi</string>
-    <string name="ColoredBackgroundNotice">Colore di sfondo ed emoji per risposte, citazioni e anteprime dei link.</string>
     <string name="ChatMenu">Menu Chat</string>
     <string name="MediaViewerMenu">Menu Visualizzatore Multimediale</string>
     <string name="MenuAndButtons">Menu e pulsanti</string>
@@ -236,7 +229,6 @@
     <string name="DoubleTapOutgoing">Messaggi in Uscita</string>
     <string name="TgBrowserOpenFail">Il Browser In-App non è disponibile</string>
     <string name="TgBrowserOpenFail_Desc">L\'operazione selezionata non è disponibile a causa del browser in-app disabilitato.</string>
-    <string name="MapPreviewProviderYandexNax">Yandex</string>
     <string name="GhostMode">Modalità Ghost</string>
     <string name="GhostEssentialsHeader">Elementi essenziali per Ghost</string>
     <string name="EnableGhostMode">Abilita Ghost</string>
@@ -274,7 +266,6 @@
     <string name="CloudflareCredentialsDialog">Configura l\'ID account Cloudflare e il token API.\n**Come ottenerlo?**\n</string>
     <string name="GeminiApiKeyNotSet">La chiave API Gemini non è configurata.</string>
     <string name="GeminiApiKeyDialog">Configura la chiave API Gemini, utilizzando quella dalle impostazioni del traduttore se il campo è vuoto.\n**Come ottenerla?**\n</string>
-    <string name="GeminiNotSupport">Gemini non è supportato su questo dispositivo.</string>
     <string name="ReplyInPrivate">Rispondi in Chat Privata</string>
     <string name="TranscribeProviderGeminiPrompt">Prompt (facoltativo)</string>
     <string name="uploadBoost">Aumenta Velocità di Upload</string>
@@ -307,7 +298,6 @@
     <string name="OpenAiApiCredentialsDialog">Configura API compatibile con OpenAI. Puoi fare riferimento a questa **documentazione**.\n</string>
     <string name="OpenAiApiBaseUrlHint">URL API ([…]/chat/completions)</string>
     <string name="OpenAiCredentialsNotSet">Le credenziali API non sono configurate.</string>
-    <string name="ApiNotSupportedOnAndroidVersion">Questo provider API non è supportato dalla tua versione Android (richiede Android 8.0+).</string>
     <string name="AppIconTelegramOriginal">Originale</string>
     <string name="BurnTtlMessage">Brucia</string>
     <string name="StreamMkvNax">Mostra MKV come video</string>
@@ -374,13 +364,11 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="DisableInAppBrowserGestures">Disattiva gestures</string>
     <string name="HowToObtain">Come si ottiene?</string>
     <string name="BlockChannel">Blocca canale</string>
-    <string name="UnblockChannel">Sblocca canale</string>
     <string name="BlockedChannels">Canali bloccati</string>
     <string name="BlockedChannelsCount_one">%1$d canale bloccato</string>
     <string name="BlockedChannelsCount_other">%1$d canali bloccati</string>
     <string name="BlockedChannelsInfo">Puoi nascondere i messaggi dai canali bloccati nei gruppi. %s</string>
     <string name="ChannelBlocked">Canale bloccato.</string>
-    <string name="ChannelUnblocked">Canale sbloccato.</string>
     <string name="BlockedChannelsEmpty">Ancora nessun canale bloccato</string>
     <string name="UnblockAllChannelsWarn">Sei sicuro di voler sbloccare **tutti i canali**?</string>
     <string name="BlockChannelsUnavailable">Alcuni canali sono temporaneamente non disponibili.</string>
@@ -471,18 +459,11 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="FontInvalidFile">File carattere non valido o corrotto.</string>
     <string name="InputFieldTextSize">Dimensione testo campo input</string>
     <string name="InputFieldTextSizeDefault">Predefinito</string>
-    <string name="HideStarRating">Nascondi valutazione a stelle nei profili</string>
     <string name="HideGiftButtons">Nascondi pulsante regalo nei profili</string>
     <string name="EnableQuickSchedule">Programmazione rapida</string>
     <string name="EnableQuickScheduleNotice">Mostra le opzioni di programmazione tenendo premuto il pulsante di invio, rispettando lo stato di silenziamento.</string>
-    <string name="UseSystemPhotoPicker">Compatibilità selettore foto di sistema</string>
-    <string name="UseSystemPhotoPickerDesc">Su Android 13 e versioni successive, usa il selettore foto di sistema per gli allegati dalla galleria senza richiedere l\'accesso completo a foto e video.</string>
-    <string name="ProviderVolcengineTranslate">Traduzione Volcengine</string>
     <string name="DisableAiEditor">Disabilita editor AI</string>
-    <string name="DisableGlareEffects">Disabilita effetti di riflesso</string>
-    <string name="ShowRecentForwardTab">Mostra scheda chat recenti all\'inoltro</string>
     <string name="ForceForward">Inoltro forzato</string>
-    <string name="ForceForwardNotice">Copia automaticamente il testo e scarica i file multimediali per reinviare i messaggi dai canali con restrizioni senza limiti di inoltro.</string>
     <string name="ForceForwardPremiumOnly">Abbonati a **Telegram Premium** per usare l\'inoltro forzato.</string>
     <string name="ShowForwardCount">Mostra conteggio inoltri</string>
 
@@ -525,7 +506,6 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="ActionBarDecoration">Decorazione della barra del titolo</string>
     <string name="DependsOnDate">Dipende dalla data</string>
     <string name="Christmas">Natale</string>
-    <string name="Valentine">San Valentino</string>
     <string name="Snowflakes">Fiocchi di neve</string>
     <string name="Fireworks">Fuochi d\'artificio</string>
     <string name="DeleteDownloadedFile">Cancella</string>
@@ -574,7 +554,6 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="Categories">Categorie</string>
     <string name="OfficialChannel">Canale Nagram</string>
     <string name="About">Informazioni</string>
-    <string name="IgnoreBlockedAbout">Non vedrai più i messaggi degli utenti bloccati nei gruppi.</string>
     <string name="SourceCode">Codice Sorgente</string>
     <string name="ResetStickerSize">Reimposta la dimensione dello sticker</string>
     <string name="RestartAppToTakeEffect">Riavvia l\'app per applicare i cambiamenti.</string>
@@ -657,9 +636,7 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="CloudConfigSyncDate">Ultima sincronizzazione: %1$s, cloud: %2$s</string>
     <string name="CloudConfigSyncDateNever">Mai</string>
     <string name="CloudConfigSync">Sincronizza con il cloud</string>
-    <string name="CloudConfigSyncShort">Sincronizza</string>
     <string name="CloudConfigRestore">Ripristina dal cloud</string>
-    <string name="CloudConfigRestoreShort">Ripristina</string>
     <string name="CloudConfigSyncing">Sincronizzazione in corso...</string>
     <string name="CloudConfigAutoSync">Sincronizzazione automatica</string>
     <string name="CloudConfigAutoSyncDesc">Sincronizzazione automatica con il cloud dopo aver apportato modifiche alle N-Impostazioni.</string>
@@ -690,19 +667,15 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="TransInputToLang">Lingua di traduzione pre-invio</string>
     <string name="More">Altro</string>
     <string name="ShowIdAndDc">Mostra ID / DC nel profilo</string>
-    <string name="UseDefaultTheme">Usa tema predefinito *</string>
     <string name="DialogsSettings">Finestre di dialogo</string>
     <string name="NiagramXPushService">Servizio Push</string>
     <string name="DisableSystemAccount">Disabilita account di sistema</string>
-    <string name="FilterMenu">Menu Filtro Dialoghi</string>
     <string name="DisableProxyWhenVpnEnabled">Disabilita proxy quando VPN è abilitato</string>
     <string name="DisableProxyWhenVpnEnabledDesc">Sospende automaticamente il proxy quando viene rilevata una VPN di sistema. Nota: Il cambio di rete (es. da Wi-Fi a dati mobili) o la riconnessione della VPN potrebbero riattivare temporaneamente il proxy.</string>
     <string name="SkipOpenLinkConfirm">Ignora conferma apertura link</string>
-    <string name="DeleteAllInChatAlert">Attenzione! Questa operazione **eliminerà tutti i messaggi** presenti in questa chat per **tutti** i partecipanti.</string>
     <string name="UnblockAll">Sblocca tutti</string>
     <string name="UnblockAllWarn">Sei sicuro di voler sbloccare **tutti gli utenti e i bot**?</string>
     <string name="BlockedListEmpty">Non hai bloccato nessuno :)</string>
-    <string name="AddProxySocks5">Aggiungi SOCKS5 Proxy</string>
     <string name="AddProxyTelegram">Aggiungi MTProto Proxy</string>
     <string name="RetestPing">Riprova il test del ping per tutti i server</string>
     <string name="ExportStickers">Esporta stickers</string>
@@ -718,7 +691,6 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="ShareQRCode">Codice QR</string>
     <string name="ScanQRCode">Scansiona codice QR</string>
     <string name="NoQrFound">Nessun codice QR trovato</string>
-    <string name="DeveloperSettings">Impostazioni sviluppatore</string>
     <string name="TransSite">Aiuto con la traduzione</string>
     <string name="ShareMessages">Condividi</string>
     <string name="DisableVibration">Disabilita Vibrazione</string>
@@ -740,13 +712,8 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="BackupSettings">Esporta Impostazioni</string>
     <string name="ImportSettings">Importa Impostazioni</string>
     <string name="ImportSettingsAlert">Sovrascrivere le impostazioni? L\'importazione di impostazioni da fonti sconosciute potrebbe causare la sovrascrittura del PIN e il blocco dell\'app.</string>
-    <string name="nekoXPaymentRemovedToast">Le funzionalità di pagamento sono state rimosse.</string>
     <string name="unreadBadgeOnBackButton">Badge non letto sul pulsante Indietro</string>
-    <string name="DeleteDownloadedFileConfirm">Eliminare questo file dalla cache locale?</string>
-    <string name="DeleteDownloadedFileSucceed">Eliminato</string>
-    <string name="DeleteDownloadedFileExternal">Il file esterno viene ignorato.</string>
     <string name="useCustomEmoji">Usa emoji personalizzate</string>
-    <string name="useCustomEmojiInvalid">Pacchetto emoji non valido.</string>
     <string name="repeatConfirm">Chiedere prima di ripubblicare</string>
     <string name="repeatConfirmText">Sei sicuro di voler ripubblicare?</string>
     <string name="rememberAllBackMessages">Ricorda tutte le risposte cliccate</string>
@@ -757,13 +724,9 @@ Non possiamo aiutarti in questo caso; se hai problemi di accesso, contatta il Su
     <string name="ConfirmSettings">Conferme</string>
     <string name="InteractionSettings">Interazioni</string>
     <string name="localPremium">Premium locale</string>
-    <string name="ReactionSettings">Reazione</string>
-    <string name="UpgradeGroup">Aggiorna gruppo</string>
     <string name="AccDescrShowKeyboard">Mostra tastiera</string>
     <string name="ConvertGroupAlertWarning">Avviso</string>
     <string name="ConvertGroupAlert">Questa azione è irreversibile. Non è possibile declassare un supergruppo a un gruppo normale.</string>
-    <string name="SharedPhotosAndVideos">Foto e Video</string>
-    <string name="UnofficialApp">app non ufficiale</string>
     <string name="FileUploadLimit">La dimensione del file non deve essere superiore a %1$s</string>
     <string name="NoFilesInfo">Questa cartella è vuota.</string>
     <string name="SearchRecentFiles">Cerca File Recenti</string>

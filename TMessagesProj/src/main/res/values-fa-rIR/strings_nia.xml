@@ -10,8 +10,6 @@
     <string name="ShowReactions">نمایش واکنش‌ها</string>
     <string name="CustomTitle">عنوان سفارشی</string>
     <string name="CustomTitleHint">خالی بگذارید تا از Niagram استفاده شود</string>
-    <string name="CreateMono">ایجاد Monospace</string>
-    <string name="CreateMonoLanguage">زبان کد</string>
     <string name="CopyPhoto">کپی‌ کردن عکس</string>
     <string name="PhotoCopied">عکس در کلیپ‌بورد کپی شد</string>
     <string name="ToTheBeginning">شروع کردن</string>
@@ -20,7 +18,6 @@
     <string name="HideReadReceiptsLocally">پنهان کردن وضعیت خوانده شدن به صورت محلی</string>
     <string name="HideReadReceiptsLocallyNotice">پیام‌های ارسال‌شده حتی پس از خوانده شدن توسط مخاطب، به صورت محلی همیشه با یک تیک نمایش داده شوند.</string>
     <string name="ShowRPCError">گزارش خطاهای PRC</string>
-    <string name="ShowPremiumStickersAnimation">نمایش انیمیشن استیکرهای پریمیوم</string>
     <string name="AppIconNeko">Neko</string>
     <string name="AppIconNekoDark">Neko Dark</string>
     <string name="AppIconNekoColorful">Neko Colorful</string>
@@ -37,7 +34,6 @@
     <string name="CustomEditedMessage">آیکون پیام ویرایش شده سفارشی</string>
     <string name="NotificationIcon">ﺁﻳﮑﻮﻥ ﺍﻋﻼﻥ‌ها</string>
     <string name="Official">رسمی</string>
-    <string name="HalloWeen">هالوين</string>
     <string name="ShowOnlineStatus">نمایش وضعیت آنلاین</string>
     <string name="ShowOnlineStatusNotice">نمایش وضعیت آنلاین بودن افراد دیگر در کنار عکس پروفایلشان در گروه‌ها.</string>
     <string name="DoActionsInCommonGroups">در گروه‌های مشترک اعمال می‌شود</string>
@@ -48,7 +44,6 @@
     <string name="CheckAllForum">افزودن انجمن</string>
     <string name="DecorationNone">هیچ</string>
     <string name="ChatDecoration">تزئین چت</string>
-    <string name="NeedChangeNekoSettings">بهتر است تنظیمات N را تغییر دهید</string>
     <string name="DoNotUnarchiveBySwipe">غیرفعال کردن سوایپ برای بازگردانی از آرشیو</string>
     <string name="DefaultDeleteMenu">منوی حذف پیش‌فرض</string>
     <string name="DisableStories">غیرفعال کردن استوری‌ها</string>
@@ -174,7 +169,6 @@
     <string name="RegexFiltersImportSuccess">فیلترها وارد شدند.</string>
     <string name="RegexFiltersImportError">وارد کردن فیلترها از کلیپ‌بورد ناموفق بود.</string>
     <string name="RegexFiltersExportError">صدور فیلترها با خطا مواجه شد.</string>
-    <string name="RegexFiltersUserHeader">فیلترهای کاربر</string>
     <string name="RegexFiltersUserFilterHint">شناسه کاربری را وارد کنید</string>
     <string name="RegexFiltersGlobalHeader">فیلترهای سراسری</string>
     <string name="RegexFiltersTextSelectionAddtoShared">افزودن به فیلترهای اشتراکی</string>
@@ -224,7 +218,6 @@
     <string name="DontAutoPlayNextVoice">عدم پخش خودکار پیام صوتی بعدی</string>
     <string name="SaveToChatSubfolder">ذخیره پیوست‌ها در پوشه‌ای با نام گفتگو</string>
     <string name="MessageColoredBackground">پس‌زمینه رنگی پیام‌ها</string>
-    <string name="ColoredBackgroundNotice">رنگ پس‌زمینه و اموجی برای پاسخ‌ها، نقل‌قول‌ها و پیش‌نمایش لینک‌ها.</string>
     <string name="ChatMenu">منوی گفتگو</string>
     <string name="MediaViewerMenu">منوی نمایشگر رسانه</string>
     <string name="MenuAndButtons">منوها و دکمه‌ها</string>
@@ -235,7 +228,6 @@
     <string name="DoubleTapOutgoing">پیام‌های ارسالی</string>
     <string name="TgBrowserOpenFail">مرورگر داخلی در دسترس نیست</string>
     <string name="TgBrowserOpenFail_Desc">عملیات انتخاب شده در دسترس نیست زیرا مرورگر داخلی غیرفعال شده است.</string>
-    <string name="MapPreviewProviderYandexNax">یاندکس</string>
     <string name="GhostMode">حالت روح</string>
     <string name="GhostEssentialsHeader">تنظیمات اصلی حالت روح</string>
     <string name="EnableGhostMode">فعال کردن حالت روح</string>
@@ -273,7 +265,6 @@
     <string name="CloudflareCredentialsDialog">شناسه حساب و توکن API کلادفلر را پیکربندی کنید.\n**چگونه به دست آورم؟**\n</string>
     <string name="GeminiApiKeyNotSet">کلید Gemini API پیکربندی نشده است.</string>
     <string name="GeminiApiKeyDialog">کلید Gemini API را پیکربندی کنید. اگر خالی بماند، از کلید تنظیمات مترجم استفاده می‌شود.\n**چگونه به دست آورم؟**\n</string>
-    <string name="GeminiNotSupport">Gemini در این دستگاه پشتیبانی نمی‌شود.</string>
     <string name="ReplyInPrivate">پاسخ در گفتگوی خصوصی</string>
     <string name="TranscribeProviderGeminiPrompt">دستور (اختیاری)</string>
     <string name="uploadBoost">افزایش سرعت آپلود</string>
@@ -306,7 +297,6 @@
     <string name="OpenAiApiCredentialsDialog">API سازگار با OpenAI را پیکربندی کنید. می‌توانید به این **مستندات** مراجعه کنید.\n</string>
     <string name="OpenAiApiBaseUrlHint">آدرس API ([…]/chat/completions)</string>
     <string name="OpenAiCredentialsNotSet">اطلاعات API پیکربندی نشده است.</string>
-    <string name="ApiNotSupportedOnAndroidVersion">این ارائه‌دهنده API در نسخه اندروید شما پشتیبانی نمی‌شود (نیازمند اندروید ۸.۰ به بالا).</string>
     <string name="AppIconTelegramOriginal">اصلی</string>
     <string name="BurnTtlMessage">سوزاندن</string>
     <string name="StreamMkvNax">نمایش MKV به عنوان ویدیو</string>
@@ -369,13 +359,11 @@
     <string name="DisableInAppBrowserGestures">غیرفعال کردن حرکات</string>
     <string name="HowToObtain">چگونه به دست آورم؟</string>
     <string name="BlockChannel">مسدود کردن کانال</string>
-    <string name="UnblockChannel">رفع مسدودیت کانال</string>
     <string name="BlockedChannels">کانال‌های مسدود شده</string>
     <string name="BlockedChannelsCount_one">%1$d کانال مسدود شده</string>
     <string name="BlockedChannelsCount_other">%1$d کانال‌های مسدود شده</string>
     <string name="BlockedChannelsInfo">می‌توانید پیام‌های کانال‌های مسدود شده در گروه‌ها را پنهان کنید. %s</string>
     <string name="ChannelBlocked">کانال مسدود شد.</string>
-    <string name="ChannelUnblocked">کانال رفع انسداد شد.</string>
     <string name="BlockedChannelsEmpty">هنوز هیچ کانال مسدودشده‌ای وجود ندارد</string>
     <string name="UnblockAllChannelsWarn">آیا مطمئن هستید که می‌خواهید **همه کانال‌ها** را از حالت مسدود خارج کنید؟</string>
     <string name="BlockChannelsUnavailable">برخی از کانال‌ها به‌طور موقت در دسترس نیستند.</string>
@@ -466,18 +454,11 @@
     <string name="FontInvalidFile">فایل فونت نامعتبر یا خراب است.</string>
     <string name="InputFieldTextSize">اندازه متن فیلد ورودی</string>
     <string name="InputFieldTextSizeDefault">پیش‌فرض</string>
-    <string name="HideStarRating">پنهان کردن امتیاز ستاره در پروفایل‌ها</string>
     <string name="HideGiftButtons">پنهان کردن دکمه هدیه در پروفایل‌ها</string>
     <string name="EnableQuickSchedule">زمان‌بندی سریع</string>
     <string name="EnableQuickScheduleNotice">با نگه‌داشتن دکمه ارسال، گزینه‌های زمان‌بندی را نمایش می‌دهد.</string>
-    <string name="UseSystemPhotoPicker">سازگاری انتخابگر عکس سیستم</string>
-    <string name="UseSystemPhotoPickerDesc">در اندروید ۱۳ و بالاتر، از انتخابگر عکس سیستم برای پیوست‌های گالری بدون درخواست دسترسی کامل به عکس‌ها و ویدیوها استفاده کنید.</string>
-    <string name="ProviderVolcengineTranslate">ترجمه Volcengine</string>
     <string name="DisableAiEditor">غیرفعال کردن ویرایشگر هوش مصنوعی</string>
-    <string name="DisableGlareEffects">غیرفعال کردن افکت‌های درخشش</string>
-    <string name="ShowRecentForwardTab">نمایش برگه چت‌های اخیر هنگام ارسال مجدد</string>
     <string name="ForceForward">فوروارد اجباری</string>
-    <string name="ForceForwardNotice">کپی خودکار متن و دانلود رسانه‌ها برای ارسال مجدد پیام‌ها از کانال‌های دارای محدودیت فوروارد.</string>
     <string name="ForceForwardPremiumOnly">برای استفاده از فوروارد اجباری، **تلگرام پرمیوم** را فعال کنید.</string>
     <string name="ShowForwardCount">نمایش تعداد فوروارد</string>
 
@@ -520,7 +501,6 @@
     <string name="ActionBarDecoration">تزیین نوار عنوان</string>
     <string name="DependsOnDate">وابسته به تاریخ</string>
     <string name="Christmas">کریسمس</string>
-    <string name="Valentine">روز ولنتاین</string>
     <string name="Snowflakes">دانه‌های برف</string>
     <string name="Fireworks">آتش‌بازی</string>
     <string name="DeleteDownloadedFile">حذف فایل دانلود شده</string>
@@ -569,7 +549,6 @@
     <string name="Categories">دسته‌بندی‌ها</string>
     <string name="OfficialChannel">کانال رسمی ناگرام</string>
     <string name="About">درباره</string>
-    <string name="IgnoreBlockedAbout">دیگر پیام‌های کاربران مسدود شده را در گروه‌ها نخواهید دید.</string>
     <string name="SourceCode">کد منبع</string>
     <string name="ResetStickerSize">بازنشانی اندازه استیکر</string>
     <string name="RestartAppToTakeEffect">برای اعمال تغییرات، برنامه را مجدداً راه‌اندازی کنید.</string>
@@ -652,9 +631,7 @@
     <string name="CloudConfigSyncDate">آخرین همگام‌سازی: %1$s، ابر: %2$s</string>
     <string name="CloudConfigSyncDateNever">هرگز</string>
     <string name="CloudConfigSync">همگام‌سازی با ابر</string>
-    <string name="CloudConfigSyncShort">همگام‌سازی</string>
     <string name="CloudConfigRestore">بازیابی از ابر</string>
-    <string name="CloudConfigRestoreShort">بازیابی</string>
     <string name="CloudConfigSyncing">در حال همگام‌سازی...</string>
     <string name="CloudConfigAutoSync">همگام‌سازی خودکار</string>
     <string name="CloudConfigAutoSyncDesc">همگام‌سازی خودکار تنظیمات پس از هر تغییر در تنظیمات ناگرام.</string>
@@ -685,19 +662,15 @@
     <string name="TransInputToLang">زبان ترجمه قبل از ارسال</string>
     <string name="More">بیشتر</string>
     <string name="ShowIdAndDc">نمایش شناسه (ID) / دیتاسنتر (DC) در پروفایل</string>
-    <string name="UseDefaultTheme">استفاده از پوسته پیش‌فرض *</string>
     <string name="DialogsSettings">تنظیمات گفتگوها</string>
     <string name="NiagramXPushService">سرویس اعلان</string>
     <string name="DisableSystemAccount">غیرفعال کردن حساب سیستمی</string>
-    <string name="FilterMenu">منوی فیلتر گفتگوها</string>
     <string name="DisableProxyWhenVpnEnabled">غیرفعال کردن پروکسی هنگام روشن بودن VPN</string>
     <string name="DisableProxyWhenVpnEnabledDesc">هنگام شناسایی VPN سیستم، پروکسی را به طور خودکار به حالت تعلیق درآورید. توجه: تغییر شبکه (مثلاً Wi-Fi به داده تلفن همراه) یا اتصال مجدد VPN ممکن است باعث فعال شدن مجدد موقت پروکسی شود.</string>
     <string name="SkipOpenLinkConfirm">رد کردن تایید باز کردن لینک</string>
-    <string name="DeleteAllInChatAlert">هشدار! این کار **تمام پیام‌ها** را در این گفتگو برای **همه** شرکت‌کنندگان حذف می‌کند.</string>
     <string name="UnblockAll">رفع انسداد همه</string>
     <string name="UnblockAllWarn">آیا مطمئن هستید که می‌خواهید **همه کاربران و ربات‌ها** را از حالت انسداد خارج کنید؟</string>
     <string name="BlockedListEmpty">شما کسی را مسدود نکرده‌اید :)</string>
-    <string name="AddProxySocks5">افزودن پروکسی SOCKS5</string>
     <string name="AddProxyTelegram">افزودن پروکسی MTProto</string>
     <string name="RetestPing">تست مجدد پینگ برای همه سرورها</string>
     <string name="ExportStickers">خروجی گرفتن از استیکرها</string>
@@ -713,7 +686,6 @@
     <string name="ShareQRCode">QR Code</string>
     <string name="ScanQRCode">اسکن QR Code</string>
     <string name="NoQrFound">هیچ QR Code یافت نشد</string>
-    <string name="DeveloperSettings">تنظیمات توسعه‌دهنده</string>
     <string name="TransSite">کمک به ترجمه</string>
     <string name="ShareMessages">اشتراک‌گذاری</string>
     <string name="DisableVibration">لرزش را غیرفعال کنید</string>
@@ -735,13 +707,8 @@
     <string name="BackupSettings">خروجی گرفتن از تنظیمات</string>
     <string name="ImportSettings">وارد کردن تنظیمات</string>
     <string name="ImportSettingsAlert">تنظیمات بازنویسی شوند؟ وارد کردن تنظیمات از منابع ناشناس ممکن است باعث بازنویسی پین و قفل شدن برنامه شود.</string>
-    <string name="nekoXPaymentRemovedToast">ویژگی‌های پرداخت حذف شده‌اند.</string>
     <string name="unreadBadgeOnBackButton">نشان خوانده نشده روی دکمه بازگشت</string>
-    <string name="DeleteDownloadedFileConfirm">این فایل از حافظه پنهان محلی حذف شود؟</string>
-    <string name="DeleteDownloadedFileSucceed">حذف شد</string>
-    <string name="DeleteDownloadedFileExternal">فایل خارجی نادیده گرفته شد.</string>
     <string name="useCustomEmoji">استفاده از اموجی سفارشی</string>
-    <string name="useCustomEmojiInvalid">بسته اموجی معتبر نیست.</string>
     <string name="repeatConfirm">تایید قبل از ارسال مجدد</string>
     <string name="repeatConfirmText">آیا از ارسال مجدد مطمئن هستید؟</string>
     <string name="rememberAllBackMessages">به خاطر سپردن تمام پاسخ‌های کلیک شده</string>
@@ -752,13 +719,9 @@
     <string name="ConfirmSettings">تاییدها</string>
     <string name="InteractionSettings">تعاملات</string>
     <string name="localPremium">پریمیوم محلی</string>
-    <string name="ReactionSettings">واکنش</string>
-    <string name="UpgradeGroup">ارتقاء گروه</string>
     <string name="AccDescrShowKeyboard">نمایش کیبورد</string>
     <string name="ConvertGroupAlertWarning">هشدار</string>
     <string name="ConvertGroupAlert">این عمل غیرقابل بازگشت است. امکان تبدیل یک سوپرگروه به گروه معمولی وجود ندارد.</string>
-    <string name="SharedPhotosAndVideos">عکس‌ها و ویدیوها</string>
-    <string name="UnofficialApp">برنامه غیررسمی</string>
     <string name="FileUploadLimit">اندازه فایل نباید بیشتر از %1$s باشد</string>
     <string name="NoFilesInfo">این پوشه خالی است.</string>
     <string name="SearchRecentFiles">جستجوی فایل‌های اخیر</string>

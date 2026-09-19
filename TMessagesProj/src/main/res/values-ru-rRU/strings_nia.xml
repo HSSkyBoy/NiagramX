@@ -10,8 +10,6 @@
     <string name="ShowReactions">Показать реакции</string>
     <string name="CustomTitle">Пользовательский заголовок</string>
     <string name="CustomTitleHint">Оставьте поле пустым, чтобы использовать «Niagram»</string>
-    <string name="CreateMono">Создать монопространство</string>
-    <string name="CreateMonoLanguage">Язык кода</string>
     <string name="CopyPhoto">Копировать фото</string>
     <string name="PhotoCopied">Фото скопировано в буфер обмена</string>
     <string name="ToTheBeginning">К началу</string>
@@ -20,7 +18,6 @@
     <string name="HideReadReceiptsLocally">Скрывать отметку о прочтении локально</string>
     <string name="HideReadReceiptsLocallyNotice">Всегда отображать отправленные сообщения с одной галочкой локально, даже если они прочитаны собеседником.</string>
     <string name="ShowRPCError">Показывать ошибки RPC</string>
-    <string name="ShowPremiumStickersAnimation">Показывать анимацию Premium-стикеров</string>
     <string name="AppIconNeko">Neko</string>
     <string name="AppIconNekoDark">Neko Dark</string>
     <string name="AppIconNekoColorful">Neko Colorful</string>
@@ -37,7 +34,6 @@
     <string name="CustomEditedMessage">Подпись для изменённых сообщений</string>
     <string name="NotificationIcon">Иконка уведомления</string>
     <string name="Official">Официальная</string>
-    <string name="HalloWeen">Хэллоуин</string>
     <string name="ShowOnlineStatus">Показывать онлайн-статус</string>
     <string name="ShowOnlineStatusNotice">Отображать онлайн-статус других людей рядом с фотографией их профиля в группах.</string>
     <string name="DoActionsInCommonGroups">Применить в общих группах</string>
@@ -48,7 +44,6 @@
     <string name="CheckAllForum">Добавить форум</string>
     <string name="DecorationNone">Не выбрано</string>
     <string name="ChatDecoration">Оформление чатов</string>
-    <string name="NeedChangeNekoSettings">Вам нужно изменить «Настройки N»</string>
     <string name="DoNotUnarchiveBySwipe">Отключить разархивирование смахиванием</string>
     <string name="DefaultDeleteMenu">Меню удаления по умолчанию</string>
     <string name="DisableStories">Отключить истории</string>
@@ -183,7 +178,6 @@
     <string name="RegexFiltersImportSuccess">Фильтры импортированы.</string>
     <string name="RegexFiltersImportError">Не удалось импортировать фильтры из буфера обмена.</string>
     <string name="RegexFiltersExportError">Не удалось экспортировать фильтры.</string>
-    <string name="RegexFiltersUserHeader">Пользовательские фильтры</string>
     <string name="RegexFiltersUserFilterHint">Введите ID пользователя</string>
     <string name="RegexFiltersGlobalHeader">Общие фильтры</string>
     <string name="RegexFiltersTextSelectionAddtoShared">Добавить в общие фильтры</string>
@@ -233,7 +227,6 @@
     <string name="DontAutoPlayNextVoice">Не воспроизводить следующее голосовое сообщение автоматически</string>
     <string name="SaveToChatSubfolder">Сохранять вложения по названию чатов</string>
     <string name="MessageColoredBackground">Красочные фоны сообщений</string>
-    <string name="ColoredBackgroundNotice">Цвет фона и эмодзи для ответов, цитат и предварительного просмотра ссылок.</string>
     <string name="ChatMenu">Меню чатов</string>
     <string name="MediaViewerMenu">Меню просмотра медиа</string>
     <string name="MenuAndButtons">Меню и кнопки</string>
@@ -244,7 +237,6 @@
     <string name="DoubleTapOutgoing">Исходящие сообщения</string>
     <string name="TgBrowserOpenFail">Встроенный браузер недоступен</string>
     <string name="TgBrowserOpenFail_Desc">Выбранная операция недоступна, поскольку встроенный браузер отключён.</string>
-    <string name="MapPreviewProviderYandexNax">Яндекс</string>
     <string name="GhostMode">Режим «Призрака»</string>
     <string name="GhostEssentialsHeader">Настройки «Призрака»</string>
     <string name="EnableGhostMode">Включить «Призрака»</string>
@@ -282,7 +274,6 @@
     <string name="CloudflareCredentialsDialog">Настройте ID аккаунта Cloudflare и токен API.\n**Как получить?**\n</string>
     <string name="GeminiApiKeyNotSet">Ключ API Gemini не настроен.</string>
     <string name="GeminiApiKeyDialog">Настройте ключ API Gemini. Оставьте поле пустым, чтобы использовать ключ из настроек переводчика.\n**Как получить?**\n</string>
-    <string name="GeminiNotSupport">Gemini не поддерживается на этом устройстве.</string>
     <string name="ReplyInPrivate">Ответить в личном чате</string>
     <string name="TranscribeProviderGeminiPrompt">Промпт (необязательно)</string>
     <string name="uploadBoost">Увеличить скорость скачивания</string>
@@ -315,7 +306,6 @@
     <string name="OpenAiApiCredentialsDialog">Настройте API, совместимый с OpenAI. Вы можете обратиться к этой **документации**.\n</string>
     <string name="OpenAiApiBaseUrlHint">API URL ([…]/chat/completions)</string>
     <string name="OpenAiCredentialsNotSet">Учётные данные API не настроены.</string>
-    <string name="ApiNotSupportedOnAndroidVersion">Этот поставщик API не поддерживается на вашей версии Android (требуется Android 8.0+).</string>
     <string name="AppIconTelegramOriginal">Оригинальная</string>
     <string name="BurnTtlMessage">Сжечь</string>
     <string name="StreamMkvNax">Показывать MKV как видео</string>
@@ -400,13 +390,11 @@
     <string name="DisableInAppBrowserGestures">Отключить жесты</string>
     <string name="HowToObtain">Как получить?</string>
     <string name="BlockChannel">Заблокировать канал</string>
-    <string name="UnblockChannel">Разблокировать канал</string>
     <string name="BlockedChannels">Заблокированные каналы</string>
     <string name="BlockedChannelsCount_one">%1$d заблокированный канал</string>
     <string name="BlockedChannelsCount_other">%1$d заблокированных каналов</string>
     <string name="BlockedChannelsInfo">Вы можете скрыть сообщения из заблокированных каналов в группах. %s</string>
     <string name="ChannelBlocked">Канал заблокирован.</string>
-    <string name="ChannelUnblocked">Канал разблокирован.</string>
     <string name="BlockedChannelsEmpty">Заблокированных каналов пока нет</string>
     <string name="UnblockAllChannelsWarn">Вы уверены, что хотите разблокировать **все каналы**?</string>
     <string name="BlockChannelsUnavailable">Некоторые каналы временно недоступны.</string>
@@ -497,18 +485,11 @@
     <string name="FontInvalidFile">Недопустимый или повреждённый файл шрифта.</string>
     <string name="InputFieldTextSize">Размер текста в поле ввода</string>
     <string name="InputFieldTextSizeDefault">По умолчанию</string>
-    <string name="HideStarRating">Скрыть звёздный рейтинг в профилях</string>
     <string name="HideGiftButtons">Скрыть кнопку подарка в профилях</string>
     <string name="EnableQuickSchedule">Быстрое планирование</string>
     <string name="EnableQuickScheduleNotice">Показывает параметры планирования при долгом нажатии кнопки отправки с учётом состояния беззвучного режима.</string>
-    <string name="UseSystemPhotoPicker">Совместимость с системным выбором фото</string>
-    <string name="UseSystemPhotoPickerDesc">На Android 13 и выше используйте системный выбор фото для вложений из галереи без запроса полного доступа к фото и видео.</string>
-    <string name="ProviderVolcengineTranslate">Перевод Volcengine</string>
     <string name="DisableAiEditor">Отключить редактор ИИ</string>
-    <string name="DisableGlareEffects">Отключить эффекты блика</string>
-    <string name="ShowRecentForwardTab">Показывать вкладку недавних чатов при пересылке</string>
     <string name="ForceForward">Принудительная пересылка</string>
-    <string name="ForceForwardNotice">Автоматически копирует текст и скачивает медиавложения для повторной отправки сообщений из защищённых каналов без ограничений пересылки.</string>
     <string name="ForceForwardPremiumOnly">Оформите подписку **Telegram Premium**, чтобы использовать принудительную пересылку.</string>
     <string name="ShowForwardCount">Показывать количество пересылок</string>
 
@@ -551,7 +532,6 @@
     <string name="ActionBarDecoration">Оформление заголовка</string>
     <string name="DependsOnDate">По календарю</string>
     <string name="Christmas">Рождество</string>
-    <string name="Valentine">День св. Валентина</string>
     <string name="Snowflakes">Снегопад</string>
     <string name="Fireworks">Фейерверки</string>
     <string name="DeleteDownloadedFile">Очистить</string>
@@ -600,7 +580,6 @@
     <string name="Categories">Настройки</string>
     <string name="OfficialChannel">Канал Nagram</string>
     <string name="About">О проекте</string>
-    <string name="IgnoreBlockedAbout">Вы больше не будете видеть сообщения от заблокированных пользователей в группах.</string>
     <string name="SourceCode">Исходный код</string>
     <string name="ResetStickerSize">Размер стикеров по умолчанию</string>
     <string name="RestartAppToTakeEffect">Перезапустите приложение.</string>
@@ -688,9 +667,7 @@
     <string name="CloudConfigSyncDate">Последняя синхронизация: %1$s, облако: %2$s</string>
     <string name="CloudConfigSyncDateNever">никогда</string>
     <string name="CloudConfigSync">Синхронизировать с облаком</string>
-    <string name="CloudConfigSyncShort">Синхронизировать</string>
     <string name="CloudConfigRestore">Восстановить из облака</string>
-    <string name="CloudConfigRestoreShort">Восстановить</string>
     <string name="CloudConfigSyncing">Синхронизация...</string>
     <string name="CloudConfigAutoSync">Автосинхронизация</string>
     <string name="CloudConfigAutoSyncDesc">Автоматическая синхронизация с облаком после изменений в «Настройках N».</string>
@@ -722,19 +699,15 @@
     <string name="TransInputToLang">Переводить с</string>
     <string name="More">Ещё</string>
     <string name="ShowIdAndDc">Показывать ID и DC в профиле</string>
-    <string name="UseDefaultTheme">Использовать тему по умолчанию *</string>
     <string name="DialogsSettings">Настройки чатов</string>
     <string name="NiagramXPushService">Push-сервис</string>
     <string name="DisableSystemAccount">Скрыть аккаунт в системе</string>
-    <string name="FilterMenu">Меню фильтра диалогов</string>
     <string name="DisableProxyWhenVpnEnabled">Отключить прокси при включении VPN</string>
     <string name="DisableProxyWhenVpnEnabledDesc">Автоматически приостанавливать прокси при обнаружении системного VPN. Примечание: переключение сетей (например, с Wi-Fi на мобильный интернет) или переподключение VPN может привести к кратковременному возобновлению работы прокси.</string>
     <string name="SkipOpenLinkConfirm">Открывать ссылки без подтверждения</string>
-    <string name="DeleteAllInChatAlert">Внимание! Это **удалит все сообщения** в этом чате для **всех**.</string>
     <string name="UnblockAll">Разблокировать всех</string>
     <string name="UnblockAllWarn">Вы уверены, что хотите разблокировать **всех пользователей и ботов**?</string>
     <string name="BlockedListEmpty">Вы никого не заблокировали :)</string>
-    <string name="AddProxySocks5">Добавить прокси SOCKS5</string>
     <string name="AddProxyTelegram">MTProto-прокси</string>
     <string name="RetestPing">Пересчитать пинг всех серверов</string>
     <string name="ExportStickers">Экспорт стикеров</string>
@@ -750,7 +723,6 @@
     <string name="ShareQRCode">QR-код</string>
     <string name="ScanQRCode">Сканировать QR-код</string>
     <string name="NoQrFound">QR-код не обнаружен</string>
-    <string name="DeveloperSettings">Настройки разработчика</string>
     <string name="TransSite">Платформа переводов</string>
     <string name="ShareMessages">Поделиться</string>
     <string name="DisableVibration">Отключить вибрацию</string>
@@ -772,13 +744,8 @@
     <string name="BackupSettings">Экспорт настроек</string>
     <string name="ImportSettings">Импорт настроек</string>
     <string name="ImportSettingsAlert">Перезаписать настройки? Импорт настроек из ненадежных источников может привести к блокировке приложения.</string>
-    <string name="nekoXPaymentRemovedToast">Функции оплаты были удалены.</string>
     <string name="unreadBadgeOnBackButton">Количество непрочитанных на кнопке «Назад»</string>
-    <string name="DeleteDownloadedFileConfirm">Удалить загруженный файл?</string>
-    <string name="DeleteDownloadedFileSucceed">Удалено</string>
-    <string name="DeleteDownloadedFileExternal">Внешний файл пропущен.</string>
     <string name="useCustomEmoji">Свой набор эмодзи</string>
-    <string name="useCustomEmojiInvalid">Недопустимый набор эмодзи.</string>
     <string name="repeatConfirm">Спрашивать перед повтором</string>
     <string name="repeatConfirmText">Вы хотите повторить сообщение?</string>
     <string name="rememberAllBackMessages">Запомнить все нажатые ответы</string>
@@ -789,13 +756,9 @@
     <string name="ConfirmSettings">Подтверждения</string>
     <string name="InteractionSettings">Взаимодействие</string>
     <string name="localPremium">Локальный Premium</string>
-    <string name="ReactionSettings">Реакции</string>
-    <string name="UpgradeGroup">Обновить группу</string>
     <string name="AccDescrShowKeyboard">Показать клавиатуру</string>
     <string name="ConvertGroupAlertWarning">Внимание</string>
     <string name="ConvertGroupAlert">Это действие нельзя будет отменить. Супергруппу невозможно сделать обычной группой.</string>
-    <string name="SharedPhotosAndVideos">Фото и видео</string>
-    <string name="UnofficialApp">неофициальное приложение</string>
     <string name="FileUploadLimit">Размер файла не должен превышать %1$s</string>
     <string name="NoFilesInfo">Эта папка пуста.</string>
     <string name="SearchRecentFiles">Поиск недавних файлов</string>
@@ -828,7 +791,6 @@
     <string name="SpyMode">Режим шпиона</string>
 
     <!-- Anti-delete chat types -->
-    <string name="SaveDeletedChatTypesHeader">Типы чатов</string>
     <string name="SaveDeletedMessagesInPrivate">Личные чаты</string>
     <string name="SaveDeletedMessagesInGroups">Группы</string>
     <string name="SaveDeletedMessagesInChannels">Каналы</string>

@@ -10,8 +10,6 @@
     <string name="ShowReactions">リアクションメニューを表示</string>
     <string name="CustomTitle">カスタムタイトル</string>
     <string name="CustomTitleHint">空白のままにすると、Niagram が使用されます</string>
-    <string name="CreateMono">等幅フォントを作成</string>
-    <string name="CreateMonoLanguage">等幅フォントの言語</string>
     <string name="CopyPhoto">画像をコピー</string>
     <string name="PhotoCopied">画像がクリップボードにコピーされました</string>
     <string name="ToTheBeginning">先頭に戻る</string>
@@ -20,7 +18,6 @@
     <string name="HideReadReceiptsLocally">既読マークをローカルで非表示</string>
     <string name="HideReadReceiptsLocallyNotice">相手がメッセージを既読にしても、ローカル上では常に未読（チェック1つ）で表示します。</string>
     <string name="ShowRPCError">RPC エラーを表示</string>
-    <string name="ShowPremiumStickersAnimation">プレミアムステッカーアニメーションを表示</string>
     <string name="AppIconNeko">Neko</string>
     <string name="AppIconNekoDark">Neko Dark</string>
     <string name="AppIconNekoColorful">Neko Colorful</string>
@@ -37,7 +34,6 @@
     <string name="CustomEditedMessage">編集ありメッセージのマーク</string>
     <string name="NotificationIcon">通知アイコンスタイル</string>
     <string name="Official">公式</string>
-    <string name="HalloWeen">ハロウィン</string>
     <string name="ShowOnlineStatus">ユーザーのオンラインステータスを表示</string>
     <string name="ShowOnlineStatusNotice">グループチャットで、ユーザーのアバターの右下にオンラインステータスを表示します。</string>
     <string name="DoActionsInCommonGroups">共通のグループに適用</string>
@@ -48,7 +44,6 @@
     <string name="CheckAllForum">すべてのトピックモードグループを追加</string>
     <string name="DecorationNone">なし</string>
     <string name="ChatDecoration">チャットデコレーション</string>
-    <string name="NeedChangeNekoSettings">この設定はNeo 設定によって上書きされているため、変更できません</string>
     <string name="DoNotUnarchiveBySwipe">スワイプによるアーカイブ解除を無効化</string>
     <string name="DefaultDeleteMenu">デフォルトの削除メニュー</string>
     <string name="DisableStories">ストーリー機能を無効化</string>
@@ -182,7 +177,6 @@
     <string name="RegexFiltersImportSuccess">フィルターがインポートされました。</string>
     <string name="RegexFiltersImportError">クリップボードからフィルターのインポートに失敗しました。</string>
     <string name="RegexFiltersExportError">フィルターのエクスポートに失敗しました。</string>
-    <string name="RegexFiltersUserHeader">ユーザーフィルター</string>
     <string name="RegexFiltersUserFilterHint">ユーザー ID を入力</string>
     <string name="RegexFiltersGlobalHeader">グローバルフィルター</string>
     <string name="RegexFiltersTextSelectionAddtoShared">共通フィルターに追加</string>
@@ -232,7 +226,6 @@
     <string name="DontAutoPlayNextVoice">次のボイスメッセージを自動再生しない</string>
     <string name="SaveToChatSubfolder">チャット別にファイルを保存</string>
     <string name="MessageColoredBackground">カラフルなメッセージ</string>
-    <string name="ColoredBackgroundNotice">返信、引用、リンクプレビューなどのカラーと絵文字。</string>
     <string name="ChatMenu">チャットメニュー</string>
     <string name="MediaViewerMenu">メディアビューアーメニュー</string>
     <string name="MenuAndButtons">メニューとボタン</string>
@@ -243,7 +236,6 @@
     <string name="DoubleTapOutgoing">送信メッセージ</string>
     <string name="TgBrowserOpenFail">内蔵ブラウザは利用できません</string>
     <string name="TgBrowserOpenFail_Desc">内蔵ブラウザが無効化されているため、選択した操作は利用できません。</string>
-    <string name="MapPreviewProviderYandexNax">Yandex</string>
     <string name="GhostMode">ゴーストモード</string>
     <string name="GhostEssentialsHeader">ゴースト設定</string>
     <string name="EnableGhostMode">ゴースト ON</string>
@@ -281,7 +273,6 @@
     <string name="CloudflareCredentialsDialog">Cloudflare アカウント ID と API トークンを設定します。\n**取得方法は？**\n</string>
     <string name="GeminiApiKeyNotSet">Gemini API キーが設定されていません。</string>
     <string name="GeminiApiKeyDialog">Gemini API キーを設定します。空白のままにすると、AI 翻訳の設定を使用します。\n**取得方法は？**\n</string>
-    <string name="GeminiNotSupport">このデバイスでは Gemini はサポートされていません。</string>
     <string name="ReplyInPrivate">DM で返信</string>
     <string name="TranscribeProviderGeminiPrompt">プロンプト（任意）</string>
     <string name="uploadBoost">アップロード速度の高速化</string>
@@ -314,7 +305,6 @@
     <string name="OpenAiApiCredentialsDialog">OpenAI と互換性のある API を設定します。この**ドキュメント**を参照できます。\n</string>
     <string name="OpenAiApiBaseUrlHint">API URL ([…]/chat/completions)</string>
     <string name="OpenAiCredentialsNotSet">API 認証情報が設定されていません。</string>
-    <string name="ApiNotSupportedOnAndroidVersion">この API プロバイダは、お使いの Android バージョンではサポートされていません（Android 8.0以上が必要です）。</string>
     <string name="AppIconTelegramOriginal">オリジナル</string>
     <string name="BurnTtlMessage">消去</string>
     <string name="StreamMkvNax">MKV をビデオとして表示</string>
@@ -377,13 +367,11 @@
     <string name="DisableInAppBrowserGestures">ジェスチャーを無効化</string>
     <string name="HowToObtain">取得方法は？</string>
     <string name="BlockChannel">ブロック</string>
-    <string name="UnblockChannel">ブロックを解除</string>
     <string name="BlockedChannels">ブロックしたチャンネル</string>
     <string name="BlockedChannelsCount_one">ブロック数 %1$d</string>
     <string name="BlockedChannelsCount_other">ブロック数 %1$d</string>
     <string name="BlockedChannelsInfo">グループ内でブロックしたチャンネルからのメッセージを非表示にできます。 %s</string>
     <string name="ChannelBlocked">ブロックしました。</string>
-    <string name="ChannelUnblocked">ブロックを解除しました。</string>
     <string name="BlockedChannelsEmpty">ブロック中のチャンネルはありません</string>
     <string name="UnblockAllChannelsWarn">**すべてのチャンネル**のブロックを解除してもよろしいですか？</string>
     <string name="BlockChannelsUnavailable">一部のチャンネルは一時的に表示できません。</string>
@@ -474,18 +462,11 @@
     <string name="FontInvalidFile">無効または破損したフォントファイルです。</string>
     <string name="InputFieldTextSize">入力フィールドのテキストサイズ</string>
     <string name="InputFieldTextSizeDefault">デフォルト</string>
-    <string name="HideStarRating">プロフィールの星評価を非表示</string>
     <string name="HideGiftButtons">プロフィールのギフトボタンを非表示</string>
     <string name="EnableQuickSchedule">クイックスケジュール</string>
     <string name="EnableQuickScheduleNotice">送信ボタンを長押しすると、ミュート状態に応じた送信タイミングの選択肢を表示します。</string>
-    <string name="UseSystemPhotoPicker">システム写真ピッカーの互換性</string>
-    <string name="UseSystemPhotoPickerDesc">Android 13以降では、完全な写真・動画アクセス権限を要求せずに、システム写真ピッカーを使用してギャラリーから添付ファイルを選択できます。</string>
-    <string name="ProviderVolcengineTranslate">Volcengine翻訳</string>
     <string name="DisableAiEditor">AIエディターを無効にする</string>
-    <string name="DisableGlareEffects">グレアエフェクトを無効にする</string>
-    <string name="ShowRecentForwardTab">転送時に最近のチャットタブを表示</string>
     <string name="ForceForward">強制転送</string>
-    <string name="ForceForwardNotice">テキストを自動的にコピーしメディア添付ファイルをダウンロードして、転送制限のあるチャンネルからでもメッセージを再送信します。</string>
     <string name="ForceForwardPremiumOnly">**Telegram Premium** に加入して強制転送を使用します。</string>
     <string name="ShowForwardCount">転送回数を表示</string>
 
@@ -528,7 +509,6 @@
     <string name="ActionBarDecoration">タイトルデコレーション</string>
     <string name="DependsOnDate">日付に基づく</string>
     <string name="Christmas">クリスマス</string>
-    <string name="Valentine">バレンタインデー</string>
     <string name="Snowflakes">雪</string>
     <string name="Fireworks">花火</string>
     <string name="DeleteDownloadedFile">クリア</string>
@@ -577,7 +557,6 @@
     <string name="Categories">カテゴリ</string>
     <string name="OfficialChannel">Nagram チャンネル</string>
     <string name="About">アプリについて</string>
-    <string name="IgnoreBlockedAbout">当ユーザーからのグループメッセージは表示されなくなります。</string>
     <string name="SourceCode">ソースコード</string>
     <string name="ResetStickerSize">ステッカーサイズをリセット</string>
     <string name="RestartAppToTakeEffect">変更適用にはアプリを再起動。</string>
@@ -665,9 +644,7 @@
     <string name="CloudConfigSyncDate">最終同期：%1$s、クラウド：%2$s</string>
     <string name="CloudConfigSyncDateNever">なし</string>
     <string name="CloudConfigSync">クラウドに同期</string>
-    <string name="CloudConfigSyncShort">同期</string>
     <string name="CloudConfigRestore">クラウドから復元</string>
-    <string name="CloudConfigRestoreShort">復元</string>
     <string name="CloudConfigSyncing">同期中...</string>
     <string name="CloudConfigAutoSync">自動同期</string>
     <string name="CloudConfigAutoSyncDesc">Neo 設定を変更した後、自動的にクラウドに同期します。</string>
@@ -698,19 +675,15 @@
     <string name="TransInputToLang">入力翻訳先言語</string>
     <string name="More">もっと見る</string>
     <string name="ShowIdAndDc">プロファイルに ID / DC を表示</string>
-    <string name="UseDefaultTheme">デフォルトテーマを使用 *</string>
     <string name="DialogsSettings">ダイアログ</string>
     <string name="NiagramXPushService">プッシュ通知サービス</string>
     <string name="DisableSystemAccount">システムアカウントを無効化</string>
-    <string name="FilterMenu">ダイアログフィルターメニュー</string>
     <string name="DisableProxyWhenVpnEnabled">VPN が有効な場合プロキシを無効化</string>
     <string name="DisableProxyWhenVpnEnabledDesc">システム VPN を検出したときにプロキシを自動的に一時停止します。注意: ネットワークの切り替え（Wi-Fi からモバイル通信など）や VPN の再接続時に、一時的にプロキシが復帰することがあります。</string>
     <string name="SkipOpenLinkConfirm">リンクを開くときの確認をスキップする</string>
-    <string name="DeleteAllInChatAlert">警告！このチャットの全てのメッセージは**削除**されます。</string>
     <string name="UnblockAll">すべてのブロックを解除</string>
     <string name="UnblockAllWarn">**すべてのユーザーとボット**のブロックを解除してもよろしいですか？</string>
     <string name="BlockedListEmpty">あなたは誰もブロックしていません :)</string>
-    <string name="AddProxySocks5">SOCKS5 プロキシを追加</string>
     <string name="AddProxyTelegram">MTProto プロキシを追加</string>
     <string name="RetestPing">すべてのサーバーの ping を再テストする</string>
     <string name="ExportStickers">ステッカーをエクスポート</string>
@@ -726,7 +699,6 @@
     <string name="ShareQRCode">QR コード</string>
     <string name="ScanQRCode">QR コードをスキャン</string>
     <string name="NoQrFound">QR コードが見つかりません</string>
-    <string name="DeveloperSettings">開発者設定</string>
     <string name="TransSite">翻訳者になろう</string>
     <string name="ShareMessages">共有</string>
     <string name="DisableVibration">バイブレーションを無効化</string>
@@ -748,13 +720,8 @@
     <string name="BackupSettings">設定をバックアップ</string>
     <string name="ImportSettings">設定をインポート</string>
     <string name="ImportSettingsAlert">設定を上書きしますか？ 不明なソースから設定をインポートすると、PINが上書きされ、アプリがロックされる可能性があります。</string>
-    <string name="nekoXPaymentRemovedToast">決済機能は廃止されました。</string>
     <string name="unreadBadgeOnBackButton">チャットの戻るボタンに未読数を表示</string>
-    <string name="DeleteDownloadedFileConfirm">ローカルキャッシュからこのファイルを削除しますか？</string>
-    <string name="DeleteDownloadedFileSucceed">削除済み</string>
-    <string name="DeleteDownloadedFileExternal">外部ファイルはスキップされました。</string>
     <string name="useCustomEmoji">カスタム絵文字を使用</string>
-    <string name="useCustomEmojiInvalid">有効な絵文字パックではありません</string>
     <string name="repeatConfirm">リポストに確認</string>
     <string name="repeatConfirmText">本当にリポストしますか？</string>
     <string name="rememberAllBackMessages">全てのクリックされた返信を記憶</string>
@@ -765,13 +732,9 @@
     <string name="ConfirmSettings">確認</string>
     <string name="InteractionSettings">インタラクション</string>
     <string name="localPremium">ローカルプレミアム</string>
-    <string name="ReactionSettings">リアクション</string>
-    <string name="UpgradeGroup">グループをアップグレード</string>
     <string name="AccDescrShowKeyboard">キーボードを表示</string>
     <string name="ConvertGroupAlertWarning">注意</string>
     <string name="ConvertGroupAlert">スーパーグループにするとグループには戻せません。</string>
-    <string name="SharedPhotosAndVideos">写真と動画</string>
-    <string name="UnofficialApp">非公式アプリ</string>
     <string name="FileUploadLimit">ファイルサイズの上限は %1$s です</string>
     <string name="NoFilesInfo">このフォルダは空です。</string>
     <string name="SearchRecentFiles">最近のファイルを検索</string>
@@ -804,7 +767,6 @@
     <string name="SpyMode">スパイモード</string>
 
     <!-- Anti-delete chat types -->
-    <string name="SaveDeletedChatTypesHeader">チャットの種類</string>
     <string name="SaveDeletedMessagesInPrivate">ダイレクトメッセージ</string>
     <string name="SaveDeletedMessagesInGroups">グループ</string>
     <string name="SaveDeletedMessagesInChannels">チャンネル</string>
