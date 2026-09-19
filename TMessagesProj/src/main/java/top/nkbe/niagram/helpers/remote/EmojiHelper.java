@@ -350,6 +350,9 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
         }
         Typeface typeface;
         if (!typefaceCache.containsKey(pack.packId)) {
+            if (pack.fileLocation == null) {
+                return null;
+            }
             File emojiFile = new File(pack.fileLocation);
             if (!emojiFile.exists()) {
                 return null;
@@ -421,7 +424,12 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
                             int version = obj.optInt("version", 1);
                             String url = obj.getString("url");
                             String preview = obj.optString("preview", "");
-                            packs.add(new EmojiPackInfo(name, id, version, url, preview));
+                            long size = obj.optLong("size", 0);
+                            EmojiPackInfo info = new EmojiPackInfo(name, id, version, url, preview);
+                            if (size > 0 && info.getFileSize() == 0) {
+                                info.fileSize = size;
+                            }
+                            packs.add(info);
                         }
 
                         preferences.edit().putString("emoji_packs_json", body).apply();
@@ -463,7 +471,12 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
                     int version = obj.optInt("version", 1);
                     String url = obj.getString("url");
                     String preview = obj.optString("preview", "");
-                    emojiPacksInfo.add(new EmojiPackInfo(name, id, version, url, preview));
+                    long size = obj.optLong("size", 0);
+                    EmojiPackInfo info = new EmojiPackInfo(name, id, version, url, preview);
+                    if (size > 0 && info.getFileSize() == 0) {
+                        info.fileSize = size;
+                    }
+                    emojiPacksInfo.add(info);
                 }
                 return;
             } catch (Exception e) {
@@ -496,7 +509,7 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
                 .filter(Objects::nonNull)
                 .filter(e -> e instanceof EmojiPackInfo)
                 .map(e -> (EmojiPackInfo) e)
-                .filter(e -> e.getFileDocument() != null && e.getPreviewDocument() != null)
+                .filter(e -> !TextUtils.isEmpty(e.getDownloadUrl()) || (e.getFileDocument() != null && e.getPreviewDocument() != null) || isPackInstalled(e))
                 .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -585,7 +598,7 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
 
     public void installDownloadedEmoji(EmojiPackInfo pack, boolean update) {
         var emojiDir = EmojiHelper.getEmojiDir(pack.packId, pack.packVersion);
-        emojiDir.mkdir();
+        emojiDir.mkdirs();
         File old = new File(pack.fileLocation);
         File newFile = new File(emojiDir, EMOJI_FONT_NAME);
         if (old.isFile() && old.exists() && old.canRead()) {
@@ -619,10 +632,10 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
                 } else {
                     EmojiHelper.getInstance().setEmojiPack(pack.getPackId());
                 }
-                reloadEmoji();
+                AndroidUtilities.runOnUIThread(EmojiHelper::reloadEmoji);
             }
         }
-        callProgressChanged(pack, true, 1.0f, pack.fileSize);
+        AndroidUtilities.runOnUIThread(() -> callProgressChanged(pack, true, 1.0f, pack.fileSize));
     }
 
     public EmojiPackBase installEmoji(File emojiFile) throws Exception {
@@ -997,7 +1010,9 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
                     }
 
                     long totalBytes = response.body().contentLength();
-                    if (totalBytes <= 0) {
+                    if (totalBytes > 0) {
+                        pack.fileSize = totalBytes;
+                    } else {
                         totalBytes = pack.getFileSize();
                     }
 
@@ -1027,11 +1042,9 @@ public class EmojiHelper extends BaseRemoteHelper implements NotificationCenter.
 
                     pack.fileLocation = tempFile.getAbsolutePath();
                     pack.fileSize = tempFile.length();
-                    AndroidUtilities.runOnUIThread(() -> {
-                        downloadingPacks.remove(pack.getPackId());
-                        installDownloadedEmoji(pack, update);
-                        tempFile.delete();
-                    });
+                    downloadingPacks.remove(pack.getPackId());
+                    installDownloadedEmoji(pack, update);
+                    tempFile.delete();
                     return;
                 }
             } catch (Exception e) {

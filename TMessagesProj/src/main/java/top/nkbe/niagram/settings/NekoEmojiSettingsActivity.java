@@ -281,7 +281,7 @@ public class NekoEmojiSettingsActivity extends BaseNekoSettingsActivity implemen
         }
 
         if (!finished) {
-            if (progress == 100f) {
+            if (progress >= 1.0f || progress == 100f) {
                 cell.checkDownloaded(true);
             } else {
                 cell.setProgress(progress, bytesLoaded, true);

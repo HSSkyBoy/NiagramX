@@ -146,9 +146,17 @@ public class EmojiSetCell extends FrameLayout {
             } else {
                 String status;
                 if (EmojiHelper.getInstance().isInstalledOldVersion(pack.getPackId(), version)) {
-                    status = LocaleController.formatString(R.string.UpdateEmojiSet, AndroidUtilities.formatFileSize(pack.getFileSize()));
+                    if (pack.getFileSize() > 0) {
+                        status = LocaleController.formatString(R.string.UpdateEmojiSet, AndroidUtilities.formatFileSize(pack.getFileSize()));
+                    } else {
+                        status = getString(R.string.UpdateEmojiSet).replace(" %s", "").replace("%s", "");
+                    }
                 } else {
-                    status = LocaleController.formatString(R.string.DownloadEmojiSet, AndroidUtilities.formatFileSize(pack.getFileSize()));
+                    if (pack.getFileSize() > 0) {
+                        status = LocaleController.formatString(R.string.DownloadEmojiSet, AndroidUtilities.formatFileSize(pack.getFileSize()));
+                    } else {
+                        status = getString(R.string.DownloadEmojiSet).replace(" %s", "").replace("%s", "");
+                    }
                 }
                 valueTextView.setText(status, animated);
             }
@@ -273,11 +281,15 @@ public class EmojiSetCell extends FrameLayout {
 
     public void setProgress(float percentage, long downBytes, boolean animated) {
         radialProgress.setProgress(percentage);
-        valueTextView.setText(LocaleController.formatString(
-                R.string.AccDescrDownloadProgress,
-                AndroidUtilities.formatFileSize(downBytes),
-                AndroidUtilities.formatFileSize(pack.getFileSize())
-        ), animated);
+        if (pack != null && pack.getFileSize() > 0) {
+            valueTextView.setText(LocaleController.formatString(
+                    R.string.AccDescrDownloadProgress,
+                    AndroidUtilities.formatFileSize(downBytes),
+                    AndroidUtilities.formatFileSize(pack.getFileSize())
+            ), animated);
+        } else {
+            valueTextView.setText(AndroidUtilities.formatFileSize(downBytes), animated);
+        }
     }
 
     public void checkDownloaded(boolean animated) {
@@ -298,9 +310,17 @@ public class EmojiSetCell extends FrameLayout {
                 setChecked(false, animated);
                 String status;
                 if (EmojiHelper.getInstance().isInstalledOldVersion(packInfo.getPackId(), packInfo.getPackVersion())) {
-                    status = LocaleController.formatString(R.string.UpdateEmojiSet, AndroidUtilities.formatFileSize(packInfo.getFileSize()));
+                    if (packInfo.getFileSize() > 0) {
+                        status = LocaleController.formatString(R.string.UpdateEmojiSet, AndroidUtilities.formatFileSize(packInfo.getFileSize()));
+                    } else {
+                        status = getString(R.string.UpdateEmojiSet).replace(" %s", "").replace("%s", "");
+                    }
                 } else {
-                    status = LocaleController.formatString(R.string.DownloadEmojiSet, AndroidUtilities.formatFileSize(packInfo.getFileSize()));
+                    if (packInfo.getFileSize() > 0) {
+                        status = LocaleController.formatString(R.string.DownloadEmojiSet, AndroidUtilities.formatFileSize(packInfo.getFileSize()));
+                    } else {
+                        status = getString(R.string.DownloadEmojiSet).replace(" %s", "").replace("%s", "");
+                    }
                 }
                 valueTextView.setText(status, animated);
             }
