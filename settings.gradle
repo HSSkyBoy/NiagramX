@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild('TMessagesProj_Modules/media/build-logic-settings')
     repositories {
         google {
             content {
@@ -13,6 +14,7 @@ pluginManagement {
 }
 plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+    id 'gradlebuild.media3-settings-logic'
 }
 
 dependencyResolutionManagement {
@@ -28,6 +30,9 @@ include ':TMessagesProj'
 include ':libs:tcp2ws'
 include ':jlatexmath'
 project(':jlatexmath').projectDir = file('TMessagesProj/lib/jlatexmath/jlatexmath')
-
-gradle.ext.androidxMediaModulePrefix = 'TMessagesProj_Modules:media3:media-'
-apply from: file("TMessagesProj_Modules/media/core_settings.gradle")
+def rootLocalProps = file('local.properties')
+def mediaLocalProps = file('TMessagesProj_Modules/media/local.properties')
+if (rootLocalProps.exists() && !mediaLocalProps.exists()) {
+    mediaLocalProps.text = rootLocalProps.text
+}
+includeMedia3.execute(file('TMessagesProj_Modules/media'))

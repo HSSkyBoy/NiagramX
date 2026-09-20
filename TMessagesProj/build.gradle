@@ -275,11 +275,11 @@ dependencies {
     implementation 'org.nanohttpd:nanohttpd:2.3.1'
     compileOnly 'org.checkerframework:checker-qual:2.5.2'
     compileOnly 'org.checkerframework:checker-compat-qual:2.5.0'
-    api project(":TMessagesProj_Modules:media3:media-lib-exoplayer")
-    api project(":TMessagesProj_Modules:media3:media-lib-exoplayer-dash")
-    api project(":TMessagesProj_Modules:media3:media-lib-exoplayer-hls")
-    api project(":TMessagesProj_Modules:media3:media-lib-decoder-ffmpeg")
-    api project(":TMessagesProj_Modules:media3:media-lib-session")
+    api "androidx.media3:media3-exoplayer:1.11.1"
+    api "androidx.media3:media3-exoplayer-dash:1.11.1"
+    api "androidx.media3:media3-exoplayer-hls:1.11.1"
+    api "androidx.media3:media3-decoder-ffmpeg:1.11.1"
+    api "androidx.media3:media3-session:1.11.1"
     implementation 'com.google.firebase:firebase-messaging:25.1.2'
     implementation 'com.google.firebase:firebase-crashlytics:20.1.0'
     implementation 'com.google.firebase:firebase-analytics:22.2.0'

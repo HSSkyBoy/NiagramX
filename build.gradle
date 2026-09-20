@@ -53,11 +53,9 @@ subprojects {
                     def manifestFile = file("${project.projectDir}/src/main/AndroidManifest.xml")
 
                     if (manifestFile.exists()) {
-                        def manifest = new XmlSlurper().parse(manifestFile)
-                        def manifestPackage = manifest.@package.text()
-
-                        if (manifestPackage) {
-                            namespace manifestPackage
+                        def matcher = (manifestFile.text =~ /package\s*=\s*"([^"]+)"/)
+                        if (matcher.find()) {
+                            namespace matcher.group(1)
                         }
                     }
                 }

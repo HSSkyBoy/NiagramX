@@ -36,4 +36,5 @@
 	url = https://github.com/tdlib/td.git
 [submodule "TMessagesProj_Modules/media"]
 	path = TMessagesProj_Modules/media
-	url = https://github.com/Arseny271/media.git
+	url = https://github.com/Nekogram/media.git
+	branch = telegram-1.11.1
