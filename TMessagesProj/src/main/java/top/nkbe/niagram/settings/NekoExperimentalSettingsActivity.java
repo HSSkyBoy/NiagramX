@@ -43,6 +43,7 @@ import kotlin.Unit;
 import top.nkbe.niagram.config.CellGroup;
 import top.nkbe.niagram.config.cell.AbstractConfigCell;
 import top.nkbe.niagram.config.cell.ConfigCellCustom;
+import top.nkbe.niagram.utils.ProxyUtil;
 import top.nkbe.niagram.config.cell.ConfigCellDivider;
 import top.nkbe.niagram.config.cell.ConfigCellHeader;
 import top.nkbe.niagram.config.cell.ConfigCellSelectBox;
@@ -203,6 +204,8 @@ public class NekoExperimentalSettingsActivity extends BaseNekoXSettingsActivity 
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
             } else if (key.equals(NyaConfig.forceFontWeightFallback.getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
+            } else if (key.equals(NyaConfig.INSTANCE.getDisableProxyWhenVpnEnabled().getKey())) {
+                ProxyUtil.checkVpnState();
             } else if (key.equals(NyaConfig.INSTANCE.getHideStoriesFromHeader().getKey())) {
                 tooltip.showWithAction(0, UndoView.ACTION_NEED_RESTART, null, null);
             } else if (key.equals(NyaConfig.enhancedFileLoader.getKey())) {

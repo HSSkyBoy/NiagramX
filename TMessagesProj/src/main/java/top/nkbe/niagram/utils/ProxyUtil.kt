@@ -15,6 +15,7 @@ import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import android.os.Environment
 import android.util.Base64
 import android.view.Gravity
@@ -52,7 +53,66 @@ import java.io.File
 object ProxyUtil {
 
     private var networkCallbackRegistered = false
-    private var proxyDisabledByVpn = false
+    @Volatile
+    private var isInternalProxyChange = false
+
+    @JvmStatic
+    @Suppress("DEPRECATION")
+    fun isVpnActive(): Boolean {
+        val connectivityManager = ApplicationLoader.applicationContext
+            .getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager ?: return false
+        val activeNetwork = connectivityManager.activeNetwork
+        if (activeNetwork != null) {
+            val capabilities = connectivityManager.getNetworkCapabilities(activeNetwork)
+            if (capabilities != null && capabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN)) {
+                return true
+            }
+        }
+        for (network in connectivityManager.allNetworks) {
+            val capabilities = connectivityManager.getNetworkCapabilities(network) ?: continue
+            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN)) {
+                return true
+            }
+        }
+        return false
+    }
+
+    @JvmStatic
+    @Synchronized
+    fun checkVpnState() {
+        if (!NyaConfig.disableProxyWhenVpnEnabled.Bool()) {
+            if (NyaConfig.proxyDisabledByVpn.Bool()) {
+                NyaConfig.proxyDisabledByVpn.setConfigBool(false)
+            }
+            return
+        }
+
+        val vpn = isVpnActive()
+        FileLog.d("ProxyUtil.checkVpnState: vpn=$vpn, proxyEnabled=${SharedConfig.isProxyEnabled()}, proxyDisabledByVpn=${NyaConfig.proxyDisabledByVpn.Bool()}")
+
+        if (vpn) {
+            if (SharedConfig.isProxyEnabled()) {
+                NyaConfig.proxyDisabledByVpn.setConfigBool(true)
+                WebSocketHelper.stopServer()
+                isInternalProxyChange = true
+                SharedConfig.setProxyEnable(false)
+            }
+        } else {
+            if (NyaConfig.proxyDisabledByVpn.Bool()) {
+                NyaConfig.proxyDisabledByVpn.setConfigBool(false)
+                if (!SharedConfig.isProxyEnabled() && SharedConfig.currentProxy != null) {
+                    isInternalProxyChange = true
+                    SharedConfig.setProxyEnable(true)
+                }
+            }
+        }
+
+        if (SharedConfig.isProxyEnabled() && SharedConfig.proxyAutoSpeedAcceleration) {
+            AndroidUtilities.runOnUIThread {
+                org.telegram.messenger.ProxyRotationController.checkAndAccelerate(false)
+            }
+        }
+    }
 
     @JvmStatic
     fun registerNetworkCallback() {
@@ -61,56 +121,65 @@ object ProxyUtil {
 
         NotificationCenter.getGlobalInstance().addObserver({ id, _, _ ->
             if (id == NotificationCenter.proxySettingsChanged) {
-                if (!SharedConfig.isProxyEnabled()) {
-                    proxyDisabledByVpn = false
+                if (isInternalProxyChange) {
+                    isInternalProxyChange = false
+                } else {
+                    if (NyaConfig.proxyDisabledByVpn.Bool()) {
+                        NyaConfig.proxyDisabledByVpn.setConfigBool(false)
+                    }
                 }
             }
         }, NotificationCenter.proxySettingsChanged)
 
-        val connectivityManager = ApplicationLoader.applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkCallback: ConnectivityManager.NetworkCallback =
-            object : ConnectivityManager.NetworkCallback() {
-                override fun onAvailable(network: Network) {
-                    val networkCapabilities =
-                        connectivityManager.getNetworkCapabilities(network) ?: return
-                    val vpn = networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_VPN)
+        val connectivityManager = ApplicationLoader.applicationContext
+            .getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager ?: return
 
-                    if (vpn) {
-                        if (NyaConfig.disableProxyWhenVpnEnabled.Bool()) {
-                            WebSocketHelper.stopServer()
-                            if (SharedConfig.isProxyEnabled()) {
-                                proxyDisabledByVpn = true
-                                SharedConfig.setProxyEnable(false)
-                                AndroidUtilities.runOnUIThread {
-                                    NotificationCenter.getGlobalInstance()
-                                        .postNotificationName(NotificationCenter.proxySettingsChanged)
-                                }
-                            }
-                        }
-                    } else {
-                        if (NyaConfig.disableProxyWhenVpnEnabled.Bool() && proxyDisabledByVpn && !SharedConfig.isProxyEnabled()) {
-                            proxyDisabledByVpn = false
-                            if (SharedConfig.currentProxy != null) {
-                                SharedConfig.setProxyEnable(true)
-                                AndroidUtilities.runOnUIThread {
-                                    NotificationCenter.getGlobalInstance()
-                                        .postNotificationName(NotificationCenter.proxySettingsChanged)
-                                }
-                            }
-                        }
-                    }
-
-                    if (SharedConfig.isProxyEnabled() && SharedConfig.proxyAutoSpeedAcceleration) {
-                        AndroidUtilities.runOnUIThread {
-                            org.telegram.messenger.ProxyRotationController.checkAndAccelerate(false)
-                        }
-                    }
-                }
+        val networkCallback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                checkVpnState()
+                AndroidUtilities.runOnUIThread({ checkVpnState() }, 400)
             }
+
+            override fun onCapabilitiesChanged(
+                network: Network,
+                networkCapabilities: NetworkCapabilities
+            ) {
+                checkVpnState()
+                AndroidUtilities.runOnUIThread({ checkVpnState() }, 400)
+            }
+
+            override fun onLost(network: Network) {
+                checkVpnState()
+                AndroidUtilities.runOnUIThread({ checkVpnState() }, 400)
+            }
+        }
 
         try {
             connectivityManager.registerDefaultNetworkCallback(networkCallback)
-        } catch (_: Exception) {}
+        } catch (e: Exception) {
+            FileLog.e(e)
+        }
+
+        try {
+            val vpnRequest = NetworkRequest.Builder()
+                .addTransportType(NetworkCapabilities.TRANSPORT_VPN)
+                .removeCapability(NetworkCapabilities.NET_CAPABILITY_NOT_VPN)
+                .build()
+            connectivityManager.registerNetworkCallback(vpnRequest, object : ConnectivityManager.NetworkCallback() {
+                override fun onAvailable(network: Network) {
+                    checkVpnState()
+                }
+
+                override fun onLost(network: Network) {
+                    checkVpnState()
+                    AndroidUtilities.runOnUIThread({ checkVpnState() }, 400)
+                }
+            })
+        } catch (e: Exception) {
+            FileLog.e(e)
+        }
+
+        checkVpnState()
     }
 
     @JvmStatic
