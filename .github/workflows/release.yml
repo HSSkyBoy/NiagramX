@@ -132,6 +132,19 @@ jobs:
           COMMIT_URL: ${{ github.event.head_commit.url }}
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
+          set -euo pipefail
+          if [ -z "${{ secrets.HELPER_BOT_TOKEN }}" ] || [ -z "${{ secrets.HELPER_BOT_TARGET }}" ]; then
+            echo "::warning::HELPER_BOT_TOKEN or HELPER_BOT_TARGET not configured, skipping Telegram upload."
+            exit 0
+          fi
+
+          # Sync runner clock with Telegram server to prevent MTProto msg_id timestamp drift
+          TG_DATE=$(curl -sI https://api.telegram.org | grep -i '^date:' | cut -d' ' -f2- || true)
+          if [ -n "$TG_DATE" ]; then
+            echo "Syncing runner time with Telegram server: $TG_DATE"
+            sudo date -s "$TG_DATE" || true
+          fi
+
           export BUILD_TIMESTAMP=$(date +%s)
           python -m pip install -r Tools/scripts/requirements.txt
           python Tools/scripts/upload.py "${{ secrets.HELPER_BOT_TOKEN }}" "${{ secrets.HELPER_BOT_TARGET }}" release "${{ secrets.HELPER_BOT_CANARY_TARGET }}"

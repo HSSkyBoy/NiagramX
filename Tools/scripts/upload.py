@@ -66,19 +66,6 @@ def get_metadata():
     tag = "#updateBeta" if test_version else "#updateRelease"
     return f"{tag}\n{build_timestamp} {commit_id}\n{commit_message}"
 
-def retry(func):
-    async def wrapper(*args, **kwargs):
-        for attempt in range(3):
-            try:
-                return await func(*args, **kwargs)
-            except Exception as e:
-                logging.error(f"Attempt {attempt + 1} failed with error: {e}", exc_info=True)
-                if attempt == 2:
-                    raise
-                await asyncio.sleep(5)
-    return wrapper
-
-@retry
 async def send_to_channel(client: "Client", cid: str):
     with contextlib.suppress(ValueError):
         cid = int(cid)
@@ -93,17 +80,19 @@ async def send_to_channel(client: "Client", cid: str):
             cid,
             media = documents,
         ),
-        timeout = 600,
+        timeout = 300,
     )
     print("Successfully uploaded media group to channel!", flush=True)
 
-@retry
 async def send_metadata(client: "Client", cid: str):
     with contextlib.suppress(ValueError):
         cid = int(cid)
-    await client.send_message(
-        chat_id = cid,
-        text = get_metadata(),
+    await asyncio.wait_for(
+        client.send_message(
+            chat_id = cid,
+            text = get_metadata(),
+        ),
+        timeout = 60,
     )
     print("Successfully sent metadata!", flush=True)
 
@@ -115,20 +104,33 @@ def get_client(bot_token: str):
         bot_token=bot_token,
         in_memory=True,
         ipv6=False,
-        max_concurrent_transmissions=8,
+        max_concurrent_transmissions=2,
     )
 
 async def main():
     bot_token = argv[1]
     chat_id = argv[2]
-    client = get_client(bot_token)
-    await client.start()
-    try:
-        await send_to_channel(client, chat_id)
-        if metadata_chat_id and str(metadata_chat_id).strip() != str(chat_id).strip():
-            await send_metadata(client, metadata_chat_id)
-    finally:
-        await client.stop()
+    max_attempts = 3
+
+    for attempt in range(1, max_attempts + 1):
+        logging.info(f"Starting upload session (attempt {attempt}/{max_attempts})...")
+        client = get_client(bot_token)
+        try:
+            await client.start()
+            await send_to_channel(client, chat_id)
+            if metadata_chat_id and str(metadata_chat_id).strip() != str(chat_id).strip():
+                await send_metadata(client, metadata_chat_id)
+            logging.info("Upload finished successfully.")
+            return
+        except Exception as e:
+            logging.error(f"Attempt {attempt} failed: {e}", exc_info=True)
+            if attempt == max_attempts:
+                raise
+            await asyncio.sleep(5)
+        finally:
+            with contextlib.suppress(Exception):
+                if client.is_connected:
+                    await client.stop()
 
 if __name__ == "__main__":
     asyncio.run(main())
