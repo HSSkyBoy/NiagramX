@@ -1,11 +1,20 @@
 import os
+import asyncio
 import contextlib
 import html
+import logging
 from pathlib import Path
 from sys import argv
 
 from pyrogram import Client
 from pyrogram.types import InputMediaDocument, LinkPreviewOptions
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="[%(asctime)s] %(levelname)s [%(name)s]: %(message)s",
+    datefmt="%H:%M:%S",
+)
+logging.getLogger("pyrogram.syncer").setLevel(logging.WARNING)
 
 api_id = os.environ.get("APP_ID") or 6
 api_hash = os.environ.get("APP_HASH") or "eb06d4abfb49dc3eeb1aeb98ae0f581e"
@@ -63,9 +72,10 @@ def retry(func):
             try:
                 return await func(*args, **kwargs)
             except Exception as e:
-                print(e)
+                logging.error(f"Attempt {attempt + 1} failed with error: {e}", exc_info=True)
                 if attempt == 2:
                     raise
+                await asyncio.sleep(5)
     return wrapper
 
 @retry
@@ -75,11 +85,17 @@ async def send_to_channel(client: "Client", cid: str):
     documents = get_document()
     print("Uploading to Telegram:", flush=True)
     for document in documents:
-        print(f"- {document.media}", flush=True)
-    await client.send_media_group(
-        cid,
-        media = documents,
+        p = Path(document.media)
+        size_mb = p.stat().st_size / (1024 * 1024) if p.exists() else 0
+        print(f"- {document.media} ({size_mb:.2f} MB)", flush=True)
+    await asyncio.wait_for(
+        client.send_media_group(
+            cid,
+            media = documents,
+        ),
+        timeout = 600,
     )
+    print("Successfully uploaded media group to channel!", flush=True)
 
 @retry
 async def send_metadata(client: "Client", cid: str):
@@ -89,6 +105,7 @@ async def send_metadata(client: "Client", cid: str):
         chat_id = cid,
         text = get_metadata(),
     )
+    print("Successfully sent metadata!", flush=True)
 
 def get_client(bot_token: str):
     return Client(
@@ -96,6 +113,9 @@ def get_client(bot_token: str):
         api_id=api_id,
         api_hash=api_hash,
         bot_token=bot_token,
+        in_memory=True,
+        ipv6=False,
+        max_concurrent_transmissions=8,
     )
 
 async def main():
@@ -103,11 +123,12 @@ async def main():
     chat_id = argv[2]
     client = get_client(bot_token)
     await client.start()
-    await send_to_channel(client, chat_id)
-    if metadata_chat_id and str(metadata_chat_id).strip() != str(chat_id).strip():
-        await send_metadata(client, metadata_chat_id)
-    await client.log_out()
+    try:
+        await send_to_channel(client, chat_id)
+        if metadata_chat_id and str(metadata_chat_id).strip() != str(chat_id).strip():
+            await send_metadata(client, metadata_chat_id)
+    finally:
+        await client.stop()
 
 if __name__ == "__main__":
-    from asyncio import run
-    run(main())
+    asyncio.run(main())
