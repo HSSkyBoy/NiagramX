@@ -4,8 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 
-import androidx.media3.exoplayer.MetadataRetriever;
-
 import org.telegram.messenger.FileLog;
 
 import java.io.File;

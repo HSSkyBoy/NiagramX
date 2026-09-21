@@ -57,6 +57,7 @@ set_target_properties(tdutils PROPERTIES IMPORTED_LOCATION ${CMAKE_HOME_DIRECTOR
 
 #tgnet
 add_library(tgnet STATIC
+        openssl/aes_ige.c
         tgnet/ApiScheme.cpp
         tgnet/BuffersStorage.cpp
         tgnet/ByteArray.cpp
@@ -64,6 +65,7 @@ add_library(tgnet STATIC
         tgnet/Connection.cpp
         tgnet/ConnectionSession.cpp
         tgnet/ConnectionsManager.cpp
+        tgnet/TLSHello.cpp
         tgnet/ConnectionSocket.cpp
         tgnet/Datacenter.cpp
         tgnet/EventObject.cpp
@@ -83,14 +85,15 @@ set_target_properties(tgnet PROPERTIES
 target_compile_definitions(tgnet PUBLIC
         HAVE_PTHREAD)
 target_include_directories(tgnet PUBLIC
-        boringssl/include/)
+        boringssl/include/
+        openssl/include)
 target_link_libraries(tgnet
         crypto)
 
 # tlottie (prebuilt Rust static library)
 add_library(tlottie STATIC IMPORTED)
 set_target_properties(tlottie PROPERTIES
-        IMPORTED_LOCATION ${CMAKE_HOME_DIRECTORY}/prebuild/${ANDROID_ABI}/libtlottie.a)
+        IMPORTED_LOCATION ${CMAKE_HOME_DIRECTORY}/prebuild/lib/${ANDROID_ABI}/libtlottie.a)
 
 #sqlite
 add_library(sqlite STATIC
@@ -182,6 +185,7 @@ target_include_directories(${NATIVE_LIB} PUBLIC
         third_party/xiph/ogg/include
         third_party/libyuv/include
         boringssl/include
+        openssl/include
         ffmpeg/include
         emoji
         exoplayer/include
@@ -199,7 +203,6 @@ target_link_options(${NATIVE_LIB} PRIVATE "-Wl,--gc-sections")
 target_link_options(${NATIVE_LIB} PRIVATE "-Wl,--icf=all")
 target_link_libraries(${NATIVE_LIB}
         -Wl,--whole-archive rnnoise openh264 voipandroid -Wl,--no-whole-archive
-        tgvoip
         tgcalls
         tgcalls_tp
         tgnet

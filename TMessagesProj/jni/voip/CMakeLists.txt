@@ -270,6 +270,7 @@ target_compile_definitions(tgcalls_tp PUBLIC
 target_include_directories(tgcalls_tp PUBLIC
         ./
         voip
+        boringssl/include/
         third_party/boringssl/include/
         openssl/include
         voip/tgcalls/
@@ -1633,6 +1634,7 @@ target_compile_definitions(tgcalls PUBLIC
 target_include_directories(tgcalls PUBLIC
         ./
         voip
+        boringssl/include
         third_party/boringssl/include
         openssl/include
         voip/tgcalls
@@ -1650,6 +1652,7 @@ target_include_directories(tgcalls PUBLIC
         third_party/usrsctplib
         third_party
         prebuild/include/${ANDROID_ABI}
+        ffmpeg/include
         third_party/ffmpeg
         third_party/libvpx
         third_party/dav1d/include
@@ -1820,6 +1823,7 @@ target_include_directories(voipandroid PUBLIC
         ./
         voip
         rlottie/src/lottie
+        boringssl/include
         third_party/boringssl/include
         openssl/include
         voip/tgcalls
@@ -1835,6 +1839,8 @@ target_include_directories(voipandroid PUBLIC
         third_party/libsrtp/crypto/include
         third_party/usrsctplib
         third_party
+        ffmpeg/include
+        tde2e/include
         td/tde2e
         td/tde2e/td/e2e
 )

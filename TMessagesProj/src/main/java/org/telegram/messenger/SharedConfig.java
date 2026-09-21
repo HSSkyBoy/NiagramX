@@ -1648,7 +1648,7 @@ public class SharedConfig {
     }
 
     public static void deleteProxy(ProxyInfo proxyInfo) {
-        if (proxyInfo != null && WebSocketHelper.proxyServer.equals(proxyInfo.address)) {
+        if (proxyInfo != null && WebSocketHelper.proxyServer.equals(proxyInfo.getAddress())) {
             return;
         }
         if (currentProxy == proxyInfo) {

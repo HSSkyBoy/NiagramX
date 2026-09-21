@@ -3291,7 +3291,10 @@ public class LocaleController {
                         editor.putString("language", localeInfo.getKey());
                         editor.apply();
 
-                        localeValues = valuesToSet;
+                        localizationExternal = new Localization.Builder()
+                            .addLocalization(valuesToSet)
+                            .build();
+                        localizationExternalSize = calculateTranslatedCount(valuesToSet);
                         currentLocale = newLocale;
                         currentLocaleInfo = localeInfo;
                         if (!TextUtils.isEmpty(currentLocaleInfo.pluralLangCode)) {

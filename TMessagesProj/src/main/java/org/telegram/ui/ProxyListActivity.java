@@ -169,7 +169,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
             checkImageView.setContentDescription(getString(R.string.Edit));
             addView(checkImageView, LayoutHelper.createFrame(48, 48, (LocaleController.isRTL ? Gravity.LEFT : Gravity.RIGHT) | Gravity.TOP, 8, 8, 8, 0));
             checkImageView.setOnClickListener(v -> {
-                if (currentInfo != null && WebSocketHelper.proxyServer.equals(currentInfo.address)) {
+                if (currentInfo != null && WebSocketHelper.proxyServer.equals(currentInfo.getAddress())) {
                     AlertUtil.showSimpleAlert(getParentActivity(), LocaleController.getString(R.string.PublicProxyDescription));
                 } else {
                     presentFragment(new ProxySettingsActivity(currentInfo));
@@ -437,7 +437,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                 R.drawable.msg_delete, LocaleController.getString("Delete", R.string.Delete),
                 true, () -> {
                     for (SharedConfig.ProxyInfo info : SharedConfig.getProxyList()) {
-                        if (!WebSocketHelper.proxyServer.equals(info.address)) {
+                        if (!WebSocketHelper.proxyServer.equals(info.getAddress())) {
                             SharedConfig.deleteProxy(info);
                         }
                     }
@@ -450,7 +450,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                     R.drawable.msg_delete, LocaleController.getString("Delete", R.string.Delete),
                     true, () -> {
                         for (SharedConfig.ProxyInfo info : SharedConfig.getProxyList()) {
-                            if (info.checking || WebSocketHelper.proxyServer.equals(info.address)) {
+                            if (info.checking || WebSocketHelper.proxyServer.equals(info.getAddress())) {
                                 continue;
                             }
                             if (!info.available) {
@@ -600,7 +600,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                 builder.setTitle(getString(R.string.DeleteProxyTitle));
                 builder.setPositiveButton(getString(R.string.Delete), (dialog, which) -> {
                     for (SharedConfig.ProxyInfo info : proxyList) {
-                        if (!WebSocketHelper.proxyServer.equals(info.address)) {
+                        if (!WebSocketHelper.proxyServer.equals(info.getAddress())) {
                             SharedConfig.deleteProxy(info);
                         }
                     }
@@ -627,7 +627,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
         listView.setOnItemLongClickListener((view, position) -> {
             if (position >= proxyStartRow && position < proxyEndRow) {
                 SharedConfig.ProxyInfo info = proxyList.get(position - proxyStartRow);
-                if (WebSocketHelper.proxyServer.equals(info.address)) {
+                if (WebSocketHelper.proxyServer.equals(info.getAddress())) {
                     AlertUtil.showToast(LocaleController.getString(R.string.PublicProxyDescription));
                     return true;
                 }
@@ -668,7 +668,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                         builder.setTitle(getString(R.string.DeleteProxyTitle));
                         builder.setPositiveButton(getString(R.string.Delete), (dialog, which) -> {
                             for (SharedConfig.ProxyInfo info : selectedItems) {
-                                if (!WebSocketHelper.proxyServer.equals(info.address)) {
+                                if (!WebSocketHelper.proxyServer.equals(info.getAddress())) {
                                     SharedConfig.deleteProxy(info);
                                 }
                             }
@@ -698,7 +698,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                     case MENU_SHARE:
                         StringBuilder links = new StringBuilder();
                         for (SharedConfig.ProxyInfo info : selectedItems) {
-                            if (WebSocketHelper.proxyServer.equals(info.address)) {
+                            if (WebSocketHelper.proxyServer.equals(info.getAddress())) {
                                 continue;
                             }
                             if (links.length() > 0) {
@@ -1059,7 +1059,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                     cell.setProxy(info);
                     cell.setChecked(SharedConfig.currentProxy == info);
                     cell.setItemSelected(selectedItems.contains(proxyList.get(position - proxyStartRow)), false);
-                    cell.setSelectionEnabled(!selectedItems.isEmpty() && !WebSocketHelper.proxyServer.equals(info.address), false);
+                    cell.setSelectionEnabled(!selectedItems.isEmpty() && !WebSocketHelper.proxyServer.equals(info.getAddress()), false);
                     break;
                 }
                 case VIEW_TYPE_SLIDE_CHOOSER: {
@@ -1091,7 +1091,7 @@ public class ProxyListActivity extends BaseFragment implements NotificationCente
                     cell.setItemSelected(selectedItems.contains(info), true);
                 }
                 if (payloads.contains(PAYLOAD_SELECTION_MODE_CHANGED)) {
-                    cell.setSelectionEnabled(!selectedItems.isEmpty() && !WebSocketHelper.proxyServer.equals(info.address), true);
+                    cell.setSelectionEnabled(!selectedItems.isEmpty() && !WebSocketHelper.proxyServer.equals(info.getAddress()), true);
                 }
             } else if (holder.getItemViewType() == VIEW_TYPE_TEXT_CHECK && payloads.contains(PAYLOAD_CHECKED_CHANGED)) {
                 TextCheckCell checkCell = (TextCheckCell) holder.itemView;
