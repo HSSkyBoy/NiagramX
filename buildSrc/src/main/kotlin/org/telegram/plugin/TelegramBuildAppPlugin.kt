@@ -14,7 +14,7 @@ import org.telegram.tasks.TelegramStringsTask
 
 class TelegramBuildAppPlugin : Plugin<Project> {
     override fun apply(project: Project) {
-        val telegramModule = project.project(":TMessagesProj")
+        val telegramModule = project.rootProject.findProject(":TMessagesProj") ?: project
         val androidComponents =
             project.extensions.findByType(AndroidComponentsExtension::class.java)
                 ?: error("Apply com.android.application/library before org.telegram.build-app-plugin")
@@ -103,7 +103,7 @@ class TelegramBuildAppPlugin : Plugin<Project> {
         androidComponents.onVariants { variant ->
             val suffix = variant.name.replaceFirstChar { it.uppercase() }
             val emojiTask = project.tasks.register<EmojiPackTask>("pack${suffix}Emoji") {
-                emojiDir.set(project.layout.projectDirectory.dir("../TMessagesProj/emoji"))
+                emojiDir.set(telegramModule.layout.projectDirectory.dir("emoji"))
                 outputDir.set(project.layout.buildDirectory.dir("generated/emojiAssets/${variant.name}"))
             }
             variant.sources.assets?.addGeneratedSourceDirectory(emojiTask, EmojiPackTask::outputDir)
