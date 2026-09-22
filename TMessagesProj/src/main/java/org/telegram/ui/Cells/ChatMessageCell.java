@@ -244,6 +244,7 @@ import org.telegram.ui.Stories.StoriesUtilities;
 import org.telegram.ui.Stories.StoryViewer;
 import org.telegram.ui.Stories.recorder.CaptionContainerView;
 import org.telegram.ui.Stories.recorder.DominantColors;
+import org.telegram.ui.recyclerview.ChatListItemAnimator;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -1846,6 +1847,8 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
     private int lastRepliesCount;
     private float selectedBackgroundProgress;
     private boolean lastTranslated;
+    private ArrayList<MessageObject.TextLayoutBlock> measuredTextLayoutBlocks;
+    private boolean staleTextLayoutRelayoutPosted;
 
     public float viewTop;
     public int backgroundHeight;
@@ -16818,8 +16821,11 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             if (botDraftTypingAnimator != null && botDraftTypingAnimator.isRunning()) {
                 drawMessageText(textX, textY, canvas, currentMessageObject.textLayoutBlocks, currentMessageObject.textXOffset, true, 1, true, false, false);
             } else {
-                drawMessageText(textX, textY, canvas, transitionParams.animateOutTextBlocks, transitionParams.animateOutTextXOffset, false, (1.0f - transitionParams.animateChangeProgress), true, false, false);
-                drawMessageText(textX, textY, canvas, currentMessageObject.textLayoutBlocks, currentMessageObject.textXOffset, true, transitionParams.animateChangeProgress, true, false, false);
+                if (!transitionParams.animateTranslationText) {
+                    drawMessageText(textX, textY, canvas, transitionParams.animateOutTextBlocks, transitionParams.animateOutTextXOffset, false, (1.0f - transitionParams.animateChangeProgress), true, false, false);
+                }
+                final float incomingProgress = getTranslationIncomingTextProgress();
+                drawMessageText(textX, textY + getTranslationIncomingTextOffsetY(incomingProgress), canvas, currentMessageObject.textLayoutBlocks, currentMessageObject.textXOffset, true, incomingProgress, true, false, false);
             }
             canvas.restore();
         } else if (transitionParams.animateLinkAbove && currentBackgroundDrawable != null) {
@@ -18980,6 +18986,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         setAvatar(messageObject);
 
         measureTime(messageObject);
+        measuredTextLayoutBlocks = messageObject.textLayoutBlocks;
 
         namesOffset = 0;
 
@@ -20372,6 +20379,21 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         if (currentMessageObject == null) {
             return;
         }
+        if (measuredTextLayoutBlocks != null
+                && currentMessageObject.textLayoutBlocks != measuredTextLayoutBlocks
+                && transitionParams.animateChangeProgress == 1f
+                && !staleTextLayoutRelayoutPosted) {
+            staleTextLayoutRelayoutPosted = true;
+            final MessageObject staleMessageObject = currentMessageObject;
+            post(() -> {
+                staleTextLayoutRelayoutPosted = false;
+                if (currentMessageObject != staleMessageObject || !attachedToWindow) {
+                    return;
+                }
+                measuredTextLayoutBlocks = currentMessageObject.textLayoutBlocks;
+                forceResetMessageObject();
+            });
+        }
         if (shouldTranslucentDeleted() && ayuDeleted) {
             canvas.saveLayerAlpha(null, (int) (255 * 0.75f), Canvas.ALL_SAVE_FLAG);
         }
@@ -21717,8 +21739,9 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                     );
                 }
             }
-            drawAnimatedEmojiMessageText(textX, textY, canvas, transitionParams.animateOutTextBlocks, transitionParams.animateOutAnimateEmoji, false, alpha * (1.0f - transitionParams.animateChangeProgress), currentMessageObject.textXOffset, false);
-            drawAnimatedEmojiMessageText(textX, textY, canvas, currentMessageObject.textLayoutBlocks, animatedEmojiStack, true, alpha * transitionParams.animateChangeProgress, currentMessageObject.textXOffset, false);
+            final float incomingProgress = getTranslationIncomingTextProgress();
+            final float incomingEmojiOffsetY = getTranslationIncomingTextOffsetY(incomingProgress);
+            drawAnimatedEmojiMessageText(textX, textY + incomingEmojiOffsetY, canvas, currentMessageObject.textLayoutBlocks, animatedEmojiStack, true, alpha * incomingProgress, currentMessageObject.textXOffset, false);
             canvas.restore();
         } else {
             drawAnimatedEmojiMessageText(textX, textY, canvas, currentMessageObject.textLayoutBlocks, animatedEmojiStack, true, alpha, currentMessageObject.textXOffset, false);
@@ -21842,8 +21865,9 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             }
         }
         if (transitionParams.animateReplaceCaptionLayout && transitionParams.animateChangeProgress != 1f) {
-            drawAnimatedEmojiMessageText(captionX, captionY, canvas, transitionParams.animateOutCaptionLayout != null ? transitionParams.animateOutCaptionLayout.textLayoutBlocks : null, transitionParams.animateOutAnimateEmoji, false, alpha * (1f - transitionParams.animateChangeProgress), transitionParams.animateOutCaptionLayout != null ? transitionParams.animateOutCaptionLayout.textXOffset : 0, true);
-            drawAnimatedEmojiMessageText(captionX, captionY, canvas, captionLayout != null ? captionLayout.textLayoutBlocks : null, animatedEmojiStack, true, alpha * transitionParams.animateChangeProgress, captionLayout != null ? captionLayout.textXOffset : 0, true);
+            final float incomingProgress = getTranslationIncomingTextProgress();
+            final float incomingOffsetY = getTranslationIncomingTextOffsetY(incomingProgress);
+            drawAnimatedEmojiMessageText(captionX, captionY + incomingOffsetY, canvas, captionLayout != null ? captionLayout.textLayoutBlocks : null, animatedEmojiStack, true, alpha * incomingProgress, captionLayout != null ? captionLayout.textXOffset : 0, true);
         } else {
             drawAnimatedEmojiMessageText(captionX, captionY, canvas, captionLayout != null ? captionLayout.textLayoutBlocks : null, animatedEmojiStack, true, alpha, captionLayout != null ? captionLayout.textXOffset : 0, true);
         }
@@ -23486,8 +23510,16 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             animatedEmojiStack.clearPositions();
         }
         if (transitionParams.animateReplaceCaptionLayout && transitionParams.animateChangeProgress != 1f) {
-            drawCaptionLayout(canvas, transitionParams.animateOutCaptionLayout, false, selectionOnly, alpha * (1f - transitionParams.animateChangeProgress));
-            drawCaptionLayout(canvas, captionLayout, true, selectionOnly, alpha * transitionParams.animateChangeProgress);
+            final float incomingProgress = getTranslationIncomingTextProgress();
+            final float incomingOffsetY = getTranslationIncomingTextOffsetY(incomingProgress);
+            if (incomingOffsetY != 0f) {
+                canvas.save();
+                canvas.translate(0f, incomingOffsetY);
+            }
+            drawCaptionLayout(canvas, captionLayout, true, selectionOnly, alpha * incomingProgress);
+            if (incomingOffsetY != 0f) {
+                canvas.restore();
+            }
         } else {
             drawCaptionLayout(canvas, captionLayout, true, selectionOnly, alpha);
         }
@@ -28438,6 +28470,24 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         return transitionParams;
     }
 
+    private static final float TRANSLATION_TEXT_DELAY_FRACTION = 30f / ChatListItemAnimator.DEFAULT_DURATION;
+    private static final float TRANSLATION_TEXT_DURATION_FRACTION = 180f / ChatListItemAnimator.DEFAULT_DURATION;
+    private static final float TRANSLATION_TEXT_OFFSET_DP = 2.5f;
+    private static final Interpolator TRANSLATION_TEXT_INTERPOLATOR = new CubicBezierInterpolator(.2f, .8f, .2f, 1f);
+
+    private float getTranslationIncomingTextProgress() {
+        if (!transitionParams.animateTranslationText) {
+            return transitionParams.animateChangeProgress;
+        }
+        final float localProgress = Math.max(0f, Math.min(1f,
+                (transitionParams.animateChangeProgress - TRANSLATION_TEXT_DELAY_FRACTION) / TRANSLATION_TEXT_DURATION_FRACTION));
+        return TRANSLATION_TEXT_INTERPOLATOR.getInterpolation(localProgress);
+    }
+
+    private float getTranslationIncomingTextOffsetY(float incomingProgress) {
+        return transitionParams.animateTranslationText ? dp(TRANSLATION_TEXT_OFFSET_DP) * (1f - incomingProgress) : 0f;
+    }
+
     public float getDeltaTop()    { return transitionParams.deltaTop; }
     public float getDeltaLeft()   { return transitionParams.deltaLeft; }
     public float getDeltaRight()  { return transitionParams.deltaRight; }
@@ -28570,6 +28620,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
         public boolean animateDrawingSideMenuEnabled;
 
         public boolean animateMessageText;
+        public boolean animateTranslationText;
         private ArrayList<MessageObject.TextLayoutBlock> animateOutTextBlocks;
         public ArrayList<MessageObject.TextLayoutBlock> lastDrawingTextBlocks;
         private int lastDrawingTextWidth;
@@ -28866,7 +28917,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             lastDrawingExpandedQuotes = getPrimaryMessageObject() != null ? getPrimaryMessageObject().expandedQuotes : null;
             lastDrawingExpandedExplanation = currentMessageObject != null && currentMessageObject.expandedExplanation;
 
-            lastDrawnTranslated = currentMessageObject != null && currentMessageObject.translated;
+            lastDrawnTranslated = currentMessageObject != null && currentMessageObject.isTranslated();
             lastDrawnTitleLayout = titleLayout;
         }
 
@@ -28893,6 +28944,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             }
 
             animateMessageText = false;
+            animateTranslationText = currentMessageObject.isTranslated() != lastDrawnTranslated;
             if (currentMessageObject.textLayoutBlocks != lastDrawingTextBlocks) {
                 boolean sameText = true;
                 if (currentMessageObject.textWidth != lastDrawingTextWidth && lastDrawingSideMenuEnabled != isSideMenuEnabled) {
@@ -28916,9 +28968,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 }
                 if (!sameText) {
                     animateMessageText = true;
-                    animateOutTextBlocks = lastDrawingTextBlocks;
-                    animateOutTextXOffset = lastTextXOffset;
-                    animateOutAnimateEmoji = AnimatedEmojiSpan.update(AnimatedEmojiDrawable.CACHE_TYPE_MESSAGES, ChatMessageCell.this, animateOutAnimateEmoji, lastDrawingTextBlocks, true);
+                    animateOutTextBlocks = null;
                     animatedEmojiStack = AnimatedEmojiSpan.update(AnimatedEmojiDrawable.CACHE_TYPE_MESSAGES, ChatMessageCell.this, animatedEmojiStack, currentMessageObject.textLayoutBlocks);
                     changed = true;
                 } else {
@@ -28971,13 +29021,11 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 CharSequence oldText = lastDrawnReplyTextLayout != null ? lastDrawnReplyTextLayout.getText() : null;
                 if (!TextUtils.equals(newText, oldText)) {
                     animateFromReplyTextHeight = lastDrawingReplyTextHeight;
-                    animateReplyTextLayout = lastDrawnReplyTextLayout;
-                    animateReplyTextOffset = lastReplyTextXOffset;
-                    animateOutAnimateEmojiReply = AnimatedEmojiSpan.update(AnimatedEmojiDrawable.CACHE_TYPE_MESSAGES, ChatMessageCell.this, false, animateOutAnimateEmojiReply, true, lastDrawnReplyTextLayout);
+                    animateReplyTextLayout = null;
                     changed = true;
                 }
             }
-            if ((((edited || ayuDeleted) && !lastDrawingEdited) || (currentMessageObject.translated && !lastTranslated)) && timeLayout != null) {
+            if ((((edited || ayuDeleted) && !lastDrawingEdited) || (currentMessageObject.isTranslated() && !lastTranslated)) && timeLayout != null) {
                 String customStr = NyaConfig.INSTANCE.getCustomEditedMessage().String();
                 String customStrFin = customStr.equals("") ? getString(R.string.EditedMessage) : customStr;
                 String deletedStr = NyaConfig.INSTANCE.getCustomDeletedMark().String();
@@ -29014,7 +29062,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                     changed = true;
                 }
                 accessibilityText = null;
-            } else if (((!(edited || ayuDeleted) && lastDrawingEdited) || (!currentMessageObject.translated && lastTranslated)) && timeLayout != null) {
+            } else if (((!(edited || ayuDeleted) && lastDrawingEdited) || (!currentMessageObject.isTranslated() && lastTranslated)) && timeLayout != null) {
                 animateTimeLayout = lastTimeLayout;
                 animateEditedWidthDiff = timeWidth - lastTimeWidth;
                 animateEditedEnter = true;
@@ -29116,8 +29164,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                     (oldCaption != null && !oldCaption.equals(currentCaption))
                 ) {
                     animateReplaceCaptionLayout = true;
-                    animateOutCaptionLayout = lastDrawingCaptionLayout;
-                    animateOutAnimateEmoji = AnimatedEmojiSpan.update(AnimatedEmojiDrawable.CACHE_TYPE_MESSAGES, ChatMessageCell.this, null, animateOutCaptionLayout == null ? null : animateOutCaptionLayout.textLayoutBlocks);
+                    animateOutCaptionLayout = null;
                     animatedEmojiStack = AnimatedEmojiSpan.update(AnimatedEmojiDrawable.CACHE_TYPE_MESSAGES, ChatMessageCell.this, animatedEmojiStack, captionLayout == null ? null : captionLayout.textLayoutBlocks);
                     if (lastDrawingSideMenuEnabled != isSideMenuEnabled || lastDrawingSummarized != summarized) {
                         moveCaption = true;
@@ -29347,7 +29394,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
                 changed = true;
             }
 
-            final boolean translated = currentMessageObject != null && currentMessageObject.translated;
+            final boolean translated = currentMessageObject != null && currentMessageObject.isTranslated();
             if (translated != lastDrawnTranslated) {
                 if (titleLayout != null && lastDrawnTitleLayout != null) {
                     animateTitleLayout = lastDrawnTitleLayout;
@@ -29392,6 +29439,7 @@ public class ChatMessageCell extends BaseCell implements SeekBar.SeekBarDelegate
             oldProgress = 0f;
             newProgress = 1f;
             animateMessageText = false;
+            animateTranslationText = false;
             animateRichLayout = false;
             animateDrawingSideMenuEnabled = false;
             animateDrawNameLayout = false;
