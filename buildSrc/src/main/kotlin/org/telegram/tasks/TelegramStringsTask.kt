@@ -35,7 +35,7 @@ abstract class TelegramStringsTask : DefaultTask() {
             "AppNameBeta"
         )
 
-        private const val STRING_RESOURCE_ID_BASE = 0x7F0FFFFE
+        private const val STRING_RESOURCE_ID_BASE = 0x7F0F0800
     }
 
     @get:Input
@@ -237,7 +237,7 @@ abstract class TelegramStringsTask : DefaultTask() {
             .bufferedWriter(StandardCharsets.UTF_8)
             .use { output ->
                 for ((index, name) in stableStrings.withIndex()) {
-                    val resId = STRING_RESOURCE_ID_BASE - index
+                    val resId = STRING_RESOURCE_ID_BASE + index
                     output.append(packageName)
                     output.append(":string/")
                     output.append(name)

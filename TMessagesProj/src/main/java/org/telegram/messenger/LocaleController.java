@@ -1578,6 +1578,10 @@ public class LocaleController {
         if (TextUtils.isEmpty(key)) {
             return "LOC_ERR:" + key;
         }
+        String value = getInstance().getLocalizationAssetString(key);
+        if (value != null) {
+            return value;
+        }
         int resourceId = getStringResId(key);
         if (resourceId != 0) {
             return getString(key, resourceId);
@@ -4677,12 +4681,40 @@ public class LocaleController {
     }
 
     private static int getLocalizedStringByName(String key) {
-        return ApplicationLoader.applicationContext.getResources().getIdentifier(key, "string", ApplicationLoader.applicationContext.getPackageName());
+        int id = ApplicationLoader.applicationContext.getResources().getIdentifier(key, "string", ApplicationLoader.applicationContext.getPackageName());
+        if (id == 0) {
+            id = ApplicationLoader.applicationContext.getResources().getIdentifier(key, "string", "org.telegram.messenger");
+        }
+        return id;
+    }
+
+    /**
+     * Key-only callers (notably persisted N-Settings keys) cannot provide a
+     * static R.string reference for the resource shrinker.  The generated
+     * localization assets already contain the complete runtime key namespace,
+     * so consult them before attempting the Android resource-table fallback.
+     */
+    private String getLocalizationAssetString(String key) {
+        String value = BuildVars.USE_CLOUD_STRINGS ? localizationExternal.getByResName(key) : null;
+        if (value != null) {
+            return value;
+        }
+        checkLocalizationInternal();
+        return localizationInternal.getByResName(key);
     }
 
     private String getLocalizedString(@StringRes int stringRes) {
+        if (stringRes == 0) {
+            return null;
+        }
         checkLocalizationInternal();
-        return localizationInternal.getByResId(ApplicationLoader.applicationContext, stringRes);
+        String result = localizationInternal.getByResId(ApplicationLoader.applicationContext, stringRes);
+        if (result == null) {
+            try {
+                result = ApplicationLoader.applicationContext.getString(stringRes);
+            } catch (Exception ignored) {}
+        }
+        return result;
     }
 
     private Localization localizationInternalDefault;

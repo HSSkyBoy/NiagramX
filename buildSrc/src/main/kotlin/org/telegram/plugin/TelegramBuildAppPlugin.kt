@@ -27,23 +27,19 @@ class TelegramBuildAppPlugin : Plugin<Project> {
             ) {
                 stringsXml.from(
                     telegramModule.fileTree("src/main/res/values") {
-                        include("strings.xml")
-                        include("strings_nia.xml")
+                        include("strings*.xml")
                     },
                     project.fileTree("src/main/res/values") {
-                        include("strings.xml")
-                        include("strings_nia.xml")
+                        include("strings*.xml")
                     }
                 )
 
                 localizationFiles.from(
                     telegramModule.fileTree("src/main/res") {
-                        include("values-*/strings.xml")
-                        include("values-*/strings_nia.xml")
+                        include("values-*/strings*.xml")
                     },
                     project.fileTree("src/main/res") {
-                        include("values-*/strings.xml")
-                        include("values-*/strings_nia.xml")
+                        include("values-*/strings*.xml")
                     }
                 )
 
@@ -126,6 +122,7 @@ class TelegramBuildAppPlugin : Plugin<Project> {
             val suffix = variant.name.replaceFirstChar { it.uppercase() }
             val lottieTask = project.tasks.register<GenerateLottieMetadataAssetFileTask>("generate${suffix}LottieMeta") {
                 runtimeSymbolList.set(variant.artifacts.get(SingleArtifact.RUNTIME_SYMBOL_LIST))
+                outputDir.set(project.layout.buildDirectory.dir("generated/lottieMeta/${variant.name}/assets"))
                 variant.sources.res?.all?.let { layers ->
                     rawResourceDirs.from(
                         telegramModule.fileTree("src/main/res") {

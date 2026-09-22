@@ -78,6 +78,7 @@ android {
     defaultConfig.applicationId = APP_PACKAGE
 
     androidResources {
+        noCompress += "pack"
         localeFilters += [
                 'en', 'ar', 'de', 'es', 'es-rES', 'fa-rIR', 'in-rID', 'it', 'it-rIT', 'ja-rJP', 'ko', 'nl', 'pl-rPL', 'pt-rBR', 'ru-rRU', 'tr-rTR', 'uk-rUA', 'vi-rVN', 'zh-rCN', 'zh-rTW'
         ]
@@ -233,7 +234,12 @@ android {
         }
     }
 
-    sourceSets.main.jniLibs.srcDirs = ['./jni/']
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['./jni/']
+            assets.exclude 'emoji/**'
+        }
+    }
 
     namespace = 'org.telegram.messenger'
 }
