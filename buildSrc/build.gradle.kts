@@ -4,10 +4,6 @@ plugins {
 
 gradlePlugin {
     plugins {
-        register("telegramBuildPlugin") {
-            id = "org.telegram.build-plugin"
-            implementationClass = "org.telegram.plugin.TelegramBuildPlugin"
-        }
         register("telegramBuildAppPlugin") {
             id = "org.telegram.build-app-plugin"
             implementationClass = "org.telegram.plugin.TelegramBuildAppPlugin"
