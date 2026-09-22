@@ -153,7 +153,7 @@ add_library(${NATIVE_LIB} SHARED
         gifvideo.cpp
         lottie.cpp
         TgNetWrapper.cpp
-        exoplayer/ffmpeg_jni.cc
+        ffmpeg_jni.cc
         fast-edge.cpp
         genann.c
         secureid_ocr.cpp
