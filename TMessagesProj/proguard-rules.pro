@@ -238,7 +238,7 @@
 -dontwarn android.support.v4.app.NotificationCompat$Builder
 
 -allowaccessmodification
--dontoptimize
+# -dontoptimize
 -keepattributes Signature,InnerClasses,EnclosingMethod
 -keepattributes SourceFile,LineNumberTable
 -keepattributes *Annotation*

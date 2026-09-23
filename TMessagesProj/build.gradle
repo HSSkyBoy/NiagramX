@@ -233,12 +233,7 @@ android {
         }
     }
 
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['./jni/']
-            assets.exclude 'emoji/**'
-        }
-    }
+    sourceSets.main.jniLibs.srcDirs = ['./jni/']
 
     namespace = 'org.telegram.messenger'
 }
