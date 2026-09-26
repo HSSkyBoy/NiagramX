@@ -189,6 +189,8 @@
     <string name="MessageSavingSaveMediaInPublicGroups">… di Grup Publik</string>
     <string name="MessageSavingSaveMediaInPrivateGroups">… di Grup Pribadi</string>
     <string name="TelegramUIAutoTranslate">Terjemahkan Seluruh Obrolan</string>
+    <string name="ShowCocoonAttribution">Tampilkan Info Cocoon</string>
+    <string name="ShowCocoonAttributionDescription">Tampilkan banner atribusi Cocoon AI di menu terjemahan.</string>
     <string name="Translated">diterjemahkan</string>
     <string name="ProviderRealMicrosoftTranslator">Microsoft Terjemahan</string>
     <string name="TranslatorSettings">Penerjemah</string>

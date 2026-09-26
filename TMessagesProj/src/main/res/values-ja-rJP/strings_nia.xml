@@ -196,6 +196,8 @@
     <string name="MessageSavingSaveMediaInPublicGroups">パブリックグループで保存</string>
     <string name="MessageSavingSaveMediaInPrivateGroups">プライベートグループで保存</string>
     <string name="TelegramUIAutoTranslate">チャット全体を翻訳</string>
+    <string name="ShowCocoonAttribution">Cocoonのサービス情報を表示</string>
+    <string name="ShowCocoonAttributionDescription">翻訳メニューにCocoon AIの提供クレジットを表示します。</string>
     <string name="Translated">翻訳済み</string>
     <string name="ProviderRealMicrosoftTranslator">Microsoft 翻訳</string>
     <string name="TranslatorSettings">翻訳</string>

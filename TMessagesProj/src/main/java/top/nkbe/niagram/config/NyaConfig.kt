@@ -751,6 +751,7 @@ object NyaConfig {
     @JvmField val translateToLang = addConfig("TransToLang", ConfigItem.configTypeString, "")
     @JvmField val translateInputLang = addConfig("TransInputToLang", ConfigItem.configTypeString, "en")
     @JvmField val googleCloudTranslateKey = addConfig("GoogleCloudTransKey", ConfigItem.configTypeString, "")
+    @JvmField val showCocoonAttribution = addConfig("ShowCocoonAttribution", ConfigItem.configTypeBool, false)
 
     @JvmField val disableNotificationBubbles = addConfig("disableNotificationBubbles", ConfigItem.configTypeBool, false)
 

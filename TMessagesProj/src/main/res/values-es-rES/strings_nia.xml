@@ -189,6 +189,8 @@ También puede utilizar texto sin formato, pero no olvide escapar los paréntesi
     <string name="MessageSavingSaveMediaInPublicGroups">… en Grupos Públicos</string>
     <string name="MessageSavingSaveMediaInPrivateGroups">… en grupos privados</string>
     <string name="TelegramUIAutoTranslate">Traducir Chats completos</string>
+    <string name="ShowCocoonAttribution">Mostrar información de Cocoon</string>
+    <string name="ShowCocoonAttributionDescription">Muestra el banner de atribución de Cocoon AI en el menú de traducción.</string>
     <string name="Translated">traducido</string>
     <string name="ProviderRealMicrosoftTranslator">Traductor de Microsoft</string>
     <string name="TranslatorSettings">Traductor</string>

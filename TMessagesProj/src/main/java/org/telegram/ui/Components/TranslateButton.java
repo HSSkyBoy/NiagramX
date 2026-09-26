@@ -375,33 +375,33 @@ public class TranslateButton extends FrameLayout implements Theme.Colorable {
         popupLayout.addView(hideButton);
 
         boolean providerTelegram = NyaConfig.translationProvider.Int() == Translator.providerTelegram;
-        if (providerTelegram) {
+        if (providerTelegram && NyaConfig.showCocoonAttribution.Bool()) {
             popupLayout.addView(new ActionBarPopupWindow.GapView(getContext(), resourcesProvider), LayoutHelper.createLinear(LayoutHelper.MATCH_PARENT, 8));
-        }
 
-        final LinkSpanDrawable.LinksTextView cocoonButton = new LinkSpanDrawable.LinksTextView(getContext());
-        cocoonButton.setPadding(dp(13), dp(8.33f), dp(13), dp(8.33f));
-        cocoonButton.setDisablePaddingsOffsetY(true);
-        cocoonButton.setTextColor(Theme.getColor(Theme.key_dialogTextBlack, resourcesProvider));
-        cocoonButton.setLinkTextColor(Theme.getColor(Theme.key_chat_messageLinkIn, resourcesProvider));
-        cocoonButton.setEmojiColor(Theme.getColor(Theme.key_dialogTextBlack, resourcesProvider));
-        CharSequence cocoonText = TextUtils.concat(AndroidUtilities.replaceTags(getString(R.string.CocoonPoweredBy)), " ", AndroidUtilities.premiumText(getString(R.string.CocoonPoweredByLink), () -> {
-            popupWindow.dismiss();
-            showCocoonAlert(getContext(), resourcesProvider);
-        }));
-        SpannableStringBuilder egg = new SpannableStringBuilder("🥚");
-        egg.setSpan(new AnimatedEmojiSpan(5197252827247841976L, cocoonButton.getPaint().getFontMetricsInt()), 0, egg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        SpannableStringBuilder eggSpaced = new SpannableStringBuilder(egg);
-        eggSpaced.append(" ");
-        cocoonText = AndroidUtilities.replaceCharSequence("🥚 ", cocoonText, eggSpaced);
-        cocoonText = AndroidUtilities.replaceCharSequence("🥚", cocoonText, egg);
-        cocoonButton.setText(HintView2.cutInFancyHalfText(cocoonText, cocoonButton.getPaint()));
-        cocoonButton.setBackground(Theme.createRadSelectorDrawable(Theme.getColor(Theme.key_listSelector, resourcesProvider), 0, 12));
-        cocoonButton.setOnClickListener(v -> {
-            popupWindow.dismiss();
-            showCocoonAlert(getContext(), resourcesProvider);
-        });
-        if (providerTelegram) popupLayout.addView(cocoonButton);
+            final LinkSpanDrawable.LinksTextView cocoonButton = new LinkSpanDrawable.LinksTextView(getContext());
+            cocoonButton.setPadding(dp(13), dp(8.33f), dp(13), dp(8.33f));
+            cocoonButton.setDisablePaddingsOffsetY(true);
+            cocoonButton.setTextColor(Theme.getColor(Theme.key_dialogTextBlack, resourcesProvider));
+            cocoonButton.setLinkTextColor(Theme.getColor(Theme.key_chat_messageLinkIn, resourcesProvider));
+            cocoonButton.setEmojiColor(Theme.getColor(Theme.key_dialogTextBlack, resourcesProvider));
+            CharSequence cocoonText = TextUtils.concat(AndroidUtilities.replaceTags(getString(R.string.CocoonPoweredBy)), " ", AndroidUtilities.premiumText(getString(R.string.CocoonPoweredByLink), () -> {
+                popupWindow.dismiss();
+                showCocoonAlert(getContext(), resourcesProvider);
+            }));
+            SpannableStringBuilder egg = new SpannableStringBuilder("🥚");
+            egg.setSpan(new AnimatedEmojiSpan(5197252827247841976L, cocoonButton.getPaint().getFontMetricsInt()), 0, egg.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            SpannableStringBuilder eggSpaced = new SpannableStringBuilder(egg);
+            eggSpaced.append(" ");
+            cocoonText = AndroidUtilities.replaceCharSequence("🥚 ", cocoonText, eggSpaced);
+            cocoonText = AndroidUtilities.replaceCharSequence("🥚", cocoonText, egg);
+            cocoonButton.setText(HintView2.cutInFancyHalfText(cocoonText, cocoonButton.getPaint()));
+            cocoonButton.setBackground(Theme.createRadSelectorDrawable(Theme.getColor(Theme.key_listSelector, resourcesProvider), 0, 12));
+            cocoonButton.setOnClickListener(v -> {
+                popupWindow.dismiss();
+                showCocoonAlert(getContext(), resourcesProvider);
+            });
+            popupLayout.addView(cocoonButton);
+        }
 
         popupWindow.setPauseNotifications(true);
         popupWindow.setDismissAnimationDuration(220);

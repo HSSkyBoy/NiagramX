@@ -188,6 +188,8 @@
     <string name="MessageSavingSaveMediaInPublicGroups">… 공개 그룹에서</string>
     <string name="MessageSavingSaveMediaInPrivateGroups">… 비공개 그룹에서</string>
     <string name="TelegramUIAutoTranslate">전체 채팅 번역</string>
+    <string name="ShowCocoonAttribution">Cocoon 정보 표시</string>
+    <string name="ShowCocoonAttributionDescription">번역 메뉴에 Cocoon AI 제공 배너를 표시합니다.</string>
     <string name="Translated">번역됨</string>
     <string name="ProviderRealMicrosoftTranslator">Microsoft 번역기</string>
     <string name="TranslatorSettings">번역기</string>

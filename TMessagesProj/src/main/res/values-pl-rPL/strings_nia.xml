@@ -188,6 +188,8 @@
     <string name="MessageSavingSaveMediaInPublicGroups">… w grupach publicznych</string>
     <string name="MessageSavingSaveMediaInPrivateGroups">… w grupach prywatnych</string>
     <string name="TelegramUIAutoTranslate">Przetłumacz całe czaty</string>
+    <string name="ShowCocoonAttribution">Pokaż informacje o Cocoon</string>
+    <string name="ShowCocoonAttributionDescription">Wyświetlaj baner Cocoon AI w menu tłumaczenia.</string>
     <string name="Translated">przetłumaczono</string>
     <string name="ProviderRealMicrosoftTranslator">Tłumacz Microsoft</string>
     <string name="TranslatorSettings">Tłumacz</string>

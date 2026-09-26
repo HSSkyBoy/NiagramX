@@ -117,6 +117,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
     private final AbstractConfigCell showTranslateRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.showTranslate, null, getString(R.string.ShowTranslateButton)));
     private final AbstractConfigCell useTelegramUIAutoTranslateRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getTelegramUIAutoTranslate()));
     private final AbstractConfigCell keepMarkdownRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.INSTANCE.getTranslatorKeepMarkdown()));
+    private final AbstractConfigCell showCocoonAttributionRow = cellGroup.appendCell(new ConfigCellTextCheck(NyaConfig.showCocoonAttribution, getString(R.string.ShowCocoonAttributionDescription)));
     private final AbstractConfigCell dividerOptions = cellGroup.appendCell(new ConfigCellDivider());
 
     // Translation
@@ -597,6 +598,7 @@ public class NekoTranslatorSettingsActivity extends BaseNekoXSettingsActivity {
         cellGroup.appendCell(showTranslateRow);
         cellGroup.appendCell(useTelegramUIAutoTranslateRow);
         cellGroup.appendCell(keepMarkdownRow);
+        cellGroup.appendCell(showCocoonAttributionRow);
         cellGroup.appendCell(dividerOptions);
 
         cellGroup.appendCell(headerTranslation);

@@ -180,6 +180,8 @@
     <string name="MessageSavingSaveMediaInPublicGroups">… trong Nhóm công khai</string>
     <string name="MessageSavingSaveMediaInPrivateGroups">… trong Nhóm riêng tư</string>
     <string name="TelegramUIAutoTranslate">Dịch toàn bộ đoạn chat</string>
+    <string name="ShowCocoonAttribution">Hiện thông tin Cocoon</string>
+    <string name="ShowCocoonAttributionDescription">Hiển thị biểu ngữ thông tin Cocoon AI trong menu dịch thuật.</string>
     <string name="Translated">đã dịch</string>
     <string name="ProviderRealMicrosoftTranslator">Trình dịch Microsoft</string>
     <string name="TranslatorSettings">Trình dịch</string>

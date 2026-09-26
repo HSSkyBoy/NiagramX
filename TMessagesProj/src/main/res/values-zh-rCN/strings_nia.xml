@@ -224,6 +224,8 @@
     <string name="MessageSavingSaveMediaInPublicGroups">公开群组</string>
     <string name="MessageSavingSaveMediaInPrivateGroups">私有群组</string>
     <string name="TelegramUIAutoTranslate">自动翻译</string>
+    <string name="ShowCocoonAttribution">显示 Cocoon 翻译服务信息</string>
+    <string name="ShowCocoonAttributionDescription">在官方翻译菜单中显示 Cocoon 技术支持底栏及运作说明。</string>
     <string name="Translated">已翻译</string>
     <string name="ProviderRealMicrosoftTranslator">微软翻译</string>
     <string name="TranslatorSettings">翻译</string>

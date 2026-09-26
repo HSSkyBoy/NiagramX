@@ -188,6 +188,8 @@
     <string name="MessageSavingSaveMediaInPublicGroups">... در گروه‌های عمومی</string>
     <string name="MessageSavingSaveMediaInPrivateGroups">... در گروه‌های خصوصی</string>
     <string name="TelegramUIAutoTranslate">ترجمه خودکار همه گفتگوها</string>
+    <string name="ShowCocoonAttribution">نمایش اطلاعات کوکون</string>
+    <string name="ShowCocoonAttributionDescription">نمایش بنر مشخصات Cocoon AI در منوی ترجمه.</string>
     <string name="Translated">ترجمه شده</string>
     <string name="ProviderRealMicrosoftTranslator">مترجم مایکروسافت</string>
     <string name="TranslatorSettings">مترجم</string>

@@ -36,4 +36,6 @@
 
     <string name="DisableProxyWhenVpnEnabled">Désactiver le proxy lorsque le VPN est activé</string>
     <string name="DisableProxyWhenVpnEnabledDesc">Suspend automatiquement le proxy lorsqu\'un VPN système est détecté. Remarque : le changement de réseau (ex. Wi-Fi vers données mobiles) ou la reconnexion du VPN peut réactiver temporairement le proxy.</string>
+    <string name="ShowCocoonAttribution">Afficher les infos de Cocoon</string>
+    <string name="ShowCocoonAttributionDescription">Afficher la bannière d\'attribution Cocoon AI dans le menu de traduction.</string>
 </resources>

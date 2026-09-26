@@ -241,6 +241,8 @@
     <string name="MessageSavingSaveMediaInPublicGroups">… in Public Groups</string>
     <string name="MessageSavingSaveMediaInPrivateGroups">… in Private Groups</string>
     <string name="TelegramUIAutoTranslate">Translate Entire Chats</string>
+    <string name="ShowCocoonAttribution">Show Cocoon Info</string>
+    <string name="ShowCocoonAttributionDescription">Display Cocoon AI attribution banner in the translation menu.</string>
     <string name="Translated">translated</string>
     <string name="ProviderRealMicrosoftTranslator">Microsoft Translator</string>
     <string name="TranslatorSettings">Translator</string>

@@ -188,6 +188,8 @@
     <string name="MessageSavingSaveMediaInPublicGroups">… у публічних групах</string>
     <string name="MessageSavingSaveMediaInPrivateGroups">… у приватних групах</string>
     <string name="TelegramUIAutoTranslate">Перекласти весь чат</string>
+    <string name="ShowCocoonAttribution">Показувати інформацію про Cocoon</string>
+    <string name="ShowCocoonAttributionDescription">Відображати банер з інформацією про Cocoon AI у меню перекладу.</string>
     <string name="Translated">перекладено</string>
     <string name="ProviderRealMicrosoftTranslator">Microsoft</string>
     <string name="TranslatorSettings">Перекладач</string>

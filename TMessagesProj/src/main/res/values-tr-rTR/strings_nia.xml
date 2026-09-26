@@ -188,6 +188,8 @@
     <string name="MessageSavingSaveMediaInPublicGroups">… Herkese Açık Gruplarda</string>
     <string name="MessageSavingSaveMediaInPrivateGroups">… Gizli Gruplarda</string>
     <string name="TelegramUIAutoTranslate">Tüm Sohbetleri Çevir</string>
+    <string name="ShowCocoonAttribution">Cocoon Bilgisini Göster</string>
+    <string name="ShowCocoonAttributionDescription">Çeviri menüsünde Cocoon AI atıf başlığını göster.</string>
     <string name="Translated">çevrildi</string>
     <string name="ProviderRealMicrosoftTranslator">Microsoft Translator</string>
     <string name="TranslatorSettings">Çevirmen</string>
