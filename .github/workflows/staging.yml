@@ -93,12 +93,16 @@ jobs:
         env:
           COMMIT_ID: ${{ github.event.head_commit.id }}
           LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
           KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
           ALIAS_NAME: ${{ vars.ALIAS_NAME || secrets.ALIAS_NAME }}
           ALIAS_PASS: ${{ secrets.ALIAS_PASS }}
         run: |
           if [ -n "$LOCAL_PROPERTIES" ]; then
             echo "$LOCAL_PROPERTIES" | base64 -d >> local.properties
+          fi
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > TMessagesProj/release.keystore
           fi
           ./gradlew TMessagesProj:assembleStaging --build-cache --parallel
       - name: Upload Artifact

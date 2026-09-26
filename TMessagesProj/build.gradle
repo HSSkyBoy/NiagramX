@@ -38,6 +38,7 @@ def officialCode = APP_VERSION_CODE
 def keystorePwd = null
 def alias = null
 def pwd = null
+def keystorePath = null
 
 Properties properties
 def base64 = System.getenv('LOCAL_PROPERTIES')
@@ -53,11 +54,13 @@ if (properties != null) {
     keystorePwd = properties.getProperty('KEYSTORE_PASS')
     alias = properties.getProperty('ALIAS_NAME')
     pwd = properties.getProperty('ALIAS_PASS')
+    keystorePath = properties.getProperty('KEYSTORE_PATH')
 }
 
 keystorePwd = keystorePwd ?: System.getenv('KEYSTORE_PASS') ?: ''
 alias = alias ?: System.getenv('ALIAS_NAME') ?: 'NPigramX'
 pwd = pwd ?: System.getenv('ALIAS_PASS') ?: ''
+keystorePath = keystorePath ?: System.getenv('KEYSTORE_PATH')
 
 def nativeTarget = System.getenv('NATIVE_TARGET') ?: ''
 
@@ -185,9 +188,10 @@ android {
 
     def isSigningAvailable = keystorePwd != null && alias != null && pwd != null && !project.hasProperty('withoutSigning') && System.getenv('DEBUG_BUILD') == null
     if (isSigningAvailable) {
+        def resolvedStoreFile = keystorePath ? file(keystorePath) : project.file('release.keystore')
         signingConfigs {
             release {
-                storeFile project.file('release.keystore')
+                storeFile resolvedStoreFile
                 storePassword keystorePwd
                 keyAlias alias
                 keyPassword pwd
