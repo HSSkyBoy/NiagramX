@@ -38,6 +38,8 @@ public class URLSpanUserMention extends URLSpanNoUnderline {
         super.updateDrawState(p);
         if (currentType == 2) {
             p.setColor(0xffffffff);
+        } else if (currentType == 3) {
+            p.setColor(p.linkColor != 0 ? p.linkColor : Theme.getColor(Theme.key_windowBackgroundWhiteLinkText));
         } else {
             p.setColor(p.linkColor);
         }

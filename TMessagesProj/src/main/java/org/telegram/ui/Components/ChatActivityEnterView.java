@@ -6683,7 +6683,7 @@ public class ChatActivityEnterView extends FrameLayout implements
         messageEditText.setPadding(0, dp(9), 0, dp(10));
         messageEditText.setBackgroundDrawable(null);
         messageEditText.setTextColor(getThemedColor(Theme.key_chat_messagePanelText));
-        messageEditText.setLinkTextColor(getThemedColor(Theme.key_chat_messageLinkOut));
+        messageEditText.setLinkTextColor(getThemedColor(Theme.key_windowBackgroundWhiteLinkText));
         messageEditText.setHighlightColor(getThemedColor(Theme.key_chat_inTextSelectionHighlight));
         messageEditText.setHintColor(getThemedColor(Theme.key_chat_messagePanelHint));
         messageEditText.setHintTextColor(getThemedColor(Theme.key_chat_messagePanelHint));

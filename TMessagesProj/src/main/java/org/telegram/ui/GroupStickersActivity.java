@@ -1016,7 +1016,7 @@ public class GroupStickersActivity extends BaseFragment implements NotificationC
             editText.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
             editText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
             editText.setTextColor(Theme.getColor(Theme.key_chat_messagePanelText));
-            editText.setLinkTextColor(Theme.getColor(Theme.key_chat_messageLinkOut));
+            editText.setLinkTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteLinkText));
             editText.setHighlightColor(Theme.getColor(Theme.key_chat_inTextSelectionHighlight));
             editText.setHintColor(Theme.getColor(Theme.key_chat_messagePanelHint));
             editText.setHintTextColor(Theme.getColor(Theme.key_chat_messagePanelHint));

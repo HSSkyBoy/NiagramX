@@ -104,6 +104,7 @@ public class EditTextCaption extends EditTextBoldCursor implements FloatingToolb
         super(context);
         this.resourcesProvider = resourcesProvider;
         quoteColor = Theme.getColor(Theme.key_chat_inQuote, resourcesProvider);
+        setLinkTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteLinkText, resourcesProvider));
         addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

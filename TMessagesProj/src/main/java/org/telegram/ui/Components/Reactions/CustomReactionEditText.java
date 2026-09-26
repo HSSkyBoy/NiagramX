@@ -71,7 +71,7 @@ public class CustomReactionEditText extends EditTextCaption {
         setGravity(Gravity.BOTTOM);
         setPadding(AndroidUtilities.dp(18), AndroidUtilities.dp(4), AndroidUtilities.dp(18), AndroidUtilities.dp(12));
         setTextColor(getThemedColor(Theme.key_chat_messagePanelText));
-        setLinkTextColor(getThemedColor(Theme.key_chat_messageLinkOut));
+        setLinkTextColor(getThemedColor(Theme.key_windowBackgroundWhiteLinkText));
         setHighlightColor(getThemedColor(Theme.key_chat_inTextSelectionHighlight));
         setHintColor(getThemedColor(Theme.key_chat_messagePanelHint));
         setHintTextColor(getThemedColor(Theme.key_chat_messagePanelHint));

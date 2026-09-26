@@ -61,7 +61,7 @@ public class EnterPrizeCell extends LinearLayout {
         editText.setFilters(inputFilters);
         editText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
         editText.setTextColor(Theme.getColor(Theme.key_chat_messagePanelText, resourcesProvider));
-        editText.setLinkTextColor(Theme.getColor(Theme.key_chat_messageLinkOut, resourcesProvider));
+        editText.setLinkTextColor(Theme.getColor(Theme.key_windowBackgroundWhiteLinkText, resourcesProvider));
         editText.setHighlightColor(Theme.getColor(Theme.key_chat_inTextSelectionHighlight, resourcesProvider));
         editText.setHintColor(Theme.getColor(Theme.key_chat_messagePanelHint, resourcesProvider));
         editText.setHintTextColor(Theme.getColor(Theme.key_chat_messagePanelHint, resourcesProvider));
